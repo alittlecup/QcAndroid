@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'retrolambda'
+
+
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+//        compileOptions {
+//            sourceCompatibility JavaVersion.VERSION_1_8
+//            targetCompatibility JavaVersion.VERSION_1_8
+//        }
+//
+//    retrolambda {
+//        jdk System.getenv("JAVA8_HOME")
+//        oldJdk System.getenv("JAVA7_HOME")
+//        javaVersion JavaVersion.VERSION_1_7
+//    }
+
+    defaultConfig {
+        applicationId "com.qingchengfit.fitcoach"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    productFlavors {
+        armv7 {
+            ndk {
+                abiFilters "armeabi-v7a", ""
+            }
+        }
+        x86 {
+            ndk {
+                abiFilters "x86", ""
+            }
+        }
+    }
+}
+
+repositories {
+    maven {
+        url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'org.xwalk:xwalk_core_library:14.43.343.17'
+    compile 'com.android.support:design:22.2.0'
+}
