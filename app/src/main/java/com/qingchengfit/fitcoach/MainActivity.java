@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         XWalkFragment xWalkFragment = new XWalkFragment();
         mFragmentManager.beginTransaction().replace(R.id.main_fraglayout,xWalkFragment).commit();
-
+        startActivity(new Intent(this,LoginActivity.class));
 //        mWebview.load("http://www.baidu.com", null);
     }
 
