@@ -24,19 +24,17 @@ import java.util.TimeZone;
  * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
  * 88      88   88 88      88.     88 `88.
  * 88      YP   YP 88      Y88888P 88   YD
- * <p>
- * <p>
  * Created by Paper on 15/7/28 2015.
  */
 public class PhoneFuncUtils {
 
     /**
      * 读取联系人
-     * @param context
-     * @return
+     * @param context context
+     * @return 联系人实体
      */
     public static List<Contact> initContactList(Context context) {
-        List<Contact> contactList = new ArrayList<Contact>();
+        List<Contact> contactList = new ArrayList<>();
 
         // 查询联系人数据
         Cursor cursor = context.getContentResolver().query(
@@ -68,7 +66,7 @@ public class PhoneFuncUtils {
                 contact.setPhoneNumber(phoneNumber);
             }
 
-            if (null != phoneCursor && !phoneCursor.isClosed()) {
+            if (!phoneCursor.isClosed()) {
                 phoneCursor.close();
             }
 
@@ -76,7 +74,7 @@ public class PhoneFuncUtils {
             LogUtil.i("name:"+contact.getContactName()+"  "+contact.getPhoneNumber());
         }
 
-        if (null != cursor && !cursor.isClosed()) {
+        if (!cursor.isClosed()) {
             cursor.close();
         }
 
@@ -90,6 +88,17 @@ public class PhoneFuncUtils {
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
             CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
     };
+
+    public static final String[] EVENT_PROJECTION2 = new String[] {
+            CalendarContract.Events._ID,                           // 0
+            CalendarContract.Events.TITLE,                  // 1
+    };
+
+
+    /**
+     * 查询日历账户
+     * @param context contex
+     */
     public static void queryCalender(Context context){
         ContentResolver cr = context.getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
@@ -103,71 +112,48 @@ public class PhoneFuncUtils {
         while (cur.moveToNext()){
             LogUtil.i(cur.getLong(0)+":id");
         }
-        if (cur!= null && !cur.isClosed()){
+        if (!cur.isClosed()){
             cur.close();
         }
     }
 
+    /**
+     * 查询日历事件
+     * @param context context
+     */
+    public static void queryEvent(Context context){
 
-    public static void insertCalendar(Context context){
-        LogUtil.i("time:"+System.currentTimeMillis());
-//        ContentResolver cr = context.getContentResolver();
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(2015, 6, 29, 0, 30);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(2015, 6, 29, 12, 30);
 //        ContentValues values = new ContentValues();
-//        values.put(CalendarContract.Events.DTSTART, 1438061183509l+3600*24*1000);
-//        values.put(CalendarContract.Events.DTEND, 1438061183509l+3600*24*1000*2);
-//        values.put(CalendarContract.Events.TITLE, "Test");
-//        values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
-//        values.put(CalendarContract.Events.CALENDAR_ID, 1);
-//        values.put(CalendarContract.Events.EVENT_TIMEZONE, "China/Beijing");
-//        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
+        ContentResolver cr = context.getContentResolver();
+        Uri uri =  Uri.parse("content://com.android.calendar/events");
+        String selection = "((" + CalendarContract.Events.DTSTART+ " >= ?) AND ("
+                + CalendarContract.Events.DTSTART + " <= ?))";
+        String[] selectionArgs = new String[] {Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis())};
+        Cursor cur = cr.query(uri,EVENT_PROJECTION2,selection,selectionArgs,null);
+        while (cur.moveToNext()){
+            LogUtil.i(cur.getString(1)+":name");
+        }
+        if (!cur.isClosed()){
+            cur.close();
+        }
+
+    }
+
+    /**
+     * 插入日历事件
+     * @param context context
+     */
+    public static void insertEvent(Context context){
         Calendar beginTime = Calendar.getInstance();
         beginTime.set(2015, 6, 29, 3, 30);
         Calendar endTime = Calendar.getInstance();
         endTime.set(2015, 6, 29, 8, 30);
         ContentValues values = new ContentValues();
-//        values.put(
-//                CalendarContract.Calendars.ACCOUNT_NAME,
-//
-//                "QingChengFit"); //Account name becomes equal to "nav_shift_manager" !!TEST!!
-////                values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
-////        values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
-//        values.put(
-//                CalendarContract.Calendars.ACCOUNT_TYPE,
-//                CalendarContract.ACCOUNT_TYPE_LOCAL);
-//        values.put(
-//                CalendarContract.Calendars.NAME,
-//                "青橙科技");
-//        values.put(
-//                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-//                "QC");
-//        values.put(
-//                CalendarContract.Calendars.CALENDAR_COLOR,
-//                0xff3366);
-//        values.put(
-//                CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
-//                CalendarContract.Calendars.CAL_ACCESS_OWNER);
-//        values.put(
-//                CalendarContract.Calendars.OWNER_ACCOUNT,
-//                "user@qingchengfit.com");
-//        values.put(
-//                CalendarContract.Calendars.CALENDAR_TIME_ZONE,
-//                "Europe/London");
-//        Uri.Builder builder =
-//                CalendarContract.Calendars.CONTENT_URI.buildUpon();
-//        builder.appendQueryParameter(
-//                CalendarContract.Calendars.ACCOUNT_NAME,
-//                "com.qingcheng");
-//        builder.appendQueryParameter(
-//                CalendarContract.Calendars.ACCOUNT_TYPE,
-//                CalendarContract.ACCOUNT_TYPE_LOCAL);
-//        builder.appendQueryParameter(
-//                CalendarContract.CALLER_IS_SYNCADAPTER,
-//                "true");
-//        Uri uri = context.getContentResolver().insert(builder.build(), values);
-////        ContentValues values = new ContentValues();
-//
-//        // Now get the CalendarID :
-//         LogUtil.e("id:"+Long.parseLong(uri.getLastPathSegment()));
 
         values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
         values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
@@ -178,12 +164,66 @@ public class PhoneFuncUtils {
 //        values.put(CalendarContract.Events.ACCOUNT_NAME,"青橙科技");
 //        values.put(CalendarContract.Events.SYNC_EVENTS,0);
         String[] des = TimeZone.getAvailableIDs();
-        for (int i=0;i<des.length;i++){
-//            LogUtil.e(des[i]);
-        }
+//        for (int i=0;i<des.length;i++){
+////            LogUtil.e(des[i]);
+//        }
 //        values.put(CalendarContract.Events.ACCOUNT_TYPE,CalendarContract.ACCOUNT_TYPE_LOCAL);
         Uri uri = context.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
         LogUtil.i(Long.parseLong(uri.getLastPathSegment())+"");
+    }
+
+    /**
+     * 插入日历账户
+     * @param context context
+     */
+    public static void insertCalendar(Context context){
+        LogUtil.i("time:"+System.currentTimeMillis());
+        ContentValues values = new ContentValues();
+        values.put(
+                CalendarContract.Calendars.ACCOUNT_NAME,
+
+                "QingChengFit"); //Account name becomes equal to "nav_shift_manager" !!TEST!!
+//                values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
+//        values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
+        values.put(
+                CalendarContract.Calendars.ACCOUNT_TYPE,
+                CalendarContract.ACCOUNT_TYPE_LOCAL);
+        values.put(
+                CalendarContract.Calendars.NAME,
+                "青橙科技");
+        values.put(
+                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
+                "QC");
+        values.put(
+                CalendarContract.Calendars.CALENDAR_COLOR,
+                0xff3366);
+        values.put(
+                CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
+                CalendarContract.Calendars.CAL_ACCESS_OWNER);
+        values.put(
+                CalendarContract.Calendars.OWNER_ACCOUNT,
+                "user@qingchengfit.com");
+        values.put(
+                CalendarContract.Calendars.CALENDAR_TIME_ZONE,
+                "Europe/London");
+        Uri.Builder builder =
+                CalendarContract.Calendars.CONTENT_URI.buildUpon();
+        builder.appendQueryParameter(
+                CalendarContract.Calendars.ACCOUNT_NAME,
+                "com.qingcheng");
+        builder.appendQueryParameter(
+                CalendarContract.Calendars.ACCOUNT_TYPE,
+                CalendarContract.ACCOUNT_TYPE_LOCAL);
+        builder.appendQueryParameter(
+                CalendarContract.CALLER_IS_SYNCADAPTER,
+                "true");
+        Uri uri = context.getContentResolver().insert(builder.build(), values);
+//        ContentValues values = new ContentValues();
+
+        // Now get the CalendarID :
+         LogUtil.e("id:"+Long.parseLong(uri.getLastPathSegment()));
+
+
 
 
 //        Calendar beginTime = Calendar.getInstance();
