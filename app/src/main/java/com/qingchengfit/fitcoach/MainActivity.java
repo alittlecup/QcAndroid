@@ -6,9 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
-import com.qingchengfit.fitcoach.utils.LogUtil;
-import com.qingchengfit.fitcoach.utils.PhoneFuncUtils;
 
 import org.xwalk.core.XWalkPreferences;
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         XWalkFragment xWalkFragment = new XWalkFragment();
         mFragmentManager.beginTransaction().replace(R.id.main_fraglayout,xWalkFragment).commit();
-        startActivity(new Intent(this,LoginActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
 //        mWebview.load("http://www.baidu.com", null);
     }
 
@@ -51,25 +51,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }

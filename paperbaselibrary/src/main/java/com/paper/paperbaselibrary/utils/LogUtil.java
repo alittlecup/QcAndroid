@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.utils;
+package com.paper.paperbaselibrary.utils;
 
 import android.util.Log;
 

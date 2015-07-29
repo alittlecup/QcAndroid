@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.utils;
+package com.paper.paperbaselibrary.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 
-import com.qingchengfit.fitcoach.Bean.Contact;
+import com.paper.paperbaselibrary.bean.Contact;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -98,7 +97,6 @@ public class LoginView extends RelativeLayout {
             OnClickListener() {
                 @Override
                 public void onClick (View view){
-                    Log.e("hshs", "click");
                     String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
                     String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
                     if (TextUtils.isEmpty(account)) {
