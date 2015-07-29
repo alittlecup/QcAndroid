@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LoginLibrary</string>
+    <string name="login_btn_lable">登录</string>
+    <string name="login_getcode">获取验证码</string>
+    <string name="logint_phonenum_hint">电话号码</string>
+    <string name="login_checkcode_hint">请输入验证码</string>
+    <string name="login_err_no_account">请输入您的手机号码</string>
+    <string name="login_err_no_checkcode">请输入验证码</string>
+</resources>

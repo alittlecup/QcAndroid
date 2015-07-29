@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextStyle.min" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/min_font</item>
+    </style>
+    <style name="TextStyle.common" parent="TextStyle.min">
+        <item name="android:textSize">@dimen/common_font</item>
+    </style>
+    <style name="TextStyle.large" parent="TextStyle.min">
+        <item name="android:textSize">@dimen/large_font</item>
+    </style>
+    <style name="TextStyle.max" parent="TextStyle.min">
+        <item name="android:textSize">@dimen/max_font</item>
+    </style>
+
+</resources>
