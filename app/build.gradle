@@ -1,9 +1,30 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'retrolambda'
+apply plugin: 'packer'                     //版本管理 多渠道打包
 
 
 
+packer {
+    // 指定渠道打包输出目录
+//    archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
+    // 指定渠道打包输出文件名格式
+    archiveNameFormat = ''
+    // 指定渠道打包需要修改的AndroidManifest文件项
+//    manifestMatcher = ['UMENG_CHANNEL','Promotion_Market']
+    // 指定是否使用build版本号自增
+    buildNumberAuto = true
+    // 指定使用版本号自增的buildType，默认是全部
+    buildNumberTypeMatcher = ['release', 'beta']
+
+}
+
+//apt {
+//    arguments {
+//        androidManifestFile variant.outputs[0].processResources.manifestFile
+//        resourcePackageName 'com.qingchengfit.fitcoach'//TODO 注意这里要设置当前项目的包名
+//    }
+//}
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -14,7 +35,8 @@ android {
         }
 
     retrolambda {
-        jdk System.getenv("JAVA8_HOME")
+//        jdk System.getenv("JAVA8_HOME")
+        jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
         oldJdk System.getenv("JAVA7_HOME")
         javaVersion JavaVersion.VERSION_1_7
     }
@@ -54,15 +76,18 @@ repositories {
     }
 }
 dependencies {
-    compile 'com.google.dagger:dagger:2.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //    compile 'com.google.dagger:dagger:2.0.1'
+    //    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    compile 'org.glassfish:javax.annotation:10.0-b28'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.xwalk:xwalk_core_library:14.43.343.17'
     compile 'com.android.support:design:22.2.0'
     compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile project(':loginlibrary')
     compile project(':paperbaselibrary')
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.facebook.fresco:fresco:0.6.0'
 }

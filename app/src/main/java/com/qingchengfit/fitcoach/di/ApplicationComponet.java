@@ -1,12 +1,5 @@
 package com.qingchengfit.fitcoach.di;
 
-import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.RxBus;
-
-import javax.inject.Singleton;
-
-import dagger.Component;
-
 /**
  * power by
  * <p/>
@@ -20,13 +13,13 @@ import dagger.Component;
  * <p/>
  * Created by Paper on 15/6/16 2015.
  */
-@Singleton
-@Component(modules = {ApplicationModule.class, RxBusModule.class})
-public interface ApplicationComponet {
-
-    void inject(App app);
-
-    RxBus getRxBus();
-
-
-}
+//@Singleton
+//@Component(modules = {ApplicationModule.class, RxBusModule.class})
+//public interface ApplicationComponet {
+//
+//    void inject(Context context);
+//
+//    RxBus getRxBus();
+//
+//
+//}

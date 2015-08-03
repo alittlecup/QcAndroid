@@ -26,4 +26,7 @@ public abstract class LoginPresenter implements   Presenter {
      */
     public abstract void doLogin(String account,String code);
 
+
+    public abstract void goRegister();
+
 }

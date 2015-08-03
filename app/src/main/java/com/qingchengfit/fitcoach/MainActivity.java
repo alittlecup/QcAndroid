@@ -4,23 +4,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 import org.xwalk.core.XWalkPreferences;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-public class MainActivity extends AppCompatActivity {
+//import javax.inject.Inject;
+
+public class MainActivity extends  BaseAcitivity implements Callback<QcResponse>{
 
     @Bind(R.id.float_btn)
     FloatingActionButton mFloatBtn;
     FragmentManager mFragmentManager;
+//    @Inject RxBus rxBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,15 +39,21 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager.beginTransaction().replace(R.id.main_fraglayout,xWalkFragment).commit();
         startActivity(new Intent(this, LoginActivity.class));
 //        mWebview.load("http://www.baidu.com", null);
+//        getAppCompent().inject(this);
+//        getAppCompent().getRxBus().hasObservers();
+
     }
 
     @OnClick(R.id.float_btn)
     public void onFloatClick(){
-        LogUtil.i("onclick");
+        LogUtil.i("onclick:");
+        QcCloudClient.getApi().qcCloudServer
+                .getTest();
 //        PhoneFuncUtils.initContactList(this);
 //        PhoneFuncUtils.insertCalendar(this);
 //        PhoneFuncUtils.queryCalender(this);
-        PhoneFuncUtils.queryEvent(this);
+//        PhoneFuncUtils.queryEvent(this);
+
     }
 
     @Override
@@ -50,5 +62,18 @@ public class MainActivity extends AppCompatActivity {
         XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
+    /**
+     * http返回
+     * @param qcResponse
+     * @param response
+     */
+    @Override
+    public void success(QcResponse qcResponse, Response response) {
 
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+
+    }
 }

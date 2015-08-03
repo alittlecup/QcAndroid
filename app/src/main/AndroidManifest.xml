@@ -19,7 +19,6 @@
  //读日历
     <application
         android:allowBackup="true"
-        android:name=".App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -35,6 +34,10 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register" >
         </activity>
     </application>
 

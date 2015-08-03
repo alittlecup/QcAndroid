@@ -1,11 +1,5 @@
 package com.qingchengfit.fitcoach;
 
-import android.app.Application;
-
-import com.qingchengfit.fitcoach.di.ApplicationComponet;
-import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
-import com.qingchengfit.fitcoach.di.RxBusModule;
-
 /**
  * power by
  * <p/>
@@ -19,21 +13,32 @@ import com.qingchengfit.fitcoach.di.RxBusModule;
  * <p/>
  * Created by Paper on 15/7/29 2015.
  */
-public class App extends Application {
-    private ApplicationComponet componet;
+//public class App extends Application {
+//    public ApplicationComponet getComponet(){
+//        if (componet!=null)
+//            return componet;
+//        else return null;
+//    }
+//
+//    public void setComponet(ApplicationComponet componet) {
+//        this.componet = componet;
+//    }
+//
+//    private ApplicationComponet componet;
+//
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        setupGraph();
+//    }
+//
+//    private void setupGraph() {
+//
+//        componet = DaggerApplicationComponet.builder()
+//                .rxBusModule(new RxBusModule())
+//                .applicationModule(new ApplicationModule(this))
+//                .build();
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        setupGraph();
-    }
 
-    private void setupGraph() {
-
-        componet = DaggerApplicationComponet.builder()
-                .rxBusModule(new RxBusModule())
-                .build();
-        componet.inject(this);
-
-    }
-}
+//    }
+//}
