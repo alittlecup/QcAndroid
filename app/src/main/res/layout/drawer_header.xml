@@ -2,16 +2,24 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="25dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp"
+    android:background="@color/accent"
+    >
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/header_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         fresco:roundAsCircle="true"
-        android:src="@drawable/dropdown_popup_background"
+        fresco:placeholderImage="@drawable/qingchenglogo"
         >
 
     </com.facebook.drawee.view.SimpleDraweeView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/abc_action_bar_home_description"
+        />
 </RelativeLayout>

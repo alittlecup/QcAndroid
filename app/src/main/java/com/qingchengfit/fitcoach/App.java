@@ -1,5 +1,9 @@
 package com.qingchengfit.fitcoach;
 
+import android.app.Application;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 /**
  * power by
  * <p/>
@@ -13,32 +17,34 @@ package com.qingchengfit.fitcoach;
  * <p/>
  * Created by Paper on 15/7/29 2015.
  */
-//public class App extends Application {
+public class App extends Application {
 //    public ApplicationComponet getComponet(){
 //        if (componet!=null)
 //            return componet;
 //        else return null;
 //    }
-//
+
 //    public void setComponet(ApplicationComponet componet) {
 //        this.componet = componet;
 //    }
 //
 //    private ApplicationComponet componet;
 //
-//    @Override
-//    public void onCreate() {
-//        super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Fresco.initialize(this);
+
 //        setupGraph();
-//    }
-//
+    }
+
 //    private void setupGraph() {
 //
 //        componet = DaggerApplicationComponet.builder()
 //                .rxBusModule(new RxBusModule())
 //                .applicationModule(new ApplicationModule(this))
 //                .build();
-
-
+//
+//
 //    }
-//}
+}

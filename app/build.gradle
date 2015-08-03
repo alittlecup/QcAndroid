@@ -90,4 +90,6 @@ dependencies {
     compile project(':paperbaselibrary')
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.facebook.fresco:fresco:0.6.0'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
 }

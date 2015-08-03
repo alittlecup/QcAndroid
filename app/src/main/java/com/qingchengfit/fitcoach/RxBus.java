@@ -12,11 +12,11 @@ public class RxBus {
   private static RxBus _RxBus ;
   public  static RxBus  getBus(){
     if (_RxBus ==null){
-      synchronized (_RxBus){
-        if (_RxBus==null){
+//      synchronized (_RxBus){
+//        if (_RxBus==null){
           _RxBus = new RxBus();
-        }
-      }
+//        }
+//      }
 
     }
     return _RxBus;
