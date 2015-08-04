@@ -1,18 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.qingchengfit.fitcoach.LoginActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                tools:context="com.qingchengfit.fitcoach.LoginActivity">
+    <include
+        layout="@layout/common_toolbar"
+        android:id="@+id/toolbar"
+        ></include>
 
-
-    <fragment
-        android:id="@+id/login_fragment"
+    <android.support.design.widget.TabLayout
+        android:layout_below="@id/toolbar"
+        android:id="@+id/login_tabview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.qingchengfit.fitcoach.fragment.LoginFragment"
+        android:layout_height="50dp"
+        android:background="@color/primary"
+        android:paddingBottom="3dp"
+        app:tabTextColor="@color/dark_white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="5dp"
         >
+    </android.support.design.widget.TabLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_below="@id/login_tabview"
+        android:id="@+id/login_viewpager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
 
-    </fragment>
-
+        ></android.support.v4.view.ViewPager>
 
 
 </RelativeLayout>

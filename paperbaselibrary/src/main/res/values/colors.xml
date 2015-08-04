@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--common color-->
+    <color name="white">#ffffff</color>
+    <color name="dark_white">#cfcfcf</color>
+    <color name="cyan">#20bfbe</color>
+
+</resources>

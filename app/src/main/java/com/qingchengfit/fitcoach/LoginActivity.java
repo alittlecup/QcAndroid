@@ -1,35 +1,63 @@
 package com.qingchengfit.fitcoach;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
+import com.qingchengfit.fitcoach.fragment.LoginFragment;
+import com.qingchengfit.fitcoach.fragment.RegisterFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.login_viewpager)
+    ViewPager loginViewpager;
+    @Bind(R.id.login_tabview)
+    TabLayout loginTablayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
+        loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
+        loginTablayout.setupWithViewPager(loginViewpager);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_login, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    class LoginFragAdapter extends FragmentPagerAdapter{
+
+        public LoginFragAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position==0){
+                return  new LoginFragment();
+            }else return new RegisterFragment();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+           if (position ==0 ){
+               return "登录";
+
+           }else return "注册";
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
 }
