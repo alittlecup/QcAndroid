@@ -1,67 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.paper.loginlibrary.RegisterView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+    <data >
+        <variable
+            name="data"
+            type="com.paper.loginlibrary.viewmodel.RegisteViewModel"
+            ></variable>
+    </data>
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/telephone_layout"
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
         >
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/login_phone_num"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/telephone_layout"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/login_phone_num"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                />
+                android:layout_height="wrap_content">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/login_getcode_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_getcode"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+
+                />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/login_checkcode_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paper_item_height"
+            android:layout_below="@id/telephone_layout"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+
+                android:id="@+id/login_phone_verity"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/paper_item_height"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
         <Button
-            android:id="@+id/login_getcode_btn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/login_getcode" />
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paper_item_height"
+            android:layout_below="@id/login_checkcode_layout"
+            android:orientation="horizontal"
+            android:text="@string/registe_btn_lable"
+            >
+        </Button>
 
     </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/login_checkcode_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/paper_item_height"
-        android:layout_below="@id/telephone_layout"
-        android:orientation="horizontal">
-
-        <android.support.design.widget.TextInputLayout
-
-            android:id="@+id/login_phone_verity"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/paper_item_height"
-            android:layout_weight="1">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </android.support.design.widget.TextInputLayout>
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="match_parent" />
-
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/paper_item_height"
-        android:layout_below="@id/login_checkcode_layout"
-        android:orientation="horizontal"
-        android:text="@string/registe_btn_lable">
-    </Button>
-
-</com.paper.loginlibrary.RegisterView>
+</layout>

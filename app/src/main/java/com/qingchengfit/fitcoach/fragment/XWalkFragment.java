@@ -11,10 +11,12 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
+import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
 import org.xwalk.core.XWalkView;
@@ -120,6 +122,13 @@ public class XWalkFragment extends Fragment {
             List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
             Gson gson = new Gson();
             return gson.toJson(contacts);
+        }
+
+        @JavascriptInterface
+        public String getPlatform(){
+            PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
+            Gson gson = new Gson();
+            return gson.toJson(info);
         }
 
 
