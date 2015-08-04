@@ -30,14 +30,14 @@
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/float_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        >
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/float_btn"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+        <!-->-->
 
-    </android.support.design.widget.FloatingActionButton>
+    <!--</android.support.design.widget.FloatingActionButton>-->
 </RelativeLayout>

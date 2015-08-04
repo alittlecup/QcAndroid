@@ -2,15 +2,12 @@ package com.qingchengfit.fitcoach;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.umeng.analytics.MobclickAgent;
 
@@ -18,7 +15,6 @@ import org.xwalk.core.XWalkPreferences;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -28,8 +24,8 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends BaseAcitivity implements Callback<QcResponse> {
 
-    @Bind(R.id.float_btn)
-    FloatingActionButton mFloatBtn;
+////    @Bind(R.id.float_btn)
+//    FloatingActionButton mFloatBtn;
     FragmentManager mFragmentManager;
     @Bind(R.id.main_drawerlayout)
     DrawerLayout mainDrawerlayout;
@@ -59,17 +55,17 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
     }
 
-    @OnClick(R.id.float_btn)
-    public void onFloatClick() {
-        LogUtil.i("onclick:");
-        QcCloudClient.getApi().qcCloudServer
-                .getTest();
+//    @OnClick(R.id.float_btn)
+//    public void onFloatClick() {
+//        LogUtil.i("onclick:");
+//        QcCloudClient.getApi().qcCloudServer
+//                .getTest();
 //        PhoneFuncUtils.initContactList(this);
 //        PhoneFuncUtils.insertCalendar(this);
 //        PhoneFuncUtils.queryCalender(this);
 //        PhoneFuncUtils.queryEvent(this);
 
-    }
+//    }
 
     @Override
     protected void onResume() {
