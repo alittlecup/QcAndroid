@@ -49,9 +49,6 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                     mainDrawerlayout.openDrawer(Gravity.LEFT);
                 }
         });
-//        mWebview.load("http://www.baidu.com", null);
-//        getAppCompent().inject(this);
-//        getAppCompent().getRxBus().hasObservers();
 
     }
 

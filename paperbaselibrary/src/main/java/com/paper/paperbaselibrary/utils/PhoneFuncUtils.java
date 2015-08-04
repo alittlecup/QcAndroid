@@ -30,6 +30,7 @@ public class PhoneFuncUtils {
 
     /**
      * 读取联系人
+     *
      * @param context context
      * @return 联系人实体
      */
@@ -48,7 +49,8 @@ public class PhoneFuncUtils {
             String contactName = cursor.getString(cursor
                     .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
             contact.setContactName(contactName);
-
+//            String sortkey = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.SORT_KEY_ALTERNATIVE));
+            contact.setSortKey(ChineseCharToEn.getFirstLetter(contactName));
             // 有联系人姓名得到对应的拼音
 //            String pinyin = PinyinUtils.getPinyin(contactName);
 //            contact.setPinyin(pinyin);
@@ -71,7 +73,7 @@ public class PhoneFuncUtils {
             }
 
             contactList.add(contact);
-            LogUtil.i("name:"+contact.getContactName()+"  "+contact.getPhoneNumber());
+            LogUtil.i("name:" + contact.getContactName() + "  " + contact.getPhoneNumber());
         }
 
         if (!cursor.isClosed()) {
@@ -82,14 +84,14 @@ public class PhoneFuncUtils {
         return contactList;
     }
 
-    public static final String[] EVENT_PROJECTION = new String[] {
+    public static final String[] EVENT_PROJECTION = new String[]{
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
             CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
     };
 
-    public static final String[] EVENT_PROJECTION2 = new String[] {
+    public static final String[] EVENT_PROJECTION2 = new String[]{
             CalendarContract.Events._ID,                           // 0
             CalendarContract.Events.TITLE,                  // 1
     };
@@ -97,9 +99,10 @@ public class PhoneFuncUtils {
 
     /**
      * 查询日历账户
+     *
      * @param context contex
      */
-    public static void queryCalender(Context context){
+    public static void queryCalender(Context context) {
         ContentResolver cr = context.getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
 //        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
@@ -109,19 +112,21 @@ public class PhoneFuncUtils {
 //                "sampleuser@gmail.com"};
 // Submit the query and get a Cursor object back.
         Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
-        while (cur.moveToNext()){
-            LogUtil.i(cur.getLong(0)+":id");
+        while (cur.moveToNext()) {
+            LogUtil.i(cur.getLong(0) + ":id" + "    other:" + cur.getString(1));
         }
-        if (!cur.isClosed()){
+        if (!cur.isClosed()) {
             cur.close();
         }
     }
 
     /**
      * 查询日历事件
+     *
      * @param context context
      */
-    public static void queryEvent(Context context){
+
+    public static void queryEvent(Context context, long starttime, long endtime) {
 
         Calendar beginTime = Calendar.getInstance();
         beginTime.set(2015, 6, 29, 0, 30);
@@ -130,15 +135,20 @@ public class PhoneFuncUtils {
 //        ContentValues values = new ContentValues();
 
         ContentResolver cr = context.getContentResolver();
-        Uri uri =  Uri.parse("content://com.android.calendar/events");
-        String selection = "((" + CalendarContract.Events.DTSTART+ " >= ?) AND ("
-                + CalendarContract.Events.DTSTART + " <= ?))";
-        String[] selectionArgs = new String[] {Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis())};
-        Cursor cur = cr.query(uri,EVENT_PROJECTION2,selection,selectionArgs,null);
-        while (cur.moveToNext()){
-            LogUtil.i(cur.getString(1)+":name");
+        Uri uri = Uri.parse("content://com.android.calendar/events");
+        String selection = "(((" + CalendarContract.Events.DTSTART + " >= ?) AND ("
+                + CalendarContract.Events.DTSTART + " <= ?)) OR (("
+                + CalendarContract.Events.DTEND + " >= ?) AND ("
+                + CalendarContract.Events.DTEND + " <= ?)))";
+        String[] selectionArgs = new String[]{
+                Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis()),
+                Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis())
+        };
+        Cursor cur = cr.query(uri, EVENT_PROJECTION2, selection, selectionArgs, null);
+        while (cur.moveToNext()) {
+            LogUtil.i(cur.getString(1) + ":name");
         }
-        if (!cur.isClosed()){
+        if (!cur.isClosed()) {
             cur.close();
         }
 
@@ -146,21 +156,28 @@ public class PhoneFuncUtils {
 
     /**
      * 插入日历事件
-     * @param context context
+     *
+     * @param context    context
+     * @param calendarid 日历id
+     * @param desc       事件描述
+     * @param title      事件标题
+     * @param endtime    结束时间
+     * @param starttime  开始时间
      */
-    public static void insertEvent(Context context){
+    public static void insertEvent(Context context, int calendarid, String title, String desc, long starttime, long endtime) {
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2015, 6, 29, 3, 30);
+        beginTime.set(2015, 7, 29, 3, 30);
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2015, 6, 29, 8, 30);
+        endTime.set(2015, 7, 29, 8, 30);
         ContentValues values = new ContentValues();
 
         values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
         values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
-        values.put(CalendarContract.Events.TITLE, "哈哈哈哈");
-        values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
-        values.put(CalendarContract.Events.CALENDAR_ID, 5);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/London");
+        values.put(CalendarContract.Events.TITLE, title);
+        values.put(CalendarContract.Events.DESCRIPTION, desc);
+        values.put(CalendarContract.Events.CALENDAR_ID, calendarid);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+        values.put(CalendarContract.Events.HAS_ALARM, 1);
 //        values.put(CalendarContract.Events.ACCOUNT_NAME,"青橙科技");
 //        values.put(CalendarContract.Events.SYNC_EVENTS,0);
         String[] des = TimeZone.getAvailableIDs();
@@ -169,15 +186,26 @@ public class PhoneFuncUtils {
 //        }
 //        values.put(CalendarContract.Events.ACCOUNT_TYPE,CalendarContract.ACCOUNT_TYPE_LOCAL);
         Uri uri = context.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
-        LogUtil.i(Long.parseLong(uri.getLastPathSegment())+"");
+        LogUtil.i(Long.parseLong(uri.getLastPathSegment()) + "");
+        addEventNoti(context, Integer.parseInt(uri.getLastPathSegment().toString()));
+    }
+
+    public static void addEventNoti(Context context, int eventID) {
+        ContentResolver cr = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Reminders.MINUTES, 15);
+        values.put(CalendarContract.Reminders.EVENT_ID, eventID);
+        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        Uri uri = cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
     }
 
     /**
      * 插入日历账户
+     *
      * @param context context
      */
-    public static void insertCalendar(Context context){
-        LogUtil.i("time:"+System.currentTimeMillis());
+    public static void insertCalendar(Context context) {
+        LogUtil.i("time:" + System.currentTimeMillis());
         ContentValues values = new ContentValues();
         values.put(
                 CalendarContract.Calendars.ACCOUNT_NAME,
@@ -221,9 +249,7 @@ public class PhoneFuncUtils {
 //        ContentValues values = new ContentValues();
 
         // Now get the CalendarID :
-         LogUtil.e("id:"+Long.parseLong(uri.getLastPathSegment()));
-
-
+        LogUtil.e("id:" + Long.parseLong(uri.getLastPathSegment()));
 
 
 //        Calendar beginTime = Calendar.getInstance();
@@ -241,7 +267,6 @@ public class PhoneFuncUtils {
 //                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
 //        context.startActivity(intent);
     }
-
 
 
 }

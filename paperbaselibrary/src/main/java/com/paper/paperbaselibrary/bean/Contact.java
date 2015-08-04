@@ -17,6 +17,15 @@ public class Contact {
     private String phoneNumber;
     private String contactName;
 
+    public String getSortKey() {
+        return sortKey;
+    }
+
+    public void setSortKey(String sortKey) {
+        this.sortKey = sortKey;
+    }
+
+    private String sortKey;
     public String getPhoneNumber() {
         return phoneNumber;
     }

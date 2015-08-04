@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.android.databinding'
 //apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'retrolambda'
 apply plugin: 'packer'                     //版本管理 多渠道打包
+
 
 
 
@@ -26,7 +28,7 @@ packer {
 //    }
 //}
 android {
-    compileSdkVersion 22
+    compileSdkVersion  22
     buildToolsVersion "22.0.1"
 
         compileOptions {
@@ -56,18 +58,18 @@ android {
     }
 
 
-    productFlavors {
-        armv7 {
-            ndk {
-                abiFilters "armeabi-v7a", ""
-            }
-        }
-        x86 {
-            ndk {
-                abiFilters "x86", ""
-            }
-        }
-    }
+//    productFlavors {
+//        armv7 {
+//            ndk {
+//                abiFilters "armeabi-v7a", ""
+//            }
+//        }
+//        x86 {
+//            ndk {
+//                abiFilters "x86", ""
+//            }
+//        }
+//    }
 }
 
 repositories {
