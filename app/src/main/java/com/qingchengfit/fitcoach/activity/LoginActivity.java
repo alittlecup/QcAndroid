@@ -52,9 +52,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
            if (position ==0 ){
-               return "登录";
+               return getString(R.string.login_btn_label);
 
-           }else return "注册";
+           }else return getString(R.string.registe_indicat_label);
         }
 
         @Override

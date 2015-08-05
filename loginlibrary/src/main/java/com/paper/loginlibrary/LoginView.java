@@ -123,12 +123,8 @@ public class LoginView extends RelativeLayout {
                                            public void onClick(View view) {
                                                String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
                                                if (TextUtils.isEmpty(account)) {
-//                    mPhoneNumInputLayout.setError(getResources().getString(R.string.login_err_no_account));
-//                    mPhoneNumInputLayout.setErrorEnabled(true);
-//
                                                    mPhoneNumInputLayout.setError("error");
                                                    mPhoneNumInputLayout.setErrorEnabled(true);
-//                    mPhoneNumInputLayout.requestFocus();
                                                    return;
                                                }
                                            }
