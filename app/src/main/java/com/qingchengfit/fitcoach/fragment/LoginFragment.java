@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.paper.loginlibrary.LoginPresenter;
 import com.paper.loginlibrary.LoginView;
-import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
@@ -21,7 +20,7 @@ import com.qingchengfit.fitcoach.http.bean.LoginBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,24 +59,26 @@ public class LoginFragment extends Fragment {
 //                        });
 
 
-                QcCloudClient.getApi().qcGetToken
-                        .qcGetToken()
+//                QcCloudClient.getApi().qcGetToken
+//                        .qcGetToken()
 //                        .observeOn(Schedulers.newThread())
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(qcResponToken -> {
-                            FileUtils.saveCache("token", qcResponToken.data.token);
-                            PreferenceUtils.setPrefString(getActivity(), "token", qcResponToken.data.token);
+//                        .subscribeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(qcResponToken -> {
+//                            FileUtils.saveCache("token", qcResponToken.data.token);
+//                            PreferenceUtils.setPrefString(getActivity(), "token", qcResponToken.data.token);
+
                             QcCloudClient.getApi().qcCloudServer
                                     .qcLogin(new LoginBean("13601218507", "123456"))
+                                    .observeOn(Schedulers.io())
+                                    .subscribeOn(Schedulers.newThread())
                                     .subscribe(qcResponLogin -> {
                                         LogUtil.e("::" + qcResponLogin.data.session_id);
-                                        PreferenceUtils.setPrefString(getActivity(),"session_id",qcResponLogin.data.session_id);
-                                        Intent toMain = new Intent(getActivity(),MainActivity.class);
-//                                        toMain.putExtra("session_id",qcResponLogin.data.session_id);
+                                        PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
+                                        Intent toMain = new Intent(getActivity(), MainActivity.class);
                                         startActivity(toMain);
                                     });
 
-                        })
+//                        })
 
 //                        .qcLogin(account, code)
 //                        .subscribe(qcResponse -> LogUtil.e(qcResponse.data))

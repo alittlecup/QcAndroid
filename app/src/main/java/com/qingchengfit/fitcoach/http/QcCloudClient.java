@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.http;
 
-import com.paper.paperbaselibrary.utils.FileUtils;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
@@ -8,8 +7,12 @@ import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
+import com.squareup.okhttp.OkHttpClient;
+
+import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
+import retrofit.client.OkClient;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
@@ -47,7 +50,7 @@ public class QcCloudClient {
     public interface QcGetToken{
         //获取token
         @GET("/api/csrftoken/")
-        rx.Observable<QcResponToken> qcGetToken();
+        QcResponToken qcGetToken();
     }
 
     public interface QcCloudServer {
@@ -76,14 +79,21 @@ public class QcCloudClient {
 
 
     public QcCloudClient() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-
+                .setClient(new OkClient(okHttpClient))
                 .setRequestInterceptor(request ->
                         {
-                            request.addHeader("X-CSRFToken",FileUtils.readCache("token"));
-                            request.addHeader("Cookie", "csrftoken=" + FileUtils.readCache("token"));
+                            QcResponToken responToken = qcGetToken.qcGetToken();
+
+                            request.addHeader("X-CSRFToken", responToken.data.token);
+                            request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+//                            request.addHeader("X-CSRFToken", FileUtils.readCache("token"));
+//                            request.addHeader("Cookie", "csrftoken=" + FileUtils.readCache("token"));
                         }
                 )
                 .build();

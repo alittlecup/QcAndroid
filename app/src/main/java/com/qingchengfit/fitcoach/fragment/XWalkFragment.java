@@ -44,9 +44,6 @@ public class XWalkFragment extends Fragment {
     public XWalkFragment() {
     }
 
-    public void setCookie(){
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,18 +51,17 @@ public class XWalkFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
-//        mWebview.load("http://feature.qingchengfit.cn/welcome/", null);
-        mWebview.load("http://192.168.31.154:8888/welcome/", null);
+        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
         mCookieManager = new XWalkCookieManager();
         mCookieManager.setAcceptCookie(true);
 
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_menu_share_holo_light);
-        btn1.setTitle("你好");
+
         btn2 = new FloatingActionButton(getActivity());
         btn2.setIcon(R.drawable.ic_menu_share_holo_light);
-        btn2.setTitle("你好");
+
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         btn1.setOnClickListener(view1 -> PhoneFuncUtils.queryCalender(getActivity()));
@@ -111,7 +107,7 @@ public class XWalkFragment extends Fragment {
 
         @JavascriptInterface
         public String getToken() {
-            return "123123123";
+            return PreferenceUtils.getPrefString(getActivity(),"token","");
         }
 
 

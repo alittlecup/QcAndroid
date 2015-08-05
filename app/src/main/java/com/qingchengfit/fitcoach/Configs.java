@@ -21,8 +21,8 @@ public class Configs {
      * http config
      */
     public static boolean isDebug     = true;
-    public static String ServerIp     = isDebug?"http://192.168.31.143":"";
-    public static String ServerPort   = ":9999";
+    public static String ServerIp     = isDebug?"http://cloudtest.qingchengfit.cn/":"";
+    public static String ServerPort   = "";
     public static String Server       = ServerIp+ServerPort;
 
     //app名称
