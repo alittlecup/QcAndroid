@@ -33,7 +33,7 @@
 
             </android.support.design.widget.TextInputLayout>
             <TextView
-                android:id="@+id/login_getcode_btn"
+                android:id="@+id/registe_getcode_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_getcode"
@@ -43,7 +43,7 @@
                 />
         </RelativeLayout>
         <LinearLayout
-            android:id="@+id/login_checkcode_layout"
+            android:id="@+id/registe_checkcode_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/paper_item_height"
             android:layout_below="@id/telephone_layout"
@@ -51,7 +51,7 @@
 
             <android.support.design.widget.TextInputLayout
 
-                android:id="@+id/login_phone_verity"
+                android:id="@+id/registe_phone_verity"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/paper_item_height"
                 android:layout_weight="1">
@@ -61,18 +61,15 @@
                     android:layout_height="match_parent" />
             </android.support.design.widget.TextInputLayout>
 
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="match_parent" />
 
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/registe_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/paper_item_height"
-            android:layout_below="@id/login_checkcode_layout"
+            android:layout_below="@id/registe_checkcode_layout"
             android:orientation="horizontal"
             android:text="@string/registe_btn_lable"
             >

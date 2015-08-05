@@ -26,4 +26,8 @@ public class RegisteViewModel {
         mResources = resources; // You might want to abstract this for testability
     }
 
+    public void doRegiste(){
+
+    }
+
 }

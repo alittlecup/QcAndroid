@@ -8,7 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.paper.loginlibrary.databinding.RegisterviewBinding;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 
 /**
  * power by
@@ -25,12 +29,20 @@ import com.qingchengfit.fitcoach.R;
  */
 public class RegisterFragment extends Fragment {
 
+    RegisterviewBinding mDataBinding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.registerview,null);
-        DataBindingUtil.bind(view);
+        mDataBinding = DataBindingUtil.bind(view);
+        mDataBinding.registeBtn.setOnClickListener(
+                view1 -> QcCloudClient.getApi().qcCloudServer.qcRegister(
+                        PreferenceUtils.getPrefString(getActivity(),"token",""),
+                        "csrftoken="+PreferenceUtils.getPrefString(getActivity(),"token",""),
+                        new RegisteBean("","",""))
+
+        );
         return view;
     }
 }

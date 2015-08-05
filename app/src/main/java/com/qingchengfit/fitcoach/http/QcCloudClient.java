@@ -6,7 +6,6 @@ import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -58,8 +57,15 @@ public class QcCloudClient {
                 @Header("Cookie") String cookie,
                 @Body RegisteBean params);
 
+        //获取电话验证码
+        @POST("/api/")
+        rx.Observable<QcResponse> qcGetCode(
+
+        );
+
         @GET("/")
         public rx.Observable<QcResponse> getTest();
+
     }
 
 
@@ -67,12 +73,8 @@ public class QcCloudClient {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://192.168.31.143:8888")
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-                .setRequestInterceptor(new RequestInterceptor(){
-                    @Override
-                    public void intercept(RequestFacade request) {
-                        request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token"));
-                    }
-                })
+                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
+
                 .build();
 
         qcCloudServer = restAdapter.create(QcCloudServer.class);
