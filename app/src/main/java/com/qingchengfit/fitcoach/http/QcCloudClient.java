@@ -2,6 +2,9 @@ package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.qingchengfit.fitcoach.BuildConfig;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
@@ -28,10 +31,11 @@ import retrofit.http.POST;
  */
 public class QcCloudClient {
 
+
+
     public QcCloudServer qcCloudServer;
-
     public static QcCloudClient client;
-
+    public QcGetToken qcGetToken;
 
     public static QcCloudClient getApi() {
         if (client == null) {
@@ -40,21 +44,23 @@ public class QcCloudClient {
 
     }
 
-    public interface QcCloudServer {
-
+    public interface QcGetToken{
         //获取token
         @GET("/api/csrftoken/")
         rx.Observable<QcResponToken> qcGetToken();
+    }
+
+    public interface QcCloudServer {
+
 
         //登录
-        @POST("/")
-        rx.Observable<QcResponse> qcLogin(String account, String password);
+        @POST("/api/coaches/login/")
+        rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
 
         //注册
         @POST("/api/coaches/register/")
         rx.Observable<QcResponse> qcRegister(
                 @Header("X-CSRFToken") String token,
-                @Header("Cookie") String cookie,
                 @Body RegisteBean params);
 
         //获取电话验证码
@@ -71,14 +77,24 @@ public class QcCloudClient {
 
     public QcCloudClient() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://192.168.31.143:8888")
+                .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
 
+                .setRequestInterceptor(request ->
+                        {
+                            request.addHeader("X-CSRFToken",FileUtils.readCache("token"));
+                            request.addHeader("Cookie", "csrftoken=" + FileUtils.readCache("token"));
+                        }
+                )
+                .build();
+        RestAdapter restAdapter2 = new RestAdapter.Builder()
+                .setEndpoint(Configs.Server)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+//                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
 
         qcCloudServer = restAdapter.create(QcCloudServer.class);
-
+        qcGetToken = restAdapter2.create(QcGetToken.class);
     }
 
 

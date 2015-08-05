@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
@@ -43,6 +44,9 @@ public class XWalkFragment extends Fragment {
     public XWalkFragment() {
     }
 
+    public void setCookie(){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,6 +133,11 @@ public class XWalkFragment extends Fragment {
             PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
             Gson gson = new Gson();
             return gson.toJson(info);
+        }
+
+        @JavascriptInterface
+        public String getSessionId(){
+            return PreferenceUtils.getPrefString(getActivity(),"session_id","");
         }
 
 

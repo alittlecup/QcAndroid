@@ -1,11 +1,13 @@
-package com.qingchengfit.fitcoach;
+package com.qingchengfit.fitcoach.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 
+import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -42,7 +44,6 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
         mFragmentManager = getSupportFragmentManager();
         XWalkFragment xWalkFragment = new XWalkFragment();
         mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, xWalkFragment).commit();
-        startActivity(new Intent(this, LoginActivity.class));
         _subscriptions = new CompositeSubscription();
         RxBus.getBus().toObserverable().subscribe(o -> {
                 if (o instanceof OpenDrawer){

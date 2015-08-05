@@ -3,16 +3,25 @@ package com.qingchengfit.fitcoach.fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.paper.loginlibrary.databinding.RegisterviewBinding;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * power by
@@ -30,19 +39,47 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 public class RegisterFragment extends Fragment {
 
     RegisterviewBinding mDataBinding;
+    @Bind(R.id.login_phone_num)
+    TextInputLayout loginPhoneNum;
+    @Bind(R.id.registe_getcode_btn)
+    TextView registeGetcodeBtn;
+    @Bind(R.id.telephone_layout)
+    RelativeLayout telephoneLayout;
+    @Bind(R.id.registe_phone_verity)
+    TextInputLayout registePhoneVerity;
+    @Bind(R.id.registe_checkcode_layout)
+    LinearLayout registeCheckcodeLayout;
+    @Bind(R.id.registe_btn)
+    Button registeBtn;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.registerview,null);
+        View view = inflater.inflate(R.layout.registerview, null);
         mDataBinding = DataBindingUtil.bind(view);
-        mDataBinding.registeBtn.setOnClickListener(
-                view1 -> QcCloudClient.getApi().qcCloudServer.qcRegister(
-                        PreferenceUtils.getPrefString(getActivity(),"token",""),
-                        "csrftoken="+PreferenceUtils.getPrefString(getActivity(),"token",""),
-                        new RegisteBean("","",""))
+        ButterKnife.bind(this, view);
+        registeBtn.setOnClickListener(
+
+                view1 -> {
+                    LogUtil.e("click");
+                    QcCloudClient.getApi().qcCloudServer.qcRegister(
+                        PreferenceUtils.getPrefString(getActivity(), "token", ""),
+                        new RegisteBean("13601218507", "aa", "123456"))
+                    .subscribe(qcResponse -> {
+                        LogUtil.e("responses");
+                    })
+                    ;
+                }
 
         );
+
         return view;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

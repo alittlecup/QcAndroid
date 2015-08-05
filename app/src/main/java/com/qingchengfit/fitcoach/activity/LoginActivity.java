@@ -1,6 +1,5 @@
-package com.qingchengfit.fitcoach;
+package com.qingchengfit.fitcoach.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.qingchengfit.fitcoach.activity.SplashActivity;
+import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 
@@ -34,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
         loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
-        startActivity(new Intent(this, SplashActivity.class));
+//        startActivity(new Intent(this, SplashActivity.class));
     }
 
     class LoginFragAdapter extends FragmentPagerAdapter{

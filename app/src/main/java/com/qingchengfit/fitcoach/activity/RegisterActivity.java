@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach;
+package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 
@@ -47,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         Gson gson = new Gson();
         RegisteBean bean = new RegisteBean("123456778","papap","123123");
         QcCloudClient.getApi().qcCloudServer
-                .qcRegister(PreferenceUtils.getPrefString(this,"token",""),"csrftoken="+PreferenceUtils.getPrefString(this,"token",""),bean)
+                .qcRegister(PreferenceUtils.getPrefString(this,"token",""),bean)
                 .subscribe(qcResponse -> LogUtil.e(qcResponse.msg))
                 ;
     }

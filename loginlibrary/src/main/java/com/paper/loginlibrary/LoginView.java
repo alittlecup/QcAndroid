@@ -140,20 +140,21 @@ public class LoginView extends RelativeLayout {
                                                  OnClickListener() {
                                                      @Override
                                                      public void onClick(View view) {
-                                                         String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
-                                                         String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
-                                                         if (TextUtils.isEmpty(account)) {
-                                                             mPhoneNumInputLayout.setError(getResources().getString(R.string.login_err_no_account));
-                                                             mPhoneNumInputLayout.requestFocus();
-                                                             return;
-                                                         }
-
-                                                         if (TextUtils.isEmpty(code)) {
-                                                             mCheckCodeInputLaout.setError(getResources().getString(R.string.login_err_no_checkcode));
-                                                             mCheckCodeInputLaout.requestFocus();
-                                                             return;
-                                                         }
-                                                         loginPresenter.doLogin(account, code);
+//                                                         String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
+//                                                         String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
+//                                                         if (TextUtils.isEmpty(account)) {
+//                                                             mPhoneNumInputLayout.setError(getResources().getString(R.string.login_err_no_account));
+//                                                             mPhoneNumInputLayout.requestFocus();
+//                                                             return;
+//                                                         }
+//
+//                                                         if (TextUtils.isEmpty(code)) {
+//                                                             mCheckCodeInputLaout.setError(getResources().getString(R.string.login_err_no_checkcode));
+//                                                             mCheckCodeInputLaout.requestFocus();
+//                                                             return;
+//                                                         }
+//                                                         loginPresenter.doLogin(account, code);
+                                                         loginPresenter.doLogin("", "");
                                                      }
                                                  });
     }

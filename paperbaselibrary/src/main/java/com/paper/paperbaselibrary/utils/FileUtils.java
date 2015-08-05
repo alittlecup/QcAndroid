@@ -1,6 +1,7 @@
 package com.paper.paperbaselibrary.utils;
 
 import android.os.Environment;
+import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +27,11 @@ import java.io.UnsupportedEncodingException;
  */
 public class FileUtils {
     public static void saveCache(String key,String value){
-        String path = Environment.getDataDirectory().getPath()+"/key";
+        if (TextUtils.isEmpty(value))
+            return;
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()+"/"+key;
+
+
         File f1 = new File(path);
 
 //        if (f1.exists()) {
@@ -51,7 +56,7 @@ public class FileUtils {
     }
 
     public static String readCache(String key){
-        String path = Environment.getDataDirectory().getPath()+"/key";
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()+"/"+key;
         File f1 = new File(path);
         String ret = null;
         if (f1.exists()) {
