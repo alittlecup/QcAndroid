@@ -20,9 +20,9 @@ public class Configs {
     /**
      * http config
      */
-    public static boolean isDebug     = true;
-    public static String ServerIp     = isDebug?"http://cloudtest.qingchengfit.cn/":"";
-    public static String ServerPort   = "";
+    public static boolean isDebug     = false;
+    public static String ServerIp     = isDebug?"http://192.168.31.143":"http://cloudtest.qingchengfit.cn/";
+    public static String ServerPort   = isDebug?":9999":"";
     public static String Server       = ServerIp+ServerPort;
 
     //app名称

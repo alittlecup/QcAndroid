@@ -51,6 +51,7 @@ public class XWalkFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
         mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
+//        mWebview.load("http://192.168.31.154:8888/welcome/", null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
 //        mCookieManager = new XWalkCookieManager();
 //        mCookieManager.setAcceptCookie(true);

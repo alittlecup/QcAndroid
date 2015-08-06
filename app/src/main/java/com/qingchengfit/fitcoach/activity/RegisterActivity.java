@@ -9,10 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 
 import butterknife.Bind;
@@ -47,9 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
     public void onRegisge(){
         Gson gson = new Gson();
         RegisteBean bean = new RegisteBean("123456778","papap","123123");
-        QcCloudClient.getApi().postApi
-                .qcRegister(PreferenceUtils.getPrefString(this,"token",""),bean)
-                .subscribe(qcResponse -> LogUtil.e(qcResponse.msg))
+//        QcCloudClient.getApi().postApi
+//                .subscribe(qcResponse -> LogUtil.e(qcResponse.msg))
                 ;
     }
 

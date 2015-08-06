@@ -14,12 +14,20 @@ package com.qingchengfit.fitcoach.http.bean;
  * Created by Paper on 15/7/31 2015.
  */
 public class RegisteBean {
-    public String phone;
     public String username;
     public String password;
+    public String code;
+    public int gender;//0,1
+
+    public RegisteBean(String username, String password, String code, int gender) {
+        this.username = username;
+        this.password = password;
+        this.code = code;
+        this.gender = gender;
+    }
 
     public RegisteBean(String phone, String username, String password) {
-        this.phone = phone;
+
         this.username = username;
         this.password = password;
     }

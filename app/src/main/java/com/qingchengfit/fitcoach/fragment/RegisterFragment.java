@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -13,15 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.paper.loginlibrary.databinding.RegisterviewBinding;
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.schedulers.Schedulers;
+
 
 /**
  * power by
@@ -38,7 +39,8 @@ import butterknife.ButterKnife;
  */
 public class RegisterFragment extends Fragment {
 
-    RegisterviewBinding mDataBinding;
+//    RegisterviewBinding mDataBinding;
+
     @Bind(R.id.login_phone_num)
     TextInputLayout loginPhoneNum;
     @Bind(R.id.registe_getcode_btn)
@@ -52,27 +54,58 @@ public class RegisterFragment extends Fragment {
     @Bind(R.id.registe_btn)
     Button registeBtn;
 
+    public String mcode ;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.registerview, null);
-        mDataBinding = DataBindingUtil.bind(view);
+//        mDataBinding = DataBindingUtil.bind(view);
         ButterKnife.bind(this, view);
         registeBtn.setOnClickListener(
-
                 view1 -> {
-                    LogUtil.e("click");
-                    QcCloudClient.getApi().postApi.qcRegister(
-                        PreferenceUtils.getPrefString(getActivity(), "token", ""),
-                        new RegisteBean("13601218507", "aa", "123456"))
-                    .subscribe(qcResponse -> {
-                        LogUtil.e("responses");
-                    })
+//                    LogUtil.e("click");
+//                    QcCloudClient.getApi().postApi.qcRegister(
+//                        PreferenceUtils.getPrefString(getActivity(), "token", ""),
+//                        new RegisteBean("13601218507", "aa", "123456"))
+//                    .subscribe(qcResponse -> {
+//                        LogUtil.e("responses");
+//                    })
+                    String phone = loginPhoneNum.getEditText().getText().toString().trim();
+                    String code = registePhoneVerity.getEditText().getText().toString().trim();
+
+
+                    QcCloudClient.getApi()
+                            .postApi
+                            .qcCheckCode(new CheckCode(phone, code))
+                            .subscribeOn(Schedulers.newThread())
+                            .subscribe(qcResponCode -> {
+                                if (qcResponCode.status == ResponseResult.SUCCESS) {
+                                    LogUtil.e("succ");
+                                    mcode = qcResponCode.data.code;
+                                } else {
+                                    LogUtil.e(qcResponCode.msg);
+                                }
+                            })
                     ;
                 }
 
         );
 
+        registeGetcodeBtn.setOnClickListener(view1 -> {
+            QcCloudClient.getApi()
+                    .postApi
+                    .qcRegister(new RegisteBean("paper","123456",mcode,1))
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(qcResponse -> {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            LogUtil.e("succ");
+                        } else {
+                            LogUtil.e(":" + qcResponse.msg);
+                        }
+                    })
+            ;
+        });
         return view;
     }
 

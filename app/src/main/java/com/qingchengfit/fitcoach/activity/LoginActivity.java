@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
         loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
-//        startActivity(new Intent(this, SplashActivity.class));
+
     }
 
     class LoginFragAdapter extends FragmentPagerAdapter{

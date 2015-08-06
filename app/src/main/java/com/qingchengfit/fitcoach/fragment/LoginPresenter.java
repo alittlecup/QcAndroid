@@ -1,4 +1,4 @@
-package com.paper.loginlibrary;
+package com.qingchengfit.fitcoach.fragment;
 
 import com.paper.paperbaselibrary.di.Presenter;
 
@@ -17,7 +17,7 @@ import com.paper.paperbaselibrary.di.Presenter;
  */
 public abstract class LoginPresenter implements   Presenter {
 
-    public abstract void onSucceed();
+    public abstract void onPhoneDone();
 
     /**
      * 登录
@@ -26,7 +26,7 @@ public abstract class LoginPresenter implements   Presenter {
      */
     public abstract void doLogin(String account,String code);
 
-
+    public abstract void getCode(String account);
     public abstract void goRegister();
 
 }

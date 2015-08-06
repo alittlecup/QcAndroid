@@ -2,7 +2,10 @@ package com.qingchengfit.fitcoach.http;
 
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.http.bean.CheckCode;
+import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.QcResponCode;
 import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -15,7 +18,6 @@ import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.http.Body;
 import retrofit.http.GET;
-import retrofit.http.Header;
 import retrofit.http.POST;
 
 
@@ -34,7 +36,7 @@ import retrofit.http.POST;
  */
 public class QcCloudClient {
 
-
+    public static int SUCCESS = 200;
 
     public PostApi postApi;
     public static QcCloudClient client;
@@ -46,6 +48,8 @@ public class QcCloudClient {
         } else return client;
 
     }
+
+
 
     public interface GetApi {
         //获取token
@@ -63,14 +67,14 @@ public class QcCloudClient {
         //注册
         @POST("/api/coaches/register/")
         rx.Observable<QcResponse> qcRegister(
-                @Header("X-CSRFToken") String token,
                 @Body RegisteBean params);
 
         //获取电话验证码
-        @POST("/api/")
-        rx.Observable<QcResponse> qcGetCode(
+        @POST("/api/send/verify/")
+        rx.Observable<QcResponse> qcGetCode(@Body GetCodeBean account);
 
-        );
+        @POST("/api/check/verify/")
+        rx.Observable<QcResponCode> qcCheckCode(@Body CheckCode checkCode);
 
         @GET("/")
         rx.Observable<QcResponse> getTest();

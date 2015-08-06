@@ -12,21 +12,10 @@ import com.google.gson.annotations.SerializedName;
  * 88      88   88 88      88.     88 `88.
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
- * <p> http响应基本结构
- * Created by Paper on 15/7/30 2015.
+ * <p>
+ * Created by Paper on 15/8/6 2015.
  */
-public class QcResponse {
-
-
-
-    @SerializedName("status")
-    public int status;
-    @SerializedName("msg")
-    public String msg;
-    @SerializedName("info")
-    public String info;
-//    @SerializedName("data")
-//    public String data;
-    @SerializedName("level")
-    public String level;
+public class Code extends BaseBean {
+    @SerializedName("code")
+    public String code;
 }
