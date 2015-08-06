@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.paper.loginlibrary.LoginPresenter;
 import com.paper.loginlibrary.LoginView;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
@@ -40,49 +39,18 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void doLogin(String account, String code) {
+
                 LoginBean bean = new LoginBean(account, code);
-//                Observable
-//                        .just(bean)
-//                        .flatMap(new Func1<LoginBean, Observable<?>>() {
-//                            @Override
-//                            public Observable<?> call(LoginBean loginBean) {
-//
-//                                return null;
-//                            }
-//                        })
-//                        .subscribe(bean1 -> {
-//                            QcCloudClient.getApi()
-//                                    .qcGetToken.qcGetToken()
-//                                    .subscribe(qcResponToken -> {
-//
-//                                    });
-//                        });
+                QcCloudClient.getApi().postApi
+                        .qcLogin(bean)
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe(qcResponLogin -> {
+                            PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
+                            Intent toMain = new Intent(getActivity(), MainActivity.class);
+                            startActivity(toMain);
+                            getActivity().finish();
+                        });
 
-
-//                QcCloudClient.getApi().qcGetToken
-//                        .qcGetToken()
-//                        .observeOn(Schedulers.newThread())
-//                        .subscribeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(qcResponToken -> {
-//                            FileUtils.saveCache("token", qcResponToken.data.token);
-//                            PreferenceUtils.setPrefString(getActivity(), "token", qcResponToken.data.token);
-
-                            QcCloudClient.getApi().qcCloudServer
-                                    .qcLogin(new LoginBean("13601218507", "123456"))
-                                    .observeOn(Schedulers.io())
-                                    .subscribeOn(Schedulers.newThread())
-                                    .subscribe(qcResponLogin -> {
-                                        LogUtil.e("::" + qcResponLogin.data.session_id);
-                                        PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
-                                        Intent toMain = new Intent(getActivity(), MainActivity.class);
-                                        startActivity(toMain);
-                                    });
-
-//                        })
-
-//                        .qcLogin(account, code)
-//                        .subscribe(qcResponse -> LogUtil.e(qcResponse.data))
-                ;
             }
 
             @Override

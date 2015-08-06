@@ -36,9 +36,9 @@ public class QcCloudClient {
 
 
 
-    public QcCloudServer qcCloudServer;
+    public PostApi postApi;
     public static QcCloudClient client;
-    public QcGetToken qcGetToken;
+    public GetApi getApi;
 
     public static QcCloudClient getApi() {
         if (client == null) {
@@ -47,13 +47,13 @@ public class QcCloudClient {
 
     }
 
-    public interface QcGetToken{
+    public interface GetApi {
         //获取token
         @GET("/api/csrftoken/")
         QcResponToken qcGetToken();
     }
 
-    public interface QcCloudServer {
+    public interface PostApi {
 
 
         //登录
@@ -73,7 +73,7 @@ public class QcCloudClient {
         );
 
         @GET("/")
-        public rx.Observable<QcResponse> getTest();
+        rx.Observable<QcResponse> getTest();
 
     }
 
@@ -88,12 +88,9 @@ public class QcCloudClient {
                 .setClient(new OkClient(okHttpClient))
                 .setRequestInterceptor(request ->
                         {
-                            QcResponToken responToken = qcGetToken.qcGetToken();
-
+                            QcResponToken responToken = getApi.qcGetToken();
                             request.addHeader("X-CSRFToken", responToken.data.token);
                             request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
-//                            request.addHeader("X-CSRFToken", FileUtils.readCache("token"));
-//                            request.addHeader("Cookie", "csrftoken=" + FileUtils.readCache("token"));
                         }
                 )
                 .build();
@@ -103,8 +100,8 @@ public class QcCloudClient {
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
 
-        qcCloudServer = restAdapter.create(QcCloudServer.class);
-        qcGetToken = restAdapter2.create(QcGetToken.class);
+        postApi = restAdapter.create(PostApi.class);
+        getApi = restAdapter2.create(GetApi.class);
     }
 
 

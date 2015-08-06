@@ -62,7 +62,7 @@ public class RegisterFragment extends Fragment {
 
                 view1 -> {
                     LogUtil.e("click");
-                    QcCloudClient.getApi().qcCloudServer.qcRegister(
+                    QcCloudClient.getApi().postApi.qcRegister(
                         PreferenceUtils.getPrefString(getActivity(), "token", ""),
                         new RegisteBean("13601218507", "aa", "123456"))
                     .subscribe(qcResponse -> {

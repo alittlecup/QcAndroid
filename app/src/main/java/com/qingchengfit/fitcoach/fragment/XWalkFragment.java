@@ -21,7 +21,6 @@ import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
 import org.xwalk.core.XWalkView;
-import org.xwalk.core.internal.XWalkCookieManager;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class XWalkFragment extends Fragment {
     FloatingActionsMenu webFloatbtn;
     FloatingActionButton btn1;
     FloatingActionButton btn2;
-    private XWalkCookieManager mCookieManager;
+//    private XWalkCookieManager mCookieManager;
 
     public XWalkFragment() {
     }
@@ -53,8 +52,8 @@ public class XWalkFragment extends Fragment {
         ButterKnife.bind(this, view);
         mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
-        mCookieManager = new XWalkCookieManager();
-        mCookieManager.setAcceptCookie(true);
+//        mCookieManager = new XWalkCookieManager();
+//        mCookieManager.setAcceptCookie(true);
 
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_menu_share_holo_light);
@@ -143,8 +142,8 @@ public class XWalkFragment extends Fragment {
         getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
     }
 
-    public void setCookie(String url, String key, String value) {
-
-    }
+//    public void setCookie(String url, String key, String value) {
+//
+//    }
 
 }

@@ -1,0 +1,81 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/myhome_appBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:contentScrim="#30469b"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            />
+        <include layout="@layout/common_toolbar"
+            >
+
+        </include>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/primary"
+            >
+
+            <com.facebook.drawee.view.SimpleDraweeView
+
+                android:id="@+id/myhome_header"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:roundAsCircle="true"
+                />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/myhome_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/myhome_header"
+                android:layout_alignRight="@id/myhome_header"
+                app:overlayImage="@drawable/ic_search"
+                app:roundAsCircle="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myhome_header"
+                android:layout_centerHorizontal="true"
+                android:text="Mark Steve"
+                android:textColor="@color/white"
+                />
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/myhome_tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/myhome_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>
