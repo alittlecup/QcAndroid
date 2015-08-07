@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
@@ -43,6 +45,9 @@ public class SplashActivity extends BaseAcitivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+        //百度云推送
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "ZVc12KfmeoroYVV0iLcvSCCr");
+
         for (int i=0 ;i < 4 ;i++){
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.qingchenglogo);
