@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -19,8 +17,6 @@ import butterknife.ButterKnife;
 public class CompleteInfoFragment extends Fragment {
 
 
-    @Bind(R.id.comple_name)
-    TextView compleName;
 
     public CompleteInfoFragment() {
     }

@@ -56,7 +56,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['src/main/jnilibs']
+//        }
+//    }
 
 //    productFlavors {
 //        armv7 {
@@ -97,4 +101,8 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile files('libs/pushservice-4.5.1.8.jar')
+    compile files('libs/jg_filter_sdk_1.1.jar')
+    compile files('libs/mid-sdk-2.20.jar')
+    compile files('libs/Xg_sdk_v2.38_20150616_1057.jar')
+    compile files('libs/wup-1.0.0-SNAPSHOT.jar')
 }
