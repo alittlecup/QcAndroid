@@ -35,7 +35,6 @@
             android:text="@string/login_getcode"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/vertical_line"
             android:drawablePadding="5dp"
             />
     </RelativeLayout>

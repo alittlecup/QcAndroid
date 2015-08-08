@@ -11,24 +11,31 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="ANDROID.PERMISSION.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="ANDROID.PERMISSION.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 //读取联系人
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 //写日历
     <uses-permission android:name="android.permission.READ_CALENDAR" />
  //读日历
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />//启动权限
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />//更改配置
-    <uses-permission android:name="android.permission.VIBRATE" />//震动
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>//下载管理
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />//无通知下载
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />//禁止键盘
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />//位置
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />//wifi状态
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+//启动权限
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+//更改配置
+    <uses-permission android:name="android.permission.VIBRATE" />
+//震动
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+//下载管理
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+//无通知下载
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+//禁止键盘
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+//位置
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+//wifi状态
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -45,19 +52,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:value="55bf26f3e0f55a750f00139e" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Qingcheng" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55bf26f3e0f55a750f00139e" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Qingcheng" />
 
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" >
-
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -65,45 +73,32 @@
         </activity>
         <activity
             android:name=".activity.SplashActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <data android:scheme="http" android:host="192.168.167.33" android:port="8088" android:path="/mi-tracker-web/download.html"/>
+                <data
+                    android:host="192.168.167.33"
+                    android:path="/mi-tracker-web/download.html"
+                    android:port="8088"
+                    android:scheme="http" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
             android:process=":xg_service_v2" >
             <intent-filter android:priority="0x7fffffff" >
+
                 <!-- 【必须】 信鸽SDK的内部广播 -->
                 <action android:name="com.tencent.android.tpush.action.SDK" />
                 <action android:name="com.tencent.android.tpush.action.INTERNAL_PUSH_MESSAGE" />
@@ -119,12 +114,13 @@
         </receiver>
 
         <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
-        <!-- 【注意】 如果被打开的activity是启动模式为SingleTop，SingleTask或SingleInstance，请根据通知的异常自查列表第8点处理-->
+        <!-- 【注意】 如果被打开的activity是启动模式为SingleTop，SingleTask或SingleInstance，请根据通知的异常自查列表第8点处理 -->
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="true" >
             <intent-filter>
-                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action"-->
+
+                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
                 <action android:name="android.intent.action" />
             </intent-filter>
         </activity>
@@ -154,7 +150,10 @@
             android:name="XG_V2_ACCESS_KEY"
             android:value="AZA94857EGPV" />
 
-
+        <activity
+            android:name=".activity.CompleteActivity"
+            android:label="@string/title_activity_complete" >
+        </activity>
     </application>
 
 </manifest>

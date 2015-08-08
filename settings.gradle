@@ -1,3 +1,2 @@
 include ':app'
-include ':loginlibrary'
 include ':paperbaselibrary'

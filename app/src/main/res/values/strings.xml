@@ -10,16 +10,22 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="login_btn_label">登录</string>
     <string name="registe_indicat_label">注册</string>
-    <string name="login_btn_lable">登录</string>
+    <string name="login_btn_lable">登&#160;&#160;录</string>
     <string name="registe_btn_lable">下一步</string>
 
     <string name="login_forgotpw">忘记密码</string>
 
     <string name="login_getcode">获取验证码</string>
     <string name="login_comfirm">确定</string>
-    <string name="logint_phonenum_hint">电话号码</string>
-    <string name="login_checkcode_hint">请输入验证码</string>
-    <string name="login_password_hint">请输入密码</string>
+    <string name="logint_phonenum_hint">手机号</string>
+    <string name="login_checkcode_hint">手机验证码</string>
+    <string name="login_password_hint">密码</string>
     <string name="login_err_no_account">请输入您的手机号码</string>
     <string name="login_err_no_checkcode">请输入验证码</string>
+    <string name="title_activity_complete">CompleteActivity</string>
+    <string name="comple_name">姓名</string>
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+    <string name="login_resend_msg">后重新发送</string>
+    <string name="complete_label">完成</string>
 </resources>

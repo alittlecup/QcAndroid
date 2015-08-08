@@ -90,6 +90,7 @@ public class QcCloudClient {
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setClient(new OkClient(okHttpClient))
+
                 .setRequestInterceptor(request ->
                         {
                             QcResponToken responToken = getApi.qcGetToken();

@@ -12,6 +12,38 @@
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
+
+
+
+        <!--<item name="textViewStyle">@style/Qc.TextCommonGrey</item>-->
+
+        <item name="buttonStyle">@style/Qc.CommonBtn</item>
+        <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
+        <item name="editTextStyle">@style/Qc.EditTextStyle</item>
+        <!--<item name="windowBackground">@color/white</item>-->
+        <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+        <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
+
+    <style name="Qc.TextCommonGrey" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">@dimen/common_font</item>
+    </style>
+    <style name="Qc.CommonBtn" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/selector_prime</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="Qc.EditTextStyle" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:drawablePadding">@dimen/qc_edit_drawable_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+    <style name="Qc.EditHintStyle" parent="TextAppearance.AppCompat">
+        <item name="android:paddingLeft">@dimen/qc_edit_drawable_padding</item>
+    </style>
 </resources>

@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <data android:layout_width="match_parent"
-          android:layout_height="match_parent"></data>
-    <RelativeLayout
+          android:layout_height="match_parent"
+        >
 
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -19,6 +21,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
+            android:background="@color/backgroud_grey"
             android:layout_height="70dp">
             <TextView
                 android:id="@+id/splash_login_btn"
@@ -26,6 +29,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="登录"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
                 />
             <TextView
                 android:id="@+id/splash_registe_btn"
@@ -33,14 +38,17 @@
                 android:layout_height="match_parent"
                 android:text="注册"
                 android:gravity="center"
+                android:textColor="@color/text_red"
                 android:layout_alignParentRight="true"
+                android:textSize="18sp"
                 />
             <me.relex.circleindicator.CircleIndicator
 
                 android:id="@+id/splash_indicator"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:ci_drawable="@drawable/splash_indicator_doc"
                 />
         </RelativeLayout>
     </RelativeLayout>

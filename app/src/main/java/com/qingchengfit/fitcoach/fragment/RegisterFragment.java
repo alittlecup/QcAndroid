@@ -1,6 +1,9 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -8,15 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.CompleteActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
-import com.qingchengfit.fitcoach.http.bean.RegisteBean;
+import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import butterknife.Bind;
@@ -41,20 +44,18 @@ public class RegisterFragment extends Fragment {
 
 //    RegisterviewBinding mDataBinding;
 
-    @Bind(R.id.login_phone_num)
-    TextInputLayout loginPhoneNum;
+    @Bind(R.id.registe_phone_num)
+    TextInputLayout registePhoneNum;
     @Bind(R.id.registe_getcode_btn)
     TextView registeGetcodeBtn;
     @Bind(R.id.telephone_layout)
     RelativeLayout telephoneLayout;
     @Bind(R.id.registe_phone_verity)
     TextInputLayout registePhoneVerity;
-    @Bind(R.id.registe_checkcode_layout)
-    LinearLayout registeCheckcodeLayout;
     @Bind(R.id.registe_btn)
     Button registeBtn;
 
-    public String mcode ;
+    public String mcode;
 
     @Nullable
     @Override
@@ -62,18 +63,21 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.registerview, null);
 //        mDataBinding = DataBindingUtil.bind(view);
         ButterKnife.bind(this, view);
+        registePhoneNum.setHint(getString(R.string.logint_phonenum_hint));
+        registePhoneVerity.setHint(getString(R.string.login_checkcode_hint));
+
         registeBtn.setOnClickListener(
                 view1 -> {
-//                    LogUtil.e("click");
-//                    QcCloudClient.getApi().postApi.qcRegister(
-//                        PreferenceUtils.getPrefString(getActivity(), "token", ""),
-//                        new RegisteBean("13601218507", "aa", "123456"))
-//                    .subscribe(qcResponse -> {
-//                        LogUtil.e("responses");
-//                    })
-                    String phone = loginPhoneNum.getEditText().getText().toString().trim();
+                    String phone = registePhoneNum.getEditText().getText().toString().trim();
                     String code = registePhoneVerity.getEditText().getText().toString().trim();
-
+                    if (phone.length()<11){
+                        registePhoneNum.setError(getString(R.string.err_login_phonenum));
+                        return;
+                    }else registePhoneNum.setError("");
+                    if (code.length()<4){
+                        registePhoneVerity.setError(getString(R.string.err_checkcode_length));
+                        return;
+                    }else registePhoneVerity.setError("");
 
                     QcCloudClient.getApi()
                             .postApi
@@ -81,9 +85,12 @@ public class RegisterFragment extends Fragment {
                             .subscribeOn(Schedulers.newThread())
                             .subscribe(qcResponCode -> {
                                 if (qcResponCode.status == ResponseResult.SUCCESS) {
-                                    LogUtil.e("succ");
-                                    mcode = qcResponCode.data.code;
+                                    Intent it = new Intent(getActivity(), CompleteActivity.class);
+                                    it.putExtra("code",qcResponCode.data.code);
+                                    startActivity(it);
+//                                    mcode = qcResponCode.data.code;
                                 } else {
+                                    registePhoneVerity.setError(qcResponCode.msg);
                                     LogUtil.e(qcResponCode.msg);
                                 }
                             })
@@ -93,9 +100,16 @@ public class RegisterFragment extends Fragment {
         );
 
         registeGetcodeBtn.setOnClickListener(view1 -> {
+            String phone = registePhoneNum.getEditText().getText().toString().trim();
+            if (phone.length()<11){
+                registePhoneNum.setError(getString(R.string.err_login_phonenum));
+                return;
+            }else registePhoneNum.setError("");
+
             QcCloudClient.getApi()
                     .postApi
-                    .qcRegister(new RegisteBean("paper","123456",mcode,1))
+                    .qcGetCode(new GetCodeBean(phone))
+//                    .qcRegister(new RegisteBean("paper", "123456", mcode, 1))
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(qcResponse -> {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
@@ -105,10 +119,32 @@ public class RegisterFragment extends Fragment {
                         }
                     })
             ;
+            registeGetcodeBtn.setEnabled(false);
+            handler.sendEmptyMessage(0);
         });
         return view;
     }
 
+    Handler handler = new Handler() {
+        int count = 60;
+
+        @Override
+        public void handleMessage(Message msg) {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getString(R.string.login_resend_msg));
+
+            registeGetcodeBtn.setText(stringBuffer.toString());
+            if (count > 0) {
+                count--;
+                handler.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                count = 60;
+                registeGetcodeBtn.setEnabled(true);
+                registeGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
+        }
+    };
 
     @Override
     public void onDestroyView() {

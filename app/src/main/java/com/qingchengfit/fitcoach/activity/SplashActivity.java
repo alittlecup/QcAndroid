@@ -73,7 +73,6 @@ public class SplashActivity extends BaseAcitivity {
         splashIndicator.setViewPager(splashViewpager);
         splashViewpager.setPageTransformer(true, (page, position) -> {
             //页面滑动动画
-
         });
     }
 

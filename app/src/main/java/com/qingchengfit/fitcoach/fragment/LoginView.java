@@ -31,6 +31,7 @@ import com.qingchengfit.fitcoach.R;
  * <p>
  * Created by Paper on 15/6/28 2015.
  */
+
 public class LoginView extends RelativeLayout {
     Button mGoRegister;
     TextView mGetCodeBtn;
@@ -69,6 +70,8 @@ public class LoginView extends RelativeLayout {
         mGoRegister = (Button) findViewById(R.id.goregiste_btn);
         mPhoneNumInputLayout.setHint(getResources().getString(R.string.logint_phonenum_hint));
         mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_password_hint));
+
+        mCheckCodeInputLaout.setErrorEnabled(true);
 //        mForgotPwBtn.setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -146,11 +149,14 @@ public class LoginView extends RelativeLayout {
         mGetCodeBtn.setOnClickListener(view -> {
             String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
             if (TextUtils.isEmpty(account) || account.length() < 11) {
+
                 mPhoneNumInputLayout.setError(getResources().getString(R.string.err_login_phonenum));
-                mPhoneNumInputLayout.setErrorEnabled(true);
                 return;
             }else {
+                mPhoneNumInputLayout.setError("");
                 loginPresenter.getCode(account);
+                handler.sendEmptyMessage(0);
+                mGetCodeBtn.setEnabled(false);
             }
         }
 
@@ -159,19 +165,20 @@ public class LoginView extends RelativeLayout {
         mLoginBtn.setOnClickListener(view -> {
             String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
             String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
-            if (TextUtils.isEmpty(account)) {
+            if (TextUtils.isEmpty(account) || account.length()<11) {
                 mPhoneNumInputLayout.setError(getResources().getString(R.string.login_err_no_account));
+//                mPhoneNumInputLayout.setErrorEnabled(true);
                 mPhoneNumInputLayout.requestFocus();
                 return;
-            }
+            }else mPhoneNumInputLayout.setError("");
 
             if (TextUtils.isEmpty(code)) {
                 mCheckCodeInputLaout.setError(getResources().getString(R.string.login_err_no_checkcode));
                 mCheckCodeInputLaout.requestFocus();
                 return;
-            }
+            }else mCheckCodeInputLaout.setError("");
             loginPresenter.doLogin(account, code);
-//                                                         loginPresenter.doLogin("", "");
+//          loginPresenter.doLogin("", "");
         });
     }
 
@@ -182,9 +189,22 @@ public class LoginView extends RelativeLayout {
 
 
     Handler handler = new Handler() {
+        int count = 60;
         @Override
         public void handleMessage(Message msg) {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getContext().getString(R.string.login_resend_msg));
 
+            mGetCodeBtn.setText(stringBuffer.toString());
+            if (count>0){
+                count--;
+                handler.sendEmptyMessageDelayed(0,1000);
+            }else {
+                count=60;
+                mGetCodeBtn.setEnabled(true);
+                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
         }
     };
 

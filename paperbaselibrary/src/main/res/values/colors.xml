@@ -7,4 +7,5 @@
     <color name="cyan">#00BFBF</color>
     <color name="transparent">#00ffffff</color>
     <color name="grey">#555555</color>
+    <color name="warm_grey">#9b9b9b</color>
 </resources>
