@@ -82,7 +82,9 @@ repositories {
     }
 }
 dependencies {
+
     //    compile 'com.google.dagger:dagger:2.0.1'
+
     //    apt 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -105,4 +107,18 @@ dependencies {
     compile files('libs/mid-sdk-2.20.jar')
     compile files('libs/Xg_sdk_v2.38_20150616_1057.jar')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
+    compile files('libs/MobLogCollector.jar')
+    compile files('libs/MobTools.jar')
+    compile files('libs/ShareSDK-Core-2.6.1.jar')
+    compile files('libs/ShareSDK-Email-2.6.1.jar')
+    compile files('libs/ShareSDK-Facebook-2.6.1.jar')
+    compile files('libs/ShareSDK-QQ-2.6.1.jar')
+    compile files('libs/ShareSDK-QZone-2.6.1.jar')
+    compile files('libs/ShareSDK-ShortMessage-2.6.1.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.6.1.jar')
+    compile files('libs/ShareSDK-TencentWeibo-2.6.1.jar')
+    compile files('libs/ShareSDK-Twitter-2.6.1.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.6.1.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
 }

@@ -16,6 +16,7 @@ import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
@@ -52,6 +53,7 @@ public class XWalkFragment extends Fragment {
         ButterKnife.bind(this, view);
         mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
+//        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
 //        mCookieManager = new XWalkCookieManager();
 //        mCookieManager.setAcceptCookie(true);
@@ -69,6 +71,7 @@ public class XWalkFragment extends Fragment {
 //            List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
 //            Gson gson = new Gson();
 //            LogUtil.e(gson.toJson(contacts));
+            ShareUtils.oneKeyShared(getActivity());
         });
         return view;
     }
