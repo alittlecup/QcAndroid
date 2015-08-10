@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+    >
+    <ImageView
+        android:id="@+id/baseinfo_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        tools:src="@drawable/ic_drawer_schedule_selector"
+
+        />
+    <TextView
+        android:id="@+id/baseinfo_item_label"
+        style="@style/Qc.TextCommonGrey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        tools:text="电话"
+        />
+    <TextView
+        android:id="@+id/baseinfo_item_content"
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        tools:text="123123123"
+
+        />
+
+
+</LinearLayout>
