@@ -17,6 +17,8 @@
 
         <!--<item name="textViewStyle">@style/Qc.TextCommonGrey</item>-->
 
+        <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
+        <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
         <item name="buttonStyle">@style/Qc.CommonBtn</item>
         <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
         <item name="editTextStyle">@style/Qc.EditTextStyle</item>
@@ -26,13 +28,17 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
-
+    <style name="Qc.ActionBarStyle" parent="Base.Theme.AppCompat.Light.DarkActionBar"></style>
     <style name="Qc.TextCommonGrey" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_grey</item>
         <item name="android:textSize">@dimen/common_font</item>
     </style>
+     <style name="Qc.TextCommonBlack" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/common_font</item>
+    </style>
     <style name="Qc.CommonBtn" parent="Base.Widget.AppCompat.Button">
-        <item name="android:background">@drawable/selector_prime</item>
+        <item name="android:background">@drawable/selector_prime_btn</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
     </style>

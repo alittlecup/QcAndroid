@@ -44,8 +44,8 @@ public class CompleteActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_complete_info);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("完善资料");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        getSupportActionBar().setTitle("完善资料");
+        getSupportActionBar().setIcon(R.drawable.ic_arrow_left);
         mCode = getIntent().getExtras().getString("code");
         initView();
 //        getSupportFragmentManager().beginTransaction()
@@ -93,6 +93,8 @@ public class CompleteActivity extends AppCompatActivity {
                         {
                             if (qcResponse.status == ResponseResult.SUCCESS){
                                 //TODO 注册成功
+
+                                this.finish();
                             }else {
 
                             }

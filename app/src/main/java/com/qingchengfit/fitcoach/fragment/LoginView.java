@@ -183,8 +183,8 @@ public class LoginView extends RelativeLayout {
     }
 
 
-    public void onError() {
-
+    public void onError(String err) {
+        mCheckCodeInputLaout.setError(err);
     }
 
 

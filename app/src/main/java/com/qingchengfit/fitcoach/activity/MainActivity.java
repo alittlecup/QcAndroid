@@ -1,18 +1,15 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
-import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.umeng.analytics.MobclickAgent;
@@ -37,8 +34,9 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     DrawerLayout mainDrawerlayout;
     @Bind(R.id.main_fraglayout)
     FrameLayout mainFraglayout;
-    @Bind(R.id.main_navi)
-    NavigationView mainNavi;
+//    @Bind(R.id.main_navi)
+//    NavigationView mainNavi;
+
     private CompositeSubscription _subscriptions;
 
     //    @Inject RxBus rxBus;
@@ -58,26 +56,15 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                 mainDrawerlayout.openDrawer(Gravity.LEFT);
             }
         });
-        View view = View.inflate(this,R.layout.drawer_header,null);
-        mainNavi.addHeaderView(view);
-        view.setOnClickListener(view1 ->
-                mFragmentManager.beginTransaction()
-                        .replace(R.id.main_fraglayout,new MyHomeFragment())
-                        .commit()
-        );
+//        View view = View.inflate(this,R.layout.drawer_header,null);
+//        mainNavi.addHeaderView(view);
+//        view.setOnClickListener(view1 ->
+//                mFragmentManager.beginTransaction()
+//                        .replace(R.id.main_fraglayout,new MyHomeFragment())
+//                        .commit()
+//        );
     }
 
-//    @OnClick(R.id.float_btn)
-//    public void onFloatClick() {
-//        LogUtil.i("onclick:");
-//        QcCloudClient.getApi().postApi
-//                .getTest();
-//        PhoneFuncUtils.initContactList(this);
-//        PhoneFuncUtils.insertCalendar(this);
-//        PhoneFuncUtils.queryCalender(this);
-//        PhoneFuncUtils.queryEvent(this);
-
-//    }
 
     @Override
     protected void onResume() {

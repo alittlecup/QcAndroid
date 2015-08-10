@@ -43,7 +43,12 @@ public class SplashActivity extends BaseAcitivity {
     CircleIndicator splashIndicator;
 
     List<View> imageViews = new ArrayList<>();
-
+    private  int[] mSplashImg = new int[]{
+            R.drawable.img_help1,
+            R.drawable.img_help2,
+            R.drawable.img_help3,
+            R.drawable.img_help4,
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +71,7 @@ public class SplashActivity extends BaseAcitivity {
 
         for (int i = 0; i < 4; i++) {
             ImageView imageView = new ImageView(this);
-            imageView.setImageResource(R.drawable.qingchenglogo);
+            imageView.setImageResource(mSplashImg[i]);
             imageViews.add(imageView);
         }
         splashViewpager.setAdapter(new ImagesAdapter(imageViews));

@@ -6,7 +6,8 @@
             <stroke android:color="@color/primary_dark"></stroke>
         </shape>
     </item>
-    <item android:state_pressed="false" android:drawable="@color/primary">
+    <item android:state_pressed="false"
+          android:drawable="@color/primary">
         <shape android:shape="rectangle">
             <solid android:color="@color/primary"></solid>
             <stroke android:color="@color/primary"></stroke>

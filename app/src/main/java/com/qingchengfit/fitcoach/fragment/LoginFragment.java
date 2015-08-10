@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
                                 startActivity(toMain);
                                 getActivity().finish();
                             }else {
-
+                                loginview.onError(qcResponLogin.msg);
                             }
 
                         });

@@ -139,6 +139,12 @@ public class XWalkFragment extends Fragment {
             return PreferenceUtils.getPrefString(getActivity(),"session_id","");
         }
 
+        @JavascriptInterface
+        public void shareTimeline(String title,String link,String imgurl,String successCallback,String failedCallback){
+
+        }
+
+
 
     }
 
