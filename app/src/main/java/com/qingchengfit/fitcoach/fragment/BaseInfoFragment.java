@@ -1,8 +1,9 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,9 @@ public class BaseInfoFragment extends Fragment {
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_city,"城市","北京"));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce,"介绍","没什么好介绍的"));
         BaseInfoAdapter adapter = new BaseInfoAdapter(datas);
+        baseinfoRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         baseinfoRecyclerview.setAdapter(adapter);
+
         return view;
     }
 

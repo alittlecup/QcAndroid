@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
            if (position ==0 ){
                return getString(R.string.login_btn_label);
-
            }else return getString(R.string.registe_indicat_label);
         }
 

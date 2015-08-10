@@ -9,7 +9,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/myhome_appBar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         >
@@ -64,13 +64,34 @@
     </android.support.design.widget.AppBarLayout>
 
 
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/myhome_tab"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         >
-    </android.support.design.widget.TabLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/warm_grey"
+            android:layout_alignParentBottom="true"
+            >
+        </View>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/myhome_tab"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            app:tabTextAppearance="@style/Qc.TextCommonGrey"
+            app:tabIndicatorColor="@color/primary"
+            app:tabIndicatorHeight="1.5dp"
+            app:tabSelectedTextColor="@color/primary_dark"
+            app:tabGravity="center"
+            app:tabTextColor="@color/primary"
+            >
+        </android.support.design.widget.TabLayout>
+
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/myhome_viewpager"

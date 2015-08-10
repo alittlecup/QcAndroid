@@ -5,11 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
+import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.umeng.analytics.MobclickAgent;
@@ -18,6 +20,7 @@ import org.xwalk.core.XWalkPreferences;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -34,6 +37,8 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     DrawerLayout mainDrawerlayout;
     @Bind(R.id.main_fraglayout)
     FrameLayout mainFraglayout;
+    @Bind(R.id.drawer_headerview)
+    RelativeLayout drawerHeaderview;
 //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
 
@@ -65,6 +70,13 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //        );
     }
 
+    @OnClick(R.id.drawer_headerview)
+    public void onHeadClick(){
+        mainDrawerlayout.closeDrawers();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.main_fraglayout,new MyHomeFragment())
+                .commit();
+    }
 
     @Override
     protected void onResume() {
