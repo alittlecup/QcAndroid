@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.ModifyInfoFragment">
+
+    <include layout="@layout/common_toolbar"
+        >
+    </include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/modifyinfo_header_pic"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="27.5dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/modifyinfo_header_pic"
+            android:layout_alignRight="@id/modifyinfo_header_pic"
+            />
+
+        <LinearLayout
+            android:id="@+id/modifyinfo_inputpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="137dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/qc_item_height"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:hint="姓名"
+                android:maxLength="16"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:hint="姓名"
+                android:maxLength="16"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:hint="姓名"
+                android:maxLength="16"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:background="@color/transparent"
+                android:hint="姓名"
+                android:maxLength="16"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/modifyinfo_inputpan"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_comfirm"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

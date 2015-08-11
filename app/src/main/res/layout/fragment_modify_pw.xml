@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroud_grey"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.ModifyPwFragment">
+
+    <include layout="@layout/common_toolbar"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        >
+
+        <EditText
+            android:id="@+id/modifypw_ori_pw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:hint="原密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            />
+
+        <EditText
+            android:id="@+id/modifypw_new_pw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:hint="新密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            />
+
+        <EditText
+            android:id="@+id/modifypw_comfirm_pw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:hint="确认新密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/modifypw_comfirm_btn"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/login_comfirm"
+        />
+
+</LinearLayout>
