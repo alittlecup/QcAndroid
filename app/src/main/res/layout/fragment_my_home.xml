@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/myhome_header"
                 android:layout_alignRight="@id/myhome_header"
-                app:overlayImage="@drawable/ic_search"
+                app:overlayImage="@drawable/ic_pw"
                 app:roundAsCircle="true"
                 />
 
@@ -72,8 +72,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/warm_grey"
             android:layout_alignParentBottom="true"
+            android:background="@color/warm_grey"
             >
         </View>
         <android.support.design.widget.TabLayout
@@ -82,11 +82,11 @@
             android:layout_height="50dp"
             android:layout_marginLeft="75dp"
             android:layout_marginRight="75dp"
-            app:tabTextAppearance="@style/Qc.TextCommonGrey"
+            app:tabGravity="center"
             app:tabIndicatorColor="@color/primary"
             app:tabIndicatorHeight="1.5dp"
             app:tabSelectedTextColor="@color/primary_dark"
-            app:tabGravity="center"
+            app:tabTextAppearance="@style/Qc.TextCommonGrey"
             app:tabTextColor="@color/primary"
             >
         </android.support.design.widget.TabLayout>

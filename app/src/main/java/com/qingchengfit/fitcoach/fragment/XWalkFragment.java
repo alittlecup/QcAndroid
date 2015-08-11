@@ -59,10 +59,10 @@ public class XWalkFragment extends Fragment {
 //        mCookieManager.setAcceptCookie(true);
 
         btn1 = new FloatingActionButton(getActivity());
-        btn1.setIcon(R.drawable.ic_menu_share_holo_light);
+        btn1.setIcon(R.drawable.ic_baseinfo_city);
 
         btn2 = new FloatingActionButton(getActivity());
-        btn2.setIcon(R.drawable.ic_menu_share_holo_light);
+        btn2.setIcon(R.drawable.ic_baseinfo_phone);
 
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
@@ -102,6 +102,9 @@ public class XWalkFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    public void openmainDrawer() {
+        getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
+    }
 
     public class JsInterface {
 
@@ -146,10 +149,6 @@ public class XWalkFragment extends Fragment {
 
 
 
-    }
-
-    public void openmainDrawer(){
-        getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
     }
 
 //    public void setCookie(String url, String key, String value) {

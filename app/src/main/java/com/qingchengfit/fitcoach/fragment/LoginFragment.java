@@ -3,10 +3,12 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
@@ -53,6 +55,11 @@ public class LoginFragment extends Fragment {
                                 getActivity().finish();
                             }else {
                                 loginview.onError(qcResponLogin.msg);
+                                Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
+                                Snackbar
+                                        .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
+//                .setAction(R.string.snackbar_action, myOnClickListener)
+                                        .show();
                             }
 
                         });

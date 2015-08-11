@@ -39,12 +39,27 @@ public class LoginView extends RelativeLayout {
     ToggleButton mForgotPwBtn;
     TextInputLayout mPhoneNumInputLayout;
     TextInputLayout mCheckCodeInputLaout;
-
-    public void setLoginPresenter(LoginPresenter loginPresenter) {
-        this.loginPresenter = loginPresenter;
-    }
-
     LoginPresenter loginPresenter;
+    Handler handler = new Handler() {
+        int count = 60;
+
+        @Override
+        public void handleMessage(Message msg) {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getContext().getString(R.string.login_resend_msg));
+
+            mGetCodeBtn.setText(stringBuffer.toString());
+            if (count > 0) {
+                count--;
+                handler.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                count = 60;
+                mGetCodeBtn.setEnabled(true);
+                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
+        }
+    };
 
 
     public LoginView(Context context) {
@@ -57,6 +72,10 @@ public class LoginView extends RelativeLayout {
 
     public LoginView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public void setLoginPresenter(LoginPresenter loginPresenter) {
+        this.loginPresenter = loginPresenter;
     }
 
     @Override
@@ -182,31 +201,10 @@ public class LoginView extends RelativeLayout {
         });
     }
 
-
     public void onError(String err) {
         mCheckCodeInputLaout.setError(err);
+
     }
-
-
-    Handler handler = new Handler() {
-        int count = 60;
-        @Override
-        public void handleMessage(Message msg) {
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(Integer.toString(count));
-            stringBuffer.append(getContext().getString(R.string.login_resend_msg));
-
-            mGetCodeBtn.setText(stringBuffer.toString());
-            if (count>0){
-                count--;
-                handler.sendEmptyMessageDelayed(0,1000);
-            }else {
-                count=60;
-                mGetCodeBtn.setEnabled(true);
-                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
-            }
-        }
-    };
 
 
 }

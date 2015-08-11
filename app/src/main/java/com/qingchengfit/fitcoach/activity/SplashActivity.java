@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
-
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
@@ -91,6 +90,7 @@ public class SplashActivity extends BaseAcitivity {
             toLogin.putExtra("isRegiste", true);
         } else toLogin.putExtra("isRegiste", false);
         startActivity(toLogin);
+        this.finish();
     }
 
 
