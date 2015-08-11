@@ -38,6 +38,10 @@ public class BaseInfoFragment extends Fragment {
     private String mParam2;
 
 
+    public BaseInfoFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -54,10 +58,6 @@ public class BaseInfoFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public BaseInfoFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -79,6 +79,13 @@ public class BaseInfoFragment extends Fragment {
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_phone,"电话","15123358198"));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_city,"城市","北京"));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce,"介绍","没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
         BaseInfoAdapter adapter = new BaseInfoAdapter(datas);
         baseinfoRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         baseinfoRecyclerview.setAdapter(adapter);
@@ -93,9 +100,20 @@ public class BaseInfoFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    public static class BaseInfoVH extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.baseinfo_item_icon)
+        ImageView itemImg;
+        @Bind(R.id.baseinfo_item_label)
+        TextView itemLabel;
+        @Bind(R.id.baseinfo_item_content)
+        TextView itemContent;
 
-
+        public BaseInfoVH(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
 
     class BaseInfoAdapter extends RecyclerView.Adapter<BaseInfoVH>{
 
@@ -122,21 +140,6 @@ public class BaseInfoFragment extends Fragment {
         @Override
         public int getItemCount() {
             return datas.size();
-        }
-    }
-
-    public static class BaseInfoVH extends RecyclerView.ViewHolder{
-
-        @Bind(R.id.baseinfo_item_icon)
-        ImageView itemImg;
-        @Bind(R.id.baseinfo_item_label)
-        TextView itemLabel;
-        @Bind(R.id.baseinfo_item_content)
-        TextView itemContent;
-
-        public BaseInfoVH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
         }
     }
 

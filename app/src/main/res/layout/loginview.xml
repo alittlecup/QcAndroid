@@ -24,14 +24,15 @@
 
             >
             <EditText
-                android:drawableLeft="@drawable/ic_login_phone"
-                android:drawablePadding="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/ic_login_phone"
+                android:drawablePadding="15dp"
+                android:imeOptions="actionNext"
                 android:inputType="phone"
-                android:text="13601218507"
                 android:maxLength="11"
+                android:text="13601218507"
                 />
 
         </android.support.design.widget.TextInputLayout>
@@ -39,13 +40,13 @@
             android:id="@+id/login_getcode_btn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/login_getcode"
-            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/checkcode_line"
             android:drawablePadding="5dp"
             android:paddingBottom="15dp"
+            android:text="@string/login_getcode"
+            android:visibility="gone"
 
             />
     </RelativeLayout>
@@ -61,19 +62,20 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_pw"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:text="123456"
-            android:drawableLeft="@drawable/ic_pw"
             />
 
     </android.support.design.widget.TextInputLayout>
 
 
     <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_phone_verity"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         >
 
@@ -83,11 +85,11 @@
             android:layout_height="@dimen/paper_item_height"
             android:layout_weight="1"
             android:background="@color/transparent"
+            android:gravity="center_vertical|left"
             android:orientation="horizontal"
+            android:textColor="@color/text_black"
             android:textOff="验证码登录"
             android:textOn="密码登陆"
-            android:textColor="@color/text_black"
-            android:gravity="center_vertical|left"
             >
         </ToggleButton>
 

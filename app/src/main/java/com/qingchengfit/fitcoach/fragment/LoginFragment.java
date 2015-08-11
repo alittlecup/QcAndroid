@@ -54,12 +54,21 @@ public class LoginFragment extends Fragment {
                                 startActivity(toMain);
                                 getActivity().finish();
                             }else {
-                                loginview.onError(qcResponLogin.msg);
-                                Toast.makeText(getActivity(),qcResponLogin.msg,Toast.LENGTH_SHORT).show();
-                                Snackbar
-                                        .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
+//                                loginview.onError(qcResponLogin.msg);
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
+
+                                        Snackbar
+
+                                                .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
 //                .setAction(R.string.snackbar_action, myOnClickListener)
-                                        .show();
+                                                .show();
+                                    }
+                                });
+
+
                             }
 
                         });

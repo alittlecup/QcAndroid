@@ -46,6 +46,7 @@ public class CompleteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("完善资料");
         getSupportActionBar().setIcon(R.drawable.ic_arrow_left);
+
         mCode = getIntent().getExtras().getString("code");
         initView();
 //        getSupportFragmentManager().beginTransaction()

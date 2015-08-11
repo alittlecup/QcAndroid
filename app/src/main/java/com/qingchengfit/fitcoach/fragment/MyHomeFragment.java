@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,12 +32,14 @@ public class MyHomeFragment extends Fragment {
     SimpleDraweeView myhomeHeader;
     @Bind(R.id.myhome_gender)
     SimpleDraweeView myhomeGender;
-    @Bind(R.id.myhome_appBar)
-    AppBarLayout myhomeAppBar;
+    //    @Bind(R.id.myhome_appBar)
+//    AppBarLayout myhomeAppBar;
     @Bind(R.id.myhome_viewpager)
     ViewPager myhomeViewpager;
     @Bind(R.id.myhome_tab)
     TabLayout myhomeTab;
+//    @Bind(R.id.myhome_coolaosingtoorbar)
+//    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
 
     public MyHomeFragment() {
 
@@ -52,12 +53,13 @@ public class MyHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_home, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
+//        myhomeCoolaosingtoorbar.setTitle("我的主页");
         initView();
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(BaseInfoFragment.newInstance("",""));
-        fragments.add(BaseInfoFragment.newInstance("",""));
-        fragments.add(BaseInfoFragment.newInstance("",""));
-        FragmentAdatper adatper = new FragmentAdatper(getActivity().getSupportFragmentManager(),fragments);
+        fragments.add(BaseInfoFragment.newInstance("", ""));
+        fragments.add(BaseInfoFragment.newInstance("", ""));
+        fragments.add(BaseInfoFragment.newInstance("", ""));
+        FragmentAdatper adatper = new FragmentAdatper(getActivity().getSupportFragmentManager(), fragments);
         myhomeViewpager.setAdapter(adatper);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(myhomeViewpager);
@@ -65,10 +67,8 @@ public class MyHomeFragment extends Fragment {
     }
 
     private void initView() {
-        
+
     }
-
-
 
 
     @Override
@@ -77,16 +77,14 @@ public class MyHomeFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    class FragmentAdatper extends FragmentPagerAdapter{
+    class FragmentAdatper extends FragmentPagerAdapter {
 
-        List<Fragment>  fragments;
+        List<Fragment> fragments;
 
-        public FragmentAdatper(FragmentManager fm,List<Fragment> fs) {
+        public FragmentAdatper(FragmentManager fm, List<Fragment> fs) {
             super(fm);
             this.fragments = fs;
         }
-
-
 
 
         @Override

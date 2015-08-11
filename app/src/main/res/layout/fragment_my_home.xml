@@ -1,102 +1,119 @@
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment">
+    tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/myhome_appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
+
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/myhome_coolaosingtoorbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:contentScrim="#30469b"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            />
-        <include layout="@layout/common_toolbar"
+
             >
 
-        </include>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="50dp"
+                android:background="@color/primary"
+                >
 
-        <RelativeLayout
+                <com.facebook.drawee.view.SimpleDraweeView
 
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/primary"
-            >
+                    android:id="@+id/myhome_header"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    app:roundAsCircle="true"
+                    />
 
-            <com.facebook.drawee.view.SimpleDraweeView
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/myhome_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/myhome_header"
+                    android:layout_alignRight="@id/myhome_header"
+                    app:overlayImage="@drawable/ic_pw"
+                    app:roundAsCircle="true"
+                    />
 
-                android:id="@+id/myhome_header"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                app:roundAsCircle="true"
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myhome_header"
+                    android:layout_centerHorizontal="true"
+                    android:text="Mark Steve"
+                    android:textColor="@color/white"
+                    />
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/myhome_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/myhome_header"
-                android:layout_alignRight="@id/myhome_header"
-                app:overlayImage="@drawable/ic_pw"
-                app:roundAsCircle="true"
-                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/myhome_header"
-                android:layout_centerHorizontal="true"
-                android:text="Mark Steve"
-                android:textColor="@color/white"
-                />
-        </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/warm_grey"
+                    >
+                </View>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/myhome_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginRight="75dp"
+                    app:tabGravity="center"
+                    app:tabIndicatorColor="@color/primary"
+                    app:tabIndicatorHeight="1.5dp"
+                    app:tabSelectedTextColor="@color/primary_dark"
+                    app:tabTextAppearance="@style/Qc.TextCommonGrey"
+                    app:tabTextColor="@color/primary"
+                    >
+                </android.support.design.widget.TabLayout>
+
+            </RelativeLayout>
+
+            <include
+                layout="@layout/common_toolbar"
+                app:layout_collapseMode="pin"
+                >
+            </include>
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/warm_grey"
-            >
-        </View>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/myhome_tab"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/primary"
-            app:tabIndicatorHeight="1.5dp"
-            app:tabSelectedTextColor="@color/primary_dark"
-            app:tabTextAppearance="@style/Qc.TextCommonGrey"
-            app:tabTextColor="@color/primary"
-            >
-        </android.support.design.widget.TabLayout>
-
-    </RelativeLayout>
-
+        />
     <android.support.v4.view.ViewPager
         android:id="@+id/myhome_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -16,8 +16,6 @@ import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.umeng.analytics.MobclickAgent;
 
-import org.xwalk.core.XWalkPreferences;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,7 +47,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // ANIMATABLE_XWALK_VIEW preference key MUST be set before XWalkView creation.
-        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
+//        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mFragmentManager = getSupportFragmentManager();
@@ -93,7 +91,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
+//        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
     /**
