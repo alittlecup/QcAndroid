@@ -42,7 +42,6 @@ public class LoginView extends RelativeLayout {
     LoginPresenter loginPresenter;
     Handler handler = new Handler() {
         int count = 60;
-
         @Override
         public void handleMessage(Message msg) {
             StringBuffer stringBuffer = new StringBuffer();
@@ -50,11 +49,11 @@ public class LoginView extends RelativeLayout {
             stringBuffer.append(getContext().getString(R.string.login_resend_msg));
 
             mGetCodeBtn.setText(stringBuffer.toString());
-            if (count > 0) {
+            if (count>0){
                 count--;
-                handler.sendEmptyMessageDelayed(0, 1000);
-            } else {
-                count = 60;
+                handler.sendEmptyMessageDelayed(0,1000);
+            }else {
+                count=60;
                 mGetCodeBtn.setEnabled(true);
                 mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
             }

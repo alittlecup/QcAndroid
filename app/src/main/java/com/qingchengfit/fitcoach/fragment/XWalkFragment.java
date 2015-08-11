@@ -102,7 +102,7 @@ public class XWalkFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    public void openmainDrawer() {
+    public void openmainDrawer(){
         getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
     }
 

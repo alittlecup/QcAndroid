@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
                                 getActivity().finish();
                             }else {
                                 loginview.onError(qcResponLogin.msg);
-                                Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),qcResponLogin.msg,Toast.LENGTH_SHORT).show();
                                 Snackbar
                                         .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
 //                .setAction(R.string.snackbar_action, myOnClickListener)
