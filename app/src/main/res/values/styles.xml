@@ -8,6 +8,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
 
+        <item name="colorControlNormal">@color/warm_grey</item>
 
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimary">@color/primary</item>
@@ -57,10 +58,16 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">18sp</item>
+        <item name="colorControlNormal">@color/warm_grey</item>
+
 
     </style>
     <style name="Qc.EditHintStyle" parent="TextAppearance.AppCompat">
         <item name="android:paddingLeft">@dimen/qc_edit_drawable_padding</item>
+    </style>
+
+    <style name="TextTranparents" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/transparent</item>
     </style>
 
     <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">

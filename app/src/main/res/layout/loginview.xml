@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:errorEnabled="true"
-
             >
             <EditText
                 android:layout_width="match_parent"
@@ -32,7 +31,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:text="13601218507"
+                android:text="15123358198"
                 />
 
         </android.support.design.widget.TextInputLayout>

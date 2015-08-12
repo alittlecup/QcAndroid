@@ -21,15 +21,16 @@
             android:id="@+id/myhome_coolaosingtoorbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:expandedTitleMarginStart="48dp"
+            android:minHeight="100dp"
+            app:collapsedTitleTextAppearance="@style/ToolbarStyle"
+            app:expandedTitleTextAppearance="@style/TextTranparents"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-
             >
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="?android:attr/actionBarSize"
                 android:background="@color/primary"
                 >
 
@@ -65,7 +66,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="?android:attr/actionBarSize"
                 android:layout_gravity="bottom"
                 >
 
@@ -80,7 +81,7 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/myhome_tab"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="?android:attr/actionBarSize"
                     android:layout_marginLeft="75dp"
                     android:layout_marginRight="75dp"
                     app:tabGravity="center"
@@ -94,11 +95,23 @@
 
             </RelativeLayout>
 
-            <include
-                layout="@layout/common_toolbar"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/cyan"
+                android:gravity="center_vertical"
+                android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+                app:titleMarginStart="20dp"
+
+                app:titleTextAppearance="@style/ToolbarStyle"
+
                 >
-            </include>
+
+            </android.support.v7.widget.Toolbar>
+
+
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -107,6 +120,7 @@
         android:layout_height="wrap_content"
 
         />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/myhome_viewpager"
         android:layout_width="match_parent"
