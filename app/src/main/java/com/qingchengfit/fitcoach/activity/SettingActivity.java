@@ -1,39 +1,34 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
+import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
+import com.qingchengfit.fitcoach.fragment.SettingFragment;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
 
+
+    FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        fragmentManager = getSupportFragmentManager();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.settting_fraglayout, SettingFragment.newInstance("", ""))
+                .commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_setting, menu);
-        return true;
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onFragmentChange(Fragment fragment) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.settting_fraglayout, fragment)
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+                .commit();
     }
 }

@@ -8,6 +8,7 @@
     <include layout="@layout/common_toolbar"></include>
 
     <RelativeLayout
+        android:id="@+id/settting_modifyinfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@drawable/qc_backgroud_selector"
@@ -32,6 +33,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/setting_modifypw"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@drawable/qc_backgroud_selector"
@@ -56,6 +58,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/setting_advice"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@drawable/qc_backgroud_selector"
@@ -80,6 +83,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/setting_aboutus"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@drawable/qc_backgroud_selector"

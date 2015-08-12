@@ -29,4 +29,5 @@
     <string name="login_resend_msg">后重新发送</string>
     <string name="complete_label">完成</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="setting_title">设置</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,7 @@ public class MyHomeFragment extends Fragment {
     TabLayout myhomeTab;
 //    @Bind(R.id.myhome_coolaosingtoorbar)
 //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
-
+private FragmentCallBack fragmentCallBack;
     public MyHomeFragment() {
 
     }
@@ -53,6 +55,11 @@ public class MyHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_home, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
+        toolbar.inflateMenu(R.menu.menu_myhome);
+        toolbar.setOnMenuItemClickListener(item -> {
+            getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+            return true;
+        });
 //        myhomeCoolaosingtoorbar.setTitle("我的主页");
         initView();
         List<Fragment> fragments = new ArrayList<>();
@@ -69,7 +76,22 @@ public class MyHomeFragment extends Fragment {
     private void initView() {
 
     }
-
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        try {
+//            fragmentCallBack = (FragmentCallBack) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        fragmentCallBack = null;
+//    }
 
     @Override
     public void onDestroyView() {

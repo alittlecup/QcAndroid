@@ -14,6 +14,8 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
 
 
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+
 
         <!--<item name="textViewStyle">@style/Qc.TextCommonGrey</item>-->
 
@@ -59,5 +61,16 @@
     </style>
     <style name="Qc.EditHintStyle" parent="TextAppearance.AppCompat">
         <item name="android:paddingLeft">@dimen/qc_edit_drawable_padding</item>
+    </style>
+
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_left_out</item>
+        <item name="android:taskOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:taskCloseEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:taskCloseExitAnimation">@anim/slide_left_out</item>
     </style>
 </resources>
