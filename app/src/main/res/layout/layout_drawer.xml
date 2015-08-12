@@ -52,27 +52,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:button="@drawable/ic_drawer_schedule_selector"
             android:paddingLeft="@dimen/qc_edit_drawable_padding"
             android:text="日程安排"
-            android:button="@drawable/ic_drawer_schedule_selector"
             />
 
         <com.qingchengfit.fitcoach.component.SegmentButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:button="@drawable/ic_drawer_statistic_selector"
             android:paddingLeft="@dimen/qc_edit_drawable_padding"
             android:text="数据报表"
-            android:button="@drawable/ic_drawer_statistic_selector"
             />
 
         <com.qingchengfit.fitcoach.component.SegmentButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:button="@drawable/ic_drawer_meeting_selector"
             android:paddingLeft="@dimen/qc_edit_drawable_padding"
             android:text="会议/培训"
-            android:button="@drawable/ic_drawer_meeting_selector"
             />
     </RadioGroup>
     <View
@@ -85,17 +85,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:clickable="false"
+        android:orientation="vertical"
 
         >
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:clickable="true"
             android:background="@drawable/qc_backgroud_selector"
+            android:clickable="true"
+
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             >
             <TextView
                 style="@style/Qc.TextCommonBlack"
@@ -106,11 +107,11 @@
                 />
             <TextView
                 style="@style/Qc.TextCommonBlack"
-                android:gravity="center_vertical|right"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="102"
                 android:layout_gravity="right"
+                android:gravity="center_vertical|right"
+                android:text="102"
                 />
         </FrameLayout>
         <FrameLayout
@@ -118,6 +119,9 @@
             android:layout_height="58dp"
             android:background="@drawable/qc_backgroud_selector"
             android:clickable="true"
+
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             >
             <TextView
                 style="@style/Qc.TextCommonBlack"
@@ -128,11 +132,11 @@
                 />
             <TextView
                 style="@style/Qc.TextCommonBlack"
-                android:gravity="center_vertical|right"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="102"
                 android:layout_gravity="right"
+                android:gravity="center_vertical|right"
+                android:text="102"
                 />
         </FrameLayout>
         <FrameLayout
@@ -140,6 +144,8 @@
             android:layout_height="58dp"
             android:background="@drawable/qc_backgroud_selector"
             android:clickable="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             >
             <TextView
                 style="@style/Qc.TextCommonBlack"
@@ -150,11 +156,11 @@
                 />
             <TextView
                 style="@style/Qc.TextCommonBlack"
-                android:gravity="center_vertical|right"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="102"
                 android:layout_gravity="right"
+                android:gravity="center_vertical|right"
+                android:text="102"
                 />
         </FrameLayout>
     </LinearLayout>
