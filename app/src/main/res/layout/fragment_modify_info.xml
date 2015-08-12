@@ -74,10 +74,10 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
+                    android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_margin="5dp"
-                    android:background="#a0a0a0"
+                    android:background="@color/divider_white"
                     >
 
                 </View>
@@ -97,6 +97,7 @@
                         android:id="@+id/comple_gender_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:button="@drawable/radio_selector"
                         android:checked="true"
                         android:text="@string/gender_male"
                         />
@@ -106,10 +107,10 @@
                         android:layout_height="match_parent"/>
 
                     <RadioButton
-
                         android:id="@+id/comple_gender_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:button="@drawable/radio_selector"
                         android:text="@string/gender_female"
 
                         />
@@ -135,6 +136,24 @@
                 />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignTop="@id/modifyinfo_inputpan"
+            android:background="@color/divider_grey"
+            >
+
+        </View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/modifyinfo_inputpan"
+            android:background="@color/divider_grey"
+            >
+
+        </View>
 
         <Button
             android:layout_width="300dp"

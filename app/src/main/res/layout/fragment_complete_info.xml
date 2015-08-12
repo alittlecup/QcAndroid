@@ -5,8 +5,10 @@
              android:layout_height="match_parent"
 
              tools:context="com.qingchengfit.fitcoach.fragment.CompleteInfoFragment">
-    <include layout="@layout/common_toolbar"></include>
-    <!-- TODO: Update blank fragment layout -->
+
+    <include layout="@layout/common_toolbar">
+
+    </include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,10 +52,10 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"
+                android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"
-                android:background="#a0a0a0"
+                android:background="@color/divider_white"
                 >
 
             </View>
@@ -73,6 +75,7 @@
                     android:id="@+id/comple_gender_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/radio_selector"
                     android:checked="true"
                     android:text="@string/gender_male"
                     />
@@ -84,8 +87,8 @@
                     android:id="@+id/comple_gender_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/radio_selector"
                     android:text="@string/gender_female"
-
                     />
             </RadioGroup>
 
