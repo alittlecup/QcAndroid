@@ -27,8 +27,15 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
     @Override
     public void onFragmentChange(Fragment fragment) {
         fragmentManager.beginTransaction()
-                .replace(R.id.settting_fraglayout, fragment)
+                .add(R.id.settting_fraglayout, fragment)
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount() == 1) {
+            super.onBackPressed();
+        } else fragmentManager.popBackStack();
     }
 }

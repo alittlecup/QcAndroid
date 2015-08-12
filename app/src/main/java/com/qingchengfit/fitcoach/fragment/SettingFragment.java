@@ -96,8 +96,8 @@ public class SettingFragment extends Fragment {
         switch (view.getId()) {
             case R.id.settting_modifyinfo:
                 mFragmentManager.beginTransaction()
-                        .replace(R.id.settting_fraglayout, ModifyInfoFragment.newInstance("", ""))
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+                        .add(R.id.settting_fraglayout, ModifyInfoFragment.newInstance("", ""))
+                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                         .commit();
                 break;
             case R.id.setting_modifypw:

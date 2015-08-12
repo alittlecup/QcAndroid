@@ -3,11 +3,17 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.qingchengfit.fitcoach.R;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +25,16 @@ public class ModifyPwFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.modifypw_ori_pw)
+    EditText modifypwOriPw;
+    @Bind(R.id.modifypw_new_pw)
+    EditText modifypwNewPw;
+    @Bind(R.id.modifypw_comfirm_pw)
+    EditText modifypwComfirmPw;
+    @Bind(R.id.modifypw_comfirm_btn)
+    Button modifypwComfirmBtn;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,8 +76,18 @@ public class ModifyPwFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_modify_pw, container, false);
+        View view = inflater.inflate(R.layout.fragment_modify_pw, container, false);
+        ButterKnife.bind(this, view);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setTitle("修改密码");
+        
+        return view;
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

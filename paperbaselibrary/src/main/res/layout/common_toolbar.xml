@@ -8,7 +8,6 @@
     android:background="@color/cyan"
     android:gravity="center_vertical"
     android:minHeight="?attr/actionBarSize"
-    app:titleMarginStart="20dp"
     app:titleTextAppearance="@style/ToolbarStyle"
     >
 
