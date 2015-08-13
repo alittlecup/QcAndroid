@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.umeng.analytics.MobclickAgent;
+
 //import com.qingchengfit.fitcoach.di.ApplicationComponet;
 
 /**
@@ -25,7 +27,21 @@ public class BaseAcitivity extends AppCompatActivity {
         super.onCreate(savedInstanceState, persistentState);
 
     }
-//    public ApplicationComponet getAppCompent(){
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    //    public ApplicationComponet getAppCompent(){
 //        return ((App)getApplication()).getComponet();
 //    }
 }

@@ -14,7 +14,6 @@ import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,18 +73,6 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
         mFragmentManager.beginTransaction()
                 .replace(R.id.main_fraglayout,new MyHomeFragment())
                 .commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

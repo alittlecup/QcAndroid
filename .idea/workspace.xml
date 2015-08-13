@@ -58,15 +58,27 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="add activity destory anim">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Utils/WechatPay.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/AdviceFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/AdviceFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/Hash.java" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/Hash.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java" />
+    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="add wechatpay utils">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/RevenUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/guava_17_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_4_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_1_0_1.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/multipart_upload_android_sdk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/raven_4_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/slf4j_api_1_7_7.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/BaseAcitivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/BaseAcitivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/LogUtil.java" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/LogUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/build.gradle" afterPath="$PROJECT_DIR$/paperbaselibrary/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" afterPath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
@@ -171,38 +183,74 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SettingFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java">
+      <file leaf-file-name="BaseAcitivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/BaseAcitivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+              <caret line="8" column="57" selection-start-line="8" selection-start-column="57" selection-end-line="8" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WechatPay.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Utils/WechatPay.java">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0918919">
-              <caret line="63" column="50" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.2393617">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1659#1674#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Hash.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/Hash.java">
+      <file leaf-file-name="LoginFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="139" column="9" selection-start-line="139" selection-start-column="9" selection-end-line="139" selection-end-column="9" />
-              <folding>
-                <element signature="e#2803#2804#0" expanded="true" />
-                <element signature="e#2863#2864#0" expanded="true" />
-              </folding>
+              <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/paperbaselibrary/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="54" column="34" selection-start-line="54" selection-start-column="34" selection-end-line="54" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -401,6 +449,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="collectDebugMultiDexComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="collectReleaseMultiDexComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="compileDebugAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -510,6 +566,14 @@
                 <option name="description" value="Installs and runs the tests for debug on connected devices." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="connectedDebugAndroidTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="createDebugMainDexClassList" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="createReleaseMainDexClassList" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -686,6 +750,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="packageAllDebugClassesForMultiDex" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="packageAllReleaseClassesForMultiDex" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="packageDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -718,15 +790,7 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="preDexDebug" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="preDexDebugAndroidTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="preDexRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -755,6 +819,11 @@
                 <option name="description" value="Prepare com.android.support:design:22.2.1" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComAndroidSupportDesign2221Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:multidex:1.0.1" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComAndroidSupportMultidex101Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.android.support:recyclerview-v7:22.2.1" />
@@ -864,6 +933,14 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="processReleaseUnitTestJavaRes" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="shrinkDebugMultiDexComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="shrinkReleaseMultiDexComponents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the signing info for each variant." />
@@ -1093,6 +1170,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="collectDebugMultiDexComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="collectReleaseMultiDexComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="compileDebugAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -1207,6 +1292,14 @@
                 <option name="description" value="Installs and runs the tests for debug on connected devices." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="connectedDebugAndroidTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="createDebugMainDexClassList" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="createReleaseMainDexClassList" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -1403,6 +1496,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="packageAllDebugClassesForMultiDex" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="packageAllReleaseClassesForMultiDex" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="packageDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -1435,15 +1536,7 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="preDexDebug" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="preDexDebugAndroidTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="preDexRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -1472,6 +1565,11 @@
                 <option name="description" value="Prepare com.android.support:design:22.2.1" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareComAndroidSupportDesign2221Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:multidex:1.0.1" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComAndroidSupportMultidex101Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.android.support:recyclerview-v7:22.2.1" />
@@ -1591,6 +1689,14 @@
                 <option name="description" value="Displays the properties of project ':app'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="properties" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="shrinkDebugMultiDexComponents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="shrinkReleaseMultiDexComponents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the signing info for each variant." />
@@ -2221,7 +2327,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5755611127000" />
+        <entry key="$PROJECT_DIR$" value="5756946053000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2467,6 +2573,7 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-urlconnection/2.0.0/afe8399d352713b66e597e9670c741d1e60ae923/okhttp-urlconnection-2.0.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.0.0/4c8d1536dba3812cc1592090dc20c47a4ed3c35e/okhttp-2.0.0.jar" />
                             <option value="$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/22.2.1/recyclerview-v7-22.2.1.aar" />
+                            <option value="$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/multidex/1.0.0/multidex-1.0.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.0.4/a607b0e12d2de769dc219e00b60a9b3d9e730d/rxjava-1.0.4.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/drawee/0.6.0/81e238f0087d84dba1584081d4a6a3712364510c/drawee-0.6.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/fbcore/0.6.0/631ec463d86e4d42bd3a6b7cf69f84dfa8c606f9/fbcore-0.6.0.aar" />
@@ -2483,7 +2590,6 @@
                             <option value="$MODULE_DIR$/libs/mid-sdk-2.20.jar" />
                             <option value="$MODULE_DIR$/libs/MobLogCollector.jar" />
                             <option value="$MODULE_DIR$/libs/MobTools.jar" />
-                            <option value="$MODULE_DIR$/libs/multipart-upload-android-sdk.jar" />
                             <option value="$MODULE_DIR$/libs/ShareSDK-Core-2.6.1.jar" />
                             <option value="$MODULE_DIR$/libs/ShareSDK-Email-2.6.1.jar" />
                             <option value="$MODULE_DIR$/libs/ShareSDK-Facebook-2.6.1.jar" />
@@ -2499,6 +2605,7 @@
                             <option value="$MODULE_DIR$/libs/wup-1.0.0-SNAPSHOT.jar" />
                             <option value="$MODULE_DIR$/libs/Xg_sdk_v2.38_20150616_1057.jar" />
                             <option value="$MODULE_DIR$/libs/pushservice-4.5.1.8.jar" />
+                            <option value="$MODULE_DIR$/libs/multipart-upload-android-sdk.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/app" />
@@ -2737,6 +2844,10 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.3/lombok-ast-0.2.3-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.3/lombok-ast-0.2.3.jar" />
                             <option value="$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/design/22.2.1/design-22.2.1.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.kencochrane.raven/raven/4.2/7c29c4ac372808162f2f2e292c54500868522639/raven-4.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.7/2b8019b6249bb05d81d3a3094e468753e2b21311/slf4j-api-1.7.7.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/17.0/9c6ef172e8de35fd8d4d8783e4821e57cdef7445/guava-17.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.4.0/1e33fd4cca6c4a9bf3d2f638cabb504a5b5c989d/jackson-core-2.4.0.jar" />
                             <option value="$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/appcompat-v7/22.2.1/appcompat-v7-22.2.1.aar" />
                             <option value="$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/support-v4/22.2.1/support-v4-22.2.1.aar" />
                             <option value="$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar" />
@@ -2878,11 +2989,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/bean/BaseInfoBean.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_base_info.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/cn/sharesdk/onekeyshare/theme/classic/EditPage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java" />
@@ -2890,8 +2996,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/CompleteActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/registerview.xml" />
         <option value="$PROJECT_DIR$/paperbaselibrary/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Configs.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_baseinfo.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java" />
@@ -2922,13 +3026,20 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/UpYunClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/bean/LoginData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/bean/User.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/AdviceFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java" />
         <option value="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/Hash.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Utils/WechatPay.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/BaseAcitivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/LogUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java" />
+        <option value="$PROJECT_DIR$/paperbaselibrary/build.gradle" />
+        <option value="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/RevenUtils.java" />
       </list>
     </option>
   </component>
@@ -3026,7 +3137,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -3038,18 +3149,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-fitcoach" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="android-fitcoach" />
@@ -3058,7 +3161,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-fitcoach" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -3130,70 +3242,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paperbaselibrary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-fitcoach" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-fitcoach" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paperbaselibrary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paperbaselibrary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-fitcoach" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-fitcoach" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paperbaselibrary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -3291,7 +3339,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Utils" />
+              <option name="myItemId" value="activity" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3337,17 +3385,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android-fitcoach" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -3360,13 +3397,13 @@
     <property name="android.sdk.path" value="$USER_HOME$/Applications/sdk" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
-    <property name="android.project.structure.last.selected" value="app" />
+    <property name="android.project.structure.last.selected" value="paperbaselibrary" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/loginlibrary" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/loginlibrary" />
     <property name="FullScreen" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/paperbaselibrary/src/main/java" />
-    <property name="SearchEverywhereHistoryKey" value="sett&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Mo&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;Modi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;Login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Modif&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;my&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_my_home.xml&#10;menu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/menu/menu_myhome.xml&#10;com&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_complete_info.xml&#10;modi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_modify_info.xml&#10;st&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Ad&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/AdviceFragment.java&#10;draw&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/menu/drawer_menu.xml&#10;Set&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SettingActivity.java&#10;set&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;Mod&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;m&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/loginview.xml&#10;sty&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;dimen&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/dimens.xml&#10;styles&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;setting&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SettingActivity.java&#10;mo&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_modify_pw.xml&#10;Con&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;baseinf&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_base_info.xml&#10;Base&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;item&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/item_baseinfo.xml&#10;Confi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;regis&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/registerview.xml&#10;Com&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/CompleteActivity.java&#10;colors&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;Spa&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;log&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_login.xml&#10;layout&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/layout_drawer.xml&#10;main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_main.xml&#10;Main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;loginv&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/loginview.xml" />
+    <property name="SearchEverywhereHistoryKey" value="S&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;Login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;MobclickAgent.onPause&#9;null&#9;null&#10;Base&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.BaseAcitivity&#10;sett&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Mo&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;Modi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;Modif&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;my&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_my_home.xml&#10;menu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/menu/menu_myhome.xml&#10;com&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_complete_info.xml&#10;modi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_modify_info.xml&#10;st&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Ad&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/AdviceFragment.java&#10;draw&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/menu/drawer_menu.xml&#10;Set&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SettingActivity.java&#10;set&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;Mod&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;m&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/loginview.xml&#10;sty&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;dimen&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/dimens.xml&#10;styles&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;setting&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SettingActivity.java&#10;mo&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_modify_pw.xml&#10;Con&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;baseinf&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_base_info.xml&#10;item&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/item_baseinfo.xml&#10;Confi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;regis&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/registerview.xml&#10;Com&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/CompleteActivity.java&#10;colors&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;Spa&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;log&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_login.xml&#10;layout&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/layout_drawer.xml&#10;main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_main.xml&#10;loginv&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/loginview.xml" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -3378,11 +3415,11 @@
       <recent name="com.qingchengfit.fitcoach" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/paperbaselibrary/libs" />
       <recent name="$PROJECT_DIR$/app/libs" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/app/src/main/res/menu" />
-      <recent name="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
@@ -3502,7 +3539,7 @@
     </configuration>
     <configuration default="true" type="JarApplication" factoryName="JAR Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="JAR_PATH" value="$PROJECT_DIR$/app/libs/java-sdk-3.1.jar" />
+      <option name="JAR_PATH" value="$PROJECT_DIR$/paperbaselibrary/libs/sentry-1.1.4.jar" />
       <envs />
       <method />
     </configuration>
@@ -3868,7 +3905,13 @@
       <option name="project" value="LOCAL" />
       <updated>1439444090220</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="add wechatpay utils">
+      <created>1439450652344</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1439450652344</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3891,19 +3934,18 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.61270803" sideWeight="0.50486225" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25202593" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32829046" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30408472" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32829046" sideWeight="0.49675852" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6535552" sideWeight="0.49513775" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3903177" sideWeight="0.49513775" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.61270803" sideWeight="0.50486225" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20340356" sideWeight="0.49195403" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39939487" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39939487" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3911,6 +3953,7 @@
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25202593" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -3955,7 +3998,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cookie add perfect;&#10;" />
     <MESSAGE value="format http api&#10;" />
     <MESSAGE value="add myHome&#10;" />
     <MESSAGE value="add fix dir struct&#10;" />
@@ -3980,96 +4022,19 @@
     <MESSAGE value="add upyun client" />
     <MESSAGE value="add upyun" />
     <MESSAGE value="add activity destory anim" />
-    <option name="LAST_COMMIT_MESSAGE" value="add activity destory anim" />
+    <MESSAGE value="add wechatpay utils" />
+    <option name="LAST_COMMIT_MESSAGE" value="add wechatpay utils" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="35" />
+      <option name="time" value="36" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.9473684">
-          <caret line="73" column="56" selection-start-line="73" selection-start-column="56" selection-end-line="73" selection-end-column="56" />
-          <folding>
-            <element signature="e#4396#4397#0" expanded="false" />
-            <element signature="e#4438#4439#0" expanded="false" />
-            <element signature="e#5023#5024#0" expanded="false" />
-            <element signature="e#5066#5067#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.736842">
-          <caret line="128" column="1" selection-start-line="128" selection-start-column="1" selection-end-line="128" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/CompleteActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36842105">
-          <caret line="43" column="50" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0804954">
-          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7894737">
-          <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22972973">
-          <caret line="28" column="46" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_right_in.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18123667">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_right_out.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21748401">
-          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_out.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39872068">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_in.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21748401">
-          <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -4235,7 +4200,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18123667">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4243,7 +4207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.07249467">
           <caret line="2" column="84" selection-start-line="2" selection-start-column="84" selection-end-line="2" selection-end-column="84" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4323,7 +4286,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32162163">
           <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4353,14 +4315,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32162163">
-          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/PreferenceUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22972973">
@@ -4376,14 +4330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.142858">
           <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17297298">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -4410,7 +4356,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6891892">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4435,11 +4380,110 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Utils/WechatPay.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0918919">
-          <caret line="63" column="50" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1659#1674#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/LogUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39872068">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="34" selection-start-line="54" selection-start-column="34" selection-end-line="54" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/BaseAcitivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="57" selection-start-line="8" selection-start-column="57" selection-end-line="8" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.6081082">
+          <caret line="81" column="4" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67027026">
+          <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paperbaselibrary/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/RevenUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36702126">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2393617">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.RegisterActivity;
@@ -58,7 +59,7 @@ public class LoginFragment extends Fragment {
                                 Gson gson = new Gson();
                                 PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
                                 Intent toMain = new Intent(getActivity(), MainActivity.class);
-
+                                RevenUtils.Reven();
                                 startActivity(toMain);
                                 getActivity().finish();
                             } else {
