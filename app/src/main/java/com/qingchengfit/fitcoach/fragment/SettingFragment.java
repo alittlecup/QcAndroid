@@ -96,19 +96,29 @@ public class SettingFragment extends Fragment {
         switch (view.getId()) {
             case R.id.settting_modifyinfo:
                 mFragmentManager.beginTransaction()
-                        .hide(this)
-                        .add(R.id.settting_fraglayout, ModifyInfoFragment.newInstance("", ""))
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .replace(R.id.settting_fraglayout, ModifyInfoFragment.newInstance("", ""))
+
                         .addToBackStack("")
                         .commit();
                 break;
+
             case R.id.setting_modifypw:
                 mFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                         .replace(R.id.settting_fraglayout, ModifyPwFragment.newInstance("", ""))
-                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+                        .addToBackStack("")
                         .commit();
                 break;
+
             case R.id.setting_advice:
+
+                mFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .replace(R.id.settting_fraglayout, new AdviceFragment())
+                        .addToBackStack("")
+                        .commit();
+
 //                mFragmentManager.beginTransaction()
 //                        .replace(R.id.settting_fraglayout,.newInstance("",""))
 //                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
