@@ -77,7 +77,7 @@ public class ModifyInfoFragment extends Fragment {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setTitle("修改资料");
         toolbar.setNavigationOnClickListener(view1 ->
-                        getFragmentManager().popBackStack()
+                        getActivity().onBackPressed()
         );
         return view;
     }

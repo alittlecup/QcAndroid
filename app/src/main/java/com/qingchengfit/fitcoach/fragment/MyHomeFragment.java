@@ -4,7 +4,6 @@ package com.qingchengfit.fitcoach.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,8 +41,8 @@ public class MyHomeFragment extends Fragment {
     ViewPager myhomeViewpager;
     @Bind(R.id.myhome_tab)
     TabLayout myhomeTab;
-    @Bind(R.id.myhome_coolaosingtoorbar)
-    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
+    //    @Bind(R.id.myhome_coolaosingtoorbar)
+//    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
 private FragmentCallBack fragmentCallBack;
     public MyHomeFragment() {
 
@@ -62,7 +61,7 @@ private FragmentCallBack fragmentCallBack;
             getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
             return true;
         });
-        myhomeCoolaosingtoorbar.setTitle("我的主页");
+//        myhomeCoolaosingtoorbar.setTitle("我的主页");
         initView();
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(BaseInfoFragment.newInstance("", ""));

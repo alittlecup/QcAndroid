@@ -17,103 +17,103 @@
 
         >
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/myhome_coolaosingtoorbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            app:collapsedTitleTextAppearance="@style/ToolbarStyle"
-            app:expandedTitleTextAppearance="@style/TextTranparents"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        <!--<android.support.design.widget.CollapsingToolbarLayout-->
+        <!--android:id="@+id/myhome_coolaosingtoorbar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:minHeight="100dp"-->
+        <!--app:collapsedTitleTextAppearance="@style/ToolbarStyle"-->
+        <!--app:expandedTitleTextAppearance="@style/TextTranparents"-->
+        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+        <!-->-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@color/primary"
+            app:layout_scrollFlags="scroll|enterAlways"
+
             >
 
-            <RelativeLayout
+            <com.facebook.drawee.view.SimpleDraweeView
+
+                android:id="@+id/myhome_header"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:roundAsCircle="true"
+                />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/myhome_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/myhome_header"
+                android:layout_alignRight="@id/myhome_header"
+                app:overlayImage="@drawable/ic_pw"
+                app:roundAsCircle="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myhome_header"
+                android:layout_centerHorizontal="true"
+                android:text="Mark Steve"
+                android:textColor="@color/white"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="bottom"
+            >
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="?android:attr/actionBarSize"
-                android:background="@color/primary"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/warm_grey"
                 >
+            </View>
 
-                <com.facebook.drawee.view.SimpleDraweeView
-
-                    android:id="@+id/myhome_header"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerInParent="true"
-                    app:roundAsCircle="true"
-                    />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/myhome_gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/myhome_header"
-                    android:layout_alignRight="@id/myhome_header"
-                    app:overlayImage="@drawable/ic_pw"
-                    app:roundAsCircle="true"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/myhome_header"
-                    android:layout_centerHorizontal="true"
-                    android:text="Mark Steve"
-                    android:textColor="@color/white"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <android.support.design.widget.TabLayout
+                android:id="@+id/myhome_tab"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:layout_gravity="bottom"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="75dp"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/primary"
+                app:tabIndicatorHeight="1.5dp"
+                app:tabSelectedTextColor="@color/primary_dark"
+                app:tabTextAppearance="@style/Qc.TextCommonGrey"
+                app:tabTextColor="@color/primary"
                 >
+            </android.support.design.widget.TabLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/warm_grey"
-                    >
-                </View>
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/myhome_tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginRight="75dp"
-                    app:tabGravity="center"
-                    app:tabIndicatorColor="@color/primary"
-                    app:tabIndicatorHeight="1.5dp"
-                    app:tabSelectedTextColor="@color/primary_dark"
-                    app:tabTextAppearance="@style/Qc.TextCommonGrey"
-                    app:tabTextColor="@color/primary"
-                    >
-                </android.support.design.widget.TabLayout>
-
-            </RelativeLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/cyan"
-                android:gravity="center_vertical"
-                android:minHeight="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:titleMarginStart="20dp"
-
-                app:titleTextAppearance="@style/ToolbarStyle"
-
-                >
-
-            </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
 
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/cyan"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:titleMarginStart="20dp"
+        app:titleTextAppearance="@style/ToolbarStyle"
+
+        >
+
+    </android.support.v7.widget.Toolbar>
 
     <TextView
         android:layout_width="wrap_content"

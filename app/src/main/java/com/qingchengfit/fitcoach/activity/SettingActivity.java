@@ -32,10 +32,10 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
                 .commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() == 1) {
-            super.onBackPressed();
-        } else fragmentManager.popBackStack();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (fragmentManager.getBackStackEntryCount() == 1) {
+//            super.onBackPressed();
+//        } else fragmentManager.popBackStack();
+//    }
 }
