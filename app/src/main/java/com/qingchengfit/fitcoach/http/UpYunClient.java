@@ -4,6 +4,8 @@ import com.paper.paperbaselibrary.utils.LogUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import main.java.com.UpYun;
 
@@ -35,11 +37,28 @@ public class UpYunClient {
         boolean ret = false;
         try {
             upYun.setContentMD5(UpYun.md5(file));
-            ret = upYun.writeFile("/header/" + userid + "/", file, true);
+            ret = upYun.writeFile("/header/123123/" + file.getName(), file, true);
         } catch (IOException e) {
             LogUtil.e("Upyun", "upload headerimg err:" + e.getMessage());
         }
         return ret;
+    }
+
+    public static void readDir(String path) {
+        // 获取目录中文件列表
+        List<UpYun.FolderItem> items = init().readDir(path);
+        for (int i = 0; i < items.size(); i++) {
+            LogUtil.e(items.get(i).name);
+            LogUtil.e(items.get(i).type);
+        }
+    }
+
+    public static void readFile(String path) {
+        // 获取文件信息
+        Map<String, String> info = init().getFileInfo(path);
+        String type = info.get("type");
+        String size = info.get("size");
+        String date = info.get("date");
     }
 
 

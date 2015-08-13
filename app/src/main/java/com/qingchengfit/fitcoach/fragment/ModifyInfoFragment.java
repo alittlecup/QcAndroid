@@ -1,6 +1,8 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -10,10 +12,22 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.FileUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.http.bean.User;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,18 +39,18 @@ public class ModifyInfoFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static int SELECT_PIC_KITKAT = 10;
+    public static int SELECT_PIC = 11;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.modifyinfo_header_pic)
     SimpleDraweeView modifyinfoHeaderPic;
     @Bind(R.id.comple_gender)
     RadioGroup compleGender;
-
+    Gson gson = new Gson();
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-
     public ModifyInfoFragment() {
         // Required empty public constructor
     }
@@ -82,6 +96,53 @@ public class ModifyInfoFragment extends Fragment {
         return view;
     }
 
+    @OnClick(R.id.modifyinfo_header_pic)
+    public void onChangeHeader() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/jpeg");
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            startActivityForResult(intent, SELECT_PIC_KITKAT);
+        } else {
+            startActivityForResult(intent, SELECT_PIC);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//            if (requestCode == SELECT_PIC){
+//
+//            }else if (requestCode == SELECT_PIC_KITKAT){
+//
+//            }
+        String filepath = "";
+        if (resultCode == -1) {
+            filepath = FileUtils.getPath(getActivity(), data.getData());
+        }
+
+        User user = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "user_info", ""), User.class);
+        LogUtil.e(filepath);
+        Observable.just(filepath)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(s -> {
+                    File upFile = new File(s);
+                    boolean reslut = UpYunClient.upLoadImg(user.id, upFile);
+                    if (reslut) {
+                        LogUtil.e("success");
+                        Observable.just(upFile)
+                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .subscribe(file -> {
+                                    modifyinfoHeaderPic.setImageURI(Uri.fromFile(file));
+                                });
+
+                    } else {
+
+                    }
+                });
+
+
+    }
 
     @Override
     public void onDestroyView() {
