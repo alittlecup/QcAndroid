@@ -23,6 +23,13 @@ public class User {
     public String phone;
     @SerializedName("id")
     public String id;
-
+    @SerializedName("city")
+    public String city;
+    @SerializedName("description")
+    public String desc;
+    @SerializedName("avatar")
+    public String avatar;
+    @SerializedName("gender")
+    public int gender;
 
 }

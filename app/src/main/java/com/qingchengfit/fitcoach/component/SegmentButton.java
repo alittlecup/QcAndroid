@@ -23,10 +23,17 @@ import com.qingchengfit.fitcoach.R;
  */
 public class SegmentButton extends RadioButton {
 
+    OnCheckedChangeListener mListener;
     private int mTextColor = Color.BLACK;
 
     public SegmentButton(Context context) {
         super(context);
+        mTextColor = getResources().getColor(R.color.text_black);
+        setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                SegmentButton.this.setTextColor(getResources().getColor(R.color.primary));
+            } else SegmentButton.this.setTextColor(mTextColor);
+        });
     }
 
     public SegmentButton(Context context, AttributeSet attrs) {
@@ -35,12 +42,16 @@ public class SegmentButton extends RadioButton {
         init(attrs);
     }
 
+    public SegmentButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(attrs);
+    }
+
     private void init(AttributeSet attrs) {
         mTextColor = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/android", "textColor", Color.BLACK);
         if (isChecked()) {
             setTextColor(getResources().getColor(R.color.primary));
         }
-//        setOnCheckedChangeListener(new SegmentChangeListener());
         setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -50,13 +61,6 @@ public class SegmentButton extends RadioButton {
             }
         });
     }
-
-    public SegmentButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs);
-    }
-
-    OnCheckedChangeListener mListener;
 
     @Override
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {

@@ -68,7 +68,7 @@
     <TencentWeibo
         AppKey="801307650"
         AppSecret="ae36f4ee3946e1cbb98d6965b0b2ff5c"
-        Enable="true"
+        Enable="false"
         Id="2"
         RedirectUri="http://sharesdk.cn"
         SortId="2" />
@@ -95,16 +95,16 @@
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
     <Wechat
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
+        AppId="wxfd52b612935d84ea"
+        AppSecret="1ef97c532db3c9aaa0649a705ca2123d"
         BypassApproval="false"
         Enable="true"
         Id="4"
         SortId="4" />
     
     <WechatMoments
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
+        AppId="wxfd52b612935d84ea"
+        AppSecret="1ef97c532db3c9aaa0649a705ca2123d"
         BypassApproval="false"
         Enable="true"
         Id="5"
@@ -129,7 +129,7 @@
     <Facebook
         ConsumerKey="107704292745179"
         ConsumerSecret="38053202e1a5fe26c80c753071f0b573"
-        Enable="true"
+        Enable="false"
         Id="8"
         RedirectUrl="http://mob.com"
         SortId="8" />
@@ -138,7 +138,7 @@
         CallbackUrl="http://mob.com"
         ConsumerKey="LRBM0H75rWrU9gNHvlEAA2aOy"
         ConsumerSecret="gbeWsZvA9ELJSdoBzJ5oLKX0TU09UOwrzdGfo9Tg7DjyGuMe8G"
-        Enable="true"
+        Enable="false"
         Id="9"
         SortId="9" />
     

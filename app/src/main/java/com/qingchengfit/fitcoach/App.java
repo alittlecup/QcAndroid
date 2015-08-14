@@ -4,6 +4,10 @@ import android.app.Application;
 import android.support.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.qingchengfit.fitcoach.di.ApplicationComponet;
+import com.qingchengfit.fitcoach.di.ApplicationModule;
+import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
+import com.qingchengfit.fitcoach.di.RxBusModule;
 
 
 /**
@@ -20,34 +24,33 @@ import com.facebook.drawee.backends.pipeline.Fresco;
  * Created by Paper on 15/7/29 2015.
  */
 public class App extends Application {
-//    public ApplicationComponet getComponet(){
-//        if (componet!=null)
-//            return componet;
-//        else return null;
-//    }
+    private ApplicationComponet componet;
 
-//    public void setComponet(ApplicationComponet componet) {
-//        this.componet = componet;
-//    }
+    public ApplicationComponet getComponet() {
+        if (componet != null)
+            return componet;
+        else return null;
+    }
+
 //
-//    private ApplicationComponet componet;
+public void setComponet(ApplicationComponet componet) {
+    this.componet = componet;
+}
+
 //
     @Override
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
         Fresco.initialize(this);
-
-//        setupGraph();
+        setupGraph();
     }
 
-//    private void setupGraph() {
-//
-//        componet = DaggerApplicationComponet.builder()
-//                .rxBusModule(new RxBusModule())
-//                .applicationModule(new ApplicationModule(this))
-//                .build();
-//
-//
-//    }
+    private void setupGraph() {
+
+        componet = DaggerApplicationComponet.builder()
+                .rxBusModule(new RxBusModule())
+                .applicationModule(new ApplicationModule(this))
+                .build();
+    }
 }

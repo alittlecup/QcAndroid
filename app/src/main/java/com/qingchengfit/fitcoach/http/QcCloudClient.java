@@ -3,11 +3,14 @@ package com.qingchengfit.fitcoach.http;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
+import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
 import com.qingchengfit.fitcoach.http.bean.QcResponCode;
 import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
+import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.squareup.okhttp.OkHttpClient;
@@ -19,6 +22,8 @@ import retrofit.client.OkClient;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
+import retrofit.http.Path;
 
 
 /**
@@ -37,10 +42,35 @@ import retrofit.http.POST;
 public class QcCloudClient {
 
     public static int SUCCESS = 200;
-
-    public PostApi postApi;
     public static QcCloudClient client;
+    public PostApi postApi;
     public GetApi getApi;
+
+    public QcCloudClient() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Configs.Server)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setClient(new OkClient(okHttpClient))
+                .setRequestInterceptor(request ->
+                        {
+                            QcResponToken responToken = getApi.qcGetToken();
+                            request.addHeader("X-CSRFToken", responToken.data.token);
+                            request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+                        }
+                )
+                .build();
+        RestAdapter restAdapter2 = new RestAdapter.Builder()
+                .setEndpoint(Configs.Server)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+//                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
+                .build();
+
+        postApi = restAdapter.create(PostApi.class);
+        getApi = restAdapter2.create(GetApi.class);
+    }
 
     public static QcCloudClient getApi() {
         if (client == null) {
@@ -49,13 +79,15 @@ public class QcCloudClient {
 
     }
 
-
-
     public interface GetApi {
         //获取token
         @GET("/api/csrftoken/")
         QcResponToken qcGetToken();
+
+        @POST("/api/users/{id}")
+        rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
     }
+
 
     public interface PostApi {
 
@@ -76,37 +108,17 @@ public class QcCloudClient {
         @POST("/api/check/verify/")
         rx.Observable<QcResponCode> qcCheckCode(@Body CheckCode checkCode);
 
+        @POST("/api/users/phone/check/")
+        rx.Observable<QcResponCheckPhone> qcCheckPhone(@Body CheckPhoneBean phone);
+
+        @PUT("/api/users/{id}/")
+        rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
+
         @GET("/")
         rx.Observable<QcResponse> getTest();
 
-    }
 
 
-    public QcCloudClient() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-                .setClient(new OkClient(okHttpClient))
-
-                .setRequestInterceptor(request ->
-                        {
-                            QcResponToken responToken = getApi.qcGetToken();
-                            request.addHeader("X-CSRFToken", responToken.data.token);
-                            request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
-                        }
-                )
-                .build();
-        RestAdapter restAdapter2 = new RestAdapter.Builder()
-                .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-//                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
-                .build();
-
-        postApi = restAdapter.create(PostApi.class);
-        getApi = restAdapter2.create(GetApi.class);
     }
 
 

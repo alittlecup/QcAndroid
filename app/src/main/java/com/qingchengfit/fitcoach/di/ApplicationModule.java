@@ -1,6 +1,13 @@
 package com.qingchengfit.fitcoach.di;
 
 
+import com.qingchengfit.fitcoach.App;
+
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+
 /**
  * power by
  * <p/>
@@ -15,17 +22,17 @@ package com.qingchengfit.fitcoach.di;
  * Created by Paper on 15/6/16 2015.
  */
 
-//@Module
-//public class ApplicationModule {
-//    App app;
-//
-//    public ApplicationModule(App app) {
-//        this.app = app;
-//    }
-//
-//    @Singleton
-//    @Provides
-//    public App getApp() {
-//        return app;
-//    }
-//}
+@Module
+public class ApplicationModule {
+    App app;
+
+    public ApplicationModule(App app) {
+        this.app = app;
+    }
+
+    @Singleton
+    @Provides
+    public App getApp() {
+        return app;
+    }
+}

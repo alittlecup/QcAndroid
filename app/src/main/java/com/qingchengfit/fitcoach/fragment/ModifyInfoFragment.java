@@ -51,6 +51,7 @@ public class ModifyInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private User user;
     public ModifyInfoFragment() {
         // Required empty public constructor
     }
@@ -80,6 +81,17 @@ public class ModifyInfoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        user = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "user_info", ""), User.class);
+//        QcCloudClient.getApi()
+//                .getApi.qcGetUserInfo(user.id)
+//                .subscribeOn(Schedulers.newThread())
+//                .subscribe(qcResponUserInfo-> {
+//                    LogUtil.e("Haahahahaha");
+//                    user = qcResponUserInfo.data.user;
+//                });
+
+
+
     }
 
     @Override
@@ -93,6 +105,7 @@ public class ModifyInfoFragment extends Fragment {
         toolbar.setNavigationOnClickListener(view1 ->
                         getActivity().onBackPressed()
         );
+
         return view;
     }
 

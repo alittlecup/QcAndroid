@@ -48,6 +48,7 @@
             >
 
             <EditText
+                android:id="@+id/modifyinfo_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:hint="姓名"
@@ -120,6 +121,7 @@
 
 
             <EditText
+
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:hint="城市"
@@ -127,6 +129,7 @@
                 />
 
             <EditText
+                android:id="@+id/modifyinfo_desc"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:layout_marginLeft="5dp"

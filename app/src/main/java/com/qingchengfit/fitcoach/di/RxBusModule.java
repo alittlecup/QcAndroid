@@ -1,6 +1,11 @@
 package com.qingchengfit.fitcoach.di;
 
 
+import com.qingchengfit.fitcoach.RxBus;
+
+import dagger.Module;
+import dagger.Provides;
+
 /**
  * power by
  * <p/>
@@ -14,10 +19,10 @@ package com.qingchengfit.fitcoach.di;
  * <p/>
  * Created by Paper on 15/6/16 2015.
 // */
-//@Module
-//public class RxBusModule {
-//    @Provides
-//    RxBus getRxBus() {
-//        return RxBus.getBus();
-//    }
-//}
+@Module
+public class RxBusModule {
+    @Provides
+    RxBus getRxBus() {
+        return RxBus.getBus();
+    }
+}

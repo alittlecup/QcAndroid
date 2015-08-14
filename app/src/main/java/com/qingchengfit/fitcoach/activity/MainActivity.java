@@ -1,16 +1,22 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
+import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -36,6 +42,8 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     FrameLayout mainFraglayout;
     @Bind(R.id.drawer_headerview)
     RelativeLayout drawerHeaderview;
+    @Bind(R.id.drawer_radiogroup)
+    RadioGroup drawerRadiogroup;
 //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
 
@@ -58,6 +66,10 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                 mainDrawerlayout.openDrawer(Gravity.LEFT);
             }
         });
+
+        initDrawer();
+
+
 //        View view = View.inflate(this,R.layout.drawer_header,null);
 //        mainNavi.addHeaderView(view);
 //        view.setOnClickListener(view1 ->
@@ -67,11 +79,24 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //        );
     }
 
+    private void initDrawer() {
+        SegmentButton button = new SegmentButton(this);
+        button.setText("测试");
+        button.setButtonDrawable(DynamicSelector.getSelector(getResources().getDrawable(R.drawable.ic_drawer_meeting_normal), getResources().getDrawable(R.drawable.ic_drawer_meeting_checked)));
+        button.setPadding(15, 0, 0, 0);
+
+        drawerRadiogroup.addView(button);
+        ImageRequest request = ImageRequest.fromUri("www.baidu.com");
+        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(this);
+        simpleDraweeView.setImageURI(Uri.parse(""));
+
+    }
+
     @OnClick(R.id.drawer_headerview)
-    public void onHeadClick(){
+    public void onHeadClick() {
         mainDrawerlayout.closeDrawers();
         mFragmentManager.beginTransaction()
-                .replace(R.id.main_fraglayout,new MyHomeFragment())
+                .replace(R.id.main_fraglayout, new MyHomeFragment())
                 .commit();
     }
 
