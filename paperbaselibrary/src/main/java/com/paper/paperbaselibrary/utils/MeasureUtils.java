@@ -1,6 +1,7 @@
 package com.paper.paperbaselibrary.utils;
 
 import android.content.res.Resources;
+import android.support.annotation.DimenRes;
 import android.util.TypedValue;
 
 /**
@@ -25,7 +26,7 @@ public class MeasureUtils {
         return (int) px;
     }
 
-    public static int dpToPx(int res, Resources resources) {
+    public static int dpToPx(@DimenRes int res, Resources resources) {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, resources.getDimension(res), resources.getDisplayMetrics());
         return (int) px;
     }

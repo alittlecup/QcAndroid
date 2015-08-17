@@ -40,91 +40,114 @@
             />
     </RelativeLayout>
 
-    <RadioGroup
-        android:id="@+id/drawer_radiogroup"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-
+        android:scrollbars="none"
         >
 
-        <!--<com.qingchengfit.fitcoach.component.SegmentButton-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:button="@drawable/ic_drawer_schedule_selector"-->
-        <!--android:paddingLeft="@dimen/qc_edit_drawable_padding"-->
-        <!--android:text="日程安排"-->
-        <!--/>-->
-
-
-    </RadioGroup>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dddddd"
-        >
-
-    </View>
-    <LinearLayout
-        android:id="@+id/drawer_modules"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:orientation="vertical"
-
-        >
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@drawable/qc_backgroud_selector"
-            android:clickable="true"
-
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             >
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="我的课程计划"
-                />
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical|right"
-                android:text="102"
-                />
-        </FrameLayout>
-        <FrameLayout
+
+
+            <RadioGroup
+                android:id="@+id/drawer_radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+
+
+                >
+
+                <!--<com.qingchengfit.fitcoach.component.SegmentButton-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@drawable/ic_drawer_schedule_selector"-->
+                <!--android:paddingLeft="@dimen/qc_edit_drawable_padding"-->
+                <!--android:text="日程安排"-->
+                <!--/>-->
+
+
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dddddd"
+            >
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/drawer_modules"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@drawable/qc_backgroud_selector"
-            android:clickable="true"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            >
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="我的健身房"
-                />
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical|right"
-                android:text="102"
-                />
-        </FrameLayout>
-    </LinearLayout>
+                android:clickable="false"
+                android:orientation="vertical"
 
+            >
+
+                <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="58dp"-->
+                <!--android:background="@drawable/qc_backgroud_selector"-->
+                <!--android:clickable="true"-->
+
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                <!-->-->
+
+                <!--<TextView-->
+                <!--style="@style/Qc.TextCommonBlack"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="我的课程计划"-->
+                <!--/>-->
+
+                <!--<TextView-->
+                <!--style="@style/Qc.TextCommonBlack"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:gravity="center_vertical|right"-->
+                <!--android:text="102"-->
+                <!--/>-->
+                <!--</FrameLayout>-->
+
+                <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="58dp"-->
+                <!--android:background="@drawable/qc_backgroud_selector"-->
+                <!--android:clickable="true"-->
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                <!-->-->
+
+                <!--<TextView-->
+                <!--style="@style/Qc.TextCommonBlack"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="我的健身房"-->
+                <!--/>-->
+
+                <!--<TextView-->
+                <!--style="@style/Qc.TextCommonBlack"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:gravity="center_vertical|right"-->
+                <!--android:text="102"-->
+                <!--/>-->
+                <!--</FrameLayout>-->
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -125,8 +125,6 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //                .subscribe(response -> {
 //
 //                });
-
-
     }
 
     private void setupModules(List<DrawerModule> modules) {
@@ -134,7 +132,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
             DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
             item.setTitle(module.title);
             item.setCount(module.text);
-            drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(getResources().getDimension(R.dimen.qc_drawer_item_height), getResources())));
+            drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         }
     }
 
@@ -178,11 +176,10 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                         button.setText(btnInfo.guideText);
                         button.setButtonDrawable(drawable1);
                         button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
-                        button.setMinHeight(MeasureUtils.dpToPx(R.dimen.qc_drawer_item_height, getResources()));
                         button.setOnClickListener(view -> {
                             LogUtil.e("toSomeWhere");
                         });
-                        drawerRadiogroup.addView(button);
+                        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
                     });
 
                 })
