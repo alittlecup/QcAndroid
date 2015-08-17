@@ -332,6 +332,53 @@ public class PhoneInfoUtils {
     }
 
     /**
+     * 获取手机cpu信息
+     *
+     * @return
+     */
+
+    private static String getCpuInfo() {
+        String str1 = "/proc/cpuinfo";
+        String str2 = "";
+        String[] cpuInfo = {"", ""}; // 1-cpu型号 //2-cpu频率
+        String[] arrayOfString;
+        try {
+            FileReader fr = new FileReader(str1);
+            BufferedReader localBufferedReader = new BufferedReader(fr, 8192);
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            for (int i = 2; i < arrayOfString.length; i++) {
+                cpuInfo[0] = cpuInfo[0] + arrayOfString[i] + " ";
+            }
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            cpuInfo[1] += arrayOfString[2];
+            localBufferedReader.close();
+        } catch (IOException e) {
+        }
+        // Log.i(TAG, "cpuinfo:" + cpuInfo[0] + " " + cpuInfo[1]);
+        return "1-cpu型号:" + cpuInfo[0] + "2-cpu频率:" + cpuInfo[1];
+    }// 和内存信息同理，cpu信息可通过读取/proc/cpuinfo文件来得到，其中第一行为cpu型号，第二行为cpu频率。
+
+    public static String getHandSetInfo() {
+        String handSetInfo = "手机型号:" + android.os.Build.MODEL
+                + "\n系统版本:" + android.os.Build.VERSION.RELEASE
+                + "\n产品型号:" + android.os.Build.PRODUCT
+                + "\n版本显示:" + android.os.Build.DISPLAY
+                + "\n系统定制商:" + android.os.Build.BRAND
+                + "\n设备参数:" + android.os.Build.DEVICE
+                + "\n开发代号:" + android.os.Build.VERSION.CODENAME
+                + "\nSDK版本号:" + android.os.Build.VERSION.SDK_INT
+                + "\nCPU类型:" + getCpuInfo()
+                + "\n硬件类型:" + android.os.Build.HARDWARE
+                + "\n主机:" + android.os.Build.HOST
+                + "\n生产ID:" + android.os.Build.ID
+                + "\nROM制造商:" + android.os.Build.MANUFACTURER // 这行返回的是rom定制商的名称
+                ;
+        return handSetInfo;
+    }
+
+    /**
      * 获取外网ip
      *
      * @param ipaddr
@@ -367,35 +414,6 @@ public class PhoneInfoUtils {
         return "";
     }
 
-    /**
-     * 获取手机cpu信息
-     *
-     * @return
-     */
-
-    private String getCpuInfo() {
-        String str1 = "/proc/cpuinfo";
-        String str2 = "";
-        String[] cpuInfo = {"", ""}; // 1-cpu型号 //2-cpu频率
-        String[] arrayOfString;
-        try {
-            FileReader fr = new FileReader(str1);
-            BufferedReader localBufferedReader = new BufferedReader(fr, 8192);
-            str2 = localBufferedReader.readLine();
-            arrayOfString = str2.split("\\s+");
-            for (int i = 2; i < arrayOfString.length; i++) {
-                cpuInfo[0] = cpuInfo[0] + arrayOfString[i] + " ";
-            }
-            str2 = localBufferedReader.readLine();
-            arrayOfString = str2.split("\\s+");
-            cpuInfo[1] += arrayOfString[2];
-            localBufferedReader.close();
-        } catch (IOException e) {
-        }
-        // Log.i(TAG, "cpuinfo:" + cpuInfo[0] + " " + cpuInfo[1]);
-        return "1-cpu型号:" + cpuInfo[0] + "2-cpu频率:" + cpuInfo[1];
-    }// 和内存信息同理，cpu信息可通过读取/proc/cpuinfo文件来得到，其中第一行为cpu型号，第二行为cpu频率。
-
     private String getTimes(Context mContext) {
         long ut = SystemClock.elapsedRealtime() / 1000;
         if (ut == 0) {
@@ -404,25 +422,6 @@ public class PhoneInfoUtils {
         int m = (int) ((ut / 60) % 60);
         int h = (int) ((ut / 3600));
         return h + " 小时" + +m + " 分钟";
-    }
-
-
-    private String getHandSetInfo() {
-        String handSetInfo = "手机型号:" + android.os.Build.MODEL
-                + "\n系统版本:" + android.os.Build.VERSION.RELEASE
-                + "\n产品型号:" + android.os.Build.PRODUCT
-                + "\n版本显示:" + android.os.Build.DISPLAY
-                + "\n系统定制商:" + android.os.Build.BRAND
-                + "\n设备参数:" + android.os.Build.DEVICE
-                + "\n开发代号:" + android.os.Build.VERSION.CODENAME
-                + "\nSDK版本号:" + android.os.Build.VERSION.SDK_INT
-                + "\nCPU类型:" + android.os.Build.CPU_ABI
-                + "\n硬件类型:" + android.os.Build.HARDWARE
-                + "\n主机:" + android.os.Build.HOST
-                + "\n生产ID:" + android.os.Build.ID
-                + "\nROM制造商:" + android.os.Build.MANUFACTURER // 这行返回的是rom定制商的名称
-                ;
-        return handSetInfo;
     }
 
 

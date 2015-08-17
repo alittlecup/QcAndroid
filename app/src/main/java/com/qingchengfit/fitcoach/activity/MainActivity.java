@@ -11,6 +11,9 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.paper.paperbaselibrary.utils.DynamicSelector;
+import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.MeasureUtils;
+import com.paper.paperbaselibrary.utils.PhoneInfoUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
@@ -21,6 +24,7 @@ import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.GuideButtonInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -94,8 +98,23 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
     private void initDrawer() {
 
+        LogUtil.e(PhoneInfoUtils.getHandSetInfo());
+
+//        QcCloudClient.getApi()
+//                .downLoadApi
+//                .qcDownload("/header/123123/IMG_20150812_182222716.jpg")
+//                .subscribeOn(Schedulers.newThread())
+//                .subscribe(response -> {
+//
+//                });
+
+
+    }
+
+    public void setupBtn(GuideButtonInfo btnInfo) {
+        SegmentButton button = new SegmentButton(this);
         List<Drawable> drawables = new ArrayList<>();
-        Observable.just("")
+        Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
                 .flatMap(s -> {
                     File f = new File(Configs.ExternalPath + s);
                     if (!f.exists()) {
@@ -125,31 +144,17 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                 )
                 .last()
                 .subscribe(s1 -> {
-                    StateListDrawable drawable = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
+                    StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
+                    button.setText(btnInfo.guideText);
+                    button.setButtonDrawable(drawable1);
+                    button.setPadding(MeasureUtils.dpToPx(15, getResources()), 0, 0, 0);
 
+                    button.setOnClickListener(view -> {
+                        LogUtil.e("toSomeWhere");
+                    });
+                    drawerRadiogroup.addView(button);
                 })
         ;
-
-//        QcCloudClient.getApi()
-//                .downLoadApi
-//                .qcDownload("/header/123123/IMG_20150812_182222716.jpg")
-//                .subscribeOn(Schedulers.newThread())
-//                .subscribe(response -> {
-//
-//                });
-
-
-        SegmentButton button = new SegmentButton(this);
-        button.setText("测试");
-        button.setButtonDrawable(DynamicSelector.getSelector(getResources().getDrawable(R.drawable.ic_drawer_meeting_normal), getResources().getDrawable(R.drawable.ic_drawer_meeting_checked)));
-        button.setPadding(15, 0, 0, 0);
-
-        drawerRadiogroup.addView(button);
-
-
-    }
-
-    public void setupBtn() {
 
     }
 
