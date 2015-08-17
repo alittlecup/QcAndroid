@@ -11,6 +11,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,29 @@ import java.io.UnsupportedEncodingException;
  * Created by Paper on 15/7/31 2015.
  */
 public class FileUtils {
+
+    public static File getFileFromBytes(byte[] b, String outputFile) {
+        BufferedOutputStream stream = null;
+        File file = null;
+        try {
+            file = new File(outputFile);
+            FileOutputStream fstream = new FileOutputStream(file);
+            stream = new BufferedOutputStream(fstream);
+            stream.write(b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return file;
+    }
+
     public static void saveCache(String key,String value){
         if (TextUtils.isEmpty(value))
             return;

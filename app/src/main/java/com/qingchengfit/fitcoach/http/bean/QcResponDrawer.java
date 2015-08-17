@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * power by
  * <p>
@@ -13,10 +15,7 @@ package com.qingchengfit.fitcoach.http.bean;
  * <p>
  * Created by Paper on 15/8/17 2015.
  */
-public class GuideButtonInfo {
-    public String drawableOn;
-    public String drawableOff;
-    public String guideText;
-    public String intentUrl;
-
+public class QcResponDrawer extends QcResponse {
+    @SerializedName("data")
+    public DrawerData data;
 }

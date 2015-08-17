@@ -25,6 +25,11 @@ public class MeasureUtils {
         return (int) px;
     }
 
+    public static int dpToPx(int res, Resources resources) {
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, resources.getDimension(res), resources.getDisplayMetrics());
+        return (int) px;
+    }
+
 
     public static int getScreenWidth(Resources resources) {
         return resources.getDisplayMetrics().widthPixels;

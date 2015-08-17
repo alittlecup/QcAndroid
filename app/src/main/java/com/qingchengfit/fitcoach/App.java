@@ -9,6 +9,8 @@ import com.qingchengfit.fitcoach.di.ApplicationModule;
 import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
 import com.qingchengfit.fitcoach.di.RxBusModule;
 
+import java.io.File;
+
 
 /**
  * power by
@@ -44,7 +46,15 @@ public void setComponet(ApplicationComponet componet) {
         MultiDex.install(this);
         Fresco.initialize(this);
 //        CrashHandler.getInstance().init(this);
+        setupFile();
         setupGraph();
+    }
+
+    private void setupFile() {
+        File file = new File(Configs.ExternalPath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
     }
 
     private void setupGraph() {

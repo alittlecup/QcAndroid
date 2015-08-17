@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
+import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PhoneInfoUtils;
@@ -20,18 +25,19 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
+import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.GuideButtonInfo;
+import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
+import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-
-import org.apache.commons.io.IOUtils;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +67,10 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     RelativeLayout drawerHeaderview;
     @Bind(R.id.drawer_radiogroup)
     RadioGroup drawerRadiogroup;
+    @Bind(R.id.header_icon)
+    SimpleDraweeView headerIcon;
+    @Bind(R.id.drawer_modules)
+    LinearLayout drawerModules;
 //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
 
@@ -99,7 +109,15 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     private void initDrawer() {
 
         LogUtil.e(PhoneInfoUtils.getHandSetInfo());
+        QcCloudClient.getApi().getApi
+                .getDrawerInfo()
+                .subscribe(qcResponDrawer -> {
+                    for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
+                        setupBtn(qcResponDrawer.data.guide.get(i));
 
+                    }
+                    setupModules(qcResponDrawer.data.modules);
+                });
 //        QcCloudClient.getApi()
 //                .downLoadApi
 //                .qcDownload("/header/123123/IMG_20150812_182222716.jpg")
@@ -111,30 +129,41 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
     }
 
-    public void setupBtn(GuideButtonInfo btnInfo) {
+    private void setupModules(List<DrawerModule> modules) {
+        for (DrawerModule module : modules) {
+            DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+            item.setTitle(module.title);
+            item.setCount(module.text);
+            drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(getResources().getDimension(R.dimen.qc_drawer_item_height), getResources())));
+        }
+    }
+
+    public void setupBtn(DrawerGuide btnInfo) {
         SegmentButton button = new SegmentButton(this);
         List<Drawable> drawables = new ArrayList<>();
         Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
                 .flatMap(s -> {
-                    File f = new File(Configs.ExternalPath + s);
+                    File f = new File(Configs.ExternalPath, s.substring(s.length() - 20, s.length()));
                     if (!f.exists()) {
-                        Response response = QcCloudClient.getApi().downLoadApi
-                                .qcDownload("");
+//                        Response response = QcCloudClient.getApi().downLoadApi
+//                                .qcDownload(s);
+                        OkHttpClient httpClient = new OkHttpClient();
+                        Request request = new Request.Builder().url(s).build();
 
                         try {
-                            FileOutputStream output = new FileOutputStream(f);
-                            IOUtils.write((CharSequence) response.getBody(), output);
-                            output.close();
+
+                            com.squareup.okhttp.Response response = httpClient.newCall(request).execute();
+                            FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
+//                            FileOutputStream output = new FileOutputStream(f);
+//                            IOUtils.write(response.body().bytes(), output);
+//                            FileUtils.copyInputStreamToFile(response.body().byteStream(),f);
 
                         } catch (FileNotFoundException e) {
                             RevenUtils.sendException("initDrawer", TAG, e);
                         } catch (IOException e) {
                             RevenUtils.sendException("initDrawer", TAG, e);
                         }
-
                     }
-
-
                     return Observable.just(f.getAbsolutePath());
                 })
                 .flatMap(s2 -> {
@@ -144,15 +173,18 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                 )
                 .last()
                 .subscribe(s1 -> {
-                    StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
-                    button.setText(btnInfo.guideText);
-                    button.setButtonDrawable(drawable1);
-                    button.setPadding(MeasureUtils.dpToPx(15, getResources()), 0, 0, 0);
-
-                    button.setOnClickListener(view -> {
-                        LogUtil.e("toSomeWhere");
+                    runOnUiThread(() -> {
+                        StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
+                        button.setText(btnInfo.guideText);
+                        button.setButtonDrawable(drawable1);
+                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
+                        button.setMinHeight(MeasureUtils.dpToPx(R.dimen.qc_drawer_item_height, getResources()));
+                        button.setOnClickListener(view -> {
+                            LogUtil.e("toSomeWhere");
+                        });
+                        drawerRadiogroup.addView(button);
                     });
-                    drawerRadiogroup.addView(button);
+
                 })
         ;
 

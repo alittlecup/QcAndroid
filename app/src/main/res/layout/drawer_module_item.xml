@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qingchengfit.fitcoach.component.DrawerModuleItem
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    android:background="@drawable/qc_backgroud_selector"
+    android:clickable="true"
+
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+    <TextView
+        android:id="@+id/drawer_module_title"
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="我的学员"
+        />
+
+    <TextView
+        android:id="@+id/drawer_module_count"
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:gravity="center_vertical|right"
+        android:text="102"
+        />
+</com.qingchengfit.fitcoach.component.DrawerModuleItem>

@@ -30,6 +30,6 @@ public class Configs {
     public static String APPNAME      ="QingChengCoach";
 
     //私有外部路径
-    public static String ExternalPath = Environment.getExternalStorageDirectory()+"/"+APPNAME;
+    public static String ExternalPath = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/";
 
 }

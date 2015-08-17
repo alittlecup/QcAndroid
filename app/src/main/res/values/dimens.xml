@@ -3,5 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="qc_item_height">48dp</dimen>
+    <dimen name="qc_drawer_item_height">58dp</dimen>
     <dimen name="qc_edit_drawable_padding">15dp</dimen>
 </resources>

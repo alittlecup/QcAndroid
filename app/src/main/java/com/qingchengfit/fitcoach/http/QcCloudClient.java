@@ -8,6 +8,7 @@ import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
 import com.qingchengfit.fitcoach.http.bean.QcResponCode;
+import com.qingchengfit.fitcoach.http.bean.QcResponDrawer;
 import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
@@ -17,7 +18,9 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
 
+import retrofit.ErrorHandler;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -63,22 +66,29 @@ public class QcCloudClient {
                             request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
                         }
                 )
+                .setErrorHandler(new ErrorHandler() {
+                    @Override
+                    public Throwable handleError(RetrofitError cause) {
+
+                        return null;
+                    }
+                })
                 .build();
         RestAdapter restAdapter2 = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setClient(new OkClient(okHttpClient))
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
-        RestAdapter restAdapter3 = new RestAdapter.Builder()
-                .setEndpoint("http://zoneke-img.b0.upaiyun.com")
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-
+//        RestAdapter restAdapter3 = new RestAdapter.Builder()
+//                .setEndpoint("")
+//                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
-                .build();
+//                .build();
 
         postApi = restAdapter.create(PostApi.class);
         getApi = restAdapter2.create(GetApi.class);
-        downLoadApi = restAdapter3.create(DownLoadApi.class);
+//        downLoadApi = restAdapter3.create(DownLoadApi.class);
     }
 
     public static QcCloudClient getApi() {
@@ -95,6 +105,11 @@ public class QcCloudClient {
 
         @POST("/api/users/{id}")
         rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
+
+        @GET("/api/android/coaches/1/welcome/")
+        rx.Observable<QcResponDrawer> getDrawerInfo();
+
+
     }
 
 
@@ -129,8 +144,8 @@ public class QcCloudClient {
     }
 
     public interface DownLoadApi {
-        @GET("/{path}")
-        Response qcDownload(@Path("path") String path);
+        @GET("/")
+        Response qcDownload();
     }
 
 

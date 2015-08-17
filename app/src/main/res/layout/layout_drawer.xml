@@ -22,7 +22,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginLeft="24dp"
             android:baseline="32dp"
-            fresco:placeholderImage="@drawable/qingchenglogo"
+            fresco:placeholderImage="@drawable/img_default_male"
             fresco:roundAsCircle="true"
             >
 
@@ -43,7 +43,8 @@
     <RadioGroup
         android:id="@+id/drawer_radiogroup"
         android:layout_width="match_parent"
-        android:layout_height="167dp"
+        android:layout_height="wrap_content"
+
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
 
@@ -58,23 +59,7 @@
         <!--android:text="日程安排"-->
         <!--/>-->
 
-        <com.qingchengfit.fitcoach.component.SegmentButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@drawable/ic_drawer_statistic_selector"
-            android:paddingLeft="@dimen/qc_edit_drawable_padding"
-            android:text="数据报表"
-            />
 
-        <com.qingchengfit.fitcoach.component.SegmentButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:button="@drawable/ic_drawer_meeting_selector"
-            android:paddingLeft="@dimen/qc_edit_drawable_padding"
-            android:text="会议/培训"
-            />
     </RadioGroup>
     <View
         android:layout_width="match_parent"
@@ -84,37 +69,13 @@
 
     </View>
     <LinearLayout
+        android:id="@+id/drawer_modules"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="false"
         android:orientation="vertical"
 
         >
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@drawable/qc_backgroud_selector"
-            android:clickable="true"
-
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            >
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="我的学员"
-                />
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical|right"
-                android:text="102"
-                />
-        </FrameLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="58dp"
