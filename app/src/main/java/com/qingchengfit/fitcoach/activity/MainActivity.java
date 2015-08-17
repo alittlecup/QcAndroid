@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.activity;
 
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -9,17 +10,27 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
+import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,12 +38,14 @@ import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import rx.Observable;
 import rx.subscriptions.CompositeSubscription;
 
 //import javax.inject.Inject;
 
 public class MainActivity extends BaseAcitivity implements Callback<QcResponse> {
 
+    private static final String TAG = MainActivity.class.getName();
     ////    @Bind(R.id.float_btn)
 //    FloatingActionButton mFloatBtn;
     FragmentManager mFragmentManager;
@@ -80,15 +93,63 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     }
 
     private void initDrawer() {
+
+        List<Drawable> drawables = new ArrayList<>();
+        Observable.just("")
+                .flatMap(s -> {
+                    File f = new File(Configs.ExternalPath + s);
+                    if (!f.exists()) {
+                        Response response = QcCloudClient.getApi().downLoadApi
+                                .qcDownload("");
+
+                        try {
+                            FileOutputStream output = new FileOutputStream(f);
+                            IOUtils.write((CharSequence) response.getBody(), output);
+                            output.close();
+
+                        } catch (FileNotFoundException e) {
+                            RevenUtils.sendException("initDrawer", TAG, e);
+                        } catch (IOException e) {
+                            RevenUtils.sendException("initDrawer", TAG, e);
+                        }
+
+                    }
+
+
+                    return Observable.just(f.getAbsolutePath());
+                })
+                .flatMap(s2 -> {
+                            drawables.add(Drawable.createFromPath(s2));
+                            return Observable.just("");
+                        }
+                )
+                .last()
+                .subscribe(s1 -> {
+                    StateListDrawable drawable = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
+
+                })
+        ;
+
+//        QcCloudClient.getApi()
+//                .downLoadApi
+//                .qcDownload("/header/123123/IMG_20150812_182222716.jpg")
+//                .subscribeOn(Schedulers.newThread())
+//                .subscribe(response -> {
+//
+//                });
+
+
         SegmentButton button = new SegmentButton(this);
         button.setText("测试");
         button.setButtonDrawable(DynamicSelector.getSelector(getResources().getDrawable(R.drawable.ic_drawer_meeting_normal), getResources().getDrawable(R.drawable.ic_drawer_meeting_checked)));
         button.setPadding(15, 0, 0, 0);
 
         drawerRadiogroup.addView(button);
-        ImageRequest request = ImageRequest.fromUri("www.baidu.com");
-        SimpleDraweeView simpleDraweeView = new SimpleDraweeView(this);
-        simpleDraweeView.setImageURI(Uri.parse(""));
+
+
+    }
+
+    public void setupBtn() {
 
     }
 

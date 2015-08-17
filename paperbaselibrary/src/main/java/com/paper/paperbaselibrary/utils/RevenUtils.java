@@ -22,7 +22,7 @@ import net.kencochrane.raven.event.interfaces.ExceptionInterface;
  */
 public class RevenUtils {
 
-    public static void Reven(String reason, String tag, Exception e) {
+    public static void sendException(String reason, String tag, Throwable e) {
         String rawDsn = "http://e808f33e682c4b10963a41a03a6733fb:6eb9bfd0f4ea4ed48d2488774779df6e@cloudsentry.qingchengfit.cn/3";
         Raven raven = RavenFactory.ravenInstance(new Dsn(rawDsn));
 

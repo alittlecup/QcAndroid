@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -45,6 +46,7 @@ public class QcCloudClient {
     public static QcCloudClient client;
     public PostApi postApi;
     public GetApi getApi;
+    public DownLoadApi downLoadApi;
 
     public QcCloudClient() {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -67,9 +69,16 @@ public class QcCloudClient {
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
+        RestAdapter restAdapter3 = new RestAdapter.Builder()
+                .setEndpoint("http://zoneke-img.b0.upaiyun.com")
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+
+//                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
+                .build();
 
         postApi = restAdapter.create(PostApi.class);
         getApi = restAdapter2.create(GetApi.class);
+        downLoadApi = restAdapter3.create(DownLoadApi.class);
     }
 
     public static QcCloudClient getApi() {
@@ -117,8 +126,11 @@ public class QcCloudClient {
         @GET("/")
         rx.Observable<QcResponse> getTest();
 
+    }
 
-
+    public interface DownLoadApi {
+        @GET("/{path}")
+        Response qcDownload(@Path("path") String path);
     }
 
 
