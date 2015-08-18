@@ -76,7 +76,9 @@ public class XWalkFragment extends Fragment {
         return view;
     }
 
-
+    public void startLoadUrl(String url) {
+        mWebview.load(url, null);
+    }
 
     @Override
     public void onResume() {

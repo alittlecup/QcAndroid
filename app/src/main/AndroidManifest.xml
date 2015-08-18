@@ -149,7 +149,6 @@
                 <action android:name="android.intent.action" />
             </intent-filter>
         </activity>
-
         <!-- 【必须】 信鸽service -->
         <service
             android:name="com.tencent.android.tpush.service.XGPushService"

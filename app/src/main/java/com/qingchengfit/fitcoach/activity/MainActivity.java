@@ -75,6 +75,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //    NavigationView mainNavi;
 
     private CompositeSubscription _subscriptions;
+    private XWalkFragment xWalkFragment;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -85,8 +86,8 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mFragmentManager = getSupportFragmentManager();
-        XWalkFragment xWalkFragment = new XWalkFragment();
-        mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, xWalkFragment).commit();
+        xWalkFragment = new XWalkFragment();
+        mFragmentManager.beginTransaction().add(R.id.main_fraglayout, xWalkFragment).commit();
         _subscriptions = new CompositeSubscription();
         RxBus.getBus().toObserverable().subscribe(o -> {
             if (o instanceof OpenDrawer) {
@@ -106,9 +107,15 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //        );
     }
 
+    private void goXwalkfragment(String url) {
+        mFragmentManager.beginTransaction().show(xWalkFragment).commit();
+        xWalkFragment.startLoadUrl(url);
+    }
+
+
     private void initDrawer() {
 
-        LogUtil.e(PhoneInfoUtils.getHandSetInfo());
+        LogUtil.d(PhoneInfoUtils.getHandSetInfo());
         QcCloudClient.getApi().getApi
                 .getDrawerInfo()
                 .subscribe(qcResponDrawer -> {
@@ -118,13 +125,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                     }
                     setupModules(qcResponDrawer.data.modules);
                 });
-//        QcCloudClient.getApi()
-//                .downLoadApi
-//                .qcDownload("/header/123123/IMG_20150812_182222716.jpg")
-//                .subscribeOn(Schedulers.newThread())
-//                .subscribe(response -> {
-//
-//                });
+
     }
 
     private void setupModules(List<DrawerModule> modules) {
@@ -132,6 +133,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
             DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
             item.setTitle(module.title);
             item.setCount(module.text);
+            item.setOnClickListener(view -> goXwalkfragment(module.url));
             drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         }
     }
@@ -177,7 +179,8 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                         button.setButtonDrawable(drawable1);
                         button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
                         button.setOnClickListener(view -> {
-                            LogUtil.e("toSomeWhere");
+                            LogUtil.d("toSomeWhere");
+                            goXwalkfragment(btnInfo.intentUrl);
                         });
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
                     });

@@ -11,6 +11,7 @@ import android.support.annotation.RequiresPermission;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -360,6 +361,12 @@ public class PhoneInfoUtils {
         return "1-cpu型号:" + cpuInfo[0] + "2-cpu频率:" + cpuInfo[1];
     }// 和内存信息同理，cpu信息可通过读取/proc/cpuinfo文件来得到，其中第一行为cpu型号，第二行为cpu频率。
 
+    public static String getDensity(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+
+        return "像素密度:" + dm.densityDpi + "尺寸:" + dm.widthPixels + "x" + dm.heightPixels;
+    }
+
     public static String getHandSetInfo() {
         String handSetInfo = "手机型号:" + android.os.Build.MODEL
                 + "\n系统版本:" + android.os.Build.VERSION.RELEASE
@@ -374,6 +381,7 @@ public class PhoneInfoUtils {
                 + "\n主机:" + android.os.Build.HOST
                 + "\n生产ID:" + android.os.Build.ID
                 + "\nROM制造商:" + android.os.Build.MANUFACTURER // 这行返回的是rom定制商的名称
+//                + "\n 像素密度:" + getDensity(context)
                 ;
         return handSetInfo;
     }

@@ -58,7 +58,7 @@ public class WechatPay {
 
         req.sign = genAppSign(signParams);
 
-        LogUtil.e("sign\n" + req.sign + "\n\n");
+        LogUtil.d("sign\n" + req.sign + "\n\n");
 
 
         Log.e("orion", signParams.toString());

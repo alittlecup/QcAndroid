@@ -88,7 +88,16 @@ public class LoginFragment extends Fragment {
                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                 LogUtil.d("send msg success!");
                             } else {
-                                LogUtil.e(qcResponse.msg);
+                                LogUtil.d(qcResponse.msg);
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getActivity(), qcResponse.msg, Toast.LENGTH_SHORT).show();
+                                        Snackbar
+                                                .make(loginview, qcResponse.msg, Snackbar.LENGTH_LONG)
+                                                .show();
+                                    }
+                                });
                             }
                         });
             }

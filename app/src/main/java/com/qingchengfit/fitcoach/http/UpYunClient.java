@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.RevenUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,8 @@ import main.java.com.UpYun;
  */
 public class UpYunClient {
 
+    public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com/";
+
     public static UpYun init() {
         UpYun upyun = new UpYun("zoneke-img", "qcandroid", "07279e9e81c661b259f93a457d6491af");
         upyun.setDebug(true);
@@ -37,9 +40,10 @@ public class UpYunClient {
         boolean ret = false;
         try {
             upYun.setContentMD5(UpYun.md5(file));
-            ret = upYun.writeFile("/header/123123/" + file.getName(), file, true);
+            ret = upYun.writeFile("/header/" + userid + ".png", file, true);
         } catch (IOException e) {
-            LogUtil.e("Upyun", "upload headerimg err:" + e.getMessage());
+            LogUtil.d("Upyun", "upload headerimg err:" + e.getMessage());
+            RevenUtils.sendException("upLoadImg", "UpYunClient", e);
         }
         return ret;
     }
@@ -48,8 +52,8 @@ public class UpYunClient {
         // 获取目录中文件列表
         List<UpYun.FolderItem> items = init().readDir(path);
         for (int i = 0; i < items.size(); i++) {
-            LogUtil.e(items.get(i).name);
-            LogUtil.e(items.get(i).type);
+            LogUtil.d(items.get(i).name);
+            LogUtil.d(items.get(i).type);
         }
     }
 

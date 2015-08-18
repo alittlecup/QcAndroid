@@ -7,11 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
 import com.tencent.android.tpush.XGPushManager;
-import com.tencent.android.tpush.service.XGPushService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,17 +55,17 @@ public class SplashActivity extends BaseAcitivity {
         ButterKnife.bind(this);
 
         // 开启logcat输出，方便debug，发布时请关闭
-// XGPushConfig.enableDebug(this, true);
-// 如果需要知道注册是否成功，请使用registerPush(getApplicationContext(), XGIOperateCallback)带callback版本
-// 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
-// 具体可参考详细的开发指南
-// 传递的参数为ApplicationContext
+        // XGPushConfig.enableDebug(this, true);
+        // 如果需要知道注册是否成功，请使用registerPush(getApplicationContext(), XGIOperateCallback)带callback版本
+        // 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
+        // 具体可参考详细的开发指南
+        // 传递的参数为ApplicationContext
         Context context = getApplicationContext();
         XGPushManager.registerPush(context);
 
-// 2.36（不包括）之前的版本需要调用以下2行代码
-        Intent service = new Intent(context, XGPushService.class);
-        context.startService(service);
+        // 2.36（不包括）之前的版本需要调用以下2行代码
+//        Intent service = new Intent(context, XGPushService.class);
+//        context.startService(service);
 
 
         for (int i = 0; i < 4; i++) {
@@ -77,6 +77,7 @@ public class SplashActivity extends BaseAcitivity {
         splashIndicator.setViewPager(splashViewpager);
         splashViewpager.setPageTransformer(true, (page, position) -> {
             //页面滑动动画
+            LogUtil.d("page:" + page.getId() + "    positon:" + position);
         });
     }
 

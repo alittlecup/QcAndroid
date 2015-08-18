@@ -44,6 +44,7 @@ public class RegisterFragment extends Fragment {
 
 //    RegisterviewBinding mDataBinding;
 
+    public String mcode;
     @Bind(R.id.registe_phone_num)
     TextInputLayout registePhoneNum;
     @Bind(R.id.registe_getcode_btn)
@@ -54,8 +55,26 @@ public class RegisterFragment extends Fragment {
     TextInputLayout registePhoneVerity;
     @Bind(R.id.registe_btn)
     Button registeBtn;
+    Handler handler = new Handler() {
+        int count = 60;
 
-    public String mcode;
+        @Override
+        public void handleMessage(Message msg) {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getString(R.string.login_resend_msg));
+
+            registeGetcodeBtn.setText(stringBuffer.toString());
+            if (count > 0) {
+                count--;
+                handler.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                count = 60;
+                registeGetcodeBtn.setEnabled(true);
+                registeGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -90,8 +109,12 @@ public class RegisterFragment extends Fragment {
                                     startActivity(it);
 //                                    mcode = qcResponCode.data.code;
                                 } else {
-                                    registePhoneVerity.setError(qcResponCode.msg);
-                                    LogUtil.e(qcResponCode.msg);
+
+                                    getActivity().runOnUiThread(() -> {
+                                        registePhoneVerity.setError(qcResponCode.msg);
+                                    });
+
+                                    LogUtil.d(qcResponCode.msg);
                                 }
                             })
                     ;
@@ -113,9 +136,9 @@ public class RegisterFragment extends Fragment {
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(qcResponse -> {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
-                            LogUtil.e("succ");
+                            LogUtil.d("succ");
                         } else {
-                            LogUtil.e(":" + qcResponse.msg);
+                            LogUtil.d(":" + qcResponse.msg);
                         }
                     })
             ;
@@ -124,27 +147,6 @@ public class RegisterFragment extends Fragment {
         });
         return view;
     }
-
-    Handler handler = new Handler() {
-        int count = 60;
-
-        @Override
-        public void handleMessage(Message msg) {
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(Integer.toString(count));
-            stringBuffer.append(getString(R.string.login_resend_msg));
-
-            registeGetcodeBtn.setText(stringBuffer.toString());
-            if (count > 0) {
-                count--;
-                handler.sendEmptyMessageDelayed(0, 1000);
-            } else {
-                count = 60;
-                registeGetcodeBtn.setEnabled(true);
-                registeGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
-            }
-        }
-    };
 
     @Override
     public void onDestroyView() {

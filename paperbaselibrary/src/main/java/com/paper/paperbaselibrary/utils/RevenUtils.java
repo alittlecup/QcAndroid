@@ -29,6 +29,7 @@ public class RevenUtils {
         EventBuilder eventBuilder = new EventBuilder()
                 .setMessage(reason)
                 .setLevel(Event.Level.ERROR)
+                .setPlatform(PhoneInfoUtils.getHandSetInfo())
                 .setLogger(tag)
                 .addSentryInterface(new ExceptionInterface(e));
 

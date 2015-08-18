@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.login_tabview)
     TabLayout loginTablayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -20,6 +20,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
  * <p>
  * Created by Paper on 15/8/10 2015.
  */
+
 public class ShareUtils {
     public static void oneKeyShared(Context context){
             ShareSDK.initSDK(context);

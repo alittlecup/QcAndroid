@@ -43,7 +43,7 @@ public class AdviceFragment extends Fragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setTitle("意见反馈");
-        toolbar.setNavigationOnClickListener(view1 -> LogUtil.e("back"));
+        toolbar.setNavigationOnClickListener(view1 -> getActivity().onBackPressed());
         return view;
     }
 
@@ -51,7 +51,7 @@ public class AdviceFragment extends Fragment {
     public void onAdvice() {
         Observable.just("")
                 .subscribe(s ->
-                                LogUtil.e("advice")
+                                LogUtil.d("advice")
                 )
 
         ;
