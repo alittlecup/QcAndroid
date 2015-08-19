@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="multipart-upload-android-sdk">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/multipart-upload-android-sdk.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

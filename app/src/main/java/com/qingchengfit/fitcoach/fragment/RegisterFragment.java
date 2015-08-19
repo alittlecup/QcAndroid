@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.CompleteActivity;
+import com.qingchengfit.fitcoach.bean.RecieveMsg;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
@@ -73,6 +75,7 @@ public class RegisterFragment extends Fragment {
                 registeGetcodeBtn.setEnabled(true);
                 registeGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
             }
+
         }
     };
 
@@ -84,7 +87,11 @@ public class RegisterFragment extends Fragment {
         ButterKnife.bind(this, view);
         registePhoneNum.setHint(getString(R.string.logint_phonenum_hint));
         registePhoneVerity.setHint(getString(R.string.login_checkcode_hint));
-
+        RxBus.getBus().toObserverable()
+                .subscribe(o -> {
+                    if (o instanceof RecieveMsg)
+                        registePhoneVerity.getEditText().setText(((RecieveMsg) o).getCode());
+                });
         registeBtn.setOnClickListener(
                 view1 -> {
                     String phone = registePhoneNum.getEditText().getText().toString().trim();

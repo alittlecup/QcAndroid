@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -123,6 +124,14 @@ public class LoginView extends RelativeLayout {
                 }
             }
         });
+        mCheckCodeInputLaout.getEditText().setOnEditorActionListener((textView, i, keyEvent) ->
+                {
+                    if (i == EditorInfo.IME_ACTION_GO) {
+                        doLogin();
+                    }
+                    return false;
+                }
+        );
         //验证码输入框检测
         mCheckCodeInputLaout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -180,24 +189,29 @@ public class LoginView extends RelativeLayout {
 
         );
 
-        mLoginBtn.setOnClickListener(view -> {
-            String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
-            String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
-            if (TextUtils.isEmpty(account) || account.length()<11) {
-                mPhoneNumInputLayout.setError(getResources().getString(R.string.login_err_no_account));
-//                mPhoneNumInputLayout.setErrorEnabled(true);
-                mPhoneNumInputLayout.requestFocus();
-                return;
-            }else mPhoneNumInputLayout.setError("");
+        mLoginBtn.setOnClickListener(view -> doLogin());
 
-            if (TextUtils.isEmpty(code)) {
-                mCheckCodeInputLaout.setError(getResources().getString(R.string.login_err_no_checkcode));
-                mCheckCodeInputLaout.requestFocus();
-                return;
-            }else mCheckCodeInputLaout.setError("");
-            loginPresenter.doLogin(account, code);
+    }
+
+
+    public void doLogin() {
+        String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
+        String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
+        if (TextUtils.isEmpty(account) || account.length() < 11) {
+            mPhoneNumInputLayout.setError(getResources().getString(R.string.login_err_no_account));
+//                mPhoneNumInputLayout.setErrorEnabled(true);
+            mPhoneNumInputLayout.requestFocus();
+            return;
+        } else mPhoneNumInputLayout.setError("");
+
+        if (TextUtils.isEmpty(code)) {
+            mCheckCodeInputLaout.setError(getResources().getString(R.string.login_err_no_checkcode));
+            mCheckCodeInputLaout.requestFocus();
+            return;
+        } else mCheckCodeInputLaout.setError("");
+        loginPresenter.doLogin(account, code);
 //          loginPresenter.doLogin("", "");
-        });
+
     }
 
     public void onError(String err) {

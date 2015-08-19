@@ -14,8 +14,10 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.RegisterActivity;
+import com.qingchengfit.fitcoach.bean.RecieveMsg;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
@@ -117,6 +119,11 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         loginview.setLoginPresenter(loginPresenter);
+        RxBus.getBus().toObserverable()
+                .subscribe(o -> {
+                    if (o instanceof RecieveMsg)
+                        loginview.mCheckCodeInputLaout.getEditText().setText(((RecieveMsg) o).getCode());
+                });
         return view;
     }
 

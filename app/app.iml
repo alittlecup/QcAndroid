@@ -83,6 +83,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.getbase/floatingactionbutton/1.10.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.gujun.android.taggroup/library/1.4/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.imid.swipebacklayout.lib/library/1.0.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.relex/circleindicator/1.1.5/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/org.xwalk/xwalk_core_library/14.43.343.17/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
@@ -125,7 +126,6 @@
     <orderEntry type="library" exported="" name="wup-1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="compiler-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="multipart-upload-android-sdk" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-0.24.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="dagger-2.0.1" level="project" />
@@ -136,8 +136,8 @@
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Favorite-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="commons-lang3-3.3.2" level="project" />
+    <orderEntry type="library" exported="" name="kotlin-stdlib-0.12.613" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.10.0" level="project" />
     <orderEntry type="library" exported="" name="design-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="analytics-5.5.3" level="project" />
@@ -158,6 +158,7 @@
     <orderEntry type="library" exported="" name="library-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="raven-4.2" level="project" />
     <orderEntry type="library" exported="" name="adapters-1.0-rc1" level="project" />
+    <orderEntry type="library" exported="" name="library-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="java-sdk-3.1" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.6.1" level="project" />

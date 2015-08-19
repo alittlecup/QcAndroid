@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -73,11 +72,19 @@ public class SplashActivity extends BaseAcitivity {
             imageView.setImageResource(mSplashImg[i]);
             imageViews.add(imageView);
         }
+        ImageView imageViewlast = new ImageView(this);
+        imageViews.add(imageViewlast);
+        imageViewlast.setId(R.id.splash_last);
+
         splashViewpager.setAdapter(new ImagesAdapter(imageViews));
         splashIndicator.setViewPager(splashViewpager);
         splashViewpager.setPageTransformer(true, (page, position) -> {
             //页面滑动动画
             LogUtil.d("page:" + page.getId() + "    positon:" + position);
+            if (page.getId() == R.id.splash_last && position < 0.5) {
+                setResult(1);
+                this.finish();
+            }
         });
     }
 
@@ -86,11 +93,12 @@ public class SplashActivity extends BaseAcitivity {
             R.id.splash_registe_btn
     })
     public void OnBtnClick(View v) {
-        Intent toLogin = new Intent(this, LoginActivity.class);
-        if (v.getId() == R.id.splash_registe_btn) {
-            toLogin.putExtra("isRegiste", true);
-        } else toLogin.putExtra("isRegiste", false);
-        startActivity(toLogin);
+//        Intent toLogin = new Intent(this, LoginActivity.class);
+//        if (v.getId() == R.id.splash_registe_btn) {
+//            toLogin.putExtra("isRegiste", true);
+//        } else toLogin.putExtra("isRegiste", false);
+//        startActivity(toLogin);
+        setResult(0);
         this.finish();
     }
 

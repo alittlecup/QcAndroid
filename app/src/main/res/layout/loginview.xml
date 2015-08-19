@@ -62,9 +62,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableLeft="@drawable/ic_pw"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionGo"
             android:inputType="textPassword"
             android:text="123456"
+
             />
 
     </android.support.design.widget.TextInputLayout>
