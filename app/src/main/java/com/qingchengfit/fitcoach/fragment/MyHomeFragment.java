@@ -67,6 +67,7 @@ private FragmentCallBack fragmentCallBack;
         fragments.add(BaseInfoFragment.newInstance("", ""));
         fragments.add(new RecordComfirmFragment());
         fragments.add(new WorkExperienceFragment());
+        fragments.add(new StudentJudgeFragment());
         FragmentAdatper adatper = new FragmentAdatper(getActivity().getSupportFragmentManager(), fragments);
         myhomeViewpager.setAdapter(adatper);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
