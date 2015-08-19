@@ -76,7 +76,24 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <data
+                    android:host="192.168.167.33"
+                    android:path="/mi-tracker-web/download.html"
+                    android:port="8088"
+                    android:scheme="http"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -85,23 +102,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <data
-                    android:host="192.168.167.33"
-                    android:path="/mi-tracker-web/download.html"
-                    android:port="8088"
-                    android:scheme="http" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
         </activity>
         //sharesdk 分享
         <activity
