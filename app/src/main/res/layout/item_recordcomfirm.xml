@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_horizontal_margin"
+    >
+
+    <TextView
+        android:id="@+id/recordcomfirm_title"
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="中国健身大会"
+        />
+
+    <TextView
+        android:id="@+id/recordcomfirm_subtitle"
+        style="@style/Qc.TextCommonGrey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recordcomfirm_title"
+        android:text="中国健身大会"
+        />
+
+    <TextView
+        android:id="@+id/recordcomfirm_time"
+        style="@style/Qc.TextCommonGrey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recordcomfirm_subtitle"
+        android:text="有效期:2015.08.01-2015.08.01"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_arrow_right"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/img_record_comfirmed"
+        />
+
+</RelativeLayout>

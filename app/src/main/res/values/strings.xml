@@ -30,4 +30,5 @@
     <string name="complete_label">完成</string>
     <string name="title_activity_setting">SettingActivity</string>
     <string name="setting_title">设置</string>
+    <string name="myhome_baseinfo_introduce">自我介绍</string>
 </resources>

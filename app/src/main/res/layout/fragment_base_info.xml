@@ -1,14 +1,45 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.qingchengfit.fitcoach.fragment.BaseInfoFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.BaseInfoFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/baseinfo_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/paper_item_height"
         >
 
     </android.support.v7.widget.RecyclerView>
-</FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_white"
+        >
+    </View>
+
+    <TextView
+        style="@style/Qc.TextCommonGrey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/myhome_baseinfo_introduce"
+        />
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/test_text"
+        />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:placeholderImage="@drawable/test_pic"
+        />
+
+</LinearLayout>

@@ -115,7 +115,7 @@ public class BaseInfoFragment extends Fragment {
         }
     }
 
-    class BaseInfoAdapter extends RecyclerView.Adapter<BaseInfoVH>{
+    class BaseInfoAdapter extends RecyclerView.Adapter<BaseInfoVH> {
 
         private List<BaseInfoBean> datas;
 
@@ -125,7 +125,7 @@ public class BaseInfoFragment extends Fragment {
 
         @Override
         public BaseInfoVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new BaseInfoVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_baseinfo,null));
+            return new BaseInfoVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_baseinfo, null));
         }
 
         @Override
@@ -134,7 +134,6 @@ public class BaseInfoFragment extends Fragment {
             holder.itemLabel.setText(datas.get(position).label);
             holder.itemContent.setText(datas.get(position).content);
         }
-
 
 
         @Override

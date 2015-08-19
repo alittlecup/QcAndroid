@@ -3,6 +3,7 @@
     <color name="accent">#20bfbe</color>
     <color name="primary">#20bfbe</color>
     <color name="primary_dark">#00a2a2</color>
+    <color name="primary_light">#1a20bfbe</color>
 
     <color name="text_grey">@color/warm_grey</color>
     <color name="text_black">@color/cm_black</color>
