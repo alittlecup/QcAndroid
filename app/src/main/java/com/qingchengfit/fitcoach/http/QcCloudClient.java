@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
+import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
@@ -14,8 +15,11 @@ import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.ErrorHandler;
@@ -54,7 +58,17 @@ public class QcCloudClient {
     public QcCloudClient() {
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        int cacheSize = 10 * 1024 * 1024; // 10 MiB
+        File fileCache = new File(Configs.ExternalCache);
+        try {
+            Cache cache = new Cache(fileCache, cacheSize);
+            okHttpClient.setCache(cache);
 
+        } catch (IOException e) {
+            //e.printStackTrace();
+            RevenUtils.sendException("http Cache error!", "http", e);
+
+        }
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
@@ -64,6 +78,7 @@ public class QcCloudClient {
                             QcResponToken responToken = getApi.qcGetToken();
                             request.addHeader("X-CSRFToken", responToken.data.token);
                             request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+                            request.addHeader("Cache-Control", "max-age=0");
                         }
                 )
                 .setErrorHandler(new ErrorHandler() {

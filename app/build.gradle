@@ -15,7 +15,7 @@ packer {
     // 指定是否使用build版本号自增
     buildNumberAuto = true
     // 指定使用版本号自增的buildType，默认是全部
-    buildNumberTypeMatcher = ['release', 'beta']
+//    buildNumberTypeMatcher = ['release', 'beta']
 
 }
 
@@ -40,20 +40,45 @@ android {
         javaVersion JavaVersion.VERSION_1_7
     }
 
+
+
     defaultConfig {
         applicationId "com.qingchengfit.fitcoach"
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
-    buildTypes {
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file("qingcheng.keystore")
+            storePassword "android"
+            keyAlias "android"
+            keyPassword "android"
         }
     }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+
+        beta {
+//            signingConfig signingConfigs.release
+            minifyEnabled false
+            debuggable true
+        }
+
+    }
+
 //    sourceSets {
 //        main {
 //            jniLibs.srcDirs = ['src/main/jnilibs']
@@ -81,14 +106,13 @@ repositories {
     }
 }
 dependencies {
-
     compile 'com.google.dagger:dagger:2.0.1'
     apt 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
+    //    compile 'org.xwalk:xwalk_core_library:14.43.343.17'
 
-    compile 'org.xwalk:xwalk_core_library:14.43.343.17'
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
     compile 'com.android.support:design:22.2.1'
     compile 'io.reactivex:rxandroid:0.24.0'
@@ -118,14 +142,15 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.6.1.jar')
     compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
-
     compile files('libs/libammsdk.jar')
     //    compile files('libs/xwalk_core_library_java.jar')
-//    compile files('libs/multipart-upload-android-sdk.jar')
+
+    //    compile files('libs/multipart-upload-android-sdk.jar')
     compile files('libs/java-sdk-3.1.jar')
     compile 'com.android.support:multidex:1.0.0'
     compile files('libs/ShareSDK-Wechat-2.6.1.jar')
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    compile project(':crosswalkwebview144334317arm')
 }

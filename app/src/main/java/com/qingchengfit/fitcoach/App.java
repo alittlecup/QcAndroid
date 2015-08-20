@@ -55,6 +55,10 @@ public void setComponet(ApplicationComponet componet) {
         if (!file.exists()) {
             file.mkdir();
         }
+        File fileCache = new File(Configs.ExternalCache);
+        if (!fileCache.exists()) {
+            fileCache.mkdir();
+        }
     }
 
     private void setupGraph() {
