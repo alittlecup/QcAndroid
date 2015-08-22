@@ -1,7 +1,5 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * power by
  * <p>
@@ -13,13 +11,14 @@ import com.google.gson.annotations.SerializedName;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
  * <p>
- * Created by Paper on 15/8/5 2015.
+ * Created by Paper on 15/8/6 2015.
  */
-public class LoginData {
-    @SerializedName("session_id")
+public class GetSysSessionBean {
+    public String phone;
     public String session_id;
-    @SerializedName("user")
-    public User user;
-    @SerializedName("coach")
-    public Coach coach;
+
+    public GetSysSessionBean(String phone, String id) {
+        this.phone = phone;
+        this.session_id = id;
+    }
 }

@@ -15,7 +15,7 @@
         >
 
 
-    <RelativeLayout
+        <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +23,88 @@
         android:padding="15dp"
         >
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:errorEnabled="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_pw"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            >
+
+            <TextView
+
+                android:id="@+id/comple_gender_label"
+                style="?android:attr/textAppearanceMediumInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="5dp"
+                android:text="性别"
+                android:textColor="?android:attr/textColorHint"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp"
+                android:background="@color/divider_white"
+                >
+
+            </View>
+
+            <RadioGroup
+                android:id="@+id/comple_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:id="@+id/comple_gender_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radio_selector"
+                    android:checked="true"
+                    android:text="@string/gender_male"
+                    />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+                <RadioButton
+
+                    android:id="@+id/comple_gender_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radio_selector"
+                    android:text="@string/gender_female"
+                    />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+
+            <RelativeLayout
             android:id="@+id/telephone_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,6 +164,45 @@
 
         </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/comple_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                app:errorEnabled="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="设置登录密码"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:maxLength="16"
+                    android:singleLine="true"
+                    android:text="123456"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/comple_pw_re"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="确认登录密码"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLength="16"
+                    android:singleLine="true"
+                    android:text="123456"
+                    />
+            </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/registe_btn"
@@ -97,6 +217,6 @@
             >
         </Button>
 
-    </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </layout>

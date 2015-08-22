@@ -1,16 +1,20 @@
 package com.qingchengfit.fitcoach.http;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
+import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
+import com.qingchengfit.fitcoach.http.bean.QcResponCoachSys;
 import com.qingchengfit.fitcoach.http.bean.QcResponCode;
 import com.qingchengfit.fitcoach.http.bean.QcResponDrawer;
 import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
+import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -22,13 +26,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import retrofit.ErrorHandler;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -75,24 +78,39 @@ public class QcCloudClient {
                 .setClient(new OkClient(okHttpClient))
                 .setRequestInterceptor(request ->
                         {
-                            QcResponToken responToken = getApi.qcGetToken();
-                            request.addHeader("X-CSRFToken", responToken.data.token);
-                            request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
-                            request.addHeader("Cache-Control", "max-age=0");
+                            QcResponToken responToken = null;
+                            try {
+                                responToken = getApi.qcGetToken();
+                            } catch (Exception e) {
+//                                if (e.getKind() == RetrofitError.Kind.NETWORK) {
+//                                    LogUtil.e("network error!!");
+//                                }
+                                LogUtil.e(e.getMessage());
+                            }
+                            if (responToken != null) {
+                                request.addHeader("X-CSRFToken", responToken.data.token);
+                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+                                request.addHeader("Cache-Control", "max-age=0");
+                            }
                         }
                 )
-                .setErrorHandler(new ErrorHandler() {
-                    @Override
-                    public Throwable handleError(RetrofitError cause) {
-
-                        return null;
-                    }
+                .setErrorHandler(cause -> {
+                    LogUtil.e(cause.getCause().getMessage());
+                    return null;
                 })
                 .build();
         RestAdapter restAdapter2 = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+
                 .setClient(new OkClient(okHttpClient))
+                .setErrorHandler(cause -> {
+                            LogUtil.e(cause.getCause().getMessage());
+                            return null;
+
+                        }
+
+                )
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
 //        RestAdapter restAdapter3 = new RestAdapter.Builder()
@@ -124,6 +142,9 @@ public class QcCloudClient {
         @GET("/api/android/coaches/1/welcome/")
         rx.Observable<QcResponDrawer> getDrawerInfo();
 
+
+        @GET("/api/coaches/{id}/systems/")
+        rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
 
     }
 
@@ -163,5 +184,9 @@ public class QcCloudClient {
         Response qcDownload();
     }
 
+    public interface MutiSystemApi {
+        @POST("/api/cloud/authenticate/")
+        rx.Observable<QcResponSystem> qcGetSession(@Body GetSysSessionBean phone);
+    }
 
 }

@@ -41,6 +41,16 @@ public class PhoneFuncUtils {
             CalendarContract.Events.TITLE,                  // 1
     };
 
+
+    public static boolean checkCalendarReadPremission(Context context) {
+        return PermissionUtils.checkPermission(context, Manifest.permission.READ_CALENDAR);
+    }
+
+    public static boolean checkCalendarWritePremission(Context context) {
+        return PermissionUtils.checkPermission(context, Manifest.permission.WRITE_CALENDAR);
+    }
+
+
     /**
      * 读取联系人
      *

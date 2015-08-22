@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -121,13 +122,16 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                 .subscribe(qcResponDrawer -> {
                     for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
                         setupBtn(qcResponDrawer.data.guide.get(i));
-
                     }
-                    setupModules(qcResponDrawer.data.modules);
+                    runOnUiThread(() -> {
+                        setupModules(qcResponDrawer.data.modules);
+                    });
+
                 });
 
     }
 
+    @UiThread
     private void setupModules(List<DrawerModule> modules) {
         for (DrawerModule module : modules) {
             DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);

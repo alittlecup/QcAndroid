@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
@@ -54,12 +53,12 @@ public class WorkExperienceFragment extends Fragment {
 
 
     public static class WorkExperienceVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_time)
-        TextView itemTime;
-        @Bind(R.id.item_studio_name)
-        TextView itemStudioName;
-        @Bind(R.id.item_studio_comfirm)
-        TextView itemStudioComfirm;
+//        @Bind(R.id.item_time)
+//        TextView itemTime;
+//        @Bind(R.id.item_studio_name)
+//        TextView itemStudioName;
+//        @Bind(R.id.item_studio_comfirm)
+//        TextView itemStudioComfirm;
 
 
         public WorkExperienceVH(View itemView) {

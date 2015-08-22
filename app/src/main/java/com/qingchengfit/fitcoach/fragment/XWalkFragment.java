@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -19,9 +20,11 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
+import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
 
 import org.xwalk.core.JavascriptInterface;
 import org.xwalk.core.XWalkView;
+import org.xwalk.core.internal.XWalkCookieManager;
 
 import java.util.List;
 
@@ -39,9 +42,12 @@ public class XWalkFragment extends Fragment {
     FloatingActionsMenu webFloatbtn;
     FloatingActionButton btn1;
     FloatingActionButton btn2;
-//    private XWalkCookieManager mCookieManager;
+    //    private XWalkCookieManager mCookieManager;
+    Gson gson;
+    private XWalkCookieManager xWalkCookieManager;
 
     public XWalkFragment() {
+        gson = new Gson();
     }
 
 
@@ -51,12 +57,30 @@ public class XWalkFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
-//        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
-        mWebview.load("http://192.168.31.154:8888/welcome/", null);
+//        XWalkSettings xWalkSettings = new XWalkSettings(mWebview.getContext(),null,false);
+//
+//        xWalkSettings.setAppCacheEnabled(true);
+//        xWalkSettings.setDatabaseEnabled(true);
+//        String appCacheDir = getActivity().getDir("cache", Context.MODE_PRIVATE).getPath();
+
+//        xWalkSettings.setAppCachePath(appCacheDir);
+//        xWalkSettings.setAllowFileAccess(true);
+
+//        xWalkSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+//        if (NetWorkUtils.getConnectedType(getActivity()) >= 0)
+//            mWebview.clearCache(true);
+
+//        CommandLine.getInstance().appendSwitch("--disable-pull-to-refresh-effect");  //禁止下拉刷新
+
+        initCookie();
+        xWalkCookieManager = new XWalkCookieManager();
+        xWalkCookieManager.setAcceptCookie(true);
+
+        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
+//        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
-//        mCookieManager = new XWalkCookieManager();
-//        mCookieManager.setAcceptCookie(true);
+
 
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_baseinfo_city);
@@ -66,14 +90,26 @@ public class XWalkFragment extends Fragment {
 
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
-        btn1.setOnClickListener(view1 -> PhoneFuncUtils.queryCalender(getActivity()));
+        btn1.setOnClickListener(view1 -> {
+            PhoneFuncUtils.queryCalender(getActivity());
+//            mWebview.setNetworkAvailable(false);
+        });
         btn2.setOnClickListener(view1 -> {
 //            List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
 //            Gson gson = new Gson();
 //            LogUtil.e(gson.toJson(contacts));
             ShareUtils.oneKeyShared(getActivity());
         });
+
         return view;
+    }
+
+    private void initCookie() {
+        List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {
+        }.getType());
+        for (MutiSysSession sysSession : mutiSysSessions) {
+            setCookie(sysSession.url, "session_id", sysSession.session_id);
+        }
     }
 
     public void startLoadUrl(String url) {
@@ -104,8 +140,18 @@ public class XWalkFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    public void openmainDrawer(){
+    public void openmainDrawer() {
         getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
+    }
+
+    public void setCookie(String url, String key, String value) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(xWalkCookieManager.getCookie(url));
+        sb.append(";");
+        sb.append(key);
+        sb.append("=");
+        sb.append("value");
+        xWalkCookieManager.setCookie(url, sb.toString());
     }
 
     public class JsInterface {
@@ -115,7 +161,7 @@ public class XWalkFragment extends Fragment {
 
         @JavascriptInterface
         public String getToken() {
-            return PreferenceUtils.getPrefString(getActivity(),"token","");
+            return PreferenceUtils.getPrefString(getActivity(), "token", "");
         }
 
 
@@ -133,28 +179,23 @@ public class XWalkFragment extends Fragment {
         }
 
         @JavascriptInterface
-        public String getPlatform(){
+        public String getPlatform() {
             PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
             Gson gson = new Gson();
             return gson.toJson(info);
         }
 
         @JavascriptInterface
-        public String getSessionId(){
-            return PreferenceUtils.getPrefString(getActivity(),"session_id","");
+        public String getSessionId() {
+            return PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         }
 
         @JavascriptInterface
-        public void shareTimeline(String title,String link,String imgurl,String successCallback,String failedCallback){
+        public void shareTimeline(String title, String link, String imgurl, String successCallback, String failedCallback) {
 
         }
 
 
-
     }
-
-//    public void setCookie(String url, String key, String value) {
-//
-//    }
 
 }

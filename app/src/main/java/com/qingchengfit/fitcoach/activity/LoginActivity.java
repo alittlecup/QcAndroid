@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.RecieveMsg;
@@ -44,7 +45,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        startActivityForResult(new Intent(this, SplashActivity.class), 11);
+        if (PreferenceUtils.getPrefBoolean(this, "first", true))
+            startActivityForResult(new Intent(this, SplashActivity.class), 11);
+
+
+//        if (PreferenceUtils.getPrefString(this,"session_id",null)!=null)
+//            startActivity(new Intent(this,MainActivity.class));
         loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
         loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
@@ -55,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        loginViewpager.setCurrentItem(requestCode);
+        PreferenceUtils.setPrefBoolean(this, "first", false);
+        loginViewpager.setCurrentItem(resultCode);
     }
 
     public void getSmsFromPhone() {
@@ -74,8 +81,6 @@ public class LoginActivity extends AppCompatActivity {
 //			System.out.println(">>>>>>>>>>>>>>>>手机号：" + number);
 //			System.out.println(">>>>>>>>>>>>>>>>联系人姓名列表：" + name);
 //			System.out.println(">>>>>>>>>>>>>>>>短信的内容：" + body);
-
-
 //            if(number.equals("106902281006")){//验证发送的短信号码
             Pattern pattern = Pattern.compile("[0-9]{6}");//4位数字验证码
             Matcher matcher = pattern.matcher(body);

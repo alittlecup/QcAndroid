@@ -43,7 +43,7 @@ public class MyHomeFragment extends Fragment {
     TabLayout myhomeTab;
     //    @Bind(R.id.myhome_coolaosingtoorbar)
 //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
-private FragmentCallBack fragmentCallBack;
+    private FragmentCallBack fragmentCallBack;
     public MyHomeFragment() {
 
     }

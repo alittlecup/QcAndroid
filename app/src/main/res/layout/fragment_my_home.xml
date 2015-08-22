@@ -12,11 +12,8 @@
         android:id="@+id/myhome_appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:fitsSystemWindows="true"
-
         >
-
         <!--<android.support.design.widget.CollapsingToolbarLayout-->
         <!--android:id="@+id/myhome_coolaosingtoorbar"-->
         <!--android:layout_width="wrap_content"-->
@@ -69,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="bottom"
+            android:background="@color/white"
             >
 
             <View
@@ -85,6 +83,7 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_marginLeft="75dp"
                 android:layout_marginRight="75dp"
+
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/primary"
                 app:tabIndicatorHeight="1.5dp"
@@ -100,26 +99,23 @@
         <!--</android.support.design.widget.CollapsingToolbarLayout>-->
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/cyan"
-        android:gravity="center_vertical"
-        android:minHeight="?attr/actionBarSize"
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:background="@color/primary"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:minHeight="?attr/actionBarSize"-->
+    <!--app:layout_scrollFlags="scroll|enterAlways"-->
+    <!--app:titleTextAppearance="@style/ToolbarStyle"-->
+    <!-->-->
+    <!--</android.support.v7.widget.Toolbar>-->
+    <include
+        layout="@layout/common_toolbar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:titleMarginStart="20dp"
-        app:titleTextAppearance="@style/ToolbarStyle"
-
         >
 
-    </android.support.v7.widget.Toolbar>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
+    </include>
     <android.support.v4.view.ViewPager
         android:id="@+id/myhome_viewpager"
         android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach;
 
 import android.app.Application;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.qingchengfit.fitcoach.di.ApplicationComponet;
@@ -10,6 +11,9 @@ import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
 import com.qingchengfit.fitcoach.di.RxBusModule;
 
 import java.io.File;
+
+import rx.plugins.RxJavaErrorHandler;
+import rx.plugins.RxJavaPlugins;
 
 
 /**
@@ -38,7 +42,6 @@ public class App extends Application {
 public void setComponet(ApplicationComponet componet) {
     this.componet = componet;
 }
-
 //
     @Override
     public void onCreate() {
@@ -48,6 +51,12 @@ public void setComponet(ApplicationComponet componet) {
 //        CrashHandler.getInstance().init(this);
         setupFile();
         setupGraph();
+        RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
+            @Override
+            public void handleError(Throwable e) {
+                Log.w("Error", e);
+            }
+        });
     }
 
     private void setupFile() {

@@ -16,15 +16,22 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
-import com.qingchengfit.fitcoach.activity.RegisterActivity;
 import com.qingchengfit.fitcoach.bean.RecieveMsg;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
+import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
+import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.RestAdapter;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 
 /**
@@ -35,6 +42,7 @@ public class LoginFragment extends Fragment {
 
     @Bind(R.id.loginview)
     LoginView loginview;
+    Gson gson = new Gson();
 
     public LoginFragment() {
         loginPresenter = new LoginPresenter() {
@@ -49,35 +57,93 @@ public class LoginFragment extends Fragment {
 //                Intent toMain = new Intent(getActivity(), MainActivity.class);
 //                startActivity(toMain);
 //                getActivity().finish();
+                List<MutiSysSession> systems = new ArrayList<>();
                 LoginBean bean = new LoginBean(account, code);
                 QcCloudClient.getApi()
                         .postApi
                         .qcLogin(bean)
                         .subscribeOn(Schedulers.newThread())
-                        .subscribe(qcResponLogin -> {
+                        .flatMap(qcResponLogin -> {
                             if (qcResponLogin.status == ResponseResult.SUCCESS) {
                                 PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
-                                Gson gson = new Gson();
+
                                 PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
+                                PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
+
+                                return rx.Observable.just(qcResponLogin);
+                            } else {
+
+                                getActivity().runOnUiThread(() -> {
+                                    Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
+                                    Snackbar
+                                            .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
+                                            .show();
+                                });
+                                return rx.Observable.just(null);
+                            }
+                        })
+                        .flatMap(qcResponLogin -> {
+                            if (qcResponLogin != null) {
+                                return QcCloudClient.getApi().getApi.qcGetSystem("1", "session_id=" + qcResponLogin.data.session_id);
+//                                    return QcCloudClient.getApi().getApi.qcGetSystem(qcResponLogin.data.coach.id,"session_id="+qcResponLogin.data.session_id);
+                            } else return null;
+                        })
+                        .flatMap(qcResponCoachSys -> {
+                            if (qcResponCoachSys != null) {
+                                return Observable.just(qcResponCoachSys.getData().getSystems())
+                                        .subscribeOn(Schedulers.newThread())
+                                        .flatMapIterable(systemsEntities -> systemsEntities)
+                                        .flatMap(systemsEntity -> {
+                                            String url = systemsEntity.getUrl();
+                                            return Observable.just(url);
+                                        })
+                                        .flatMap(s ->
+                                                        new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
+                                                                .setEndpoint(s)
+                                                                .setRequestInterceptor(request ->
+                                                                        {
+                                                                            QcResponToken responToken = null;
+                                                                            try {
+                                                                                responToken = QcCloudClient.getApi().getApi.qcGetToken();
+                                                                            } catch (Exception e) {
+                                                                                LogUtil.e(e.getMessage());
+                                                                            }
+                                                                            if (responToken != null) {
+                                                                                request.addHeader("X-CSRFToken", responToken.data.token);
+                                                                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+                                                                                request.addHeader("Cache-Control", "max-age=0");
+                                                                            }
+                                                                        }
+                                                                )
+                                                                .build()
+                                                                .create(QcCloudClient.MutiSystemApi.class)
+                                                                .qcGetSession(new GetSysSessionBean(account, PreferenceUtils.getPrefString(getActivity(), "session_id", "")))
+                                        )
+                                        .flatMap(qcResponSystem -> {
+                                            MutiSysSession sysSession = new MutiSysSession();
+                                            sysSession.session_id = qcResponSystem.getData().getSession_id();
+                                            sysSession.url = qcResponSystem.getUrl();
+                                            systems.add(sysSession);
+                                            return Observable.just(sysSession);
+                                        })
+                                        .last()
+                                        .flatMap(sysSession -> {
+                                            PreferenceUtils.setPrefString(getActivity(), "sessions", gson.toJson(systems));
+                                            ;
+                                            return Observable.just(true);
+                                        });
+                            } else return Observable.just(false);
+
+                        })
+                        .subscribe(aBoolean -> {
+                            if (aBoolean) {
                                 Intent toMain = new Intent(getActivity(), MainActivity.class);
                                 startActivity(toMain);
                                 getActivity().finish();
-                            } else {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
-                                        Snackbar
-                                                .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
-                                                .show();
-                                    }
-                                });
-
-
                             }
 
-
                         });
+                ;
             }
 
             @Override
@@ -106,7 +172,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void goRegister() {
-                getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
+//                getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
             }
         };
     }

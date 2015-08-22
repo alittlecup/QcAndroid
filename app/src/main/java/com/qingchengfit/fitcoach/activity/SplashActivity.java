@@ -94,11 +94,12 @@ public class SplashActivity extends BaseAcitivity {
     })
     public void OnBtnClick(View v) {
 //        Intent toLogin = new Intent(this, LoginActivity.class);
-//        if (v.getId() == R.id.splash_registe_btn) {
+        if (v.getId() == R.id.splash_registe_btn) {
 //            toLogin.putExtra("isRegiste", true);
-//        } else toLogin.putExtra("isRegiste", false);
+            setResult(1);
+        } else setResult(0);
 //        startActivity(toLogin);
-        setResult(0);
+
         this.finish();
     }
 

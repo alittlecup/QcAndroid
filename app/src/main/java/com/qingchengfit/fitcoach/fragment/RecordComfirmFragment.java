@@ -89,7 +89,7 @@ public class RecordComfirmFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 10;
         }
     }
 

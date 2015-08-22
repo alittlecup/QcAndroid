@@ -13,13 +13,11 @@ import com.google.gson.annotations.SerializedName;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
  * <p>
- * Created by Paper on 15/8/5 2015.
+ * Created by Paper on 15/8/22 2015.
  */
-public class LoginData {
+public class MutiSysSession {
+    @SerializedName("url")
+    public String url;
     @SerializedName("session_id")
     public String session_id;
-    @SerializedName("user")
-    public User user;
-    @SerializedName("coach")
-    public Coach coach;
 }
