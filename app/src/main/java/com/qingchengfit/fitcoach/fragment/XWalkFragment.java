@@ -49,8 +49,6 @@ public class XWalkFragment extends Fragment {
     public XWalkFragment() {
         gson = new Gson();
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,10 +70,10 @@ public class XWalkFragment extends Fragment {
 
 //        CommandLine.getInstance().appendSwitch("--disable-pull-to-refresh-effect");  //禁止下拉刷新
 
-        initCookie();
+
         xWalkCookieManager = new XWalkCookieManager();
         xWalkCookieManager.setAcceptCookie(true);
-
+        initCookie();
         mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
@@ -146,11 +144,11 @@ public class XWalkFragment extends Fragment {
 
     public void setCookie(String url, String key, String value) {
         StringBuffer sb = new StringBuffer();
-        sb.append(xWalkCookieManager.getCookie(url));
-        sb.append(";");
+//        sb.append(xWalkCookieManager.getCookie(url));
+//        sb.append(";");
         sb.append(key);
         sb.append("=");
-        sb.append("value");
+        sb.append(value);
         xWalkCookieManager.setCookie(url, sb.toString());
     }
 
