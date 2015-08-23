@@ -28,6 +28,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
     public void onFragmentChange(Fragment fragment) {
         fragmentManager.beginTransaction()
                 .add(R.id.settting_fraglayout, fragment)
+
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
                 .commit();
     }

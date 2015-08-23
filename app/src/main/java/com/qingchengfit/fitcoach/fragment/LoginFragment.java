@@ -30,6 +30,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.RestAdapter;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -44,7 +45,10 @@ public class LoginFragment extends Fragment {
     LoginView loginview;
     Gson gson = new Gson();
 
+    MaterialDialog materialDialog;
+
     public LoginFragment() {
+
         loginPresenter = new LoginPresenter() {
             @Override
             public void onPhoneDone() {
@@ -97,27 +101,26 @@ public class LoginFragment extends Fragment {
                                             String url = systemsEntity.getUrl();
                                             return Observable.just(url);
                                         })
-                                        .flatMap(s ->
-                                                        new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
-                                                                .setEndpoint(s)
-                                                                .setRequestInterceptor(request ->
-                                                                        {
-                                                                            QcResponToken responToken = null;
-                                                                            try {
-                                                                                responToken = QcCloudClient.getApi().getApi.qcGetToken();
-                                                                            } catch (Exception e) {
-                                                                                LogUtil.e(e.getMessage());
-                                                                            }
-                                                                            if (responToken != null) {
-                                                                                request.addHeader("X-CSRFToken", responToken.data.token);
-                                                                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
-                                                                                request.addHeader("Cache-Control", "max-age=0");
-                                                                            }
-                                                                        }
-                                                                )
-                                                                .build()
-                                                                .create(QcCloudClient.MutiSystemApi.class)
-                                                                .qcGetSession(new GetSysSessionBean(account, PreferenceUtils.getPrefString(getActivity(), "session_id", "")))
+                                        .flatMap(s -> new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
+                                                        .setEndpoint(s)
+                                                        .setRequestInterceptor(request ->
+                                                                {
+                                                                    QcResponToken responToken = null;
+                                                                    try {
+                                                                        responToken = QcCloudClient.getApi().getApi.qcGetToken();
+                                                                    } catch (Exception e) {
+                                                                        LogUtil.e(e.getMessage());
+                                                                    }
+                                                                    if (responToken != null) {
+                                                                        request.addHeader("X-CSRFToken", responToken.data.token);
+                                                                        request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+                                                                        request.addHeader("Cache-Control", "max-age=0");
+                                                                    }
+                                                                }
+                                                        )
+                                                        .build()
+                                                        .create(QcCloudClient.MutiSystemApi.class)
+                                                        .qcGetSession(new GetSysSessionBean(account, PreferenceUtils.getPrefString(getActivity(), "session_id", "")))
                                         )
                                         .flatMap(qcResponSystem -> {
                                             MutiSysSession sysSession = new MutiSysSession();

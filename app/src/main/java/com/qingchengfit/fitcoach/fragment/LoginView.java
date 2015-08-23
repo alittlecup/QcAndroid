@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.bean.SendSmsCode;
 
 /**
  * ,==.              |~~~
@@ -50,6 +52,8 @@ public class LoginView extends RelativeLayout {
             stringBuffer.append(getContext().getString(R.string.login_resend_msg));
 
             mGetCodeBtn.setText(stringBuffer.toString());
+            if (count == 60)
+                mGetCodeBtn.setEnabled(false);
             if (count>0){
                 count--;
                 handler.sendEmptyMessageDelayed(0,1000);
@@ -182,8 +186,7 @@ public class LoginView extends RelativeLayout {
             }else {
                 mPhoneNumInputLayout.setError("");
                 loginPresenter.getCode(account);
-                handler.sendEmptyMessage(0);
-                mGetCodeBtn.setEnabled(false);
+                RxBus.getBus().send(new SendSmsCode());
             }
         }
 

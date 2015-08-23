@@ -19,6 +19,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.CompleteActivity;
 import com.qingchengfit.fitcoach.bean.RecieveMsg;
+import com.qingchengfit.fitcoach.bean.SendSmsCode;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
@@ -67,6 +68,8 @@ public class RegisterFragment extends Fragment {
             stringBuffer.append(getString(R.string.login_resend_msg));
 
             registeGetcodeBtn.setText(stringBuffer.toString());
+            if (count == 60)
+                registeGetcodeBtn.setEnabled(false);
             if (count > 0) {
                 count--;
                 handler.sendEmptyMessageDelayed(0, 1000);
@@ -92,19 +95,22 @@ public class RegisterFragment extends Fragment {
                 .subscribe(o -> {
                     if (o instanceof RecieveMsg)
                         registePhoneVerity.getEditText().setText(((RecieveMsg) o).getCode());
+                    else if (o instanceof SendSmsCode) {
+                        handler.sendEmptyMessage(0);
+                    }
                 });
         registeBtn.setOnClickListener(
                 view1 -> {
                     String phone = registePhoneNum.getEditText().getText().toString().trim();
                     String code = registePhoneVerity.getEditText().getText().toString().trim();
-                    if (phone.length()<11){
+                    if (phone.length() < 11) {
                         registePhoneNum.setError(getString(R.string.err_login_phonenum));
                         return;
-                    }else registePhoneNum.setError("");
-                    if (code.length()<4){
+                    } else registePhoneNum.setError("");
+                    if (code.length() < 6) {
                         registePhoneVerity.setError(getString(R.string.err_checkcode_length));
                         return;
-                    }else registePhoneVerity.setError("");
+                    } else registePhoneVerity.setError("");
 
                     QcCloudClient.getApi()
                             .postApi
@@ -113,7 +119,7 @@ public class RegisterFragment extends Fragment {
                             .subscribe(qcResponCode -> {
                                 if (qcResponCode.status == ResponseResult.SUCCESS) {
                                     Intent it = new Intent(getActivity(), CompleteActivity.class);
-                                    it.putExtra("code",qcResponCode.data.code);
+                                    it.putExtra("code", qcResponCode.data.code);
                                     startActivity(it);
 //                                    mcode = qcResponCode.data.code;
                                 } else {
@@ -132,10 +138,10 @@ public class RegisterFragment extends Fragment {
 
         registeGetcodeBtn.setOnClickListener(view1 -> {
             String phone = registePhoneNum.getEditText().getText().toString().trim();
-            if (phone.length()<11){
+            if (phone.length() < 11) {
                 registePhoneNum.setError(getString(R.string.err_login_phonenum));
                 return;
-            }else registePhoneNum.setError("");
+            } else registePhoneNum.setError("");
 
             QcCloudClient.getApi()
                     .postApi
@@ -150,8 +156,8 @@ public class RegisterFragment extends Fragment {
                         }
                     })
             ;
-            registeGetcodeBtn.setEnabled(false);
-            handler.sendEmptyMessage(0);
+
+            RxBus.getBus().send(new SendSmsCode());
         });
         return view;
     }

@@ -58,10 +58,10 @@ android {
 //    }
     signingConfigs {
         release {
-            storeFile file("qingcheng.keystore")
-            storePassword "android"
-            keyAlias "android"
-            keyPassword "android"
+            storeFile file("../qingcheng.keystore")
+            storePassword "Qingcheng2014"
+            keyAlias "Qingcheng"
+            keyPassword "Qingcheng2014"
         }
     }
 
