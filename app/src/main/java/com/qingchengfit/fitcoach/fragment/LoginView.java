@@ -208,6 +208,7 @@ public class LoginView extends RelativeLayout {
     }
 
     public void doLogin() {
+
         String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
         String code = mCheckCodeInputLaout.getEditText().getText().toString().trim();
         if (TextUtils.isEmpty(account) || account.length() < 11) {

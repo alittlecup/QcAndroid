@@ -48,7 +48,7 @@ public void setComponet(ApplicationComponet componet) {
         super.onCreate();
         MultiDex.install(this);
         Fresco.initialize(this);
-//        CrashHandler.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
@@ -57,6 +57,8 @@ public void setComponet(ApplicationComponet componet) {
                 Log.w("Error", e);
             }
         });
+
+
     }
 
     /**

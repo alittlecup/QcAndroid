@@ -77,13 +77,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
             }
             //退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+            System.exit(0);
         }
     }
 
@@ -107,9 +107,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
         }.start();
         //收集设备参数信息
-        collectDeviceInfo(mContext);
+//        collectDeviceInfo(mContext);
         //保存日志文件
-        RevenUtils.sendException("", "", ex);
+        RevenUtils.sendException("uncatch", ex.toString(), ex);
+
         return true;
     }
 

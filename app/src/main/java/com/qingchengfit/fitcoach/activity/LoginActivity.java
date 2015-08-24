@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         ButterKnife.bind(this);
         if (PreferenceUtils.getPrefBoolean(this, "first", true))
             startActivityForResult(new Intent(this, SplashActivity.class), 11);
@@ -54,8 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
         loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
+
         smsObserver = new SmsObserver(this, new Handler(getMainLooper()));
         getContentResolver().registerContentObserver(SMS_INBOX, true, smsObserver);
+
+
     }
 
     @Override
@@ -124,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         public SmsObserver(Context context, Handler handler) {
             super(handler);
         }
+
 
         @Override
         public void onChange(boolean selfChange) {
