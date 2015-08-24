@@ -20,6 +20,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.SendSmsCode;
 
+import java.lang.ref.WeakReference;
+
 /**
  * ,==.              |~~~
  * /  66\             |
@@ -43,32 +45,35 @@ public class LoginView extends RelativeLayout {
     TextInputLayout mPhoneNumInputLayout;
     TextInputLayout mCheckCodeInputLaout;
     LoginPresenter loginPresenter;
-    Handler handler = new Handler() {
-        int count = 60;
-        @Override
-        public void handleMessage(Message msg) {
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(Integer.toString(count));
-            stringBuffer.append(getContext().getString(R.string.login_resend_msg));
-
-            mGetCodeBtn.setText(stringBuffer.toString());
-            if (count == 60)
-                mGetCodeBtn.setEnabled(false);
-            if (count>0){
-                count--;
-                handler.sendEmptyMessageDelayed(0,1000);
-            }else {
-                count=60;
-                mGetCodeBtn.setEnabled(true);
-                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
-            }
-        }
-    };
-
+    private InternalHandler handler;
 
     public LoginView(Context context) {
         super(context);
     }
+
+//    public static Handler handler = new Handler() {
+//
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            StringBuffer stringBuffer = new StringBuffer();
+//            stringBuffer.append(Integer.toString(count));
+//            stringBuffer.append(getContext().getString(R.string.login_resend_msg));
+//
+//            mGetCodeBtn.setText(stringBuffer.toString());
+//            if (count == 60)
+//                mGetCodeBtn.setEnabled(false);
+//            if (count>0){
+//                count--;
+//                handler.sendEmptyMessageDelayed(0,1000);
+//            }else {
+//                count=60;
+//                mGetCodeBtn.setEnabled(true);
+//                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
+//            }
+//        }
+//    };
+
 
     public LoginView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -85,6 +90,7 @@ public class LoginView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        handler = new InternalHandler(getContext());
         mGetCodeBtn = (TextView) findViewById(R.id.login_getcode_btn);
         mLoginBtn = (Button) findViewById(R.id.login_btn);
         mPhoneNumInputLayout = (TextInputLayout) findViewById(R.id.login_phone_num);
@@ -178,24 +184,28 @@ public class LoginView extends RelativeLayout {
         mGoRegister.setOnClickListener(view -> loginPresenter.goRegister());
 
         mGetCodeBtn.setOnClickListener(view -> {
-            String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
-            if (TextUtils.isEmpty(account) || account.length() < 11) {
+                    String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
+                    if (TextUtils.isEmpty(account) || account.length() < 11) {
 
-                mPhoneNumInputLayout.setError(getResources().getString(R.string.err_login_phonenum));
-                return;
-            }else {
-                mPhoneNumInputLayout.setError("");
-                loginPresenter.getCode(account);
-                RxBus.getBus().send(new SendSmsCode());
-            }
-        }
+                        mPhoneNumInputLayout.setError(getResources().getString(R.string.err_login_phonenum));
+                        return;
+                    } else {
+                        mPhoneNumInputLayout.setError("");
+                        loginPresenter.getCode(account);
+                        RxBus.getBus().send(new SendSmsCode());
+                    }
+                }
 
         );
+        RxBus.getBus().toObserverable().subscribe(o -> {
+            if (o instanceof SendSmsCode) {
+                handler.sendEmptyMessage(0);
+            }
+        });
 
         mLoginBtn.setOnClickListener(view -> doLogin());
 
     }
-
 
     public void doLogin() {
         String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
@@ -215,11 +225,42 @@ public class LoginView extends RelativeLayout {
         loginPresenter.doLogin(account, code);
 //          loginPresenter.doLogin("", "");
 
+
     }
 
     public void onError(String err) {
         mCheckCodeInputLaout.setError(err);
 
+    }
+
+    public class InternalHandler extends Handler {
+        WeakReference<Context> context;
+        int count = 60;
+
+        InternalHandler(Context c) {
+            context = new WeakReference<Context>(c);
+
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getContext().getString(R.string.login_resend_msg));
+
+            mGetCodeBtn.setText(stringBuffer.toString());
+            if (count == 60)
+                mGetCodeBtn.setEnabled(false);
+            if (count > 0) {
+                count--;
+                this.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                count = 60;
+                mGetCodeBtn.setEnabled(true);
+                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
+        }
     }
 
 

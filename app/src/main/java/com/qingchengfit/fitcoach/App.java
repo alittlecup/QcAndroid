@@ -50,7 +50,7 @@ public void setComponet(ApplicationComponet componet) {
         Fresco.initialize(this);
 //        CrashHandler.getInstance().init(this);
         setupFile();
-        setupGraph();
+//        setupGraph();
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override
             public void handleError(Throwable e) {
@@ -59,6 +59,9 @@ public void setComponet(ApplicationComponet componet) {
         });
     }
 
+    /**
+     * create dir in SDcard
+     */
     private void setupFile() {
         File file = new File(Configs.ExternalPath);
         if (!file.exists()) {
@@ -77,4 +80,5 @@ public void setComponet(ApplicationComponet componet) {
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
+
 }

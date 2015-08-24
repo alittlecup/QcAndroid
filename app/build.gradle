@@ -151,6 +151,5 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-2.6.1.jar')
     compile 'me.drakeet.materialdialog:library:1.2.2'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
 //    compile project(':crosswalkwebview144334317arm')
 }

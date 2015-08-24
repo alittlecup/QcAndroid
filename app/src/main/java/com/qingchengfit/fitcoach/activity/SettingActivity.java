@@ -11,7 +11,7 @@ import com.qingchengfit.fitcoach.fragment.SettingFragment;
 
 public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
 
-
+    public static String TAG = SettingActivity.class.getName();
     FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
