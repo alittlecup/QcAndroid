@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
 
 import org.xwalk.core.JavascriptInterface;
+import org.xwalk.core.XWalkResourceClient;
+import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
 import org.xwalk.core.internal.XWalkCookieManager;
 
@@ -49,6 +52,7 @@ public class XWalkFragment extends Fragment {
     public XWalkFragment() {
         gson = new Gson();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,8 +82,15 @@ public class XWalkFragment extends Fragment {
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
-
-
+        mWebview.setUIClient(new MyUIClient(mWebview));
+        mWebview.setNetworkAvailable(false);
+        mWebview.setResourceClient(new XWalkResourceClient(mWebview) {
+            @Override
+            public void onReceivedLoadError(XWalkView view, int errorCode, String description, String failingUrl) {
+                //TODO 错误监控
+//                super.onReceivedLoadError(view, errorCode, description, failingUrl);
+            }
+        });
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_baseinfo_city);
 
@@ -150,6 +161,31 @@ public class XWalkFragment extends Fragment {
         sb.append("=");
         sb.append(value);
         xWalkCookieManager.setCookie(url, sb.toString());
+    }
+
+    class MyUIClient extends XWalkUIClient {
+        MyUIClient(XWalkView view) {
+            super(view);
+        }
+
+        @Override
+        public boolean onConsoleMessage(XWalkView view, String message, int lineNumber, String sourceId, ConsoleMessageType messageType) {
+            return super.onConsoleMessage(view, message, lineNumber, sourceId, messageType);
+        }
+
+        @Override
+        public void onUnhandledKeyEvent(XWalkView view, KeyEvent event) {
+            super.onUnhandledKeyEvent(view, event);
+        }
+
+        @Override
+        public void onPageLoadStarted(XWalkView view, String url) {
+            //TODO 监控网络
+            super.onPageLoadStarted(view, url);
+
+        }
+
+
     }
 
     public class JsInterface {

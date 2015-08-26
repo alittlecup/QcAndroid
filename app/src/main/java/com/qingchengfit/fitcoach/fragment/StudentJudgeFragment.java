@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.TagGroup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * A simple {@link Fragment} subclass.
