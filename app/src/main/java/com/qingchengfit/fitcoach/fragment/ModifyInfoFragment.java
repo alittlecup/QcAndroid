@@ -20,6 +20,7 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.User;
 
@@ -29,7 +30,6 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.drakeet.materialdialog.MaterialDialog;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -121,18 +121,19 @@ public class ModifyInfoFragment extends Fragment {
 
     @OnClick(R.id.modifyinfo_header_pic)
     public void onChangeHeader() {
-        MaterialDialog mMaterialDialog = new MaterialDialog(getActivity());
-        mMaterialDialog.setTitle("请选择拍照或相册")
-                .setPositiveButton("拍照", view -> {
-                    mMaterialDialog.dismiss();
-                    goCamera();
-                })
-                .setNegativeButton("相册", view -> {
-                    mMaterialDialog.dismiss();
-                    goGalley();
-                });
-        mMaterialDialog.show();
-
+//        MaterialDialog mMaterialDialog = new MaterialDialog(getActivity());
+//        mMaterialDialog.setTitle("请选择拍照或相册")
+//                .setPositiveButton("拍照", view -> {
+//                    mMaterialDialog.dismiss();
+//                    goCamera();
+//                })
+//                .setNegativeButton("相册", view -> {
+//                    mMaterialDialog.dismiss();
+//                    goGalley();
+//                });
+//        mMaterialDialog.show();
+        PicChooseDialog dialog = new PicChooseDialog(getActivity());
+        dialog.show();
     }
 
     public void goGalley() {
