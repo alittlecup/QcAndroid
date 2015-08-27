@@ -114,7 +114,6 @@
             android:layout_marginLeft="10dp"
             />
     </LinearLayout>
-
     <TextView
         style="@style/Qc.TextCommonBlack"
         android:layout_width="wrap_content"
