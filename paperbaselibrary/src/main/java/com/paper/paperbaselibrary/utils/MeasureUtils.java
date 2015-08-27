@@ -1,8 +1,10 @@
 package com.paper.paperbaselibrary.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.DimenRes;
 import android.util.TypedValue;
+import android.view.ViewConfiguration;
 
 /**
  * power by
@@ -35,4 +37,26 @@ public class MeasureUtils {
     public static int getScreenWidth(Resources resources) {
         return resources.getDisplayMetrics().widthPixels;
     }
+
+    public static int getScreenHeight(Resources resources) {
+        return resources.getDisplayMetrics().heightPixels;
+    }
+
+    /**
+     * height with out virtual bar and system bar
+     */
+    public static int getTrueheight(Context context) {
+        boolean hasVir = ViewConfiguration.get(context).hasPermanentMenuKey();
+        int navigationHeight = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        navigationHeight = context.getResources().getDimensionPixelSize(navigationHeight);
+        int statusHeight = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        statusHeight = context.getResources().getDimensionPixelSize(statusHeight);
+        if (hasVir)
+            return getScreenHeight(context.getResources()) - navigationHeight - statusHeight;
+        else return getScreenHeight(context.getResources()) - statusHeight;
+    }
+
+
+
+
 }

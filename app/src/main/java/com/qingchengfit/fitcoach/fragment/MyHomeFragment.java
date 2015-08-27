@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 
@@ -35,8 +36,8 @@ public class MyHomeFragment extends Fragment {
     SimpleDraweeView myhomeHeader;
     @Bind(R.id.myhome_gender)
     SimpleDraweeView myhomeGender;
-    @Bind(R.id.myhome_appBar)
-    AppBarLayout myhomeAppBar;
+    //    @Bind(R.id.myhome_appBar)
+//    AppBarLayout myhomeAppBar;
     @Bind(R.id.myhome_viewpager)
     ViewPager myhomeViewpager;
     @Bind(R.id.myhome_tab)
@@ -53,7 +54,7 @@ public class MyHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
         toolbar.inflateMenu(R.menu.menu_myhome);
@@ -72,8 +73,18 @@ public class MyHomeFragment extends Fragment {
         myhomeViewpager.setAdapter(adatper);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(myhomeViewpager);
+
+        ViewTreeObserver observer = myhomeViewpager.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(() -> {
+            ViewGroup.LayoutParams lp = myhomeViewpager.getLayoutParams();
+            int hei = MeasureUtils.getTrueheight(getActivity()) - toolbar.getHeight() - myhomeTab.getHeight();
+            lp.height = hei;
+            myhomeViewpager.setLayoutParams(lp);
+        });
+
         return view;
     }
+
 
     private void initView() {
 
