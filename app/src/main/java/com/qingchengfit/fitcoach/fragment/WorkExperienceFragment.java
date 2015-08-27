@@ -59,11 +59,14 @@ public class WorkExperienceFragment extends Fragment {
 //        TextView itemStudioName;
 //        @Bind(R.id.item_studio_comfirm)
 //        TextView itemStudioComfirm;
-
+//        @Bind(R.id.item_studio_classes)
+//        GridViewInScroll itemStudioClasses;
+//        @Bind(R.id.item_tag_group)
+//        TagGroup itemTagGroup;
 
         public WorkExperienceVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+//            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -83,7 +86,7 @@ public class WorkExperienceFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(WorkExperienceVH holder, int position) {
-
+//            holder.itemTagGroup.setTags("非常好","长得帅","一般般嘛");
         }
 
 

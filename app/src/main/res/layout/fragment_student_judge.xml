@@ -123,5 +123,5 @@
         app:atg_checkedBackgroundColor="@color/white"
         app:atg_textColor="@color/text_black"
         >
-    </com.qingchengfit.fitcoach.component.TagGroup>.
+    </com.qingchengfit.fitcoach.component.TagGroup>
 </LinearLayout>

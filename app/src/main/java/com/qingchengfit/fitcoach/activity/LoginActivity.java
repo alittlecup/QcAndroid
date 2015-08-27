@@ -16,6 +16,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -48,12 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         if (PreferenceUtils.getPrefBoolean(this, "first", true))
             startActivityForResult(new Intent(this, SplashActivity.class), 11);
-
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "ZVc12KfmeoroYVV0iLcvSCCr");
 
 //        if (PreferenceUtils.getPrefString(this,"session_id",null)!=null)
 //            startActivity(new Intent(this,MainActivity.class));
-        loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
-        loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
 
         smsObserver = new SmsObserver(this, new Handler(getMainLooper()));

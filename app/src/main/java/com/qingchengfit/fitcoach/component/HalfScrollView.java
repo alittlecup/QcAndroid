@@ -52,7 +52,7 @@ public class HalfScrollView extends ScrollView {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
 
-        if (!ViewCompat.canScrollHorizontally(this, 1)) {
+        if (!ViewCompat.canScrollVertically(this, 1)) {
             return false;
         }
         return super.onInterceptTouchEvent(ev);

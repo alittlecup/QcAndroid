@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/paper_item_height"
         android:background="@color/primary_light"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="2014-至今"
         android:textColor="@color/primary"
         />
@@ -41,7 +42,59 @@
             android:text="已确认"
             />
     </RelativeLayout>
+    <!--<TextView-->
+    <!--style="@style/Qc.TextCommonBlack"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="职位:教练"-->
+    <!--android:paddingBottom="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_horizontal_margin"-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--style="@style/Qc.TextCommonBlack"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="职位:教练"-->
+    <!--android:paddingBottom="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_horizontal_margin"-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--style="@style/Qc.TextCommonBlack"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="职位:教练"-->
+    <!--android:paddingBottom="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_horizontal_margin"-->
+    <!--/>-->
 
+
+    <!--<com.paper.paperbaselibrary.component.GridViewInScroll-->
+    <!--android:id="@+id/item_studio_classes"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:minHeight="50dp"-->
+    <!--android:numColumns="2"-->
+    <!-->-->
+    <!--</com.paper.paperbaselibrary.component.GridViewInScroll>-->
+    <!--<com.qingchengfit.fitcoach.component.TagGroup-->
+    <!--android:id="@+id/item_tag_group"-->
+    <!--style="@style/TagGroup"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+    <!--app:atg_backgroundColor="@color/white"-->
+    <!--app:atg_borderColor="@color/text_black"-->
+    <!--app:atg_borderStrokeWidth="1dp"-->
+    <!--app:atg_checkedBackgroundColor="@color/white"-->
+    <!--app:atg_textColor="@color/text_black"-->
+    <!-->-->
+    <!--</com.qingchengfit.fitcoach.component.TagGroup>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,4 +114,16 @@
             android:layout_marginLeft="10dp"
             />
     </LinearLayout>
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@drawable/ic_baseinfo_city"
+        android:drawablePadding="@dimen/qc_edit_drawable_padding"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="展开"
+        />
 </LinearLayout>
