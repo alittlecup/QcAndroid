@@ -35,12 +35,18 @@ public class UpYunClient {
         return upyun;
     }
 
-    public static boolean upLoadImg(String userid, File file) {
+    /**
+     * @param path   记得带分隔符 eg /header/
+     * @param userid 云上存储的文件名
+     * @param file
+     * @return
+     */
+    public static boolean upLoadImg(String path, String userid, File file) {
         UpYun upYun = init();
         boolean ret = false;
         try {
             upYun.setContentMD5(UpYun.md5(file));
-            ret = upYun.writeFile("/header/" + userid + ".png", file, true);
+            ret = upYun.writeFile(path + userid + ".png", file, true);
         } catch (IOException e) {
             LogUtil.d("Upyun", "upload headerimg err:" + e.getMessage());
             RevenUtils.sendException("upLoadImg", "UpYunClient", e);

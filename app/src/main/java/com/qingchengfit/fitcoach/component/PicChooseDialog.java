@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.component;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.LayoutRes;
 import android.view.Gravity;
 import android.view.View;
@@ -9,7 +10,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.paper.paperbaselibrary.utils.ChoosePicUtils;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+
+import java.io.File;
 
 /**
  * power by
@@ -30,7 +35,8 @@ public class PicChooseDialog extends Dialog {
         super(context, R.style.ChoosePicDialogStyle);
         View view = getLayoutInflater().inflate(R.layout.dialog_pic_choose, null);
         this.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
+        view.findViewById(R.id.choosepic_camera).setOnClickListener(view1 -> ChoosePicUtils.choosePicFromCamera(context, Uri.fromFile(new File(Configs.CameraPic))));
+        view.findViewById(R.id.choosepic_galley).setOnClickListener(view1 -> ChoosePicUtils.choosePicFromGalley(context));
     }
 
     public PicChooseDialog(Context context, int theme, @LayoutRes int layout) {

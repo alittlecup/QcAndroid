@@ -5,6 +5,7 @@
               android:orientation="vertical">
 
     <TextView
+        android:id="@+id/choosepic_camera"
         style="@style/Qc.TextCommonBlack"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -13,6 +14,8 @@
         />
 
     <TextView
+
+        android:id="@+id/choosepic_galley"
         style="@style/Qc.TextCommonBlack"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

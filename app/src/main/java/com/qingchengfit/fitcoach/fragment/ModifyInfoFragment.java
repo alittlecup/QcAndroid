@@ -188,7 +188,7 @@ public class ModifyInfoFragment extends Fragment {
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(s -> {
                         File upFile = new File(s);
-                        boolean reslut = UpYunClient.upLoadImg(user.id, upFile);
+                        boolean reslut = UpYunClient.upLoadImg("/header/", user.id, upFile);
                         if (reslut) {
                             LogUtil.d("success");
                             Observable.just(upFile)
