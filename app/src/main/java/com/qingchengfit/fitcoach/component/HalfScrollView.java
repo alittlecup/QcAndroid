@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
-
 /**
  * power by
  * <p>
@@ -63,7 +61,7 @@ public class HalfScrollView extends ScrollView {
         int action = ev.getAction();
         float scrolly = getScrollY();
 
-        LogUtil.e("scroll:" + scrolly + "   " + ViewCompat.canScrollHorizontally(getChildAt(0), 1));
+//        LogUtil.e("scroll:" + scrolly + "   " + ViewCompat.canScrollHorizontally(getChildAt(0), 1));
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:

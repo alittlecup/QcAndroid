@@ -5,16 +5,16 @@
              tools:context="com.qingchengfit.fitcoach.fragment.RecordComfirmFragment">
 
 
-    <com.paper.paperbaselibrary.component.RefreshEnhangceLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<com.paper.paperbaselibrary.component.RefreshEnhangceLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
-    </com.paper.paperbaselibrary.component.RefreshEnhangceLayout>
+    <!--</com.paper.paperbaselibrary.component.RefreshEnhangceLayout>-->
 
 
 </FrameLayout>

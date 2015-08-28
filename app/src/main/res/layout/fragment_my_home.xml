@@ -129,6 +129,7 @@
         android:layout_height="@dimen/qc_item_height"
         android:layout_gravity="bottom"
         android:text="生成我的名片"
+        android:visibility="gone"
         />
 
 </android.support.design.widget.CoordinatorLayout>

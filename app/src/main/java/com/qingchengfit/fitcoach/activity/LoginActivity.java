@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
 //        if (PreferenceUtils.getPrefString(this,"session_id",null)!=null)
 //            startActivity(new Intent(this,MainActivity.class));
+        loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
+        loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
 
         smsObserver = new SmsObserver(this, new Handler(getMainLooper()));

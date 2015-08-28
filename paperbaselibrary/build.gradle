@@ -9,6 +9,13 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
+
+    }
+    android {
+        lintOptions {
+            abortOnError false
+        }
     }
     buildTypes {
         release {

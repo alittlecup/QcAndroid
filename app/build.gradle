@@ -64,7 +64,9 @@ android {
             keyPassword "Qingcheng2014"
         }
     }
-
+    lintOptions {
+        abortOnError false
+    }
     buildTypes {
         release {
             signingConfig signingConfigs.release

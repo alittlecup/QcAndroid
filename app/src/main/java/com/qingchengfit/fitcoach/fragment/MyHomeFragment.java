@@ -54,7 +54,7 @@ public class MyHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_home, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
         toolbar.inflateMenu(R.menu.menu_myhome);
@@ -62,8 +62,6 @@ public class MyHomeFragment extends Fragment {
             getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
             return true;
         });
-//        myhomeCoolaosingtoorbar.setTitle("我的主页");
-        initView();
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(BaseInfoFragment.newInstance("", ""));
         fragments.add(new RecordComfirmFragment());
