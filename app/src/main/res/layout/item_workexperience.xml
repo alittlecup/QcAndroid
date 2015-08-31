@@ -82,9 +82,16 @@
         android:id="@+id/item_studio_classes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:horizontalSpacing="5dp"
         android:minHeight="50dp"
         android:numColumns="2"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:verticalSpacing="5dp"
         android:visibility="gone"
+
         >
     </com.paper.paperbaselibrary.component.GridViewInScroll>
 

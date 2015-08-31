@@ -25,9 +25,8 @@
         <!-->-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            android:background="@color/primary"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
 
             >
@@ -38,7 +37,17 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                app:placeholderImage="@drawable/img_default_male"
                 app:roundAsCircle="true"
+                />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/myhome_bg"
+                android:layout_width="match_parent"
+                android:layout_height="172dp"
+                app:placeholderImage="@drawable/img_selfinfo_bg"
+                app:placeholderImageScaleType="fitXY"
                 />
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -52,12 +61,21 @@
                 />
 
             <TextView
+                android:id="@+id/myhome_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/myhome_header"
                 android:layout_centerHorizontal="true"
                 android:text="Mark Steve"
                 android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/myhome_brief"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myhome_name"
+                android:text="@string/test_text"
                 />
 
         </RelativeLayout>
@@ -81,8 +99,8 @@
                 android:id="@+id/myhome_tab"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:layout_marginLeft="75dp"
-                android:layout_marginRight="75dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/primary"

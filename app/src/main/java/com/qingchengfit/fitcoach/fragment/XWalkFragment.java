@@ -16,6 +16,7 @@ import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
@@ -24,6 +25,7 @@ import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
 
 import org.xwalk.core.JavascriptInterface;
+import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
@@ -59,6 +61,8 @@ public class XWalkFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
+        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
+
 //        XWalkSettings xWalkSettings = new XWalkSettings(mWebview.getContext(),null,false);
 //
 //        xWalkSettings.setAppCacheEnabled(true);
@@ -91,6 +95,7 @@ public class XWalkFragment extends Fragment {
 //                super.onReceivedLoadError(view, errorCode, description, failingUrl);
             }
         });
+
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_baseinfo_city);
 
@@ -114,12 +119,14 @@ public class XWalkFragment extends Fragment {
     }
 
     private void initCookie() {
+        setCookie(Configs.ServerIp, "sessionid", PreferenceUtils.getPrefString(getActivity(), "session_id", ""));
         List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {
         }.getType());
         for (MutiSysSession sysSession : mutiSysSessions) {
-            setCookie(sysSession.url, "session_id", sysSession.session_id);
+            setCookie(sysSession.url, "sessionid", sysSession.session_id);
         }
     }
+
 
     public void startLoadUrl(String url) {
         mWebview.load(url, null);

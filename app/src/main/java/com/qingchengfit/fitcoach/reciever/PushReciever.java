@@ -26,11 +26,11 @@ public class PushReciever extends PushMessageReceiver {
     /**
      * @param context
      * @param i     errorcode
-     * appid
-     * @param s     userId
-     * @param s1    channelId
-     * @param s2    requestId
-     * @param s3
+     *
+     * @param s     appid
+     * @param s1    userId
+     * @param s2    channelId
+     * @param s3    requestId
      */
     public static String BD_CHANNELID = "bd_channelid";
     public static String BD_USERLID = "bd_userid";
@@ -38,7 +38,7 @@ public class PushReciever extends PushMessageReceiver {
     public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
         LogUtil.e(s + "  " + s1 + "    " + s2 + "    " + s3);
         PreferenceUtils.setPrefString(context, BD_USERLID, s1);
-        PreferenceUtils.setPrefString(context, BD_USERLID, s2);
+        PreferenceUtils.setPrefString(context, BD_CHANNELID, s2);
     }
 
     @Override

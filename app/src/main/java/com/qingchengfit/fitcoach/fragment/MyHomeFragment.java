@@ -132,7 +132,18 @@ public class MyHomeFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "测试";
+            switch (position) {
+                case 0:
+                    return "基本信息";
+                case 1:
+                    return "资质认证";
+                case 2:
+                    return "工作经历";
+                case 3:
+                    return "学员评价";
+                default:
+                    return "";
+            }
         }
     }
 

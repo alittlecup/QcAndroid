@@ -45,7 +45,16 @@ public class QcResponSystem extends QcResponse {
          */
         private int user_id;
         private boolean success;
+        private String host;
         private String session_id;
+
+        public String getHost() {
+            return host;
+        }
+
+        public void setHost(String host) {
+            this.host = host;
+        }
 
         public int getUser_id() {
             return user_id;

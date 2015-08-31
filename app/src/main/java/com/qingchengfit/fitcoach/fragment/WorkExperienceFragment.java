@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -70,16 +71,38 @@ public class WorkExperienceFragment extends Fragment {
         TagGroup itemTagGroup;
         @Bind(R.id.item_studio_expaned)
         ToggleButton itemExpaned;
+
         public WorkExperienceVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             LogUtil.e("hahhahahah");
             itemExpaned.setOnCheckedChangeListener((compoundButton, b) -> {
                 if (b) {
+                    itemStudioClasses.setVisibility(View.VISIBLE);
                     itemTagGroup.setVisibility(View.VISIBLE);
-                } else itemTagGroup.setVisibility(View.GONE);
+                } else {
+                    itemTagGroup.setVisibility(View.GONE);
+                    itemStudioClasses.setVisibility(View.GONE);
+                }
             });
 
+        }
+    }
+
+    /**
+     * This class contains all butterknife-injected Views & Layouts from layout file 'item_work_classes.xml'
+     * for easy to all layout elements.
+     *
+     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+     */
+    static class ViewHolder {
+        @Bind(R.id.item_workclass_name)
+        TextView itemWorkclassName;
+        @Bind(R.id.item_workclass_num)
+        TextView itemWorkclassNum;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
     }
 
@@ -101,8 +124,15 @@ public class WorkExperienceFragment extends Fragment {
         public void onBindViewHolder(WorkExperienceVH holder, int position) {
 
             holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
-        }
+            List<String> aaaas = new ArrayList<>();
+            aaaas.add("12");
+            aaaas.add("12");
+            aaaas.add("12");
+            aaaas.add("12");
+            GridInScrollAdapter adapter1 = new GridInScrollAdapter(aaaas);
+            holder.itemStudioClasses.setAdapter(adapter1);
 
+        }
 
         @Override
         public int getItemCount() {
@@ -110,5 +140,78 @@ public class WorkExperienceFragment extends Fragment {
         }
     }
 
+    class ClassBean {
+        String name;
+        String classNum;
+        String studentNum;
 
+        public ClassBean(String name, String classNum, String studentNum) {
+            this.name = name;
+            this.classNum = classNum;
+            this.studentNum = studentNum;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getClassNum() {
+            return classNum;
+        }
+
+        public void setClassNum(String classNum) {
+            this.classNum = classNum;
+        }
+
+        public String getStudentNum() {
+            return studentNum;
+        }
+
+        public void setStudentNum(String studentNum) {
+            this.studentNum = studentNum;
+        }
+    }
+
+    class GridInScrollAdapter extends BaseAdapter {
+        List data;
+
+        public GridInScrollAdapter(List data) {
+            this.data = data;
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return data.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ViewHolder holder = null;
+            if (view == null) {
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_work_classes, null);
+                holder = new ViewHolder(view);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+
+            return view;
+        }
+
+
+    }
 }

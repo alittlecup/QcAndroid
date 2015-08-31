@@ -85,7 +85,7 @@ public class QcCloudClient {
 //                                if (e.getKind() == RetrofitError.Kind.NETWORK) {
 //                                    LogUtil.e("network error!!");
 //                                }
-                                LogUtil.e(e.getMessage());
+//                                LogUtil.e(e.getMessage());
                             }
                             if (responToken != null) {
                                 request.addHeader("X-CSRFToken", responToken.data.token);

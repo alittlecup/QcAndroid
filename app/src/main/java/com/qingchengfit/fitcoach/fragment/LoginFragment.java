@@ -58,16 +58,23 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void doLogin(String account, String code) {
+//                Uri uri = Uri.fromParts("weixin", "wxpay/bizpayurl", "appid=wxc6a77068671948fa&mch_id=1229776802&nonce_str=ZTvdtqVJwKbe5Ua&product_id=122&time_stamp=1440998807&sign=461F09C69743638397CFEA2422516656");
+//                Uri uri = Uri.parse("weixin://wxpay/bizpayurl?appid=wxc6a77068671948fa&mch_id=1229776802&nonce_str=ZTvdtqVJwKbe5Ua&product_id=122&time_stamp=1440998807&sign=461F09C69743638397CFEA2422516656");
+//                Intent toWeixin = new Intent(Intent.ACTION_VIEW);
+//                toWeixin.setData(uri);
+//                getActivity().startActivity(toWeixin);
+//                return;
+//
 
-//                Intent toMain = new Intent(getActivity(), MainActivity.class);
+// Intent toMain = new Intent(getActivity(), MainActivity.class);
 //                startActivity(toMain);
 //                getActivity().finish();
                 List<MutiSysSession> systems = new ArrayList<>();
                 LoginBean bean = new LoginBean(account, code);
                 String userid = PreferenceUtils.getPrefString(getActivity(), PushReciever.BD_USERLID, null);
                 String channelid = PreferenceUtils.getPrefString(getActivity(), PushReciever.BD_CHANNELID, null);
-                if (userid != null) ;
-                bean.setPush_id(userid);
+                if (userid != null)
+                    bean.setPush_id(userid);
                 if (channelid != null)
                     bean.setPush_channel_id(channelid);
                 QcCloudClient.getApi()
@@ -95,12 +102,12 @@ public class LoginFragment extends Fragment {
                         })
                         .flatMap(qcResponLogin -> {
                             if (qcResponLogin != null) {
-                                return QcCloudClient.getApi().getApi.qcGetSystem("4", "session_id=" + qcResponLogin.data.session_id);
-//                                    return QcCloudClient.getApi().getApi.qcGetSystem(qcResponLogin.data.coach.id,"session_id="+qcResponLogin.data.session_id);
+//                                return QcCloudClient.getApi().getApi.qcGetSystem("1", "session_id=" + qcResponLogin.data.session_id);
+                                return QcCloudClient.getApi().getApi.qcGetSystem(qcResponLogin.data.coach.id, "session_id=" + qcResponLogin.data.session_id);
                             } else return null;
                         })
                         .flatMap(qcResponCoachSys -> {
-                            if (qcResponCoachSys != null) {
+                            if (qcResponCoachSys != null && qcResponCoachSys.getData() != null && qcResponCoachSys.getData().getSystems() != null && qcResponCoachSys.getData().getSystems().size() > 0) {
                                 return Observable.just(qcResponCoachSys.getData().getSystems())
                                         .subscribeOn(Schedulers.newThread())
                                         .flatMapIterable(systemsEntities -> systemsEntities)
@@ -116,7 +123,7 @@ public class LoginFragment extends Fragment {
                                                                     try {
                                                                         responToken = QcCloudClient.getApi().getApi.qcGetToken();
                                                                     } catch (Exception e) {
-                                                                        LogUtil.e(e.getMessage());
+//                                                                        LogUtil.e(e.getMessage());
                                                                     }
                                                                     if (responToken != null) {
                                                                         request.addHeader("X-CSRFToken", responToken.data.token);
@@ -132,7 +139,7 @@ public class LoginFragment extends Fragment {
                                         .flatMap(qcResponSystem -> {
                                             MutiSysSession sysSession = new MutiSysSession();
                                             sysSession.session_id = qcResponSystem.getData().getSession_id();
-                                            sysSession.url = qcResponSystem.getUrl();
+                                            sysSession.url = qcResponSystem.getData().getHost();
                                             systems.add(sysSession);
                                             return Observable.just(sysSession);
                                         })
@@ -153,7 +160,7 @@ public class LoginFragment extends Fragment {
                             }
 
                         });
-                ;
+
             }
 
             @Override
