@@ -15,11 +15,28 @@ package com.qingchengfit.fitcoach.http.bean;
  */
 public class LoginBean {
 
+    public String phone;
+    public String password;
+    public String push_id;
+    public String push_channel_id;
     public LoginBean(String phone, String password) {
         this.phone = phone;
         this.password = password;
     }
 
-    public String phone;
-    public String password;
+    public String getPush_id() {
+        return push_id;
+    }
+
+    public void setPush_id(String push_id) {
+        this.push_id = push_id;
+    }
+
+    public String getPush_channel_id() {
+        return push_channel_id;
+    }
+
+    public void setPush_channel_id(String push_channel_id) {
+        this.push_channel_id = push_channel_id;
+    }
 }

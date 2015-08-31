@@ -60,7 +60,6 @@ public class RegisterFragment extends Fragment {
     Button registeBtn;
     Handler handler = new Handler() {
         int count = 60;
-
         @Override
         public void handleMessage(Message msg) {
             StringBuffer stringBuffer = new StringBuffer();

@@ -78,7 +78,7 @@ public class XWalkFragment extends Fragment {
         xWalkCookieManager = new XWalkCookieManager();
         xWalkCookieManager.setAcceptCookie(true);
         initCookie();
-        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
+//        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
@@ -155,8 +155,10 @@ public class XWalkFragment extends Fragment {
 
     public void setCookie(String url, String key, String value) {
         StringBuffer sb = new StringBuffer();
+//        String oriCookie = xWalkCookieManager.getCookie(url);
+//        if (oriCookie != null){
 //        sb.append(xWalkCookieManager.getCookie(url));
-//        sb.append(";");
+//        sb.append(";");}
         sb.append(key);
         sb.append("=");
         sb.append(value);

@@ -121,7 +121,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                 .getDrawerInfo()
                 .subscribe(qcResponDrawer -> {
                     for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
-                        setupBtn(qcResponDrawer.data.guide.get(i));
+                        setupBtn(qcResponDrawer.data.guide.get(i), i);
                     }
                     runOnUiThread(() -> {
                         setupModules(qcResponDrawer.data.modules);
@@ -137,12 +137,15 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
             DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
             item.setTitle(module.title);
             item.setCount(module.text);
-            item.setOnClickListener(view -> goXwalkfragment(module.url));
+            item.setOnClickListener(view -> {
+                goXwalkfragment(module.url);
+                mainDrawerlayout.closeDrawers();
+            });
             drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         }
     }
 
-    public void setupBtn(DrawerGuide btnInfo) {
+    public void setupBtn(DrawerGuide btnInfo, int count) {
         SegmentButton button = new SegmentButton(this);
         List<Drawable> drawables = new ArrayList<>();
         Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
@@ -184,9 +187,14 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                         button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
                         button.setOnClickListener(view -> {
                             LogUtil.d("toSomeWhere");
+                            mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl);
+
                         });
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+                        if (count == 0) {
+                            drawerRadiogroup.getChildAt(0).performClick();
+                        }
                     });
 
                 })

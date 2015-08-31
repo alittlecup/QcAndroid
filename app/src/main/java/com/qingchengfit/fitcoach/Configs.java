@@ -20,9 +20,10 @@ public class Configs {
     /**
      * http config
      */
-    public static boolean isDebug     = false;
-    //    public static String ServerIp     = isDebug?"http://192.168.31.154":"http://cloudtest.qingchengfit.cn/";
-    public static String ServerIp = isDebug ? "http://192.168.31.143" : "http://cloudtest.qingchengfit.cn/";
+    public static boolean isDebug = true;
+    //    public static boolean isDebug     = false;
+    public static String ServerIp = isDebug ? "http://192.168.31.154" : "http://cloudtest.qingchengfit.cn/";
+    //    public static String ServerIp = isDebug ? "http://192.168.31.143" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort   = isDebug?":7777":"";
     public static String Server       = ServerIp+ServerPort;
 

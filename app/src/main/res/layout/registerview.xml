@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_pw"
+                    android:hint="名字"
                     android:imeOptions="actionDone"
                     android:inputType="phone"
                     />
@@ -42,6 +43,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             >
 
             <TextView
@@ -158,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_pw"
+                android:hint="手机验证码"
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 />
@@ -208,12 +212,10 @@
             android:id="@+id/registe_btn"
             android:layout_width="133dp"
             android:layout_height="48dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/registe_phone_verity"
+            android:layout_gravity="right"
             android:layout_marginTop="30dp"
             android:orientation="horizontal"
-            android:text="@string/registe_btn_lable"
-
+            android:text="@string/complete_label"
             >
         </Button>
 

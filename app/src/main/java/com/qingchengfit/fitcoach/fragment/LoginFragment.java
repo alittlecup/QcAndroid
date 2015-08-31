@@ -24,6 +24,7 @@ import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import com.qingchengfit.fitcoach.reciever.PushReciever;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,12 @@ public class LoginFragment extends Fragment {
 //                getActivity().finish();
                 List<MutiSysSession> systems = new ArrayList<>();
                 LoginBean bean = new LoginBean(account, code);
+                String userid = PreferenceUtils.getPrefString(getActivity(), PushReciever.BD_USERLID, null);
+                String channelid = PreferenceUtils.getPrefString(getActivity(), PushReciever.BD_CHANNELID, null);
+                if (userid != null) ;
+                bean.setPush_id(userid);
+                if (channelid != null)
+                    bean.setPush_channel_id(channelid);
                 QcCloudClient.getApi()
                         .postApi
                         .qcLogin(bean)
@@ -88,7 +95,7 @@ public class LoginFragment extends Fragment {
                         })
                         .flatMap(qcResponLogin -> {
                             if (qcResponLogin != null) {
-                                return QcCloudClient.getApi().getApi.qcGetSystem("1", "session_id=" + qcResponLogin.data.session_id);
+                                return QcCloudClient.getApi().getApi.qcGetSystem("4", "session_id=" + qcResponLogin.data.session_id);
 //                                    return QcCloudClient.getApi().getApi.qcGetSystem(qcResponLogin.data.coach.id,"session_id="+qcResponLogin.data.session_id);
                             } else return null;
                         })

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 
 import java.util.List;
 
@@ -21,9 +22,23 @@ import java.util.List;
  * Created by Paper on 15/8/27 2015.
  */
 public class PushReciever extends PushMessageReceiver {
+
+    /**
+     * @param context
+     * @param i     errorcode
+     * appid
+     * @param s     userId
+     * @param s1    channelId
+     * @param s2    requestId
+     * @param s3
+     */
+    public static String BD_CHANNELID = "bd_channelid";
+    public static String BD_USERLID = "bd_userid";
     @Override
     public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
         LogUtil.e(s + "  " + s1 + "    " + s2 + "    " + s3);
+        PreferenceUtils.setPrefString(context, BD_USERLID, s1);
+        PreferenceUtils.setPrefString(context, BD_USERLID, s2);
     }
 
     @Override
