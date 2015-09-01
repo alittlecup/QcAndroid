@@ -6,14 +6,14 @@
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.BaseInfoFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <com.qingchengfit.fitcoach.component.RecyclerViewInScroll
         android:id="@+id/baseinfo_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/paper_item_height"
         >
 
-    </android.support.v7.widget.RecyclerView>
+    </com.qingchengfit.fitcoach.component.RecyclerViewInScroll>
 
     <View
         android:layout_width="match_parent"

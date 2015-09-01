@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
+import com.qingchengfit.fitcoach.component.RecyclerViewInScroll;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +33,14 @@ public class BaseInfoFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     @Bind(R.id.baseinfo_recyclerview)
-    RecyclerView baseinfoRecyclerview;
+    RecyclerViewInScroll baseinfoRecyclerview;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+
+    private boolean canScrollup;
 
     public BaseInfoFragment() {
         // Required empty public constructor
@@ -89,10 +93,33 @@ public class BaseInfoFragment extends Fragment {
         BaseInfoAdapter adapter = new BaseInfoAdapter(datas);
         baseinfoRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         baseinfoRecyclerview.setAdapter(adapter);
+        baseinfoRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (!ViewCompat.canScrollVertically(recyclerView, -1)) {
+                        canScrollup = false;
+                    } else canScrollup = true;
+                }
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
         return view;
     }
 
+
+    public boolean isCanScrollup() {
+        return canScrollup;
+    }
+
+    public void setCanScrollup(boolean canScrollup) {
+        this.canScrollup = canScrollup;
+    }
 
     @Override
     public void onDestroyView() {

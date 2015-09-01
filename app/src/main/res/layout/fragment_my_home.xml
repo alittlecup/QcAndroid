@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment"
     >
 
@@ -12,7 +13,9 @@
         android:id="@+id/myhome_appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/backgroud_grey"
         android:fitsSystemWindows="true"
+
         >
         <!--<android.support.design.widget.CollapsingToolbarLayout-->
         <!--android:id="@+id/myhome_coolaosingtoorbar"-->
@@ -31,16 +34,7 @@
 
             >
 
-            <com.facebook.drawee.view.SimpleDraweeView
 
-                android:id="@+id/myhome_header"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="30dp"
-                app:placeholderImage="@drawable/img_default_male"
-                app:roundAsCircle="true"
-                />
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/myhome_bg"
@@ -50,6 +44,17 @@
                 app:placeholderImageScaleType="fitXY"
                 />
 
+            <com.facebook.drawee.view.SimpleDraweeView
+
+                android:id="@+id/myhome_header"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="130dp"
+                app:placeholderImage="@drawable/img_default_male"
+                app:roundAsCircle="true"
+                />
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/myhome_gender"
                 android:layout_width="wrap_content"
@@ -66,20 +71,64 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/myhome_header"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
                 android:text="Mark Steve"
-                android:textColor="@color/white"
                 />
 
             <TextView
+
                 android:id="@+id/myhome_brief"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/myhome_name"
-                android:text="@string/test_text"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/test_test_short"
+                />
+
+            <TextView
+                android:id="@+id/myhome_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myhome_brief"
+                android:layout_centerHorizontal="true"
+                android:text="北京"
                 />
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_grey"
+            ></View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_grey"
+            ></View>
+
+        <FrameLayout
+            android:id="@+id/myhome_student_judge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            ></FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_grey"
+            ></View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider_grey"
+            ></View>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"

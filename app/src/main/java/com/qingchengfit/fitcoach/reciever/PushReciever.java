@@ -5,6 +5,8 @@ import android.content.Context;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.bean.NewPushMsg;
 
 import java.util.List;
 
@@ -64,6 +66,7 @@ public class PushReciever extends PushMessageReceiver {
     @Override
     public void onMessage(Context context, String s, String s1) {
         LogUtil.e(s + "  " + s1);
+        RxBus.getBus().send(new NewPushMsg());
     }
 
     @Override

@@ -16,23 +16,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/backgroud_grey"
             android:orientation="vertical"
             >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="?android:attr/actionBarSize"
-                android:background="@color/primary"
+                android:layout_height="wrap_content"
 
                 >
-
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/myhome_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="172dp"
+                    app:placeholderImage="@drawable/img_selfinfo_bg"
+                    app:placeholderImageScaleType="fitXY"
+                    />
                 <com.facebook.drawee.view.SimpleDraweeView
 
                     android:id="@+id/myhome_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="130dp"
+                    app:placeholderImage="@drawable/img_default_male"
                     app:roundAsCircle="true"
                     />
 
@@ -47,17 +55,72 @@
                     />
 
                 <TextView
+                    android:id="@+id/myhome_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/myhome_header"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
                     android:text="Mark Steve"
-                    android:textColor="@color/white"
+                    />
+
+                <TextView
+
+                    android:id="@+id/myhome_brief"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myhome_name"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:text="@string/test_test_short"
+                    />
+
+                <TextView
+                    android:id="@+id/myhome_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myhome_brief"
+                    android:layout_centerHorizontal="true"
+                    android:text="北京"
                     />
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_grey"
+                ></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider_grey"
+                ></View>
+
+            <FrameLayout
+                android:id="@+id/myhome_student_judge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                ></FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_grey"
+                ></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider_grey"
+                ></View>
+
             <RelativeLayout
+                android:id="@+id/myhome_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_gravity="bottom"
@@ -76,15 +139,15 @@
                     android:id="@+id/myhome_tab"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginRight="75dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
 
                     app:tabGravity="center"
                     app:tabIndicatorColor="@color/primary"
                     app:tabIndicatorHeight="1.5dp"
                     app:tabSelectedTextColor="@color/primary_dark"
                     app:tabTextAppearance="@style/Qc.TextCommonGrey"
-                    app:tabTextColor="@color/primary"
+                    app:tabTextColor="@color/text_grey"
                     >
                 </android.support.design.widget.TabLayout>
 
@@ -136,12 +199,5 @@
     </include>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:text="生成我的名片"
-        />
 
 </RelativeLayout>

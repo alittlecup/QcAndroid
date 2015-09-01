@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
@@ -42,9 +46,16 @@ public class MyHomeFragment extends Fragment {
     ViewPager myhomeViewpager;
     @Bind(R.id.myhome_tab)
     TabLayout myhomeTab;
+    @Bind(R.id.myhome_name)
+    TextView myhomeName;
+    @Bind(R.id.myhome_brief)
+    TextView myhomeBrief;
+    @Bind(R.id.myhome_student_judge)
+    FrameLayout myhomeStudentJudge;
     //    @Bind(R.id.myhome_coolaosingtoorbar)
 //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
+
     public MyHomeFragment() {
 
     }
@@ -54,10 +65,11 @@ public class MyHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
         toolbar.inflateMenu(R.menu.menu_myhome);
+        toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {
             getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
             return true;
@@ -80,6 +92,7 @@ public class MyHomeFragment extends Fragment {
             myhomeViewpager.setLayoutParams(lp);
         });
 
+        getFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
         return view;
     }
 
@@ -108,6 +121,11 @@ public class MyHomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+
+    public interface TouchListener {
+        public void onTouchEvent(MotionEvent event);
     }
 
     class FragmentAdatper extends FragmentPagerAdapter {
@@ -146,6 +164,4 @@ public class MyHomeFragment extends Fragment {
             }
         }
     }
-
-
 }

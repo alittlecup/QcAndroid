@@ -77,6 +77,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
     private CompositeSubscription _subscriptions;
     private XWalkFragment xWalkFragment;
+    private MyHomeFragment myHomeFragment;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -97,7 +98,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
         });
 
         initDrawer();
-
+        myHomeFragment = new MyHomeFragment();
 
 //        View view = View.inflate(this,R.layout.drawer_header,null);
 //        mainNavi.addHeaderView(view);
@@ -199,15 +200,15 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
                 })
         ;
-
     }
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
         mainDrawerlayout.closeDrawers();
         mFragmentManager.beginTransaction()
-                .replace(R.id.main_fraglayout, new MyHomeFragment())
+                .replace(R.id.main_fraglayout, myHomeFragment)
                 .commit();
+
     }
 
     @Override

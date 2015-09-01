@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+
+import com.qingchengfit.fitcoach.R;
 
 /**
  * power by
@@ -20,6 +23,9 @@ import android.widget.ScrollView;
  * Created by Paper on 15/8/27 2015.
  */
 public class HalfScrollView extends ScrollView {
+    private RelativeLayout tab;
+    private int firstheight;
+    private boolean isSecondView;
 
     public HalfScrollView(Context context) {
         super(context);
@@ -36,21 +42,22 @@ public class HalfScrollView extends ScrollView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
+        tab = (RelativeLayout) findViewById(R.id.myhome_tab_layout);
 
     }
 
     @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
-
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        firstheight = tab.getTop();
     }
+
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
 
-        if (!ViewCompat.canScrollVertically(this, 1)) {
+        if (!ViewCompat.canScrollVertically(this, 1) && isSecondView) {
             return false;
         }
         return super.onInterceptTouchEvent(ev);
@@ -65,19 +72,24 @@ public class HalfScrollView extends ScrollView {
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                if (scrolly < 200) {
+
+                if (isSecondView && scrolly < firstheight - 200) {
                     smoothScrollTo(0, 0);
-                } else
-                    smoothScrollTo(0, 400);
+                    isSecondView = false;
+                } else if (!isSecondView && scrolly > 200) {
+                    smoothScrollTo(0, firstheight);
+                    isSecondView = true;
+                }
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                if (scrolly >= 400)
-                    return false;
+                if (scrolly >= firstheight - 200)
+                    return true;
                 break;
         }
         return super.onTouchEvent(ev);
     }
+
 
 //    private boolean canChildSrcollUp(){
 //

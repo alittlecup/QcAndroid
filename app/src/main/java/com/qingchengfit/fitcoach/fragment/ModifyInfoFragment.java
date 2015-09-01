@@ -119,6 +119,7 @@ public class ModifyInfoFragment extends Fragment {
         return view;
     }
 
+
     @OnClick(R.id.modifyinfo_header_pic)
     public void onChangeHeader() {
 //        MaterialDialog mMaterialDialog = new MaterialDialog(getActivity());

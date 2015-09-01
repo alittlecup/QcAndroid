@@ -20,6 +20,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
+import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
@@ -94,7 +95,14 @@ public class XWalkFragment extends Fragment {
                 //TODO 错误监控
 //                super.onReceivedLoadError(view, errorCode, description, failingUrl);
             }
+
+            @Override
+            public void onLoadFinished(XWalkView view, String url) {
+                super.onLoadFinished(view, url);
+
+            }
         });
+
 
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_baseinfo_city);
@@ -114,7 +122,11 @@ public class XWalkFragment extends Fragment {
 //            LogUtil.e(gson.toJson(contacts));
             ShareUtils.oneKeyShared(getActivity());
         });
-
+        RxBus.getBus().toObserverable().subscribe(o -> {
+            if (o instanceof NewPushMsg) {
+                mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
+            }
+        });
         return view;
     }
 
