@@ -93,6 +93,7 @@ public class BaseInfoFragment extends Fragment {
         BaseInfoAdapter adapter = new BaseInfoAdapter(datas);
         baseinfoRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         baseinfoRecyclerview.setAdapter(adapter);
+
         baseinfoRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

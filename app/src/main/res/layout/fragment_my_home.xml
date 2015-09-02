@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
-
             >
 
 
@@ -101,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider_grey"
+            app:layout_scrollFlags="scroll|enterAlways"
             ></View>
 
         <View
@@ -108,6 +108,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="@color/divider_grey"
+            app:layout_scrollFlags="scroll|enterAlways"
             ></View>
 
         <FrameLayout
@@ -115,6 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
             ></FrameLayout>
 
         <View
@@ -150,7 +152,6 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/primary"
                 app:tabIndicatorHeight="1.5dp"

@@ -193,6 +193,10 @@
             android:name=".activity.SettingActivity"
             android:label="@string/title_activity_setting">
         </activity>
+        <activity
+            android:name=".activity.MyHomeActivity"
+            android:label="@string/title_activity_setting">
+        </activity>
 
 
         <!-- push service start -->

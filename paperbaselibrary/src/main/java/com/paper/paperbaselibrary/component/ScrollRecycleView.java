@@ -35,4 +35,6 @@ public class ScrollRecycleView extends RecyclerView {
                 Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
+
+
 }

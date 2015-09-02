@@ -9,11 +9,14 @@
     >
 
     <com.qingchengfit.fitcoach.component.HalfScrollView
+        android:id="@+id/myhome_scroller"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         >
 
         <LinearLayout
+            android:id="@+id/halfscroll_first"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/backgroud_grey"
@@ -23,7 +26,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 >
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/myhome_bg"
@@ -33,7 +35,6 @@
                     app:placeholderImageScaleType="fitXY"
                     />
                 <com.facebook.drawee.view.SimpleDraweeView
-
                     android:id="@+id/myhome_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -43,7 +44,6 @@
                     app:placeholderImage="@drawable/img_default_male"
                     app:roundAsCircle="true"
                     />
-
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/myhome_gender"
                     android:layout_width="wrap_content"
@@ -53,7 +53,6 @@
                     app:overlayImage="@drawable/ic_pw"
                     app:roundAsCircle="true"
                     />
-
                 <TextView
                     android:id="@+id/myhome_name"
                     android:layout_width="wrap_content"
@@ -63,9 +62,7 @@
                     android:layout_marginTop="0dp"
                     android:text="Mark Steve"
                     />
-
                 <TextView
-
                     android:id="@+id/myhome_brief"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,7 +71,6 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:text="@string/test_test_short"
                     />
-
                 <TextView
                     android:id="@+id/myhome_location"
                     android:layout_width="wrap_content"
@@ -83,7 +79,6 @@
                     android:layout_centerHorizontal="true"
                     android:text="北京"
                     />
-
             </RelativeLayout>
 
             <View
@@ -91,7 +86,6 @@
                 android:layout_height="1dp"
                 android:background="@color/divider_grey"
                 ></View>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -135,13 +129,20 @@
                     >
                 </View>
 
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
                 <android.support.design.widget.TabLayout
                     android:id="@+id/myhome_tab"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-
                     app:tabGravity="center"
                     app:tabIndicatorColor="@color/primary"
                     app:tabIndicatorHeight="1.5dp"
@@ -151,14 +152,14 @@
                     >
                 </android.support.design.widget.TabLayout>
 
-            </RelativeLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/myhome_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="700dp"
+                    android:background="@color/white"
+                    />
+            </LinearLayout>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/myhome_viewpager"
-
-                android:layout_width="match_parent"
-                android:layout_height="700dp"
-                />
         </LinearLayout>
 
     </com.qingchengfit.fitcoach.component.HalfScrollView>
@@ -193,6 +194,12 @@
     <!--app:titleTextAppearance="@style/ToolbarStyle"-->
     <!-->-->
     <!--</android.support.v7.widget.Toolbar>-->
+    <!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?android:actionBarSize">-->
+    <!-- -->
+    <!-- -->
+    <!--</FrameLayout>-->
     <include
         layout="@layout/common_toolbar"
         >

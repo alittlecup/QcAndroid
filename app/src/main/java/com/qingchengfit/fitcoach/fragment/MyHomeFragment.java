@@ -22,6 +22,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
+import com.qingchengfit.fitcoach.component.HalfScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +37,10 @@ public class MyHomeFragment extends Fragment {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.myhome_header)
-    SimpleDraweeView myhomeHeader;
-    @Bind(R.id.myhome_gender)
-    SimpleDraweeView myhomeGender;
+    //    @Bind(R.id.myhome_header)
+//    SimpleDraweeView myhomeHeader;
+//    @Bind(R.id.myhome_gender)
+//    SimpleDraweeView myhomeGender;
     //    @Bind(R.id.myhome_appBar)
 //    AppBarLayout myhomeAppBar;
     @Bind(R.id.myhome_viewpager)
@@ -52,7 +53,13 @@ public class MyHomeFragment extends Fragment {
     TextView myhomeBrief;
     @Bind(R.id.myhome_student_judge)
     FrameLayout myhomeStudentJudge;
-    //    @Bind(R.id.myhome_coolaosingtoorbar)
+    @Bind(R.id.myhome_scroller)
+    HalfScrollView myhomeScroller;
+    @Bind(R.id.myhome_bg)
+    SimpleDraweeView myhomeBg;
+    private int mHomeBgHeight = 1;
+
+    //        @Bind(R.id.myhome_coolaosingtoorbar)
 //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
 
@@ -81,17 +88,30 @@ public class MyHomeFragment extends Fragment {
         fragments.add(new StudentJudgeFragment());
         FragmentAdatper adatper = new FragmentAdatper(getActivity().getSupportFragmentManager(), fragments);
         myhomeViewpager.setAdapter(adatper);
+        myhomeViewpager.setOffscreenPageLimit(4);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(myhomeViewpager);
 
         ViewTreeObserver observer = myhomeViewpager.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(() -> {
-            ViewGroup.LayoutParams lp = myhomeViewpager.getLayoutParams();
-            int hei = MeasureUtils.getTrueheight(getActivity()) - toolbar.getHeight() - myhomeTab.getHeight();
-            lp.height = hei;
-            myhomeViewpager.setLayoutParams(lp);
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                ViewGroup.LayoutParams lp = myhomeViewpager.getLayoutParams();
+                int hei = MeasureUtils.getTrueheight(getActivity()) - toolbar.getHeight() - myhomeTab.getHeight();
+                lp.height = hei;
+                myhomeViewpager.setLayoutParams(lp);
+                mHomeBgHeight = myhomeBg.getHeight();
+                myhomeViewpager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            }
         });
-
+        myhomeScroller.setListener(new HalfScrollView.HalfViewListener() {
+            @Override
+            public void onScroll(int i) {
+                if (i > mHomeBgHeight)
+                    i = mHomeBgHeight;
+                toolbar.setBackgroundColor(Color.argb(255 * i / mHomeBgHeight, 32, 191, 189));
+            }
+        });
         getFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
         return view;
     }

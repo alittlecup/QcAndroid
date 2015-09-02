@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.component;
+package com.paper.paperbaselibrary.component;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -18,25 +18,18 @@ import android.view.MotionEvent;
  * <p>
  * Created by Paper on 15/9/1 2015.
  */
-public class RecyclerViewInScroll extends RecyclerView {
-    public RecyclerViewInScroll(Context context) {
+public class ReboundRecyclerView extends RecyclerView {
+
+    public ReboundRecyclerView(Context context) {
         super(context);
     }
 
-    public RecyclerViewInScroll(Context context, AttributeSet attrs) {
+    public ReboundRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public RecyclerViewInScroll(Context context, AttributeSet attrs, int defStyle) {
+    public ReboundRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent e) {
-//        if (!ViewCompat.canScrollVertically(this, -1)) {
-//            return false;
-//        } else return true;
-        return super.onInterceptTouchEvent(e);
     }
 
     @Override
