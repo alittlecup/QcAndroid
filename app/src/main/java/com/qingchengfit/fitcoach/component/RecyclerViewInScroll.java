@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -40,8 +41,21 @@ public class RecyclerViewInScroll extends RecyclerView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
+    public boolean onTouchEvent(MotionEvent ev) {
+        final int action = MotionEventCompat.getActionMasked(ev);
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
 
-        return super.onTouchEvent(e);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(ev);
+
     }
 }

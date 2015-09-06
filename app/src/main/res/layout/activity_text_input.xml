@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="com.qingchengfit.fitcoach.activity.TextInputActivity">
+
+    <include layout="@layout/common_toolbar"></include>
+
+    <EditText
+        android:id="@+id/textinput_et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:maxLength="140"
+        />
+
+    <Button
+        android:id="@+id/textinput_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_alignParentBottom="true"
+        android:text="确定插入"
+        />
+</RelativeLayout>

@@ -1,8 +1,6 @@
 package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -11,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -86,48 +85,63 @@ public class HalfScrollView extends ScrollView {
         firstheight = tab.getTop();
     }
 
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+//        this.onInterceptTouchEvent(ev);
+//        return true;
+    }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
+
         if (!isSecondView)
             return true;
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 lastY = ev.getY();
                 lastX = ev.getX();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (isSecondView && Math.abs(ev.getX() - lastX) > 10) {
-                    lastX = ev.getX();
-                    return false;
-                }
 
-                if (ev.getY() - lastY > 20 && isSecondView && !canChildVScroll(-1)) {
-                    lastY = ev.getY();
-                    return true;
-                } else if (ev.getY() - lastY > 20 && isSecondView && canChildVScroll(-1)) {
-                    lastY = ev.getY();
-                    return false;
-                } else if (ev.getY() - lastY < 20 && isSecondView && (canChildVScroll(1) || (canChildVScroll(-1)))) {
-                    lastY = ev.getY();
-                    return false;
-                }
-                lastY = ev.getY();
-                break;
+            case MotionEvent.ACTION_MOVE:
+                if (isSecondView) {
+                    if (ev.getY() - lastY > 5 && canChildUp())
+                        return true;
+                    else return false;
+                } else return true;
+
+//                if (isSecondView && Math.abs(ev.getX() - lastX) > 10) {
+//                    lastX = ev.getX();
+//                    return false;
+//                }
+//
+//                if (ev.getY() - lastY > 20 && isSecondView && !canChildVScroll(-1)) {
+//                    lastY = ev.getY();
+//                    return true;
+//                } else if (ev.getY() - lastY > 20 && isSecondView && canChildVScroll(-1)) {
+//                    lastY = ev.getY();
+//                    return false;
+//                } else if (ev.getY() - lastY < 20 && isSecondView && (canChildVScroll(1) || (canChildVScroll(-1)))) {
+//                    lastY = ev.getY();
+//                    return false;
+//                }
+//                lastY = ev.getY();
         }
         return super.onInterceptTouchEvent(ev);
     }
 
-    public boolean canChildVScroll(int direct) {
+    public boolean canChildUp() {
         ViewGroup vg = (ViewGroup) getChildAt(0);
 //
         ViewGroup v = (ViewGroup) vg.getChildAt(vg.getChildCount() - 1);
-        ViewPager viewPager = (ViewPager) v.getChildAt(v.getChildCount() - 1);
+        MyhomeViewPager viewPager = (MyhomeViewPager) v.getChildAt(v.getChildCount() - 1);
         ViewGroup vg2 = (ViewGroup) viewPager.getChildAt(0);
-        if (direct > 0)
-            return ViewCompat.canScrollVertically(vg2.getChildAt(0), direct);
-        else
-            return ViewCompat.canScrollVertically(vg2.getChildAt(0), direct) && viewPager.getCurrentItem() == 0;
+        return viewPager.canScrollup();
+//        if (direct > 0)
+//            return ViewCompat.canScrollVertically(vg2.getChildAt(0), direct);
+//        else
+//            return ViewCompat.canScrollVertically(vg2.getChildAt(0), direct) && viewPager.getCurrentItem() == 0;
     }
 
 
@@ -139,19 +153,23 @@ public class HalfScrollView extends ScrollView {
 //        LogUtil.e("scroll:" + scrolly + "   " + ViewCompat.canScrollHorizontally(getChildAt(0), 1));
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                if (!canChildVScroll(-1) && isSecondView)
+                if (!isSecondView)
+                    return super.onTouchEvent(ev);
+
+                if (canChildUp() && isSecondView)
                     return true;
+                else return false;
             case MotionEvent.ACTION_UP:
 
-                if (isSecondView && scrolly < firstheight - 200) {
-                    smoothScrollTo(0, 0);
+//                if (isSecondView && scrolly < firstheight - 200) {
+//                    smoothScrollTo(0, 0);
 //                    ViewCompat.animate(this).rotationYBy(-firstheight).start();
-                    isSecondView = false;
-                } else if (!isSecondView && scrolly > 200) {
-                    smoothScrollTo(0, firstheight);
+//                    isSecondView = false;
+//                } else if (!isSecondView && scrolly > 200) {
+//                    smoothScrollTo(0, firstheight);
 //                    ViewCompat.animate(this).rotationYBy(firstheight).start();
-                    isSecondView = true;
-                }
+//                    isSecondView = true;
+//                }
                 return super.onTouchEvent(ev);
 
             case MotionEvent.ACTION_MOVE:
@@ -173,6 +191,10 @@ public class HalfScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+        LogUtil.e("scroll:" + t);
+        if (t < firstheight) {
+            isSecondView = false;
+        } else isSecondView = true;
         if (listener != null)
             listener.onScroll(t);
     }

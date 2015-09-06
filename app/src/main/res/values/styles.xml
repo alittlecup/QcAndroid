@@ -31,6 +31,7 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+
     <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
     </style>

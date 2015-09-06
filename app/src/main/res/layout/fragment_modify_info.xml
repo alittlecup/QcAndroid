@@ -19,7 +19,7 @@
 
         <TextView
 
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -42,8 +42,8 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/modifyinfo_header_pic"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             app:placeholderImage="@drawable/qingchenglogo"
@@ -60,7 +60,7 @@
 
         <TextView
 
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -100,7 +100,7 @@
         <TextView
 
             android:id="@+id/comple_gender_label"
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -165,7 +165,7 @@
 
         <TextView
 
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -204,7 +204,7 @@
 
         <TextView
 
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -243,7 +243,7 @@
 
         <TextView
 
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -282,7 +282,7 @@
 
         <TextView
 
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -312,6 +312,7 @@
     </View>
 
     <RelativeLayout
+        android:id="@+id/modifyinfo_brief"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_marginTop="20dp"
@@ -320,7 +321,7 @@
         >
 
         <TextView
-            style="?android:attr/textAppearanceMediumInverse"
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -365,6 +366,12 @@
         </View>
     </RelativeLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="保存"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"

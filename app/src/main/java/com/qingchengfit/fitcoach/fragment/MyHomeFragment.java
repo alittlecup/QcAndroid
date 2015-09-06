@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 
@@ -58,9 +59,8 @@ public class MyHomeFragment extends Fragment {
     @Bind(R.id.myhome_bg)
     SimpleDraweeView myhomeBg;
     private int mHomeBgHeight = 1;
-
-    //        @Bind(R.id.myhome_coolaosingtoorbar)
-//    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
+    //    @Bind(R.id.myhome_coolaosingtoorbar)
+    //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
 
     public MyHomeFragment() {
@@ -74,11 +74,15 @@ public class MyHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
         ButterKnife.bind(this, view);
+
         toolbar.setTitle("我的主页");
         toolbar.inflateMenu(R.menu.menu_myhome);
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {
-            getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+            if (item.getItemId() == R.id.action_myhome_settings)
+                getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+            else if (item.getItemId() == R.id.action_myhome_share)
+                ShareUtils.oneKeyShared(getActivity());
             return true;
         });
         List<Fragment> fragments = new ArrayList<>();
@@ -86,12 +90,11 @@ public class MyHomeFragment extends Fragment {
         fragments.add(new RecordComfirmFragment());
         fragments.add(new WorkExperienceFragment());
         fragments.add(new StudentJudgeFragment());
-        FragmentAdatper adatper = new FragmentAdatper(getActivity().getSupportFragmentManager(), fragments);
+        FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
         myhomeViewpager.setAdapter(adatper);
         myhomeViewpager.setOffscreenPageLimit(4);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(myhomeViewpager);
-
         ViewTreeObserver observer = myhomeViewpager.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -112,30 +115,9 @@ public class MyHomeFragment extends Fragment {
                 toolbar.setBackgroundColor(Color.argb(255 * i / mHomeBgHeight, 32, 191, 189));
             }
         });
-        getFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
+        getChildFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
         return view;
     }
-
-
-    private void initView() {
-
-    }
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            fragmentCallBack = (FragmentCallBack) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        fragmentCallBack = null;
-//    }
 
     @Override
     public void onDestroyView() {

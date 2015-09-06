@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,12 @@ public class ModifyInfoFragment extends Fragment {
     private User user;
     private User mModifyUser;
 
+
+    private FragmentManager mFragmentManager;
+
+
+
+
     public ModifyInfoFragment() {
         // Required empty public constructor
     }
@@ -92,6 +99,7 @@ public class ModifyInfoFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         user = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "user_info", ""), User.class);
+        mFragmentManager = getChildFragmentManager();
 //        QcCloudClient.getApi()
 //                .getApi.qcGetUserInfo(user.id)
 //                .subscribeOn(Schedulers.newThread())
@@ -171,6 +179,12 @@ public class ModifyInfoFragment extends Fragment {
         startActivityForResult(intent, SELECT_CAM);
     }
 
+    @OnClick(R.id.modifyinfo_brief)
+    public void onClickBrief() {
+        getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, new ModifyBrifeFragment())
+                .addToBackStack("")
+                .commit();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

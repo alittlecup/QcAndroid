@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -78,6 +79,8 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     private CompositeSubscription _subscriptions;
     private XWalkFragment xWalkFragment;
     private MyHomeFragment myHomeFragment;
+    private Fragment topFragment;
+
 
     //    @Inject RxBus rxBus;
     @Override
@@ -110,8 +113,21 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     }
 
     private void goXwalkfragment(String url) {
-        mFragmentManager.beginTransaction().show(xWalkFragment).commit();
-        xWalkFragment.startLoadUrl(url);
+
+        XWalkFragment fragment = (XWalkFragment) getSupportFragmentManager().findFragmentByTag(url);
+        if (fragment == null) {
+            fragment = XWalkFragment.newInstance(url);
+            mFragmentManager.beginTransaction()
+                    .add(R.id.main_fraglayout, fragment, url)
+                    .show(fragment)
+                    .commit();
+
+        } else {
+            mFragmentManager.getFragments();
+            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
+        }
+        topFragment = fragment;
+//        fragment.startLoadUrl(url);
     }
 
 
@@ -159,7 +175,6 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                         Request request = new Request.Builder().url(s).build();
 
                         try {
-
                             com.squareup.okhttp.Response response = httpClient.newCall(request).execute();
                             FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
 //                            FileOutputStream output = new FileOutputStream(f);
@@ -204,10 +219,16 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
-        mainDrawerlayout.closeDrawers();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.main_fraglayout, myHomeFragment)
-                .commit();
+        mainDrawerlayout.closeDrawer(Gravity.LEFT);
+        if (mFragmentManager.getFragments().contains(myHomeFragment)) {
+            mFragmentManager.beginTransaction().hide(topFragment).show(myHomeFragment).commit();
+        } else {
+            mFragmentManager.beginTransaction()
+                    .add(R.id.main_fraglayout, myHomeFragment)
+                    .show(myHomeFragment)
+                    .commit();
+        }
+        topFragment = myHomeFragment;
 
     }
 

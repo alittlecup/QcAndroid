@@ -146,7 +146,6 @@ public class LoginFragment extends Fragment {
                                         .last()
                                         .flatMap(sysSession -> {
                                             PreferenceUtils.setPrefString(getActivity(), "sessions", gson.toJson(systems));
-                                            ;
                                             return Observable.just(true);
                                         });
                             } else return Observable.just(false);

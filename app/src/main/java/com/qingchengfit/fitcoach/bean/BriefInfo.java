@@ -18,6 +18,13 @@ public class BriefInfo {
     String text;
     String img;
 
+    public BriefInfo() {
+    }
+
+    public BriefInfo(String text, String img) {
+        this.text = text;
+        this.img = img;
+    }
 
     public String getText() {
         return text;

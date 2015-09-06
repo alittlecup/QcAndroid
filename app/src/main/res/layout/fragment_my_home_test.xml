@@ -152,7 +152,7 @@
                     >
                 </android.support.design.widget.TabLayout>
 
-                <android.support.v4.view.ViewPager
+                <com.qingchengfit.fitcoach.component.MyhomeViewPager
                     android:id="@+id/myhome_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="700dp"

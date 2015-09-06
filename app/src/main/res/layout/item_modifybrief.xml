@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+              android:gravity="center"
                 android:orientation="vertical"
     >
 
@@ -17,17 +18,62 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/item_modifybrief_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:scaleType="matrix"
         android:visibility="gone"
+        app:actualImageScaleType="fitCenter"
         app:placeholderImage="@drawable/test_pic"
-        app:placeholderImageScaleType="fitXY"
+        app:placeholderImageScaleType="fitCenter"
         />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_margin="7dp"
-        android:src="@drawable/ic_drawer_meeting_selector"
-        />
-</RelativeLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:dividerPadding="30dp"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/item_modifybrief_del"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/primary"
+            />
+
+        <Button
+
+            android:id="@+id/item_modifybrief_up"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="上移"
+            android:textColor="@color/primary"
+            />
+
+        <Button
+
+            android:id="@+id/item_modifybrief_down"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="下移"
+            android:textColor="@color/primary"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>

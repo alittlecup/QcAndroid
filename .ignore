@@ -11,7 +11,7 @@ lt application files
 # Generated files
 bin/
 gen/
-
+.idea/
 # Gradle files
 .gradle/
 build/
