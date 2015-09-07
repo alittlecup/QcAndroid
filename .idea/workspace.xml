@@ -82,36 +82,13 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/MyhomeViewPager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/btn_text_delete.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_text_input.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ignore" afterPath="$PROJECT_DIR$/.ignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/bean/BriefInfo.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/bean/BriefInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Configs.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Configs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/HalfScrollView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/HalfScrollView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
+    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="add fix breif">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/RecyclerViewInScroll.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/RecyclerViewInScroll.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_info.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_info.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_home_test.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_home_test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_myhome.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_myhome.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_in.xml" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_in.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_out.xml" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_out.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_right_in.xml" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_right_in.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_right_out.xml" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_right_out.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
@@ -234,88 +211,7 @@
     <favorites_list name="android-fitcoach" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ModifyInfoFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="203" column="36" selection-start-line="203" selection-start-column="36" selection-end-line="203" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ModifyBrifeFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7505241">
-              <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
-              <folding>
-                <element signature="e#2197#2232#0" expanded="true" />
-                <element signature="e#5672#5673#0" expanded="true" />
-                <element signature="e#5714#5715#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextInputActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_text_input.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.928572">
-              <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
-              <folding>
-                <element signature="e#478#513#0" expanded="true" />
-                <element signature="e#854#877#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="item_modifybrief.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-43.107143">
-              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-              <folding>
-                <element signature="e#561#596#0" expanded="true" />
-                <element signature="e#618#637#0" expanded="true" />
-                <element signature="e#856#891#0" expanded="true" />
-                <element signature="e#1249#1272#0" expanded="true" />
-                <element signature="e#1348#1383#0" expanded="true" />
-                <element signature="e#1419#1454#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="btn_text_delete.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_text_delete.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -3553,8 +3449,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_pic_choose.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java" />
         <option value="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/ChoosePicUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/UpYunClient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RegisterFragment.java" />
@@ -3601,8 +3495,10 @@
         <option value="$PROJECT_DIR$/paperbaselibrary/src/main/res/anim/slide_left_out.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java" />
       </list>
     </option>
@@ -4156,7 +4052,7 @@
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/loginlibrary" />
     <property name="FullScreen" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
-    <property name="SearchEverywhereHistoryKey" value="sett&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;Share&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Utils.ShareUtils&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;set&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_setting.xml&#10;Set&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.SettingFragment&#10;Log&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Confi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;x&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Ba&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;Base&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;base&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_base_info.xml&#10;color&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;B&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;my&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_my_home.xml&#10;Android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Reci&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/reciever/PushReciever.java&#10;Xwal&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;co&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;myh&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_my_home_test.xml&#10;colors&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;stud&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_student_judge.xml&#10;Myh&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Push&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/reciever/PushReciever.java&#10;Wecha&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Utils.WechatPay&#10;L&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Xw&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.XWalkFragment&#10;Login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Work&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java&#10;Recie&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/reciever/PushReciever.java&#10;con&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Regis&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.RegisterFragment&#10;Main&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.MainActivity&#10;ShareU&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Utils.ShareUtils&#10;C&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Modify&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;Mo&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java&#10;App&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/App.java&#10;Stud&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_student_judge.xml&#10;wor&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java&#10;LoginV&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java&#10;log&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/LoginActivity.java&#10;LoginF&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.LoginFragment&#10;xwa&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Qc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;gradle&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Config&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Configs&#10;Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;grad&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle" />
+    <property name="SearchEverywhereHistoryKey" value="Share&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Utils/ShareUtils.java&#10;sett&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;set&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_setting.xml&#10;Set&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.SettingFragment&#10;Log&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Confi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;x&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Ba&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;Base&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;base&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_base_info.xml&#10;color&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;B&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseInfoFragment.java&#10;my&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_my_home.xml&#10;Android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Reci&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/reciever/PushReciever.java&#10;Xwal&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;co&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;myh&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_my_home_test.xml&#10;colors&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;stud&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_student_judge.xml&#10;Myh&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Push&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/reciever/PushReciever.java&#10;Wecha&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Utils.WechatPay&#10;L&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Xw&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.XWalkFragment&#10;Login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;Work&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java&#10;Recie&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/reciever/PushReciever.java&#10;con&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Regis&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.RegisterFragment&#10;Main&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.MainActivity&#10;ShareU&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Utils.ShareUtils&#10;C&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Modify&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java&#10;Mo&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java&#10;App&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/App.java&#10;Stud&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_student_judge.xml&#10;wor&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java&#10;LoginV&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java&#10;log&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/LoginActivity.java&#10;LoginF&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.LoginFragment&#10;xwa&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Qc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;gradle&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Config&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.Configs&#10;Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;grad&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -4470,12 +4366,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00024" summary="add sns share">
-      <created>1439173946212</created>
-      <option name="number" value="00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1439173946212</updated>
-    </task>
     <task id="LOCAL-00025" summary="add sns share">
       <created>1439173977684</created>
       <option name="number" value="00025" />
@@ -4764,7 +4654,13 @@
       <option name="project" value="LOCAL" />
       <updated>1441184989201</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="add fix breif">
+      <created>1441535954722</created>
+      <option name="number" value="00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1441535954725</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4778,7 +4674,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1276" height="777" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31013617" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -4787,7 +4683,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32731137" sideWeight="0.5021299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47049925" sideWeight="0.4978701" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3237519" sideWeight="0.4978701" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.267423" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32731137" sideWeight="0.49520767" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1633888" sideWeight="0.4978701" order="2" side_tool="false" content_ui="tabs" />
@@ -4795,7 +4691,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.61270803" sideWeight="0.50486225" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21555915" sideWeight="0.48562783" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21555915" sideWeight="0.48562783" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -4813,31 +4709,31 @@
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16506922" sideWeight="0.5140625" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21555915" sideWeight="0.51437217" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32731137" sideWeight="0.5021299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3857791" sideWeight="0.4978701" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3237519" sideWeight="0.4978701" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27987897" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2375189" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3103082" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31013617" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14991896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.267423" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32731137" sideWeight="0.49520767" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1633888" sideWeight="0.4978701" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24123274" sideWeight="0.49675852" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.61270803" sideWeight="0.50486225" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4484591" sideWeight="0.49513775" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21555915" sideWeight="0.4859375" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38788524" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21555915" sideWeight="0.48562783" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19515885" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
@@ -4855,7 +4751,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="get desity info&#10;&#10;&#10;" />
     <MESSAGE value="fix splash img&#10;&#10;" />
     <MESSAGE value="little fix" />
     <MESSAGE value="change log.e to d" />
@@ -4880,36 +4775,24 @@
     <MESSAGE value="fix add cookie &amp;&amp;&#10;fix login channelid" />
     <MESSAGE value="add push notify js" />
     <MESSAGE value="fix  my home" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix  my home" />
+    <MESSAGE value="add fix breif" />
+    <option name="LAST_COMMIT_MESSAGE" value="add fix breif" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="292" />
+      <option name="time" value="302" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7193764">
-          <caret line="66" column="39" selection-start-line="66" selection-start-column="39" selection-end-line="66" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Applications/sdk/platforms/android-22/android.jar!/android/view/MotionEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37531486">
-          <caret line="168" column="21" selection-start-line="168" selection-start-column="21" selection-end-line="168" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/support-v4/22.2.1/support-v4-22.2.1-sources.jar!/android/support/v4/widget/ViewDragHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33184856">
           <caret line="289" column="32" selection-start-line="289" selection-start-column="32" selection-end-line="289" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4981,6 +4864,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.15850815">
           <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -5002,6 +4888,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.8783069">
           <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5009,6 +4896,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.8888888">
           <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5023,6 +4911,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5041,6 +4930,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="e#682#683#0" expanded="false" />
+            <element signature="e#712#713#0" expanded="false" />
+            <element signature="e#784#785#0" expanded="false" />
+            <element signature="e#821#822#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -5161,6 +5056,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.5639412">
           <caret line="35" column="44" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5184,6 +5080,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46331236">
           <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -5191,6 +5090,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="4.790356">
           <caret line="202" column="51" selection-start-line="202" selection-start-column="51" selection-end-line="202" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5198,6 +5098,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40888888">
           <caret line="106" column="81" selection-start-line="106" selection-start-column="81" selection-end-line="106" selection-end-column="81" />
+          <folding>
+            <element signature="class#FragmentAdatper#0;class#MyHomeFragment#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -5205,6 +5108,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9643606">
           <caret line="196" column="34" selection-start-line="196" selection-start-column="34" selection-end-line="196" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5212,6 +5116,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2830188">
           <caret line="111" column="44" selection-start-line="111" selection-start-column="44" selection-end-line="111" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -5245,36 +5152,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.464286">
-          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/bean/BriefInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39413">
           <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Utils/ShareUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/22.2.1/recyclerview-v7-22.2.1-sources.jar!/android/support/v7/widget/RecyclerView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15513627">
-          <caret line="8074" column="49" selection-start-line="8074" selection-start-column="47" selection-end-line="8074" selection-end-column="50" />
           <folding />
         </state>
       </provider>
@@ -5311,14 +5192,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05263158">
-          <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -5340,47 +5213,34 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="203" column="36" selection-start-line="203" selection-start-column="36" selection-end-line="203" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_text_delete.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-43.107143">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.36870027">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding>
-            <element signature="e#561#596#0" expanded="true" />
-            <element signature="e#618#637#0" expanded="true" />
-            <element signature="e#856#891#0" expanded="true" />
-            <element signature="e#1249#1272#0" expanded="true" />
-            <element signature="e#1348#1383#0" expanded="true" />
-            <element signature="e#1419#1454#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="jar://$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/recyclerview-v7/22.2.1/recyclerview-v7-22.2.1-sources.jar!/android/support/v7/widget/RecyclerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29761904">
+          <caret line="8946" column="0" selection-start-line="8946" selection-start-column="0" selection-end-line="8946" selection-end-column="0" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_text_input.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.928572">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.43207127">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
-            <element signature="e#478#513#0" expanded="true" />
-            <element signature="e#854#877#0" expanded="true" />
+            <element signature="e#682#715#0" expanded="true" />
+            <element signature="e#750#785#0" expanded="true" />
+            <element signature="e#821#856#0" expanded="true" />
+            <element signature="e#893#916#0" expanded="true" />
+            <element signature="e#1087#1110#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -5388,23 +5248,97 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state vertical-scroll-proportion="2.8396437">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#559#594#0" expanded="true" />
+            <element signature="e#616#635#0" expanded="true" />
+            <element signature="e#893#928#0" expanded="true" />
+            <element signature="e#1248#1271#0" expanded="true" />
+            <element signature="e#1306#1341#0" expanded="true" />
+            <element signature="e#1377#1412#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/btn_text_delete.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10691824">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyBrifeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7505241">
-          <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
+        <state vertical-scroll-proportion="4.9895177">
+          <caret line="230" column="0" selection-start-line="230" selection-start-column="0" selection-end-line="230" selection-end-column="0" />
           <folding>
-            <element signature="e#2197#2232#0" expanded="true" />
-            <element signature="e#5672#5673#0" expanded="true" />
-            <element signature="e#5714#5715#0" expanded="true" />
+            <element signature="e#2494#2529#0" expanded="true" />
+            <element signature="e#2574#2609#0" expanded="true" />
+            <element signature="e#7865#7866#0" expanded="true" />
+            <element signature="e#7907#7908#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ModifyInfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4654088">
+          <caret line="203" column="36" selection-start-line="203" selection-start-column="36" selection-end-line="203" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/Utils/ShareUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5366876">
+          <caret line="42" column="70" selection-start-line="42" selection-start-column="70" selection-end-line="42" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/UpYunClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5471698">
+          <caret line="48" column="46" selection-start-line="48" selection-start-column="46" selection-end-line="48" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0089086">
+          <caret line="46" column="45" selection-start-line="46" selection-start-column="45" selection-end-line="46" selection-end-column="45" />
+          <folding>
+            <element signature="e#601#624#0" expanded="true" />
+            <element signature="e#660#695#0" expanded="true" />
+            <element signature="e#730#765#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/ChoosePicUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17819707">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/TextInputActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5366876">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -62,4 +62,10 @@ public class TextInputActivity extends AppCompatActivity {
         setResult(0, it);
         this.finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(-100);
+        this.finish();
+    }
 }

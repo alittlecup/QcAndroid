@@ -3,19 +3,22 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.TextInputActivity;
@@ -34,6 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -49,6 +53,8 @@ public class ModifyBrifeFragment extends Fragment {
     DrawableCenterTextView modifybriefInsertimg;
     @Bind(R.id.modifybrief_inserttext)
     DrawableCenterTextView modifybriefInserttext;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private ModifyBrifeAdapter adapter;
 
     public ModifyBrifeFragment() {
@@ -60,6 +66,11 @@ public class ModifyBrifeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_brief, container, false);
         ButterKnife.bind(this, view);
+        toolbar.setTitle("自我介绍");
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(v -> {
+            getActivity().onBackPressed();
+        });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         listData.add(new BriefInfo(getString(R.string.test_test_short), null));
         listData.add(new BriefInfo(getString(R.string.test_test_short), null));
@@ -73,21 +84,50 @@ public class ModifyBrifeFragment extends Fragment {
     @OnClick(R.id.modifybrief_insertimg)
     public void onInsertImg() {
         PicChooseDialog dialog = new PicChooseDialog(getActivity());
+        dialog.setListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                   dialog.dismiss();
+                                   Intent intent = new Intent();
+                                   // 指定开启系统相机的Action
+                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                                   startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                               }
+                           },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/jpeg");
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        } else {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        }
+                    }
+                }
+
+        );
         dialog.show();
     }
 
+    @OnClick(R.id.modifybrief_inserttext)
     public void onInsertText() {
         Intent toInput = new Intent(getActivity(), TextInputActivity.class);
-        getActivity().startActivityForResult(toInput, INSERT_TEXT);
+        startActivityForResult(toInput, INSERT_TEXT);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INSERT_TEXT) {
-            //TODO 添加一段文字
             if (resultCode >= 0) {
-                listData.add(new BriefInfo(null, data.getStringExtra(TextInputActivity.FIX_TEXT)));
+                listData.add(new BriefInfo(data.getStringExtra(TextInputActivity.FIX_TEXT), null));
                 adapter.notifyDataSetChanged();
             }
 
@@ -99,15 +139,18 @@ public class ModifyBrifeFragment extends Fragment {
                     .subscribe(s -> {
                         String filename = UUID.randomUUID().toString();
                         boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
-                        if (reslut) {
-                            LogUtil.d("success");
-                            BriefInfo briefInfo = new BriefInfo();
-                            briefInfo.setImg(UpYunClient.UPYUNPATH + "/brief/" + filename);
-                            listData.add(briefInfo);
-                            adapter.notifyDataSetChanged();
-                        } else {                            //upload failed TODO
+                        Observable.just(reslut)
+                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .subscribe(aBoolean -> {
+                                    if (aBoolean) {
+                                        BriefInfo briefInfo = new BriefInfo(null, UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
+                                        listData.add(briefInfo);
+                                        adapter.notifyDataSetChanged();
+                                    } else {
+                                        Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
+                                    }
 
-                        }
+                                });
                     });
 
         }

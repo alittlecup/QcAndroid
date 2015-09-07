@@ -31,9 +31,11 @@ import java.io.File;
  */
 public class PicChooseDialog extends Dialog {
 
+    private View view;
+
     public PicChooseDialog(Context context) {
         super(context, R.style.ChoosePicDialogStyle);
-        View view = getLayoutInflater().inflate(R.layout.dialog_pic_choose, null);
+        view = getLayoutInflater().inflate(R.layout.dialog_pic_choose, null);
         this.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         view.findViewById(R.id.choosepic_camera).setOnClickListener(view1 -> ChoosePicUtils.choosePicFromCamera(context, Uri.fromFile(new File(Configs.CameraPic))));
         view.findViewById(R.id.choosepic_galley).setOnClickListener(view1 -> ChoosePicUtils.choosePicFromGalley(context));
@@ -55,5 +57,10 @@ public class PicChooseDialog extends Dialog {
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.ButtomDialogStyle);
         super.show();
+    }
+
+    public void setListener(View.OnClickListener camera, View.OnClickListener gallery) {
+        view.findViewById(R.id.choosepic_camera).setOnClickListener(camera);
+        view.findViewById(R.id.choosepic_galley).setOnClickListener(gallery);
     }
 }
