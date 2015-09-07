@@ -32,4 +32,5 @@
     <string name="setting_title">设置</string>
     <string name="myhome_baseinfo_introduce">自我介绍</string>
     <string name="title_activity_text_input">TextInputActivity</string>
+    <string name="title_activity_my_home">MyHomeActivity</string>
 </resources>

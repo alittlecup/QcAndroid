@@ -258,6 +258,7 @@ public class ModifyBrifeFragment extends Fragment {
 //                        .setTapToRetryEnabled(true)
 //                        .build();
                 holder.itemModifybriefImg.setImageURI(Uri.parse(briefInfo.getImg()));
+
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
             } else {

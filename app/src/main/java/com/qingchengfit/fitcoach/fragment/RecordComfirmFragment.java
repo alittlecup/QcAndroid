@@ -30,19 +30,23 @@ public class RecordComfirmFragment extends Fragment {
     private RecordComfirmAdapter adapter;
 
     public RecordComfirmFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecordComfirmAdapter(new ArrayList<>());
+        adapter.setListener((v, pos) -> {
+            ComfirmDetailFragment fragment = new ComfirmDetailFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+                    .show(fragment).addToBackStack("").commit();
+        });
         recyclerview.setAdapter(adapter);
+
         return view;
     }
 
@@ -53,6 +57,10 @@ public class RecordComfirmFragment extends Fragment {
     }
 
 
+    public interface OnRecycleItemClickListener {
+        public void onItemClick(View v, int pos);
+    }
+
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
         @Bind(R.id.recordcomfirm_title)
         TextView recordcomfirmTitle;
@@ -61,29 +69,39 @@ public class RecordComfirmFragment extends Fragment {
         @Bind(R.id.recordcomfirm_time)
         TextView recordcomfirmTime;
 
-
         public RecordComfirmVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    class RecordComfirmAdapter extends RecyclerView.Adapter<RecordComfirmVH> {
+    class RecordComfirmAdapter extends RecyclerView.Adapter<RecordComfirmVH> implements View.OnClickListener {
 
         private List<BaseInfoBean> datas;
+        private OnRecycleItemClickListener listener;
 
         public RecordComfirmAdapter(List datas) {
             this.datas = datas;
         }
 
+        public OnRecycleItemClickListener getListener() {
+            return listener;
+        }
+
+        public void setListener(OnRecycleItemClickListener listener) {
+            this.listener = listener;
+        }
+
         @Override
         public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, null));
+            RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, parent, false));
+            holder.itemView.setOnClickListener(this);
+            return holder;
         }
 
         @Override
         public void onBindViewHolder(RecordComfirmVH holder, int position) {
-
+            holder.itemView.setTag(position);
         }
 
 
@@ -91,7 +109,11 @@ public class RecordComfirmFragment extends Fragment {
         public int getItemCount() {
             return 10;
         }
-    }
 
+        @Override
+        public void onClick(View v) {
+            listener.onItemClick(v, (int) v.getTag());
+        }
+    }
 
 }

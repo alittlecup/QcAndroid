@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
@@ -220,16 +221,16 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
         mainDrawerlayout.closeDrawer(Gravity.LEFT);
-        if (mFragmentManager.getFragments().contains(myHomeFragment)) {
-            mFragmentManager.beginTransaction().hide(topFragment).show(myHomeFragment).commit();
-        } else {
-            mFragmentManager.beginTransaction()
-                    .add(R.id.main_fraglayout, myHomeFragment)
-                    .show(myHomeFragment)
-                    .commit();
-        }
-        topFragment = myHomeFragment;
-
+//        if (mFragmentManager.getFragments().contains(myHomeFragment)) {
+//            mFragmentManager.beginTransaction().hide(topFragment).show(myHomeFragment).commit();
+//        } else {
+//            mFragmentManager.beginTransaction()
+//                    .add(R.id.main_fraglayout, myHomeFragment)
+//                    .show(myHomeFragment)
+//                    .commit();
+//        }
+//        topFragment = myHomeFragment;
+        startActivity(new Intent(this, MyHomeActivity.class));
     }
 
     @Override

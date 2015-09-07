@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                tools:context="com.qingchengfit.fitcoach.fragment.ComfirmDetailFragment">
+
+    <include layout="@layout/common_toolbar"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="?android:actionBarSize"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="ACE健身教练资格认证"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_oganazation"
+            android:drawablePadding="@dimen/qc_edit_drawable_padding"
+            android:text="机构:"
+            />
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_schedule"
+            android:drawablePadding="@dimen/qc_edit_drawable_padding"
+            android:text="机构:"
+            />
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_score"
+            android:drawablePadding="@dimen/qc_edit_drawable_padding"
+            android:text="机构:"
+            />
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="@dimen/qc_edit_drawable_padding"
+            android:gravity="top"
+            android:text="@string/test_test_short"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/test_pic"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="( 发证日期:20150818)"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="?android:actionBarSize"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:src="@drawable/img_record_comfirmed"
+        />
+</RelativeLayout>

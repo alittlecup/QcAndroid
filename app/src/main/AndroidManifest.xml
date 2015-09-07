@@ -192,10 +192,6 @@
             android:name=".activity.SettingActivity"
             android:label="@string/title_activity_setting">
         </activity>
-        <activity
-            android:name=".activity.MyHomeActivity"
-            android:label="@string/title_activity_setting">
-        </activity>
 
         <!-- push service start -->
         <!-- 用于接收系统消息以保证PushService正常运行 -->
@@ -258,6 +254,10 @@
         <activity
             android:name=".activity.TextInputActivity"
             android:label="@string/title_activity_text_input">
+        </activity>
+        <activity
+            android:name=".activity.MyHomeActivity"
+            android:label="@string/title_activity_my_home">
         </activity>
     </application>
 
