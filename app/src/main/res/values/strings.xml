@@ -33,4 +33,14 @@
     <string name="myhome_baseinfo_introduce">自我介绍</string>
     <string name="title_activity_text_input">TextInputActivity</string>
     <string name="title_activity_my_home">MyHomeActivity</string>
+    <string name="recordedit_competition">比赛</string>
+    <string name="recordedit_comfirm">认证</string>
+    <string name="recordedit_meeting">健身大会</string>
+    <string name="recordedit_label_type">类型</string>
+    <string name="recordedit_certificat_time">证书有效期</string>
+    <string name="recordedit_score">成绩</string>
+    <string name="recordedit_certificate_date">发证日期</string>
+    <string name="recordedit_host_organization">主办机构</string>
+    <string name="recordedit_name">认证名称</string>
+    <string name="record_title">资质认证</string>
 </resources>

@@ -89,7 +89,8 @@ public class SettingFragment extends Fragment {
     @OnClick({R.id.setting_aboutus,
             R.id.setting_advice,
             R.id.setting_modifypw,
-            R.id.settting_modifyinfo
+            R.id.settting_modifyinfo,
+            R.id.setting_comfirm
 
     })
     public void onClickUs(View view) {
@@ -130,6 +131,15 @@ public class SettingFragment extends Fragment {
 //                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
 //                        .commit();
                 break;
+            case R.id.setting_comfirm:
+                mFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .replace(R.id.settting_fraglayout, new RecordFragment())
+                        .addToBackStack("")
+                        .commit();
+
+                break;
+
             default:
                 break;
 
