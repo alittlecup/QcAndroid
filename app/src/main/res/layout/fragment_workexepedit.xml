@@ -12,7 +12,6 @@
         android:layout_height="@dimen/qc_item_height"
         app:civ_lable="起始时间"
         >
-
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
     <com.qingchengfit.fitcoach.component.CommonInputView

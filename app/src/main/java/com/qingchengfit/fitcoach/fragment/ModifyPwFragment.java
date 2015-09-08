@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,6 @@ public class ModifyPwFragment extends BaseSettingFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.modifypw_ori_pw)
     EditText modifypwOriPw;
     @Bind(R.id.modifypw_new_pw)
@@ -42,7 +39,6 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
 
     public ModifyPwFragment() {
-        // Required empty public constructor
     }
 
     /**
