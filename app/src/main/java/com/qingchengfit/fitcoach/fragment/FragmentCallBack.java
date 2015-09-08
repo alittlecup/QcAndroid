@@ -1,6 +1,9 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.support.annotation.DrawableRes;
+import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 
 /**
  * power by
@@ -17,4 +20,8 @@ import android.support.v4.app.Fragment;
  */
 public interface FragmentCallBack {
     public void onFragmentChange(Fragment fragment);
+
+    public void onToolbarMenu(@MenuRes int menu, @DrawableRes int naviicon, String title);
+
+    public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener);
 }

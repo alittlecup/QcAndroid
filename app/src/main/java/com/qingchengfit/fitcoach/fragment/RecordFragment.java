@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +22,13 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecordFragment extends Fragment {
+public class RecordFragment extends BaseSettingFragment {
     public static final String TAG = RecordFragment.class.getName();
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     private RecordComfirmAdapter adapter;
 
     public RecordFragment() {
-        // Required empty public constructor
     }
 
 
@@ -41,12 +37,9 @@ public class RecordFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle(getActivity().getString(R.string.record_title));
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.inflateMenu(R.menu.add);
-        toolbar.setOnMenuItemClickListener(item -> {
-            Fragment fragment = RecordEditFragment.newInstance("添加认证", null);
-            getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, fragment).commit();
+        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
+        fragmentCallBack.onToolbarClickListener(item -> {
+            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance("添加认证", null));
             return true;
 
         });
@@ -54,20 +47,13 @@ public class RecordFragment extends Fragment {
         adapter = new RecordComfirmAdapter(new ArrayList<>());
         adapter.setListener((v, pos) -> {
             //TODO 添加数据内容
-            Fragment fragment = RecordEditFragment.newInstance("添加认证", null);
-            getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, fragment).commit();
+            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance("添加认证", null));
         });
         recyclerview.setAdapter(adapter);
 
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-    }
 
     @Override
     public void onDestroyView() {

@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,30 +19,25 @@ import rx.Observable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AdviceFragment extends Fragment {
+public class AdviceFragment extends BaseSettingFragment {
 
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.setting_advice_mail)
     EditText settingAdviceMail;
     @Bind(R.id.setting_advice_content)
     EditText settingAdviceContent;
 
     public AdviceFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_advice, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setTitle("意见反馈");
-        toolbar.setNavigationOnClickListener(view1 -> getActivity().onBackPressed());
+        fragmentCallBack.onToolbarMenu(0, 0, "意见反馈");
+
         return view;
     }
 

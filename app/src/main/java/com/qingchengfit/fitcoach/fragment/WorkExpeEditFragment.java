@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import com.qingchengfit.fitcoach.R;
  * <p>
  * Created by Paper on 15/9/8 2015.
  */
-public class WorkExpeEditFragment extends Fragment {
+public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @Nullable
     @Override

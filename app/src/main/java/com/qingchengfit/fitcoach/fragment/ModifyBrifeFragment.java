@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModifyBrifeFragment extends Fragment {
+public class ModifyBrifeFragment extends BaseSettingFragment {
 
     public static int INSERT_TEXT = 1;
     public List<BriefInfo> listData = new ArrayList<>();
@@ -53,8 +52,6 @@ public class ModifyBrifeFragment extends Fragment {
     DrawableCenterTextView modifybriefInsertimg;
     @Bind(R.id.modifybrief_inserttext)
     DrawableCenterTextView modifybriefInserttext;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     private ModifyBrifeAdapter adapter;
 
     public ModifyBrifeFragment() {
@@ -66,11 +63,7 @@ public class ModifyBrifeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_brief, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle("自我介绍");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(v -> {
-            getActivity().onBackPressed();
-        });
+        fragmentCallBack.onToolbarMenu(0, 0, "自我介绍");
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         listData.add(new BriefInfo(getString(R.string.test_test_short), null));
         listData.add(new BriefInfo(getString(R.string.test_test_short), null));

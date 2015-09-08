@@ -6,7 +6,6 @@
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.ModifyPwFragment">
 
-    <include layout="@layout/common_toolbar"></include>
 
     <LinearLayout
         android:layout_width="match_parent"

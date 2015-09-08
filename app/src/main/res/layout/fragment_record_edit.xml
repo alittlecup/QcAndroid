@@ -11,7 +11,7 @@
         android:background="@color/backgroud_grey"
         tools:context="com.qingchengfit.fitcoach.fragment.RecordEditFragment">
 
-        <include layout="@layout/common_toolbar"></include>
+        i
 
         <LinearLayout
             android:layout_width="match_parent"

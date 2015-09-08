@@ -2,14 +2,12 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -19,12 +17,10 @@ import butterknife.ButterKnife;
  * Use the {@link RecordEditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecordEditFragment extends Fragment {
+public class RecordEditFragment extends BaseSettingFragment {
     public static final String TAG = RecordEditFragment.class.getName();
     private static final String TITLE = "param1";
     private static final String CONTENT = "param2";
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
 
     private String mTitle;
     private String mContent;
@@ -65,11 +61,8 @@ public class RecordEditFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        toolbar.setTitle(mTitle);
-        toolbar.inflateMenu(R.menu.menu_delete);
-        toolbar.setOnMenuItemClickListener(item -> false);//TODO 删除该条记录
+        fragmentCallBack.onToolbarMenu(R.menu.menu_delete, 0, mTitle);
+        fragmentCallBack.onToolbarClickListener(item1 -> false);//TODO 删除该条记录
         return view;
     }
 

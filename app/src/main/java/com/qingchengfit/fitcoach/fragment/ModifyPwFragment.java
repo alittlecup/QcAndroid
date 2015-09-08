@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Use the {@link ModifyPwFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModifyPwFragment extends Fragment {
+public class ModifyPwFragment extends BaseSettingFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -78,8 +78,7 @@ public class ModifyPwFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_modify_pw, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setTitle("修改密码");
+        fragmentCallBack.onToolbarMenu(0, 0, "修改密码");
         
         return view;
     }

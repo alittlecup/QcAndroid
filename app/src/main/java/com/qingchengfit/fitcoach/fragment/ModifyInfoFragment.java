@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,7 @@ import rx.schedulers.Schedulers;
  * Use the {@link ModifyInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModifyInfoFragment extends Fragment {
+public class ModifyInfoFragment extends BaseSettingFragment {
     public static final String TAG = ModifyInfoFragment.class.getName();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,8 +49,7 @@ public class ModifyInfoFragment extends Fragment {
     public static int SELECT_PIC = 11;
     public static int SELECT_CAM = 12;
     private static String FILE_PATH = Configs.ExternalPath + "header.png";
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+
     @Bind(R.id.modifyinfo_header_pic)
     SimpleDraweeView modifyinfoHeaderPic;
     @Bind(R.id.comple_gender)
@@ -100,30 +98,15 @@ public class ModifyInfoFragment extends Fragment {
         }
         user = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "user_info", ""), User.class);
         mFragmentManager = getChildFragmentManager();
-//        QcCloudClient.getApi()
-//                .getApi.qcGetUserInfo(user.id)
-//                .subscribeOn(Schedulers.newThread())
-//                .subscribe(qcResponUserInfo-> {
-//                    LogUtil.e("Haahahahaha");
-//                    user = qcResponUserInfo.data.user;
-//                });
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_modify_info, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setTitle("修改资料");
-        toolbar.setNavigationOnClickListener(view1 ->
-                        getActivity().onBackPressed()
-        );
+        fragmentCallBack.onToolbarMenu(0, 0, "修改资料");
         modifyinfoHeaderPic.setImageURI(Uri.parse(user.avatar));
-
         return view;
     }
 
@@ -181,9 +164,7 @@ public class ModifyInfoFragment extends Fragment {
 
     @OnClick(R.id.modifyinfo_brief)
     public void onClickBrief() {
-        getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, new ModifyBrifeFragment())
-                .addToBackStack("")
-                .commit();
+        fragmentCallBack.onFragmentChange(new ModifyBrifeFragment());
     }
 
     @Override

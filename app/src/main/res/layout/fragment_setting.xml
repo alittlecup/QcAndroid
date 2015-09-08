@@ -5,9 +5,8 @@
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.SettingFragment">
 
-    <include layout="@layout/common_toolbar"></include>
 
-    <RelativeLayout
+<RelativeLayout
         android:id="@+id/settting_modifyinfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -36,10 +36,8 @@ import butterknife.ButterKnife;
  * <p>
  * Created by Paper on 15/9/7 2015.
  */
-public class WorkExepSettingFragment extends Fragment {
+public class WorkExepSettingFragment extends BaseSettingFragment {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     private WorkExepAdapter adapter;
@@ -49,25 +47,22 @@ public class WorkExepSettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle(getActivity().getString(R.string.workexper_title));
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.inflateMenu(R.menu.add);
-//        toolbar.setOnMenuItemClickListener(item -> {
-//            Fragment fragment = RecordEditFragment.newInstance("添加认证", null);
-//            getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, fragment).commit();
-//            return true;
-
-//        });
+        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.workexper_title));
+        fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         recyclerview.addItemDecoration(new RecycleDivider(getActivity()));
-
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         adapter = new WorkExepAdapter(new ArrayList<>());
-        adapter.setListener((v, pos) -> {
-            //TODO 添加数据内容
-            Fragment fragment = new WorkExpeEditFragment();
-            getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, fragment).addToBackStack("").commit();
+        adapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                fragmentCallBack.onFragmentChange(new WorkExpeEditFragment());
+            }
         });
         recyclerview.setAdapter(adapter);
         return view;
@@ -81,7 +76,7 @@ public class WorkExepSettingFragment extends Fragment {
 
 
     public interface OnRecycleItemClickListener {
-        public void onItemClick(View v, int pos);
+        void onItemClick(View v, int pos);
     }
 
     public static class WorkExepVH extends RecyclerView.ViewHolder {
