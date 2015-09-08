@@ -46,7 +46,7 @@ public class RecordFragment extends Fragment {
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
             Fragment fragment = RecordEditFragment.newInstance("添加认证", null);
-            getFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment).show(fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, fragment).commit();
             return true;
 
         });
@@ -55,7 +55,7 @@ public class RecordFragment extends Fragment {
         adapter.setListener((v, pos) -> {
             //TODO 添加数据内容
             Fragment fragment = RecordEditFragment.newInstance("添加认证", null);
-            getFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment).show(fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.settting_fraglayout, fragment).commit();
         });
         recyclerview.setAdapter(adapter);
 

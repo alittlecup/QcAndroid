@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,6 +41,7 @@ public class SettingFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -90,16 +90,17 @@ public class SettingFragment extends Fragment {
             R.id.setting_advice,
             R.id.setting_modifypw,
             R.id.settting_modifyinfo,
-            R.id.setting_comfirm
+            R.id.setting_comfirm,
+            R.id.setting_workexpe,
 
     })
+
     public void onClickUs(View view) {
         switch (view.getId()) {
             case R.id.settting_modifyinfo:
                 mFragmentManager.beginTransaction()
                         .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                         .replace(R.id.settting_fraglayout, ModifyInfoFragment.newInstance("", ""))
-
                         .addToBackStack("")
                         .commit();
                 break;
@@ -125,6 +126,13 @@ public class SettingFragment extends Fragment {
 //                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
 //                        .commit();
                 break;
+            case R.id.setting_workexpe:
+                mFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+                        .replace(R.id.settting_fraglayout, new WorkExepSettingFragment())
+                        .addToBackStack("")
+                        .commit();
+                break;
             case R.id.setting_aboutus:
 //                mFragmentManager.beginTransaction()
 //                        .replace(R.id.settting_fraglayout,.newInstance("",""))
@@ -146,22 +154,6 @@ public class SettingFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            fragmentCallBack = (FragmentCallBack) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        fragmentCallBack = null;
-    }
 
     @Override
     public void onDestroyView() {

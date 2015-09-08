@@ -10,7 +10,6 @@ import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
-import com.tencent.android.tpush.XGPushManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,6 @@ public class SplashActivity extends BaseAcitivity {
         // 具体可参考详细的开发指南
         // 传递的参数为ApplicationContext
         Context context = getApplicationContext();
-        XGPushManager.registerPush(context);
 
         // 2.36（不包括）之前的版本需要调用以下2行代码
 //        Intent service = new Intent(context, XGPushService.class);

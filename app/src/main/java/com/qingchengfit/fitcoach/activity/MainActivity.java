@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.paper.paperbaselibrary.utils.FileUtils;
@@ -35,7 +36,6 @@ import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
@@ -48,15 +48,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import rx.Observable;
-import rx.subscriptions.CompositeSubscription;
 
 //import javax.inject.Inject;
 
-public class MainActivity extends BaseAcitivity implements Callback<QcResponse> {
+public class MainActivity extends BaseAcitivity {
 
     private static final String TAG = MainActivity.class.getName();
     ////    @Bind(R.id.float_btn)
@@ -77,11 +73,11 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
 
-    private CompositeSubscription _subscriptions;
     private XWalkFragment xWalkFragment;
     private MyHomeFragment myHomeFragment;
     private Fragment topFragment;
-
+    private ArrayList<String> urls = new ArrayList<>();
+    private MaterialDialog dialog;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -94,24 +90,42 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
         mFragmentManager = getSupportFragmentManager();
         xWalkFragment = new XWalkFragment();
         mFragmentManager.beginTransaction().add(R.id.main_fraglayout, xWalkFragment).commit();
-        _subscriptions = new CompositeSubscription();
         RxBus.getBus().toObserverable().subscribe(o -> {
             if (o instanceof OpenDrawer) {
                 mainDrawerlayout.openDrawer(Gravity.LEFT);
             }
         });
-
+        initDialog();
         initDrawer();
         myHomeFragment = new MyHomeFragment();
-
-//        View view = View.inflate(this,R.layout.drawer_header,null);
-//        mainNavi.addHeaderView(view);
-//        view.setOnClickListener(view1 ->
-//                mFragmentManager.beginTransaction()
-//                        .replace(R.id.main_fraglayout,new MyHomeFragment())
-//                        .commit()
-//        );
     }
+
+    public void initDialog() {
+        dialog = new MaterialDialog.Builder(this)
+                .title("是否确认退出?")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        dialog.dismiss();
+                        MainActivity.this.finish();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .positiveText("退出")
+                .negativeText("不要")
+                .build();
+
+//        dialog.setTitle("是否确定退出?");
+//        dialog.setCanceledOnTouchOutside(true);
+//        dialog.setMessage("");
+//        dialog.setPositiveButton("是",v ->{dialog.dismiss(); this.finish();});
+//        dialog.setNegativeButton("否",v -> dialog.dismiss());
+    }
+
 
     private void goXwalkfragment(String url) {
 
@@ -131,9 +145,10 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //        fragment.startLoadUrl(url);
     }
 
-
+    /**
+     * 初始化侧滑,从后台拉去
+     */
     private void initDrawer() {
-
         LogUtil.d(PhoneInfoUtils.getHandSetInfo());
         QcCloudClient.getApi().getApi
                 .getDrawerInfo()
@@ -144,7 +159,6 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                     runOnUiThread(() -> {
                         setupModules(qcResponDrawer.data.modules);
                     });
-
                 });
 
     }
@@ -203,11 +217,11 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
                         button.setButtonDrawable(drawable1);
                         button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
                         button.setOnClickListener(view -> {
-                            LogUtil.d("toSomeWhere");
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl);
 
                         });
+                        urls.add(btnInfo.intentUrl);
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
                         if (count == 0) {
                             drawerRadiogroup.getChildAt(0).performClick();
@@ -220,7 +234,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
-        mainDrawerlayout.closeDrawer(Gravity.LEFT);
+
 //        if (mFragmentManager.getFragments().contains(myHomeFragment)) {
 //            mFragmentManager.beginTransaction().hide(topFragment).show(myHomeFragment).commit();
 //        } else {
@@ -231,6 +245,7 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //        }
 //        topFragment = myHomeFragment;
         startActivity(new Intent(this, MyHomeActivity.class));
+        mainDrawerlayout.closeDrawer(Gravity.LEFT);
     }
 
     @Override
@@ -239,19 +254,14 @@ public class MainActivity extends BaseAcitivity implements Callback<QcResponse> 
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
-    /**
-     * http返回
-     *
-     * @param qcResponse http回调
-     * @param response   返回头信息
-     */
-    @Override
-    public void success(QcResponse qcResponse, Response response) {
-
-    }
 
     @Override
-    public void failure(RetrofitError error) {
-
+    public void onBackPressed() {
+        mainDrawerlayout.closeDrawers();
+        if (topFragment.getTag().endsWith(urls.get(0))) {
+            dialog.show();
+        } else {
+            drawerRadiogroup.getChildAt(0).performClick();
+        }
     }
 }

@@ -101,7 +101,7 @@ public class XWalkFragment extends Fragment {
 
         xWalkCookieManager = new XWalkCookieManager();
         xWalkCookieManager.setAcceptCookie(true);
-        initCookie();
+//        initCookie();
 //        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);

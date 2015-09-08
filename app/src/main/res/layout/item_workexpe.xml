@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/item_workexpe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/item_workexpe_name"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中美引力工作室"
+            />
+
+        <TextView
+            android:id="@+id/item_workexpe_time"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2014-至今"
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/item_workexpe"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_arrow_right"
+        />
+
+</RelativeLayout>

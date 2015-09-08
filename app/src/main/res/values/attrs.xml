@@ -42,6 +42,11 @@
         <attr name="atg_verticalPadding" format="dimension"/>
     </declare-styleable>
 
+
+    <declare-styleable name="CommonInputView">
+        <attr name="civ_lable" format="string"></attr>
+    </declare-styleable>
+
     <declare-styleable name="Themes">
         <attr name="tagGroupStyle" format="reference"/>
     </declare-styleable>

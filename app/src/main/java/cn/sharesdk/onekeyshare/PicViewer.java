@@ -14,41 +14,38 @@ import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.DisplayMetrics;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+
 import com.mob.tools.FakeActivity;
 
 /** 查看编辑页面中图片的例子 */
 public class PicViewer extends FakeActivity implements OnTouchListener {
-	private ImageView ivViewer;
-	private Bitmap pic;
-
-	Matrix matrix = new Matrix();
-    Matrix savedMatrix = new Matrix();
-    DisplayMetrics dm;
-
-    /** 最小缩放比例*/
-    float minScaleR = 1f;
     /** 最大缩放比例*/
     static final float MAX_SCALE = 10f;
-
     /** 初始状态*/
     static final int NONE = 0;
     /** 拖动*/
     static final int DRAG = 1;
     /** 缩放*/
     static final int ZOOM = 2;
-
+    Matrix matrix = new Matrix();
+    Matrix savedMatrix = new Matrix();
+    DisplayMetrics dm;
+    /**
+     * 最小缩放比例
+     */
+    float minScaleR = 1f;
     /** 当前模式*/
     int mode = NONE;
-
     PointF prev = new PointF();
     PointF mid = new PointF();
     float dist = 1f;
+    private ImageView ivViewer;
+    private Bitmap pic;
 
 	/** 设置图片用于浏览 */
 	public void setImageBitmap(Bitmap pic) {
@@ -203,7 +200,7 @@ public class PicViewer extends FakeActivity implements OnTouchListener {
 	private float spacing(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
+        return (float) Math.sqrt(x * x + y * y);
     }
 
     /**
