@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 public class MyhomeViewPager extends ViewPager {
     private View scrollView;
     private float touchY;
+    private float touchX;
 
     public MyhomeViewPager(Context context) {
         super(context);
@@ -53,15 +54,19 @@ public class MyhomeViewPager extends ViewPager {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 touchY = ev.getY();
+                touchX = ev.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
-
-
-                if (ev.getY() - touchY > 0 && !ViewCompat.canScrollVertically(v, -1)) {
+                float y = touchY;
+                float x = touchX;
+                touchX = ev.getX();
+                touchY = ev.getY();
+                if (ev.getY() - y > 0 && !ViewCompat.canScrollVertically(v, -1)) {
                     if (getCurrentItem() == 0)
+
                         return super.onInterceptTouchEvent(ev);
                     else return true;
-                } else if (ev.getY() - touchY <= 0 && !ViewCompat.canScrollVertically(v, 1)) {
+                } else if (ev.getY() - y <= 0 && !ViewCompat.canScrollVertically(v, 1)) {
                     return true;
                 } else return super.onInterceptTouchEvent(ev);
             case MotionEvent.ACTION_UP:
@@ -80,21 +85,27 @@ public class MyhomeViewPager extends ViewPager {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 touchY = ev.getY();
+                touchX = ev.getX();
+                super.onTouchEvent(ev);
                 break;
             case MotionEvent.ACTION_MOVE:
-                super.onInterceptTouchEvent(ev);
-                if (ev.getY() > touchY && !ViewCompat.canScrollVertically(v, -1)) {
+
+                float y = touchY;
+                float x = touchX;
+                touchX = ev.getX();
+                touchY = ev.getY();
+                if (ev.getY() - y >= 50 && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, -1)) {
                     if (getCurrentItem() != 0) {
                         setCurrentItem(getCurrentItem() - 1, true);
                     }
-                } else if (ev.getY() <= touchY && !ViewCompat.canScrollVertically(v, 1)) {
+                } else if (ev.getY() - y <= -50 && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, 1)) {
                     if (getCurrentItem() != getAdapter().getCount() - 1) {
                         setCurrentItem(getCurrentItem() + 1, true);
                     }
                 }
 
 
-                return true;
+                return super.onTouchEvent(ev);
             case MotionEvent.ACTION_UP:
 
                 break;
