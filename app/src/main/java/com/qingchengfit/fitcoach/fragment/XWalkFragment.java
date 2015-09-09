@@ -199,6 +199,13 @@ public class XWalkFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+
+    public void removeCookie() {
+        if (xWalkCookieManager != null) {
+            xWalkCookieManager.removeAllCookie();
+        }
+    }
+
     public void openmainDrawer() {
         getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
     }

@@ -5,7 +5,10 @@
                 android:orientation="vertical"
                 tools:context="com.qingchengfit.fitcoach.activity.TextInputActivity">
 
-    <include layout="@layout/common_toolbar"></include>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"
+        ></include>
 
     <EditText
         android:id="@+id/textinput_et"

@@ -76,6 +76,7 @@ public class SettingFragment extends BaseSettingFragment {
             R.id.setting_comfirm,
             R.id.setting_workexpe,
             R.id.setting_logout,
+            R.id.setting_modifyphone,
 
     })
 
@@ -114,8 +115,8 @@ public class SettingFragment extends BaseSettingFragment {
                 Intent it = new Intent(getActivity(), MainActivity.class);
                 it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
                 startActivity(it);
-
-
+            case R.id.setting_modifyphone:
+                fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
 
             default:

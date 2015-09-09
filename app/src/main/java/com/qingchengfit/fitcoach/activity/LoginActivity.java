@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
@@ -33,8 +32,8 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    //    @Bind(R.id.toolbar)
+//    Toolbar toolbar;
     @Bind(R.id.login_viewpager)
     ViewPager loginViewpager;
     @Bind(R.id.login_tabview)

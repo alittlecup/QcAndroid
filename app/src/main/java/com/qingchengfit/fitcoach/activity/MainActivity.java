@@ -114,7 +114,15 @@ public class MainActivity extends BaseAcitivity {
 
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
+        List<Fragment> fragments = mFragmentManager.getFragments();
+        for (int i = 0; i < fragments.size(); i++) {
+            Fragment fragment = fragments.get(i);
+            if (fragment instanceof XWalkFragment) {
+                ((XWalkFragment) fragment).removeCookie();
+            }
+        }
         startActivity(new Intent(this, LoginActivity.class));
+
         this.finish();
     }
 

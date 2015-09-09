@@ -26,7 +26,7 @@ public class MyhomeViewPager extends ViewPager {
     private View scrollView;
     private float touchY;
     private float touchX;
-
+    private int senseY = 10;
     public MyhomeViewPager(Context context) {
         super(context);
         init();
@@ -94,11 +94,11 @@ public class MyhomeViewPager extends ViewPager {
                 float x = touchX;
                 touchX = ev.getX();
                 touchY = ev.getY();
-                if (ev.getY() - y >= 50 && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, -1)) {
+                if (ev.getY() - y >= senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, -1)) {
                     if (getCurrentItem() != 0) {
                         setCurrentItem(getCurrentItem() - 1, true);
                     }
-                } else if (ev.getY() - y <= -50 && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, 1)) {
+                } else if (ev.getY() - y <= -senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, 1)) {
                     if (getCurrentItem() != getAdapter().getCount() - 1) {
                         setCurrentItem(getCurrentItem() + 1, true);
                     }

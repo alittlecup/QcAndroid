@@ -46,6 +46,17 @@ public class LoginFragment extends Fragment {
 
     public LoginFragment() {
 
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        materialDialog = new MaterialDialog.Builder(getActivity())
+                .content("登录中请稍后")
+                .progress(true, 0)
+                .build();
+
+
         loginPresenter = new LoginPresenter() {
             @Override
             public void onPhoneDone() {
@@ -72,6 +83,7 @@ public class LoginFragment extends Fragment {
                     bean.setPush_id(userid);
                 if (channelid != null)
                     bean.setPush_channel_id(channelid);
+                materialDialog.show();
                 QcCloudClient.getApi()
                         .postApi
                         .qcLogin(bean)
@@ -147,6 +159,7 @@ public class LoginFragment extends Fragment {
                             if (aBoolean) {
                                 Intent toMain = new Intent(getActivity(), MainActivity.class);
                                 startActivity(toMain);
+                                materialDialog.dismiss();
                                 getActivity().finish();
                             } else {
 
@@ -186,7 +199,6 @@ public class LoginFragment extends Fragment {
             }
         };
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

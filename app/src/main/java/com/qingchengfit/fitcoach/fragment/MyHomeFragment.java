@@ -76,6 +76,8 @@ public class MyHomeFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         toolbar.setTitle("我的主页");
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.menu_myhome);
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {

@@ -25,6 +25,7 @@
         <item name="buttonStyle">@style/Qc.CommonBtn</item>
         <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
         <item name="editTextStyle">@style/Qc.EditTextStyle</item>
+        <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
         <!--<item name="windowBackground">@color/white</item>-->
         <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
@@ -35,6 +36,11 @@
     <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
     </style>
+
+    <style name="Qc.ScrollviewStyle" parent="android:Widget.ScrollView">
+        <item name="android:scrollbars">none</item>
+    </style>
+
 
     <style name="Qc.TextCommonGrey" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_grey</item>
