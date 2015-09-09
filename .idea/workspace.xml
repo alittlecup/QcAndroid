@@ -4318,12 +4318,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00032" summary="add setting frament&#10;">
-      <created>1439290987180</created>
-      <option name="number" value="00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1439290987180</updated>
-    </task>
     <task id="LOCAL-00033" summary="add anim&#10;">
       <created>1439349128496</created>
       <option name="number" value="00033" />
@@ -4612,7 +4606,13 @@
       <option name="project" value="LOCAL" />
       <updated>1441770095197</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="fix cookie">
+      <created>1441770121901</created>
+      <option name="number" value="00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1441770121901</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4703,7 +4703,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="add StudentsJudge" />
     <MESSAGE value="add msg Observer" />
     <MESSAGE value="fix app entry" />
     <MESSAGE value="add scroll ScrollRecycleView" />
@@ -4728,7 +4727,8 @@
     <MESSAGE value="fix change toolbar from fragment to activity" />
     <MESSAGE value="fix" />
     <MESSAGE value="add logout" />
-    <option name="LAST_COMMIT_MESSAGE" value="add logout" />
+    <MESSAGE value="fix cookie" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix cookie" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
