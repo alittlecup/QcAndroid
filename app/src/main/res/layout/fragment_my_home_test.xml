@@ -12,6 +12,7 @@
         android:id="@+id/myhome_scroller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="vertical"
         >
 
@@ -113,44 +114,50 @@
                 android:background="@color/divider_grey"
                 ></View>
 
-            <RelativeLayout
-                android:id="@+id/myhome_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_gravity="bottom"
-                android:background="@color/white"
-                >
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/warm_grey"
-                    >
-                </View>
-
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical"
                 >
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/myhome_tab"
+
+                <RelativeLayout
+                    android:id="@+id/myhome_tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    app:tabGravity="center"
-                    app:tabIndicatorColor="@color/primary"
-                    app:tabIndicatorHeight="1.5dp"
-                    app:tabSelectedTextColor="@color/primary_dark"
-                    app:tabTextAppearance="@style/Qc.TextCommonGrey"
-                    app:tabTextColor="@color/text_grey"
+                    android:layout_gravity="bottom"
+                    android:background="@color/white"
                     >
-                </android.support.design.widget.TabLayout>
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/myhome_tab"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        app:tabGravity="center"
+                        app:tabIndicatorColor="@color/primary"
+                        app:tabIndicatorHeight="1.5dp"
+                        app:tabSelectedTextColor="@color/primary_dark"
+                        app:tabTextAppearance="@style/Qc.TextCommonGrey"
+                        app:tabTextColor="@color/text_grey"
+                        >
+                    </android.support.design.widget.TabLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/warm_grey"
+                        >
+                    </View>
+
+
+                </RelativeLayout>
+
 
                 <com.qingchengfit.fitcoach.component.MyhomeViewPager
                     android:id="@+id/myhome_viewpager"

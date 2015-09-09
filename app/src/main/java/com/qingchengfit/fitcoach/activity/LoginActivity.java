@@ -54,6 +54,12 @@ public class LoginActivity extends AppCompatActivity {
 
 //        if (PreferenceUtils.getPrefString(this,"session_id",null)!=null)
 //            startActivity(new Intent(this,MainActivity.class));
+
+        if (PreferenceUtils.getPrefString(this,"session_id",null) !=null ){
+            Intent toMain = new Intent(this, MainActivity.class);
+            startActivity(toMain);
+            this.finish();
+        }
         loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
         loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);

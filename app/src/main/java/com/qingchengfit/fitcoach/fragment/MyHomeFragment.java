@@ -104,7 +104,9 @@ public class MyHomeFragment extends Fragment {
                 lp.height = hei;
                 myhomeViewpager.setLayoutParams(lp);
                 mHomeBgHeight = myhomeBg.getHeight();
+
                 myhomeViewpager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
             }
         });
         myhomeScroller.setListener(new HalfScrollView.HalfViewListener() {
@@ -117,6 +119,12 @@ public class MyHomeFragment extends Fragment {
         });
         getChildFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     @Override

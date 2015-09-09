@@ -1,10 +1,14 @@
 package com.paper.paperbaselibrary.utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.DimenRes;
 import android.util.TypedValue;
 import android.view.ViewConfiguration;
+
+import java.lang.reflect.Method;
 
 /**
  * power by
@@ -51,12 +55,41 @@ public class MeasureUtils {
         navigationHeight = context.getResources().getDimensionPixelSize(navigationHeight);
         int statusHeight = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         statusHeight = context.getResources().getDimensionPixelSize(statusHeight);
-        if (hasVir)
+        if (hasNavBar(context))
             return getScreenHeight(context.getResources()) - navigationHeight - statusHeight;
         else return getScreenHeight(context.getResources()) - statusHeight;
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private static boolean hasNavBar(Context context) {
+        Resources res = context.getResources();
+        int resourceId = res.getIdentifier("config_showNavigationBar",
+                "bool", "android");
+        if (resourceId != 0) {
+            boolean hasNav = res.getBoolean(resourceId);
+            String sNavBarOverride = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                try {
+                    Class c = Class.forName("android.os.SystemProperties");
+                    Method m = c.getDeclaredMethod("get", String.class);
+                    m.setAccessible(true);
+                    sNavBarOverride = (String) m.invoke(null, "qemu.hw.mainkeys");
+                } catch (Throwable e) {
+                    sNavBarOverride = null;
+                }
+            }
 
+            // check override flag (see static block)
+            if ("1".equals(sNavBarOverride)) {
+                hasNav = true;
+            } else if ("0".equals(sNavBarOverride)) {
+                hasNav = false;
+            }
+            return hasNav;
+        } else { // fallback
+            return !ViewConfiguration.get(context).hasPermanentMenuKey();
+        }
+    }
 
 
 }

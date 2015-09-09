@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.MainActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -73,6 +75,7 @@ public class SettingFragment extends BaseSettingFragment {
             R.id.settting_modifyinfo,
             R.id.setting_comfirm,
             R.id.setting_workexpe,
+            R.id.setting_logout,
 
     })
 
@@ -105,6 +108,14 @@ public class SettingFragment extends BaseSettingFragment {
                 break;
             case R.id.setting_comfirm:
                 fragmentCallBack.onFragmentChange(new RecordFragment());
+                break;
+            case R.id.setting_logout:
+
+                Intent it = new Intent(getActivity(), MainActivity.class);
+                it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
+                startActivity(it);
+
+
                 break;
 
             default:

@@ -23,7 +23,9 @@ import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PhoneInfoUtils;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -54,6 +56,8 @@ import rx.Observable;
 
 public class MainActivity extends BaseAcitivity {
 
+    public static final String ACTION = "main_action";
+    public static final int LOGOUT = 0;
     private static final String TAG = MainActivity.class.getName();
     ////    @Bind(R.id.float_btn)
 //    FloatingActionButton mFloatBtn;
@@ -98,6 +102,20 @@ public class MainActivity extends BaseAcitivity {
         initDialog();
         initDrawer();
         myHomeFragment = new MyHomeFragment();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
+            logout();
+        }
+    }
+
+    public void logout() {
+        PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
+        startActivity(new Intent(this, LoginActivity.class));
+        this.finish();
     }
 
     public void initDialog() {
@@ -245,7 +263,13 @@ public class MainActivity extends BaseAcitivity {
 //        }
 //        topFragment = myHomeFragment;
         startActivity(new Intent(this, MyHomeActivity.class));
-        mainDrawerlayout.closeDrawer(Gravity.LEFT);
+//        mainDrawerlayout.closeDrawer(Gravity.LEFT);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mainDrawerlayout.closeDrawers();
     }
 
     @Override

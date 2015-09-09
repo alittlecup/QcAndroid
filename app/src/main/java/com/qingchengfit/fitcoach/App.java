@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
@@ -30,6 +31,7 @@ import rx.plugins.RxJavaPlugins;
  * Created by Paper on 15/7/29 2015.
  */
 public class App extends Application {
+    public static Context AppContex;
     private ApplicationComponet componet;
 
     public ApplicationComponet getComponet() {
@@ -57,6 +59,7 @@ public void setComponet(ApplicationComponet componet) {
                 Log.w("Error", e);
             }
         });
+        AppContex = getApplicationContext();
 
 
     }
