@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -20,10 +19,10 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
+import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
-import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
 
 import org.xwalk.core.JavascriptInterface;
 import org.xwalk.core.XWalkPreferences;
@@ -101,7 +100,7 @@ public class XWalkFragment extends Fragment {
 
         xWalkCookieManager = new XWalkCookieManager();
         xWalkCookieManager.setAcceptCookie(true);
-//        initCookie();
+        initCookie();
 //        mWebview.load("http://feature2.qingchengfit.cn/welcome/", null);
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
@@ -151,12 +150,17 @@ public class XWalkFragment extends Fragment {
     }
 
     private void initCookie() {
-        setCookie(Configs.ServerIp, "sessionid", PreferenceUtils.getPrefString(getActivity(), "session_id", ""));
-        List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {
-        }.getType());
-        for (MutiSysSession sysSession : mutiSysSessions) {
-            setCookie(sysSession.url, "sessionid", sysSession.session_id);
+        String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
+        if (sessionid != null)
+            setCookie(Configs.ServerIp, "sessionid", sessionid);
+        else {
+            ((MainActivity) getActivity()).logout();
         }
+//        List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {
+//        }.getType());
+//        for (MutiSysSession sysSession : mutiSysSessions) {
+//            setCookie(sysSession.url, "sessionid", sysSession.session_id);
+//        }
     }
 
 
@@ -172,6 +176,12 @@ public class XWalkFragment extends Fragment {
             mWebview.resumeTimers();
             mWebview.onShow();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initCookie();
     }
 
     @Override
