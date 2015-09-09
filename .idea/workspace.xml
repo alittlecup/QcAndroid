@@ -108,13 +108,9 @@
   <component name="ChangeListManager">
     <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="fix cookie">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_shadow.9.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/HalfScrollView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/HalfScrollView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/MyhomeViewPager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/MyhomeViewPager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_modify_brief.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_home_test.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_home_test.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_modifybrief.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
@@ -305,7 +301,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/HalfScrollView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="96" column="30" selection-start-line="96" selection-start-column="30" selection-end-line="96" selection-end-column="30" />
+              <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -4300,12 +4296,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00034" summary="little change&#10;">
-      <created>1439358519171</created>
-      <option name="number" value="00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1439358519171</updated>
-    </task>
     <task id="LOCAL-00035" summary="little change about setting&#10;">
       <created>1439365699427</created>
       <option name="number" value="00035" />
@@ -4594,7 +4584,13 @@
       <option name="project" value="LOCAL" />
       <updated>1441770136460</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="fix myhome scroll">
+      <created>1441777848104</created>
+      <option name="number" value="00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1441777848104</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4685,7 +4681,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="add msg Observer" />
     <MESSAGE value="fix app entry" />
     <MESSAGE value="add scroll ScrollRecycleView" />
     <MESSAGE value="add PermissionCheck" />
@@ -4710,7 +4705,8 @@
     <MESSAGE value="fix" />
     <MESSAGE value="add logout" />
     <MESSAGE value="fix cookie" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix cookie" />
+    <MESSAGE value="fix myhome scroll" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix myhome scroll" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -5118,7 +5114,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/HalfScrollView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="96" column="30" selection-start-line="96" selection-start-column="30" selection-end-line="96" selection-end-column="30" />
+          <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
           <folding />
         </state>
       </provider>
