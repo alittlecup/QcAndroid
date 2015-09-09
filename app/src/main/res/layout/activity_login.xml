@@ -5,23 +5,23 @@
                 android:layout_height="match_parent"
                 tools:context="com.qingchengfit.fitcoach.activity.LoginActivity">
 
-    <!--<include-->
-    <!--android:id="@+id/toolbar"-->
-    <!--layout="@layout/common_toolbar"-->
-    <!-->-->
-
-    <!--</include>-->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"
+        >
+    </include>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/login_tabview"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-
+        android:layout_below="@id/toolbar"
         android:background="@color/primary"
         android:paddingBottom="1px"
         app:tabIndicatorColor="@color/white"
         app:tabIndicatorHeight="5dp"
         app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/Qc.TextCommonWhite"
         app:tabTextColor="@color/dark_white"
         >
     </android.support.design.widget.TabLayout>

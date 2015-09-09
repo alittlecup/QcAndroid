@@ -93,7 +93,6 @@ public class LoginFragment extends Fragment {
                                 PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
                                 PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
                                 PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
-
                                 return rx.Observable.just(true);
                             } else {
 
@@ -162,6 +161,7 @@ public class LoginFragment extends Fragment {
                                 materialDialog.dismiss();
                                 getActivity().finish();
                             } else {
+                                materialDialog.dismiss();
 
                             }
 

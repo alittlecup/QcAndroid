@@ -33,10 +33,11 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_pw"
+                    android:drawableLeft="@drawable/ic_register_username"
                     android:hint="名字"
                     android:imeOptions="actionDone"
                     android:inputType="phone"
+                    android:textSize="18sp"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -56,6 +57,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_register_gender"
+                android:drawablePadding="@dimen/qc_edit_drawable_padding"
                 android:text="性别"
                 android:textColor="?android:attr/textColorHint"
                 />
@@ -128,6 +131,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="phone"
                     android:maxLength="11"
+                    android:textSize="18sp"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -143,7 +147,7 @@
                 android:drawableLeft="@drawable/checkcode_line"
                 android:drawablePadding="8dp"
                 android:gravity="center_vertical"
-                android:paddingBottom="15dp"
+                android:paddingBottom="20dp"
                 android:text="@string/login_getcode"
                 />
         </RelativeLayout>
@@ -160,10 +164,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_pw"
+                android:drawableLeft="@drawable/ic_register_verify"
                 android:hint="手机验证码"
                 android:imeOptions="actionDone"
                 android:inputType="phone"
+                android:textSize="18sp"
                 />
 
         </android.support.design.widget.TextInputLayout>
@@ -179,12 +184,14 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/ic_pw"
                     android:hint="设置登录密码"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLength="16"
                     android:singleLine="true"
                     android:text="123456"
+                    android:textSize="18sp"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -199,12 +206,14 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/ic_pw"
                     android:hint="确认登录密码"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLength="16"
                     android:singleLine="true"
                     android:text="123456"
+                    android:textSize="18sp"
                     />
             </android.support.design.widget.TextInputLayout>
 

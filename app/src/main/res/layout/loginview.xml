@@ -27,11 +27,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_login_phone"
-                android:drawablePadding="15dp"
                 android:imeOptions="actionNext"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:text="18618216549"
+                android:textSize="18sp"
                 />
 
         </android.support.design.widget.TextInputLayout>
@@ -44,7 +44,7 @@
             android:drawableLeft="@drawable/checkcode_line"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
-            android:paddingBottom="15dp"
+            android:paddingBottom="20dp"
             android:text="@string/login_getcode"
             android:visibility="gone"
             />
@@ -65,6 +65,7 @@
             android:imeOptions="actionGo"
             android:inputType="textPassword"
             android:text="admin123"
+            android:textSize="18sp"
 
             />
 
