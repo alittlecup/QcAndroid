@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context="com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment">
+
+    <EditText
+        android:id="@+id/modifyphone_pw"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/modifyphone_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:hint="请输入新手机号"
+
+            />
+
+        <TextView
+            android:id="@+id/modifyphone_getcode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/checkcode_line"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:text="@string/login_getcode"
+
+            />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/modifyphone_code"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:hint="请输入验证码"
+        android:inputType="number"
+        />
+
+    <Button
+        android:id="@+id/modifyphone_comfirm_btn"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/login_comfirm"
+        />
+</LinearLayout>
