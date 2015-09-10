@@ -115,6 +115,8 @@ public class SettingFragment extends BaseSettingFragment {
                 Intent it = new Intent(getActivity(), MainActivity.class);
                 it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
                 startActivity(it);
+                break;
+
             case R.id.setting_modifyphone:
                 fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
