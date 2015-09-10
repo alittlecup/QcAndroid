@@ -139,8 +139,8 @@ public class QcCloudClient {
         @POST("/api/users/{id}")
         rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
 
-        @GET("/api/android/coaches/1/welcome/")
-        rx.Observable<QcResponDrawer> getDrawerInfo();
+        @GET("/api/android/coaches/{id}/welcome/")
+        rx.Observable<QcResponDrawer> getDrawerInfo(@Path("id") String id);
 
 
         @GET("/api/coaches/{id}/systems/")
@@ -158,7 +158,7 @@ public class QcCloudClient {
 
         //注册
         @POST("/api/coaches/register/")
-        rx.Observable<QcResponse> qcRegister(
+        rx.Observable<QcResponLogin> qcRegister(
                 @Body RegisteBean params);
 
         //获取电话验证码

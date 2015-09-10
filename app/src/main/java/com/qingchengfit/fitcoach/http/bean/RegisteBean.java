@@ -18,6 +18,32 @@ public class RegisteBean {
     public String password;
     public String code;
     public int gender;//0,1
+    public String phone;
+    public String city;
+
+    public RegisteBean() {
+    }
+
+    public RegisteBean(String username, String password, String code, int gender) {
+        this.username = username;
+        this.password = password;
+        this.code = code;
+        this.gender = gender;
+    }
+
+    public RegisteBean(String phone, String username, String password) {
+
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getCity() {
         return city;
@@ -25,10 +51,6 @@ public class RegisteBean {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String city;
-    public RegisteBean() {
     }
 
     public String getUsername() {
@@ -61,18 +83,5 @@ public class RegisteBean {
 
     public void setGender(int gender) {
         this.gender = gender;
-    }
-
-    public RegisteBean(String username, String password, String code, int gender) {
-        this.username = username;
-        this.password = password;
-        this.code = code;
-        this.gender = gender;
-    }
-
-    public RegisteBean(String phone, String username, String password) {
-
-        this.username = username;
-        this.password = password;
     }
 }

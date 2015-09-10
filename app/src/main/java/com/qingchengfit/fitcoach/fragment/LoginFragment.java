@@ -56,7 +56,6 @@ public class LoginFragment extends Fragment {
                 .progress(true, 0)
                 .build();
 
-
         loginPresenter = new LoginPresenter() {
             @Override
             public void onPhoneDone() {

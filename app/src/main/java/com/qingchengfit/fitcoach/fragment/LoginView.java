@@ -117,12 +117,14 @@ public class LoginView extends RelativeLayout {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
+
                     mGetCodeBtn.setVisibility(VISIBLE);
                     mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_checkcode_hint));
                 } else {
                     mGetCodeBtn.setVisibility(GONE);
                     mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_password_hint));
                 }
+                mCheckCodeInputLaout.getEditText().setText("");
             }
         });
 
@@ -249,17 +251,18 @@ public class LoginView extends RelativeLayout {
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(Integer.toString(count));
             stringBuffer.append(getContext().getString(R.string.login_resend_msg));
-
-            mGetCodeBtn.setText(stringBuffer.toString());
-            if (count == 60)
-                mGetCodeBtn.setEnabled(false);
-            if (count > 0) {
-                count--;
-                this.sendEmptyMessageDelayed(0, 1000);
-            } else {
-                count = 60;
-                mGetCodeBtn.setEnabled(true);
-                mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
+            if (mGetCodeBtn != null) {
+                mGetCodeBtn.setText(stringBuffer.toString());
+                if (count == 60)
+                    mGetCodeBtn.setEnabled(false);
+                if (count > 0) {
+                    count--;
+                    this.sendEmptyMessageDelayed(0, 1000);
+                } else {
+                    count = 60;
+                    mGetCodeBtn.setEnabled(true);
+                    mGetCodeBtn.setText(getResources().getString(R.string.login_getcode));
+                }
             }
         }
     }

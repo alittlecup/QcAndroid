@@ -8,6 +8,7 @@ import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
@@ -36,6 +38,7 @@ import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.squareup.okhttp.OkHttpClient;
@@ -82,7 +85,7 @@ public class MainActivity extends BaseAcitivity {
     private Fragment topFragment;
     private ArrayList<String> urls = new ArrayList<>();
     private MaterialDialog dialog;
-
+    private Gson gson;
     //    @Inject RxBus rxBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class MainActivity extends BaseAcitivity {
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        gson = new Gson();
         mFragmentManager = getSupportFragmentManager();
         xWalkFragment = new XWalkFragment();
         mFragmentManager.beginTransaction().add(R.id.main_fraglayout, xWalkFragment).commit();
@@ -102,6 +106,7 @@ public class MainActivity extends BaseAcitivity {
         initDialog();
         initDrawer();
         myHomeFragment = new MyHomeFragment();
+
     }
 
     @Override
@@ -176,8 +181,13 @@ public class MainActivity extends BaseAcitivity {
      */
     private void initDrawer() {
         LogUtil.d(PhoneInfoUtils.getHandSetInfo());
+        String id = PreferenceUtils.getPrefString(this, "coach", "");
+        if (TextUtils.isEmpty(id)) {
+            //TODO error
+        }
+        Coach coach = gson.fromJson(id, Coach.class);
         QcCloudClient.getApi().getApi
-                .getDrawerInfo()
+                .getDrawerInfo(coach.id)
                 .subscribe(qcResponDrawer -> {
                     for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
                         setupBtn(qcResponDrawer.data.guide.get(i), i);

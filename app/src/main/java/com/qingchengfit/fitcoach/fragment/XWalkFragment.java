@@ -25,7 +25,6 @@ import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
-import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
@@ -80,7 +79,7 @@ public class XWalkFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
-        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
+//        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 
 //        XWalkSettings xWalkSettings = new XWalkSettings(mWebview.getContext(),null,false);
 //

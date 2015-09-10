@@ -68,7 +68,7 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">14sp</item>
         <item name="colorControlNormal">@color/warm_grey</item>
-
+        <item name="android:textColorHint">@color/warm_grey</item>
 
     </style>
     <style name="Qc.EditHintStyle" parent="TextAppearance.AppCompat">
