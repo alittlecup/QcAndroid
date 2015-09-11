@@ -32,6 +32,7 @@ import rx.plugins.RxJavaPlugins;
  */
 public class App extends Application {
     public static Context AppContex;
+    public static boolean canXwalk;
     private ApplicationComponet componet;
 
     public ApplicationComponet getComponet() {
@@ -53,6 +54,8 @@ public void setComponet(ApplicationComponet componet) {
 //        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
+        setupWebView();
+
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override
             public void handleError(Throwable e) {
@@ -62,6 +65,15 @@ public void setComponet(ApplicationComponet componet) {
         AppContex = getApplicationContext();
 
 
+    }
+
+    private void setupWebView() {
+        try {
+            System.loadLibrary("xwalkcore");
+            canXwalk = true;
+        } catch (Error e) {
+            canXwalk = false;
+        }
     }
 
     /**
@@ -85,5 +97,6 @@ public void setComponet(ApplicationComponet componet) {
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
+
 
 }

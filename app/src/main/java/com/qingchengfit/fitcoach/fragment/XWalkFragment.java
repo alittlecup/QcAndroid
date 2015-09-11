@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +25,10 @@ import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
+import org.xwalk.core.XWalkCookieManager;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
-import org.xwalk.core.internal.XWalkCookieManager;
 
 import java.util.List;
 
@@ -38,9 +38,9 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class XWalkFragment extends Fragment {
+public class XWalkFragment extends WebFragment {
 
-    private static final String BASE_URL = "base_url";
+
     @Bind(R.id.webview)
     XWalkView mWebview;
     @Bind(R.id.web_floatbtn)
@@ -56,20 +56,20 @@ public class XWalkFragment extends Fragment {
 
     }
 
-    public static XWalkFragment newInstance(String baseUrl) {
-        XWalkFragment fragment = new XWalkFragment();
-        Bundle args = new Bundle();
-        args.putString(BASE_URL, baseUrl);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static XWalkFragment newInstance(String baseUrl) {
+//        XWalkFragment fragment = new XWalkFragment();
+//        Bundle args = new Bundle();
+//        args.putString(WebFragment., baseUrl);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson = new Gson();
         if (getArguments() != null) {
-            base_url = getArguments().getString(BASE_URL);
+            base_url = getArguments().getString(WebFragment.BASE_URL);
         }
     }
 
@@ -104,9 +104,12 @@ public class XWalkFragment extends Fragment {
 //        mWebview.load("http://192.168.31.154:8888/welcome/", null);
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
         mWebview.load(base_url, null);
+
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
         mWebview.setUIClient(new MyUIClient(mWebview));
         mWebview.setNetworkAvailable(false);
+        mWebview.setVerticalScrollBarEnabled(false);
+        mWebview.setHorizontalScrollBarEnabled(false);
         mWebview.setResourceClient(new XWalkResourceClient(mWebview) {
             @Override
             public void onReceivedLoadError(XWalkView view, int errorCode, String description, String failingUrl) {
@@ -198,7 +201,7 @@ public class XWalkFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-
+    @Override
     public void removeCookie() {
         if (xWalkCookieManager != null) {
             xWalkCookieManager.removeAllCookie();
