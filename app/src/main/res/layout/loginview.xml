@@ -30,7 +30,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:text="18618216549"
+
                 android:textSize="18sp"
                 />
 
@@ -66,11 +66,13 @@
             android:drawableLeft="@drawable/ic_pw"
             android:imeOptions="actionGo"
             android:inputType="textPassword"
-            android:text="admin123"
+
             android:textSize="18sp"
 
             />
-
+        <!--android:text="admin123"
+                        android:text="18618216549"
+        -->
     </android.support.design.widget.TextInputLayout>
 
 

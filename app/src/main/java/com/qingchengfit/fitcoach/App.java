@@ -5,11 +5,11 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.qingchengfit.fitcoach.di.ApplicationComponet;
 import com.qingchengfit.fitcoach.di.ApplicationModule;
 import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
 import com.qingchengfit.fitcoach.di.RxBusModule;
+import com.qingchengfit.fitcoach.http.bean.User;
 
 import java.io.File;
 
@@ -33,7 +33,12 @@ import rx.plugins.RxJavaPlugins;
 public class App extends Application {
     public static Context AppContex;
     public static boolean canXwalk;
+    public static User gUser;
     private ApplicationComponet componet;
+
+    public static void setgUser(User ser) {
+        gUser = ser;
+    }
 
     public ApplicationComponet getComponet() {
         if (componet != null)
@@ -45,12 +50,12 @@ public class App extends Application {
 public void setComponet(ApplicationComponet componet) {
     this.componet = componet;
 }
-//
+
+    //
     @Override
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
-        Fresco.initialize(this);
 //        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
@@ -97,6 +102,5 @@ public void setComponet(ApplicationComponet componet) {
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
-
 
 }

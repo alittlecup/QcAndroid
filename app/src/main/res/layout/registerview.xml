@@ -193,7 +193,6 @@
                     android:inputType="textPassword"
                     android:maxLength="16"
                     android:singleLine="true"
-                    android:text="123456"
                     android:textSize="18sp"
                     />
 
@@ -215,7 +214,6 @@
                     android:inputType="textPassword"
                     android:maxLength="16"
                     android:singleLine="true"
-                    android:text="123456"
                     android:textSize="18sp"
                     />
             </android.support.design.widget.TextInputLayout>

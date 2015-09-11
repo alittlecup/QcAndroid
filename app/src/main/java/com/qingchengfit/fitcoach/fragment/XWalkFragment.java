@@ -18,7 +18,6 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
@@ -73,6 +72,7 @@ public class XWalkFragment extends WebFragment {
         if (getArguments() != null) {
             base_url = getArguments().getString(WebFragment.BASE_URL);
         }
+
     }
 
     @Override
@@ -143,7 +143,7 @@ public class XWalkFragment extends WebFragment {
 //            List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
 //            Gson gson = new Gson();
 //            LogUtil.e(gson.toJson(contacts));
-            ShareUtils.oneKeyShared(getActivity());
+
         });
         RxBus.getBus().toObserverable().subscribe(o -> {
             if (o instanceof NewPushMsg) {
