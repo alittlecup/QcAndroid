@@ -1,13 +1,75 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.qingchengfit.fitcoach.fragment.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        >
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+
+            >
+
+            <EditText
+                android:id="@+id/searchview_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/ic_search"
+                android:paddingLeft="5dp"
+
+                />
+
+            <ImageView
+                android:id="@+id/searchview_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_cross_blace"
+                />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/searchview_cancle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_marginTop="?android:actionBarSize"
+        android:orientation="vertical"
+        >
 
-</FrameLayout>
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="热门机构"
+            />
+
+        <com.qingchengfit.fitcoach.component.SearchListView
+            android:id="@+id/search_resultlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </com.qingchengfit.fitcoach.component.SearchListView>
+    </LinearLayout>
+
+</RelativeLayout>

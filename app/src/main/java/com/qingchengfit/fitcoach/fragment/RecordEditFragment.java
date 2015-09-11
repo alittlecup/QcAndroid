@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CommonInputView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +24,8 @@ public class RecordEditFragment extends BaseSettingFragment {
     public static final String TAG = RecordEditFragment.class.getName();
     private static final String TITLE = "param1";
     private static final String CONTENT = "param2";
+    @Bind(R.id.recordedit_host)
+    CommonInputView recordeditHost;
 
     private String mTitle;
     private String mContent;
@@ -63,9 +68,14 @@ public class RecordEditFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.menu_delete, 0, mTitle);
         fragmentCallBack.onToolbarClickListener(item1 -> false);//TODO 删除该条记录
+
         return view;
     }
 
+    @OnClick(R.id.recordedit_host)
+    public void onHost() {
+        fragmentCallBack.onFragmentChange(new SearchFragment());
+    }
 
     @Override
     public void onDestroyView() {

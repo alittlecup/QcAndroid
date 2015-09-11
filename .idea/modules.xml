@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/android-fitcoach.iml" filepath="$PROJECT_DIR$/android-fitcoach.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crosswalkwebview144334317arm/crosswalkwebview144334317arm.iml" filepath="$PROJECT_DIR$/crosswalkwebview144334317arm/crosswalkwebview144334317arm.iml" />
       <module fileurl="file://$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" filepath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" />
     </modules>
   </component>

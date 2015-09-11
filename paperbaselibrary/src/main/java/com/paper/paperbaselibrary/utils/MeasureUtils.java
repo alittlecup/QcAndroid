@@ -55,7 +55,7 @@ public class MeasureUtils {
         navigationHeight = context.getResources().getDimensionPixelSize(navigationHeight);
         int statusHeight = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         statusHeight = context.getResources().getDimensionPixelSize(statusHeight);
-        if (hasNavBar(context))
+        if (hasVir)
             return getScreenHeight(context.getResources()) - navigationHeight - statusHeight;
         else return getScreenHeight(context.getResources()) - statusHeight;
     }
