@@ -7,17 +7,20 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
@@ -51,7 +54,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private static String FILE_PATH = Configs.ExternalPath + "header.png";
 
     @Bind(R.id.modifyinfo_header_pic)
-    SimpleDraweeView modifyinfoHeaderPic;
+    ImageView modifyinfoHeaderPic;
     @Bind(R.id.comple_gender)
     RadioGroup compleGender;
     Gson gson = new Gson();
@@ -96,7 +99,8 @@ public class ModifyInfoFragment extends BaseSettingFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        user = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "user_info", ""), User.class);
+        user = App.gUser;
+
         mFragmentManager = getChildFragmentManager();
     }
 
@@ -107,9 +111,36 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "修改资料");
         modifyinfoHeaderPic.setImageURI(Uri.parse(user.avatar));
+        initInfo();
         return view;
     }
 
+    private void initInfo() {
+        initHead();
+        if (user.gender == 0) {
+
+        }
+
+    }
+
+    public void initHead() {
+        int gender = R.drawable.img_default_female;
+        if (user.gender == 0)
+            gender = R.drawable.img_default_male;
+        if (TextUtils.isEmpty(user.avatar)) {
+            Glide.with(App.AppContex)
+                    .load(gender)
+                    .transform(new GlideCircleTransform(App.AppContex))
+                    .into(modifyinfoHeaderPic);
+        } else {
+            Glide.with(App.AppContex)
+                    .load(user.avatar)
+                    .placeholder(gender)
+                    .transform(new GlideCircleTransform(App.AppContex))
+                    .into(modifyinfoHeaderPic);
+        }
+
+    }
 
     @OnClick(R.id.modifyinfo_header_pic)
     public void onChangeHeader() {

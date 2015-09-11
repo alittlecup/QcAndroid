@@ -8,22 +8,31 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
+import com.qingchengfit.fitcoach.component.MyhomeViewPager;
+import com.qingchengfit.fitcoach.http.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +47,8 @@ public class MyHomeFragment extends Fragment {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    //    @Bind(R.id.myhome_header)
-//    SimpleDraweeView myhomeHeader;
-//    @Bind(R.id.myhome_gender)
-//    SimpleDraweeView myhomeGender;
-    //    @Bind(R.id.myhome_appBar)
-//    AppBarLayout myhomeAppBar;
-    @Bind(R.id.myhome_viewpager)
-    ViewPager myhomeViewpager;
+    @Bind(R.id.myhome_header)
+    ImageView myhomeHeader;
     @Bind(R.id.myhome_tab)
     TabLayout myhomeTab;
     @Bind(R.id.myhome_name)
@@ -57,8 +60,23 @@ public class MyHomeFragment extends Fragment {
     @Bind(R.id.myhome_scroller)
     HalfScrollView myhomeScroller;
     @Bind(R.id.myhome_bg)
-    SimpleDraweeView myhomeBg;
+    ImageView myhomeBg;
+    @Bind(R.id.myhome_gender)
+    ImageView myhomeGender;
+    @Bind(R.id.myhome_location)
+    TextView myhomeLocation;
+    @Bind(R.id.myhome_sawtooth)
+    ImageView myhomeSawtooth;
+    @Bind(R.id.myhome_tab_layout)
+    RelativeLayout myhomeTabLayout;
+    @Bind(R.id.myhome_viewpager)
+    MyhomeViewPager myhomeViewpager;
+    @Bind(R.id.halfscroll_first)
+    LinearLayout halfscrollFirst;
     private int mHomeBgHeight = 1;
+
+    private User user;
+    private Gson gson;
     //    @Bind(R.id.myhome_coolaosingtoorbar)
     //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
@@ -74,7 +92,7 @@ public class MyHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
         ButterKnife.bind(this, view);
-
+        gson = new Gson();
         toolbar.setTitle("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -84,7 +102,9 @@ public class MyHomeFragment extends Fragment {
             if (item.getItemId() == R.id.action_myhome_settings)
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
             else if (item.getItemId() == R.id.action_myhome_share)
-                ShareUtils.oneKeyShared(getActivity());
+                ShareUtils.oneKeyShared(getActivity(), "http://www.qingchengfit.cn/"
+                        , "http://www.qingchengfit.cn/static/images/photo3.png"
+                        , "我是分享");
             return true;
         });
         List<Fragment> fragments = new ArrayList<>();
@@ -120,7 +140,48 @@ public class MyHomeFragment extends Fragment {
             }
         });
         getChildFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
+        Glide.with(App.AppContex).load(R.drawable.img_selfinfo_bg).into(myhomeBg);
+        initUser();
         return view;
+    }
+
+    public void initHead() {
+        int gender = R.drawable.img_default_female;
+        Glide.with(App.AppContex)
+                .load(R.drawable.ic_gender_signal_female)
+                .into(myhomeGender);
+        if (user.gender == 0) {
+            gender = R.drawable.img_default_male;
+            Glide.with(App.AppContex)
+                    .load(R.drawable.ic_gender_signal_male)
+                    .into(myhomeGender);
+        }
+        if (TextUtils.isEmpty(user.avatar)) {
+            Glide.with(App.AppContex)
+                    .load(gender)
+                    .transform(new GlideCircleTransform(App.AppContex))
+                    .into(myhomeHeader);
+        } else {
+            Glide.with(App.AppContex)
+                    .load(user.avatar)
+                    .placeholder(gender)
+                    .transform(new GlideCircleTransform(App.AppContex))
+                    .into(myhomeHeader);
+        }
+
+    }
+
+    private void initUser() {
+        String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");
+        if (!TextUtils.isEmpty(u)) {
+            user = gson.fromJson(u, User.class);
+
+        } else {
+            //TODO ERROR
+        }
+        myhomeName.setText(user.username);
+        myhomeLocation.setText(user.city);
+        initHead();
     }
 
     @Override

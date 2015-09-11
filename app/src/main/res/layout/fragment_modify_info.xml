@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -9,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
+        android:layout_height="50dp"
+        android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         >
@@ -21,9 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
             android:text="头像"
-            android:textColor="?android:attr/textColorHint"
+
             />
 
         <View
@@ -36,60 +37,30 @@
 
         </View>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/modifyinfo_header_pic"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            app:placeholderImage="@drawable/qingchenglogo"
-            app:roundAsCircle="true"
             />
     </RelativeLayout>
 
-    <RelativeLayout
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/mofifyinfo_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+        app:civ_lable="姓名"
         >
 
-        <TextView
 
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
-            android:text="姓名"
-            android:textColor="?android:attr/textColorHint"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="5dp"
-            android:background="@color/divider_white"
-            >
-
-        </View>
-
-        <TextView
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="MIKE BROWN"
-            />
-    </RelativeLayout>
+    </com.qingchengfit.fitcoach.component.CommonInputView>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
+        android:layout_height="50dp"
+        android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         >
@@ -102,9 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
             android:text="性别"
-            android:textColor="?android:attr/textColorHint"
             />
 
         <View
@@ -153,152 +122,68 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/mofifyinfo_city"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="城市"
+        >
+
+
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/mofifyinfo_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="微信"
+        >
+
+
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/mofifyinfo_weibo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="微博"
+        >
+
+
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         >
 
         <TextView
-
+            android:id="@+id/modifyinfo_label"
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
-            android:text="城市"
-            android:textColor="?android:attr/textColorHint"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="5dp"
-            android:background="@color/divider_white"
-            >
-
-        </View>
-
-        <TextView
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="MIKE BROWN"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
-
-        <TextView
-
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
-            android:text="微信"
-            android:textColor="?android:attr/textColorHint"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="5dp"
-            android:background="@color/divider_white"
-            >
-
-        </View>
-
-        <TextView
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="MIKE BROWN"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
-
-        <TextView
-
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
-            android:text="微博"
-            android:textColor="?android:attr/textColorHint"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="5dp"
-            android:background="@color/divider_white"
-            >
-
-        </View>
-
-        <TextView
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="MIKE BROWN"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
-
-        <TextView
-
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
+            android:layout_height="@dimen/qc_item_height"
             android:text="个性签名"
-            android:textColor="?android:attr/textColorHint"
             />
 
-
-        <TextView
-
+        <EditText
+            android:id="@+id/modifyinfo_sign_et"
             style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="MIKE BROWN"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/modifyinfo_label"
+            android:background="@color/transparent"
+            android:gravity="top"
+            android:maxLength="144"
             />
+
+
     </RelativeLayout>
 
     <View
@@ -313,8 +198,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_marginTop="20dp"
-        android:background="@drawable/qc_backgroud_selector"
+        android:background="@color/white"
         android:gravity="center|left"
+
         >
 
         <TextView

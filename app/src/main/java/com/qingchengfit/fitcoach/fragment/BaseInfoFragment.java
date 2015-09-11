@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
 import com.qingchengfit.fitcoach.component.RecyclerViewInScroll;
@@ -38,7 +39,6 @@ public class BaseInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
 
     private boolean canScrollup;
 
@@ -80,9 +80,10 @@ public class BaseInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_base_info, container, false);
         ButterKnife.bind(this, view);
         List<BaseInfoBean> datas = new ArrayList<>();
-        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_phone,"电话","15123358198"));
-        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_city,"城市","北京"));
-        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce,"介绍","没什么好介绍的"));
+
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_phone, "电话", App.gUser.phone));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_city, "城市", App.gUser.city));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", App.gUser.desc));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "介绍", "没什么好介绍的"));

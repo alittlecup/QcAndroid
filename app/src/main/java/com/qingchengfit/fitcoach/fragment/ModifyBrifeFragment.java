@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.TextInputActivity;
@@ -161,7 +163,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         @Bind(R.id.item_modifybrief_text)
         TextView itemModifybriefText;
         @Bind(R.id.item_modifybrief_img)
-        SimpleDraweeView itemModifybriefImg;
+        ImageView itemModifybriefImg;
         @Bind(R.id.item_modifybrief_del)
         Button itemModifybriefDel;
         @Bind(R.id.item_modifybrief_up)
@@ -235,6 +237,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             else holder.itemModifybriefDown.setEnabled(true);
 
             if (briefInfo.getImg() != null) {
+
 //                ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(briefInfo.getImg()))
 //                        .setPostprocessor(new BasePostprocessor() {
 //                            @Override
@@ -250,8 +253,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 //                        .setImageRequest(request)
 //                        .setTapToRetryEnabled(true)
 //                        .build();
-                holder.itemModifybriefImg.setImageURI(Uri.parse(briefInfo.getImg()));
-
+                Glide.with(App.AppContex).load(briefInfo.getImg()).into(holder.itemModifybriefImg);
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
             } else {

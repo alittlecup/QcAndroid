@@ -28,32 +28,33 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 >
-                <com.facebook.drawee.view.SimpleDraweeView
+
+                <ImageView
                     android:id="@+id/myhome_bg"
                     android:layout_width="match_parent"
                     android:layout_height="172dp"
-                    app:placeholderImage="@drawable/img_selfinfo_bg"
-                    app:placeholderImageScaleType="fitXY"
                     />
-                <com.facebook.drawee.view.SimpleDraweeView
+
+                <ImageView
                     android:id="@+id/myhome_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="130dp"
-                    app:placeholderImage="@drawable/img_default_male"
-                    app:roundAsCircle="true"
                     />
-                <com.facebook.drawee.view.SimpleDraweeView
+
+                <ImageView
                     android:id="@+id/myhome_gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_alignBottom="@id/myhome_header"
                     android:layout_alignRight="@id/myhome_header"
-                    app:overlayImage="@drawable/ic_pw"
-                    app:roundAsCircle="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_gender_signal_female"
                     />
                 <TextView
                     android:id="@+id/myhome_name"
@@ -63,14 +64,18 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:text="Mark Steve"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     />
                 <TextView
+
                     android:id="@+id/myhome_brief"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/myhome_name"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/test_test_short"
                     />
                 <TextView
@@ -79,8 +84,18 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/myhome_brief"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:drawablePadding="10dp"
                     android:text="北京"
                     />
+
+                <ImageView
+                    android:id="@+id/myhome_sawtooth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myhome_location"
+                    android:layout_marginTop="10dp"/>
             </RelativeLayout>
 
             <View
@@ -141,7 +156,7 @@
                         android:layout_marginRight="15dp"
                         app:tabGravity="center"
                         app:tabIndicatorColor="@color/primary"
-                        app:tabIndicatorHeight="1.5dp"
+                        app:tabIndicatorHeight="3dp"
                         app:tabSelectedTextColor="@color/primary_dark"
                         app:tabTextAppearance="@style/Qc.TextCommonGrey"
                         app:tabTextColor="@color/text_grey"

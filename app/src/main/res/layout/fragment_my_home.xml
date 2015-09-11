@@ -34,16 +34,13 @@
             >
 
 
-
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/myhome_bg"
                 android:layout_width="match_parent"
                 android:layout_height="172dp"
-                app:placeholderImage="@drawable/img_selfinfo_bg"
-                app:placeholderImageScaleType="fitXY"
                 />
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
 
                 android:id="@+id/myhome_header"
                 android:layout_width="80dp"
@@ -51,17 +48,14 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="130dp"
-                app:placeholderImage="@drawable/img_default_male"
-                app:roundAsCircle="true"
                 />
-            <com.facebook.drawee.view.SimpleDraweeView
+
+            <ImageView
                 android:id="@+id/myhome_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/myhome_header"
                 android:layout_alignRight="@id/myhome_header"
-                app:overlayImage="@drawable/ic_pw"
-                app:roundAsCircle="true"
                 />
 
             <TextView
