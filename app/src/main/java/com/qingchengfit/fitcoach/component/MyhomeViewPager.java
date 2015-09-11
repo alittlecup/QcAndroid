@@ -27,6 +27,7 @@ public class MyhomeViewPager extends ViewPager {
     private float touchY;
     private float touchX;
     private int senseY = 10;
+
     public MyhomeViewPager(Context context) {
         super(context);
         init();
@@ -61,14 +62,13 @@ public class MyhomeViewPager extends ViewPager {
                 float x = touchX;
                 touchX = ev.getX();
                 touchY = ev.getY();
-                if (ev.getY() - y > 0 && !ViewCompat.canScrollVertically(v, -1)) {
+                if (ev.getY() - y > 5 && !ViewCompat.canScrollVertically(v, -1)) {
                     if (getCurrentItem() == 0)
-
-                        return super.onInterceptTouchEvent(ev);
+                        return false;
                     else return true;
-                } else if (ev.getY() - y <= 0 && !ViewCompat.canScrollVertically(v, 1)) {
+                } else if (ev.getY() - y <= -5 && !ViewCompat.canScrollVertically(v, 1)) {
                     return true;
-                } else return super.onInterceptTouchEvent(ev);
+                } else return false;
             case MotionEvent.ACTION_UP:
 
                 break;
@@ -97,10 +97,12 @@ public class MyhomeViewPager extends ViewPager {
                 if (ev.getY() - y >= senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, -1)) {
                     if (getCurrentItem() != 0) {
                         setCurrentItem(getCurrentItem() - 1, true);
+                        return true;
                     }
                 } else if (ev.getY() - y <= -senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, 1)) {
                     if (getCurrentItem() != getAdapter().getCount() - 1) {
                         setCurrentItem(getCurrentItem() + 1, true);
+                        return true;
                     }
                 }
 

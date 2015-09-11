@@ -94,7 +94,6 @@ public class CompleteActivity extends AppCompatActivity {
                         {
                             if (qcResponse.status == ResponseResult.SUCCESS){
                                 //TODO 注册成功
-
                                 this.finish();
                             }else {
 

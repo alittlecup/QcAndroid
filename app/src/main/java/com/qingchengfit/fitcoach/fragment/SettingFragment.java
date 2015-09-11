@@ -64,7 +64,6 @@ public class SettingFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_title));
-
         return view;
     }
 

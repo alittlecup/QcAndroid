@@ -7,35 +7,37 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
-* .DS_Store
-* .idea/
-* .idea/.name
-* .idea/compiler.xml
-* .idea/copyright/
-* .idea/copyright/profiles_settings.xml
-* .idea/crosswalk-webview-14.43.343.17-arm.iml
-* .idea/libraries/
-* .idea/libraries/xwalk_core_library_java.xml
-* .idea/misc.xml
-* .idea/modules.xml
-* .idea/vcs.xml
-* .idea/workspace.xml
+* ._AndroidManifest.xml
+* ._ant.properties
+* ._build.xml
+* ._libs
+* ._project.properties
+* ._res
+* ._src
 * ant.properties
 * build.xml
-* crosswalk-webview-14.43.343.17-arm.iml
-* settings.gradle
+* crosswalkwebview15443867arm.iml
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => crosswalkwebview144334317arm/src/main/AndroidManifest.xml
-* libs/armeabi-v7a/libxwalkcore.so => crosswalkwebview144334317arm/src/main/jniLibs/armeabi-v7a/libxwalkcore.so
-* libs/xwalk_core_library_java.jar => crosswalkwebview144334317arm/libs/xwalk_core_library_java.jar
-* res/ => crosswalkwebview144334317arm/src/main/res/
-* src/ => crosswalkwebview144334317arm/src/main/java
-* src/README.md => crosswalkwebview144334317arm/src/main/resources/README.md
+* ._values-en-rGB => ._values-en-rgb
+* ._values-es-rUS => ._values-es-rus
+* ._values-pt-rBR => ._values-pt-rbr
+* ._values-pt-rPT => ._values-pt-rpt
+* ._values-zh-rCN => ._values-zh-rcn
+* ._values-zh-rTW => ._values-zh-rtw
+* AndroidManifest.xml => crosswalkwebview15443867arm/src/main/AndroidManifest.xml
+* libs/._xwalk_core_library_java.jar => crosswalkwebview15443867arm/libs/._xwalk_core_library_java.jar
+* libs/armeabi-v7a/libxwalkcore.so.lzma => crosswalkwebview15443867arm/src/main/jniLibs/armeabi-v7a/libxwalkcore.so.lzma
+* libs/armeabi-v7a/libxwalkdummy.so => crosswalkwebview15443867arm/src/main/jniLibs/armeabi-v7a/libxwalkdummy.so
+* libs/xwalk_core_library_java.jar => crosswalkwebview15443867arm/libs/xwalk_core_library_java.jar
+* res/ => crosswalkwebview15443867arm/src/main/res/
+* src/ => crosswalkwebview15443867arm/src/main/java
+* src/._README.md => crosswalkwebview15443867arm/src/main/resources/._README.md
+* src/README.md => crosswalkwebview15443867arm/src/main/resources/README.md
 
 Next Steps:
 -----------
