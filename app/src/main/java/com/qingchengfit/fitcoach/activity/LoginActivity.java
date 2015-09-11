@@ -19,8 +19,6 @@ import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.bean.RecieveMsg;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 
@@ -98,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             if (matcher.find()) {
                 String res = matcher.group().substring(0, 6);// 获取短信的内容
                 //send msg
-                RxBus.getBus().send(new RecieveMsg(res));
+//                RxBus.getBus().send(new RecieveMsg(res));
             }
 //            }
         }
