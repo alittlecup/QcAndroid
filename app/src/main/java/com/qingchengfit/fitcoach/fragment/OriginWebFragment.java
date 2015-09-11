@@ -1,15 +1,21 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
@@ -53,6 +59,7 @@ public class OriginWebFragment extends WebFragment {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,12 +67,13 @@ public class OriginWebFragment extends WebFragment {
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
 
         ButterKnife.bind(this, view);
-        webview.loadUrl(base_url);
+
 
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
+                webview.loadUrl("javascript:MyApp.resize(document.body.getBoundingClientRect().height)");
                 super.onPageFinished(view, url);
             }
 
@@ -73,15 +81,47 @@ public class OriginWebFragment extends WebFragment {
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
             }
+
+
         });
+        webview.setWebChromeClient(new WebChromeClient() {
+
+        });
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.setInitialScale(getScale());
+
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
+        initCookie();
         RxBus.getBus().toObserverable().subscribe(o -> {
             if (o instanceof NewPushMsg) {
                 webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();");
             }
         });
+        webview.loadUrl(base_url);
+
+//        webview.loadUrl("http://www.baidu.com");
         return view;
+    }
+
+    private int getScale() {
+        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+//        Double val = new Double(width)/new Double(PIC_WIDTH);
+//        val = val * 100d;
+//        return val.intValue();
+        return 1;
+    }
+
+    @Override
+    public Boolean canGoBack() {
+        if (webview != null)
+            return webview.canGoBack();
+        else return false;
+    }
+
+    public void goBack() {
+        webview.goBack();
     }
 
 
@@ -172,6 +212,15 @@ public class OriginWebFragment extends WebFragment {
 
         }
 
+        @JavascriptInterface
+        public void resize(final float height) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    webview.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+                }
+            });
+        }
 
     }
 }

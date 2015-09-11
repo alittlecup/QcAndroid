@@ -1,7 +1,9 @@
 package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
@@ -26,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
@@ -57,9 +60,11 @@ public class QcCloudClient {
     public PostApi postApi;
     public GetApi getApi;
     public DownLoadApi downLoadApi;
+    private OkHttpClient okHttpClient;
+
 
     public QcCloudClient() {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient = new OkHttpClient();
         okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         File fileCache = new File(Configs.ExternalCache);
@@ -89,7 +94,8 @@ public class QcCloudClient {
                             }
                             if (responToken != null) {
                                 request.addHeader("X-CSRFToken", responToken.data.token);
-                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
+                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
+                                        PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
                                 request.addHeader("Cache-Control", "max-age=0");
                             }
                         }
@@ -102,7 +108,13 @@ public class QcCloudClient {
         RestAdapter restAdapter2 = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-
+                .setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestFacade request) {
+                        request.addHeader("Cookie", "sessionid=" +
+                                PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
+                    }
+                })
                 .setClient(new OkClient(okHttpClient))
                 .setErrorHandler(cause -> {
                             LogUtil.e(cause.getCause().getMessage());
@@ -130,6 +142,29 @@ public class QcCloudClient {
         } else return client;
 
     }
+
+    public RestAdapter.Builder getRestAdapter() {
+        return new RestAdapter.Builder()
+                .setClient(new OkClient(okHttpClient))
+                .setEndpoint(Configs.Server)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setRequestInterceptor(request ->
+                        {
+                            QcResponToken responToken = null;
+                            try {
+                                responToken = getApi.qcGetToken();
+                            } catch (Exception e) {
+                                //TODO handle error
+                            }
+                            if (responToken != null) {
+                                request.addHeader("X-CSRFToken", responToken.data.token);
+//                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token+";sessionid="+);
+                                request.addHeader("Cache-Control", "max-age=0");
+                            }
+                        }
+                );
+    }
+
 
     public interface GetApi {
         //获取token

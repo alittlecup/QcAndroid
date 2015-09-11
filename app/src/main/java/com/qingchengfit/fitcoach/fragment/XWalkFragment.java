@@ -25,15 +25,17 @@ import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
-import org.xwalk.core.XWalkCookieManager;
+import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
+import org.xwalk.core.internal.XWalkCookieManager;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -206,6 +208,18 @@ public class XWalkFragment extends WebFragment {
         if (xWalkCookieManager != null) {
             xWalkCookieManager.removeAllCookie();
         }
+    }
+
+    @Override
+    public Boolean canGoBack() {
+        if (mWebview != null)
+            return mWebview.getNavigationHistory().canGoBack();
+        else return false;
+    }
+
+    public void goBack() {
+        if (mWebview != null)
+            mWebview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
     }
 
     public void openmainDrawer() {

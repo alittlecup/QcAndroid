@@ -38,4 +38,8 @@ public class WebFragment extends Fragment {
 
     }
 
+    public Boolean canGoBack() {
+        return false;
+    }
+
 }

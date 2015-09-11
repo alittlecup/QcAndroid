@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -36,6 +37,8 @@ import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
+import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
+import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
@@ -80,12 +83,18 @@ public class MainActivity extends BaseAcitivity {
 //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
 
-    private XWalkFragment xWalkFragment;
+    private WebFragment xWalkFragment;
     private MyHomeFragment myHomeFragment;
     private Fragment topFragment;
     private ArrayList<String> urls = new ArrayList<>();
     private MaterialDialog dialog;
     private Gson gson;
+
+//    @Override
+//    protected void onXWalkReady() {
+//
+//    }
+
     //    @Inject RxBus rxBus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +105,7 @@ public class MainActivity extends BaseAcitivity {
         ButterKnife.bind(this);
         gson = new Gson();
         mFragmentManager = getSupportFragmentManager();
-        xWalkFragment = new XWalkFragment();
-        mFragmentManager.beginTransaction().add(R.id.main_fraglayout, xWalkFragment).commit();
+
         RxBus.getBus().toObserverable().subscribe(o -> {
             if (o instanceof OpenDrawer) {
                 mainDrawerlayout.openDrawer(Gravity.LEFT);
@@ -120,10 +128,14 @@ public class MainActivity extends BaseAcitivity {
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
         List<Fragment> fragments = mFragmentManager.getFragments();
-        for (int i = 0; i < fragments.size(); i++) {
-            Fragment fragment = fragments.get(i);
-            if (fragment instanceof XWalkFragment) {
-                ((XWalkFragment) fragment).removeCookie();
+        if (fragments != null) {
+            for (int i = 0; i < fragments.size(); i++) {
+                Fragment fragment = fragments.get(i);
+                if (fragment instanceof XWalkFragment) {
+                    ((XWalkFragment) fragment).removeCookie();
+                } else if (fragment instanceof OriginWebFragment) {
+                    ((OriginWebFragment) fragment).removeCookie();
+                }
             }
         }
         startActivity(new Intent(this, LoginActivity.class));
@@ -159,18 +171,17 @@ public class MainActivity extends BaseAcitivity {
 
 
     private void goXwalkfragment(String url) {
-
-        XWalkFragment fragment = (XWalkFragment) getSupportFragmentManager().findFragmentByTag(url);
+        WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag(url);
         if (fragment == null) {
-            fragment = XWalkFragment.newInstance(url);
+            fragment = WebFragment.newInstance(url);
             mFragmentManager.beginTransaction()
                     .add(R.id.main_fraglayout, fragment, url)
                     .show(fragment)
                     .commit();
 
         } else {
-            mFragmentManager.getFragments();
-            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
+            if (topFragment != fragment)
+                mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
         }
         topFragment = fragment;
 //        fragment.startLoadUrl(url);
@@ -255,7 +266,6 @@ public class MainActivity extends BaseAcitivity {
                         button.setOnClickListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl);
-
                         });
                         urls.add(btnInfo.intentUrl);
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
@@ -300,10 +310,25 @@ public class MainActivity extends BaseAcitivity {
     @Override
     public void onBackPressed() {
         mainDrawerlayout.closeDrawers();
-        if (topFragment.getTag().endsWith(urls.get(0))) {
+
+        if (topFragment instanceof XWalkFragment) {
+            if (((XWalkFragment) topFragment).canGoBack()) {
+                ((XWalkFragment) topFragment).goBack();
+                return;
+            }
+
+        } else if (topFragment instanceof OriginWebFragment) {
+            if (((OriginWebFragment) topFragment).canGoBack()) {
+                ((OriginWebFragment) topFragment).goBack();
+                return;
+            }
+        }
+
+        if (topFragment.getTag() != null && topFragment.getTag().endsWith(urls.get(0))) {
             dialog.show();
         } else {
-            drawerRadiogroup.getChildAt(0).performClick();
+            if (drawerRadiogroup.getChildCount() > 0)
+                drawerRadiogroup.getChildAt(0).performClick();
         }
     }
 }

@@ -16,9 +16,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/7/30 2015.
  */
 public class QcResponse {
-
-
-
     @SerializedName("status")
     public int status;
     @SerializedName("msg")
@@ -29,4 +26,6 @@ public class QcResponse {
 //    public String data;
     @SerializedName("level")
     public String level;
+    @SerializedName("error_code")
+    public String error_code;
 }
