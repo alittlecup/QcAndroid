@@ -8,19 +8,23 @@ import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
@@ -36,7 +40,6 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentButton;
-import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
@@ -44,13 +47,16 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
+import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -77,18 +83,22 @@ public class MainActivity extends BaseAcitivity {
     @Bind(R.id.drawer_radiogroup)
     RadioGroup drawerRadiogroup;
     @Bind(R.id.header_icon)
-    SimpleDraweeView headerIcon;
+    ImageView headerIcon;
     @Bind(R.id.drawer_modules)
     LinearLayout drawerModules;
+    @Bind(R.id.drawer_name)
+    TextView drawerName;
+    HashMap<String, Fragment> fragments = new HashMap<>();
 //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
-
-    private WebFragment xWalkFragment;
-    private MyHomeFragment myHomeFragment;
+private User user;
+    //    private WebFragment xWalkFragment;
+//    private MyHomeFragment myHomeFragment;
     private Fragment topFragment;
     private ArrayList<String> urls = new ArrayList<>();
     private MaterialDialog dialog;
     private Gson gson;
+
 
 //    @Override
 //    protected void onXWalkReady() {
@@ -111,9 +121,26 @@ public class MainActivity extends BaseAcitivity {
                 mainDrawerlayout.openDrawer(Gravity.LEFT);
             }
         });
+        initVersion();
+        initUser();
         initDialog();
         initDrawer();
-        myHomeFragment = new MyHomeFragment();
+
+    }
+
+    private void initVersion() {
+        LogUtil.e("version:");
+    }
+
+    private void initUser() {
+        String u = PreferenceUtils.getPrefString(this, "user_info", "");
+        if (!TextUtils.isEmpty(u)) {
+            user = gson.fromJson(u, User.class);
+            App.setgUser(user);
+        } else {
+            //TODO ERROR
+        }
+        drawerName.setText(user.username);
 
     }
 
@@ -171,20 +198,24 @@ public class MainActivity extends BaseAcitivity {
 
 
     private void goXwalkfragment(String url) {
+//        WebFragment fragment = (WebFragment)fragments.get(url);
+//        mFragmentManager.beginTransaction()
+//                .replace(R.id.main_fraglayout,fragment)
+//                .commit();
         WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag(url);
         if (fragment == null) {
             fragment = WebFragment.newInstance(url);
-            mFragmentManager.beginTransaction()
-                    .add(R.id.main_fraglayout, fragment, url)
-                    .show(fragment)
-                    .commit();
+            FragmentTransaction fr = mFragmentManager.beginTransaction();
+            fr.add(R.id.main_fraglayout, fragment, url);
+            if (topFragment != null)
+                fr.hide(topFragment);
+            fr.show(fragment);
+            fr.commit();
 
         } else {
-            if (topFragment != fragment)
-                mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
+            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
         }
         topFragment = fragment;
-//        fragment.startLoadUrl(url);
     }
 
     /**
@@ -192,6 +223,23 @@ public class MainActivity extends BaseAcitivity {
      */
     private void initDrawer() {
         LogUtil.d(PhoneInfoUtils.getHandSetInfo());
+        int gender = R.drawable.img_default_female;
+        if (user.gender == 0)
+            gender = R.drawable.img_default_male;
+        if (TextUtils.isEmpty(user.avatar)) {
+            Glide.with(App.AppContex)
+                    .load(gender)
+                    .transform(new GlideCircleTransform(App.AppContex))
+                    .into(headerIcon);
+        } else {
+            Glide.with(App.AppContex)
+                    .load(user.avatar)
+                    .placeholder(gender)
+                    .transform(new GlideCircleTransform(App.AppContex))
+                    .into(headerIcon);
+        }
+
+
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {
             //TODO error
@@ -220,6 +268,7 @@ public class MainActivity extends BaseAcitivity {
                 goXwalkfragment(module.url);
                 mainDrawerlayout.closeDrawers();
             });
+//            fragments.put( module.url, WebFragment.newInstance(module.url));
             drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         }
     }
@@ -237,7 +286,7 @@ public class MainActivity extends BaseAcitivity {
                         Request request = new Request.Builder().url(s).build();
 
                         try {
-                            com.squareup.okhttp.Response response = httpClient.newCall(request).execute();
+                            Response response = httpClient.newCall(request).execute();
                             FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
 //                            FileOutputStream output = new FileOutputStream(f);
 //                            IOUtils.write(response.body().bytes(), output);
@@ -268,6 +317,7 @@ public class MainActivity extends BaseAcitivity {
                             goXwalkfragment(btnInfo.intentUrl);
                         });
                         urls.add(btnInfo.intentUrl);
+//                        fragments.put( btnInfo.intentUrl,  WebFragment.newInstance(btnInfo.intentUrl));
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
                         if (count == 0) {
                             drawerRadiogroup.getChildAt(0).performClick();
