@@ -15,7 +15,6 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
@@ -73,7 +72,6 @@ public class OriginWebFragment extends WebFragment {
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                webview.loadUrl("javascript:MyApp.resize(document.body.getBoundingClientRect().height)");
                 super.onPageFinished(view, url);
             }
 
@@ -88,7 +86,7 @@ public class OriginWebFragment extends WebFragment {
 
         });
         webview.getSettings().setJavaScriptEnabled(true);
-        webview.setInitialScale(getScale());
+//        webview.setInitialScale(getScale());
 
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
@@ -212,15 +210,15 @@ public class OriginWebFragment extends WebFragment {
 
         }
 
-        @JavascriptInterface
-        public void resize(final float height) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    webview.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
-                }
-            });
-        }
+//        @JavascriptInterface
+//        public void resize(final float height) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    webview.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+//                }
+//            });
+//        }
 
     }
 }
