@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
@@ -29,6 +28,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 
 /**
@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
     Gson gson = new Gson();
 
     MaterialDialog materialDialog;
-
+    private Observable mObservable;
     public LoginFragment() {
 
     }
@@ -205,11 +205,11 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         loginview.setLoginPresenter(loginPresenter);
-        RxBus.getBus().toObserverable()
-                .subscribe(o -> {
+//        RxBus.getBus().toObserverable()
+//                .subscribe(o -> {
 //                    if (o instanceof RecieveMsg)
 //                        loginview.mCheckCodeInputLaout.getEditText().setText(((RecieveMsg) o).getCode());
-                });
+//                });
         return view;
     }
 

@@ -22,6 +22,8 @@ import com.qingchengfit.fitcoach.bean.SendSmsCode;
 
 import java.lang.ref.WeakReference;
 
+import rx.Observable;
+
 /**
  * ,==.              |~~~
  * /  66\             |
@@ -46,6 +48,7 @@ public class LoginView extends RelativeLayout {
     TextInputLayout mCheckCodeInputLaout;
     LoginPresenter loginPresenter;
     private InternalHandler handler;
+    private Observable<SendSmsCode> mObservable;
 
     public LoginView(Context context) {
         super(context);
@@ -194,20 +197,27 @@ public class LoginView extends RelativeLayout {
                     } else {
                         mPhoneNumInputLayout.setError("");
                         loginPresenter.getCode(account);
-                        RxBus.getBus().send(new SendSmsCode());
+                        RxBus.getBus().post(new SendSmsCode());
                     }
                 }
 
         );
-        RxBus.getBus().toObserverable().subscribe(o -> {
-            if (o instanceof SendSmsCode) {
-                handler.sendEmptyMessage(0);
-            }
-        });
+        mObservable = RxBus.getBus().register(SendSmsCode.class.getName(), SendSmsCode.class);
+        mObservable.subscribe(sendSmsCode -> handler.sendEmptyMessage(0));
+//        RxBus.getBus().toObserverable().subscribe(o -> {
+//            if (o instanceof SendSmsCode) {
+//                handler.sendEmptyMessage(0);
+//            }
+//        });
 
         mLoginBtn.setOnClickListener(view -> doLogin());
 
     }
+
+    public void unRegiste() {
+        RxBus.getBus().unregister(SendSmsCode.class.getName(), mObservable);
+    }
+
 
     public void doLogin() {
 

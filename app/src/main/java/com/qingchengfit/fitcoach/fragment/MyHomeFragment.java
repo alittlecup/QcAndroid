@@ -182,6 +182,7 @@ public class MyHomeFragment extends Fragment {
         myhomeName.setText(user.username);
         myhomeLocation.setText(user.city);
         initHead();
+
     }
 
     @Override

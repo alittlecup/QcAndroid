@@ -74,7 +74,7 @@ android {
         // 指定渠道打包输出文件名格式
         archiveNameFormat = ''
         // 指定渠道打包需要修改的AndroidManifest文件项
-//    manifestMatcher = ['UMENG_CHANNEL','Promotion_Market']
+        manifestMatcher = ['UMENG_CHANNEL', 'QingCheng']
         // 指定是否使用build版本号自增
         buildNumberAuto = true
         // 指定使用版本号自增的buildType，默认是全部
@@ -118,7 +118,6 @@ dependencies {
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
-
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
     compile 'com.android.support:design:23.0.1'
     compile 'io.reactivex:rxandroid:0.24.0'

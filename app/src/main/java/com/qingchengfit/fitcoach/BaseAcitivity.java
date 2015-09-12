@@ -22,10 +22,10 @@ import com.umeng.analytics.MobclickAgent;
  * Created by Paper on 15/7/29 2015.
  */
 public class BaseAcitivity extends AppCompatActivity {
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
     }
 
     @Override
@@ -34,6 +34,7 @@ public class BaseAcitivity extends AppCompatActivity {
         MobclickAgent.onResume(this);
 
     }
+
 
     @Override
     protected void onPause() {

@@ -66,7 +66,7 @@ public class PushReciever extends PushMessageReceiver {
     @Override
     public void onMessage(Context context, String s, String s1) {
         LogUtil.e(s + "  " + s1);
-        RxBus.getBus().send(new NewPushMsg());
+        RxBus.getBus().post(new NewPushMsg());
     }
 
     @Override

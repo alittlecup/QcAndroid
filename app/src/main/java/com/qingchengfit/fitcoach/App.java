@@ -19,15 +19,15 @@ import rx.plugins.RxJavaPlugins;
 
 /**
  * power by
- * <p/>
+ * <p>
  * d8888b.  .d8b.  d8888b. d88888b d8888b.
  * 88  `8D d8' `8b 88  `8D 88'     88  `8D
  * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'
  * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
  * 88      88   88 88      88.     88 `88.
  * 88      YP   YP 88      Y88888P 88   YD
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Created by Paper on 15/7/29 2015.
  */
 public class App extends Application {
@@ -46,10 +46,10 @@ public class App extends Application {
         else return null;
     }
 
-//
-public void setComponet(ApplicationComponet componet) {
-    this.componet = componet;
-}
+    //
+    public void setComponet(ApplicationComponet componet) {
+        this.componet = componet;
+    }
 
     //
     @Override
@@ -67,7 +67,19 @@ public void setComponet(ApplicationComponet componet) {
                 Log.w("Error", e);
             }
         });
-        AppContex = getApplicationContext();
+
+//        DefaultAcceptConfiguration.getInstance().registerAcceptConfiguration(new DefaultAcceptConfiguration.OnDefaultAcceptConfiguration() {
+//            @Override
+//            public Executor applyAcceptExecutor() {
+//                return acceptExecutor;
+//            }
+//
+//            @Override
+//            public Handler applyAcceptHandler() {
+//                return handler;
+//            }
+//        });
+//        AppContex = getApplicationContext();
 
 
     }

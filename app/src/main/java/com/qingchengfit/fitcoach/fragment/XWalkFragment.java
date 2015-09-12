@@ -20,7 +20,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
-import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
@@ -34,6 +33,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 
 /**
@@ -52,6 +52,7 @@ public class XWalkFragment extends WebFragment {
     Gson gson;
     private XWalkCookieManager xWalkCookieManager;
     private String base_url;
+    private Observable<NewPushMsg> mObservable;
 
     public XWalkFragment() {
 
@@ -145,11 +146,9 @@ public class XWalkFragment extends WebFragment {
 //            LogUtil.e(gson.toJson(contacts));
 
         });
-        RxBus.getBus().toObserverable().subscribe(o -> {
-            if (o instanceof NewPushMsg) {
-                mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
-            }
-        });
+        mObservable = RxBus.getBus().register(NewPushMsg.class);
+        mObservable.subscribe(newPushMsg -> mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null));
+
         return view;
     }
 
@@ -201,6 +200,7 @@ public class XWalkFragment extends WebFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        RxBus.getBus().unregister(NewPushMsg.class, mObservable);
     }
 
     @Override
@@ -223,7 +223,7 @@ public class XWalkFragment extends WebFragment {
     }
 
     public void openmainDrawer() {
-        getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
+        getActivity().runOnUiThread(() -> RxBus.getBus().post(RxBus.OPEN_DRAWER));
     }
 
     public void setCookie(String url, String key, String value) {

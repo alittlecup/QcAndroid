@@ -38,6 +38,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 
 
@@ -88,6 +89,8 @@ public class RegisterFragment extends Fragment {
     TextInputLayout registeUsername;
     Gson gson;
     private InternalHandler handler;
+    private Observable<RecieveMsg> mRecieveMsgOb;
+    private Observable<SendSmsCode> mSendsmsOb;
 
     @Nullable
     @Override
@@ -104,14 +107,11 @@ public class RegisterFragment extends Fragment {
         });
         registePhoneNum.setHint(getString(R.string.logint_phonenum_hint));
         registePhoneVerity.setHint(getString(R.string.login_checkcode_hint));
-        RxBus.getBus().toObserverable()
-                .subscribe(o -> {
-                    if (o instanceof RecieveMsg)
-                        registePhoneVerity.getEditText().setText(((RecieveMsg) o).getCode());
-                    else if (o instanceof SendSmsCode) {
-                        handler.sendEmptyMessage(0);
-                    }
-                });
+        mRecieveMsgOb = RxBus.getBus().register(RecieveMsg.class);
+        mRecieveMsgOb.subscribe(recieveMsg -> registePhoneVerity.getEditText().setText(recieveMsg.getCode()));
+
+        mSendsmsOb = RxBus.getBus().register(SendSmsCode.class);
+        mSendsmsOb.subscribe(sendSmsCode -> handler.sendEmptyMessage(0));
         registeBtn.setOnClickListener(
                 view1 -> {
                     String userName = "";
@@ -251,6 +251,8 @@ public class RegisterFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        RxBus.getBus().unregister(RecieveMsg.class, mRecieveMsgOb);
+        RxBus.getBus().unregister(SendSmsCode.class, mSendsmsOb);
     }
 
     public class InternalHandler extends Handler {

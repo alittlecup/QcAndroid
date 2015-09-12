@@ -17,6 +17,8 @@ import rx.subjects.Subject;
  * courtesy: https://gist.github.com/benjchristensen/04eef9ca0851f3a5d7bf
  */
 public class RxBus {
+    public static String TAG1 = "RxBus";
+    public static String OPEN_DRAWER = "RxBus_opendrawer";
     private static String TAG = "RxBus";
     private static RxBus _RxBus;
     // If multiple threads are going to emit events to this
@@ -50,6 +52,33 @@ public class RxBus {
     }
 
     public <T> Observable<T> register(@NonNull Object tag, @NonNull Class<T> clazz) {
+        List<Subject> subjectList = subjectMapper.get(tag);
+        if (null == subjectList) {
+            subjectList = new ArrayList<>();
+            subjectMapper.put(tag, subjectList);
+        }
+
+        Subject<T, T> subject;
+        subjectList.add(subject = PublishSubject.create());
+        LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
+        return subject;
+    }
+
+    public <T> Observable<T> register(@NonNull Object tag) {
+        List<Subject> subjectList = subjectMapper.get(tag);
+        if (null == subjectList) {
+            subjectList = new ArrayList<>();
+            subjectMapper.put(tag, subjectList);
+        }
+
+        Subject<T, T> subject;
+        subjectList.add(subject = PublishSubject.create());
+        LogUtil.d(TAG, "[register]subjectMapper: " + subjectMapper);
+        return subject;
+    }
+
+    public <T> Observable<T> register(@NonNull Class<T> clazz) {
+        String tag = clazz.getName();
         List<Subject> subjectList = subjectMapper.get(tag);
         if (null == subjectList) {
             subjectList = new ArrayList<>();

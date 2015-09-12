@@ -37,7 +37,6 @@ import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentButton;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
@@ -63,6 +62,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.functions.Action1;
 
 //import javax.inject.Inject;
 
@@ -98,7 +98,7 @@ private User user;
     private ArrayList<String> urls = new ArrayList<>();
     private MaterialDialog dialog;
     private Gson gson;
-
+    private Observable mMainObservabel;
 
 //    @Override
 //    protected void onXWalkReady() {
@@ -115,12 +115,8 @@ private User user;
         ButterKnife.bind(this);
         gson = new Gson();
         mFragmentManager = getSupportFragmentManager();
-
-        RxBus.getBus().toObserverable().subscribe(o -> {
-            if (o instanceof OpenDrawer) {
-                mainDrawerlayout.openDrawer(Gravity.LEFT);
-            }
-        });
+        mMainObservabel = RxBus.getBus().register(RxBus.OPEN_DRAWER);
+        mMainObservabel.subscribe((Action1) o -> mainDrawerlayout.openDrawer(Gravity.LEFT));
         initVersion();
         initUser();
         initDialog();
@@ -353,6 +349,7 @@ private User user;
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 

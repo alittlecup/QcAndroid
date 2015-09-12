@@ -27,13 +27,13 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
-import com.qingchengfit.fitcoach.bean.OpenDrawer;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +45,7 @@ public class OriginWebFragment extends WebFragment {
     CookieManager cookieManager;
     private String base_url;
     private Gson gson;
+    private Observable<NewPushMsg> mObservable;
 
     public OriginWebFragment() {
     }
@@ -91,11 +92,8 @@ public class OriginWebFragment extends WebFragment {
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         initCookie();
-        RxBus.getBus().toObserverable().subscribe(o -> {
-            if (o instanceof NewPushMsg) {
-                webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();");
-            }
-        });
+        mObservable = RxBus.getBus().register(NewPushMsg.class);
+        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
         webview.loadUrl(base_url);
 
 //        webview.loadUrl("http://www.baidu.com");
@@ -142,6 +140,7 @@ public class OriginWebFragment extends WebFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        RxBus.getBus().unregister(NewPushMsg.class, mObservable);
     }
 
 
@@ -153,7 +152,7 @@ public class OriginWebFragment extends WebFragment {
     }
 
     public void openmainDrawer() {
-        getActivity().runOnUiThread(() -> RxBus.getBus().send(new OpenDrawer()));
+        getActivity().runOnUiThread(() -> RxBus.getBus().post(RxBus.OPEN_DRAWER));
     }
 
     public void setCookie(String url, String key, String value) {
