@@ -3,8 +3,8 @@ package com.qingchengfit.fitcoach;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.di.ApplicationComponet;
 import com.qingchengfit.fitcoach.di.ApplicationModule;
 import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
@@ -56,6 +56,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
+
+        AppContex = getApplicationContext();
 //        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
@@ -64,7 +66,8 @@ public class App extends Application {
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override
             public void handleError(Throwable e) {
-                Log.w("Error", e);
+                if (e != null)
+                    LogUtil.e("rxError:" + e.getMessage());
             }
         });
 
@@ -79,7 +82,6 @@ public class App extends Application {
 //                return handler;
 //            }
 //        });
-//        AppContex = getApplicationContext();
 
 
     }

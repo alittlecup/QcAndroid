@@ -43,6 +43,7 @@ public class LoginFragment extends Fragment {
 
     MaterialDialog materialDialog;
     private Observable mObservable;
+
     public LoginFragment() {
 
     }
@@ -169,6 +170,14 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void getCode(String account) {
+//                QcCloudClient.getApi().getRestAdapter()
+//                        .setErrorHandler(cause -> {
+//                                    LogUtil.e(cause.toString());
+//                                    return null;
+//                                }
+//                        )
+//                        .build().create(QcCloudClient.PostApi.class)
+//                        .qcGetCode(new GetCodeBean(account))
                 QcCloudClient.getApi()
                         .postApi
                         .qcGetCode(new GetCodeBean(account))
@@ -205,11 +214,6 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
         loginview.setLoginPresenter(loginPresenter);
-//        RxBus.getBus().toObserverable()
-//                .subscribe(o -> {
-//                    if (o instanceof RecieveMsg)
-//                        loginview.mCheckCodeInputLaout.getEditText().setText(((RecieveMsg) o).getCode());
-//                });
         return view;
     }
 
@@ -218,5 +222,7 @@ public class LoginFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        if (loginview != null)
+            loginview.unRegiste();
     }
 }

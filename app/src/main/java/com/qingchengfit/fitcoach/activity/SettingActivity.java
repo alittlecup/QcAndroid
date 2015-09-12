@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
@@ -31,7 +30,6 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
         fragmentManager = getSupportFragmentManager();
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         onFragmentChange(SettingFragment.newInstance(), false);
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
     }
 
 

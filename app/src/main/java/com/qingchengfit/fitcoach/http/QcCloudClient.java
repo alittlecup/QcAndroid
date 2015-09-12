@@ -73,9 +73,7 @@ public class QcCloudClient {
             okHttpClient.setCache(cache);
 
         } catch (IOException e) {
-            //e.printStackTrace();
             RevenUtils.sendException("http Cache error!", "http", e);
-
         }
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
@@ -157,9 +155,8 @@ public class QcCloudClient {
                                 //TODO handle error
                             }
                             if (responToken != null) {
-                                request.addHeader("X-CSRFToken", responToken.data.token);
-//                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token+";sessionid="+);
-                                request.addHeader("Cache-Control", "max-age=0");
+//                                request.addHeader("X-CSRFToken", responToken.data.token);
+//                                request.addHeader("Cache-Control", "max-age=0");
                             }
                         }
                 );
@@ -209,8 +206,6 @@ public class QcCloudClient {
         @PUT("/api/users/{id}/")
         rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
 
-        @GET("/")
-        rx.Observable<QcResponse> getTest();
 
     }
 

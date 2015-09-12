@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
@@ -125,7 +126,7 @@ private User user;
     }
 
     private void initVersion() {
-        LogUtil.e("version:");
+        LogUtil.e("version:" + AppUtils.getAppVer(this));
     }
 
     private void initUser() {
