@@ -44,4 +44,5 @@
     <string name="recordedit_name">认证名称</string>
     <string name="record_title">资质认证</string>
     <string name="workexper_title">工作经历</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>

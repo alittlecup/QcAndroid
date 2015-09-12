@@ -13,6 +13,22 @@ apply plugin: 'packer'                     //版本管理 多渠道打包
 //        resourcePackageName 'com.qingchengfit.fitcoach'//TODO 注意这里要设置当前项目的包名
 //    }
 //}
+
+
+packer {
+    // 指定渠道打包输出目录
+//    archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
+    // 指定渠道打包输出文件名格式
+    archiveNameFormat = '${appName}${buildType}${versionName.buildNumber}_${versionCode}'
+    // 指定渠道打包需要修改的AndroidManifest文件项
+    manifestMatcher = ['UMENG_CHANNEL']
+    // 指定是否使用build版本号自增
+    buildNumberAuto = true
+    // 指定使用版本号自增的buildType，默认是全部
+    buildNumberTypeMatcher = ['release', 'beta']
+
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -68,19 +84,7 @@ android {
         }
 
     }
-    packer {
-        // 指定渠道打包输出目录
-//    archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
-        // 指定渠道打包输出文件名格式
-        archiveNameFormat = ''
-        // 指定渠道打包需要修改的AndroidManifest文件项
-        manifestMatcher = ['UMENG_CHANNEL', 'QingCheng']
-        // 指定是否使用build版本号自增
-        buildNumberAuto = true
-        // 指定使用版本号自增的buildType，默认是全部
-        buildNumberTypeMatcher = ['release', 'beta']
 
-    }
 
 //    packagingOptions {
 //        exclude 'lib/armeabi-v7a/libxwalkdummy.so'

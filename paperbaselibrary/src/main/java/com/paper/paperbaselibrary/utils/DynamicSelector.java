@@ -28,6 +28,7 @@ public class DynamicSelector {
      */
     public static StateListDrawable getSelector(Drawable drawableNormal, Drawable drawableChecked) {
         StateListDrawable bg = new StateListDrawable();
+        drawableNormal.getBounds();
         bg.addState(new int[]{android.R.attr.state_checked}, drawableChecked);
         bg.addState(new int[]{}, drawableNormal);
         return bg;

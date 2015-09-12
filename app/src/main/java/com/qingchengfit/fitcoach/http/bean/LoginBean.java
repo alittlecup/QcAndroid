@@ -19,9 +19,11 @@ public class LoginBean {
     public String password;
     public String push_id;
     public String push_channel_id;
+    public String code;
     public LoginBean(String phone, String password) {
         this.phone = phone;
         this.password = password;
+        this.code = password;
     }
 
     public String getPush_id() {

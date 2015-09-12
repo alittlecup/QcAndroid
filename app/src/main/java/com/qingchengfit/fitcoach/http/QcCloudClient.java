@@ -11,6 +11,7 @@ import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
 import com.qingchengfit.fitcoach.http.bean.QcResponCoachSys;
 import com.qingchengfit.fitcoach.http.bean.QcResponCode;
@@ -177,6 +178,15 @@ public class QcCloudClient {
 
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
+
+        @GET("/api/coaches/{id}/detail/")
+        rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
+
+        @GET("/api/messages/")
+        rx.Observable<QcResponse> qcGetMessages();
+
+        @GET("/message/{id}/")
+        rx.Observable<QcResponse> qcGetMsgDetails(@Path("id") String id);
 
     }
 

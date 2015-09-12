@@ -32,6 +32,8 @@ import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,7 +129,6 @@ public class MyHomeFragment extends Fragment {
                 lp.height = hei;
                 myhomeViewpager.setLayoutParams(lp);
                 mHomeBgHeight = myhomeBg.getHeight();
-
                 myhomeViewpager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
             }
@@ -139,7 +141,7 @@ public class MyHomeFragment extends Fragment {
                 toolbar.setBackgroundColor(Color.argb(255 * i / mHomeBgHeight, 32, 191, 189));
             }
         });
-        getChildFragmentManager().beginTransaction().add(R.id.myhome_student_judge, new StudentJudgeFragment(), "").commit();
+
         Glide.with(App.AppContex).load(R.drawable.img_selfinfo_bg).into(myhomeBg);
         initUser();
         return view;
@@ -172,6 +174,22 @@ public class MyHomeFragment extends Fragment {
     }
 
     private void initUser() {
+
+        String id = PreferenceUtils.getPrefString(App.AppContex, "coach", "");
+        if (TextUtils.isEmpty(id)) {
+            //TODO error
+        }
+        Coach coach = gson.fromJson(id, Coach.class);
+        QcCloudClient.getApi().getApi.qcGetDetail(coach.id)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    myhomeLocation.setText(response.getData().getCoach().getCity());
+                    myhomeBrief.setText(response.getData().getCoach().getShort_description());
+                    getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
+                            StudentJudgeFragment.newInstance(response.getData().getCoach().getTags()
+                                    , response.getData().getCoach().getEvaluate()), "").commit();
+                });
+
         String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");
         if (!TextUtils.isEmpty(u)) {
             user = gson.fromJson(u, User.class);

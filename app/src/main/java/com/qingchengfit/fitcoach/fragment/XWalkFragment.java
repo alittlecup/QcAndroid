@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
@@ -125,6 +127,8 @@ public class XWalkFragment extends WebFragment {
                 super.onLoadFinished(view, url);
 
             }
+
+
         });
 
 
@@ -154,8 +158,11 @@ public class XWalkFragment extends WebFragment {
 
     private void initCookie() {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
-        if (sessionid != null)
+        if (sessionid != null) {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
+            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
+            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+        }
         else {
             ((MainActivity) getActivity()).logout();
         }
@@ -239,9 +246,11 @@ public class XWalkFragment extends WebFragment {
     }
 
     class MyUIClient extends XWalkUIClient {
+
         MyUIClient(XWalkView view) {
             super(view);
         }
+
 
         @Override
         public boolean onConsoleMessage(XWalkView view, String message, int lineNumber, String sourceId, ConsoleMessageType messageType) {
@@ -257,7 +266,6 @@ public class XWalkFragment extends WebFragment {
         public void onPageLoadStarted(XWalkView view, String url) {
             //TODO 监控网络
             super.onPageLoadStarted(view, url);
-
         }
 
 
@@ -278,6 +286,11 @@ public class XWalkFragment extends WebFragment {
         public void openDrawer() {
             openmainDrawer();
 
+        }
+
+        @JavascriptInterface
+        public void openMsg() {
+            startActivity(new Intent(getActivity(), NotificationActivity.class));
         }
 
         @JavascriptInterface

@@ -90,9 +90,9 @@ public class MainActivity extends BaseAcitivity {
     @Bind(R.id.drawer_name)
     TextView drawerName;
     HashMap<String, Fragment> fragments = new HashMap<>();
-//    @Bind(R.id.main_navi)
+    //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
-private User user;
+    private User user;
     //    private WebFragment xWalkFragment;
 //    private MyHomeFragment myHomeFragment;
     private Fragment topFragment;
@@ -138,7 +138,6 @@ private User user;
             //TODO ERROR
         }
         drawerName.setText(user.username);
-
     }
 
     @Override
@@ -245,12 +244,16 @@ private User user;
         QcCloudClient.getApi().getApi
                 .getDrawerInfo(coach.id)
                 .subscribe(qcResponDrawer -> {
-                    for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
-                        setupBtn(qcResponDrawer.data.guide.get(i), i);
+                    if (qcResponDrawer.status == 200) {
+                        for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
+                            setupBtn(qcResponDrawer.data.guide.get(i), i);
+                        }
+                        runOnUiThread(() -> {
+                            setupModules(qcResponDrawer.data.modules);
+                        });
+                    } else if (qcResponDrawer.error_code.equals("400001")) {
+                        logout();
                     }
-                    runOnUiThread(() -> {
-                        setupModules(qcResponDrawer.data.modules);
-                    });
                 });
 
     }

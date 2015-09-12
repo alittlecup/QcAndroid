@@ -73,8 +73,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
-            >
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".activity.LoginActivity"
@@ -203,6 +202,10 @@
         <activity
             android:name=".activity.MyHomeActivity"
             android:label="@string/title_activity_my_home">
+        </activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:label="@string/title_activity_notification">
         </activity>
     </application>
 

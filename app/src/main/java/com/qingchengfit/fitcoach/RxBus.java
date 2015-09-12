@@ -103,8 +103,12 @@ public class RxBus {
         LogUtil.d(TAG, "[unregister]subjectMapper: " + subjectMapper);
     }
 
-    public void post(@NonNull Object content) {
-        post(content.getClass().getName(), content);
+    public void post(@NonNull String content) {
+        post(content, "");
+    }
+
+    public void post(@NonNull Object o) {
+        post(o.getClass().getName(), o);
     }
 
     @SuppressWarnings("unchecked")

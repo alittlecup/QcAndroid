@@ -1,0 +1,79 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            tools:context="com.qingchengfit.fitcoach.fragment.NotiDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_notification_size"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
+
+            <TextView
+
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="8月29号活动通知"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/notidetail_time"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="8月29号活动通知"
+                />
+
+            <TextView
+                android:id="@+id/notidetail_sender"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_toRightOf="@id/notidetail_time"
+                android:text="8月29号活动通知"
+                />
+
+            <ImageView
+                android:id="@+id/notidetail_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/test_pic"
+                />
+
+        </RelativeLayout>
+
+        <include layout="@layout/divider_white"></include>
+
+        <TextView
+            android:id="@+id/notidetail_content"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="@string/test_text"
+            />
+    </LinearLayout>
+
+</ScrollView>
