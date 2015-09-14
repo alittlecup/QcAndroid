@@ -23,9 +23,11 @@ import com.qingchengfit.fitcoach.R;
  */
 public class SegmentButton extends RadioButton {
 
+    private static final int[] CHECKED_STATE_SET = {
+            android.R.attr.state_checked
+    };
     OnCheckedChangeListener mListener;
     private int mTextColor = Color.BLACK;
-
     public SegmentButton(Context context) {
         super(context);
         mTextColor = getResources().getColor(R.color.text_black);
@@ -47,6 +49,7 @@ public class SegmentButton extends RadioButton {
         init(attrs);
     }
 
+
     private void init(AttributeSet attrs) {
         mTextColor = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/android", "textColor", Color.BLACK);
         if (isChecked()) {
@@ -61,6 +64,7 @@ public class SegmentButton extends RadioButton {
             }
         });
     }
+
 
     @Override
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {

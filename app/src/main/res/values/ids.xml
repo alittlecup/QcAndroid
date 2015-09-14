@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="splash_last" type="id"></item>
+    <item name="segmentbtn_0" type="id"></item>
+    <item name="segmentbtn_1" type="id"></item>
+    <item name="segmentbtn_2" type="id"></item>
+    <item name="segmentbtn_3" type="id"></item>
+    <item name="segmentbtn_4" type="id"></item>
+    <item name="segmentbtn_5" type="id"></item>
+    <item name="segmentbtn_6" type="id"></item>
+    <item name="segmentbtn_7" type="id"></item>
+    <item name="segmentbtn_8" type="id"></item>
+    <item name="segmentbtn_9" type="id"></item>
 </resources>

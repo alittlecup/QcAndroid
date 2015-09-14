@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:text="我的学员"
+        android:textSize="16sp"
         />
 
     <TextView
@@ -27,5 +28,7 @@
         android:layout_gravity="right"
         android:gravity="center_vertical|right"
         android:text="102"
+        android:textSize="16sp"
+
         />
 </com.qingchengfit.fitcoach.component.DrawerModuleItem>

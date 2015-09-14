@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,7 +28,6 @@ import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PhoneInfoUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
@@ -38,8 +36,9 @@ import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
-import com.qingchengfit.fitcoach.component.SegmentButton;
+import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.XWalkFragment;
@@ -72,6 +71,18 @@ public class MainActivity extends BaseAcitivity {
     public static final String ACTION = "main_action";
     public static final int LOGOUT = 0;
     private static final String TAG = MainActivity.class.getName();
+    private static int ids[] = {
+            R.id.segmentbtn_0,
+            R.id.segmentbtn_1,
+            R.id.segmentbtn_2,
+            R.id.segmentbtn_3,
+            R.id.segmentbtn_4,
+            R.id.segmentbtn_5,
+            R.id.segmentbtn_6,
+            R.id.segmentbtn_7,
+            R.id.segmentbtn_8,
+            R.id.segmentbtn_9,
+    };
     ////    @Bind(R.id.float_btn)
 //    FloatingActionButton mFloatBtn;
     FragmentManager mFragmentManager;
@@ -82,7 +93,7 @@ public class MainActivity extends BaseAcitivity {
     @Bind(R.id.drawer_headerview)
     RelativeLayout drawerHeaderview;
     @Bind(R.id.drawer_radiogroup)
-    RadioGroup drawerRadiogroup;
+    CustomSetmentLayout drawerRadiogroup;
     @Bind(R.id.header_icon)
     ImageView headerIcon;
     @Bind(R.id.drawer_modules)
@@ -122,6 +133,7 @@ public class MainActivity extends BaseAcitivity {
         initUser();
         initDialog();
         initDrawer();
+
 
     }
 
@@ -274,7 +286,8 @@ public class MainActivity extends BaseAcitivity {
     }
 
     public void setupBtn(DrawerGuide btnInfo, int count) {
-        SegmentButton button = new SegmentButton(this);
+        SegmentLayout button = new SegmentLayout(this);
+
         List<Drawable> drawables = new ArrayList<>();
         Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
                 .flatMap(s -> {
@@ -310,15 +323,18 @@ public class MainActivity extends BaseAcitivity {
                     runOnUiThread(() -> {
                         StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
                         button.setText(btnInfo.guideText);
-                        button.setButtonDrawable(drawable1);
-                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
-                        button.setOnClickListener(view -> {
+                        button.setDrawables(drawables.toArray(new Drawable[2]));
+//                        button.setButtonDrawable(drawable1);
+//                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
+                        button.setId(ids[count]);
+                        button.setListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl);
                         });
                         urls.add(btnInfo.intentUrl);
 //                        fragments.put( btnInfo.intentUrl,  WebFragment.newInstance(btnInfo.intentUrl));
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+
                         if (count == 0) {
                             drawerRadiogroup.getChildAt(0).performClick();
                         }
@@ -327,6 +343,61 @@ public class MainActivity extends BaseAcitivity {
                 })
         ;
     }
+// public void setupBtn(DrawerGuide btnInfo, int count) {
+//        SegmentButton button = new SegmentButton(this);
+//
+//        List<Drawable> drawables = new ArrayList<>();
+//        Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
+//                .flatMap(s -> {
+//                    File f = new File(Configs.ExternalPath, s.substring(s.length() - 20, s.length()));
+//                    if (!f.exists()) {
+////                        Response response = QcCloudClient.getApi().downLoadApi
+////                                .qcDownload(s);
+//                        OkHttpClient httpClient = new OkHttpClient();
+//                        Request request = new Request.Builder().url(s).build();
+//
+//                        try {
+//                            Response response = httpClient.newCall(request).execute();
+//                            FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
+////                            FileOutputStream output = new FileOutputStream(f);
+////                            IOUtils.write(response.body().bytes(), output);
+////                            FileUtils.copyInputStreamToFile(response.body().byteStream(),f);
+//
+//                        } catch (FileNotFoundException e) {
+//                            RevenUtils.sendException("initDrawer", TAG, e);
+//                        } catch (IOException e) {
+//                            RevenUtils.sendException("initDrawer", TAG, e);
+//                        }
+//                    }
+//                    return Observable.just(f.getAbsolutePath());
+//                })
+//                .flatMap(s2 -> {
+//                            drawables.add(Drawable.createFromPath(s2));
+//                            return Observable.just("");
+//                        }
+//                )
+//                .last()
+//                .subscribe(s1 -> {
+//                    runOnUiThread(() -> {
+//                        StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
+//                        button.setText(btnInfo.guideText);
+//                        button.setButtonDrawable(drawable1);
+//                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
+//                        button.setOnClickListener(view -> {
+//                            mainDrawerlayout.closeDrawer(Gravity.LEFT);
+//                            goXwalkfragment(btnInfo.intentUrl);
+//                        });
+//                        urls.add(btnInfo.intentUrl);
+////                        fragments.put( btnInfo.intentUrl,  WebFragment.newInstance(btnInfo.intentUrl));
+//                        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+//                        if (count == 0) {
+//                            drawerRadiogroup.getChildAt(0).performClick();
+//                        }
+//                    });
+//
+//                })
+//        ;
+//    }
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
@@ -361,6 +432,11 @@ public class MainActivity extends BaseAcitivity {
     @Override
     public void onBackPressed() {
         mainDrawerlayout.closeDrawers();
+        if (topFragment == null) {
+            this.finish();
+            return;
+        }
+
 
         if (topFragment instanceof XWalkFragment) {
             if (((XWalkFragment) topFragment).canGoBack()) {
