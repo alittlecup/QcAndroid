@@ -22,9 +22,9 @@ public class Configs {
      */
     public static boolean isDebug = true;
     //        public static boolean isDebug = false;
-    public static String ServerIp = isDebug ? "http://192.168.31.154" : "http://cloudtest.qingchengfit.cn/";
+//    public static String ServerIp = isDebug ? "http://192.168.31.154" : "http://cloudtest.qingchengfit.cn/";
 //    public static String ServerIp = isDebug ? "http://192.168.31.143" : "http://cloudtest.qingchengfit.cn/";
-//    public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
+    public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
 public static String ServerPort = isDebug ? ":7777" : "";
     public static String Server = ServerIp + ServerPort;
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
