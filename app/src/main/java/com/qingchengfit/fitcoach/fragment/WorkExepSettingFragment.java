@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
-import com.qingchengfit.fitcoach.component.RecycleDivider;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             }
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerview.addItemDecoration(new RecycleDivider(getActivity()));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         adapter = new WorkExepAdapter(new ArrayList<>());
         adapter.setListener(new OnRecycleItemClickListener() {

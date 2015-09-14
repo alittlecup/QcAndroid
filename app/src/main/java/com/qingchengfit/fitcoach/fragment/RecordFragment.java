@@ -63,7 +63,7 @@ public class RecordFragment extends BaseSettingFragment {
 
 
     public interface OnRecycleItemClickListener {
-        public void onItemClick(View v, int pos);
+        void onItemClick(View v, int pos);
     }
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
