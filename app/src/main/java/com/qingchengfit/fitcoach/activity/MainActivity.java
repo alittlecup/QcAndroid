@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -47,13 +49,17 @@ import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.qingchengfit.fitcoach.http.bean.User;
+import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,7 +117,10 @@ public class MainActivity extends BaseAcitivity {
     private MaterialDialog dialog;
     private Gson gson;
     private Observable mMainObservabel;
-
+    private MaterialDialog updateDialog;
+    private MaterialDialog downloadDialog;
+    private String url;
+    private File newAkp;
 //    @Override
 //    protected void onXWalkReady() {
 //
@@ -138,7 +147,55 @@ public class MainActivity extends BaseAcitivity {
     }
 
     private void initVersion() {
+        updateDialog = new MaterialDialog.Builder(this)
+                .title("前方发现新版本!!")
+                .content("是否马上更新?")
+                .positiveText("更新")
+                .negativeText("下次再说")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        updateDialog.dismiss();
+
+                        if (url != null) {
+                            //TODO download app
+                            downloadDialog.show();
+                            new AsyncDownloader().execute(url);
+                        }
+
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        updateDialog.dismiss();
+                    }
+                })
+                .build();
+        downloadDialog = new MaterialDialog.Builder(this)
+                .title("正在飞速为您下载")
+                .progress(false, 100)
+                .build();
+
         LogUtil.e("version:" + AppUtils.getAppVer(this));
+        QcCloudClient.getApi().getApi.qcGetVersion()
+                .subscribe(qcVersionResponse -> {
+                    if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
+                        url = qcVersionResponse.getData().getDownload().getAndroid();
+                        newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
+                        if (!newAkp.exists()) {
+                            try {
+                                newAkp.createNewFile();
+                            } catch (IOException e) {
+//e.printStackTrace();
+                            }
+                        }
+                        runOnUiThread(() -> updateDialog.show());
+
+                    }
+
+                });
     }
 
     private void initUser() {
@@ -456,6 +513,81 @@ public class MainActivity extends BaseAcitivity {
         } else {
             if (drawerRadiogroup.getChildCount() > 0)
                 drawerRadiogroup.getChildAt(0).performClick();
+        }
+    }
+
+
+    private class AsyncDownloader extends AsyncTask<String, Long, Boolean> {
+//        private final String URL = "file_url";
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            OkHttpClient httpClient = new OkHttpClient();
+            Call call = httpClient.newCall(new Request.Builder().url(params[0]).get().build());
+            try {
+                Response response = call.execute();
+                if (response.code() == 200) {
+                    InputStream inputStream = null;
+                    OutputStream output = new FileOutputStream(newAkp);
+                    try {
+                        inputStream = response.body().byteStream();
+                        byte[] buff = new byte[1024 * 4];
+                        long downloaded = 0;
+                        long target = response.body().contentLength();
+
+                        publishProgress(0L, target);
+                        while (true) {
+                            int readed = inputStream.read(buff);
+                            if (readed == -1) {
+                                break;
+                            }
+                            output.write(buff, 0, readed);
+                            output.flush();
+                            //write buff
+                            downloaded += readed;
+                            publishProgress(downloaded, target);
+                            if (isCancelled()) {
+                                return false;
+                            }
+                        }
+//                        FileUtils.getFileFromBytes(response.body().bytes(), newAkp.getAbsolutePath());
+                        return downloaded == target;
+                    } catch (IOException ignore) {
+                        return false;
+                    } finally {
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                        if (output != null) {
+                            output.close();
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Long... values) {
+            downloadDialog.setProgress((int) (values[0] * 100 / values[1]));
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result) {
+                downloadDialog.dismiss();
+                AppUtils.install(MainActivity.this, newAkp.getAbsolutePath());
+                //TODO 安装应用
+            } else {
+                downloadDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 }

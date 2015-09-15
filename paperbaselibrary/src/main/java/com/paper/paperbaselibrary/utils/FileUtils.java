@@ -58,6 +58,30 @@ public class FileUtils {
         return file;
     }
 
+//    public static void saveInput2File(InputStream input,){
+//        try {
+//            File file = new File(getCacheDir(), "cacheFileAppeal.srl");
+//            OutputStream output = new FileOutputStream(file);
+//            try {
+//                try {
+//                    byte[] buffer = new byte[4 * 1024]; // or other buffer size
+//                    int read;
+//
+//                    while ((read = input.read(buffer)) != -1) {
+//                        output.write(buffer, 0, read);
+//                    }
+//                    output.flush();
+//                } finally {
+//                    output.close();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace(); // handle exception, define IOException and others
+//            }
+//        } finally {
+//            input.close();
+//        }
+//    }
+
     public static void saveCache(String key,String value){
         if (TextUtils.isEmpty(value))
             return;

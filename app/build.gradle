@@ -13,7 +13,7 @@ apply plugin: 'packer'                     //版本管理 多渠道打包
 //        resourcePackageName 'com.qingchengfit.fitcoach'//TODO 注意这里要设置当前项目的包名
 //    }
 //}
-
+def buildNumber = "1"
 
 packer {
     // 指定渠道打包输出目录
@@ -23,7 +23,7 @@ packer {
     // 指定渠道打包需要修改的AndroidManifest文件项
     manifestMatcher = ['UMENG_CHANNEL']
     // 指定是否使用build版本号自增
-    buildNumberAuto = true
+    buildNumberAuto = false
     // 指定使用版本号自增的buildType，默认是全部
     buildNumberTypeMatcher = ['release', 'beta']
 
@@ -51,8 +51,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 1
-        versionName "0.1"
+        versionCode 10
+        versionName "0.1.0"
     }
 //    buildTypes {
 //        release {
@@ -73,6 +73,7 @@ android {
     }
     buildTypes {
         release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             minifyEnabled false
         }
@@ -124,7 +125,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
     compile 'com.android.support:design:23.0.1'
-    compile 'io.reactivex:rxandroid:0.24.0'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile project(':paperbaselibrary')
     compile 'com.umeng.analytics:analytics:latest.integration'

@@ -1,8 +1,10 @@
 package com.paper.paperbaselibrary.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 
 /**
  * power by
@@ -26,5 +28,22 @@ public class AppUtils {
         } catch (PackageManager.NameNotFoundException e) {
            return "";
         }
+    }
+
+    public static int getAppVerCode(Context c) {
+        try {
+            PackageInfo packageInfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            return 0;
+        }
+    }
+
+
+    public static void install(Context context, String filePath) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setDataAndType(Uri.parse("file://" + filePath), "application/vnd.android.package-archive");
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 }
