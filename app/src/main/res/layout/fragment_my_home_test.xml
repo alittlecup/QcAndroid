@@ -35,6 +35,7 @@
                     android:id="@+id/myhome_bg"
                     android:layout_width="match_parent"
                     android:layout_height="172dp"
+                    android:scaleType="fitXY"
                     />
 
                 <ImageView
@@ -63,7 +64,6 @@
                     android:layout_below="@id/myhome_header"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
-                    android:text="Mark Steve"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     />
@@ -73,10 +73,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/myhome_name"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="@string/test_test_short"
+                    android:maxWidth="250dp"
                     />
                 <TextView
                     android:id="@+id/myhome_location"
@@ -98,17 +97,17 @@
                     android:layout_marginTop="10dp"/>
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider_grey"
-                ></View>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider_grey"
-                ></View>
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/divider_grey"-->
+            <!--></View>-->
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@color/divider_grey"-->
+            <!--></View>-->
 
             <FrameLayout
                 android:id="@+id/myhome_student_judge"
@@ -145,6 +144,7 @@
                     android:layout_height="?android:attr/actionBarSize"
                     android:layout_gravity="bottom"
                     android:background="@color/white"
+                    android:visibility="gone"
                     >
 
                     <android.support.design.widget.TabLayout

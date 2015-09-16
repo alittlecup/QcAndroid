@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:layout_margin="5dp"
             android:background="@color/divider_white"
             >
 
@@ -80,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:layout_margin="5dp"
             android:background="@color/divider_white"
             >
 
@@ -146,6 +144,7 @@
         android:id="@+id/mofifyinfo_weibo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        android:visibility="gone"
         app:civ_lable="微博"
         >
 
@@ -200,6 +199,7 @@
         android:layout_marginTop="20dp"
         android:background="@color/white"
         android:gravity="center|left"
+        android:visibility="gone"
 
         >
 
@@ -250,6 +250,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/modifyinfo_comfirm"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_margin="@dimen/activity_horizontal_margin"

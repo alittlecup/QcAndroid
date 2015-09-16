@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
+import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -24,6 +25,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrUIHandler;
+import in.srain.cube.views.ptr.header.StoreHouseHeader;
+import in.srain.cube.views.ptr.indicator.PtrIndicator;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -35,6 +40,8 @@ public class NotificationFragment extends BaseSettingFragment {
     RecyclerView recyclerview;
     NotifiAdapter adapter;
     List<QcNotificationResponse.DataEntity.MsgsEntity> list;
+    @Bind(R.id.pulltorefresh)
+    PtrFrameLayout pulltorefresh;
 
 
     public NotificationFragment() {
@@ -50,6 +57,41 @@ public class NotificationFragment extends BaseSettingFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
 //        adapter = new NotifiAdapter(list);
+        final StoreHouseHeader header = new StoreHouseHeader(getContext());
+        header.setPadding(0, MeasureUtils.dpToPx(15f, getResources()), 0, 0);
+        header.initWithStringArray(R.array.storehouse);
+        pulltorefresh.setHeaderView(header);
+        pulltorefresh.addPtrUIHandler(new PtrUIHandler() {
+            @Override
+            public void onUIReset(PtrFrameLayout ptrFrameLayout) {
+
+            }
+
+            @Override
+            public void onUIRefreshPrepare(PtrFrameLayout ptrFrameLayout) {
+
+            }
+
+            @Override
+            public void onUIRefreshBegin(PtrFrameLayout ptrFrameLayout) {
+                onRefesh();
+            }
+
+            @Override
+            public void onUIRefreshComplete(PtrFrameLayout ptrFrameLayout) {
+
+            }
+
+            @Override
+            public void onUIPositionChange(PtrFrameLayout ptrFrameLayout, boolean b, byte b1, PtrIndicator ptrIndicator) {
+
+            }
+        });
+        onRefesh();
+        return view;
+    }
+
+    public void onRefesh() {
         QcCloudClient.getApi().getApi.qcGetMessages()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -68,14 +110,13 @@ public class NotificationFragment extends BaseSettingFragment {
                                     });
 
                                     recyclerview.setAdapter(adapter);
+                                    pulltorefresh.refreshComplete();
                                 }
                             });
 
                         }
                 );
-        return view;
     }
-
 
 
     @Override
@@ -147,7 +188,7 @@ public class NotificationFragment extends BaseSettingFragment {
             holder.itemNotiTitle.setText(entity.getTitle());
             holder.itemNotiTime.setText(entity.getCreated_at());
             holder.itemNotiSender.setText(entity.getSender());
-            Glide.with(App.AppContex).load(entity.getUrl()).transform(new GlideCircleTransform(getContext())).into(holder.itemNotiIcon);
+            Glide.with(App.AppContex).load(entity.getPhoto()).transform(new GlideCircleTransform(getContext())).into(holder.itemNotiIcon);
             if (TextUtils.isEmpty(entity.getCreated_at())) {
                 holder.itemNotiUnread.setVisibility(View.VISIBLE);
             } else {

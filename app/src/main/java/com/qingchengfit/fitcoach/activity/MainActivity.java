@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -63,6 +64,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -107,6 +109,8 @@ public class MainActivity extends BaseAcitivity {
     @Bind(R.id.drawer_name)
     TextView drawerName;
     HashMap<String, Fragment> fragments = new HashMap<>();
+    @Bind(R.id.main_loading)
+    RelativeLayout mainLoading;
     //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
     private User user;
@@ -138,7 +142,6 @@ public class MainActivity extends BaseAcitivity {
         mFragmentManager = getSupportFragmentManager();
         mMainObservabel = RxBus.getBus().register(RxBus.OPEN_DRAWER);
         mMainObservabel.subscribe((Action1) o -> mainDrawerlayout.openDrawer(Gravity.LEFT));
-        initVersion();
         initUser();
         initDialog();
         initDrawer();
@@ -312,7 +315,7 @@ public class MainActivity extends BaseAcitivity {
         Coach coach = gson.fromJson(id, Coach.class);
         QcCloudClient.getApi().getApi
                 .getDrawerInfo(coach.id)
-                .subscribe(qcResponDrawer -> {
+                .flatMap(qcResponDrawer -> {
                     if (qcResponDrawer.status == 200) {
                         for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
                             setupBtn(qcResponDrawer.data.guide.get(i), i);
@@ -323,7 +326,13 @@ public class MainActivity extends BaseAcitivity {
                     } else if (qcResponDrawer.error_code.equals("400001")) {
                         logout();
                     }
-                });
+                    return Observable.just("");
+                })
+                .delay(1, TimeUnit.SECONDS)
+                .subscribe(s -> runOnUiThread(() -> {
+                    initVersion();
+                    mainLoading.setVisibility(View.GONE);
+                }));
 
     }
 

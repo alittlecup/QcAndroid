@@ -22,6 +22,8 @@
 
         <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
         <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+        <item name="android:windowIsTranslucent">true</item>
+
         <item name="buttonStyle">@style/Qc.CommonBtn</item>
         <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
         <item name="editTextStyle">@style/Qc.EditTextStyle</item>
@@ -29,7 +31,7 @@
         <!--<item name="windowBackground">@color/white</item>-->
         <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
 
 
@@ -79,7 +81,7 @@
         <item name="android:textColor">@color/transparent</item>
     </style>
 
-    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Translucent">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>

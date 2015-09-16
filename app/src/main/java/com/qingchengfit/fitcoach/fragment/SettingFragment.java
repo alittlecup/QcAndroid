@@ -67,6 +67,11 @@ public class SettingFragment extends BaseSettingFragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_title));
+    }
 
     @OnClick({R.id.setting_aboutus,
             R.id.setting_advice,
@@ -101,7 +106,10 @@ public class SettingFragment extends BaseSettingFragment {
                 fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
                 break;
             case R.id.setting_aboutus:
-//                mFragmentManager.beginTransaction()
+                fragmentCallBack.onFragmentChange(WebFragment.newInstance("http://cloud.qingchengfit.cn/aboutus/"));
+                fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
+//
+//  mFragmentManager.beginTransaction()
 //                        .replace(R.id.settting_fraglayout,.newInstance("",""))
 //                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
 //                        .commit();

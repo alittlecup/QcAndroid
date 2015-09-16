@@ -59,7 +59,6 @@ public class CommonInputView extends RelativeLayout {
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
         label.setText(str_label);
-
     }
 
     public String getContent() {

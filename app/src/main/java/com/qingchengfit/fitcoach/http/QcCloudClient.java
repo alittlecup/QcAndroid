@@ -11,6 +11,8 @@ import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
+import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
@@ -23,6 +25,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
@@ -33,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -103,6 +107,9 @@ public class QcCloudClient {
                 )
                 .setErrorHandler(cause -> {
                     LogUtil.e(cause.getCause().getMessage());
+                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
+
+                    }
                     return null;
                 })
                 .build();
@@ -190,6 +197,11 @@ public class QcCloudClient {
         @GET("/api/messages/{id}/")
         rx.Observable<QcNotiDetailResponse> qcGetMsgDetails(@Path("id") int id);
 
+        @GET("/api/coaches/{id}/")
+        rx.Observable<QcCoachRespone> qcGetCoach(@Path("id") int id);
+
+        @GET("/api/app/version/")
+        rx.Observable<QcVersionResponse> qcGetVersion();
     }
 
 
@@ -218,6 +230,11 @@ public class QcCloudClient {
         @PUT("/api/users/{id}/")
         rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
 
+        @PUT("/api/coaches/{id}/")
+        rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body QcCoachRespone.DataEntity.CoachEntity coachEntity);
+
+        @POST("/api/coaches/{id}/change/password/")
+        rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
 
     }
 

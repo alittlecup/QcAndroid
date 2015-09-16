@@ -8,12 +8,16 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.Configs;
@@ -52,6 +56,10 @@ public class XWalkFragment extends WebFragment {
     FloatingActionButton btn2;
     //    private XWalkCookieManager mCookieManager;
     Gson gson;
+    @Bind(R.id.loading_gif)
+    ImageView loadingGif;
+    @Bind(R.id.loading)
+    RelativeLayout loading;
     private XWalkCookieManager xWalkCookieManager;
     private String base_url;
     private Observable<NewPushMsg> mObservable;
@@ -84,6 +92,7 @@ public class XWalkFragment extends WebFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
+        Glide.with(getContext()).load(R.raw.ic_loading_gif).into(loadingGif);
 //        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 
 //        XWalkSettings xWalkSettings = new XWalkSettings(mWebview.getContext(),null,false);
@@ -128,7 +137,12 @@ public class XWalkFragment extends WebFragment {
 
             }
 
-
+            @Override
+            public void onProgressChanged(XWalkView view, int progressInPercent) {
+                super.onProgressChanged(view, progressInPercent);
+//                loading.setAlpha(255 * (100 - progressInPercent) / 100);
+                LogUtil.e("percent:" + progressInPercent);
+            }
         });
 
 
@@ -141,7 +155,8 @@ public class XWalkFragment extends WebFragment {
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         btn1.setOnClickListener(view1 -> {
-            PhoneFuncUtils.queryCalender(getActivity());
+            mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
+//            PhoneFuncUtils.queryCalender(getActivity());
 //            mWebview.setNetworkAvailable(false);
         });
         btn2.setOnClickListener(view1 -> {
@@ -162,8 +177,7 @@ public class XWalkFragment extends WebFragment {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
             setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
-        }
-        else {
+        } else {
             ((MainActivity) getActivity()).logout();
         }
 //        List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {

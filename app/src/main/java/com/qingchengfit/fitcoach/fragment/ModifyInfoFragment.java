@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -11,21 +12,33 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
+import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
-import com.qingchengfit.fitcoach.http.bean.User;
+import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +47,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -58,16 +70,42 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     @Bind(R.id.comple_gender)
     RadioGroup compleGender;
     Gson gson = new Gson();
+    @Bind(R.id.mofifyinfo_name)
+    CommonInputView mofifyinfoName;
+    @Bind(R.id.comple_gender_label)
+    TextView compleGenderLabel;
+    @Bind(R.id.comple_gender_male)
+    RadioButton compleGenderMale;
+    @Bind(R.id.comple_gender_female)
+    RadioButton compleGenderFemale;
+    @Bind(R.id.mofifyinfo_city)
+    CommonInputView mofifyinfoCity;
+    @Bind(R.id.mofifyinfo_wechat)
+    CommonInputView mofifyinfoWechat;
+    @Bind(R.id.mofifyinfo_weibo)
+    CommonInputView mofifyinfoWeibo;
+    @Bind(R.id.modifyinfo_label)
+    TextView modifyinfoLabel;
+    @Bind(R.id.modifyinfo_sign_et)
+    EditText modifyinfoSignEt;
+    @Bind(R.id.modifyinfo_right_arrow)
+    ImageView modifyinfoRightArrow;
+    @Bind(R.id.modifyinfo_brief)
+    RelativeLayout modifyinfoBrief;
+    @Bind(R.id.modifyinfo_name)
+    EditText modifyinfoName;
+    @Bind(R.id.modifyinfo_desc)
+    EditText modifyinfoDesc;
+    @Bind(R.id.modifyinfo_inputpan)
+    LinearLayout modifyinfoInputpan;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private User user;
-    private User mModifyUser;
+    private QcCoachRespone.DataEntity.CoachEntity user;
 
 
     private FragmentManager mFragmentManager;
-
-
+    private Coach coach;
 
 
     public ModifyInfoFragment() {
@@ -99,8 +137,6 @@ public class ModifyInfoFragment extends BaseSettingFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        user = App.gUser;
-
         mFragmentManager = getChildFragmentManager();
     }
 
@@ -110,31 +146,49 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_modify_info, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "修改资料");
-        modifyinfoHeaderPic.setImageURI(Uri.parse(user.avatar));
-        initInfo();
+//        modifyinfoHeaderPic.setImageURI(Uri.parse(user.avatar));
+        String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
+        coach = gson.fromJson(coachStr, Coach.class);
+        QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id)).subscribe(
+                qcCoachRespone -> {
+                    user = qcCoachRespone.getData().getCoach();
+                    getActivity().runOnUiThread(() -> initInfo());
+
+                }
+        );
+//        initInfo();
         return view;
     }
 
     private void initInfo() {
         initHead();
-        if (user.gender == 0) {
-
-        }
-
+        mofifyinfoCity.setContent(user.getCity());
+        mofifyinfoName.setContent(user.getUsername());
+        mofifyinfoWechat.setContent(user.getWeixin());
+//        mofifyinfoWeibo.setContent(user.get);
+        modifyinfoSignEt.setText(user.getShort_description());
+        compleGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.comple_gender_male) {
+                    user.setGender(0);
+                } else user.setGender(1);
+            }
+        });
     }
 
     public void initHead() {
         int gender = R.drawable.img_default_female;
-        if (user.gender == 0)
+        if (user.getGender() == 0)
             gender = R.drawable.img_default_male;
-        if (TextUtils.isEmpty(user.avatar)) {
+        if (TextUtils.isEmpty(user.getAvatar())) {
             Glide.with(App.AppContex)
                     .load(gender)
                     .transform(new GlideCircleTransform(App.AppContex))
                     .into(modifyinfoHeaderPic);
         } else {
             Glide.with(App.AppContex)
-                    .load(user.avatar)
+                    .load(user.getAvatar())
                     .placeholder(gender)
                     .transform(new GlideCircleTransform(App.AppContex))
                     .into(modifyinfoHeaderPic);
@@ -156,6 +210,35 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //                });
 //        mMaterialDialog.show();
         PicChooseDialog dialog = new PicChooseDialog(getActivity());
+        dialog.setListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                   dialog.dismiss();
+                                   Intent intent = new Intent();
+                                   // 指定开启系统相机的Action
+                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                                   startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                               }
+                           },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/jpeg");
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        } else {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        }
+                    }
+                }
+
+        );
         dialog.show();
     }
 
@@ -164,7 +247,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/jpeg");
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             startActivityForResult(intent, SELECT_PIC_KITKAT);
         } else {
             startActivityForResult(intent, SELECT_PIC);
@@ -198,6 +281,29 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         fragmentCallBack.onFragmentChange(new ModifyBrifeFragment());
     }
 
+    @OnClick(R.id.modifyinfo_comfirm)
+    public void onComfirm() {
+        user.setCity(mofifyinfoCity.getContent());
+        user.setWeixin(mofifyinfoWechat.getContent());
+        user.setShort_description(modifyinfoSignEt.getText().toString());
+        QcCloudClient.getApi().postApi.qcModifyCoach(Integer.parseInt(coach.id), user)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(qcResponse -> {
+                    if (qcResponse.status == ResponseResult.SUCCESS) {
+
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            getActivity().onBackPressed();
+                        });
+
+                    } else {
+                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), qcResponse.msg, Toast.LENGTH_SHORT).show());
+                    }
+
+                });
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //            if (requestCode == SELECT_PIC){
@@ -207,7 +313,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //            }
         String filepath = "";
         if (resultCode == -1) {
-            if (requestCode == SELECT_PIC || requestCode == SELECT_PIC_KITKAT)
+            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = FILE_PATH;
             LogUtil.d(filepath);
@@ -215,18 +321,20 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(s -> {
                         File upFile = new File(s);
-                        boolean reslut = UpYunClient.upLoadImg("/header/", user.id, upFile);
+                        boolean reslut = UpYunClient.upLoadImg("/header/", coach.id, upFile);
                         if (reslut) {
                             LogUtil.d("success");
-                            Observable.just(upFile)
-                                    .subscribeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(file -> {
-                                        modifyinfoHeaderPic.setImageURI(Uri.fromFile(file));
-                                        mModifyUser.avatar = UpYunClient.UPYUNPATH + "header/" + user.id + ".png";
-                                    });
+                            getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(Uri.fromFile(upFile))
+                                    .transform(new GlideCircleTransform(App.AppContex))
+                                    .into(modifyinfoHeaderPic));
+
+//                                        mModifyUser.avatar = UpYunClient.UPYUNPATH + "header/" + user.id + ".png";
+                            user.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
+
 
                         } else {
                             //upload failed TODO
+                            LogUtil.d("update img false");
                         }
                     });
 

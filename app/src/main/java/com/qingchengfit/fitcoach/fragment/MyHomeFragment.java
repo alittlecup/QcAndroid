@@ -28,7 +28,6 @@ import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
@@ -104,10 +103,10 @@ public class MyHomeFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_settings)
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
-            else if (item.getItemId() == R.id.action_myhome_share)
-                ShareUtils.oneKeyShared(getActivity(), "http://www.qingchengfit.cn/"
-                        , "http://www.qingchengfit.cn/static/images/photo3.png"
-                        , "我是分享");
+//            else if (item.getItemId() == R.id.action_myhome_share)
+//                ShareUtils.oneKeyShared(getActivity(), "http://www.qingchengfit.cn/"
+//                        , "http://www.qingchengfit.cn/static/images/photo3.png"
+//                        , "我是分享");
             return true;
         });
         List<Fragment> fragments = new ArrayList<>();
@@ -138,6 +137,8 @@ public class MyHomeFragment extends Fragment {
             public void onScroll(int i) {
                 if (i > mHomeBgHeight)
                     i = mHomeBgHeight;
+                else if (i < 0)
+                    i = 0;
                 toolbar.setBackgroundColor(Color.argb(255 * i / mHomeBgHeight, 32, 191, 189));
             }
         });
@@ -183,11 +184,14 @@ public class MyHomeFragment extends Fragment {
         QcCloudClient.getApi().getApi.qcGetDetail(coach.id)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
-                    myhomeLocation.setText(response.getData().getCoach().getCity());
-                    myhomeBrief.setText(response.getData().getCoach().getShort_description());
-                    getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
-                            StudentJudgeFragment.newInstance(response.getData().getCoach().getTags()
-                                    , response.getData().getCoach().getEvaluate()), "").commit();
+                    getActivity().runOnUiThread(() -> {
+                        myhomeLocation.setText(response.getData().getCoach().getCity());
+                        myhomeBrief.setText(response.getData().getCoach().getShort_description());
+                    });
+
+//                    getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
+//                            StudentJudgeFragment.newInstance(response.getData().getCoach().getTags()
+//                                    , response.getData().getCoach().getEvaluate()), "").commit();
                 });
 
         String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");
@@ -237,7 +241,8 @@ public class MyHomeFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return fragments.size();
+//            return fragments.size();
+            return 1;
         }
 
         @Override

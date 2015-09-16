@@ -127,7 +127,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             }
 
 
-        } else if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_GALLERY) {
+        } else if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
             Observable.just(f)
                     .subscribeOn(Schedulers.newThread())
