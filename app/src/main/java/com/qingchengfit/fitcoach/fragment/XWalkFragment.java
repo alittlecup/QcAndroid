@@ -17,7 +17,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.Configs;
@@ -141,7 +140,7 @@ public class XWalkFragment extends WebFragment {
             public void onProgressChanged(XWalkView view, int progressInPercent) {
                 super.onProgressChanged(view, progressInPercent);
 //                loading.setAlpha(255 * (100 - progressInPercent) / 100);
-                LogUtil.e("percent:" + progressInPercent);
+//                LogUtil.e("percent:" + progressInPercent);
             }
         });
 

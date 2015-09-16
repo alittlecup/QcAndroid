@@ -1,0 +1,203 @@
+package com.qingchengfit.fitcoach.http.bean;
+
+import java.util.List;
+
+/**
+ * power by
+ * <p>
+ * d8888b.  .d8b.  d8888b. d88888b d8888b.
+ * 88  `8D d8' `8b 88  `8D 88'     88  `8D
+ * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'
+ * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
+ * 88      88   88 88      88.     88 `88.
+ * 88      YP   YP 88      Y88888P 88   YD
+ * <p>
+ * <p>
+ * Created by Paper on 15/9/16 2015.
+ */
+public class QcCertificatesReponse extends QcResponse {
+
+    /**
+     * data : {"certificates":[{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"is_authenticated":true}],"total_count":1,"current_page":1,"pages":1}
+     */
+
+    private DataEntity data;
+
+    public DataEntity getData() {
+        return data;
+    }
+
+    public void setData(DataEntity data) {
+        this.data = data;
+    }
+
+    public static class DataEntity {
+        /**
+         * certificates : [{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"is_authenticated":true}]
+         * total_count : 1
+         * current_page : 1
+         * pages : 1
+         */
+
+        private int total_count;
+        private int current_page;
+        private int pages;
+        private List<CertificatesEntity> certificates;
+
+        public int getTotal_count() {
+            return total_count;
+        }
+
+        public void setTotal_count(int total_count) {
+            this.total_count = total_count;
+        }
+
+        public int getCurrent_page() {
+            return current_page;
+        }
+
+        public void setCurrent_page(int current_page) {
+            this.current_page = current_page;
+        }
+
+        public int getPages() {
+            return pages;
+        }
+
+        public void setPages(int pages) {
+            this.pages = pages;
+        }
+
+        public List<CertificatesEntity> getCertificates() {
+            return certificates;
+        }
+
+        public void setCertificates(List<CertificatesEntity> certificates) {
+            this.certificates = certificates;
+        }
+
+        public static class CertificatesEntity {
+            /**
+             * date_of_issue : 2015-09-16T15:08:00
+             * coach : {"id":6}
+             * name : 青橙科技
+             * photo : http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png
+             * grade : 100
+             * organization : {}
+             * created_at : 2015-09-16T15:08:00
+             * type : 1
+             * is_authenticated : true
+             */
+
+            private String date_of_issue;
+            private CoachEntity coach;
+            private String name;
+            private String photo;
+            private String grade;
+            private String created_at;
+            private OrganizationEntity organization;
+            private int type;
+            private boolean is_authenticated;
+
+            public OrganizationEntity getOrganization() {
+                return organization;
+            }
+
+            public void setOrganization(OrganizationEntity organization) {
+                this.organization = organization;
+            }
+
+            public String getDate_of_issue() {
+                return date_of_issue;
+            }
+
+            public void setDate_of_issue(String date_of_issue) {
+                this.date_of_issue = date_of_issue;
+            }
+
+            public CoachEntity getCoach() {
+                return coach;
+            }
+
+            public void setCoach(CoachEntity coach) {
+                this.coach = coach;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getPhoto() {
+                return photo;
+            }
+
+            public void setPhoto(String photo) {
+                this.photo = photo;
+            }
+
+            public String getGrade() {
+                return grade;
+            }
+
+            public void setGrade(String grade) {
+                this.grade = grade;
+            }
+
+            public String getCreated_at() {
+                return created_at;
+            }
+
+            public void setCreated_at(String created_at) {
+                this.created_at = created_at;
+            }
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public boolean getIs_authenticated() {
+                return is_authenticated;
+            }
+
+            public void setIs_authenticated(boolean is_authenticated) {
+                this.is_authenticated = is_authenticated;
+            }
+
+            public static class CoachEntity {
+                /**
+                 * id : 6
+                 */
+
+                private int id;
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+            }
+
+            public static class OrganizationEntity {
+                private String name;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+            }
+        }
+    }
+}

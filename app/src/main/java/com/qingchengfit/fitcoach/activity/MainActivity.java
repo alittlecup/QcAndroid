@@ -313,6 +313,7 @@ public class MainActivity extends BaseAcitivity {
             //TODO error
         }
         Coach coach = gson.fromJson(id, Coach.class);
+        App.coachid = Integer.parseInt(coach.id);
         QcCloudClient.getApi().getApi
                 .getDrawerInfo(coach.id)
                 .flatMap(qcResponDrawer -> {

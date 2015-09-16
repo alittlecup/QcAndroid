@@ -13,6 +13,7 @@ import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
+import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
@@ -203,6 +204,10 @@ public class QcCloudClient {
 
         @GET("/api/app/version/")
         rx.Observable<QcVersionResponse> qcGetVersion();
+
+        @GET("/api/coaches/{id}/certificates/")
+        rx.Observable<QcCertificatesReponse> qcGetCertificates(@Path("id") int id);
+
     }
 
 

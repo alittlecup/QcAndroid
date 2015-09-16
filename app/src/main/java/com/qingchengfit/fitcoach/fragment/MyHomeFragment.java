@@ -241,8 +241,8 @@ public class MyHomeFragment extends Fragment {
 
         @Override
         public int getCount() {
-//            return fragments.size();
-            return 1;
+            return fragments.size();
+//            return 1;
         }
 
         @Override

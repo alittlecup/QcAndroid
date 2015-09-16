@@ -8,12 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.paper.paperbaselibrary.utils.DateUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.BaseInfoBean;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,7 +33,7 @@ public class RecordComfirmFragment extends Fragment {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     private RecordComfirmAdapter adapter;
-
+    private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
     public RecordComfirmFragment() {
     }
 
@@ -39,15 +44,27 @@ public class RecordComfirmFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecordComfirmAdapter(new ArrayList<>());
-        adapter.setListener((v, pos) -> {
-            ComfirmDetailFragment fragment = new ComfirmDetailFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
-                    .show(fragment).addToBackStack("").commit();
-        });
-        recyclerview.setAdapter(adapter);
+        recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
+        QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
+            getActivity().runOnUiThread(() -> {
+
+                adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+                adapter.setListener((v, pos) -> {
+                    ComfirmDetailFragment fragment = new ComfirmDetailFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+                            .show(fragment).addToBackStack("").commit();
+                });
+                recyclerview.setAdapter(adapter);
+            });
+        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -68,6 +85,8 @@ public class RecordComfirmFragment extends Fragment {
         TextView recordcomfirmSubtitle;
         @Bind(R.id.recordcomfirm_time)
         TextView recordcomfirmTime;
+        @Bind(R.id.recordcomfirm_comfirm)
+        ImageView img;
 
         public RecordComfirmVH(View itemView) {
             super(itemView);
@@ -77,7 +96,7 @@ public class RecordComfirmFragment extends Fragment {
 
     class RecordComfirmAdapter extends RecyclerView.Adapter<RecordComfirmVH> implements View.OnClickListener {
 
-        private List<BaseInfoBean> datas;
+        private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
         private OnRecycleItemClickListener listener;
 
         public RecordComfirmAdapter(List datas) {
@@ -96,18 +115,33 @@ public class RecordComfirmFragment extends Fragment {
         public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
             RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, parent, false));
             holder.itemView.setOnClickListener(this);
+
             return holder;
         }
 
         @Override
         public void onBindViewHolder(RecordComfirmVH holder, int position) {
             holder.itemView.setTag(position);
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = datas.get(position);
+            holder.recordcomfirmTitle.setText(certificatesEntity.getName());
+            holder.recordcomfirmSubtitle.setText(certificatesEntity.getOrganization().getName());
+            if (certificatesEntity.getIs_authenticated()) {
+                Glide.with(App.AppContex).load(R.drawable.img_record_comfirmed).into(holder.img);
+            } else
+                Glide.with(App.AppContex).load(R.drawable.img_record_uncomfirmed).into(holder.img);
+            StringBuffer sb = new StringBuffer();
+            sb.append("有效期:  ");
+            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getCreated_at())));
+            sb.append("-");
+            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            holder.recordcomfirmTime.setText(sb.toString());
+
         }
 
 
         @Override
         public int getItemCount() {
-            return 10;
+            return datas.size();
         }
 
         @Override

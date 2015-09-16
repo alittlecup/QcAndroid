@@ -34,6 +34,7 @@ public class App extends Application {
     public static Context AppContex;
     public static boolean canXwalk;
     public static User gUser;
+    public static int coachid;
     private ApplicationComponet componet;
 
     public static void setgUser(User ser) {
