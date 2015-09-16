@@ -8,6 +8,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
+import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
@@ -235,6 +236,10 @@ public class QcCloudClient {
 
         @POST("/api/coaches/{id}/change/password/")
         rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
+
+        @POST("/api/feedback/")
+        rx.Observable<QcResponse> qcFeedBack(@Body FeedBackBean bean);
+
 
     }
 

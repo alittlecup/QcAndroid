@@ -240,15 +240,37 @@
                 android:layout_marginTop="20dp"
                 ></include>
 
+        <RelativeLayout
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+            >
+
+            <TextView
+                android:id="@+id/recordedit_upimg"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:gravity="center"
+
+                android:text="上传照片"
+                />
+
+
             <ImageView
+                android:id="@+id/recordedit_img"
                 android:layout_width="360dp"
                 android:layout_height="200dp"
                 android:background="@color/white"
                 android:padding="@dimen/activity_horizontal_margin"
                 android:src="@drawable/test_pic"
+                android:visibility="gone"
                 />
 
-            <include layout="@layout/divider_grey"></include>
+        </RelativeLayout>
+
+
+        <include layout="@layout/divider_grey"></include>
 
             <Button
                 android:layout_width="match_parent"

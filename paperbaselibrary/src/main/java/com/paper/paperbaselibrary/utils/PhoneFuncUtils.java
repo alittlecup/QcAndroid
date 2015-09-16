@@ -73,7 +73,7 @@ public class PhoneFuncUtils {
             // 获取联系人的姓名
             String contactName = cursor.getString(cursor
                     .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-            contact.setContactName(contactName);
+            contact.setUsername(contactName);
 //            String sortkey = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.SORT_KEY_ALTERNATIVE));
             contact.setSortKey(ChineseCharToEn.getFirstLetter(contactName));
             // 有联系人姓名得到对应的拼音
@@ -91,7 +91,7 @@ public class PhoneFuncUtils {
                 String phoneNumber = phoneCursor
                         .getString(phoneCursor
                                 .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                contact.setPhoneNumber(phoneNumber);
+                contact.setPhone(phoneNumber);
             }
 
             if (!phoneCursor.isClosed()) {
@@ -99,7 +99,7 @@ public class PhoneFuncUtils {
             }
 
             contactList.add(contact);
-            LogUtil.i("name:" + contact.getContactName() + "  " + contact.getPhoneNumber());
+            LogUtil.i("name:" + contact.getUsername() + "  " + contact.getPhone());
         }
 
         if (!cursor.isClosed()) {
