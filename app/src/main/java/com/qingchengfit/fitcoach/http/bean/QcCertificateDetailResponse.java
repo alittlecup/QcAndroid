@@ -1,7 +1,5 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import java.util.List;
-
 /**
  * power by
  * <p>
@@ -15,14 +13,63 @@ import java.util.List;
  * <p>
  * Created by Paper on 15/9/16 2015.
  */
-public class QcCertificatesReponse extends QcResponse {
-
+public class QcCertificateDetailResponse {
 
     /**
-     * data : {"certificates":[{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}],"total_count":1,"current_page":1,"pages":1}
+     * status : 200
+     * info :
+     * level : success
+     * error_code :
+     * msg : ok
+     * data : {"certificate":{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}}
      */
 
+    private int status;
+    private String info;
+    private String level;
+    private String error_code;
+    private String msg;
     private DataEntity data;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getError_code() {
+        return error_code;
+    }
+
+    public void setError_code(String error_code) {
+        this.error_code = error_code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public DataEntity getData() {
         return data;
@@ -34,50 +81,20 @@ public class QcCertificatesReponse extends QcResponse {
 
     public static class DataEntity {
         /**
-         * certificates : [{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}]
-         * total_count : 1
-         * current_page : 1
-         * pages : 1
+         * certificate : {"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}
          */
 
-        private int total_count;
-        private int current_page;
-        private int pages;
-        private List<CertificatesEntity> certificates;
+        private CertificateEntity certificate;
 
-        public int getTotal_count() {
-            return total_count;
+        public CertificateEntity getCertificate() {
+            return certificate;
         }
 
-        public void setTotal_count(int total_count) {
-            this.total_count = total_count;
+        public void setCertificate(CertificateEntity certificate) {
+            this.certificate = certificate;
         }
 
-        public int getCurrent_page() {
-            return current_page;
-        }
-
-        public void setCurrent_page(int current_page) {
-            this.current_page = current_page;
-        }
-
-        public int getPages() {
-            return pages;
-        }
-
-        public void setPages(int pages) {
-            this.pages = pages;
-        }
-
-        public List<CertificatesEntity> getCertificates() {
-            return certificates;
-        }
-
-        public void setCertificates(List<CertificatesEntity> certificates) {
-            this.certificates = certificates;
-        }
-
-        public static class CertificatesEntity {
+        public static class CertificateEntity {
             /**
              * date_of_issue : 2015-09-16T15:08:00
              * coach : {"id":6}
@@ -96,11 +113,23 @@ public class QcCertificatesReponse extends QcResponse {
             private String name;
             private String photo;
             private String grade;
-            private OrganizationEntity organization;
             private String created_at;
+            private OrganizationEntity organization;
             private int type;
             private int id;
             private boolean is_authenticated;
+
+            public OrganizationEntity getOrganization() {
+                return organization;
+            }
+
+            public void setOrganization(OrganizationEntity organization) {
+                this.organization = organization;
+            }
+
+            public boolean is_authenticated() {
+                return is_authenticated;
+            }
 
             public String getDate_of_issue() {
                 return date_of_issue;
@@ -142,14 +171,6 @@ public class QcCertificatesReponse extends QcResponse {
                 this.grade = grade;
             }
 
-            public OrganizationEntity getOrganization() {
-                return organization;
-            }
-
-            public void setOrganization(OrganizationEntity organization) {
-                this.organization = organization;
-            }
-
             public String getCreated_at() {
                 return created_at;
             }
@@ -182,6 +203,18 @@ public class QcCertificatesReponse extends QcResponse {
                 this.is_authenticated = is_authenticated;
             }
 
+            public static class OrganizationEntity {
+                String name;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+            }
+
             public static class CoachEntity {
                 /**
                  * id : 6
@@ -195,18 +228,6 @@ public class QcCertificatesReponse extends QcResponse {
 
                 public void setId(int id) {
                     this.id = id;
-                }
-            }
-
-            public static class OrganizationEntity {
-                String name;
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
                 }
             }
         }

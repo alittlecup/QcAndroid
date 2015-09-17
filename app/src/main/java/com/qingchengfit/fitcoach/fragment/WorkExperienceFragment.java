@@ -13,10 +13,12 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.paper.paperbaselibrary.component.GridViewInScroll;
-import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.DateUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.BaseInfoBean;
 import com.qingchengfit.fitcoach.component.TagGroup;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,8 @@ public class WorkExperienceFragment extends Fragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    private RecordComfirmAdapter adapter;
+    private QcExperienceResponse qcExperienceResponse;
+    private WorkExperiencAdapter adapter;
 
     public WorkExperienceFragment() {
         // Required empty public constructor
@@ -46,8 +49,13 @@ public class WorkExperienceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecordComfirmAdapter(new ArrayList<>());
-        recyclerview.setAdapter(adapter);
+
+        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
+                        getActivity().runOnUiThread(() -> {
+                            adapter = new WorkExperiencAdapter(qcExperienceResponse.getData().getExperiences());
+                            recyclerview.setAdapter(adapter);
+                        })
+        );
         return view;
     }
 
@@ -65,18 +73,23 @@ public class WorkExperienceFragment extends Fragment {
         TextView itemStudioName;
         @Bind(R.id.item_studio_comfirm)
         TextView itemStudioComfirm;
+        @Bind(R.id.item_studio_pos)
+        TextView itemStudioPos;
+        @Bind(R.id.item_studio_des)
+        TextView itemStudioDes;
+        @Bind(R.id.item_studio_complish)
+        TextView itemStudioComplish;
         @Bind(R.id.item_studio_classes)
         GridViewInScroll itemStudioClasses;
         @Bind(R.id.item_tag_group)
         TagGroup itemTagGroup;
         @Bind(R.id.item_studio_expaned)
-        ToggleButton itemExpaned;
+        ToggleButton itemStudioExpaned;
 
         public WorkExperienceVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            LogUtil.e("hahhahahah");
-            itemExpaned.setOnCheckedChangeListener((compoundButton, b) -> {
+            itemStudioExpaned.setOnCheckedChangeListener((compoundButton, b) -> {
                 if (b) {
                     itemStudioClasses.setVisibility(View.VISIBLE);
                     itemTagGroup.setVisibility(View.VISIBLE);
@@ -106,23 +119,47 @@ public class WorkExperienceFragment extends Fragment {
         }
     }
 
-    class RecordComfirmAdapter extends RecyclerView.Adapter<WorkExperienceVH> {
+    class WorkExperiencAdapter extends RecyclerView.Adapter<WorkExperienceVH> {
 
 
-        private List<BaseInfoBean> datas;
+        private List<QcExperienceResponse.DataEntity.ExperiencesEntity> datas;
 
-        public RecordComfirmAdapter(List datas) {
+        public WorkExperiencAdapter(List datas) {
             this.datas = datas;
         }
 
         @Override
         public WorkExperienceVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new WorkExperienceVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_workexperience, null));
+            return new WorkExperienceVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_workexperience, parent, false));
         }
 
         @Override
         public void onBindViewHolder(WorkExperienceVH holder, int position) {
 
+            QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
+//
+            holder.itemStudioName.setText(experiencesEntity.getName());
+            holder.itemStudioPos.setText("职位:" + experiencesEntity.getPosition());
+            StringBuffer sb = new StringBuffer();
+            sb.append("业绩:");
+            sb.append("团课");
+            sb.append(experiencesEntity.getGroup_course());
+            sb.append("节,服务");
+            sb.append(experiencesEntity.getGroup_user());
+            sb.append("人次;私教课");
+            sb.append(experiencesEntity.getPrivate_course());
+            sb.append("节,服务");
+            sb.append(experiencesEntity.getPrivate_user());
+            sb.append("人次;销售额达");
+            sb.append(experiencesEntity.getSale());
+            sb.append("元.");
+            holder.itemStudioComplish.setText(sb.toString());
+            holder.itemStudioDes.setText("描述:" + experiencesEntity.getDescription());
+            StringBuffer ss = new StringBuffer();
+            ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            ss.append("-");
+            ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
+            holder.itemTime.setText(ss.toString());
             holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
             List<String> aaaas = new ArrayList<>();
             aaaas.add("12");
@@ -131,12 +168,14 @@ public class WorkExperienceFragment extends Fragment {
             aaaas.add("12");
             GridInScrollAdapter adapter1 = new GridInScrollAdapter(aaaas);
             holder.itemStudioClasses.setAdapter(adapter1);
-
+            if (experiencesEntity.getIs_authenticated())
+                holder.itemStudioComfirm.setText("已确认");
+            else holder.itemStudioComfirm.setText("未确认");
         }
 
         @Override
         public int getItemCount() {
-            return 3;
+            return datas.size();
         }
     }
 

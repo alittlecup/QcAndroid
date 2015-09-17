@@ -17,6 +17,7 @@
         >
 
         <TextView
+            android:id="@+id/recorddetail_title"
             style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,49 +25,137 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="ACE健身教练资格认证"
+            android:textSize="18sp"
             android:textStyle="bold"
             />
 
-        <TextView
-            style="@style/Qc.TextCommonGrey"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:drawableLeft="@drawable/ic_oganazation"
-            android:drawablePadding="@dimen/qc_edit_drawable_padding"
-            android:text="机构:"
-            />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            >
 
-        <TextView
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:drawableLeft="@drawable/ic_schedule"
-            android:drawablePadding="@dimen/qc_edit_drawable_padding"
-            android:text="机构:"
-            />
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_oganazation"
+                />
 
-        <TextView
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:drawableLeft="@drawable/ic_score"
-            android:drawablePadding="@dimen/qc_edit_drawable_padding"
-            android:text="机构:"
-            />
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qc_edit_drawable_padding"
+                android:text="机构:"
+                />
 
-        <TextView
-            style="@style/Qc.TextCommonGrey"
+            <TextView
+                android:id="@+id/recorddetail_host"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:drawableLeft="@drawable/ic_comment"
-            android:drawablePadding="@dimen/qc_edit_drawable_padding"
-            android:gravity="top"
-            android:text="@string/test_test_short"
-            />
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            >
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_schedule"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qc_edit_drawable_padding"
+                android:text="有效期:"
+                />
+
+            <TextView
+                android:id="@+id/recorddetail_time"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            >
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_score"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qc_edit_drawable_padding"
+                android:text="成绩:"
+                />
+
+            <TextView
+                android:id="@+id/recorddetail_score"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            >
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_comment"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qc_edit_drawable_padding"
+                android:text="机构评价:"
+                />
+
+            <TextView
+                android:id="@+id/recorddetail_comment"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/comfirm_img"
@@ -79,6 +168,7 @@
 
 
         <TextView
+            android:id="@+id/comfirm_createtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -87,8 +177,9 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/record_comfirm_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="?android:actionBarSize"

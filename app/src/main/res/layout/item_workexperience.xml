@@ -27,6 +27,7 @@
         >
 
         <TextView
+
             android:id="@+id/item_studio_name"
             style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
@@ -45,6 +46,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/item_studio_pos"
         style="@style/Qc.TextCommonBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
         />
 
     <TextView
+        android:id="@+id/item_studio_des"
         style="@style/Qc.TextCommonBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,6 +70,7 @@
         />
 
     <TextView
+        android:id="@+id/item_studio_complish"
         style="@style/Qc.TextCommonBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

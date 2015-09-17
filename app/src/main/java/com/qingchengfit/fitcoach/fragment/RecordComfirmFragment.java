@@ -51,7 +51,10 @@ public class RecordComfirmFragment extends Fragment {
 
                 adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                 adapter.setListener((v, pos) -> {
-                    ComfirmDetailFragment fragment = new ComfirmDetailFragment();
+                    ComfirmDetailFragment fragment =
+//                            ComfirmDetailFragment.newInstance(1);
+                            ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+
                     getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
                             .show(fragment).addToBackStack("").commit();
                 });
