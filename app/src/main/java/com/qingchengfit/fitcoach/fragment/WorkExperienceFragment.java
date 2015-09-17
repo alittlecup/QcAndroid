@@ -135,7 +135,8 @@ public class WorkExperienceFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(WorkExperienceVH holder, int position) {
-
+            if (position >= datas.size())
+                return;
             QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
 //
             holder.itemStudioName.setText(experiencesEntity.getName());

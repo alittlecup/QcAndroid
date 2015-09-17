@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.TagGroup;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import butterknife.Bind;
@@ -65,6 +67,7 @@ public class StudentJudgeFragment extends Fragment {
             mTags = getArguments().getParcelable(TAGS);
             mEntityls = getArguments().getParcelable(EVALUATE);
         }
+
     }
 
     @Override
@@ -86,10 +89,40 @@ public class StudentJudgeFragment extends Fragment {
             SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
             s.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 3 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             studentJudgeText.setText(s);
+        } else {
+            QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid).subscribe(qcEvaluateResponse -> {
+                getActivity().runOnUiThread(() -> {
+                    mTags = qcEvaluateResponse.getData().getHomeTags();
+                    mEntityls = qcEvaluateResponse.getData().getHomeEvaluate();
+
+
+                    if (mTags != null && mEntityls != null) {
+                        studentJudgeCoachScore.setText(mEntityls.getEvaluate().getCoach_score() + "");
+                        studentJudgeCoachStar.setRating((float) mEntityls.getEvaluate().getCoach_score());
+                        studentJudgeCourseScore.setText(mEntityls.getEvaluate().getCourse_score() + "");
+                        studentJudgeCourseStar.setRating((float) mEntityls.getEvaluate().getCourse_score());
+                        tagGroup.setTags(
+                                mTags.toArray()
+                        );
+
+                        String count = Integer.toString(mEntityls.getEvaluate().getTotal_count());
+                        SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
+                        s.setSpan(new ForegroundColorSpan(Color.CYAN), 4, 4 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                        studentJudgeText.setText(s);
+                    }
+                });
+
+
+            });
         }
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     @Override
     public void onDestroyView() {

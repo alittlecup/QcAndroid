@@ -16,6 +16,7 @@ import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
+import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
@@ -216,6 +217,9 @@ public class QcCloudClient {
         @GET("/api/certificates/{id}/")
         rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
 
+        @GET("/api/coaches/{id}/evaluate/")
+        rx.Observable<QcEvaluateResponse> qcGetEvaluate(@Path("id") int id);
+
     }
 
 
@@ -251,7 +255,7 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
 
         @POST("/api/feedback/")
-        rx.Observable<QcResponse> qcFeedBack(@Body FeedBackBean bean);
+        rx.Observable<QcEvaluateResponse> qcFeedBack(@Body FeedBackBean bean);
 
 
     }
