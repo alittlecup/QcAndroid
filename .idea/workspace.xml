@@ -5210,12 +5210,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00063" summary="fix studentjudge &amp;&amp; webview No newwork">
-      <created>1440580973306</created>
-      <option name="number" value="00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1440580973306</updated>
-    </task>
     <task id="LOCAL-00064" summary="add halfscrollview">
       <created>1440653806851</created>
       <option name="number" value="00064" />
@@ -5504,7 +5498,13 @@
       <option name="project" value="LOCAL" />
       <updated>1442469334193</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="fix bugs when info is too short,swipe too quick;">
+      <created>1442481411327</created>
+      <option name="number" value="00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1442481411328</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TodoView">
