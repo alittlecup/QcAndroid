@@ -23,6 +23,7 @@ import android.view.ViewGroup;
  * Created by Paper on 15/9/2 2015.
  */
 public class MyhomeViewPager extends ViewPager {
+    boolean canSwipe = false;
     private View scrollView;
     private float touchY;
     private float touchX;
@@ -56,6 +57,7 @@ public class MyhomeViewPager extends ViewPager {
             case MotionEvent.ACTION_DOWN:
                 touchY = ev.getY();
                 touchX = ev.getX();
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 float y = touchY;
@@ -86,6 +88,7 @@ public class MyhomeViewPager extends ViewPager {
             case MotionEvent.ACTION_DOWN:
                 touchY = ev.getY();
                 touchX = ev.getX();
+                canSwipe = true;
                 super.onTouchEvent(ev);
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -95,13 +98,15 @@ public class MyhomeViewPager extends ViewPager {
                 touchX = ev.getX();
                 touchY = ev.getY();
                 if (ev.getY() - y >= senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, -1)) {
-                    if (getCurrentItem() != 0) {
+                    if (getCurrentItem() != 0 && canSwipe) {
                         setCurrentItem(getCurrentItem() - 1, true);
+                        canSwipe = false;
                         return true;
                     }
                 } else if (ev.getY() - y <= -senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, 1)) {
-                    if (getCurrentItem() != getAdapter().getCount() - 1) {
+                    if (getCurrentItem() != getAdapter().getCount() - 1 && canSwipe) {
                         setCurrentItem(getCurrentItem() + 1, true);
+                        canSwipe = false;
                         return true;
                     }
                 }
