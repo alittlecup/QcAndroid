@@ -1,5 +1,8 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -77,7 +80,16 @@ public class QcExperienceResponse extends QcResponse {
             this.experiences = experiences;
         }
 
-        public static class ExperiencesEntity {
+        public static class ExperiencesEntity implements Parcelable {
+            public static final Parcelable.Creator<ExperiencesEntity> CREATOR = new Parcelable.Creator<ExperiencesEntity>() {
+                public ExperiencesEntity createFromParcel(Parcel source) {
+                    return new ExperiencesEntity(source);
+                }
+
+                public ExperiencesEntity[] newArray(int size) {
+                    return new ExperiencesEntity[size];
+                }
+            };
             /**
              * coach : {"id":6}
              * description : 无
@@ -107,6 +119,25 @@ public class QcExperienceResponse extends QcResponse {
             private String start;
             private int group_course;
             private int private_user;
+
+            public ExperiencesEntity() {
+            }
+
+            protected ExperiencesEntity(Parcel in) {
+                this.coach = in.readParcelable(CoachEntity.class.getClassLoader());
+                this.description = in.readString();
+                this.is_authenticated = in.readByte() != 0;
+                this.position = in.readString();
+                this.private_course = in.readInt();
+                this.city = in.readString();
+                this.end = in.readString();
+                this.name = in.readString();
+                this.group_user = in.readInt();
+                this.sale = in.readInt();
+                this.start = in.readString();
+                this.group_course = in.readInt();
+                this.private_user = in.readInt();
+            }
 
             public CoachEntity getCoach() {
                 return coach;
@@ -212,12 +243,50 @@ public class QcExperienceResponse extends QcResponse {
                 this.private_user = private_user;
             }
 
-            public static class CoachEntity {
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeParcelable(this.coach, flags);
+                dest.writeString(this.description);
+                dest.writeByte(is_authenticated ? (byte) 1 : (byte) 0);
+                dest.writeString(this.position);
+                dest.writeInt(this.private_course);
+                dest.writeString(this.city);
+                dest.writeString(this.end);
+                dest.writeString(this.name);
+                dest.writeInt(this.group_user);
+                dest.writeInt(this.sale);
+                dest.writeString(this.start);
+                dest.writeInt(this.group_course);
+                dest.writeInt(this.private_user);
+            }
+
+            public static class CoachEntity implements Parcelable {
+                public static final Creator<CoachEntity> CREATOR = new Creator<CoachEntity>() {
+                    public CoachEntity createFromParcel(Parcel source) {
+                        return new CoachEntity(source);
+                    }
+
+                    public CoachEntity[] newArray(int size) {
+                        return new CoachEntity[size];
+                    }
+                };
                 /**
                  * id : 6
                  */
 
                 private int id;
+
+                public CoachEntity() {
+                }
+
+                protected CoachEntity(Parcel in) {
+                    this.id = in.readInt();
+                }
 
                 public int getId() {
                     return id;
@@ -225,6 +294,16 @@ public class QcExperienceResponse extends QcResponse {
 
                 public void setId(int id) {
                     this.id = id;
+                }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeInt(this.id);
                 }
             }
         }

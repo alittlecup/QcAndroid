@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.DateUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.BaseInfoBean;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -51,20 +53,26 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", null));
                 return false;
             }
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(),LinearLayoutManager.VERTICAL));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-        adapter = new WorkExepAdapter(new ArrayList<>());
-        adapter.setListener(new OnRecycleItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
-                fragmentCallBack.onFragmentChange(new WorkExpeEditFragment());
-            }
-        });
+
         recyclerview.setAdapter(adapter);
+        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
+                        getActivity().runOnUiThread(() -> {
+                            adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
+                            adapter.setListener(new OnRecycleItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, int pos) {
+                                    fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历", qcExperienceResponse.getData().getExperiences().get(pos)));
+                                }
+                            });
+                        })
+        );
         return view;
     }
 
@@ -96,7 +104,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     class WorkExepAdapter extends RecyclerView.Adapter<WorkExepVH> implements View.OnClickListener {
 
 
-        private List<BaseInfoBean> datas;
+        private List<QcExperienceResponse.DataEntity.ExperiencesEntity> datas;
         private OnRecycleItemClickListener listener;
 
         public WorkExepAdapter(List datas) {
@@ -121,12 +129,20 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         @Override
         public void onBindViewHolder(WorkExepVH holder, int position) {
             holder.itemView.setTag(position);
+            QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
+
+            holder.itemWorkexpeName.setText(experiencesEntity.getName());
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            stringBuffer.append("-");
+            stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
+            holder.itemWorkexpeTime.setText(stringBuffer.toString());
         }
 
 
         @Override
         public int getItemCount() {
-            return 10;
+            return datas.size();
         }
 
         @Override

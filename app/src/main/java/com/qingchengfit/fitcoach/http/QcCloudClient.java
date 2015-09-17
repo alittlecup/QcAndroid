@@ -6,6 +6,8 @@ import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.http.bean.AddCertificate;
+import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
@@ -256,6 +258,15 @@ public class QcCloudClient {
 
         @POST("/api/feedback/")
         rx.Observable<QcEvaluateResponse> qcFeedBack(@Body FeedBackBean bean);
+
+        @POST("/api/certificates/")
+        rx.Observable<QcResponse> qcAddCertificate(@Body AddCertificate addExperience);
+
+        @POST("/api/experiences/")
+        rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
+
+        @POST("/api/gym/")
+        rx.Observable<QcResponse> qcAddGym();
 
 
     }

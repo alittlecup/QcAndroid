@@ -273,6 +273,7 @@
         <include layout="@layout/divider_grey"></include>
 
             <Button
+                android:id="@+id/recordedit_comfirm_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:layout_margin="@dimen/activity_horizontal_margin"

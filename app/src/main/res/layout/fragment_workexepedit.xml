@@ -1,112 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/backgroud_grey"
-              android:orientation="vertical"
-    >
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="起始时间"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="结束时间"
-        >
-
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="城市"
-        >
-
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="健身房名称"
-        >
-
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="职位"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:background="@color/backgroud_grey"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         >
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="起始时间"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_start_end"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="结束时间"
+            >
+
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_city"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="城市"
+            >
+
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_gym_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="健身房名称"
+            >
+
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_position"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="职位"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/qc_item_height"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="描述"
+                ></TextView>
+
+            <EditText
+                android:id="@+id/workexpedit_descripe"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:gravity="top"
+                android:maxLength="50"
+                android:text="进取的人"
+                />
+
+            <include layout="@layout/divider_grey"></include>
+
+        </LinearLayout>
 
         <TextView
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qc_item_height"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:text="@string/recordedit_name"
-            ></TextView>
-
-        <EditText
             style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
             android:background="@color/transparent"
-            android:gravity="top"
-            android:maxLength="50"
-            android:text="进取的人"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="工作业绩"
             />
 
-        <include layout="@layout/divider_grey"></include>
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_group_class"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="团课数量(节)"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
 
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_group_num"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="团课服务(人次)"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_private_class"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="私教数量(节)"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_private_num"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="私教服务(人次)"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/workexpedit_sale"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="销售额(元)"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <Button
+            android:id="@+id/workexpedit_comfirm_btn"
+            android:layout_width="300dp"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
+            />
     </LinearLayout>
-
-    <TextView
-        style="@style/Qc.TextCommonBlack"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:background="@color/transparent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="工作业绩"
-        />
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="职位"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="职位"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="职位"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
-
-</LinearLayout>
+</ScrollView>

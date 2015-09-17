@@ -6,12 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +80,14 @@ public class RecordEditFragment extends BaseSettingFragment {
     public void onHost() {
         fragmentCallBack.onFragmentChange(new SearchFragment());
     }
+
+    @OnClick(R.id.recordedit_comfirm_btn)
+    public void onComplete() {
+        QcCloudClient.getApi().postApi.qcAddCertificate(
+                new AddCertificate(App.coachid, 1, "哈哈哈哈", "1", "2015-09-30", "100", "")
+        ).subscribeOn(Schedulers.newThread()).subscribe();
+    }
+
 
     @Override
     public void onDestroyView() {
