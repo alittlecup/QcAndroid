@@ -62,5 +62,15 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
         toolbar.setOnMenuItemClickListener(listener);
     }
 
+    @Override
+    public void hindToolbar() {
+
+    }
+
+    @Override
+    public void showToolbar() {
+
+    }
+
 
 }

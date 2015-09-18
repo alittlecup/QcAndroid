@@ -58,7 +58,7 @@ public class CitiesChooser {
             options3Items.add(option3);
         }
         pwOptions.setPicker(options1Items, options2Items, options3Items, true);
-        pwOptions.setLabels("省", "市", "");
+        pwOptions.setLabels("", "市", "");
         pwOptions.setSelectOptions(3, 3, 3);
         pwOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
             @Override

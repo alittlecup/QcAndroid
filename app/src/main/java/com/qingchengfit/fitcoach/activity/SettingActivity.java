@@ -5,6 +5,7 @@ import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
@@ -62,6 +63,16 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
     @Override
     public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener) {
         toolbar.setOnMenuItemClickListener(listener);
+    }
+
+    @Override
+    public void hindToolbar() {
+        toolbar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showToolbar() {
+        toolbar.setVisibility(View.VISIBLE);
     }
 
 

@@ -24,4 +24,9 @@ public interface FragmentCallBack {
     public void onToolbarMenu(@MenuRes int menu, @DrawableRes int naviicon, String title);
 
     public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener);
+
+    public void hindToolbar();
+
+    public void showToolbar();
+
 }

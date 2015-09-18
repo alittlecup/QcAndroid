@@ -28,11 +28,11 @@ import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
 import org.xwalk.core.JavascriptInterface;
+import org.xwalk.core.XWalkCookieManager;
 import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
-import org.xwalk.core.internal.XWalkCookieManager;
 
 import java.util.List;
 

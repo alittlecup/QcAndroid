@@ -85,6 +85,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workexepedit, container, false);
+        ButterKnife.bind(this, view);
+        fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);
         if (experiencesEntity != null) {
             workexpeditStartTime.setContent(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
@@ -97,7 +99,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             workexpeditPrivateNum.setContent(Integer.toString(experiencesEntity.getPrivate_user()));
             workexpeditSale.setContent(Integer.toString(experiencesEntity.getSale()));
         }
-        ButterKnife.bind(this, view);
+
+
         return view;
     }
 
@@ -108,6 +111,10 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         )).subscribeOn(Schedulers.newThread()).subscribe();
     }
 
+    @OnClick(R.id.workexpedit_gym_name)
+    public void onClickGym() {
+        fragmentCallBack.onFragmentChange(new SearchFragment());
+    }
 
     @Override
     public void onDestroyView() {

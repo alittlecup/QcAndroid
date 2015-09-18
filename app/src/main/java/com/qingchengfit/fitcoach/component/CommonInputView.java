@@ -61,6 +61,10 @@ public class CommonInputView extends RelativeLayout {
         label.setText(str_label);
     }
 
+    public void setLabel(String s) {
+        label.setText(s);
+    }
+
     public String getContent() {
         return edit.getText().toString().trim();
     }

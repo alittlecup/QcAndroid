@@ -52,6 +52,7 @@ public class SearchListView extends RelativeLayout {
 
     public SearchListView(Context context) {
         super(context);
+        init(context);
     }
 
     public SearchListView(Context context, AttributeSet attrs) {
