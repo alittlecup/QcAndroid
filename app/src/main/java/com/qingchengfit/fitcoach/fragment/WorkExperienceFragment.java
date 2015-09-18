@@ -139,7 +139,7 @@ public class WorkExperienceFragment extends Fragment {
                 return;
             QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
 //
-            holder.itemStudioName.setText(experiencesEntity.getName());
+            holder.itemStudioName.setText(experiencesEntity.getGym().getName());
             holder.itemStudioPos.setText("职位:" + experiencesEntity.getPosition());
             StringBuffer sb = new StringBuffer();
             sb.append("业绩:");

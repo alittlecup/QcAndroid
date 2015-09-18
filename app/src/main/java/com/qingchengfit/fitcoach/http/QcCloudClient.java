@@ -17,6 +17,7 @@ import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
+import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
@@ -277,7 +278,7 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
 
         @POST("/api/gym/")
-        rx.Observable<QcResponse> qcAddGym(@Body AddGymBean addGymBean);
+        rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymBean addGymBean);
 
         @POST("/api/organizations/")
         rx.Observable<QcResponse> qcAddOrganization(@Body OrganizationBean organizationBean);

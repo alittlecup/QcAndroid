@@ -51,6 +51,7 @@ public class CommonInputView extends RelativeLayout {
         str_label = ta.getString(R.styleable.CommonInputView_civ_lable);
         ta.recycle();
 
+
     }
 
     @Override
@@ -59,6 +60,7 @@ public class CommonInputView extends RelativeLayout {
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
         label.setText(str_label);
+        setOnClickListener(v -> edit.requestFocus());
     }
 
     public void setLabel(String s) {

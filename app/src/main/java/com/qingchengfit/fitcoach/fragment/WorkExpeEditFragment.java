@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -9,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.CitiesChooser;
+import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
@@ -70,7 +73,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     TimePopupWindow pwTime;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
-    private CitiesChooser citiesChooser;
+    private AddWorkExperience addWorkExperience;
 
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
 
@@ -91,7 +94,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             experiencesEntity = getArguments().getParcelable("experience");
         }
         pwTime = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
-        citiesChooser = new CitiesChooser(getActivity());
     }
 
     @Nullable
@@ -101,11 +103,15 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);
+
+        if (addWorkExperience == null)
+            addWorkExperience = new AddWorkExperience(App.coachid);
         if (experiencesEntity != null) {
             workexpeditStartTime.setContent(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             workexpeditStartEnd.setContent(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
             workexpeditDescripe.setText(experiencesEntity.getDescription());
             workexpeditPosition.setContent(experiencesEntity.getPosition());
+            workexpeditGymName.setContent(experiencesEntity.getGym().getName());
             workexpeditGroupClass.setContent(Integer.toString(experiencesEntity.getGroup_course()));
             workexpeditGroupNum.setContent(Integer.toString(experiencesEntity.getGroup_user()));
             workexpeditPrivateClass.setContent(Integer.toString(experiencesEntity.getPrivate_course()));
@@ -119,20 +125,42 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.workexpedit_comfirm_btn)
     public void onComfirm() {
-        QcCloudClient.getApi().postApi.qcAddExperience(new AddWorkExperience(
-                App.coachid, "2015-07-01", "2015-08-30", "北京", "xxxx", "coach", "description", "12", "13", "14", "15", "16"
-        )).subscribeOn(Schedulers.newThread()).subscribe();
+        String starttime = workexpeditStartTime.getContent();
+        String endtime = workexpeditStartEnd.getContent();
+        String postion = workexpeditPosition.getContent();
+        String description = workexpeditDescripe.getText().toString();
+        String groupCount = workexpeditGroupClass.getContent();
+        String groupNum = workexpeditGroupNum.getContent();
+        String privateClass = workexpeditPrivateClass.getContent();
+        String privateNum = workexpeditPrivateNum.getContent();
+        String sale = workexpeditSale.getContent();
+        if (TextpaperUtils.isEmpty(starttime, endtime, postion, groupCount, groupNum, privateClass, privateNum,
+                sale)) {
+            Toast.makeText(getContext(), "请填写完整信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        addWorkExperience.setStart(starttime);
+        addWorkExperience.setEnd(endtime);
+        addWorkExperience.setDescription(description);
+        addWorkExperience.setGroup_course(groupCount);
+        addWorkExperience.setGroup_user(groupNum);
+        addWorkExperience.setPosition(postion);
+        addWorkExperience.setPrivate_course(privateClass);
+        addWorkExperience.setPrivate_user(privateNum);
+        addWorkExperience.setSale(sale);
+        QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.newThread()).subscribe();
     }
 
     @OnClick(R.id.workexpedit_gym_name)
     public void onClickGym() {
-        fragmentCallBack.onFragmentChange(new SearchFragment());
+//        startActivity(new Intent(getContext(), SplashActivity.class));
+        startActivityForResult(new Intent(getActivity(), SearchActivity.class), 10010);
     }
 
     @OnClick(R.id.workexpedit_start_time)
     public void onStartTime() {
         pwTime.setOnTimeSelectListener(date -> {
-            experiencesEntity.setStart(DateUtils.getDateDay(date));
+
             workexpeditStartTime.setContent(DateUtils.getDateDay(date));
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
@@ -141,7 +169,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @OnClick(R.id.workexpedit_start_end)
     public void onEndTime() {
         pwTime.setOnTimeSelectListener(date -> {
-            experiencesEntity.setEnd(DateUtils.getDateDay(date));
             workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
@@ -150,18 +177,20 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.workexpedit_city)
     public void onCityClick() {
-        citiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
-            @Override
-            public void onCityChoosen(String provice, String city, String district, int id) {
-                workexpeditCity.setContent(provice + city + "市");
-            }
-        });
-        citiesChooser.show(rootview);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10010 && resultCode > 0) {
+            workexpeditGymName.setContent(data.getStringExtra("name"));
+            addWorkExperience.setGym_id(data.getIntExtra("id", 0));
+        }
     }
 }

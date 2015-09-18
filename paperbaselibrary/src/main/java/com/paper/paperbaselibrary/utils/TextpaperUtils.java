@@ -1,5 +1,7 @@
 package com.paper.paperbaselibrary.utils;
 
+import android.text.TextUtils;
+
 /**
  * power by
  * <p>
@@ -14,4 +16,11 @@ package com.paper.paperbaselibrary.utils;
  * Created by Paper on 15/8/8 2015.
  */
 public class TextpaperUtils {
+    public static boolean isEmpty(String... s) {
+        for (int i = 0; i < s.length; i++) {
+            if (TextUtils.isEmpty(s[i]))
+                return true;
+        }
+        return false;
+    }
 }

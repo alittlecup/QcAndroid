@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
@@ -28,7 +27,6 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.DynamicSelector;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneInfoUtils;
@@ -388,7 +386,7 @@ public class MainActivity extends BaseAcitivity {
                 .last()
                 .subscribe(s1 -> {
                     runOnUiThread(() -> {
-                        StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
+//                        StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
                         button.setText(btnInfo.guideText);
                         button.setDrawables(drawables.toArray(new Drawable[2]));
 //                        button.setButtonDrawable(drawable1);

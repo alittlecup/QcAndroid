@@ -61,16 +61,19 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerview.setAdapter(adapter);
+
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
                         getActivity().runOnUiThread(() -> {
-                            adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
-                            adapter.setListener(new OnRecycleItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int pos) {
-                                    fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历", qcExperienceResponse.getData().getExperiences().get(pos)));
-                                }
-                            });
+                            if (qcExperienceResponse.getData().getExperiences() != null) {
+                                adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
+                                adapter.setListener(new OnRecycleItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View v, int pos) {
+                                        fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历", qcExperienceResponse.getData().getExperiences().get(pos)));
+                                    }
+                                });
+                                recyclerview.setAdapter(adapter);
+                            }
                         })
         );
         return view;
@@ -131,10 +134,10 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             holder.itemView.setTag(position);
             QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
 
-            holder.itemWorkexpeName.setText(experiencesEntity.getName());
+            holder.itemWorkexpeName.setText(experiencesEntity.getGym().getName());
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            stringBuffer.append("-");
+            stringBuffer.append("至");
             stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
             holder.itemWorkexpeTime.setText(stringBuffer.toString());
         }

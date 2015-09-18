@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddGymBean;
 
@@ -42,7 +43,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends BaseSettingFragment {
+public class SearchFragment extends android.support.v4.app.Fragment {
     public static final String TAG = SearchFragment.class.getName();
     public static final int TYPE_GYM = 0;
     public static final int TYPE_ORGANASITON = 1;
@@ -65,7 +66,7 @@ public class SearchFragment extends BaseSettingFragment {
     private int type;
     private List<String> strings;
     private InternalHandler handler;
-
+    private SearchInterface searchListener;
 
     public SearchFragment() {
     }
@@ -101,7 +102,6 @@ public class SearchFragment extends BaseSettingFragment {
             searchresultBtn.setText("添加健身房");
         }
 
-        fragmentCallBack.hindToolbar();
         searchviewEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,9 +157,11 @@ public class SearchFragment extends BaseSettingFragment {
     @OnClick(R.id.searchresult_btn)
     public void onAdd() {
         if (type == TYPE_GYM)
-            fragmentCallBack.onFragmentChange(new AddGymFragment());
+            getFragmentManager().beginTransaction().replace(R.id.search_fraglayout, new AddGymFragment()).addToBackStack(null).commit();
         else if (type == TYPE_ORGANASITON)
-            fragmentCallBack.onFragmentChange(new AddOganasitionFragment());
+            getFragmentManager().beginTransaction().replace(R.id.search_fraglayout, new AddOganasitionFragment())
+                    .addToBackStack(null).commit();
+
     }
 
 
@@ -182,6 +184,9 @@ public class SearchFragment extends BaseSettingFragment {
                             for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
                                 strings.add(addGymBean.name);
                             }
+                            adapter.setListener(((v, pos) -> {
+                                searchListener.onSearchResult(Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                            }));
                             adapter.notifyDataSetChanged();
                         });
                     });
@@ -246,9 +251,10 @@ public class SearchFragment extends BaseSettingFragment {
         public void onBindViewHolder(SearchResultVH holder, int position) {
             holder.itemView.setTag(position);
             String s = datas.get(position);
-            if (!TextUtils.isEmpty(keyword) && s.contains(s)) {
+            if (!TextUtils.isEmpty(keyword) && s.contains(keyword)) {
                 SpannableString ss = new SpannableString(s);
                 int pos = s.indexOf(keyword);
+
                 ss.setSpan(new ForegroundColorSpan(Color.CYAN), pos, pos + keyword.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.itemText.setText(ss);
             } else holder.itemText.setText(s);
@@ -284,6 +290,34 @@ public class SearchFragment extends BaseSettingFragment {
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SearchInterface) {
+            searchListener = (SearchInterface) context;
+        }
+    }
 
+    public class InternalHandler extends Handler {
+        WeakReference<Context> context;
 
+        InternalHandler(Context c) {
+            context = new WeakReference<Context>(c);
+
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String s = msg.getData().getString("keyword");
+            if (s.equals(keyword))
+                searchResult(keyword);
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        searchListener = null;
+    }
 }

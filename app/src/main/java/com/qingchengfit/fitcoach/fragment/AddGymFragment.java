@@ -1,11 +1,13 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import com.bigkoo.pickerview.OptionsPopupWindow;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddGymBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -56,6 +59,7 @@ public class AddGymFragment extends Fragment {
 
     private CitiesChooser citiesChooser;
     private int Districtid;
+    private SearchInterface searchListener;
 
     public AddGymFragment() {
     }
@@ -82,7 +86,12 @@ public class AddGymFragment extends Fragment {
                 addgymCity.setContent(provice + city + "市");
             }
         });
-
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -105,10 +114,10 @@ public class AddGymFragment extends Fragment {
             return;
 
         AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), "descripe");
-        QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+        QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread()).subscribe(qcAddGymResponse -> {
             getActivity().runOnUiThread(() -> {
-                if (qcResponse.status == ResponseResult.SUCCESS) {
-                    getActivity().onBackPressed();
+                if (qcAddGymResponse.status == ResponseResult.SUCCESS) {
+                    searchListener.onSearchResult(Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
                 } else {
                     Toast.makeText(getContext(), "添加失败", Toast.LENGTH_SHORT).show();
                 }
@@ -117,5 +126,17 @@ public class AddGymFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SearchInterface) {
+            searchListener = (SearchInterface) context;
+        }
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        searchListener = null;
+    }
 }

@@ -24,6 +24,8 @@ public class AddGymBean {
     public String contact;
     @SerializedName("description")
     public String description;
+    @SerializedName("id")
+    public String id;
 
     public AddGymBean(String name, int city, String contact, String description) {
         this.name = name;

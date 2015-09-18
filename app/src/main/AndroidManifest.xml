@@ -207,6 +207,10 @@
             android:name=".activity.NotificationActivity"
             android:label="@string/title_activity_notification">
         </activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:label="@string/title_activity_notification">
+        </activity>
     </application>
 
 </manifest>

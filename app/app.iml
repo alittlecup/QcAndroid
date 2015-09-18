@@ -121,8 +121,8 @@
     <orderEntry type="library" exported="" name="circleindicator-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="ultra-ptr-1.0.10" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="antlr4-runtime-4.5" level="project" />
     <orderEntry type="library" exported="" name="antlr4-annotations-4.5" level="project" />
+    <orderEntry type="library" exported="" name="antlr4-runtime-4.5" level="project" />
     <orderEntry type="library" exported="" name="library-1.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="org.abego.treelayout.core-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="pushservice-4.5.3.48" level="project" />
@@ -173,8 +173,8 @@
     <orderEntry type="library" exported="" name="jg_filter_sdk_1.1" level="project" />
     <orderEntry type="library" exported="" name="mid-sdk-2.20" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.0.14" level="project" />
+    <orderEntry type="library" exported="" name="ST4-4.0.8" level="project" />
     <orderEntry type="library" exported="" name="Xg_sdk_v2.38_20150616_1057" level="project" />
     <orderEntry type="library" exported="" name="pushservice-4.5.1.8" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Facebook-2.6.1" level="project" />

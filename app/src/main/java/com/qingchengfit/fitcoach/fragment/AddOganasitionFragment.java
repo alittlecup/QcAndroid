@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -46,6 +48,7 @@ public class AddOganasitionFragment extends Fragment {
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
+    private SearchInterface searchListener;
 
 
     public AddOganasitionFragment() {
@@ -90,12 +93,25 @@ public class AddOganasitionFragment extends Fragment {
                     getActivity().runOnUiThread(() -> {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
                             Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
-                            getActivity().onBackPressed();
+//                           searchListener.onSearchResult();
                         } else Toast.makeText(getActivity(), "添加失败", Toast.LENGTH_SHORT).show();
                     });
 
                 });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SearchInterface) {
+            searchListener = (SearchInterface) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        searchListener = null;
+    }
 
 }

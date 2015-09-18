@@ -57,7 +57,7 @@ public class MyhomeViewPager extends ViewPager {
             case MotionEvent.ACTION_DOWN:
                 touchY = ev.getY();
                 touchX = ev.getX();
-
+                canSwipe = true;
                 break;
             case MotionEvent.ACTION_MOVE:
                 float y = touchY;

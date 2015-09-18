@@ -1,8 +1,13 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.SearchInterface;
+import com.qingchengfit.fitcoach.fragment.SearchFragment;
 
 /**
  * power by
@@ -17,10 +22,28 @@ import android.support.v7.app.AppCompatActivity;
  * <p>
  * Created by Paper on 15/9/17 2015.
  */
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchInterface {
+
+    private FragmentManager mFragmentManager;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", SearchFragment.TYPE_GYM)))
+                .commit();
+
+    }
+
+    @Override
+    public void onSearchResult(int id, String name) {
+        Intent it = new Intent();
+        it.putExtra("id", id);
+        it.putExtra("name", name);
+        setResult(100, it);
+        this.finish();
     }
 }

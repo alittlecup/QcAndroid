@@ -17,8 +17,7 @@ public class AddWorkExperience {
     int coach_id;
     String start;
     String end;
-    String city;
-    String name;
+
     String position;
     String description;
     String group_course;
@@ -26,13 +25,18 @@ public class AddWorkExperience {
     String private_course;
     String private_user;
     String sale;
+    int gym_id;
 
-    public AddWorkExperience(int coach_id, String start, String end, String city, String name, String position, String description, String group_course, String group_user, String private_course, String private_user, String sale) {
+    public AddWorkExperience(int coach_id) {
+        this.coach_id = coach_id;
+    }
+
+    public AddWorkExperience(int coach_id, int gym_id, String start, String end, String position, String description, String group_course, String group_user, String private_course, String private_user, String sale) {
         this.coach_id = coach_id;
         this.start = start;
         this.end = end;
-        this.city = city;
-        this.name = name;
+        this.gym_id = gym_id;
+
         this.position = position;
         this.description = description;
         this.group_course = group_course;
@@ -42,4 +46,91 @@ public class AddWorkExperience {
         this.sale = sale;
     }
 
+    public int getCoach_id() {
+        return coach_id;
+    }
+
+    public void setCoach_id(int coach_id) {
+        this.coach_id = coach_id;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getGroup_course() {
+        return group_course;
+    }
+
+    public void setGroup_course(String group_course) {
+        this.group_course = group_course;
+    }
+
+    public String getGroup_user() {
+        return group_user;
+    }
+
+    public void setGroup_user(String group_user) {
+        this.group_user = group_user;
+    }
+
+    public String getPrivate_course() {
+        return private_course;
+    }
+
+    public void setPrivate_course(String private_course) {
+        this.private_course = private_course;
+    }
+
+    public String getPrivate_user() {
+        return private_user;
+    }
+
+    public void setPrivate_user(String private_user) {
+        this.private_user = private_user;
+    }
+
+    public String getSale() {
+        return sale;
+    }
+
+    public void setSale(String sale) {
+        this.sale = sale;
+    }
+
+    public int getGym_id() {
+        return gym_id;
+    }
+
+    public void setGym_id(int gym_id) {
+        this.gym_id = gym_id;
+    }
 }
