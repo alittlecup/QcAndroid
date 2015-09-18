@@ -34,6 +34,7 @@ public class RecordComfirmFragment extends Fragment {
     RecyclerView recyclerview;
     private RecordComfirmAdapter adapter;
     private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
+
     public RecordComfirmFragment() {
     }
 
@@ -48,17 +49,18 @@ public class RecordComfirmFragment extends Fragment {
 
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
-
-                adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
-                adapter.setListener((v, pos) -> {
-                    ComfirmDetailFragment fragment =
+                if (qcCertificatesReponse.getData().getCertificates() != null) {
+                    adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+                    adapter.setListener((v, pos) -> {
+                        ComfirmDetailFragment fragment =
 //                            ComfirmDetailFragment.newInstance(1);
-                            ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+                                ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
 
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
-                            .show(fragment).addToBackStack("").commit();
-                });
-                recyclerview.setAdapter(adapter);
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+                                .show(fragment).addToBackStack("").commit();
+                    });
+                    recyclerview.setAdapter(adapter);
+                }
             });
         });
         return view;

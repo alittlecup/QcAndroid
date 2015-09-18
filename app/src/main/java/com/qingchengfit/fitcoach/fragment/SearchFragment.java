@@ -95,8 +95,10 @@ public class SearchFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         if (type == TYPE_ORGANASITON) {
             searchviewEt.setHint("搜索机构");
+            searchresultBtn.setText("添加主办机构");
         } else if (type == TYPE_GYM) {
             searchviewEt.setHint("搜索健身房");
+            searchresultBtn.setText("添加健身房");
         }
 
         fragmentCallBack.hindToolbar();
@@ -154,7 +156,10 @@ public class SearchFragment extends BaseSettingFragment {
 
     @OnClick(R.id.searchresult_btn)
     public void onAdd() {
-        fragmentCallBack.onFragmentChange(new AddGymFragment());
+        if (type == TYPE_GYM)
+            fragmentCallBack.onFragmentChange(new AddGymFragment());
+        else if (type == TYPE_ORGANASITON)
+            fragmentCallBack.onFragmentChange(new AddOganasitionFragment());
     }
 
 

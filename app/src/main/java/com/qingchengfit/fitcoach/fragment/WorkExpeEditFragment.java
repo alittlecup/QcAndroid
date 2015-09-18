@@ -2,14 +2,19 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
@@ -58,8 +63,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     CommonInputView workexpeditPrivateNum;
     @Bind(R.id.workexpedit_sale)
     CommonInputView workexpeditSale;
+    @Bind(R.id.workexpedit_comfirm_btn)
+    Button workexpeditComfirmBtn;
+    @Bind(R.id.rootview)
+    ScrollView rootview;
+    TimePopupWindow pwTime;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
+    private CitiesChooser citiesChooser;
 
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
 
@@ -79,6 +90,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             mTitle = getArguments().getString("title");
             experiencesEntity = getArguments().getParcelable("experience");
         }
+        pwTime = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        citiesChooser = new CitiesChooser(getActivity());
     }
 
     @Nullable
@@ -114,6 +127,36 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @OnClick(R.id.workexpedit_gym_name)
     public void onClickGym() {
         fragmentCallBack.onFragmentChange(new SearchFragment());
+    }
+
+    @OnClick(R.id.workexpedit_start_time)
+    public void onStartTime() {
+        pwTime.setOnTimeSelectListener(date -> {
+            experiencesEntity.setStart(DateUtils.getDateDay(date));
+            workexpeditStartTime.setContent(DateUtils.getDateDay(date));
+        });
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+    }
+
+    @OnClick(R.id.workexpedit_start_end)
+    public void onEndTime() {
+        pwTime.setOnTimeSelectListener(date -> {
+            experiencesEntity.setEnd(DateUtils.getDateDay(date));
+            workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
+        });
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+    }
+
+
+    @OnClick(R.id.workexpedit_city)
+    public void onCityClick() {
+        citiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
+            @Override
+            public void onCityChoosen(String provice, String city, String district, int id) {
+                workexpeditCity.setContent(provice + city + "市");
+            }
+        });
+        citiesChooser.show(rootview);
     }
 
     @Override

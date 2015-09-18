@@ -10,10 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,6 +29,7 @@ public class RecordFragment extends BaseSettingFragment {
     RecyclerView recyclerview;
     private RecordComfirmAdapter adapter;
 
+
     public RecordFragment() {
     }
 
@@ -39,18 +41,27 @@ public class RecordFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
-            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance("添加认证", null));
+            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
             return true;
 
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecordComfirmAdapter(new ArrayList<>());
-        adapter.setListener((v, pos) -> {
-            //TODO 添加数据内容
-            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance("添加认证", null));
-        });
-        recyclerview.setAdapter(adapter);
+        QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
+            getActivity().runOnUiThread(() -> {
+                if (qcCertificatesReponse.getData().getCertificates() != null) {
+                    adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+                    adapter.setListener((v, pos) -> {
+                        ComfirmDetailFragment fragment =
+//                            ComfirmDetailFragment.newInstance(1);
+                                ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
 
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment)
+                                .show(fragment).addToBackStack("").commit();
+                    });
+                    recyclerview.setAdapter(adapter);
+                }
+            });
+        });
         return view;
     }
 
@@ -112,7 +123,7 @@ public class RecordFragment extends BaseSettingFragment {
 
         @Override
         public int getItemCount() {
-            return 10;
+            return datas.size();
         }
 
         @Override

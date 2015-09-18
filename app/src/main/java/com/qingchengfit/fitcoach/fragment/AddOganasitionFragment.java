@@ -4,20 +4,26 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +64,7 @@ public class AddOganasitionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_gym, container, false);
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
-        toolbar.setTitle("添加健身房");
+        toolbar.setTitle("添加主办机构");
         addgymName.setLabel("机构名");
         addgymCity.setVisibility(View.GONE);
 
@@ -75,7 +81,20 @@ public class AddOganasitionFragment extends Fragment {
 
     @OnClick(R.id.addgym_addbtn)
     public void onClickAdd() {
+        if (TextUtils.isEmpty(addgymName.getContent()))
+            return;
 
+        QcCloudClient.getApi().postApi.qcAddOrganization(new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), "description"))
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(qcResponse -> {
+                    getActivity().runOnUiThread(() -> {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
+                            getActivity().onBackPressed();
+                        } else Toast.makeText(getActivity(), "添加失败", Toast.LENGTH_SHORT).show();
+                    });
+
+                });
     }
 
 

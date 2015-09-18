@@ -31,7 +31,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     @Bind(R.id.recordedit_host)
     CommonInputView recordeditHost;
 
-    private String mTitle;
+    private boolean mTitle;
     private String mContent;
 
     public RecordEditFragment() {
@@ -41,15 +41,15 @@ public class RecordEditFragment extends BaseSettingFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param param1  是否为编辑
      * @param param2 Parameter 2.
      * @return A new instance of fragment RecordEditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RecordEditFragment newInstance(String param1, String param2) {
+    public static RecordEditFragment newInstance(boolean param1, String param2) {
         RecordEditFragment fragment = new RecordEditFragment();
         Bundle args = new Bundle();
-        args.putString(TITLE, param1);
+        args.putBoolean(TITLE, param1);
         args.putString(CONTENT, param2);
         fragment.setArguments(args);
         return fragment;
@@ -59,7 +59,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTitle = getArguments().getString(TITLE);
+            mTitle = getArguments().getBoolean(TITLE);
             mContent = getArguments().getString(CONTENT);
         }
     }
@@ -70,7 +70,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(R.menu.menu_delete, 0, mTitle);
+        fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
         fragmentCallBack.onToolbarClickListener(item1 -> false);//TODO 删除该条记录
 
         return view;
@@ -78,14 +78,16 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_host)
     public void onHost() {
-        fragmentCallBack.onFragmentChange(new SearchFragment());
+        fragmentCallBack.onFragmentChange(SearchFragment.newInstance(SearchFragment.TYPE_ORGANASITON));
     }
 
     @OnClick(R.id.recordedit_comfirm_btn)
     public void onComplete() {
         QcCloudClient.getApi().postApi.qcAddCertificate(
                 new AddCertificate(App.coachid, 1, "哈哈哈哈", "1", "2015-09-30", "100", "")
-        ).subscribeOn(Schedulers.newThread()).subscribe();
+        ).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+
+        });
     }
 
 
