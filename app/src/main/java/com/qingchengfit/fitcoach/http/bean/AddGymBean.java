@@ -19,13 +19,13 @@ public class AddGymBean {
     @SerializedName("name")
     public String name;
     @SerializedName("city")
-    public String city;
+    public int city;
     @SerializedName("contact")
     public String contact;
     @SerializedName("description")
     public String description;
 
-    public AddGymBean(String name, String city, String contact, String description) {
+    public AddGymBean(String name, int city, String contact, String description) {
         this.name = name;
         this.city = city;
         this.contact = contact;
