@@ -63,13 +63,48 @@
             android:text="热门机构"
             />
 
-        <com.qingchengfit.fitcoach.component.SearchListView
-            android:id="@+id/search_resultlist"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             >
 
-        </com.qingchengfit.fitcoach.component.SearchListView>
+            <LinearLayout
+                android:id="@+id/searchresult_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="没有匹配的机构\n您可以添加该机构"
+                    />
+
+                <Button
+                    android:id="@+id/searchresult_btn"
+                    android:layout_width="200dp"
+                    android:layout_height="@dimen/qc_item_height"
+                    android:layout_marginTop="50dp"
+                    android:text="添加主办机构"
+                    />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/searchresult_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clipToPadding="true"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,0 +1,81 @@
+<LinearLayout
+    android:id="@+id/rootview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.AddGymFragment">
+
+    <include layout="@layout/common_toolbar"></include>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/addgym_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginTop="20dp"
+        app:civ_lable="健身房名称"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/addgym_contact"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="联系方式"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/addgym_city"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="城市"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="简介"
+            ></TextView>
+
+        <EditText
+            android:id="@+id/workexpedit_descripe"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:gravity="top"
+            android:maxLength="50"
+            android:text="进取的人"
+            />
+
+        <include layout="@layout/divider_grey"></include>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addgym_addbtn"
+        android:layout_width="270dp"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_gravity="center_horizontal"
+        android:text="确定添加"
+        />
+</LinearLayout>

@@ -82,42 +82,42 @@ public class FileUtils {
 //        }
 //    }
 
-    public static void saveCache(String key,String value){
+    public static void saveCache(String key, String value) {
         if (TextUtils.isEmpty(value))
             return;
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()+"/"+key;
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/" + key;
 
 
         File f1 = new File(path);
 
 //        if (f1.exists()) {
-            try {
-                if (!f1.exists())
-                    f1.createNewFile();
-                FileOutputStream is = new FileOutputStream(f1);
+        try {
+            if (!f1.exists())
+                f1.createNewFile();
+            FileOutputStream is = new FileOutputStream(f1);
 
-                is.write(value.getBytes());
-                is.close();
-            } catch (FileNotFoundException e) {
+            is.write(value.getBytes());
+            is.close();
+        } catch (FileNotFoundException e) {
 
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
 
-                e.printStackTrace();
-            } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
 
-                e.printStackTrace();
-            }
+            e.printStackTrace();
+        }
 //    }
     }
 
-    public static String readCache(String key){
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()+"/"+key;
+    public static String readCache(String key) {
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/" + key;
         File f1 = new File(path);
         String ret = null;
         if (f1.exists()) {
             try {
-            FileInputStream is = new FileInputStream(f1);
+                FileInputStream is = new FileInputStream(f1);
                 InputStreamReader input = new InputStreamReader(is, "UTF-8");
                 BufferedReader bf = new BufferedReader(input);
 
@@ -208,6 +208,29 @@ public class FileUtils {
         }
 
         return null;
+    }
+
+
+    /**
+     * 读取本地文件中JSON字符串
+     *
+     * @param fileName
+     * @return
+     */
+    public static String getJsonFromAssert(String fileName, Context context) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            BufferedReader bf = new BufferedReader(new InputStreamReader(
+                    context.getAssets().open(fileName)));
+            String line;
+            while ((line = bf.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 
     /**

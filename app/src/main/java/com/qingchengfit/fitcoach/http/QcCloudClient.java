@@ -7,6 +7,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
+import com.qingchengfit.fitcoach.http.bean.AddGymBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
@@ -32,6 +33,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.squareup.okhttp.Cache;
@@ -39,6 +41,7 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.RequestInterceptor;
@@ -52,6 +55,7 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.QueryMap;
 
 
 /**
@@ -222,6 +226,12 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/evaluate/")
         rx.Observable<QcEvaluateResponse> qcGetEvaluate(@Path("id") int id);
 
+        @GET("/api/gym/")
+        rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);
+
+        @GET("/api/organizations/")
+        rx.Observable<QcResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
+
     }
 
 
@@ -266,7 +276,7 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
 
         @POST("/api/gym/")
-        rx.Observable<QcResponse> qcAddGym();
+        rx.Observable<QcResponse> qcAddGym(@Body AddGymBean addGymBean);
 
 
     }
