@@ -1,4 +1,6 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:id="@+id/rootview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -15,7 +17,7 @@
         tools:context="com.qingchengfit.fitcoach.fragment.RecordEditFragment">
 
 
-    <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -23,6 +25,7 @@
             >
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:background="@color/white"
@@ -109,6 +112,7 @@
                     ></TextView>
 
                 <EditText
+                    android:id="@+id/record_edit_name"
                     style="@style/Qc.EditTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,111 +129,132 @@
                     ></View>
             </RelativeLayout>
 
-        <com.qingchengfit.fitcoach.component.CommonInputView
-            android:id="@+id/recordedit_host"
+            <com.qingchengfit.fitcoach.component.CommonInputView
+                android:id="@+id/recordedit_host"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
-            app:civ_lable="@string/recordedit_host_organization"
-            ></com.qingchengfit.fitcoach.component.CommonInputView>
+                app:civ_lable="@string/recordedit_host_organization"
+                ></com.qingchengfit.fitcoach.component.CommonInputView>
 
-            <RelativeLayout
+            <com.qingchengfit.fitcoach.component.CommonInputView
+                android:id="@+id/recordedit_date"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                >
+                app:civ_lable="@string/recordedit_certificate_date"
+                ></com.qingchengfit.fitcoach.component.CommonInputView>
 
-                <TextView
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/recordedit_certificate_date"
-                    ></TextView>
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/qc_item_height"-->
+            <!--android:background="@color/white"-->
+            <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+            <!-->-->
 
-                <EditText
-                    style="@style/Qc.EditTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@color/transparent"
-                    />
+            <!--<TextView-->
+            <!--style="@style/Qc.TextCommonGrey"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/recordedit_certificate_date"-->
+            <!--></TextView>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_white"
-                    ></View>
-            </RelativeLayout>
+            <!--<EditText-->
 
-            <RelativeLayout
+            <!--style="@style/Qc.EditTextStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@color/transparent"-->
+            <!--/>-->
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/divider_white"-->
+            <!--></View>-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/qc_item_height"-->
+            <!--android:background="@color/white"-->
+            <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+            <!-->-->
+
+            <!--<TextView-->
+            <!--style="@style/Qc.TextCommonGrey"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/recordedit_score"-->
+            <!--></TextView>-->
+
+            <!--<EditText-->
+            <!--style="@style/Qc.EditTextStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@color/transparent"-->
+            <!--/>-->
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/divider_white"-->
+            <!--></View>-->
+            <!--</RelativeLayout>-->
+            <com.qingchengfit.fitcoach.component.CommonInputView
+                android:id="@+id/recordedit_score"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                >
+                app:civ_lable="@string/recordedit_score"
+                ></com.qingchengfit.fitcoach.component.CommonInputView>
 
-                <TextView
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/recordedit_score"
-                    ></TextView>
-
-                <EditText
-                    style="@style/Qc.EditTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@color/transparent"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_white"
-                    ></View>
-            </RelativeLayout>
-
-            <RelativeLayout
+            <com.qingchengfit.fitcoach.component.CommonInputView
+                android:id="@+id/recordedit_dateoff"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                >
+                app:civ_lable="@string/recordedit_certificat_time"
+                ></com.qingchengfit.fitcoach.component.CommonInputView>
 
-                <TextView
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/recordedit_certificat_time"
-                    ></TextView>
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/qc_item_height"-->
+            <!--android:background="@color/white"-->
+            <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+            <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+            <!-->-->
 
-                <EditText
-                    style="@style/Qc.EditTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@color/transparent"
-                    />
+            <!--<TextView-->
+            <!--style="@style/Qc.TextCommonGrey"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="@string/recordedit_certificat_time"-->
+            <!--></TextView>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_white"
-                    ></View>
-            </RelativeLayout>
+            <!--<EditText-->
+            <!--style="@style/Qc.EditTextStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@color/transparent"-->
+            <!--/>-->
+
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/divider_white"-->
+            <!--></View>-->
+            <!--</RelativeLayout>-->
 
             <include layout="@layout/divider_grey"></include>
 
@@ -240,37 +265,37 @@
                 android:layout_marginTop="20dp"
                 ></include>
 
-        <RelativeLayout
+            <RelativeLayout
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-            >
+                >
 
-            <TextView
-                android:id="@+id/recordedit_upimg"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:gravity="center"
+                <TextView
+                    android:id="@+id/recordedit_upimg"
+                    style="@style/Qc.TextCommonGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qc_item_height"
+                    android:gravity="center"
 
-                android:text="上传照片"
-                />
-
-
-            <ImageView
-                android:id="@+id/recordedit_img"
-                android:layout_width="360dp"
-                android:layout_height="200dp"
-                android:background="@color/white"
-                android:padding="@dimen/activity_horizontal_margin"
-                android:src="@drawable/test_pic"
-                android:visibility="gone"
-                />
-
-        </RelativeLayout>
+                    android:text="上传照片"
+                    />
 
 
-        <include layout="@layout/divider_grey"></include>
+                <ImageView
+                    android:id="@+id/recordedit_img"
+                    android:layout_width="360dp"
+                    android:layout_height="200dp"
+                    android:background="@color/white"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/test_pic"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+
+            <include layout="@layout/divider_grey"></include>
 
             <Button
                 android:id="@+id/recordedit_comfirm_btn"

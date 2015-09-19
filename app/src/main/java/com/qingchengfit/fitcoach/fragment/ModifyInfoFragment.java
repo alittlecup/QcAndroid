@@ -306,11 +306,6 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//            if (requestCode == SELECT_PIC){
-//
-//            }else if (requestCode == SELECT_PIC_KITKAT){
-//
-//            }
         String filepath = "";
         if (resultCode == -1) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)

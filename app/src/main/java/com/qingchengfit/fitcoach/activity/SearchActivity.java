@@ -31,9 +31,10 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        int type = getIntent().getIntExtra("type", SearchFragment.TYPE_GYM);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
-                .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", SearchFragment.TYPE_GYM)))
+                .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", type)))
                 .commit();
 
     }

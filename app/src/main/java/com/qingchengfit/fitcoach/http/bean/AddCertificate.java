@@ -22,6 +22,10 @@ public class AddCertificate {
     String grade;
     String photo;
 
+    public AddCertificate(int coach_id) {
+        this.coach_id = coach_id;
+    }
+
     public AddCertificate(int coach_id, int type, String name, String organization_id, String date_of_issue, String grade, String photo) {
         this.coach_id = coach_id;
         this.type = type;

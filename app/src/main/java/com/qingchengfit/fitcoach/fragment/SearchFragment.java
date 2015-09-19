@@ -65,7 +65,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     SearchResultAdapter adapter;
     private int type;
     private List<String> strings;
-    private InternalHandler handler;
+    private InternalSearchHandler handler;
     private SearchInterface searchListener;
 
     public SearchFragment() {
@@ -83,7 +83,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        handler = new InternalHandler(getContext());
+        handler = new InternalSearchHandler(getContext());
         if (getArguments() != null) {
             type = getArguments().getInt("type");
         }
@@ -208,6 +208,20 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         adapter.setListener(listener);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SearchInterface) {
+            searchListener = (SearchInterface) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        searchListener = null;
+    }
+
     public interface OnRecycleItemClickListener {
         void onItemClick(View v, int pos);
     }
@@ -290,18 +304,10 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof SearchInterface) {
-            searchListener = (SearchInterface) context;
-        }
-    }
-
-    public class InternalHandler extends Handler {
+    public class InternalSearchHandler extends Handler {
         WeakReference<Context> context;
 
-        InternalHandler(Context c) {
+        InternalSearchHandler(Context c) {
             context = new WeakReference<Context>(c);
 
         }
@@ -313,11 +319,5 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             if (s.equals(keyword))
                 searchResult(keyword);
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        searchListener = null;
     }
 }

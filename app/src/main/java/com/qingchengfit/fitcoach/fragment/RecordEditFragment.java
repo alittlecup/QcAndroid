@@ -1,20 +1,51 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePopupWindow;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.ChoosePicUtils;
+import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.FileUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
+import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 
 /**
@@ -28,11 +59,39 @@ public class RecordEditFragment extends BaseSettingFragment {
     public static final String TAG = RecordEditFragment.class.getName();
     private static final String TITLE = "param1";
     private static final String CONTENT = "param2";
+    private static String FILE_PATH = Configs.ExternalPath + "tmp_certificate.png";
     @Bind(R.id.recordedit_host)
     CommonInputView recordeditHost;
-
+    @Bind(R.id.recordedit_type_meeting)
+    RadioButton recordeditTypeMeeting;
+    @Bind(R.id.recordedit_type_comfirm)
+    RadioButton recordeditTypeComfirm;
+    @Bind(R.id.recordedit_type_competition)
+    RadioButton recordeditTypeCompetition;
+    @Bind(R.id.recordedit_type)
+    RadioGroup recordeditType;
+    @Bind(R.id.record_edit_name)
+    EditText recordEditName;
+    @Bind(R.id.recordedit_date)
+    CommonInputView recordeditDate;
+    @Bind(R.id.recordedit_score)
+    CommonInputView recordeditScore;
+    @Bind(R.id.recordedit_dateoff)
+    CommonInputView recordeditDateoff;
+    @Bind(R.id.recordedit_upimg)
+    TextView recordeditUpimg;
+    @Bind(R.id.recordedit_img)
+    ImageView recordeditImg;
+    @Bind(R.id.recordedit_comfirm_btn)
+    Button recordeditComfirmBtn;
+    TimePopupWindow pwTime;
+    @Bind(R.id.rootview)
+    ScrollView rootview;
     private boolean mTitle;
     private String mContent;
+    private Gson gson = new Gson();
+    private QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity;
+    private AddCertificate addCertificate;
 
     public RecordEditFragment() {
     }
@@ -41,7 +100,7 @@ public class RecordEditFragment extends BaseSettingFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1  是否为编辑
+     * @param param1 是否为编辑
      * @param param2 Parameter 2.
      * @return A new instance of fragment RecordEditFragment.
      */
@@ -62,6 +121,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             mTitle = getArguments().getBoolean(TITLE);
             mContent = getArguments().getString(CONTENT);
         }
+        pwTime = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
 
     @Override
@@ -72,24 +132,163 @@ public class RecordEditFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
         fragmentCallBack.onToolbarClickListener(item1 -> false);//TODO 删除该条记录
-
+        if (mContent != null) {
+            certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
+            recordeditHost.setContent(certificatesEntity.getOrganization().getName());
+            recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getCreated_at())));
+            recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            recordEditName.setText(certificatesEntity.getName());
+            recordeditScore.setContent(certificatesEntity.getGrade());
+            switch (certificatesEntity.getType()) {
+                case 0:
+                    recordeditType.check(R.id.recordedit_type_meeting);
+                    break;
+                case 1:
+                    recordeditType.check(R.id.recordedit_type_comfirm);
+                    break;
+                case 2:
+                    recordeditType.check(R.id.recordedit_type_competition);
+                    break;
+            }
+            if (!TextUtils.isEmpty(certificatesEntity.getPhoto())) {
+                Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).into(recordeditImg);
+            } else recordeditImg.setVisibility(View.GONE);
+        }
+        recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.recordedit_type_meeting:
+                        addCertificate.setType(0);
+                        break;
+                    case R.id.recordedit_type_comfirm:
+                        addCertificate.setType(1);
+                        break;
+                    case R.id.recordedit_type_competition:
+                        addCertificate.setType(2);
+                        break;
+                }
+            }
+        });
+        if (addCertificate == null)
+            addCertificate = new AddCertificate(App.coachid);
         return view;
     }
 
     @OnClick(R.id.recordedit_host)
     public void onHost() {
-        fragmentCallBack.onFragmentChange(SearchFragment.newInstance(SearchFragment.TYPE_ORGANASITON));
+//        fragmentCallBack.onFragmentChange(SearchFragment.newInstance(SearchFragment.TYPE_ORGANASITON));
+        Intent toSearch = new Intent(getActivity(), SearchActivity.class);
+        toSearch.putExtra("type", SearchFragment.TYPE_ORGANASITON);
+        startActivityForResult(toSearch, 10010);
     }
 
     @OnClick(R.id.recordedit_comfirm_btn)
     public void onComplete() {
-        QcCloudClient.getApi().postApi.qcAddCertificate(
-                new AddCertificate(App.coachid, 1, "哈哈哈哈", "1", "2015-09-30", "100", "")
+        if (TextpaperUtils.isEmpty(recordEditName.getText().toString(), recordeditDate.getContent(),
+                recordeditDateoff.getContent(), recordeditHost.getContent()
+        ))
+            Toast.makeText(App.AppContex, "请填写完整信息", Toast.LENGTH_SHORT).show();
+        addCertificate.setGrade(recordeditScore.getContent());
+        addCertificate.setName(recordEditName.getText().toString());
+        QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate
         ).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+            if (qcResponse.status == ResponseResult.SUCCESS) {
+                getActivity().onBackPressed();
+            } else {
+                Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
 
+            }
         });
     }
 
+    @OnClick(R.id.recordedit_date)
+    public void onClickDate() {
+        pwTime.setOnTimeSelectListener(date -> {
+
+            recordeditDate.setContent(DateUtils.getDateDay(date));
+        });
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+    }
+
+    @OnClick(R.id.recordedit_dateoff)
+    public void onClickDateoff() {
+        pwTime.setOnTimeSelectListener(date -> {
+
+            recordeditDateoff.setContent(DateUtils.getDateDay(date));
+        });
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+    }
+
+
+    @OnClick(R.id.recordedit_upimg)
+    public void onUpdatePic() {
+        PicChooseDialog dialog = new PicChooseDialog(getActivity());
+        dialog.setListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                   dialog.dismiss();
+                                   Intent intent = new Intent();
+                                   // 指定开启系统相机的Action
+                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                                   startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                               }
+                           },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/jpeg");
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        } else {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        }
+                    }
+                }
+
+        );
+        dialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String filepath = "";
+        if (resultCode == -1) {
+            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
+                filepath = FileUtils.getPath(getActivity(), data.getData());
+            else filepath = FILE_PATH;
+            LogUtil.d(filepath);
+            Observable.just(filepath)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(s -> {
+                        File upFile = new File(s);
+                        boolean reslut = UpYunClient.upLoadImg("/certificate/", Integer.toString(App.coachid), upFile);
+                        if (reslut) {
+                            LogUtil.d("success");
+                            getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(Uri.fromFile(upFile))
+                                    .into(recordeditImg));
+                            recordeditImg.setVisibility(View.VISIBLE);
+                            addCertificate.setPhoto(UpYunClient.UPYUNPATH + "certificate/" + Integer.toString(App.coachid) + ".png");
+
+
+                        } else {
+                            Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        } else if (requestCode == 10010 && requestCode > 0) {
+            addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
+            recordeditHost.setContent(data.getStringExtra("name"));
+        }
+
+
+    }
 
     @Override
     public void onDestroyView() {

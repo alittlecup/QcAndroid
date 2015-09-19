@@ -154,7 +154,9 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @OnClick(R.id.workexpedit_gym_name)
     public void onClickGym() {
 //        startActivity(new Intent(getContext(), SplashActivity.class));
-        startActivityForResult(new Intent(getActivity(), SearchActivity.class), 10010);
+        Intent toSearch = new Intent(getActivity(), SearchActivity.class);
+        toSearch.putExtra("type", SearchFragment.TYPE_GYM);
+        startActivityForResult(toSearch, 10010);
     }
 
     @OnClick(R.id.workexpedit_start_time)
