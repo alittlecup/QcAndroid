@@ -38,6 +38,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
@@ -131,7 +132,14 @@ public class RecordEditFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
-        fragmentCallBack.onToolbarClickListener(item1 -> false);//TODO 删除该条记录
+        fragmentCallBack.onToolbarClickListener(item1 -> {
+            if (certificatesEntity != null) {
+                QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
+            }
+            return true;
+        });//TODO 删除该条记录
+        if (addCertificate == null)
+            addCertificate = new AddCertificate(App.coachid);
         if (mContent != null) {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
@@ -170,8 +178,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 }
             }
         });
-        if (addCertificate == null)
-            addCertificate = new AddCertificate(App.coachid);
+
         return view;
     }
 
@@ -191,22 +198,34 @@ public class RecordEditFragment extends BaseSettingFragment {
             Toast.makeText(App.AppContex, "请填写完整信息", Toast.LENGTH_SHORT).show();
         addCertificate.setGrade(recordeditScore.getContent());
         addCertificate.setName(recordEditName.getText().toString());
-        QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate
-        ).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+        addCertificate.setDate_of_issue(recordeditDateoff.getContent());
+        addCertificate.setCreated_at(recordeditDate.getContent());
+        if (mTitle)
+            QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
+                    .subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
+        else
+            QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate).subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
+    }
+
+    public void onResult(QcResponse qcResponse) {
+        getActivity().runOnUiThread(() -> {
             if (qcResponse.status == ResponseResult.SUCCESS) {
                 getActivity().onBackPressed();
             } else {
                 Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
-
             }
+
         });
+
     }
+
 
     @OnClick(R.id.recordedit_date)
     public void onClickDate() {
         pwTime.setOnTimeSelectListener(date -> {
 
             recordeditDate.setContent(DateUtils.getDateDay(date));
+
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
@@ -216,6 +235,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         pwTime.setOnTimeSelectListener(date -> {
 
             recordeditDateoff.setContent(DateUtils.getDateDay(date));
+
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
     }
@@ -282,7 +302,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                         }
                     });
 
-        } else if (requestCode == 10010 && requestCode > 0) {
+        } else if (requestCode == 10010 && resultCode > 0) {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
             recordeditHost.setContent(data.getStringExtra("name"));
         }

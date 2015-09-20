@@ -35,6 +35,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
@@ -52,6 +53,7 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
@@ -232,7 +234,7 @@ public class QcCloudClient {
         rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);
 
         @GET("/api/organizations/")
-        rx.Observable<QcResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
+        rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
 
     }
 
@@ -273,6 +275,13 @@ public class QcCloudClient {
 
         @POST("/api/certificates/")
         rx.Observable<QcResponse> qcAddCertificate(@Body AddCertificate addExperience);
+
+        @PUT("/api/certificates/{id}")
+        rx.Observable<QcResponse> qcEditCertificate(@Path("id") int id, @Body AddCertificate addExperience);
+
+        @DELETE("/api/certificates/{id}")
+        rx.Observable<QcResponse> qcDelCertificate(@Path("id") int id);
+
 
         @POST("/api/experiences/")
         rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);

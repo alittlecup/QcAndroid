@@ -29,6 +29,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddGymBean;
+import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -112,10 +113,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 0) {
                     searchviewClear.setVisibility(View.VISIBLE);
-                    searchresultRv.setVisibility(View.VISIBLE);
                 } else {
+                    //推荐
                     searchviewClear.setVisibility(View.GONE);
-                    searchresultRv.setVisibility(View.GONE);
+                    initRv();
+                    searchresultRv.setVisibility(View.VISIBLE);
                 }
                 LogUtil.e(s.toString());
                 keyword = s.toString();
@@ -137,17 +139,22 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
         searchresultRv.setLayoutManager(new LinearLayoutManager(getContext()));
         strings = new ArrayList<>();
-        strings.add("中国建设协会");
-        strings.add("China fit 健身");
-        strings.add("说好的健身呢");
-        strings.add("必须要包含健身");
+
         adapter = new SearchResultAdapter(strings);
         searchresultRv.setAdapter(adapter);
+        initRv();
         searchresultRv.setVisibility(View.VISIBLE);
         return view;
     }
 
-
+    public void initRv() {
+        strings.clear();
+        strings.add("中国建设协会");
+        strings.add("China fit 健身");
+        strings.add("说好的健身呢");
+        strings.add("必须要包含健身");
+        adapter.notifyDataSetChanged();
+    }
 
     @OnClick(R.id.searchview_clear)
     public void onClear() {
@@ -181,17 +188,35 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                     qcSerachGymRepsonse -> {
                         getActivity().runOnUiThread(() -> {
                             strings.clear();
+                            if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
+                                searchresultRv.setVisibility(View.VISIBLE);
                             for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
                                 strings.add(addGymBean.name);
                             }
                             adapter.setListener(((v, pos) -> {
                                 searchListener.onSearchResult(Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
                             }));
-                            adapter.notifyDataSetChanged();
+                                adapter.notifyDataSetChanged();
+                            } else searchresultRv.setVisibility(View.GONE);
                         });
                     });
         } else if (type == TYPE_ORGANASITON) {
-            QcCloudClient.getApi().getApi.qcSearchOrganization(params).subscribe();
+            QcCloudClient.getApi().getApi.qcSearchOrganization(params).subscribe(
+                    qcSearchOrganResponse ->
+                            getActivity().runOnUiThread(() -> {
+                                strings.clear();
+                                if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
+                                    searchresultRv.setVisibility(View.VISIBLE);
+                                    for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
+                                        strings.add(addGymBean.getName());
+                                    }
+                                    adapter.setListener(((v, pos) -> {
+                                        searchListener.onSearchResult(qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                    }));
+                                    adapter.notifyDataSetChanged();
+                                } else searchresultRv.setVisibility(View.GONE);
+                            })
+            );
         }
 
     }

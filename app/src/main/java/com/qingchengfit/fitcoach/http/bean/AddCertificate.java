@@ -21,12 +21,13 @@ public class AddCertificate {
     String date_of_issue;//(2015-09-01)
     String grade;
     String photo;
+    String created_at;
 
     public AddCertificate(int coach_id) {
         this.coach_id = coach_id;
     }
 
-    public AddCertificate(int coach_id, int type, String name, String organization_id, String date_of_issue, String grade, String photo) {
+    public AddCertificate(int coach_id, int type, String name, String organization_id, String date_of_issue, String grade, String photo, String created_at) {
         this.coach_id = coach_id;
         this.type = type;
         this.name = name;
@@ -34,6 +35,15 @@ public class AddCertificate {
         this.date_of_issue = date_of_issue;
         this.grade = grade;
         this.photo = photo;
+        this.created_at = created_at;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public int getCoach_id() {
