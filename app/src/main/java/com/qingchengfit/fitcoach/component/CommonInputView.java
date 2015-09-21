@@ -65,8 +65,8 @@ public class CommonInputView extends RelativeLayout {
         edit = (EditText) findViewById(R.id.commoninput_edit);
         label.setText(str_label);
         if (canClick)
-            edit.setClickable(true);
-        else edit.setClickable(false);
+            edit.setClickable(false);
+        else edit.setClickable(true);
         if (isNum)
             edit.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 

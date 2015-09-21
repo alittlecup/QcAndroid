@@ -165,7 +165,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.workexpedit_gym_name)
     public void onClickGym() {
-//        startActivity(new Intent(getContext(), SplashActivity.class));
         Intent toSearch = new Intent(getActivity(), SearchActivity.class);
         toSearch.putExtra("type", SearchFragment.TYPE_GYM);
         startActivityForResult(toSearch, 10010);

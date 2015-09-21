@@ -17,6 +17,7 @@
             android:id="@+id/workexpedit_start_time"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
             app:civ_lable="起始时间"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
@@ -25,6 +26,7 @@
             android:id="@+id/workexpedit_start_end"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
             app:civ_lable="结束时间"
             >
 
@@ -44,6 +46,7 @@
             android:id="@+id/workexpedit_gym_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
             app:civ_lable="健身房名称"
             >
 
@@ -105,6 +108,7 @@
             android:id="@+id/workexpedit_group_class"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
             app:civ_lable="团课数量(节)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
@@ -113,6 +117,7 @@
             android:id="@+id/workexpedit_group_num"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
             app:civ_lable="团课服务(人次)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
@@ -121,6 +126,7 @@
             android:id="@+id/workexpedit_private_class"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
             app:civ_lable="私教数量(节)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
@@ -129,6 +135,7 @@
             android:id="@+id/workexpedit_private_num"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
             app:civ_lable="私教服务(人次)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
@@ -137,6 +144,7 @@
             android:id="@+id/workexpedit_sale"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
             app:civ_lable="销售额(元)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>

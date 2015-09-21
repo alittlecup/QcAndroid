@@ -133,6 +133,7 @@
                 android:id="@+id/recordedit_host"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
+                app:civ_clickable="true"
                 app:civ_lable="@string/recordedit_host_organization"
                 ></com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -140,6 +141,7 @@
                 android:id="@+id/recordedit_date"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
+                app:civ_clickable="true"
                 app:civ_lable="@string/recordedit_certificate_date"
                 ></com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -213,6 +215,7 @@
                 android:id="@+id/recordedit_score"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
+                app:civ_inputnum="true"
                 app:civ_lable="@string/recordedit_score"
                 ></com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -220,6 +223,7 @@
                 android:id="@+id/recordedit_dateoff"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
+                app:civ_clickable="true"
                 app:civ_lable="@string/recordedit_certificat_time"
                 ></com.qingchengfit.fitcoach.component.CommonInputView>
 
