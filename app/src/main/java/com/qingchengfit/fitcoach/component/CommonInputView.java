@@ -24,15 +24,16 @@ import com.qingchengfit.fitcoach.R;
  * <p>
  * <p>
  * Created by Paper on 15/9/8 2015.
+ *
  */
 public class CommonInputView extends RelativeLayout {
 
     private TextView label;
     private EditText edit;
-
     private String str_label;
     private boolean isNum;
     private boolean canClick;
+
     public CommonInputView(Context context) {
         super(context);
     }
@@ -50,13 +51,10 @@ public class CommonInputView extends RelativeLayout {
     public void init(Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.layout_commoninput, this, true);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CommonInputView);
-
         str_label = ta.getString(R.styleable.CommonInputView_civ_lable);
         isNum = ta.getBoolean(R.styleable.CommonInputView_civ_inputnum, false);
         canClick = ta.getBoolean(R.styleable.CommonInputView_civ_clickable, false);
         ta.recycle();
-
-
     }
 
     @Override
@@ -76,8 +74,6 @@ public class CommonInputView extends RelativeLayout {
         }
         if (isNum)
             edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-
     }
 
     public void setLabel(String s) {
@@ -101,10 +97,4 @@ public class CommonInputView extends RelativeLayout {
         return super.onInterceptTouchEvent(ev);
     }
 
-    @Override
-    public void setOnClickListener(OnClickListener l) {
-//        edit.setFocusable(false);
-//        edit.setClickable(false);
-        super.setOnClickListener(l);
-    }
 }
