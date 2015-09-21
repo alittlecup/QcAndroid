@@ -1,10 +1,9 @@
 package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 
-import com.bigkoo.pickerview.OptionsPopupWindow;
+import com.bigkoo.pickerview.OptionsDialog;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.qingchengfit.fitcoach.http.bean.CitiesData;
@@ -32,11 +31,11 @@ public class CitiesChooser {
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
-    private OptionsPopupWindow pwOptions;
+    private OptionsDialog pwOptions;
     private OnCityChoosenListener onCityChoosenListener;
 
     public CitiesChooser(Context context) {
-        pwOptions = new OptionsPopupWindow(context);
+        pwOptions = new OptionsDialog(context);
         Gson gson = new Gson();
         CitiesData citiesData = gson.fromJson(FileUtils.getJsonFromAssert("cities.json", context), CitiesData.class);
         for (int i = 0; i < citiesData.provinces.size(); i++) {
@@ -58,9 +57,9 @@ public class CitiesChooser {
             options3Items.add(option3);
         }
         pwOptions.setPicker(options1Items, options2Items, options3Items, true);
-        pwOptions.setLabels("", "市", "");
+        pwOptions.setLabels("", "", "");
         pwOptions.setSelectOptions(3, 3, 3);
-        pwOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+        pwOptions.setOnoptionsSelectListener(new OptionsDialog.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int i, int i1, int i2) {
                 if (onCityChoosenListener != null) {
@@ -77,13 +76,15 @@ public class CitiesChooser {
     }
 
     public void show(View v) {
-        pwOptions.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-        pwOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int i, int i1, int i2) {
+//        pwOptions.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+//        pwOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int i, int i1, int i2) {
+//
+//            }
+//        });
+        pwOptions.show();
 
-            }
-        });
     }
 
 

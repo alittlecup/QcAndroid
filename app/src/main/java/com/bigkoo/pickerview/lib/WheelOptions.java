@@ -69,7 +69,7 @@ public class WheelOptions {
         wv_option3.setCurrentItem(wv_option3.getCurrentItem());// 初始化时显示的数据
 
         // 根据屏幕密度来指定选择器字体的大小(不同屏幕可能不同)
-        int textSize = (screenheight / 100) * 4;
+        int textSize = (screenheight / 100) * 3;
 
         wv_option1.TEXT_SIZE = textSize;
         wv_option2.TEXT_SIZE = textSize;
