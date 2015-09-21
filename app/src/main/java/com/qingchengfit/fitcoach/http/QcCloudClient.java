@@ -276,10 +276,10 @@ public class QcCloudClient {
         @POST("/api/certificates/")
         rx.Observable<QcResponse> qcAddCertificate(@Body AddCertificate addExperience);
 
-        @PUT("/api/certificates/{id}")
+        @PUT("/api/certificates/{id}/")
         rx.Observable<QcResponse> qcEditCertificate(@Path("id") int id, @Body AddCertificate addExperience);
 
-        @DELETE("/api/certificates/{id}")
+        @DELETE("/api/certificates/{id}/")
         rx.Observable<QcResponse> qcDelCertificate(@Path("id") int id);
 
 

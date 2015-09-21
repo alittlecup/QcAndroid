@@ -32,6 +32,7 @@ import butterknife.OnClick;
 import rx.schedulers.Schedulers;
 
 /**
+ * 新增健身房页面
  * A simple {@link Fragment} subclass.
  */
 public class AddGymFragment extends Fragment {
@@ -68,8 +69,6 @@ public class AddGymFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         citiesChooser = new CitiesChooser(getActivity());
-
-
     }
 
     @Override

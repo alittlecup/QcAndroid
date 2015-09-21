@@ -58,6 +58,9 @@ import rx.schedulers.Schedulers;
  */
 public class RecordEditFragment extends BaseSettingFragment {
     public static final String TAG = RecordEditFragment.class.getName();
+    public static final int TYPE_MEETING = 1;
+    public static final int TYPE_COMFIRM = 2;
+    public static final int TYPE_COMPETITION = 3;
     private static final String TITLE = "param1";
     private static final String CONTENT = "param2";
     private static String FILE_PATH = Configs.ExternalPath + "tmp_certificate.png";
@@ -148,13 +151,13 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordEditName.setText(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
             switch (certificatesEntity.getType()) {
-                case 0:
+                case TYPE_MEETING:
                     recordeditType.check(R.id.recordedit_type_meeting);
                     break;
-                case 1:
+                case TYPE_COMFIRM:
                     recordeditType.check(R.id.recordedit_type_comfirm);
                     break;
-                case 2:
+                case TYPE_COMPETITION:
                     recordeditType.check(R.id.recordedit_type_competition);
                     break;
             }
@@ -167,13 +170,13 @@ public class RecordEditFragment extends BaseSettingFragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.recordedit_type_meeting:
-                        addCertificate.setType(0);
+                        addCertificate.setType(TYPE_MEETING);
                         break;
                     case R.id.recordedit_type_comfirm:
-                        addCertificate.setType(1);
+                        addCertificate.setType(TYPE_COMFIRM);
                         break;
                     case R.id.recordedit_type_competition:
-                        addCertificate.setType(2);
+                        addCertificate.setType(TYPE_COMPETITION);
                         break;
                 }
             }

@@ -60,7 +60,10 @@ public class CommonInputView extends RelativeLayout {
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
         label.setText(str_label);
-        setOnClickListener(v -> edit.requestFocus());
+        setOnClickListener(v -> {
+            edit.setClickable(true);
+            edit.requestFocus();
+        });
     }
 
     public void setLabel(String s) {
@@ -77,9 +80,10 @@ public class CommonInputView extends RelativeLayout {
             edit.setSelection(c.length());
     }
 
-//    @Override
-//    public void setOnClickListener(OnClickListener l) {
+    @Override
+    public void setOnClickListener(OnClickListener l) {
 //        edit.setFocusable(false);
-//        super.setOnClickListener(l);
-//    }
+//        edit.setClickable(false);
+        super.setOnClickListener(l);
+    }
 }
