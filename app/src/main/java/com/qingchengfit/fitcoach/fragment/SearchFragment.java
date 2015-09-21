@@ -341,7 +341,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                 SpannableString ss = new SpannableString(s);
                 int pos = s.indexOf(keyword);
 
-                ss.setSpan(new ForegroundColorSpan(Color.CYAN), pos, pos + keyword.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                ss.setSpan(new ForegroundColorSpan(Color.argb(255, 32, 191, 189)), pos, pos + keyword.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.itemText.setText(ss);
             } else holder.itemText.setText(s);
         }
@@ -371,7 +371,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String s = msg.getData().getString("keyword");
-            if (s.equals(keyword))
+            if (s != null && keyword.length() > 0 && s.equals(keyword))
                 searchResult(keyword);
         }
     }
