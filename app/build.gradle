@@ -34,7 +34,7 @@ packer {
 
 def getDate() {
     def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmmss')
+    def formattedDate = date.format('yyyyMMddHHmm')
     return formattedDate
 }
 android {

@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,16 +65,19 @@ public class CommonInputView extends RelativeLayout {
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
         label.setText(str_label);
-        if (canClick)
+        if (canClick) {
             edit.setClickable(false);
-        else edit.setClickable(true);
-        if (isNum)
-            edit.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-        setOnClickListener(v -> {
+        } else {
             edit.setClickable(true);
-            edit.requestFocus();
-        });
+            setOnClickListener(v -> {
+                edit.setClickable(true);
+                edit.requestFocus();
+            });
+        }
+        if (isNum)
+            edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+
     }
 
     public void setLabel(String s) {
@@ -88,6 +92,13 @@ public class CommonInputView extends RelativeLayout {
         edit.setText(c);
         if (c != null)
             edit.setSelection(c.length());
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (canClick)
+            return true;
+        return super.onInterceptTouchEvent(ev);
     }
 
     @Override
