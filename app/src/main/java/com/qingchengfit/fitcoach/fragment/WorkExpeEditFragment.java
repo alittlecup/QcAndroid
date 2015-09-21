@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.TextpaperUtils;
@@ -24,6 +25,8 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
+
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,7 +75,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     Button workexpeditComfirmBtn;
     @Bind(R.id.rootview)
     ScrollView rootview;
-    TimePopupWindow pwTime;
+    TimeDialogWindow pwTime;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
     private AddWorkExperience addWorkExperience;
@@ -95,7 +98,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             mTitle = getArguments().getString("title");
             experiencesEntity = getArguments().getParcelable("experience");
         }
-        pwTime = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
 
     @Nullable
@@ -174,7 +177,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
             workexpeditStartTime.setContent(DateUtils.getDateDay(date));
         });
-        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
     @OnClick(R.id.workexpedit_start_end)
@@ -182,7 +185,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         pwTime.setOnTimeSelectListener(date -> {
             workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
         });
-        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
 

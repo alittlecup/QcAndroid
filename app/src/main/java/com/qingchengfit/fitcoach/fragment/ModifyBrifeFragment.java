@@ -55,10 +55,14 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     @Bind(R.id.modifybrief_inserttext)
     DrawableCenterTextView modifybriefInserttext;
     private ModifyBrifeAdapter adapter;
-
     public ModifyBrifeFragment() {
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +79,12 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         recyclerview.setAdapter(adapter);
         return view;
     }
+
+
+    public void onSave(){
+
+    }
+
 
     @OnClick(R.id.modifybrief_insertimg)
     public void onInsertImg() {

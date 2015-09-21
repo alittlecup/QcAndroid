@@ -116,7 +116,7 @@ public class AddGymFragment extends Fragment {
         QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread()).subscribe(qcAddGymResponse -> {
             getActivity().runOnUiThread(() -> {
                 if (qcAddGymResponse.status == ResponseResult.SUCCESS) {
-                    searchListener.onSearchResult(Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
+                    searchListener.onSearchResult(100, Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
                 } else {
                     Toast.makeText(getContext(), "添加失败", Toast.LENGTH_SHORT).show();
                 }

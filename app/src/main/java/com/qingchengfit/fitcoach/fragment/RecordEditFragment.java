@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,7 +90,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     ImageView recordeditImg;
     @Bind(R.id.recordedit_comfirm_btn)
     Button recordeditComfirmBtn;
-    TimePopupWindow pwTime;
+    TimeDialogWindow pwTime;
     @Bind(R.id.rootview)
     ScrollView rootview;
     private boolean mTitle;
@@ -125,7 +127,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             mTitle = getArguments().getBoolean(TITLE);
             mContent = getArguments().getString(CONTENT);
         }
-        pwTime = new TimePopupWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
 
     @Override
@@ -230,7 +232,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditDate.setContent(DateUtils.getDateDay(date));
 
         });
-        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
     @OnClick(R.id.recordedit_dateoff)
@@ -240,7 +242,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditDateoff.setContent(DateUtils.getDateDay(date));
 
         });
-        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0);
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
 
