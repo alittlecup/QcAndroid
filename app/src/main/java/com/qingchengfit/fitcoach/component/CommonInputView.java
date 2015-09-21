@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -29,7 +30,8 @@ public class CommonInputView extends RelativeLayout {
     private EditText edit;
 
     private String str_label;
-
+    private boolean isNum;
+    private boolean canClick;
     public CommonInputView(Context context) {
         super(context);
     }
@@ -49,6 +51,8 @@ public class CommonInputView extends RelativeLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CommonInputView);
 
         str_label = ta.getString(R.styleable.CommonInputView_civ_lable);
+        isNum = ta.getBoolean(R.styleable.CommonInputView_civ_inputnum, false);
+        canClick = ta.getBoolean(R.styleable.CommonInputView_civ_clickable, false);
         ta.recycle();
 
 
@@ -60,6 +64,12 @@ public class CommonInputView extends RelativeLayout {
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
         label.setText(str_label);
+        if (canClick)
+            edit.setClickable(true);
+        else edit.setClickable(false);
+        if (isNum)
+            edit.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
         setOnClickListener(v -> {
             edit.setClickable(true);
             edit.requestFocus();
