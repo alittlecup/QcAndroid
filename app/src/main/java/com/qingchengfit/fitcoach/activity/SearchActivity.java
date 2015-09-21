@@ -40,11 +40,11 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     }
 
     @Override
-    public void onSearchResult(int id, String name) {
+    public void onSearchResult(int result, int id, String name) {
         Intent it = new Intent();
         it.putExtra("id", id);
         it.putExtra("name", name);
-        setResult(100, it);
+        setResult(result, it);
         this.finish();
     }
 }

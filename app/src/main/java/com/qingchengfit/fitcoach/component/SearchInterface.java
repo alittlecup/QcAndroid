@@ -14,5 +14,5 @@ package com.qingchengfit.fitcoach.component;
  * Created by Paper on 15/9/18 2015.
  */
 public interface SearchInterface {
-    void onSearchResult(int id, String name);
+    void onSearchResult(int result, int id, String name);
 }

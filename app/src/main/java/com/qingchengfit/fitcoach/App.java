@@ -5,16 +5,24 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.qingchengfit.fitcoach.di.ApplicationComponet;
-import com.qingchengfit.fitcoach.di.ApplicationModule;
-import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
-import com.qingchengfit.fitcoach.di.RxBusModule;
 import com.qingchengfit.fitcoach.http.bean.User;
 
 import java.io.File;
 
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
+
+//import com.qingchengfit.fitcoach.di.ApplicationComponet;
+
+//import com.qingchengfit.fitcoach.di.ApplicationModule;
+
+//import com.qingchengfit.fitcoach.di.ApplicationComponet;
+
+//import rx.plugins.RxJavaErrorHandler;
+
+//import com.qingchengfit.fitcoach.di.ApplicationComponet;
+//import com.qingchengfit.fitcoach.di.ApplicationModule;
+//import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
 
 
 /**
@@ -35,22 +43,22 @@ public class App extends Application {
     public static boolean canXwalk;
     public static User gUser;
     public static int coachid;
-    private ApplicationComponet componet;
+//    private ApplicationComponet componet;
 
     public static void setgUser(User ser) {
         gUser = ser;
     }
 
-    public ApplicationComponet getComponet() {
-        if (componet != null)
-            return componet;
-        else return null;
-    }
+//    public ApplicationComponet getComponet() {
+//        if (componet != null)
+//            return componet;
+//        else return null;
+//    }
 
     //
-    public void setComponet(ApplicationComponet componet) {
-        this.componet = componet;
-    }
+//    public void setComponet(ApplicationComponet componet) {
+//        this.componet = componet;
+//    }
 
     //
     @Override
@@ -112,10 +120,10 @@ public class App extends Application {
 
     private void setupGraph() {
 
-        componet = DaggerApplicationComponet.builder()
-                .rxBusModule(new RxBusModule())
-                .applicationModule(new ApplicationModule(this))
-                .build();
+//        componet = DaggerApplicationComponet.builder()
+//                .rxBusModule(new RxBusModule())
+//                .applicationModule(new ApplicationModule(this))
+//                .build();
     }
 
 }

@@ -64,6 +64,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @Bind(R.id.searchresult_rv)
     RecyclerView searchresultRv;
     SearchResultAdapter adapter;
+    @Bind(R.id.search_hottable)
+    TextView searchHottable;
     private int type;
     private List<String> strings;
     private InternalSearchHandler handler;
@@ -148,12 +150,49 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     }
 
     public void initRv() {
-        strings.clear();
-        strings.add("中国建设协会");
-        strings.add("China fit 健身");
-        strings.add("说好的健身呢");
-        strings.add("必须要包含健身");
-        adapter.notifyDataSetChanged();
+        Map<String, String> params = new HashMap<>();
+        params.put("is_hot", "1");
+
+        if (type == TYPE_GYM) {
+
+            QcCloudClient.getApi().getApi.qcSearchGym(params).subscribe(
+                    qcSerachGymRepsonse -> {
+                        getActivity().runOnUiThread(() -> {
+                            strings.clear();
+                            if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
+                                searchHottable.setText("热门健身房");
+                                searchresultRv.setVisibility(View.VISIBLE);
+                                for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
+                                    strings.add(addGymBean.name);
+                                }
+                                adapter.setListener(((v, pos) -> {
+                                    searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                }));
+                                adapter.notifyDataSetChanged();
+                            } else searchresultRv.setVisibility(View.GONE);
+                        });
+                    });
+        } else if (type == TYPE_ORGANASITON) {
+            QcCloudClient.getApi().getApi.qcSearchOrganization(params).subscribe(
+                    qcSearchOrganResponse ->
+                            getActivity().runOnUiThread(() -> {
+                                strings.clear();
+                                if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
+                                    searchHottable.setText("热门机构");
+                                    searchresultRv.setVisibility(View.VISIBLE);
+                                    for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
+                                        strings.add(addGymBean.getName());
+                                    }
+                                    adapter.setListener(((v, pos) -> {
+                                        searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                    }));
+                                    adapter.notifyDataSetChanged();
+                                } else searchresultRv.setVisibility(View.GONE);
+                            })
+            );
+        }
+
+
     }
 
     @OnClick(R.id.searchview_clear)
@@ -172,6 +211,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     }
 
 
+    @OnClick(R.id.searchview_cancle)
+    public void onCancle() {
+        searchListener.onSearchResult(-100, 0, "");
+    }
+
     /**
      * 搜索健身房
      *
@@ -189,13 +233,14 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                         getActivity().runOnUiThread(() -> {
                             strings.clear();
                             if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
+                                searchHottable.setText("搜索结果");
                                 searchresultRv.setVisibility(View.VISIBLE);
-                            for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
-                                strings.add(addGymBean.name);
-                            }
-                            adapter.setListener(((v, pos) -> {
-                                searchListener.onSearchResult(Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
-                            }));
+                                for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
+                                    strings.add(addGymBean.name);
+                                }
+                                adapter.setListener(((v, pos) -> {
+                                    searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                }));
                                 adapter.notifyDataSetChanged();
                             } else searchresultRv.setVisibility(View.GONE);
                         });
@@ -206,12 +251,13 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                             getActivity().runOnUiThread(() -> {
                                 strings.clear();
                                 if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
+                                    searchHottable.setText("搜索结果");
                                     searchresultRv.setVisibility(View.VISIBLE);
                                     for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
                                         strings.add(addGymBean.getName());
                                     }
                                     adapter.setListener(((v, pos) -> {
-                                        searchListener.onSearchResult(qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                        searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
                                     }));
                                     adapter.notifyDataSetChanged();
                                 } else searchresultRv.setVisibility(View.GONE);
@@ -291,6 +337,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             holder.itemView.setTag(position);
             String s = datas.get(position);
             if (!TextUtils.isEmpty(keyword) && s.contains(keyword)) {
+
                 SpannableString ss = new SpannableString(s);
                 int pos = s.indexOf(keyword);
 

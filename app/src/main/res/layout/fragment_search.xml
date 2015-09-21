@@ -56,6 +56,7 @@
         >
 
         <TextView
+            android:id="@+id/search_hottable"
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/qc_item_height"

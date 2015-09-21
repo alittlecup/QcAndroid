@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 // This does not break the build when Android Studio is missing the JRebel for Android plugin.
-apply plugin: 'com.zeroturnaround.jrebel.android'
-apply plugin: 'com.android.databinding'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.zeroturnaround.jrebel.android'
+//apply plugin: 'com.android.databinding'
+//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'packer'                     //版本管理 多渠道打包
+//apply plugin: 'packer'                     //版本管理 多渠道打包
 
 
 
@@ -15,8 +15,8 @@ apply plugin: 'packer'                     //版本管理 多渠道打包
 //        resourcePackageName 'com.qingchengfit.fitcoach'//TODO 注意这里要设置当前项目的包名
 //    }
 //}
-def buildNumber = "1"
-
+//def buildNumber = "1"
+/*
 packer {
     // 指定渠道打包输出目录
 //    archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
@@ -30,7 +30,7 @@ packer {
     buildNumberTypeMatcher = ['release', 'beta']
 
 }
-
+*/
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -123,9 +123,9 @@ repositories {
     }
 }
 dependencies {
-    compile 'com.google.dagger:dagger:2.0.1'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
-    compile 'org.glassfish:javax.annotation:10.0-b28'
+//    compile 'com.google.dagger:dagger:2.0.1'
+//    apt 'com.google.dagger:dagger-compiler:2.0.1'
+//    compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
