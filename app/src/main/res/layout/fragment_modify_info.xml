@@ -124,7 +124,7 @@
         android:id="@+id/mofifyinfo_city"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        app:civ_clickable="false"
+        app:civ_clickable="true"
         app:civ_lable="城市"
         >
 
@@ -148,8 +148,6 @@
         android:visibility="gone"
         app:civ_lable="微博"
         >
-
-
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
 

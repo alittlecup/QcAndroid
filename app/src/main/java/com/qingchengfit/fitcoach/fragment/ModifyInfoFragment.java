@@ -32,6 +32,7 @@ import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -107,6 +108,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private FragmentManager mFragmentManager;
     private Coach coach;
 
+    private CitiesChooser citiesChooser;
 
     public ModifyInfoFragment() {
         // Required empty public constructor
@@ -138,6 +140,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mFragmentManager = getChildFragmentManager();
+        citiesChooser = new CitiesChooser(getContext());
     }
 
     @Override
@@ -152,11 +155,10 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id)).subscribe(
                 qcCoachRespone -> {
                     user = qcCoachRespone.getData().getCoach();
-                    getActivity().runOnUiThread(() -> initInfo());
+                    getActivity().runOnUiThread(this::initInfo);
 
                 }
         );
-//        initInfo();
         return view;
     }
 
@@ -195,6 +197,16 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         }
 
     }
+
+    @OnClick(R.id.mofifyinfo_city)
+    public void onClickCity() {
+        citiesChooser.setOnCityChoosenListener((provice, city, district, id) -> {
+            mofifyinfoCity.setContent(provice + city);
+        });
+        citiesChooser.show(modifyinfoBrief);
+
+    }
+
 
     @OnClick(R.id.modifyinfo_header_pic)
     public void onChangeHeader() {

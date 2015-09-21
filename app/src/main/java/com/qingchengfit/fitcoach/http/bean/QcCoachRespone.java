@@ -17,7 +17,7 @@ public class QcCoachRespone extends QcResponse {
 
 
     /**
-     * data : {"coach":{"username":"测试","phone":"15123358198","weixin":"","description":"","city":"","short_description":"","gender":0,"id":6,"avatar":""}}
+     * data : {"coach":{"username":"黄三三","phone":"15123358198","weixin":"哈哈哈","description":"","city":"北京市","short_description":"我不是教练","gender":0,"id":2,"avatar":"http://zoneke-img.b0.upaiyun.com//2015/9/1442461927.jpg.jpg"}}
      */
 
     private DataEntity data;
@@ -32,7 +32,7 @@ public class QcCoachRespone extends QcResponse {
 
     public static class DataEntity {
         /**
-         * coach : {"username":"测试","phone":"15123358198","weixin":"","description":"","city":"","short_description":"","gender":0,"id":6,"avatar":""}
+         * coach : {"username":"黄三三","phone":"15123358198","weixin":"哈哈哈","description":"","city":"北京市","short_description":"我不是教练","gender":0,"id":2,"avatar":"http://zoneke-img.b0.upaiyun.com//2015/9/1442461927.jpg.jpg"}
          */
 
         private CoachEntity coach;
@@ -47,15 +47,15 @@ public class QcCoachRespone extends QcResponse {
 
         public static class CoachEntity {
             /**
-             * username : 测试
+             * username : 黄三三
              * phone : 15123358198
-             * weixin :
+             * weixin : 哈哈哈
              * description :
-             * city :
-             * short_description :
+             * city : 北京市
+             * short_description : 我不是教练
              * gender : 0
-             * id : 6
-             * avatar :
+             * id : 2
+             * avatar : http://zoneke-img.b0.upaiyun.com//2015/9/1442461927.jpg.jpg
              */
 
             private String username;
