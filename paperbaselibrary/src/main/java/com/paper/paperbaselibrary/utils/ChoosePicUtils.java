@@ -67,11 +67,12 @@ public class ChoosePicUtils {
      */
     public static File choosePicFileCtl(Context context, int requestcode, Intent data, String fp) {
         String filepath = null;
-        if (requestcode == CHOOSE_GALLERY) {
+        if (requestcode == CHOOSE_GALLERY || requestcode / 100 == 3) {
             filepath = FileUtils.getPath(context, data.getData());
-        } else if (requestcode == CHOOSE_CAMERA) {
+        } else if (requestcode == CHOOSE_CAMERA || requestcode / 100 == 2) {
             filepath = fp;
-        }
+        } else filepath = fp;
+
         return new File(filepath);
     }
 

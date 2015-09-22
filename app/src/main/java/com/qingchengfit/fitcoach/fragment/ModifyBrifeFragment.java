@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -25,7 +24,6 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.HTMLUtils;
-import com.qingchengfit.fitcoach.activity.TextInputActivity;
 import com.qingchengfit.fitcoach.bean.BriefInfo;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
@@ -53,6 +51,10 @@ import rx.schedulers.Schedulers;
 public class ModifyBrifeFragment extends BaseSettingFragment {
 
     public static int INSERT_TEXT = 1;
+    public static int INSERT_PIC_CAMERA = 101;
+    public static int INSERT_PIC_GALLEY = 102;
+    public static int CHANGE_PIC_CAMERA = 103;
+    public static int CHANGE_PIC_GALLEY = 104;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     private List<BriefInfo> mListData = new ArrayList<>();
@@ -105,7 +107,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             @Override
             public void onItemClick(View v, int pos) {
                 if (!TextUtils.isEmpty(mListData.get(pos).getImg())) {
-                    onInsertImg();
+                    choosePic(pos);
                 } else {
                     mTextInputDialog.setOnOkListener(v1 -> {
                         mListData.get(pos).setText(mTextInputDialog.getContent());
@@ -147,9 +149,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                 });
     }
 
-
-    @OnClick(R.id.modifybrief_insertimg)
-    public void onInsertImg() {
+    public void choosePic(int type) {
         PicChooseDialog dialog = new PicChooseDialog(getActivity());
         dialog.setListener(new View.OnClickListener() {
                                @Override
@@ -160,7 +160,9 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                                    intent.addCategory(Intent.CATEGORY_DEFAULT);
                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                                   startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                                   if (type == -100)
+                                       startActivityForResult(intent, INSERT_PIC_CAMERA);
+                                   else startActivityForResult(intent, 200 + type);
                                }
                            },
                 new View.OnClickListener() {
@@ -170,17 +172,24 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
                         intent.setType("image/jpeg");
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        if (type == -100)
                             startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        } else {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        }
+                        else startActivityForResult(intent, 300 + type);
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+//                        } else {
+//                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+//                        }
                     }
                 }
 
         );
         dialog.show();
+    }
+
+    @OnClick(R.id.modifybrief_insertimg)
+    public void onInsertImg() {
+        choosePic(-100);
     }
 
     @OnClick(R.id.modifybrief_inserttext)
@@ -197,14 +206,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == INSERT_TEXT) {
-            if (resultCode >= 0) {
-                mListData.add(new BriefInfo(data.getStringExtra(TextInputActivity.FIX_TEXT), null));
-                adapter.notifyDataSetChanged();
-            }
-
-
-        } else if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
+        if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
             Observable.just(f)
                     .subscribeOn(Schedulers.newThread())
@@ -226,6 +228,26 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                                 });
                     });
 
+        } else {
+            File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
+            Observable.just(f)
+                    .subscribeOn(Schedulers.newThread())
+                    .subscribe(s -> {
+                        String filename = UUID.randomUUID().toString();
+                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
+                        Observable.just(reslut)
+                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .subscribe(aBoolean -> {
+                                    if (aBoolean) {
+
+                                        mListData.get(requestCode % 100).setImg(UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
+                                        adapter.notifyDataSetChanged();
+                                    } else {
+                                        Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                });
+                    });
         }
 
 
