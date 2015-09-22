@@ -228,9 +228,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_date)
     public void onClickDate() {
         pwTime.setOnTimeSelectListener(date -> {
-
             recordeditDate.setContent(DateUtils.getDateDay(date));
-
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
@@ -238,9 +236,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_dateoff)
     public void onClickDateoff() {
         pwTime.setOnTimeSelectListener(date -> {
-
             recordeditDateoff.setContent(DateUtils.getDateDay(date));
-
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }

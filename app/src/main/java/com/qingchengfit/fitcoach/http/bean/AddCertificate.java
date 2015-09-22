@@ -22,6 +22,8 @@ public class AddCertificate {
     String grade;
     String photo;
     String created_at;
+    String start;
+    String end;
 
     public AddCertificate(int coach_id) {
         this.coach_id = coach_id;
@@ -36,6 +38,22 @@ public class AddCertificate {
         this.grade = grade;
         this.photo = photo;
         this.created_at = created_at;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public String getCreated_at() {

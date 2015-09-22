@@ -39,8 +39,9 @@ public class HTMLUtils {
 
         InputStream xml = new ByteArrayInputStream(s.getBytes());
         //XmlPullParserFactory pullPaser = XmlPullParserFactory.newInstance();
-        ArrayList<BriefInfo> persons = null;
+        ArrayList<BriefInfo> persons = new ArrayList<>();
         BriefInfo breif = null;
+        boolean isImg = false;
         // 创建一个xml解析的工厂
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
         // 获得xml解析类的引用
@@ -55,15 +56,21 @@ public class HTMLUtils {
                 case XmlPullParser.START_TAG:
                     breif = new BriefInfo();
                     if ("p".equals(parser.getName())) {
-
-                        // 取出属性值
-                        String content = parser.getText();
-                        breif.setText(content);
+                        isImg = false;
                     } else if ("img".equals(parser.getName())) {
-                        String img = parser.getText();
-                        breif.setImg(img);
+                        isImg = true;
                     }
 
+                    break;
+                case XmlPullParser.TEXT:
+                    if (isImg) {
+                        String img = parser.getText();
+                        String img_out = img.substring(6, img.length() - 2);
+                        breif.setImg(img_out);
+                    } else {
+                        String content = parser.getText();
+                        breif.setText(content);
+                    }
                     break;
                 case XmlPullParser.END_TAG:
                     persons.add(breif);
@@ -82,7 +89,7 @@ public class HTMLUtils {
      * @return
      */
 
-    public String toHTML(List<BriefInfo> list) {
+    public static String toHTML(List<BriefInfo> list) {
         StringBuffer sb = new StringBuffer();
         for (BriefInfo info : list) {
             if (TextUtils.isEmpty(info.getImg())) {
@@ -95,7 +102,7 @@ public class HTMLUtils {
                 sb.append("\" </img>");
             }
         }
-        return "";
+        return sb.toString();
     }
 
 

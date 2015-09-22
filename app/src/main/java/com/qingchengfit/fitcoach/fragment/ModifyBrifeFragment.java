@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.HTMLUtils;
 import com.qingchengfit.fitcoach.activity.TextInputActivity;
 import com.qingchengfit.fitcoach.bean.BriefInfo;
-import com.qingchengfit.fitcoach.component.DrawableCenterTextView;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.http.bean.ModifyDes;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,42 +53,98 @@ import rx.schedulers.Schedulers;
 public class ModifyBrifeFragment extends BaseSettingFragment {
 
     public static int INSERT_TEXT = 1;
-    public List<BriefInfo> listData = new ArrayList<>();
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.modifybrief_insertimg)
-    DrawableCenterTextView modifybriefInsertimg;
-    @Bind(R.id.modifybrief_inserttext)
-    DrawableCenterTextView modifybriefInserttext;
+    private List<BriefInfo> mListData = new ArrayList<>();
     private ModifyBrifeAdapter adapter;
+    private String mBrifeData;
+    private TextInputDialog mTextInputDialog;
+
+
     public ModifyBrifeFragment() {
     }
 
+    public static ModifyBrifeFragment newInstance(String data) {
+
+        Bundle args = new Bundle();
+        args.putString("brifedata", data);
+        ModifyBrifeFragment fragment = new ModifyBrifeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mBrifeData = getArguments().getString("brifedata");
+            try {
+                mListData.addAll(HTMLUtils.fromHTML(mBrifeData));
+            } catch (Exception e) {
+                LogUtil.e("error:" + e.getMessage() + "  :" + e.getCause());
+            }
+        }
+
+        mTextInputDialog = new TextInputDialog(getContext());
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_brief, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, 0, "自我介绍");
+        fragmentCallBack.onToolbarMenu(R.menu.menu_save, 0, "自我介绍");
+        fragmentCallBack.onToolbarClickListener(item -> {
+            onSave();
+            return true;
+        });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listData.add(new BriefInfo(getString(R.string.test_test_short), null));
-        listData.add(new BriefInfo(getString(R.string.test_test_short), null));
-        listData.add(new BriefInfo(null, "http://zoneke-img.b0.upaiyun.com/header/123123/IMG_20150812_182222716.jpg"));
-
-        adapter = new ModifyBrifeAdapter(listData);
+        adapter = new ModifyBrifeAdapter(mListData);
+        adapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                if (!TextUtils.isEmpty(mListData.get(pos).getImg())) {
+                    onInsertImg();
+                } else {
+                    mTextInputDialog.setOnOkListener(v1 -> {
+                        mListData.get(pos).setText(mTextInputDialog.getContent());
+                        mTextInputDialog.dismiss();
+                        adapter.notifyDataSetChanged();
+//                        QcCloudClient.getApi().postApi.qcModifyDes(App.coachid,new ModifyDes(HTMLUtils.toHTML(mListData)))
+//                            .subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
+//                            if (qcResponse.status == ResponseResult.SUCCESS){
+//
+//                                getActivity().runOnUiThread(() -> {
+//
+//                                });
+//
+//                            }else {
+//                                Toast.makeText(App.AppContex,"修改失败,请稍后重试",Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+                    });
+                    mTextInputDialog.show();
+                }
+            }
+        });
         recyclerview.setAdapter(adapter);
         return view;
     }
 
 
     public void onSave(){
+        QcCloudClient.getApi().postApi.qcModifyDes(App.coachid, new ModifyDes(HTMLUtils.toHTML(mListData))).subscribeOn(Schedulers.newThread())
+                .subscribe(qcResponse -> {
+                    getActivity().runOnUiThread(() -> {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            getActivity().onBackPressed();
+                        } else {
+                            Toast.makeText(App.AppContex, "", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
+                });
     }
 
 
@@ -123,8 +185,13 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 
     @OnClick(R.id.modifybrief_inserttext)
     public void onInsertText() {
-        Intent toInput = new Intent(getActivity(), TextInputActivity.class);
-        startActivityForResult(toInput, INSERT_TEXT);
+        mTextInputDialog.setOnOkListener(v -> {
+            mListData.add(new BriefInfo(mTextInputDialog.getContent(), null));
+            mTextInputDialog.dismiss();
+            adapter.notifyDataSetChanged();
+
+        });
+        mTextInputDialog.show();
     }
 
     @Override
@@ -132,7 +199,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INSERT_TEXT) {
             if (resultCode >= 0) {
-                listData.add(new BriefInfo(data.getStringExtra(TextInputActivity.FIX_TEXT), null));
+                mListData.add(new BriefInfo(data.getStringExtra(TextInputActivity.FIX_TEXT), null));
                 adapter.notifyDataSetChanged();
             }
 
@@ -148,8 +215,9 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                                 .subscribeOn(AndroidSchedulers.mainThread())
                                 .subscribe(aBoolean -> {
                                     if (aBoolean) {
+
                                         BriefInfo briefInfo = new BriefInfo(null, UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
-                                        listData.add(briefInfo);
+                                        mListData.add(briefInfo);
                                         adapter.notifyDataSetChanged();
                                     } else {
                                         Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
@@ -203,11 +271,11 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 
     }
 
-    class ModifyBrifeAdapter extends RecyclerView.Adapter<ModifyBrifeVH> {
+    class ModifyBrifeAdapter extends RecyclerView.Adapter<ModifyBrifeVH> implements View.OnClickListener {
 
 
         private List<BriefInfo> datas;
-
+        private OnRecycleItemClickListener listener;
         public ModifyBrifeAdapter(List datas) {
             this.datas = datas;
         }
@@ -216,27 +284,32 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         public ModifyBrifeVH onCreateViewHolder(ViewGroup parent, int viewType) {
             ModifyBrifeVH brifeVH = new ModifyBrifeVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_modifybrief, parent, false));
             brifeVH.itemModifybriefDel.setOnClickListener(v -> {
-                this.notifyItemRemoved(brifeVH.OnDelclick(listData));
+                this.notifyItemRemoved(brifeVH.OnDelclick(mListData));
                 this.notifyDataSetChanged();
             });
             brifeVH.itemModifybriefUp.setOnClickListener(v -> {
-                int pos = brifeVH.OnUpClick(listData);
+                int pos = brifeVH.OnUpClick(mListData);
                 this.notifyItemMoved(pos, pos - 1);
                 this.notifyItemChanged(pos);
                 this.notifyItemChanged(pos - 1);
             });
             brifeVH.itemModifybriefDown.setOnClickListener(v -> {
-                int pos = brifeVH.OnDownClick(listData);
+                int pos = brifeVH.OnDownClick(mListData);
                 this.notifyItemMoved(pos, pos + 1);
                 this.notifyItemChanged(pos);
                 this.notifyItemChanged(pos + 1);
             });
+            brifeVH.itemView.setOnClickListener(this);
             return brifeVH;
         }
 
+        public void setListener(OnRecycleItemClickListener listener) {
+            this.listener = listener;
+        }
 
         @Override
         public void onBindViewHolder(ModifyBrifeVH holder, int position) {
+            holder.itemView.setTag(position);
             BriefInfo briefInfo = datas.get(position);
             if (position == 0)
                 holder.itemModifybriefUp.setEnabled(false);
@@ -247,22 +320,6 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             else holder.itemModifybriefDown.setEnabled(true);
 
             if (briefInfo.getImg() != null) {
-
-//                ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(briefInfo.getImg()))
-//                        .setPostprocessor(new BasePostprocessor() {
-//                            @Override
-//                            public void process(Bitmap bitmap) {
-//                                super.process(bitmap);
-//                                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                                        bitmap.getHeight()*holder.itemModifybriefImg.getWidth()/bitmap.getWidth());
-//                                holder.itemModifybriefImg.setLayoutParams(layoutParams);
-//                            }
-//                        })
-//                        .build();
-//                DraweeController controller = Fresco.newDraweeControllerBuilder()
-//                        .setImageRequest(request)
-//                        .setTapToRetryEnabled(true)
-//                        .build();
                 Glide.with(App.AppContex).load(briefInfo.getImg()).into(holder.itemModifybriefImg);
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
@@ -277,6 +334,11 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         @Override
         public int getItemCount() {
             return datas.size();
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onItemClick(v, (int) v.getTag());
         }
     }
 

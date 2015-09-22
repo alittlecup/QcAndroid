@@ -15,6 +15,8 @@ import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
+import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
+import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
@@ -265,7 +267,7 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
 
         @PUT("/api/coaches/{id}/")
-        rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body QcCoachRespone.DataEntity.CoachEntity coachEntity);
+        rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body ModifyCoachInfo coachInfo);
 
         @POST("/api/coaches/{id}/change/password/")
         rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
@@ -295,7 +297,11 @@ public class QcCloudClient {
         @POST("/api/organizations/")
         rx.Observable<QcResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
 
+        @POST("/api/coaches/{id}/change/phone/")
+        rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
 
+        @POST("/api/coaches/{id}/change/description/")
+        rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);
     }
 
     public interface DownLoadApi {

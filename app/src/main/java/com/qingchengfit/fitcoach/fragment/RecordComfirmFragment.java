@@ -16,6 +16,7 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 
@@ -78,10 +79,6 @@ public class RecordComfirmFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-
-    public interface OnRecycleItemClickListener {
-        public void onItemClick(View v, int pos);
-    }
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
         @Bind(R.id.recordcomfirm_title)

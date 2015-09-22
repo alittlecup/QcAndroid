@@ -38,6 +38,7 @@ import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
@@ -103,11 +104,10 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private String mParam1;
     private String mParam2;
     private QcCoachRespone.DataEntity.CoachEntity user;
-
+    private ModifyCoachInfo mModifyCoachInfo;
 
     private FragmentManager mFragmentManager;
     private Coach coach;
-
     private CitiesChooser citiesChooser;
 
     public ModifyInfoFragment() {
@@ -141,6 +141,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         }
         mFragmentManager = getChildFragmentManager();
         citiesChooser = new CitiesChooser(getContext());
+        mModifyCoachInfo = new ModifyCoachInfo();
     }
 
     @Override
@@ -149,33 +150,35 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_modify_info, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "修改资料");
-//        modifyinfoHeaderPic.setImageURI(Uri.parse(user.avatar));
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id)).subscribe(
                 qcCoachRespone -> {
                     user = qcCoachRespone.getData().getCoach();
                     getActivity().runOnUiThread(this::initInfo);
-
                 }
         );
         return view;
     }
 
+    /**
+     * 初始化个人信息
+     */
     private void initInfo() {
         initHead();
-        mofifyinfoCity.setContent(user.getCity());
+        if (user.getDistrict() != null && user.getDistrict().province != null) {
+            mofifyinfoCity.setContent(user.getDistrict().province.name + user.getDistrict().city.name);
+            mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
+        }
         mofifyinfoName.setContent(user.getUsername());
         mofifyinfoWechat.setContent(user.getWeixin());
 //        mofifyinfoWeibo.setContent(user.get);
         modifyinfoSignEt.setText(user.getShort_description());
-        compleGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.comple_gender_male) {
-                    user.setGender(0);
-                } else user.setGender(1);
-            }
+        mModifyCoachInfo.setGender(user.getGender());
+        compleGender.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.comple_gender_male) {
+                mModifyCoachInfo.setGender(0);
+            } else mModifyCoachInfo.setGender(1);
         });
     }
 
@@ -198,10 +201,14 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     }
 
+    /**
+     * 修改城市
+     */
     @OnClick(R.id.mofifyinfo_city)
     public void onClickCity() {
         citiesChooser.setOnCityChoosenListener((provice, city, district, id) -> {
             mofifyinfoCity.setContent(provice + city);
+            mModifyCoachInfo.setDistrict_id(Integer.toString(id));
         });
         citiesChooser.show(modifyinfoBrief);
 
@@ -210,43 +217,27 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     @OnClick(R.id.modifyinfo_header_pic)
     public void onChangeHeader() {
-//        MaterialDialog mMaterialDialog = new MaterialDialog(getActivity());
-//        mMaterialDialog.setTitle("请选择拍照或相册")
-//                .setPositiveButton("拍照", view -> {
-//                    mMaterialDialog.dismiss();
-//                    goCamera();
-//                })
-//                .setNegativeButton("相册", view -> {
-//                    mMaterialDialog.dismiss();
-//                    goGalley();
-//                });
-//        mMaterialDialog.show();
-        PicChooseDialog dialog = new PicChooseDialog(getActivity());
-        dialog.setListener(new View.OnClickListener() {
-                               @Override
-                               public void onClick(View v) {
-                                   dialog.dismiss();
-                                   Intent intent = new Intent();
-                                   // 指定开启系统相机的Action
-                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                                   startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
-                               }
-                           },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("image/jpeg");
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        } else {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        }
+        PicChooseDialog dialog = new PicChooseDialog(getActivity());
+        dialog.setListener(v -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent();
+                    // 指定开启系统相机的Action
+                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                    startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                },
+                v -> {
+                    //图片选择
+                    dialog.dismiss();
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("image/jpeg");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                    } else {
+                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
                     }
                 }
 
@@ -284,21 +275,27 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         Uri uri = Uri.fromFile(file);
 //         设置系统相机拍摄照片完成后图片文件的存放地址
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
         startActivityForResult(intent, SELECT_CAM);
     }
 
+    /**
+     * 修改简介
+     */
     @OnClick(R.id.modifyinfo_brief)
     public void onClickBrief() {
-        fragmentCallBack.onFragmentChange(new ModifyBrifeFragment());
+        fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(user.getDescription()));
     }
 
+
+    /**
+     * 确认修改
+     */
     @OnClick(R.id.modifyinfo_comfirm)
     public void onComfirm() {
-        user.setCity(mofifyinfoCity.getContent());
-        user.setWeixin(mofifyinfoWechat.getContent());
-        user.setShort_description(modifyinfoSignEt.getText().toString());
-        QcCloudClient.getApi().postApi.qcModifyCoach(Integer.parseInt(coach.id), user)
+
+        mModifyCoachInfo.setWeixin(mofifyinfoWechat.getContent());
+        mModifyCoachInfo.setShort_description(modifyinfoSignEt.getText().toString());
+        QcCloudClient.getApi().postApi.qcModifyCoach(Integer.parseInt(coach.id), mModifyCoachInfo)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(qcResponse -> {
                     if (qcResponse.status == ResponseResult.SUCCESS) {
@@ -334,7 +331,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                             getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(Uri.fromFile(upFile))
                                     .transform(new GlideCircleTransform(App.AppContex))
                                     .into(modifyinfoHeaderPic));
-                            user.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
+                            mModifyCoachInfo.setPhoto(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
 
 
                         } else {

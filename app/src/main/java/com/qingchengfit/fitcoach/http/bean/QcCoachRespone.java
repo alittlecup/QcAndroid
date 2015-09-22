@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * power by
  * <p>
@@ -62,11 +64,19 @@ public class QcCoachRespone extends QcResponse {
             private String phone;
             private String weixin;
             private String description;
-            private String city;
+            private DistrictEntity district;
             private String short_description;
             private int gender;
             private int id;
             private String avatar;
+
+            public DistrictEntity getDistrict() {
+                return district;
+            }
+
+            public void setDistrict(DistrictEntity district) {
+                this.district = district;
+            }
 
             public String getUsername() {
                 return username;
@@ -100,13 +110,7 @@ public class QcCoachRespone extends QcResponse {
                 this.description = description;
             }
 
-            public String getCity() {
-                return city;
-            }
 
-            public void setCity(String city) {
-                this.city = city;
-            }
 
             public String getShort_description() {
                 return short_description;
@@ -137,8 +141,23 @@ public class QcCoachRespone extends QcResponse {
             }
 
             public void setAvatar(String avatar) {
+
                 this.avatar = avatar;
             }
+
+            public static class DistrictEntity {
+                @SerializedName("province")
+                public ProvinceBean province;
+                @SerializedName("city")
+                public CityBean city;
+                @SerializedName("id")
+                public String id;
+                @SerializedName("name")
+                public String name;
+
+            }
+
+
         }
     }
 }

@@ -32,19 +32,20 @@
             android:layout_alignBaseline="@id/header_icon"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/header_icon"
+            android:drawablePadding="90dp"
+            android:drawableRight="@drawable/ic_arrow_right_white"
             android:text="MARK DOWN"
             android:textColor="@color/white"
             android:textSize="16sp"
             />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/drawer_name"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_right_white"
-            />
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:src="@drawable/ic_arrow_right_white"-->
+        <!--/>-->
     </RelativeLayout>
 
     <ScrollView
