@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentJudgeFragment extends Fragment {
+public class StudentJudgeFragment extends BaseFragment {
 
     public static final String TAGS = "tags";
     public static final String EVALUATE = "EvaluateEntitys";
@@ -76,6 +76,16 @@ public class StudentJudgeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_judge, container, false);
         ButterKnife.bind(this, view);
+        isPrepared = true;
+        lazyLoad();
+        return view;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible)
+            return;
+
         if (mTags != null && mEntityls != null) {
             studentJudgeCoachScore.setText(mEntityls.getEvaluate().getCoach_score() + "");
             studentJudgeCoachStar.setRating((float) mEntityls.getEvaluate().getCoach_score());
@@ -115,14 +125,9 @@ public class StudentJudgeFragment extends Fragment {
 
             });
         }
-        return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-    }
 
     @Override
     public void onDestroyView() {

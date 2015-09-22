@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecordComfirmFragment extends Fragment {
+public class RecordComfirmFragment extends BaseFragment {
 
 
     @Bind(R.id.recyclerview)
@@ -45,6 +45,15 @@ public class RecordComfirmFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
+        isPrepared = true;
+        lazyLoad();
+        return view;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || isVisible)
+            return;
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
@@ -54,7 +63,6 @@ public class RecordComfirmFragment extends Fragment {
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
                         ComfirmDetailFragment fragment =
-//                            ComfirmDetailFragment.newInstance(1);
                                 ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
 
                         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
@@ -64,7 +72,6 @@ public class RecordComfirmFragment extends Fragment {
                 }
             });
         });
-        return view;
     }
 
     @Override

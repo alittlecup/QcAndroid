@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WorkExperienceFragment extends Fragment {
+public class WorkExperienceFragment extends BaseFragment {
 
 
     @Bind(R.id.recyclerview)
@@ -38,7 +38,6 @@ public class WorkExperienceFragment extends Fragment {
     private WorkExperiencAdapter adapter;
 
     public WorkExperienceFragment() {
-        // Required empty public constructor
     }
 
 
@@ -48,6 +47,16 @@ public class WorkExperienceFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
+        isPrepared = true;
+        lazyLoad();
+        return view;
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (!isPrepared || isVisible) {
+            return;
+        }
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
@@ -56,7 +65,6 @@ public class WorkExperienceFragment extends Fragment {
                             recyclerview.setAdapter(adapter);
                         })
         );
-        return view;
     }
 
     @Override

@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
@@ -37,6 +36,7 @@ import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
@@ -285,14 +285,14 @@ public class MainActivity extends BaseAcitivity {
         if (TextUtils.isEmpty(user.avatar)) {
             Glide.with(App.AppContex)
                     .load(gender)
-                    .transform(new GlideCircleTransform(App.AppContex))
-                    .into(headerIcon);
+                    .asBitmap()
+                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
         } else {
             Glide.with(App.AppContex)
                     .load(user.avatar)
+                    .asBitmap()
                     .placeholder(gender)
-                    .transform(new GlideCircleTransform(App.AppContex))
-                    .into(headerIcon);
+                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
         }
 
 
