@@ -107,11 +107,12 @@ public class RegisterFragment extends Fragment {
         });
         registePhoneNum.setHint(getString(R.string.logint_phonenum_hint));
         registePhoneVerity.setHint(getString(R.string.login_checkcode_hint));
-        mRecieveMsgOb = RxBus.getBus().register(RecieveMsg.class);
-        mRecieveMsgOb.subscribe(recieveMsg -> registePhoneVerity.getEditText().setText(recieveMsg.getCode()));
+//        mRecieveMsgOb = RxBus.getBus().register(RecieveMsg.class);
+//        mRecieveMsgOb.subscribe(recieveMsg -> registePhoneVerity.getEditText().setText(recieveMsg.getCode()));
 
-        mSendsmsOb = RxBus.getBus().register(SendSmsCode.class);
-        mSendsmsOb.subscribe(sendSmsCode -> handler.sendEmptyMessage(0));
+        mSendsmsOb = RxBus.getBus().register(SendSmsCode.class.getName(), SendSmsCode.class);
+        mSendsmsOb.subscribe(sendSmsCode ->
+                handler.sendEmptyMessage(0));
         registeBtn.setOnClickListener(
                 view1 -> {
                     String userName = "";
@@ -210,6 +211,8 @@ public class RegisterFragment extends Fragment {
         );
 
         registeGetcodeBtn.setOnClickListener(view2 -> {
+            if (registePhoneNum.getEditText() == null)
+                return;
             String phone2 = registePhoneNum.getEditText().getText().toString().trim();
             if (phone2.length() < 11) {
                 registePhoneNum.setError(getString(R.string.err_login_phonenum));
@@ -229,8 +232,8 @@ public class RegisterFragment extends Fragment {
                         }
                     })
             ;
+            RxBus.getBus().post(new SendSmsCode());
 
-            RxBus.getBus().send(new SendSmsCode());
         });
         return view;
     }

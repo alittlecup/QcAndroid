@@ -255,19 +255,9 @@ public class MainActivity extends BaseAcitivity {
                 .negativeText("不要")
                 .build();
 
-//        dialog.setTitle("是否确定退出?");
-//        dialog.setCanceledOnTouchOutside(true);
-//        dialog.setMessage("");
-//        dialog.setPositiveButton("是",v ->{dialog.dismiss(); this.finish();});
-//        dialog.setNegativeButton("否",v -> dialog.dismiss());
     }
 
-
     private void goXwalkfragment(String url) {
-//        WebFragment fragment = (WebFragment)fragments.get(url);
-//        mFragmentManager.beginTransaction()
-//                .replace(R.id.main_fraglayout,fragment)
-//                .commit();
         WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag(url);
         if (fragment == null) {
             fragment = WebFragment.newInstance(url);

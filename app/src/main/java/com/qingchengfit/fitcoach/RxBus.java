@@ -39,9 +39,9 @@ public class RxBus {
         return _RxBus;
     }
 
-    public void send(Object o) {
-        _bus.onNext(o);
-    }
+//    public void send(Object o) {
+//        _bus.onNext(o);
+//    }
 
     public Observable<Object> toObserverable() {
         return _bus;
