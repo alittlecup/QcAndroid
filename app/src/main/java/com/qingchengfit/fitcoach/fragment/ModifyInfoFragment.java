@@ -331,7 +331,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                             getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(Uri.fromFile(upFile))
                                     .transform(new GlideCircleTransform(App.AppContex))
                                     .into(modifyinfoHeaderPic));
-                            mModifyCoachInfo.setPhoto(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
+                            mModifyCoachInfo.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
 
 
                         } else {

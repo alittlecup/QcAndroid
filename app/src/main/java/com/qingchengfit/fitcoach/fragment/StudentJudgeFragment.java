@@ -30,7 +30,7 @@ public class StudentJudgeFragment extends BaseFragment {
     public static final String TAGS = "tags";
     public static final String EVALUATE = "EvaluateEntitys";
     QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys mTags;
-    QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys mEntityls;
+    QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity mEntityls;
     @Bind(R.id.tag_group)
     TagGroup tagGroup;
     @Bind(R.id.student_judge_coach_score)
@@ -49,7 +49,7 @@ public class StudentJudgeFragment extends BaseFragment {
     }
 
     public static StudentJudgeFragment newInstance(QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys tags,
-                                                   QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys entityls) {
+                                                   QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity entityls) {
 
         Bundle args = new Bundle();
 
@@ -87,15 +87,15 @@ public class StudentJudgeFragment extends BaseFragment {
             return;
 
         if (mTags != null && mEntityls != null) {
-            studentJudgeCoachScore.setText(mEntityls.getEvaluate().getCoach_score() + "");
-            studentJudgeCoachStar.setRating((float) mEntityls.getEvaluate().getCoach_score());
-            studentJudgeCourseScore.setText(mEntityls.getEvaluate().getCourse_score() + "");
-            studentJudgeCourseStar.setRating((float) mEntityls.getEvaluate().getCourse_score());
+            studentJudgeCoachScore.setText(mEntityls.getCoach_score() + "");
+            studentJudgeCoachStar.setRating((float) mEntityls.getCoach_score());
+            studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
+            studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
             tagGroup.setTags(
                     mTags.toArray()
             );
 
-            String count = Integer.toString(mEntityls.getEvaluate().getTotal_count());
+            String count = Integer.toString(mEntityls.getTotal_count());
             SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
             s.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 3 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             studentJudgeText.setText(s);
@@ -107,15 +107,15 @@ public class StudentJudgeFragment extends BaseFragment {
 
 
                     if (mTags != null && mEntityls != null) {
-                        studentJudgeCoachScore.setText(mEntityls.getEvaluate().getCoach_score() + "");
-                        studentJudgeCoachStar.setRating((float) mEntityls.getEvaluate().getCoach_score());
-                        studentJudgeCourseScore.setText(mEntityls.getEvaluate().getCourse_score() + "");
-                        studentJudgeCourseStar.setRating((float) mEntityls.getEvaluate().getCourse_score());
+                        studentJudgeCoachScore.setText(mEntityls.getCoach_score() + "");
+                        studentJudgeCoachStar.setRating((float) mEntityls.getCoach_score());
+                        studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
+                        studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
                         tagGroup.setTags(
                                 mTags.toArray()
                         );
 
-                        String count = Integer.toString(mEntityls.getEvaluate().getTotal_count());
+                        String count = Integer.toString(mEntityls.getTotal_count());
                         SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
                         s.setSpan(new ForegroundColorSpan(Color.CYAN), 4, 4 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                         studentJudgeText.setText(s);

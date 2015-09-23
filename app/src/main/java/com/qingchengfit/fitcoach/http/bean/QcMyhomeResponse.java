@@ -3,6 +3,8 @@ package com.qingchengfit.fitcoach.http.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * Created by Paper on 15/9/12 2015.
  */
 public class QcMyhomeResponse extends QcResponse {
+
 
     /**
      * data : {"coach":{"username":"小碗","city":"北京","description":"","tags":{"tags":[{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]},"weixin":"","evaluate":{"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}},"phone":"13501200175","short_description":"我是一名健身教练","id":5}}
@@ -66,12 +69,25 @@ public class QcMyhomeResponse extends QcResponse {
             private String username;
             private String city;
             private String description;
-            private TagsEntitys tags;
+            private DistrictEntity district;
+            //            private TagsEntitys tags;
             private String weixin;
-            private EvaluateEntitys evaluate;
+            private EvaluateEntity evaluate;
             private String phone;
+
+
+            private int gender;
             private String short_description;
             private int id;
+            private String avatar;
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
 
             public String getUsername() {
                 return username;
@@ -79,6 +95,22 @@ public class QcMyhomeResponse extends QcResponse {
 
             public void setUsername(String username) {
                 this.username = username;
+            }
+
+            public DistrictEntity getDistrict() {
+                return district;
+            }
+
+            public void setDistrict(DistrictEntity district) {
+                this.district = district;
+            }
+
+            public String getDistrictStr() {
+                if (district != null && district.province != null && district.city != null) {
+                    if (district.province.name.equalsIgnoreCase(district.city.name)) {
+                        return district.city.name;
+                    } else return district.province.name + district.city.name;
+                } else return "";
             }
 
             public String getCity() {
@@ -97,13 +129,20 @@ public class QcMyhomeResponse extends QcResponse {
                 this.description = description;
             }
 
-            public TagsEntitys getTags() {
-                return tags;
+            public int getGender() {
+                return gender;
             }
 
-            public void setTags(TagsEntitys tags) {
-                this.tags = tags;
+            public void setGender(int gender) {
+                this.gender = gender;
             }
+//            public TagsEntitys getTags() {
+//                return tags;
+//            }
+//
+//            public void setTags(TagsEntitys tags) {
+//                this.tags = tags;
+//            }
 
             public String getWeixin() {
                 return weixin;
@@ -113,11 +152,11 @@ public class QcMyhomeResponse extends QcResponse {
                 this.weixin = weixin;
             }
 
-            public EvaluateEntitys getEvaluate() {
+            public EvaluateEntity getEvaluate() {
                 return evaluate;
             }
 
-            public void setEvaluate(EvaluateEntitys evaluate) {
+            public void setEvaluate(EvaluateEntity evaluate) {
                 this.evaluate = evaluate;
             }
 
@@ -144,6 +183,87 @@ public class QcMyhomeResponse extends QcResponse {
             public void setId(int id) {
                 this.id = id;
             }
+
+            public static class DistrictEntity {
+                @SerializedName("province")
+                public ProvinceBean province;
+                @SerializedName("city")
+                public CityBean city;
+                @SerializedName("id")
+                public String id;
+                @SerializedName("name")
+                public String name;
+
+            }
+
+            public static class EvaluateEntity implements Parcelable {
+                public static final Parcelable.Creator<EvaluateEntity> CREATOR = new Parcelable.Creator<EvaluateEntity>() {
+                    public EvaluateEntity createFromParcel(Parcel source) {
+                        return new EvaluateEntity(source);
+                    }
+
+                    public EvaluateEntity[] newArray(int size) {
+                        return new EvaluateEntity[size];
+                    }
+                };
+                /**
+                 * course_score : 4.7
+                 * total_count : 3658
+                 * coach_score : 4.8
+                 */
+
+                private double course_score;
+                private int total_count;
+                private double coach_score;
+
+                public EvaluateEntity() {
+                }
+
+                protected EvaluateEntity(Parcel in) {
+                    this.course_score = in.readDouble();
+                    this.total_count = in.readInt();
+                    this.coach_score = in.readDouble();
+                }
+
+                public double getCourse_score() {
+                    return course_score;
+                }
+
+                public void setCourse_score(double course_score) {
+                    this.course_score = course_score;
+                }
+
+                public int getTotal_count() {
+                    return total_count;
+                }
+
+                public void setTotal_count(int total_count) {
+                    this.total_count = total_count;
+                }
+
+                public double getCoach_score() {
+                    return coach_score;
+                }
+
+                public void setCoach_score(double coach_score) {
+                    this.coach_score = coach_score;
+                }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeDouble(this.course_score);
+                    dest.writeInt(this.total_count);
+                    dest.writeDouble(this.coach_score);
+                }
+            }
+
+
+
 
             public static class TagsEntitys implements Parcelable {
                 public static final Parcelable.Creator<TagsEntitys> CREATOR = new Parcelable.Creator<TagsEntitys>() {
@@ -229,85 +349,9 @@ public class QcMyhomeResponse extends QcResponse {
                 }
             }
 
-            public static class EvaluateEntitys implements Parcelable {
-                public static final Parcelable.Creator<EvaluateEntitys> CREATOR = new Parcelable.Creator<EvaluateEntitys>() {
-                    public EvaluateEntitys createFromParcel(Parcel source) {
-                        return new EvaluateEntitys(source);
-                    }
-
-                    public EvaluateEntitys[] newArray(int size) {
-                        return new EvaluateEntitys[size];
-                    }
-                };
-                /**
-                 * evaluate : {"course_score":4.7,"total_count":3658,"coach_score":4.8}
-                 */
-
-                private EvaluateEntity evaluate;
-
-                public EvaluateEntitys() {
-                }
 
 
-                protected EvaluateEntitys(Parcel in) {
-                    this.evaluate = in.readParcelable(EvaluateEntity.class.getClassLoader());
-                }
 
-                public EvaluateEntity getEvaluate() {
-                    return evaluate;
-                }
-
-                public void setEvaluate(EvaluateEntity evaluate) {
-                    this.evaluate = evaluate;
-                }
-
-                @Override
-                public int describeContents() {
-                    return 0;
-                }
-
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeParcelable(this, flags);
-                }
-
-                public static class EvaluateEntity {
-                    /**
-                     * course_score : 4.7
-                     * total_count : 3658
-                     * coach_score : 4.8
-                     */
-
-                    private double course_score;
-                    private int total_count;
-                    private double coach_score;
-
-                    public double getCourse_score() {
-                        return course_score;
-                    }
-
-                    public void setCourse_score(double course_score) {
-                        this.course_score = course_score;
-                    }
-
-                    public int getTotal_count() {
-                        return total_count;
-                    }
-
-                    public void setTotal_count(int total_count) {
-                        this.total_count = total_count;
-                    }
-
-                    public double getCoach_score() {
-                        return coach_score;
-                    }
-
-                    public void setCoach_score(double coach_score) {
-                        this.coach_score = coach_score;
-                    }
-                }
-
-            }
         }
     }
 }

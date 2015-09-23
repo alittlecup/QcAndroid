@@ -57,14 +57,12 @@ public class QcEvaluateResponse extends QcResponse {
             this.tags = tags;
         }
 
-        public QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys getHomeEvaluate() {
-            QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys evaluateEntitys = new QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys();
-            QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys.EvaluateEntity evaluate = new QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntitys.EvaluateEntity();
+        public QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity getHomeEvaluate() {
+            QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity evaluate = new QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity();
             evaluate.setCoach_score(getEvaluate().coach_score);
             evaluate.setCourse_score(getEvaluate().course_score);
             evaluate.setTotal_count(getEvaluate().total_count);
-            evaluateEntitys.setEvaluate(evaluate);
-            return evaluateEntitys;
+            return evaluate;
         }
 
 

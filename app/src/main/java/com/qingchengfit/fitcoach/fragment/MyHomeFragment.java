@@ -25,15 +25,12 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.Coach;
-import com.qingchengfit.fitcoach.http.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +74,6 @@ public class MyHomeFragment extends Fragment {
     LinearLayout halfscrollFirst;
     private int mHomeBgHeight = 1;
 
-    private User user;
     private Gson gson;
     //    @Bind(R.id.myhome_coolaosingtoorbar)
     //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
@@ -103,22 +99,10 @@ public class MyHomeFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_settings)
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
-//            else if (item.getItemId() == R.id.action_myhome_share)
-//                ShareUtils.oneKeyShared(getActivity(), "http://www.qingchengfit.cn/"
-//                        , "http://www.qingchengfit.cn/static/images/photo3.png"
-//                        , "我是分享");
             return true;
         });
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(BaseInfoFragment.newInstance("", ""));
-        fragments.add(new RecordComfirmFragment());
-        fragments.add(new WorkExperienceFragment());
-        fragments.add(new StudentJudgeFragment());
-        FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
-        myhomeViewpager.setAdapter(adatper);
-        myhomeViewpager.setOffscreenPageLimit(4);
-        myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
-        myhomeTab.setupWithViewPager(myhomeViewpager);
+        initUser();
+
         ViewTreeObserver observer = myhomeViewpager.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -143,30 +127,30 @@ public class MyHomeFragment extends Fragment {
             }
         });
 
-        Glide.with(App.AppContex).load(R.drawable.img_selfinfo_bg).into(myhomeBg);
-        initUser();
+//        Glide.with(App.AppContex).load(R.drawable.img_selfinfo_bg).into(myhomeBg);
+
         return view;
     }
 
-    public void initHead() {
+    public void initHead(String userAvatar, int userGender) {
         int gender = R.drawable.img_default_female;
         Glide.with(App.AppContex)
                 .load(R.drawable.ic_gender_signal_female)
                 .into(myhomeGender);
-        if (user.gender == 0) {
+        if (userGender == 0) {
             gender = R.drawable.img_default_male;
             Glide.with(App.AppContex)
                     .load(R.drawable.ic_gender_signal_male)
                     .into(myhomeGender);
         }
-        if (TextUtils.isEmpty(user.avatar)) {
+        if (TextUtils.isEmpty(userAvatar)) {
             Glide.with(App.AppContex)
                     .load(gender)
                     .transform(new GlideCircleTransform(App.AppContex))
                     .into(myhomeHeader);
         } else {
             Glide.with(App.AppContex)
-                    .load(user.avatar)
+                    .load(userAvatar)
                     .placeholder(gender)
                     .transform(new GlideCircleTransform(App.AppContex))
                     .into(myhomeHeader);
@@ -176,17 +160,25 @@ public class MyHomeFragment extends Fragment {
 
     private void initUser() {
 
-        String id = PreferenceUtils.getPrefString(App.AppContex, "coach", "");
-        if (TextUtils.isEmpty(id)) {
-            //TODO error
-        }
-        Coach coach = gson.fromJson(id, Coach.class);
-        QcCloudClient.getApi().getApi.qcGetDetail(coach.id)
+        QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> {
+                .subscribe(qcMyhomeResponse -> {
                     getActivity().runOnUiThread(() -> {
-                        myhomeLocation.setText(response.getData().getCoach().getCity());
-                        myhomeBrief.setText(response.getData().getCoach().getShort_description());
+                        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
+                        myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
+                        List<Fragment> fragments = new ArrayList<>();
+                        fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
+                        fragments.add(new RecordComfirmFragment());
+                        fragments.add(new WorkExperienceFragment());
+                        fragments.add(new StudentJudgeFragment());
+                        FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
+                        myhomeViewpager.setAdapter(adatper);
+                        myhomeViewpager.setOffscreenPageLimit(4);
+                        myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
+                        myhomeTab.setupWithViewPager(myhomeViewpager);
+                        myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
+                        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrict().city.name);
+                        initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
                     });
 
 //                    getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
@@ -194,16 +186,14 @@ public class MyHomeFragment extends Fragment {
 //                                    , response.getData().getCoach().getEvaluate()), "").commit();
                 });
 
-        String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");
-        if (!TextUtils.isEmpty(u)) {
-            user = gson.fromJson(u, User.class);
+//        String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");
+//        if (!TextUtils.isEmpty(u)) {
+//            user = gson.fromJson(u, User.class);
+//
+//        } else {
+//            TODO ERROR
+//        }
 
-        } else {
-            //TODO ERROR
-        }
-        myhomeName.setText(user.username);
-        myhomeLocation.setText(user.city);
-        initHead();
 
     }
 

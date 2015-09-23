@@ -17,7 +17,7 @@ public class ModifyCoachInfo {
     String username;
     String phone;
     String city;
-    String photo;
+    String avatar;
     String short_description;
     String weixin;
     String district_id;
@@ -43,12 +43,12 @@ public class ModifyCoachInfo {
         this.gender = gender;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getUsername() {
