@@ -78,6 +78,14 @@ public class QcCoachRespone extends QcResponse {
                 this.district = district;
             }
 
+            public String getDistrictStr() {
+                if (district != null && district.province != null && district.city != null) {
+                    if (district.province.name.equalsIgnoreCase(district.city.name)) {
+                        return district.city.name;
+                    } else return district.province.name + district.city.name;
+                } else return "";
+            }
+
             public String getUsername() {
                 return username;
             }

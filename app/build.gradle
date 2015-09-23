@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.android.databinding'
 //apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-//apply plugin: 'packer'                     //版本管理 多渠道打包
+apply plugin: 'packer'                     //版本管理 多渠道打包
 
 
 
@@ -16,21 +16,19 @@ apply plugin: 'me.tatarka.retrolambda'
 //    }
 //}
 //def buildNumber = "1"
-/*
 packer {
-    // 指定渠道打包输出目录
+//     指定渠道打包输出目录
 //    archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
-    // 指定渠道打包输出文件名格式
+//     指定渠道打包输出文件名格式
     archiveNameFormat = '${appName}${buildType}${versionName.buildNumber}_${versionCode}'
     // 指定渠道打包需要修改的AndroidManifest文件项
     manifestMatcher = ['UMENG_CHANNEL']
     // 指定是否使用build版本号自增
-    buildNumberAuto = false
+    buildNumberAuto = true
     // 指定使用版本号自增的buildType，默认是全部
     buildNumberTypeMatcher = ['release', 'beta']
 
 }
-*/
 
 def getDate() {
     def date = new Date()
@@ -123,6 +121,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             minifyEnabled false
+            debuggable false
+
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     output.outputFile = new File(
@@ -218,20 +218,16 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
     compile files('libs/libammsdk.jar')
-    //    compile files('libs/xwalk_core_library_java.jar')
-    //    compile files('libs/multipart-upload-android-sdk.jar')
+
     compile files('libs/java-sdk-3.1.jar')
     compile 'com.android.support:multidex:1.0.1'
     compile files('libs/ShareSDK-Wechat-2.6.1.jar')
-    //    compile 'me.drakeet.materialdialog:library:1.2.2'
+
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-    compile 'org.xwalk:xwalk_core_library:14.43.343.23'
-    //    compile 'org.xwalk:xwalk_core_library:_beta:15.44.384.7'
-    //    compile project(':crosswalkwebview144334317arm')
-    //        compile project(':crosswalkwebview15443867arm')
+//    debugCompile 'org.xwalk:xwalk_core_library:14.43.343.23'
+    compile project(':crosswalkwebview144334317arm')
     compile 'com.afollestad:material-dialogs:0.7.9.1'
     compile 'in.srain.cube:ultra-ptr:1.0.10'
-    //    compile 'com.bigkoo:pickerview:1.0.0'
     compile files('libs/pushservice-4.5.3.48.jar')
     compile 'com.android.support:cardview-v7:23.0.1'
 }

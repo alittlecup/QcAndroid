@@ -15,8 +15,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
@@ -45,22 +43,19 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
-        if (PreferenceUtils.getPrefBoolean(this, "first", true))
-            startActivityForResult(new Intent(this, SplashActivity.class), 11);
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "ZVc12KfmeoroYVV0iLcvSCCr");
 
 //        if (PreferenceUtils.getPrefString(this,"session_id",null)!=null)
 //            startActivity(new Intent(this,MainActivity.class));
 
-        if (PreferenceUtils.getPrefString(this,"session_id",null) !=null ){
-            Intent toMain = new Intent(this, MainActivity.class);
-            startActivity(toMain);
-            this.finish();
-        }
+
         loginViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(loginTablayout));
         loginViewpager.setAdapter(new LoginFragAdapter(getSupportFragmentManager()));
         loginTablayout.setupWithViewPager(loginViewpager);
-
+        if (getIntent().getIntExtra("isRegiste", 1) == 1) {
+            loginViewpager.setCurrentItem(1);
+        } else {
+            loginViewpager.setCurrentItem(0);
+        }
         smsObserver = new SmsObserver(this, new Handler(getMainLooper()));
         getContentResolver().registerContentObserver(SMS_INBOX, true, smsObserver);
 

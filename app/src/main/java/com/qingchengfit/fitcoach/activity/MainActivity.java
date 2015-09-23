@@ -13,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -107,8 +106,6 @@ public class MainActivity extends BaseAcitivity {
     @Bind(R.id.drawer_name)
     TextView drawerName;
     HashMap<String, Fragment> fragments = new HashMap<>();
-    @Bind(R.id.main_loading)
-    RelativeLayout mainLoading;
     //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
     private User user;
@@ -320,7 +317,6 @@ public class MainActivity extends BaseAcitivity {
                 .delay(1, TimeUnit.SECONDS)
                 .subscribe(s -> runOnUiThread(() -> {
                     initVersion();
-                    mainLoading.setVisibility(View.GONE);
                 }));
 
     }

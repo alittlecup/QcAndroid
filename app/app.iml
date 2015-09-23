@@ -84,7 +84,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.0.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.gujun.android.taggroup/library/1.4/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.relex/circleindicator/1.1.5/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/org.xwalk/xwalk_core_library/14.43.343.23/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -138,7 +137,6 @@
     <orderEntry type="library" exported="" name="raven-4.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
-    <orderEntry type="library" exported="" name="xwalk_core_library-14.43.343.23" level="project" />
     <orderEntry type="library" exported="" name="java-sdk-3.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QQ-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.0.1" level="project" />
@@ -153,6 +151,7 @@
     <orderEntry type="library" exported="" name="ShareSDK-Facebook-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="material-dialogs-0.7.9.1" level="project" />
+    <orderEntry type="module" module-name="crosswalkwebview144334317arm" exported="" />
     <orderEntry type="module" module-name="paperbaselibrary" exported="" />
   </component>
 </module>

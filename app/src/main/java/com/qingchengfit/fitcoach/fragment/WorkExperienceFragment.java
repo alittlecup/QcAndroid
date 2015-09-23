@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -34,6 +36,12 @@ public class WorkExperienceFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.record_comfirm_no_img)
+    ImageView recordComfirmNoImg;
+    @Bind(R.id.record_comfirm_no_txt)
+    TextView recordComfirmNoTxt;
+    @Bind(R.id.record_confirm_none)
+    RelativeLayout recordConfirmNone;
     private QcExperienceResponse qcExperienceResponse;
     private WorkExperiencAdapter adapter;
 
@@ -61,8 +69,18 @@ public class WorkExperienceFragment extends BaseFragment {
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
                         getActivity().runOnUiThread(() -> {
-                            adapter = new WorkExperiencAdapter(qcExperienceResponse.getData().getExperiences());
-                            recyclerview.setAdapter(adapter);
+                            if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
+                                recyclerview.setVisibility(View.VISIBLE);
+                                recordConfirmNone.setVisibility(View.GONE);
+                                adapter = new WorkExperiencAdapter(qcExperienceResponse.getData().getExperiences());
+                                recyclerview.setAdapter(adapter);
+                            } else {
+                                recyclerview.setVisibility(View.GONE);
+                                recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                                recordComfirmNoTxt.setText("您还没有添加任何工作经历请在设置页面中添加");
+                                recordConfirmNone.setVisibility(View.VISIBLE);
+
+                            }
                         })
         );
     }

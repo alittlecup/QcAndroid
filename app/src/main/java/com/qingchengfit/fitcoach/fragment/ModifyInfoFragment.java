@@ -167,9 +167,9 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private void initInfo() {
         initHead();
         if (user.getDistrict() != null && user.getDistrict().province != null) {
-            mofifyinfoCity.setContent(user.getDistrict().province.name + user.getDistrict().city.name);
             mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
         }
+        mofifyinfoCity.setContent(user.getDistrictStr());
         mofifyinfoName.setContent(user.getUsername());
         mofifyinfoWechat.setContent(user.getWeixin());
 //        mofifyinfoWeibo.setContent(user.get);

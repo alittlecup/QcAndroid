@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +34,12 @@ public class RecordComfirmFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.record_confirm_none)
+    RelativeLayout recordConfirmNone;
+    @Bind(R.id.record_comfirm_no_img)
+    ImageView recordComfirmNoImg;
+    @Bind(R.id.record_comfirm_no_txt)
+    TextView recordComfirmNoTxt;
     private RecordComfirmAdapter adapter;
     private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
 
@@ -60,6 +67,8 @@ public class RecordComfirmFragment extends BaseFragment {
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
                 if (qcCertificatesReponse.getData().getCertificates() != null) {
+                    recordConfirmNone.setVisibility(View.GONE);
+                    recyclerview.setVisibility(View.VISIBLE);
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
                         ComfirmDetailFragment fragment =
@@ -69,6 +78,11 @@ public class RecordComfirmFragment extends BaseFragment {
                                 .show(fragment).addToBackStack("").commit();
                     });
                     recyclerview.setAdapter(adapter);
+                } else {
+                    recyclerview.setVisibility(View.GONE);
+                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                    recordComfirmNoTxt.setText("您还没有添加任何工作经历请在设置页面中添加");
+                    recordConfirmNone.setVisibility(View.VISIBLE);
                 }
             });
         });
