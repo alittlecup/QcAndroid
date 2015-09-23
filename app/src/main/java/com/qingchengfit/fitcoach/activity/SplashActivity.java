@@ -2,14 +2,15 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
@@ -48,6 +49,7 @@ public class SplashActivity extends BaseAcitivity {
     List<View> imageViews = new ArrayList<>();
     @Bind(R.id.main_loading)
     RelativeLayout mainLoading;
+    float touchX;
     private int[] mSplashImg = new int[]{
             R.drawable.img_help1,
             R.drawable.img_help2,
@@ -68,19 +70,18 @@ public class SplashActivity extends BaseAcitivity {
                 imageView.setImageResource(mSplashImg[i]);
                 imageViews.add(imageView);
             }
-            ImageView imageViewlast = new ImageView(this);
-            imageViews.add(imageViewlast);
-            imageViewlast.setId(R.id.splash_last);
+//            ImageView imageViewlast = new ImageView(this);
+//            imageViews.add(imageViewlast);
+//            imageViewlast.setId(R.id.splash_last);
 
             splashViewpager.setAdapter(new ImagesAdapter(imageViews));
             splashIndicator.setViewPager(splashViewpager);
-            splashViewpager.setPageTransformer(true, (page, position) -> {
-                //页面滑动动画
-                LogUtil.d("page:" + page.getId() + "    positon:" + position);
-                if (page.getId() == R.id.splash_last && position < 0.5) {
-                    goLogin(1);
-                }
-            });
+//            splashViewpager.setPageTransformer(true, (page, position) -> {
+//                LogUtil.d("page:" + page.getId() + "    positon:" + position);
+//                if (page.getId() == R.id.splash_last && position < 0.5) {
+//                    goLogin(1);
+//                }
+//            });
         } else {
             Observable.just("")
                     .subscribeOn(Schedulers.newThread())
@@ -135,5 +136,22 @@ public class SplashActivity extends BaseAcitivity {
 
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (splashViewpager.getCurrentItem() != 3)
+            return super.dispatchTouchEvent(ev);
+        switch (MotionEventCompat.getActionMasked(ev)) {
+            case MotionEvent.ACTION_DOWN:
+                touchX = ev.getRawX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (ev.getRawY() - touchX < -50) {
+                    goLogin(1);
 
+                }
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+
+    }
 }
