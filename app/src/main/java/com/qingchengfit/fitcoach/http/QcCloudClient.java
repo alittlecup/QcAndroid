@@ -17,6 +17,7 @@ import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
+import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
@@ -298,7 +299,7 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
 
         @POST("/api/coaches/{id}/change/phone/")
-        rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
+        rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id, @Body ModifyPhoneNum modifyPwBean);
 
         @POST("/api/coaches/{id}/change/description/")
         rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);

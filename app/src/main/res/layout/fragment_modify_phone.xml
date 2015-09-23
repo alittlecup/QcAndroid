@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             android:hint="请输入新手机号"
-
+            android:inputType="number"
             />
 
         <TextView

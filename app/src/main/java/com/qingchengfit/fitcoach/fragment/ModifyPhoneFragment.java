@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,10 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
+import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import butterknife.Bind;
@@ -107,7 +111,30 @@ public class ModifyPhoneFragment extends Fragment {
      */
     @OnClick(R.id.modifyphone_comfirm_btn)
     public void onConfirm() {
+        if (TextpaperUtils.isEmpty(modifyphonePw.getText().toString(), modifyphonePhone.getText().toString(), modifyphoneCode.getText().toString())) {
+            Toast.makeText(App.AppContex, "请填写正确的信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        ModifyPhoneNum modifyPhoneNum = new ModifyPhoneNum(modifyphonePhone.getText().toString()
+                , modifyphonePw.getText().toString(), modifyphoneCode.getText().toString()
+        );
+
+        QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, modifyPhoneNum)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(qcResponse -> {
+                    getActivity().runOnUiThread(() -> {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
+                            Intent it = new Intent(getActivity(), MainActivity.class);
+                            it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
+                            startActivity(it);
+
+                        } else
+                            Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                    });
+
+                });
     }
 
     @Override

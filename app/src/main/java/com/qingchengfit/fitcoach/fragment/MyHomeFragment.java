@@ -177,7 +177,7 @@ public class MyHomeFragment extends Fragment {
                         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
                         myhomeTab.setupWithViewPager(myhomeViewpager);
                         myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
-                        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrict().city.name);
+                        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
                         initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
                     });
 
