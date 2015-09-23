@@ -51,40 +51,6 @@ public class ModifyPhoneFragment extends Fragment {
 
     private  PostMsgHandler handler;
 
-    public class PostMsgHandler extends Handler {
-        WeakReference<Context> context;
-        int count = 60;
-
-        PostMsgHandler(Context c) {
-            context = new WeakReference<Context>(c);
-
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(Integer.toString(count));
-            stringBuffer.append(getString(R.string.login_resend_msg));
-
-            modifyphoneGetcodeBtn.setText(stringBuffer.toString());
-            if (count == 60)
-                modifyphoneGetcodeBtn.setEnabled(false);
-            if (count > 0) {
-                count--;
-                handler.sendEmptyMessageDelayed(0, 1000);
-            } else {
-                count = 60;
-                modifyphoneGetcodeBtn.setEnabled(true);
-                modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
-            }
-        }
-    }
-
-
-
-
-
     public ModifyPhoneFragment() {
     }
 
@@ -148,6 +114,7 @@ public class ModifyPhoneFragment extends Fragment {
                     getActivity().runOnUiThread(() -> {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
                             Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
+                            handler.removeMessages(0);
                             Intent it = new Intent(getActivity(), MainActivity.class);
                             it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
                             startActivity(it);
@@ -163,5 +130,36 @@ public class ModifyPhoneFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    public class PostMsgHandler extends Handler {
+        WeakReference<Context> context;
+        int count = 60;
+
+        PostMsgHandler(Context c) {
+            context = new WeakReference<Context>(c);
+
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getString(R.string.login_resend_msg));
+
+            modifyphoneGetcodeBtn.setText(stringBuffer.toString());
+            if (count == 60)
+                modifyphoneGetcodeBtn.setEnabled(false);
+            if (count > 0) {
+                count--;
+                handler.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                count = 60;
+                modifyphoneGetcodeBtn.setEnabled(true);
+                modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
+        }
     }
 }
