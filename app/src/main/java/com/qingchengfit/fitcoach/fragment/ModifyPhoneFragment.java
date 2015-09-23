@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,8 @@ import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,11 +48,21 @@ public class ModifyPhoneFragment extends Fragment {
     EditText modifyphoneCode;
     @Bind(R.id.modifyphone_comfirm_btn)
     Button modifyphoneComfirmBtn;
-    Handler handler = new Handler() {
+
+    private  PostMsgHandler handler;
+
+    public class PostMsgHandler extends Handler {
+        WeakReference<Context> context;
         int count = 60;
+
+        PostMsgHandler(Context c) {
+            context = new WeakReference<Context>(c);
+
+        }
 
         @Override
         public void handleMessage(Message msg) {
+            super.handleMessage(msg);
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(Integer.toString(count));
             stringBuffer.append(getString(R.string.login_resend_msg));
@@ -66,10 +79,19 @@ public class ModifyPhoneFragment extends Fragment {
                 modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
             }
         }
-    };
+    }
+
+
+
 
 
     public ModifyPhoneFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        handler = new PostMsgHandler(getContext());
     }
 
     @Override
