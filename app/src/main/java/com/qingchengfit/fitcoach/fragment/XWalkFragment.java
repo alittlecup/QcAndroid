@@ -17,6 +17,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.Configs;
@@ -39,6 +40,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -124,6 +127,24 @@ public class XWalkFragment extends WebFragment {
         mWebview.setVerticalScrollBarEnabled(false);
         mWebview.setHorizontalScrollBarEnabled(false);
         mWebview.setResourceClient(new XWalkResourceClient(mWebview) {
+
+            @Override
+            public void onLoadStarted(XWalkView view, String url) {
+                LogUtil.d("onLoadStarted:" + url);
+
+                super.onLoadStarted(view, url);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(XWalkView view, String url) {
+                LogUtil.d("shouldOverrideUrlLoading:" + url);
+                LogUtil.e("shouldover:" + mWebview.getNavigationHistory().getCurrentIndex());
+
+
+                loading.setVisibility(View.VISIBLE);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
             @Override
             public void onReceivedLoadError(XWalkView view, int errorCode, String description, String failingUrl) {
                 //TODO 错误监控
@@ -133,12 +154,20 @@ public class XWalkFragment extends WebFragment {
             @Override
             public void onLoadFinished(XWalkView view, String url) {
                 super.onLoadFinished(view, url);
-
+                LogUtil.d("onLoadFinished:" + url);
+                Observable.just(sleepThread(200))
+                        .observeOn(Schedulers.newThread())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe(s ->
+                                getActivity().runOnUiThread(() ->
+                                                loading.setVisibility(View.GONE)
+                                ));
             }
 
             @Override
             public void onProgressChanged(XWalkView view, int progressInPercent) {
                 super.onProgressChanged(view, progressInPercent);
+                LogUtil.d("onProgressChanged:");
 //                loading.setAlpha(255 * (100 - progressInPercent) / 100);
 //                LogUtil.e("percent:" + progressInPercent);
             }
@@ -170,6 +199,7 @@ public class XWalkFragment extends WebFragment {
         return view;
     }
 
+
     private void initCookie() {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         if (sessionid != null) {
@@ -186,9 +216,17 @@ public class XWalkFragment extends WebFragment {
 //        }
     }
 
+    private String sleepThread(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+        } finally {
+            return "";
+        }
+    }
 
     public void startLoadUrl(String url) {
-        if (mWebview != null)
+        if (mWebview != null && !mWebview.getUrl().equalsIgnoreCase(url))
             mWebview.load(url, null);
     }
 
@@ -238,6 +276,7 @@ public class XWalkFragment extends WebFragment {
     }
 
     public void goBack() {
+
         if (mWebview != null)
             mWebview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
     }
@@ -326,8 +365,7 @@ public class XWalkFragment extends WebFragment {
         }
 
         @JavascriptInterface
-        public void shareTimeline(String title, String link, String imgurl, String successCallback, String failedCallback) {
-
+        public void shareInfo(String title, String link, String imgurl, String desc) {
         }
 
 

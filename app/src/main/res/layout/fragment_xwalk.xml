@@ -20,7 +20,7 @@
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/backgroud_grey"
         android:visibility="gone"
         >
 
@@ -41,6 +41,9 @@
             android:textSize="18sp"
             />
 
+        <include layout="@layout/common_toolbar"
+
+            ></include>
     </RelativeLayout>
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/web_floatbtn"
