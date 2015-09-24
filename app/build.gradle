@@ -122,7 +122,6 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             debuggable false
-
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     output.outputFile = new File(
@@ -130,8 +129,9 @@ android {
                             output.outputFile.name.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
                 }
             }
+            proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
+            zipAlignEnabled true
         }
-
         beta {
 //            signingConfig signingConfigs.release
             minifyEnabled false
@@ -147,7 +147,6 @@ android {
                 }
             }
         }
-
     }
 
 
@@ -182,8 +181,11 @@ repositories {
     }
 }
 dependencies {
+
     //    compile 'com.google.dagger:dagger:2.0.1'
+
     //    apt 'com.google.dagger:dagger-compiler:2.0.1'
+
     //    compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
@@ -218,13 +220,11 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
     compile files('libs/libammsdk.jar')
-
     compile files('libs/java-sdk-3.1.jar')
     compile 'com.android.support:multidex:1.0.1'
     compile files('libs/ShareSDK-Wechat-2.6.1.jar')
-
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-//    debugCompile 'org.xwalk:xwalk_core_library:14.43.343.23'
+    //    debugCompile 'org.xwalk:xwalk_core_library:14.43.343.23'
     compile project(':crosswalkwebview144334317arm')
     compile 'com.afollestad:material-dialogs:0.7.9.1'
     compile 'in.srain.cube:ultra-ptr:1.0.10'

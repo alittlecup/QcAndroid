@@ -147,9 +147,8 @@ public class SplashActivity extends BaseAcitivity {
             case MotionEvent.ACTION_MOVE:
                 if (ev.getRawY() - touchX < -50) {
                     goLogin(1);
-
                 }
-                break;
+                return true;
         }
         return super.dispatchTouchEvent(ev);
 
