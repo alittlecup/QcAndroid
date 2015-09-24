@@ -29,7 +29,6 @@ public class StudentJudgeFragment extends BaseFragment {
 
     public static final String TAGS = "tags";
     public static final String EVALUATE = "EvaluateEntitys";
-    QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys mTags;
     QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity mEntityls;
     @Bind(R.id.tag_group)
     TagGroup tagGroup;
@@ -43,17 +42,18 @@ public class StudentJudgeFragment extends BaseFragment {
     RatingBar studentJudgeCourseStar;
     @Bind(R.id.student_judge_text)
     TextView studentJudgeText;
+    private String[] mTags;
 
     public StudentJudgeFragment() {
         // Required empty public constructor
     }
 
-    public static StudentJudgeFragment newInstance(QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys tags,
+    public static StudentJudgeFragment newInstance(String[] tags,
                                                    QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity entityls) {
 
         Bundle args = new Bundle();
 
-        args.putParcelable(TAGS, tags);
+        args.putStringArray(TAGS, tags);
         args.putParcelable(EVALUATE, entityls);
         StudentJudgeFragment fragment = new StudentJudgeFragment();
         fragment.setArguments(args);
@@ -64,7 +64,7 @@ public class StudentJudgeFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTags = getArguments().getParcelable(TAGS);
+            mTags = getArguments().getStringArray(TAGS);
             mEntityls = getArguments().getParcelable(EVALUATE);
         }
 
@@ -82,8 +82,7 @@ public class StudentJudgeFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared || !isVisible)
-            return;
+
 
         if (mTags != null && mEntityls != null) {
             studentJudgeCoachScore.setText(mEntityls.getCoach_score() + "");
@@ -91,17 +90,19 @@ public class StudentJudgeFragment extends BaseFragment {
             studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
             studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
             tagGroup.setTags(
-                    mTags.toArray()
+                    mTags
             );
 
             String count = Integer.toString(mEntityls.getTotal_count());
             SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
-            s.setSpan(new ForegroundColorSpan(Color.YELLOW), 3, 3 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(Color.argb(255, 31, 192, 189)), 4, 4 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             studentJudgeText.setText(s);
         } else {
+            if (!isPrepared || !isVisible)
+                return;
             QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid).subscribe(qcEvaluateResponse -> {
                 getActivity().runOnUiThread(() -> {
-                    mTags = qcEvaluateResponse.getData().getHomeTags();
+                    mTags = qcEvaluateResponse.getData().getTagArray();
                     mEntityls = qcEvaluateResponse.getData().getHomeEvaluate();
 
 
@@ -111,7 +112,7 @@ public class StudentJudgeFragment extends BaseFragment {
                         studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
                         studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
                         tagGroup.setTags(
-                                mTags.toArray()
+                                mTags
                         );
 
                         String count = Integer.toString(mEntityls.getTotal_count());

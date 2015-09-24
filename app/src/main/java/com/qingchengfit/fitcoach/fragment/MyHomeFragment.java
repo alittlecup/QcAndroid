@@ -171,6 +171,9 @@ public class MyHomeFragment extends Fragment {
                         fragments.add(new WorkExperienceFragment());
                         fragments.add(new StudentJudgeFragment());
                         FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
+                        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
+                                StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
+                                        , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
                         myhomeViewpager.setAdapter(adatper);
                         myhomeViewpager.setOffscreenPageLimit(4);
                         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
@@ -180,9 +183,7 @@ public class MyHomeFragment extends Fragment {
                         initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
                     });
 
-//                    getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
-//                            StudentJudgeFragment.newInstance(response.getData().getCoach().getTags()
-//                                    , response.getData().getCoach().getEvaluate()), "").commit();
+
                 });
 
 //        String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");

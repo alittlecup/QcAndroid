@@ -66,7 +66,7 @@ public class RecordComfirmFragment extends BaseFragment {
 
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
-                if (qcCertificatesReponse.getData().getCertificates() != null) {
+                if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
                     recordConfirmNone.setVisibility(View.GONE);
                     recyclerview.setVisibility(View.VISIBLE);
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());

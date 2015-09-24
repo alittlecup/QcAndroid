@@ -70,16 +70,37 @@ public class QcMyhomeResponse extends QcResponse {
             private String city;
             private String description;
             private DistrictEntity district;
-            //            private TagsEntitys tags;
+            private List<TagsEntity> tags;
             private String weixin;
             private EvaluateEntity evaluate;
             private String phone;
-
-
             private int gender;
             private String short_description;
             private int id;
             private String avatar;
+
+            public List<TagsEntity> getTags() {
+                return tags;
+            }
+
+            public void setTags(List<TagsEntity> tags) {
+                this.tags = tags;
+            }
+
+            public String[] getTagArray() {
+                List<String> list = new ArrayList<>();
+                for (TagsEntity tag : tags) {
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(tag.getName());
+                    sb.append("  (");
+                    sb.append(tag.getCount());
+                    sb.append(")");
+                    list.add(sb.toString());
+
+                }
+                String[] ret = list.toArray(new String[list.size()]);
+                return ret;
+            }
 
             public String getAvatar() {
                 return avatar;
@@ -136,13 +157,6 @@ public class QcMyhomeResponse extends QcResponse {
             public void setGender(int gender) {
                 this.gender = gender;
             }
-//            public TagsEntitys getTags() {
-//                return tags;
-//            }
-//
-//            public void setTags(TagsEntitys tags) {
-//                this.tags = tags;
-//            }
 
             public String getWeixin() {
                 return weixin;
@@ -262,54 +276,46 @@ public class QcMyhomeResponse extends QcResponse {
                 }
             }
 
-
-
-
-            public static class TagsEntitys implements Parcelable {
-                public static final Parcelable.Creator<TagsEntitys> CREATOR = new Parcelable.Creator<TagsEntitys>() {
-                    public TagsEntitys createFromParcel(Parcel source) {
-                        return new TagsEntitys(source);
+            public static class TagsEntity implements Parcelable {
+                public static final Parcelable.Creator<TagsEntity> CREATOR = new Parcelable.Creator<TagsEntity>() {
+                    public TagsEntity createFromParcel(Parcel source) {
+                        return new TagsEntity(source);
                     }
 
-                    public TagsEntitys[] newArray(int size) {
-                        return new TagsEntitys[size];
+                    public TagsEntity[] newArray(int size) {
+                        return new TagsEntity[size];
                     }
                 };
                 /**
-                 * tags : [{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]
+                 * count : 1.2k
+                 * name : 减脂
                  */
 
-                private List<TagsEntity> tags;
+                private String count;
+                private String name;
 
-                public TagsEntitys() {
+                public TagsEntity() {
                 }
 
-                protected TagsEntitys(Parcel in) {
-                    this.tags = new ArrayList<TagsEntity>();
-                    in.readList(this.tags, List.class.getClassLoader());
+                protected TagsEntity(Parcel in) {
+                    this.count = in.readString();
+                    this.name = in.readString();
                 }
 
-                public List<TagsEntity> getTags() {
-                    return tags;
+                public String getCount() {
+                    return count;
                 }
 
-                public void setTags(List<TagsEntity> tags) {
-                    this.tags = tags;
+                public void setCount(String count) {
+                    this.count = count;
                 }
 
-                public String[] toArray() {
-                    List<String> list = new ArrayList<>();
-                    for (TagsEntity tag : tags) {
-                        StringBuffer sb = new StringBuffer();
-                        sb.append(tag.getName());
-                        sb.append("  (");
-                        sb.append(tag.getCount());
-                        sb.append(")");
-                        list.add(sb.toString());
+                public String getName() {
+                    return name;
+                }
 
-                    }
-                    String[] ret = list.toArray(new String[list.size()]);
-                    return ret;
+                public void setName(String name) {
+                    this.name = name;
                 }
 
                 @Override
@@ -319,35 +325,58 @@ public class QcMyhomeResponse extends QcResponse {
 
                 @Override
                 public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeList(this.tags);
-                }
-
-                public static class TagsEntity {
-                    /**
-                     * count : 1.2k
-                     * name : 减脂
-                     */
-
-                    private String count;
-                    private String name;
-
-                    public String getCount() {
-                        return count;
-                    }
-
-                    public void setCount(String count) {
-                        this.count = count;
-                    }
-
-                    public String getName() {
-                        return name;
-                    }
-
-                    public void setName(String name) {
-                        this.name = name;
-                    }
+                    dest.writeString(this.count);
+                    dest.writeString(this.name);
                 }
             }
+
+
+//            public static class TagsEntitys implements Parcelable {
+//                public static final Parcelable.Creator<TagsEntitys> CREATOR = new Parcelable.Creator<TagsEntitys>() {
+//                    public TagsEntitys createFromParcel(Parcel source) {
+//                        return new TagsEntitys(source);
+//                    }
+//
+//                    public TagsEntitys[] newArray(int size) {
+//                        return new TagsEntitys[size];
+//                    }
+//                };
+//                /**
+//                 * tags : [{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]
+//                 */
+//
+//                private List<TagsEntity> tags;
+//
+//                public TagsEntitys() {
+//                }
+//
+//                protected TagsEntitys(Parcel in) {
+//                    this.tags = new ArrayList<TagsEntity>();
+//                    in.readList(this.tags, List.class.getClassLoader());
+//                }
+//
+//                public List<TagsEntity> getTags() {
+//                    return tags;
+//                }
+//
+//                public void setTags(List<TagsEntity> tags) {
+//                    this.tags = tags;
+//                }
+//
+//
+//
+//                @Override
+//                public int describeContents() {
+//                    return 0;
+//                }
+//
+//                @Override
+//                public void writeToParcel(Parcel dest, int flags) {
+//                    dest.writeList(this.tags);
+//                }
+//
+//
+//            }
 
 
 

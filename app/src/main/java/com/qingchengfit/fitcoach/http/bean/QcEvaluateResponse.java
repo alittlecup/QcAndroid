@@ -66,20 +66,33 @@ public class QcEvaluateResponse extends QcResponse {
         }
 
 
-        public QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys getHomeTags() {
-            QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys tagsEntitys = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys();
-            List<QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity> tags = new ArrayList<>();
+        //        public QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys getHomeTags() {
+//            QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys tagsEntitys = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys();
+//            List<QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity> tags = new ArrayList<>();
+//
+//            for (int i = 0; i < getTags().size(); i++) {
+//                QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity tagsEntity = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity();
+//                tagsEntity.setCount(getTags().get(i).count);
+//                tagsEntity.setName(getTags().get(i).name);
+//                tags.add(tagsEntity);
+//            }
+//            tagsEntitys.setTags(tags);
+//            return tagsEntitys;
+//        }
+        public String[] getTagArray() {
+            List<String> list = new ArrayList<>();
+            for (TagsEntity tag : tags) {
+                StringBuffer sb = new StringBuffer();
+                sb.append(tag.getName());
+                sb.append("  (");
+                sb.append(tag.getCount());
+                sb.append(")");
+                list.add(sb.toString());
 
-            for (int i = 0; i < getTags().size(); i++) {
-                QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity tagsEntity = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity();
-                tagsEntity.setCount(getTags().get(i).count);
-                tagsEntity.setName(getTags().get(i).name);
-                tags.add(tagsEntity);
             }
-            tagsEntitys.setTags(tags);
-            return tagsEntitys;
+            String[] ret = list.toArray(new String[list.size()]);
+            return ret;
         }
-
         public static class EvaluateEntity {
             /**
              * course_score : 5.0

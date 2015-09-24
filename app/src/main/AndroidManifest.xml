@@ -137,7 +137,8 @@
         </activity>
         <activity
             android:name=".activity.SettingActivity"
-            android:label="@string/title_activity_setting">
+            android:label="@string/title_activity_setting"
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- push service start -->
@@ -200,19 +201,23 @@
 
         <activity
             android:name=".activity.TextInputActivity"
-            android:label="@string/title_activity_text_input">
+            android:label="@string/title_activity_text_input"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.MyHomeActivity"
-            android:label="@string/title_activity_my_home">
+            android:label="@string/title_activity_my_home"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.NotificationActivity"
-            android:label="@string/title_activity_notification">
+            android:label="@string/title_activity_notification"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.SearchActivity"
-            android:label="@string/title_activity_notification">
+            android:label="@string/title_activity_notification"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
