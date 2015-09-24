@@ -267,6 +267,11 @@ public class MainActivity extends BaseAcitivity {
 
         } else {
             mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
+            if (fragment instanceof XWalkFragment)
+                ((XWalkFragment)fragment).startLoadUrl(url);
+            else if (fragment instanceof OriginWebFragment){
+                ((OriginWebFragment)fragment).startLoadUrl(url);
+            }
         }
         topFragment = fragment;
     }
@@ -288,7 +293,6 @@ public class MainActivity extends BaseAcitivity {
             Glide.with(App.AppContex)
                     .load(user.avatar)
                     .asBitmap()
-                    .placeholder(gender)
                     .into(new CircleImgWrapper(headerIcon, App.AppContex));
         }
 
