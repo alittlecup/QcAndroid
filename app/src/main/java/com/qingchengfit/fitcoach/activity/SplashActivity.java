@@ -73,7 +73,7 @@ public class SplashActivity extends BaseAcitivity {
 //            ImageView imageViewlast = new ImageView(this);
 //            imageViews.add(imageViewlast);
 //            imageViewlast.setId(R.id.splash_last);
-
+            PreferenceUtils.setPrefBoolean(this,"first",false);
             splashViewpager.setAdapter(new ImagesAdapter(imageViews));
             splashIndicator.setViewPager(splashViewpager);
 //            splashViewpager.setPageTransformer(true, (page, position) -> {
