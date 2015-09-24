@@ -8,7 +8,10 @@
     android:background="@color/cyan"
     android:gravity="center_vertical"
     android:minHeight="?attr/actionBarSize"
+
     app:titleTextAppearance="@style/ToolbarStyle"
+    app:theme="@style/Qc.toolbarStyle"
+
     >
 
 </android.support.v7.widget.Toolbar>

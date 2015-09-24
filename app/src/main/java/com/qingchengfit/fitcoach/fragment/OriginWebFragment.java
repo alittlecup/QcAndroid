@@ -121,6 +121,10 @@ public class OriginWebFragment extends WebFragment {
     }
 
 
+    public void startLoadUrl(String url) {
+        if (webview != null)
+            webview.loadUrl(url);
+    }
     private void initCookie() {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         if (sessionid != null)

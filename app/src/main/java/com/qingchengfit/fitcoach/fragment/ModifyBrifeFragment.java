@@ -101,6 +101,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             onSave();
             return true;
         });
+
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ModifyBrifeAdapter(mListData);
         adapter.setListener(new OnRecycleItemClickListener() {
