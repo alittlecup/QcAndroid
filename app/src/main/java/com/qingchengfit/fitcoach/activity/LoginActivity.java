@@ -1,10 +1,8 @@
 package com.qingchengfit.fitcoach.activity;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,9 +17,6 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,33 +64,33 @@ public class LoginActivity extends AppCompatActivity {
         loginViewpager.setCurrentItem(resultCode);
     }
 
-    public void getSmsFromPhone() {
-        ContentResolver cr = getContentResolver();
-        String[] projection = new String[]{"body", "address", "person"};// "_id", "address",
-
-        String where = " date >  " + (System.currentTimeMillis() - 60 * 1000);
-        Cursor cur = cr.query(SMS_INBOX, projection, where, null, "date desc");
-        if (null == cur)
-            return;
-        if (cur.moveToNext()) {
-            String number = cur.getString(cur.getColumnIndex("address"));// 手机号
-            String name = cur.getString(cur.getColumnIndex("person"));// 联系人姓名列表
-            String body = cur.getString(cur.getColumnIndex("body"));//短信内容
-
+//    public void getSmsFromPhone() {
+//        ContentResolver cr = getContentResolver();
+//        String[] projection = new String[]{"body", "address", "person"};// "_id", "address",
+//
+//        String where = " date >  " + (System.currentTimeMillis() - 60 * 1000);
+//        Cursor cur = cr.query(SMS_INBOX, projection, where, null, "date desc");
+//        if (null == cur)
+//            return;
+//        if (cur.moveToNext()) {
+//            String number = cur.getString(cur.getColumnIndex("address"));// 手机号
+//            String name = cur.getString(cur.getColumnIndex("person"));// 联系人姓名列表
+//            String body = cur.getString(cur.getColumnIndex("body"));//短信内容
+//
 //			System.out.println(">>>>>>>>>>>>>>>>手机号：" + number);
 //			System.out.println(">>>>>>>>>>>>>>>>联系人姓名列表：" + name);
 //			System.out.println(">>>>>>>>>>>>>>>>短信的内容：" + body);
 //            if(number.equals("106902281006")){//验证发送的短信号码
-            Pattern pattern = Pattern.compile("[0-9]{6}");//4位数字验证码
-            Matcher matcher = pattern.matcher(body);
-            if (matcher.find()) {
-                String res = matcher.group().substring(0, 6);// 获取短信的内容
+//            Pattern pattern = Pattern.compile("[0-9]{6}");//4位数字验证码
+//            Matcher matcher = pattern.matcher(body);
+//            if (matcher.find()) {
+//                String res = matcher.group().substring(0, 6);// 获取短信的内容
                 //send msg
 //                RxBus.getBus().send(new RecieveMsg(res));
-            }
 //            }
-        }
-    }
+//            }
+//        }
+//    }
 
     class LoginFragAdapter extends FragmentPagerAdapter{
 
@@ -133,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            getSmsFromPhone();
+//            getSmsFromPhone();
         }
     }
 
