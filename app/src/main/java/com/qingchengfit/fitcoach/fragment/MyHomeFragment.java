@@ -23,11 +23,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -146,14 +146,13 @@ public class MyHomeFragment extends Fragment {
         if (TextUtils.isEmpty(userAvatar)) {
             Glide.with(App.AppContex)
                     .load(gender)
-                    .transform(new GlideCircleTransform(App.AppContex))
-                    .into(myhomeHeader);
+                    .asBitmap()
+                    .into(new CircleImgWrapper(myhomeHeader,App.AppContex));
         } else {
             Glide.with(App.AppContex)
                     .load(userAvatar)
-                    .placeholder(gender)
-                    .transform(new GlideCircleTransform(App.AppContex))
-                    .into(myhomeHeader);
+                    .asBitmap()
+                    .into(new CircleImgWrapper(myhomeHeader,App.AppContex));
         }
 
     }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -32,6 +33,7 @@ import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
@@ -109,6 +111,8 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private FragmentManager mFragmentManager;
     private Coach coach;
     private CitiesChooser citiesChooser;
+    private Bundle saveState;
+    private boolean isLoading = false;
 
     public ModifyInfoFragment() {
         // Required empty public constructor
@@ -142,6 +146,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         mFragmentManager = getChildFragmentManager();
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
+        isLoading = true;
     }
 
     @Override
@@ -152,12 +157,18 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarMenu(0, 0, "修改资料");
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
-        QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id)).subscribe(
-                qcCoachRespone -> {
-                    user = qcCoachRespone.getData().getCoach();
-                    getActivity().runOnUiThread(this::initInfo);
-                }
-        );
+//        if (!restoreStateFromArguments()) {
+            QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id)).subscribe(
+                    qcCoachRespone -> {
+                        user = qcCoachRespone.getData().getCoach();
+                        getActivity().runOnUiThread(this::initInfo);
+                    }
+            );
+
+//        }else {
+//            mofifyinfoName.setContent("xxxxx");
+//        }
+
         return view;
     }
 
@@ -165,38 +176,39 @@ public class ModifyInfoFragment extends BaseSettingFragment {
      * 初始化个人信息
      */
     private void initInfo() {
-        initHead();
-        if (user.getDistrict() != null && user.getDistrict().province != null) {
-            mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
-        }
-        mofifyinfoCity.setContent(user.getDistrictStr());
-        mofifyinfoName.setContent(user.getUsername());
-        mofifyinfoWechat.setContent(user.getWeixin());
+        if (!restoreStateFromArguments()) {
+            initHead(user.getAvatar());
+            if (user.getDistrict() != null && user.getDistrict().province != null) {
+                mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
+            }
+            mofifyinfoCity.setContent(user.getDistrictStr());
+            mofifyinfoName.setContent(user.getUsername());
+            mofifyinfoWechat.setContent(user.getWeixin());
 //        mofifyinfoWeibo.setContent(user.get);
-        modifyinfoSignEt.setText(user.getShort_description());
-        mModifyCoachInfo.setGender(user.getGender());
-        compleGender.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.comple_gender_male) {
-                mModifyCoachInfo.setGender(0);
-            } else mModifyCoachInfo.setGender(1);
-        });
+            modifyinfoSignEt.setText(user.getShort_description());
+            mModifyCoachInfo.setGender(user.getGender());
+            compleGender.setOnCheckedChangeListener((group, checkedId) -> {
+                if (checkedId == R.id.comple_gender_male) {
+                    mModifyCoachInfo.setGender(0);
+                } else mModifyCoachInfo.setGender(1);
+            });
+        }
     }
 
-    public void initHead() {
+    public void initHead(String headurl) {
         int gender = R.drawable.img_default_female;
         if (user.getGender() == 0)
             gender = R.drawable.img_default_male;
-        if (TextUtils.isEmpty(user.getAvatar())) {
+        if (TextUtils.isEmpty(headurl)) {
             Glide.with(App.AppContex)
                     .load(gender)
-                    .transform(new GlideCircleTransform(App.AppContex))
-                    .into(modifyinfoHeaderPic);
+                    .asBitmap()
+                    .into(new CircleImgWrapper(modifyinfoHeaderPic,App.AppContex));
         } else {
             Glide.with(App.AppContex)
-                    .load(user.getAvatar())
-                    .placeholder(gender)
-                    .transform(new GlideCircleTransform(App.AppContex))
-                    .into(modifyinfoHeaderPic);
+                    .load(headurl)
+                    .asBitmap()
+                    .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
         }
 
     }
@@ -283,6 +295,9 @@ public class ModifyInfoFragment extends BaseSettingFragment {
      */
     @OnClick(R.id.modifyinfo_brief)
     public void onClickBrief() {
+//        Fragment fragment = ModifyBrifeFragment.newInstance(user.getDescription());
+//        mFragmentManager.beginTransaction().add(R.id.settting_fraglayout,fragment)
+//                .show(fragment).commit();
         fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(user.getDescription()));
     }
 
@@ -313,6 +328,9 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     }
 
+
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
@@ -332,7 +350,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                                     .transform(new GlideCircleTransform(App.AppContex))
                                     .into(modifyinfoHeaderPic));
                             mModifyCoachInfo.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
-
+                            user.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
 
                         } else {
                             //upload failed TODO
@@ -345,8 +363,49 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     }
 
+    //    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//
+//        Bundle state = new Bundle();
+//        state.putString("city",mofifyinfoCity.getContent());
+//        state.putString("desc",modifyinfoDesc.getText().toString());
+//        state.putString("name",mofifyinfoName.getContent());
+//        state.putString("wechat", mofifyinfoWechat.getContent());
+//        outState.putBundle(this.getClass().getName(),state);
+//        super.onSaveInstanceState(outState);
+//    }
+//
+    private boolean restoreStateFromArguments() {
+        Bundle b = getArguments();
+        saveState = b.getBundle(this.getClass().getName());
+        if (saveState != null) {
+            restoreSave();
+            return true;
+        } else return false;
+    }
+
+    @UiThread
+    private void restoreSave() {
+        if (saveState != null){
+
+            mofifyinfoCity.setContent(saveState.getString("city"));
+            mofifyinfoWechat.setContent(saveState.getString("wechat"));
+            mofifyinfoName.setContent(saveState.getString("name"));
+            modifyinfoDesc.setText(saveState.getString("desc"));
+            initHead(saveState.getString("avatar"));
+        }
+    }
+
+
     @Override
     public void onDestroyView() {
+        Bundle state = new Bundle();
+        state.putString("city", mofifyinfoCity.getContent());
+        state.putString("desc", modifyinfoDesc.getText().toString());
+        state.putString("name", mofifyinfoName.getContent());
+        state.putString("wechat", mofifyinfoWechat.getContent());
+        state.putString("avatar", user.getAvatar());
+        getArguments().putBundle(this.getClass().getName(), state);
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
