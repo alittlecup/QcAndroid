@@ -63,6 +63,8 @@ public class SplashActivity extends BaseAcitivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "ZVc12KfmeoroYVV0iLcvSCCr");
+//        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder();
+//        builder.setStatusbarIcon(R.drawable.);
         if (PreferenceUtils.getPrefBoolean(this, "first", true)) {
             mainLoading.setVisibility(View.GONE);
             for (int i = 0; i < 4; i++) {

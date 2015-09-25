@@ -82,6 +82,7 @@ public class LoginFragment extends Fragment {
                     bean.setPush_id(userid);
                 if (channelid != null)
                     bean.setPush_channel_id(channelid);
+                bean.setDevice_type("android");
                 materialDialog.show();
                 QcCloudClient.getApi()
                         .postApi

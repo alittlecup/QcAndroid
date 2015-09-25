@@ -20,10 +20,20 @@ public class LoginBean {
     public String push_id;
     public String push_channel_id;
     public String code;
+    public String device_type;
+
     public LoginBean(String phone, String password) {
         this.phone = phone;
         this.password = password;
         this.code = password;
+    }
+
+    public String getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(String device_type) {
+        this.device_type = device_type;
     }
 
     public String getPush_id() {

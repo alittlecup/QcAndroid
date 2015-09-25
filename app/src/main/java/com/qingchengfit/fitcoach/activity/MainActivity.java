@@ -240,7 +240,10 @@ public class MainActivity extends BaseAcitivity {
                 }
             }
         }
-        startActivity(new Intent(this, LoginActivity.class));
+        Intent logout = new Intent(this, LoginActivity.class);
+        logout.putExtra("isRegiste", 0);
+
+        startActivity(logout);
 
         this.finish();
     }

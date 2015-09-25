@@ -88,4 +88,6 @@ public class PushReciever extends PushMessageReceiver {
         LogUtil.d(" recieve title:" + s + "   content:" + s1 + "   self:" + s2);
         RxBus.getBus().post(new NewPushMsg());
     }
+
+
 }
