@@ -35,6 +35,7 @@ import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.bean.RecievePush;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseAcitivity {
 
     public static final String ACTION = "main_action";
     public static final int LOGOUT = 0;
+    public static final int NOTIFICATION = 1;
     private static final String TAG = MainActivity.class.getName();
     private static int ids[] = {
             R.id.segmentbtn_0,
@@ -212,6 +214,16 @@ public class MainActivity extends BaseAcitivity {
         super.onNewIntent(intent);
         if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
             logout();
+        } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
+            if (gson == null) {
+                gson = new Gson();
+            }
+            String contetn = intent.getStringExtra("content");
+            if (!TextUtils.isEmpty(contetn)) {
+                RecievePush recievePush = gson.fromJson(contetn, RecievePush.class);
+
+                goXwalkfragment(recievePush.url);
+            }
         }
     }
 
@@ -268,9 +280,9 @@ public class MainActivity extends BaseAcitivity {
         } else {
             mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
             if (fragment instanceof XWalkFragment)
-                ((XWalkFragment)fragment).startLoadUrl(url);
-            else if (fragment instanceof OriginWebFragment){
-                ((OriginWebFragment)fragment).startLoadUrl(url);
+                ((XWalkFragment) fragment).startLoadUrl(url);
+            else if (fragment instanceof OriginWebFragment) {
+                ((OriginWebFragment) fragment).startLoadUrl(url);
             }
         }
         topFragment = fragment;

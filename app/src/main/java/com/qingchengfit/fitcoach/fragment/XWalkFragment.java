@@ -194,7 +194,11 @@ public class XWalkFragment extends WebFragment {
 
         });
         mObservable = RxBus.getBus().register(NewPushMsg.class);
-        mObservable.subscribe(newPushMsg -> mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null));
+        mObservable.subscribe(newPushMsg -> {
+            if (mWebview != null)
+                LogUtil.e("recieve Notificate");
+            mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
+        });
 
         return view;
     }

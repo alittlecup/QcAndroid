@@ -1,11 +1,13 @@
 package com.qingchengfit.fitcoach.reciever;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 
 import java.util.List;
@@ -71,11 +73,19 @@ public class PushReciever extends PushMessageReceiver {
 
     @Override
     public void onNotificationClicked(Context context, String s, String s1, String s2) {
-
+        LogUtil.d("title:" + s + "   content:" + s1 + "   self:" + s2);
+        Intent toMain = new Intent(context, MainActivity.class);
+        toMain.putExtra(MainActivity.ACTION, MainActivity.NOTIFICATION);
+        if (s2 == null)
+            s2 = "";
+        toMain.putExtra("content", s2);
+        toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(toMain);
     }
 
     @Override
     public void onNotificationArrived(Context context, String s, String s1, String s2) {
-
+        LogUtil.d(" recieve title:" + s + "   content:" + s1 + "   self:" + s2);
+        RxBus.getBus().post(new NewPushMsg());
     }
 }

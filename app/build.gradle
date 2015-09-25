@@ -93,8 +93,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 11
-        versionName "0.2.1"
+        versionCode 22
+        versionName "0.2.2"
     }
 //    buildTypes {
 //        release {

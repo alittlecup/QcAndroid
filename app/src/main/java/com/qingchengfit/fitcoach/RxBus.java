@@ -114,6 +114,8 @@ public class RxBus {
     @SuppressWarnings("unchecked")
     public void post(@NonNull Object tag, @NonNull Object content) {
         List<Subject> subjectList = subjectMapper.get(tag);
+        if (subjectList == null)
+            return;
 
         if (subjectList.size() > 0) {
             for (Subject subject : subjectList) {
