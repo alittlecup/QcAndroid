@@ -28,10 +28,11 @@
         <EditText
             android:id="@+id/setting_advice_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="16dp"
             android:background="@color/transparent"
+            android:gravity="left"
             android:hint="感谢您的意见或建议:)"
             android:inputType="textMultiLine"
             android:maxLength="140"
