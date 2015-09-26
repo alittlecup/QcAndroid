@@ -74,6 +74,7 @@ public class CommonInputView extends RelativeLayout {
         }
         if (isNum)
             edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        else edit.setInputType(InputType.TYPE_CLASS_TEXT);
     }
 
     public void setLabel(String s) {

@@ -372,7 +372,10 @@ public class MainActivity extends BaseAcitivity {
     public void guideTo(String url) {
         if (TextUtils.isEmpty(url)) {
             if (drawerRadiogroup.getChildCount() > 0) {
-                drawerRadiogroup.getChildAt(0).performClick();
+                runOnUiThread(() -> {
+                    drawerRadiogroup.getChildAt(0).performClick();
+                });
+
             }
         } else {
             goXwalkfragment(url, "");
@@ -543,6 +546,9 @@ public class MainActivity extends BaseAcitivity {
 
     @Override
     public void onBackPressed() {
+        if (topFragment == null && urls.size() == 0)
+            this.finish();
+
         if (path.size() > 0) {
             mFragmentManager.popBackStack();
             mFragmentManager.beginTransaction().remove(mFragmentManager.findFragmentByTag(path.get(path.size() - 1))).commit();
