@@ -67,7 +67,11 @@ public class CustomSetmentLayout extends LinearLayout {
         }
     }
 
-
+    public void check(int index) {
+        if (getChildCount() > 0) {
+            ((SegmentLayout) getChildAt(0)).onCheckChange(true);
+        }
+    }
     public interface onSegmentChangeListener {
         void onCheckChange(boolean isChecked);
     }

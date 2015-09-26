@@ -67,6 +67,7 @@ public class App extends Application {
         MultiDex.install(this);
 
         AppContex = getApplicationContext();
+//        refWatcher = LeakCanary.install(this);
 //        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
@@ -118,6 +119,12 @@ public class App extends Application {
         }
     }
 
+    //    public RefWatcher getRefWatcher(Context context) {
+//        return refWatcher;
+//    }
+//
+//    private  RefWatcher refWatcher;
+//
     private void setupGraph() {
 
 //        componet = DaggerApplicationComponet.builder()

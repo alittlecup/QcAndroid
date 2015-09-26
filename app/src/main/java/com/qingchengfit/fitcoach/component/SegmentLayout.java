@@ -85,6 +85,9 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
 
     }
 
+    public void setCheck(boolean isCheck) {
+
+    }
 
     @Override
     public void onCheckChange(boolean isChecked) {

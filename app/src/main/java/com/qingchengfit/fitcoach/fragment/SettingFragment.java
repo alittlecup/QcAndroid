@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 
@@ -106,7 +107,7 @@ public class SettingFragment extends BaseSettingFragment {
                 fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
                 break;
             case R.id.setting_aboutus:
-                fragmentCallBack.onFragmentChange(WebFragment.newInstance("http://cloud.qingchengfit.cn/aboutus/"));
+                fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/"));
                 fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
 //
 //  mFragmentManager.beginTransaction()

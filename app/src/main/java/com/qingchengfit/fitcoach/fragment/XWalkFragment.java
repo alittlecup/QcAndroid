@@ -1,8 +1,10 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -67,7 +69,6 @@ public class XWalkFragment extends WebFragment {
     private Observable<NewPushMsg> mObservable;
 
     public XWalkFragment() {
-
     }
 
 //    public static XWalkFragment newInstance(String baseUrl) {
@@ -88,6 +89,7 @@ public class XWalkFragment extends WebFragment {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,6 +123,14 @@ public class XWalkFragment extends WebFragment {
 //        mWebview.load("http://mm.qingchengfit.cn/meetings/1/#/info",null);
         mWebview.load(base_url, null);
 
+        mWebview.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK)
+                    return false;
+                return false;
+            }
+        });
         mWebview.addJavascriptInterface(new JsInterface(), "NativeMethod");
         mWebview.setUIClient(new MyUIClient(mWebview));
         mWebview.setNetworkAvailable(false);
@@ -138,10 +148,12 @@ public class XWalkFragment extends WebFragment {
             @Override
             public boolean shouldOverrideUrlLoading(XWalkView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading:" + url);
-                LogUtil.e("shouldover:" + mWebview.getNavigationHistory().getCurrentIndex());
-
-
+                if (mWebview != null && mWebview.getOriginalUrl() != null) {
+                    ((MainActivity) getActivity()).goXwalkfragment(url, mWebview.getOriginalUrl());
+                    return true;
+                }
                 loading.setVisibility(View.VISIBLE);
+//                return true;
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
@@ -158,10 +170,14 @@ public class XWalkFragment extends WebFragment {
                 Observable.just(sleepThread(200))
                         .observeOn(Schedulers.newThread())
                         .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(s ->
-                                getActivity().runOnUiThread(() ->
-                                                loading.setVisibility(View.GONE)
-                                ));
+                        .subscribe(s -> {
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(() -> {
+                                    if (loading != null)
+                                        loading.setVisibility(View.GONE);
+                                });
+                            }
+                        });
             }
 
             @Override
@@ -199,6 +215,7 @@ public class XWalkFragment extends WebFragment {
                 LogUtil.e("recieve Notificate");
             mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
         });
+        mWebview.cancelPendingInputEvents();
 
         return view;
     }
@@ -208,6 +225,7 @@ public class XWalkFragment extends WebFragment {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         if (sessionid != null) {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
+            setCookie("", "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
@@ -364,6 +382,21 @@ public class XWalkFragment extends WebFragment {
         }
 
         @JavascriptInterface
+        public void goBack() {
+            if (getActivity() != null) {
+                getActivity().onBackPressed();
+            }
+        }
+
+        @JavascriptInterface
+        public void guideTo(String url) {
+
+            if (getActivity() != null) {
+                ((MainActivity) getActivity()).guideTo(url);
+            }
+        }
+
+        @JavascriptInterface
         public String getSessionId() {
             return PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         }
@@ -374,5 +407,6 @@ public class XWalkFragment extends WebFragment {
 
 
     }
+
 
 }

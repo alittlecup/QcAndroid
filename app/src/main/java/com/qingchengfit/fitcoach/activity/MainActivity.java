@@ -115,6 +115,8 @@ public class MainActivity extends BaseAcitivity {
 //    private MyHomeFragment myHomeFragment;
     private Fragment topFragment;
     private ArrayList<String> urls = new ArrayList<>();
+    private ArrayList<String> path = new ArrayList<>();
+    private String pathOri;
     private MaterialDialog dialog;
     private Gson gson;
     private Observable mMainObservabel;
@@ -222,7 +224,7 @@ public class MainActivity extends BaseAcitivity {
             if (!TextUtils.isEmpty(contetn)) {
                 RecievePush recievePush = gson.fromJson(contetn, RecievePush.class);
 
-                goXwalkfragment(recievePush.url);
+                goXwalkfragment(recievePush.url, null);
             }
         }
     }
@@ -269,26 +271,53 @@ public class MainActivity extends BaseAcitivity {
 
     }
 
-    private void goXwalkfragment(String url) {
-        WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag(url);
-        if (fragment == null) {
-            fragment = WebFragment.newInstance(url);
-            FragmentTransaction fr = mFragmentManager.beginTransaction();
-            fr.add(R.id.main_fraglayout, fragment, url);
-            if (topFragment != null)
-                fr.hide(topFragment);
-            fr.show(fragment);
-            fr.commit();
+    public void goXwalkfragment(String url, String from) {
 
-        } else {
-            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
-            if (fragment instanceof XWalkFragment)
-                ((XWalkFragment) fragment).startLoadUrl(url);
-            else if (fragment instanceof OriginWebFragment) {
-                ((OriginWebFragment) fragment).startLoadUrl(url);
+
+        WebFragment fragment = WebFragment.newInstance(url);
+        FragmentTransaction fr = mFragmentManager.beginTransaction();
+        fr.replace(R.id.main_fraglayout, fragment, url);
+        fr.addToBackStack(null);
+        fr.commit();
+        if (urls.contains(url)) {
+            topFragment = fragment;
+            if (path.size() > 0) {
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                for (String str : path) {
+                    Fragment f = mFragmentManager.findFragmentByTag(str);
+                    if (f != null)
+                        ft.remove(f);
+                }
+                ft.commit();
+
             }
+            path.clear();
+        } else {
+            path.add(url);
         }
-        topFragment = fragment;
+
+
+//        }else
+//            mFragmentManager.popBackStack(url, 0);
+
+
+//        WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag(url);
+//        if (fragment == null) {
+//        WebFragment fragment = WebFragment.newInstance(url);
+//            FragmentTransaction fr = mFragmentManager.beginTransaction();
+//            fr.replace(R.id.main_fraglayout, fragment, url);
+//            fr.addToBackStack(url);
+//        fr.commit();
+
+//        } else {
+//            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
+//            if (fragment instanceof XWalkFragment)
+//                ((XWalkFragment) fragment).startLoadUrl(url);
+//            else if (fragment instanceof OriginWebFragment) {
+//                ((OriginWebFragment) fragment).startLoadUrl(url);
+//            }
+//        }
+//        topFragment = fragment;
     }
 
     /**
@@ -340,6 +369,17 @@ public class MainActivity extends BaseAcitivity {
 
     }
 
+    public void guideTo(String url) {
+        if (TextUtils.isEmpty(url)) {
+            if (drawerRadiogroup.getChildCount() > 0) {
+                drawerRadiogroup.getChildAt(0).performClick();
+            }
+        } else {
+            goXwalkfragment(url, "");
+        }
+    }
+
+
     @UiThread
     private void setupModules(List<DrawerModule> modules) {
         for (DrawerModule module : modules) {
@@ -347,7 +387,7 @@ public class MainActivity extends BaseAcitivity {
             item.setTitle(module.title);
             item.setCount(module.text);
             item.setOnClickListener(view -> {
-                goXwalkfragment(module.url);
+                goXwalkfragment(module.url, null);
                 mainDrawerlayout.closeDrawers();
             });
 //            fragments.put( module.url, WebFragment.newInstance(module.url));
@@ -399,14 +439,17 @@ public class MainActivity extends BaseAcitivity {
                         button.setId(ids[count]);
                         button.setListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
-                            goXwalkfragment(btnInfo.intentUrl);
+                            goXwalkfragment(btnInfo.intentUrl, null);
                         });
                         urls.add(btnInfo.intentUrl);
 //                        fragments.put( btnInfo.intentUrl,  WebFragment.newInstance(btnInfo.intentUrl));
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
                         if (count == 0) {
-                            drawerRadiogroup.getChildAt(0).performClick();
+//                            drawerRadiogroup.getChildAt(0).performClick();
+                            drawerRadiogroup.check(0);
+                            mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, XWalkFragment.newInstance(btnInfo.intentUrl), btnInfo.intentUrl)
+                                    .commit();
                         }
                     });
 
@@ -498,37 +541,64 @@ public class MainActivity extends BaseAcitivity {
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
-
     @Override
     public void onBackPressed() {
-        mainDrawerlayout.closeDrawers();
-        if (topFragment == null) {
-            this.finish();
-            return;
-        }
-
-
-        if (topFragment instanceof XWalkFragment) {
-            if (((XWalkFragment) topFragment).canGoBack()) {
-                ((XWalkFragment) topFragment).goBack();
-                return;
-            }
-
-        } else if (topFragment instanceof OriginWebFragment) {
-            if (((OriginWebFragment) topFragment).canGoBack()) {
-                ((OriginWebFragment) topFragment).goBack();
-                return;
-            }
-        }
-
-        if (topFragment.getTag() != null && topFragment.getTag().endsWith(urls.get(0))) {
-            dialog.show();
+        if (path.size() > 0) {
+            mFragmentManager.popBackStack();
+            mFragmentManager.beginTransaction().remove(mFragmentManager.findFragmentByTag(path.get(path.size() - 1))).commit();
+            path.remove(path.size() - 1);
         } else {
-            if (drawerRadiogroup.getChildCount() > 0)
-                drawerRadiogroup.getChildAt(0).performClick();
+            if (topFragment.getTag().equalsIgnoreCase(urls.get(0))) {
+                dialog.show();
+            } else {
+                if (drawerRadiogroup.getChildCount() > 0)
+                    drawerRadiogroup.getChildAt(0).performClick();
+            }
         }
+//        super.onBackPressed();
+//       if (mFragmentManager.getFragments().size() >1)
+//           mFragmentManager.popBackStack();
+//
+//       else
+//           dialog.show();
+//
+//    }
+
+
+        //    @Override
+//    public void onBackPressed() {
+//        mainDrawerlayout.closeDrawers();
+//        if (topFragment == null) {
+//            this.finish();
+//            return;
+//        }
+
+
+//        if (topFragment instanceof XWalkFragment) {
+//            if (((XWalkFragment) topFragment).canGoBack()) {
+//                ((XWalkFragment) topFragment).goBack();
+//                return;
+//            }
+//
+//        } else if (topFragment instanceof OriginWebFragment) {
+//            if (((OriginWebFragment) topFragment).canGoBack()) {
+//                ((OriginWebFragment) topFragment).goBack();
+//                return;
+//            }
+//        }
+
+//        if (topFragment.getTag() != null && topFragment.getTag().endsWith(urls.get(0))) {
+//            dialog.show();
+//        } else {
+//            if (drawerRadiogroup.getChildCount() > 0)
+//                drawerRadiogroup.getChildAt(0).performClick();
+//        }
     }
 
+
+    /**
+     * 新版本下载
+     */
 
     private class AsyncDownloader extends AsyncTask<String, Long, Boolean> {
 //        private final String URL = "file_url";
