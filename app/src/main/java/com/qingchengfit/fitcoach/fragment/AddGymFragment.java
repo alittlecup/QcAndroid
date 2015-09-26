@@ -78,6 +78,7 @@ public class AddGymFragment extends Fragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
         toolbar.setTitle("添加健身房");
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         citiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
             @Override
             public void onCityChoosen(String provice, String city, String district, int id) {

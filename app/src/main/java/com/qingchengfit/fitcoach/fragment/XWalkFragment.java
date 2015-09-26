@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
@@ -96,7 +96,6 @@ public class XWalkFragment extends WebFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
-        Glide.with(getContext()).load(R.raw.ic_loading_gif).into(loadingGif);
 //        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 
 //        XWalkSettings xWalkSettings = new XWalkSettings(mWebview.getContext(),null,false);
@@ -153,6 +152,7 @@ public class XWalkFragment extends WebFragment {
                     return true;
                 }
                 loading.setVisibility(View.VISIBLE);
+                ((AnimationDrawable) loadingGif.getDrawable()).start();
 //                return true;
                 return super.shouldOverrideUrlLoading(view, url);
             }
@@ -173,8 +173,11 @@ public class XWalkFragment extends WebFragment {
                         .subscribe(s -> {
                             if (getActivity() != null) {
                                 getActivity().runOnUiThread(() -> {
-                                    if (loading != null)
+                                    if (loading != null) {
+                                        ((AnimationDrawable) loadingGif.getDrawable()).start();
                                         loading.setVisibility(View.GONE);
+                                    }
+
                                 });
                             }
                         });

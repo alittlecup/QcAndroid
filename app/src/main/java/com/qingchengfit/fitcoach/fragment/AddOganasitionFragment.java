@@ -68,6 +68,7 @@ public class AddOganasitionFragment extends Fragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
         toolbar.setTitle("添加主办机构");
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         addgymName.setLabel("机构名");
         addgymCity.setVisibility(View.GONE);
 
