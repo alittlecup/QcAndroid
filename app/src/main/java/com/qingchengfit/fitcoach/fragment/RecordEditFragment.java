@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -76,8 +75,6 @@ public class RecordEditFragment extends BaseSettingFragment {
     RadioButton recordeditTypeCompetition;
     @Bind(R.id.recordedit_type)
     RadioGroup recordeditType;
-    @Bind(R.id.record_edit_name)
-    EditText recordEditName;
     @Bind(R.id.recordedit_date)
     CommonInputView recordeditDate;
     @Bind(R.id.recordedit_score)
@@ -93,6 +90,8 @@ public class RecordEditFragment extends BaseSettingFragment {
     TimeDialogWindow pwTime;
     @Bind(R.id.rootview)
     ScrollView rootview;
+    @Bind(R.id.record_edit_name)
+    CommonInputView recordEditName;
     private boolean mTitle;
     private String mContent;
     private Gson gson = new Gson();
@@ -150,7 +149,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
             recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getCreated_at())));
             recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
-            recordEditName.setText(certificatesEntity.getName());
+            recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
             switch (certificatesEntity.getType()) {
                 case TYPE_MEETING:
@@ -197,12 +196,12 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_comfirm_btn)
     public void onComplete() {
-        if (TextpaperUtils.isEmpty(recordEditName.getText().toString(), recordeditDate.getContent(),
+        if (TextpaperUtils.isEmpty(recordEditName.getContent(), recordeditDate.getContent(),
                 recordeditDateoff.getContent(), recordeditHost.getContent()
         ))
             Toast.makeText(App.AppContex, "请填写完整信息", Toast.LENGTH_SHORT).show();
         addCertificate.setGrade(recordeditScore.getContent());
-        addCertificate.setName(recordEditName.getText().toString());
+        addCertificate.setName(recordEditName.getContent());
         addCertificate.setDate_of_issue(recordeditDateoff.getContent());
         addCertificate.setCreated_at(recordeditDate.getContent());
         if (mTitle)
