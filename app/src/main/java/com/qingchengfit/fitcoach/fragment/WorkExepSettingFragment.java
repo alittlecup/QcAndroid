@@ -72,7 +72,9 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
                         getActivity().runOnUiThread(() -> {
-                            if (qcExperienceResponse.getData().getExperiences() != null) {
+                            if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
+                                recyclerview.setVisibility(View.VISIBLE);
+                                recordConfirmNone.setVisibility(View.GONE);
                                 adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
                                 adapter.setListener(new OnRecycleItemClickListener() {
                                     @Override
@@ -84,7 +86,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
                             } else {
                                 recyclerview.setVisibility(View.GONE);
                                 recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
-                                recordComfirmNoTxt.setText("您还没有添加任何工作经历\n请点击添加按钮");
+                                recordComfirmNoTxt.setText("您还没有添加任何工作经历请点击添加按钮");
                                 recordConfirmNone.setVisibility(View.VISIBLE);
                             }
                         })

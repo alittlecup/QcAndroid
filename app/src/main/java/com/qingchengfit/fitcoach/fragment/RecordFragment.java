@@ -59,7 +59,9 @@ public class RecordFragment extends BaseSettingFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
-                if (qcCertificatesReponse.getData().getCertificates() != null) {
+                if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
+                    recyclerview.setVisibility(View.VISIBLE);
+                    recordConfirmNone.setVisibility(View.GONE);
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
 //                        ComfirmDetailFragment fragment =
@@ -71,8 +73,8 @@ public class RecordFragment extends BaseSettingFragment {
                     recyclerview.setAdapter(adapter);
                 } else {
                     recyclerview.setVisibility(View.GONE);
-                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
-                    recordComfirmNoTxt.setText("您还没有添加任何认证信息\n请点击添加按钮");
+                    recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
+                    recordComfirmNoTxt.setText("您还没有添加任何认证信息请点击添加按钮");
                     recordConfirmNone.setVisibility(View.VISIBLE);
                 }
             });
