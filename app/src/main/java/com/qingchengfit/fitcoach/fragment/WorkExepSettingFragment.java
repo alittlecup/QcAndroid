@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.DateUtils;
@@ -42,6 +44,12 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.record_comfirm_no_img)
+    ImageView recordComfirmNoImg;
+    @Bind(R.id.record_comfirm_no_txt)
+    TextView recordComfirmNoTxt;
+    @Bind(R.id.record_confirm_none)
+    RelativeLayout recordConfirmNone;
     private WorkExepAdapter adapter;
 
     @Nullable
@@ -73,6 +81,11 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
                                     }
                                 });
                                 recyclerview.setAdapter(adapter);
+                            } else {
+                                recyclerview.setVisibility(View.GONE);
+                                recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                                recordComfirmNoTxt.setText("您还没有添加任何工作经历\n请点击添加按钮");
+                                recordConfirmNone.setVisibility(View.VISIBLE);
                             }
                         })
         );

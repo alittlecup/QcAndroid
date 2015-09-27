@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,12 @@ public class RecordFragment extends BaseSettingFragment {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     Gson gson = new Gson();
+    @Bind(R.id.record_comfirm_no_img)
+    ImageView recordComfirmNoImg;
+    @Bind(R.id.record_comfirm_no_txt)
+    TextView recordComfirmNoTxt;
+    @Bind(R.id.record_confirm_none)
+    RelativeLayout recordConfirmNone;
     private RecordComfirmAdapter adapter;
 
     public RecordFragment() {
@@ -62,6 +69,11 @@ public class RecordFragment extends BaseSettingFragment {
                                 .show(fragment).addToBackStack("").commit();
                     });
                     recyclerview.setAdapter(adapter);
+                } else {
+                    recyclerview.setVisibility(View.GONE);
+                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                    recordComfirmNoTxt.setText("您还没有添加任何认证信息\n请点击添加按钮");
+                    recordConfirmNone.setVisibility(View.VISIBLE);
                 }
             });
         });

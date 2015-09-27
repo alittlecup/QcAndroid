@@ -4,13 +4,16 @@
     >
     <item
         android:drawable="@drawable/loading_gif_00"
-        android:duration="@integer/loading_time"></item>
+        android:duration="@integer/loading_time">
+    </item>
     <item
         android:drawable="@drawable/loading_gif_01"
-        android:duration="@integer/loading_time"></item>
+        android:duration="@integer/loading_time">
+    </item>
     <item
         android:drawable="@drawable/loading_gif_02"
-        android:duration="@integer/loading_time"></item>
+        android:duration="@integer/loading_time">
+    </item>
     <item
         android:drawable="@drawable/loading_gif_03"
         android:duration="@integer/loading_time"></item>
