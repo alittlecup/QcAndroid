@@ -546,8 +546,10 @@ public class MainActivity extends BaseAcitivity {
 
     @Override
     public void onBackPressed() {
-        if (topFragment == null && urls.size() == 0)
-            this.finish();
+        if (topFragment == null || topFragment.getTag() == null || urls.size() == 0) {
+            dialog.show();
+            return;
+        }
 
         if (path.size() > 0) {
             mFragmentManager.popBackStack();

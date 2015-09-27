@@ -209,7 +209,7 @@ public class BaseInfoFragment extends BaseFragment {
                     holder.itemContent.setVisibility(View.GONE);
                     holder.itemImg.setVisibility(View.VISIBLE);
                     holder.itemLabel.setVisibility(View.GONE);
-                    Glide.with(App.AppContex).load("http://zoneke-img.b0.upaiyun.com//brief/965ed91b-3c4e-46f2-9401-d3b0f60b4df7.png").into(holder.itemImg);
+                    Glide.with(App.AppContex).load(baseInfoBean.content).into(holder.itemImg);
                 }
             }
         }
