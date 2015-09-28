@@ -4,7 +4,6 @@ package com.qingchengfit.fitcoach.fragment;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,14 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -42,8 +41,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -54,10 +51,10 @@ public class XWalkFragment extends WebFragment {
 
     @Bind(R.id.webview)
     XWalkView mWebview;
-    @Bind(R.id.web_floatbtn)
-    FloatingActionsMenu webFloatbtn;
-    FloatingActionButton btn1;
-    FloatingActionButton btn2;
+    //    @Bind(R.id.web_floatbtn)
+//    FloatingActionsMenu webFloatbtn;
+//    FloatingActionButton btn1;
+//    FloatingActionButton btn2;
     //    private XWalkCookieManager mCookieManager;
     Gson gson;
     @Bind(R.id.loading_gif)
@@ -113,7 +110,7 @@ public class XWalkFragment extends WebFragment {
 
 //        CommandLine.getInstance().appendSwitch("--disable-pull-to-refresh-effect");  //禁止下拉刷新
 
-
+        Glide.with(App.AppContex).load(R.drawable.ic_loading_gif).into(loadingGif);
         xWalkCookieManager = new XWalkCookieManager();
         xWalkCookieManager.setAcceptCookie(true);
         initCookie();
@@ -135,6 +132,7 @@ public class XWalkFragment extends WebFragment {
         mWebview.setNetworkAvailable(false);
         mWebview.setVerticalScrollBarEnabled(false);
         mWebview.setHorizontalScrollBarEnabled(false);
+        mWebview.setUserAgentString("crosswalk/" + mWebview.getXWalkVersion() + " " + mWebview.getAPIVersion() + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android");
         mWebview.setResourceClient(new XWalkResourceClient(mWebview) {
 
             @Override
@@ -151,8 +149,7 @@ public class XWalkFragment extends WebFragment {
                     ((MainActivity) getActivity()).goXwalkfragment(url, mWebview.getOriginalUrl());
                     return true;
                 }
-                loading.setVisibility(View.VISIBLE);
-                ((AnimationDrawable) loadingGif.getDrawable()).start();
+
 //                return true;
                 return super.shouldOverrideUrlLoading(view, url);
             }
@@ -167,20 +164,31 @@ public class XWalkFragment extends WebFragment {
             public void onLoadFinished(XWalkView view, String url) {
                 super.onLoadFinished(view, url);
                 LogUtil.d("onLoadFinished:" + url);
-                Observable.just(sleepThread(200))
-                        .observeOn(Schedulers.newThread())
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(s -> {
-                            if (getActivity() != null) {
-                                getActivity().runOnUiThread(() -> {
-                                    if (loading != null) {
-                                        ((AnimationDrawable) loadingGif.getDrawable()).start();
-                                        loading.setVisibility(View.GONE);
-                                    }
-
-                                });
-                            }
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                    }
+                    if (getActivity() != null)
+                        getActivity().runOnUiThread(() -> {
+                            if (loading != null)
+                                loading.setVisibility(View.GONE);
                         });
+
+                }).start();
+//                Observable.just(sleepThread(5000))
+//                        .observeOn(Schedulers.newThread())
+//                        .subscribeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(s -> {
+//                            if (getActivity() != null) {
+//                                getActivity().runOnUiThread(() -> {
+//                                    if (loading != null) {
+//                                        loading.setVisibility(View.GONE);
+//                                    }
+//
+//                                });
+//                            }
+//                        });
             }
 
             @Override
@@ -191,34 +199,31 @@ public class XWalkFragment extends WebFragment {
 //                LogUtil.e("percent:" + progressInPercent);
             }
         });
+//        btn1 = new FloatingActionButton(getActivity());
+//        btn1.setIcon(R.drawable.ic_baseinfo_city);
 
-
-        btn1 = new FloatingActionButton(getActivity());
-        btn1.setIcon(R.drawable.ic_baseinfo_city);
-
-        btn2 = new FloatingActionButton(getActivity());
-        btn2.setIcon(R.drawable.ic_baseinfo_phone);
-
-        webFloatbtn.addButton(btn1);
-        webFloatbtn.addButton(btn2);
-        btn1.setOnClickListener(view1 -> {
-            mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
+//        btn2 = new FloatingActionButton(getActivity());
+//        btn2.setIcon(R.drawable.ic_baseinfo_phone);
+//
+//        webFloatbtn.addButton(btn1);
+//        webFloatbtn.addButton(btn2);
+//        btn1.setOnClickListener(view1 -> {
+//            mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
 //            PhoneFuncUtils.queryCalender(getActivity());
 //            mWebview.setNetworkAvailable(false);
-        });
-        btn2.setOnClickListener(view1 -> {
+//        });
+//        btn2.setOnClickListener(view1 -> {
 //            List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
 //            Gson gson = new Gson();
 //            LogUtil.e(gson.toJson(contacts));
 
-        });
+//        });
         mObservable = RxBus.getBus().register(NewPushMsg.class);
         mObservable.subscribe(newPushMsg -> {
             if (mWebview != null)
                 LogUtil.e("recieve Notificate");
             mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
         });
-        mWebview.cancelPendingInputEvents();
 
         return view;
     }
@@ -367,7 +372,13 @@ public class XWalkFragment extends WebFragment {
 
         @JavascriptInterface
         public void openMsg() {
-            startActivity(new Intent(getActivity(), NotificationActivity.class));
+
+            getActivity().runOnUiThread(() -> {
+                startActivity(new Intent(getActivity(), NotificationActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+            });
+
+
         }
 
         @JavascriptInterface
@@ -410,6 +421,5 @@ public class XWalkFragment extends WebFragment {
 
 
     }
-
 
 }
