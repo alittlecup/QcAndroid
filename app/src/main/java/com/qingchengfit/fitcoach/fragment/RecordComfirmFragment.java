@@ -80,8 +80,8 @@ public class RecordComfirmFragment extends BaseFragment {
                     recyclerview.setAdapter(adapter);
                 } else {
                     recyclerview.setVisibility(View.GONE);
-                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
-                    recordComfirmNoTxt.setText("您还没有添加任何工作经历请在设置页面中添加");
+                    recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
+                    recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
                     recordConfirmNone.setVisibility(View.VISIBLE);
                 }
             });
