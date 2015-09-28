@@ -275,10 +275,7 @@ public class MainActivity extends BaseAcitivity {
 
 
         WebFragment fragment = WebFragment.newInstance(url);
-        FragmentTransaction fr = mFragmentManager.beginTransaction();
-        fr.replace(R.id.main_fraglayout, fragment, url);
-        fr.addToBackStack(null);
-        fr.commit();
+
         if (urls.contains(url)) {
             topFragment = fragment;
             if (path.size() > 0) {
@@ -296,7 +293,10 @@ public class MainActivity extends BaseAcitivity {
             path.add(url);
         }
 
-
+        FragmentTransaction fr = mFragmentManager.beginTransaction();
+        fr.replace(R.id.main_fraglayout, fragment, url);
+        fr.addToBackStack(null);
+        fr.commit();
 //        }else
 //            mFragmentManager.popBackStack(url, 0);
 
@@ -393,7 +393,7 @@ public class MainActivity extends BaseAcitivity {
                 goXwalkfragment(module.url, null);
                 mainDrawerlayout.closeDrawers();
             });
-//            fragments.put( module.url, WebFragment.newInstance(module.url));
+            urls.add(module.url);
             drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         }
     }
@@ -528,6 +528,7 @@ public class MainActivity extends BaseAcitivity {
 //        }
 //        topFragment = myHomeFragment;
         startActivity(new Intent(this, MyHomeActivity.class));
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
 //        mainDrawerlayout.closeDrawer(Gravity.LEFT);
     }
 
