@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroud_grey"
-        android:visibility="gone"
         >
 
         <ImageView
@@ -29,7 +28,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/anim_loading"
             />
 
         <TextView
@@ -43,8 +41,8 @@
             />
 
         <include layout="@layout/common_toolbar"
-
-            ></include>
+            >
+        </include>
     </RelativeLayout>
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/web_floatbtn"

@@ -91,7 +91,6 @@ public class SplashActivity extends BaseAcitivity {
                         try {
                             Thread.sleep(3000);
                         } catch (InterruptedException e) {
-
                         }
                         return Observable.just("");
                     }).subscribe(s1 -> {

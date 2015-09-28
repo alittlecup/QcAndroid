@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
@@ -48,9 +49,8 @@ public class ModifyPhoneFragment extends Fragment {
     EditText modifyphoneCode;
     @Bind(R.id.modifyphone_comfirm_btn)
     Button modifyphoneComfirmBtn;
-
+    MaterialDialog materialDialog;
     private  PostMsgHandler handler;
-
     public ModifyPhoneFragment() {
     }
 
@@ -58,6 +58,11 @@ public class ModifyPhoneFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new PostMsgHandler(getContext());
+        materialDialog = new MaterialDialog.Builder(getActivity())
+                .content("修改中请稍后")
+                .progress(true, 0)
+
+                .build();
     }
 
     @Override
@@ -107,20 +112,23 @@ public class ModifyPhoneFragment extends Fragment {
         ModifyPhoneNum modifyPhoneNum = new ModifyPhoneNum(modifyphonePhone.getText().toString()
                 , modifyphonePw.getText().toString(), modifyphoneCode.getText().toString()
         );
-
+        materialDialog.show();
         QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, modifyPhoneNum)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(qcResponse -> {
                     getActivity().runOnUiThread(() -> {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
+                            materialDialog.dismiss();
                             Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
                             handler.removeMessages(0);
                             Intent it = new Intent(getActivity(), MainActivity.class);
                             it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
                             startActivity(it);
 
-                        } else
+                        } else {
+                            materialDialog.dismiss();
                             Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                        }
                     });
 
                 });

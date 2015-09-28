@@ -27,7 +27,10 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
         setContentView(R.layout.activity_notification);
         ButterKnife.bind(this);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(v -> this.onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            this.onBackPressed();
+            overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
+        });
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()

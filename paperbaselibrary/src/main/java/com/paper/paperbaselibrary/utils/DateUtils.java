@@ -33,13 +33,13 @@ public class DateUtils {
 
     public static String getDateDay(Date d) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd", Locale.CHINA);
         return formatter.format(d);
     }
 
     public static String getDateMonth(Date d) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM", Locale.CHINA);
         return formatter.format(d);
     }
 

@@ -93,12 +93,17 @@ public class MyHomeFragment extends Fragment {
         gson = new Gson();
         toolbar.setTitle("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            getActivity().onBackPressed();
+            getActivity().overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
+        });
         toolbar.inflateMenu(R.menu.menu_myhome);
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_myhome_settings)
+            if (item.getItemId() == R.id.action_myhome_settings) {
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+            }
             return true;
         });
         initUser();
