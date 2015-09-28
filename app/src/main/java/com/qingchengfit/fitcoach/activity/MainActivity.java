@@ -451,8 +451,10 @@ public class MainActivity extends BaseAcitivity {
                         if (count == 0) {
 //                            drawerRadiogroup.getChildAt(0).performClick();
                             drawerRadiogroup.check(0);
-                            mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, XWalkFragment.newInstance(btnInfo.intentUrl), btnInfo.intentUrl)
+                            Fragment fragment = XWalkFragment.newInstance(btnInfo.intentUrl);
+                            mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, fragment, btnInfo.intentUrl)
                                     .commit();
+                            topFragment = fragment;
                         }
                     });
 
