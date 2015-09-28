@@ -43,5 +43,9 @@ public class DateUtils {
         return formatter.format(d);
     }
 
+    public static String formatDateToServer(String s) {
+
+        return s.replace(".", "-");
+    }
 
 }
