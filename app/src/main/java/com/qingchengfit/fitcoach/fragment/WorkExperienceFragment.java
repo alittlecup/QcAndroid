@@ -62,9 +62,9 @@ public class WorkExperienceFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared || isVisible) {
-            return;
-        }
+//        if (!isPrepared || isVisible) {
+//            return;
+//        }
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
