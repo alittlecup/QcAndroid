@@ -113,6 +113,7 @@ public class QcExperienceResponse extends QcResponse {
             private int private_course;
             private String end;
             private String name;
+            private int id;
             private int group_user;
             private int sale;
             private String start;
@@ -136,7 +137,16 @@ public class QcExperienceResponse extends QcResponse {
                 this.start = in.readString();
                 this.group_course = in.readInt();
                 this.private_user = in.readInt();
+                this.id = in.readInt();
                 this.gym = in.readParcelable(GymEntity.class.getClassLoader());
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
             }
 
             public CoachEntity getCoach() {
@@ -263,6 +273,7 @@ public class QcExperienceResponse extends QcResponse {
                 dest.writeInt(this.group_course);
                 dest.writeInt(this.private_user);
                 dest.writeParcelable(this.gym, 0);
+                dest.writeInt(this.id);
             }
 
             public static class GymEntity implements Parcelable {

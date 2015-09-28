@@ -289,6 +289,9 @@ public class QcCloudClient {
         @POST("/api/experiences/")
         rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
 
+        @PUT("/api/experiences/{id}")
+        rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
+
         @DELETE("/api/experiences/{id}")
         rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);
 

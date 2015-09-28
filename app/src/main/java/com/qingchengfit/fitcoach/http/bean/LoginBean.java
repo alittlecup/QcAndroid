@@ -22,10 +22,37 @@ public class LoginBean {
     public String code;
     public String device_type;
 
+    public LoginBean() {
+    }
+
     public LoginBean(String phone, String password) {
         this.phone = phone;
         this.password = password;
         this.code = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDevice_type() {

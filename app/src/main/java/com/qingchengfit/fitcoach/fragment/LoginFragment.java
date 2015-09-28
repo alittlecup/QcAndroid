@@ -75,7 +75,12 @@ public class LoginFragment extends Fragment {
 //                startActivity(toMain);
 //                getActivity().finish();
                 List<MutiSysSession> systems = new ArrayList<>();
-                LoginBean bean = new LoginBean(account, code);
+                LoginBean bean = new LoginBean();
+                bean.setPhone(account);
+                if (loginview.mGetCodeBtn.getVisibility() == View.VISIBLE)
+                    bean.setCode(code);
+                else
+                    bean.setPassword(code);
                 String userid = PreferenceUtils.getPrefString(getActivity(), PushReciever.BD_USERLID, null);
                 String channelid = PreferenceUtils.getPrefString(getActivity(), PushReciever.BD_CHANNELID, null);
                 if (userid != null)

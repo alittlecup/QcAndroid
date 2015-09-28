@@ -378,7 +378,6 @@ public class XWalkFragment extends WebFragment {
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
             });
 
-
         }
 
         @JavascriptInterface
@@ -397,8 +396,12 @@ public class XWalkFragment extends WebFragment {
 
         @JavascriptInterface
         public void goBack() {
+
             if (getActivity() != null) {
-                getActivity().onBackPressed();
+                getActivity().runOnUiThread(() -> {
+                    getActivity().onBackPressed();
+                });
+
             }
         }
 

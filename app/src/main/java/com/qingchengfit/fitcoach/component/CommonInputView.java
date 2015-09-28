@@ -88,7 +88,7 @@ public class CommonInputView extends RelativeLayout {
     public void setContent(String c) {
         edit.setText(c);
         if (c != null)
-            edit.setSelection(c.length());
+            edit.setSelection(c.length() > 20 ? 20 : c.length());
     }
 
     @Override

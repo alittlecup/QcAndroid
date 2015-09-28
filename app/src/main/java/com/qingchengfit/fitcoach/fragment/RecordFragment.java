@@ -50,7 +50,7 @@ public class RecordFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
+
         fragmentCallBack.onToolbarClickListener(item -> {
             fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
             return true;
@@ -82,6 +82,11 @@ public class RecordFragment extends BaseSettingFragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
+    }
 
     @Override
     public void onDestroyView() {

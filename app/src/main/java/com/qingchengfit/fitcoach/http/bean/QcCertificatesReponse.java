@@ -101,6 +101,25 @@ public class QcCertificatesReponse extends QcResponse {
             private int type;
             private int id;
             private boolean is_authenticated;
+            private String start;
+            private String end;
+
+
+            public String getStart() {
+                return start;
+            }
+
+            public void setStart(String start) {
+                this.start = start;
+            }
+
+            public String getEnd() {
+                return end;
+            }
+
+            public void setEnd(String end) {
+                this.end = end;
+            }
 
             public String getDate_of_issue() {
                 return date_of_issue;

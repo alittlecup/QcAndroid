@@ -25,12 +25,15 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -151,8 +154,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             Toast.makeText(getContext(), "请填写完整信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        addWorkExperience.setStart(starttime);
-        addWorkExperience.setEnd(endtime);
+        addWorkExperience.setStart(DateUtils.formatDateToServer(starttime));
+        addWorkExperience.setEnd(DateUtils.formatDateToServer(endtime));
         addWorkExperience.setDescription(description);
         addWorkExperience.setGroup_course(groupCount);
         addWorkExperience.setGroup_user(groupNum);
@@ -160,7 +163,21 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         addWorkExperience.setPrivate_course(privateClass);
         addWorkExperience.setPrivate_user(privateNum);
         addWorkExperience.setSale(sale);
-        QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.newThread()).subscribe();
+        Action1 qcResponseAction = (Action1<QcResponse>) qcResponse -> {
+            getActivity().runOnUiThread(() -> {
+                if (qcResponse.status == ResponseResult.SUCCESS) {
+                    getActivity().onBackPressed();
+                } else {
+                    Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        };
+        if (experiencesEntity == null)
+            QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.newThread()).subscribe(qcResponseAction);
+        else
+            QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience).subscribeOn(Schedulers.newThread()).subscribe(qcResponseAction);
+
     }
 
     @OnClick(R.id.workexpedit_gym_name)

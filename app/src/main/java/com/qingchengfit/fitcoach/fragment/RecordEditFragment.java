@@ -147,8 +147,9 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (mContent != null) {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
-            recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getCreated_at())));
-            recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+            recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart() + "-" +
+                    DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())))));
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
             switch (certificatesEntity.getType()) {
@@ -202,8 +203,8 @@ public class RecordEditFragment extends BaseSettingFragment {
             Toast.makeText(App.AppContex, "请填写完整信息", Toast.LENGTH_SHORT).show();
         addCertificate.setGrade(recordeditScore.getContent());
         addCertificate.setName(recordEditName.getContent());
-        addCertificate.setDate_of_issue(recordeditDateoff.getContent());
-        addCertificate.setCreated_at(recordeditDate.getContent());
+        addCertificate.setDate_of_issue(DateUtils.formatDateToServer(recordeditDate.getContent()));
+        addCertificate.setStart(DateUtils.formatDateToServer(recordeditDate.getContent()));
         if (mTitle)
             QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
                     .subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
@@ -235,7 +236,8 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_dateoff)
     public void onClickDateoff() {
         pwTime.setOnTimeSelectListener(date -> {
-            recordeditDateoff.setContent(DateUtils.getDateDay(date));
+            recordeditDateoff.setContent(recordeditDate.getContent() + "-" + DateUtils.getDateDay(date));
+            addCertificate.setEnd(DateUtils.formatDateToServer(DateUtils.getDateDay(date)));
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
