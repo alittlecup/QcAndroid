@@ -2,20 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.qingchengfit.fitcoach.fragment.XWalkFragment">
-
-    <com.qingchengfit.fitcoach.component.XwalkViewNoBack
-        android:id="@+id/webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        />
-
-    <!--<Button-->
-        <!--android:id="@+id/postjs"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:text="@string/js_alert_title"-->
-        <!--/>-->
     <RelativeLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
@@ -44,6 +30,21 @@
             >
         </include>
     </RelativeLayout>
+    <com.qingchengfit.fitcoach.component.XwalkViewNoBack
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:background="@color/transparent"
+        />
+
+    <!--<Button-->
+        <!--android:id="@+id/postjs"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:text="@string/js_alert_title"-->
+        <!--/>-->
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/web_floatbtn"
         android:layout_width="wrap_content"

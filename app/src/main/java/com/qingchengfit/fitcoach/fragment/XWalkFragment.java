@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,8 @@ public class XWalkFragment extends WebFragment {
     ImageView loadingGif;
     @Bind(R.id.loading)
     RelativeLayout loading;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private XWalkCookieManager xWalkCookieManager;
     private String base_url;
     private Observable<NewPushMsg> mObservable;
@@ -93,7 +96,8 @@ public class XWalkFragment extends WebFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
         ButterKnife.bind(this, view);
-//        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+//      toolbarXWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 
 //        XWalkSettings xWalkSettings = new XWalkSettings(mWebview.getContext(),null,false);
 //
@@ -166,7 +170,7 @@ public class XWalkFragment extends WebFragment {
                 LogUtil.d("onLoadFinished:" + url);
                 new Thread(() -> {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(600);
                     } catch (InterruptedException e) {
                     }
                     if (getActivity() != null)
@@ -266,7 +270,9 @@ public class XWalkFragment extends WebFragment {
         if (mWebview != null) {
             mWebview.resumeTimers();
             mWebview.onShow();
+            mWebview.load("javascript:window.nativeLinkWeb.updateNotifications();", null);
         }
+
     }
 
     @Override

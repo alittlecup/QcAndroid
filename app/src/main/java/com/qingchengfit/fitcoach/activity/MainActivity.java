@@ -223,10 +223,27 @@ public class MainActivity extends BaseAcitivity {
             String contetn = intent.getStringExtra("content");
             if (!TextUtils.isEmpty(contetn)) {
                 RecievePush recievePush = gson.fromJson(contetn, RecievePush.class);
-
                 goXwalkfragment(recievePush.url, null);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+                .subscribe(qcCoachRespone -> {
+                    runOnUiThread(() -> {
+                        Glide.with(App.AppContex)
+                                .load(qcCoachRespone.getData().getCoach().getAvatar())
+                                .asBitmap()
+                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
+                        drawerName.setText(qcCoachRespone.getData().getCoach().getUsername());
+                    });
+                });
+
+
+
     }
 
     public void logout() {
@@ -237,6 +254,8 @@ public class MainActivity extends BaseAcitivity {
                 Fragment fragment = fragments.get(i);
                 if (fragment instanceof XWalkFragment) {
                     ((XWalkFragment) fragment).removeCookie();
+
+
                 } else if (fragment instanceof OriginWebFragment) {
                     ((OriginWebFragment) fragment).removeCookie();
                 }
@@ -274,8 +293,9 @@ public class MainActivity extends BaseAcitivity {
     public void goXwalkfragment(String url, String from) {
 
 
-        WebFragment fragment = WebFragment.newInstance(url);
-
+        WebFragment fragment =(WebFragment) mFragmentManager.findFragmentByTag(url);
+        if (fragment == null){
+              fragment =  WebFragment.newInstance(url);
         if (urls.contains(url)) {
             topFragment = fragment;
             if (path.size() > 0) {
@@ -294,7 +314,7 @@ public class MainActivity extends BaseAcitivity {
         }
 
         FragmentTransaction fr = mFragmentManager.beginTransaction();
-        fr.replace(R.id.main_fraglayout, fragment, url);
+        fr.add(R.id.main_fraglayout, fragment, url);
         fr.addToBackStack(null);
         fr.commit();
 //        }else
