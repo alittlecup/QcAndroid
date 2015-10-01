@@ -48,8 +48,8 @@
     <shared>
       <config>
         <devices>
-          <device id="Nexus 5" />
           <device id="Nexus 7 2013" />
+          <device id="Nexus 5" />
           <device id="Nexus 4" />
           <device id="Galaxy Nexus" />
         </devices>
@@ -150,34 +150,10 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="fix : 主页返回">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/analytics_5_6_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_schedules.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/analytics_5_5_3.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseXwalkFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/BaseXwalkFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DateSegmentLayout.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DateSegmentLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java" afterPath="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleDateLayout.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleDateLayout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WebFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WebFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/XwalkViewNoBack.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/XwalkViewNoBack.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_origin_web.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_origin_web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_xwalk.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_xwalk.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_drawer.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_drawer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_schedule_date.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_schedule_date.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" afterPath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" />
+    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="fix :">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/img_logo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/splash_slogan.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/splash_slogan.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
@@ -388,7 +364,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="51" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
+              <caret line="110" column="51" selection-start-line="110" selection-start-column="51" selection-end-line="110" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -398,20 +374,20 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="135" column="55" selection-start-line="135" selection-start-column="55" selection-end-line="135" selection-end-column="55" />
+              <caret line="144" column="34" selection-start-line="144" selection-start-column="34" selection-end-line="144" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_record_edit.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml">
+      <file leaf-file-name="activity_splash.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4906542">
-              <caret line="168" column="26" selection-start-line="168" selection-start-column="26" selection-end-line="168" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.5303738">
+              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -4230,7 +4206,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/CommonInputView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordComfirmFragment.java" />
@@ -4257,6 +4232,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" />
       </list>
     </option>
   </component>
@@ -4599,6 +4575,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable-xhdpi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-fitcoach" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-fitcoach" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -4669,7 +4675,7 @@
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/loginlibrary" />
     <property name="FullScreen" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
-    <property name="SearchEverywhereHistoryKey" value="RecordE&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java&#10;Setting&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.SettingActivity&#10;Or&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Coach&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.http.bean.Coach&#10;Main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;Qc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;Web&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Xw&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;gra&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;O&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;DateU&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java&#10;S&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;colors&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;Sch&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Sc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleDateLayout.java&#10;App&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.App&#10;Ori&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;x&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Xwal&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;X&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Config&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Rxb&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.RxBus&#10;buil&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;myhom&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;Record&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordFragment.java&#10;Reci&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.reciever.PushReciever&#10;Android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Xwa&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;Exp&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java&#10;Splash&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;Reco&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordFragment.java&#10;Dat&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java&#10;Confi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;bu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;an&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Q&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;Androi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/SplashActivity.java&#10;Noti&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/NotificationActivity.java&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Date&#9;PSI&#9;JAVA://com.paper.paperbaselibrary.utils.DateUtils&#10;my&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.MyHomeActivity&#10;LoginV&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.LoginView&#10;ModifyP&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment&#10;Con&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;s&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;Baseinfo&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.BaseInfoFragment" />
+    <property name="SearchEverywhereHistoryKey" value="Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;RecordE&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java&#10;Setting&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.SettingActivity&#10;Or&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Coach&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.http.bean.Coach&#10;Main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;Qc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;Web&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Xw&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;gra&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;O&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;DateU&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java&#10;S&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;colors&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/colors.xml&#10;Sch&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Sc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleDateLayout.java&#10;App&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.App&#10;Ori&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;x&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Xwal&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;X&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;Config&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Rxb&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.RxBus&#10;buil&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;myhom&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;Record&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordFragment.java&#10;Reci&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.reciever.PushReciever&#10;Android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Xwa&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/XWalkFragment.java&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java&#10;Exp&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java&#10;Splash&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;Reco&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordFragment.java&#10;Dat&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java&#10;Confi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;Login&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginFragment.java&#10;bu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;an&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Q&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;Androi&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Noti&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/NotificationActivity.java&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Date&#9;PSI&#9;JAVA://com.paper.paperbaselibrary.utils.DateUtils&#10;my&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.MyHomeActivity&#10;LoginV&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.LoginView&#10;ModifyP&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment&#10;Con&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;s&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/SettingFragment.java&#10;Baseinfo&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.BaseInfoFragment" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -5015,12 +5021,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00114" summary="addcertificate &amp;&amp; addexperience">
-      <created>1442481461793</created>
-      <option name="number" value="00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1442481461793</updated>
-    </task>
     <task id="LOCAL-00115" summary="citychoose popup">
       <created>1442565927079</created>
       <option name="number" value="00115" />
@@ -5309,7 +5309,13 @@
       <option name="project" value="LOCAL" />
       <updated>1443441308302</updated>
     </task>
-    <option name="localTasksCounter" value="163" />
+    <task id="LOCAL-00163" summary="fix :">
+      <created>1443673818502</created>
+      <option name="number" value="00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1443673818504</updated>
+    </task>
+    <option name="localTasksCounter" value="164" />
     <servers />
   </component>
   <component name="TodoView">
@@ -5403,7 +5409,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="fix baseinfo" />
     <MESSAGE value="fix changePhoneNum" />
     <MESSAGE value="fix login splash" />
     <MESSAGE value="fix splash dot" />
@@ -5428,7 +5433,8 @@
     <MESSAGE value="禁止横屏" />
     <MESSAGE value="fix : 主页返回" />
     <MESSAGE value="fix : 空数据字符串错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix : 空数据字符串错误" />
+    <MESSAGE value="fix :" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix :" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -5468,21 +5474,6 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/loading_text.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.3203342">
-          <caret line="98" column="23" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
-          <folding>
-            <element signature="e#974#1009#0" expanded="true" />
-            <element signature="e#1043#1078#0" expanded="true" />
-            <element signature="e#3325#3343#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExpeEditFragment.java">
@@ -5869,15 +5860,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="51" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="135" column="55" selection-start-line="135" selection-start-column="55" selection-end-line="135" selection-end-column="55" />
+          <caret line="110" column="51" selection-start-line="110" selection-start-column="51" selection-end-line="110" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -5887,8 +5870,27 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4906542">
-          <caret line="168" column="26" selection-start-line="168" selection-start-column="26" selection-end-line="168" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.3317757">
+          <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="144" column="34" selection-start-line="144" selection-start-column="34" selection-end-line="144" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5303738">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding />
         </state>
       </provider>
