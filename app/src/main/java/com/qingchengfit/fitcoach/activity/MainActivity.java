@@ -106,6 +106,7 @@ public class MainActivity extends BaseAcitivity {
     LinearLayout drawerModules;
     @Bind(R.id.drawer_name)
     TextView drawerName;
+    AsyncDownloader mDownloadThread;
     HashMap<String, Fragment> fragments = new HashMap<>();
     //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
@@ -158,13 +159,12 @@ public class MainActivity extends BaseAcitivity {
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
                         updateDialog.dismiss();
-
                         if (url != null) {
                             //TODO download app
                             downloadDialog.show();
-                            new AsyncDownloader().execute(url);
+                            mDownloadThread = new AsyncDownloader();
+                            mDownloadThread.execute(url);
                         }
-
                     }
 
                     @Override
@@ -177,8 +177,22 @@ public class MainActivity extends BaseAcitivity {
         downloadDialog = new MaterialDialog.Builder(this)
                 .title("正在飞速为您下载")
                 .progress(false, 100)
-                .build();
+                .cancelable(false)
+                .positiveText("后台更新")
+                .negativeText("取消更新")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                    }
 
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        mDownloadThread.cancel(true);
+                    }
+                })
+                .build();
         LogUtil.e("version:" + AppUtils.getAppVer(this));
         QcCloudClient.getApi().getApi.qcGetVersion()
                 .subscribe(qcVersionResponse -> {
@@ -189,7 +203,6 @@ public class MainActivity extends BaseAcitivity {
                             try {
                                 newAkp.createNewFile();
                             } catch (IOException e) {
-//e.printStackTrace();
                             }
                         }
                         runOnUiThread(() -> updateDialog.show());
