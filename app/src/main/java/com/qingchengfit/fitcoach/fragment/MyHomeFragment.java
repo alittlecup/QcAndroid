@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
@@ -146,18 +147,22 @@ public class MyHomeFragment extends Fragment {
             gender = R.drawable.img_default_male;
             Glide.with(App.AppContex)
                     .load(R.drawable.ic_gender_signal_male)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(myhomeGender);
         }
         if (TextUtils.isEmpty(userAvatar)) {
             Glide.with(App.AppContex)
                     .load(gender)
+
                     .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(new CircleImgWrapper(myhomeHeader,App.AppContex));
         } else {
             Glide.with(App.AppContex)
                     .load(userAvatar)
                     .asBitmap()
-                    .into(new CircleImgWrapper(myhomeHeader,App.AppContex));
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
         }
 
     }

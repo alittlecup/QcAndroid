@@ -21,6 +21,7 @@ import com.qingchengfit.fitcoach.Utils.HTMLUtils;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
 import com.qingchengfit.fitcoach.bean.BriefInfo;
 import com.qingchengfit.fitcoach.component.RecyclerViewInScroll;
+import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import java.util.ArrayList;
@@ -209,7 +210,7 @@ public class BaseInfoFragment extends BaseFragment {
                     holder.itemContent.setVisibility(View.GONE);
                     holder.itemImg.setVisibility(View.VISIBLE);
                     holder.itemLabel.setVisibility(View.GONE);
-                    Glide.with(App.AppContex).load(baseInfoBean.content).into(holder.itemImg);
+                    Glide.with(App.AppContex).load(baseInfoBean.content).asBitmap().into(new ScaleWidthWrapper(holder.itemImg, App.AppContex));
                 }
             }
         }
