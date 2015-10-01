@@ -202,7 +202,6 @@ public class QcCloudClient {
         @GET("/api/android/coaches/{id}/welcome/")
         rx.Observable<QcResponDrawer> getDrawerInfo(@Path("id") String id);
 
-
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
 
@@ -238,6 +237,12 @@ public class QcCloudClient {
 
         @GET("/api/organizations/")
         rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
+
+        //获取教练日程
+        @GET("/api/coaches/{id}/systems/schedules/")
+        rx.Observable<QcResponse> qcGetCoachSchedule(@Path("id") int id);
+
+
 
     }
 

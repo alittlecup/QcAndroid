@@ -3,8 +3,6 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.qingchengfit.fitcoach.App;
-
 /**
  * power by
  * <p>
@@ -23,11 +21,11 @@ public class WebFragment extends Fragment {
 
     public static WebFragment newInstance(String baseUrl) {
         WebFragment fragment;
-        if (App.canXwalk) {
-            fragment = new XWalkFragment();
-        } else {
+//        if (App.canXwalk) {
+//            fragment = new XWalkFragment();
+//        } else {
             fragment = new OriginWebFragment();
-        }
+//        }
         Bundle args = new Bundle();
         args.putString(BASE_URL, baseUrl);
         fragment.setArguments(args);

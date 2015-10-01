@@ -1,13 +1,139 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.qingchengfit.fitcoach.fragment.ScheduesFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.ScheduesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/common_toolbar">
+    </include>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="60dp"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        >
 
-</FrameLayout>
+        <com.qingchengfit.fitcoach.component.DateSegmentLayout
+            android:id="@+id/drawer_radiogroup"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            >
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+        </com.qingchengfit.fitcoach.component.DateSegmentLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/disable"
+            >
+        </View>
+
+        <RelativeLayout
+            android:id="@+id/schedule_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_calendar"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="75dp"
+            android:background="@color/warm_grey"
+            >
+
+        </View>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/schedule_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/schedule_no_img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/schedules_no_data"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/schedule_no_tv"
+            style="@style/TextStyle.common"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/schedule_no_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="暂无日程安排"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

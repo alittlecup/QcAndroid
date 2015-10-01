@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -29,6 +35,7 @@ import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -43,10 +50,12 @@ public class OriginWebFragment extends WebFragment {
     @Bind(R.id.webview)
     WebView webview;
     CookieManager cookieManager;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private String base_url;
     private Gson gson;
     private Observable<NewPushMsg> mObservable;
-
+    private List<Integer> mlastPosition = new ArrayList<>();
     public OriginWebFragment() {
     }
 
@@ -63,17 +72,17 @@ public class OriginWebFragment extends WebFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
-
         ButterKnife.bind(this, view);
-
-
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
+
         webview.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
             }
 
             @Override
@@ -82,12 +91,53 @@ public class OriginWebFragment extends WebFragment {
             }
 
 
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                LogUtil.d("shouldOverrideUrlLoading" + url);
+                WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+                mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+
+
         });
+
+
         webview.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                toolbar.setTitle(title);
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.menu_delete);
+            }
+
+            @Override
+            public void getVisitedHistory(ValueCallback<String[]> callback) {
+                super.getVisitedHistory(callback);
+
+            }
 
         });
         webview.getSettings().setJavaScriptEnabled(true);
 //        webview.setInitialScale(getScale());
+        String s = webview.getSettings().getUserAgentString();
+        webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
+        webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
+        // 开启DOM storage API 功能
+        webview.getSettings().setDomStorageEnabled(true);
+        // 开启database storage API功能
+        webview.getSettings().setDatabaseEnabled(true);
+        String cacheDirPath = Configs.ExternalCache;
+        Log.i("cachePath", cacheDirPath);
+        // 设置数据库缓存路径
+        webview.getSettings().setDatabasePath(cacheDirPath); // API 19 deprecated
+        // 设置Application caches缓存目录
+        webview.getSettings().setAppCachePath(cacheDirPath);
+        // 开启Application Cache功能
+        webview.getSettings().setAppCacheEnabled(true);
 
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
@@ -95,7 +145,6 @@ public class OriginWebFragment extends WebFragment {
         mObservable = RxBus.getBus().register(NewPushMsg.class);
         mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
         webview.loadUrl(base_url);
-
 //        webview.loadUrl("http://www.baidu.com");
         return view;
     }
@@ -111,25 +160,37 @@ public class OriginWebFragment extends WebFragment {
 
     @Override
     public Boolean canGoBack() {
+
         if (webview != null)
             return webview.canGoBack();
         else return false;
     }
 
     public void goBack() {
-        webview.goBack();
+        WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+        webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
+//        if (mlastPosition.size()>0){
+//            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
+//            mlastPosition.remove(mlastPosition.size()-1);
+//        }else
+//            webview.goBack();
     }
 
 
     public void startLoadUrl(String url) {
         if (webview != null)
             webview.loadUrl(url);
+
     }
+
     private void initCookie() {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
-        if (sessionid != null)
+        if (sessionid != null) {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
-        else {
+            setCookie("", "qc_session_id", sessionid);
+            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
+            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+        } else {
             ((MainActivity) getActivity()).logout();
         }
 //        List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {
@@ -201,6 +262,15 @@ public class OriginWebFragment extends WebFragment {
             PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
             Gson gson = new Gson();
             return gson.toJson(info);
+        }
+
+        @JavascriptInterface
+        public void goBack() {
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    getActivity().onBackPressed();
+                });
+            }
         }
 
         @JavascriptInterface

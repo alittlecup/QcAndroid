@@ -37,6 +37,13 @@ public class DateUtils {
         return formatter.format(d);
     }
 
+    public static String getOnlyDay(Date d) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM.dd", Locale.CHINA);
+        return formatter.format(d);
+    }
+
+
     public static String getDateMonth(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM", Locale.CHINA);

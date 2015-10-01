@@ -127,7 +127,6 @@
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Moments-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.10.0" level="project" />
-    <orderEntry type="library" exported="" name="analytics-5.5.3" level="project" />
     <orderEntry type="library" exported="" name="okhttp-urlconnection-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="MobTools" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.9.0" level="project" />
@@ -152,8 +151,8 @@
     <orderEntry type="library" exported="" name="pushservice-4.5.1.8" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Facebook-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-ShortMessage-2.6.1" level="project" />
+    <orderEntry type="library" exported="" name="analytics-5.6.1" level="project" />
     <orderEntry type="library" exported="" name="material-dialogs-0.7.9.1" level="project" />
-    <orderEntry type="module" module-name="crosswalkwebview144334317arm" exported="" />
     <orderEntry type="module" module-name="paperbaselibrary" exported="" />
   </component>
 </module>

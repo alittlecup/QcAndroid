@@ -99,7 +99,7 @@ public class App extends Application {
     private void setupWebView() {
         try {
             System.loadLibrary("xwalkcore");
-            canXwalk = true;
+            canXwalk = false;
         } catch (Error e) {
             canXwalk = false;
         }

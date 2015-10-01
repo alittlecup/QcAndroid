@@ -2,40 +2,45 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.qingchengfit.fitcoach.fragment.XWalkFragment">
-    <RelativeLayout
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroud_grey"
+
+    <include layout="@layout/common_toolbar"
         >
+    </include>
 
-        <ImageView
-            android:id="@+id/loading_gif"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerInParent="true"
-            />
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/loading"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/backgroud_grey"-->
+    <!--android:visibility="gone"-->
+    <!-->-->
 
-        <TextView
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/loading_gif"
-            android:layout_centerHorizontal="true"
-            android:text="正在加载"
-            android:textSize="18sp"
-            />
+    <!--<ImageView-->
+    <!--android:id="@+id/loading_gif"-->
+    <!--android:layout_width="80dp"-->
+    <!--android:layout_height="80dp"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--/>-->
 
-        <include layout="@layout/common_toolbar"
-            >
-        </include>
-    </RelativeLayout>
+    <!--<TextView-->
+    <!--style="@style/Qc.TextCommonGrey"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/loading_gif"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:text="正在加载"-->
+    <!--android:textSize="18sp"-->
+    <!--/>-->
+
+
+    <!--</RelativeLayout>-->
     <com.qingchengfit.fitcoach.component.XwalkViewNoBack
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
+        android:layout_marginTop="?android:actionBarSize"
         android:background="@color/transparent"
+        android:scrollbars="none"
         />
 
     <!--<Button-->
@@ -45,13 +50,13 @@
         <!--android:text="@string/js_alert_title"-->
         <!--/>-->
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/web_floatbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
-        />
+    <!--<com.getbase.floatingactionbutton.FloatingActionsMenu-->
+    <!--android:id="@+id/web_floatbtn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|right"-->
+    <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+    <!--android:visibility="gone"-->
+    <!--/>-->
 </FrameLayout>

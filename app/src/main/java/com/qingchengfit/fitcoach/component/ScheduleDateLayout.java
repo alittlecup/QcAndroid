@@ -2,11 +2,9 @@ package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,12 +31,12 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
 
     public SegmentListener segmentListener;
     public TouchUpListener listener;
-    @Bind(R.id.segment_img)
-    ImageView segmentImg;
-    @Bind(R.id.segment_text)
-    TextView segmentText;
-    Drawable[] drawables;
-    private String text;
+    @Bind(R.id.weekday)
+    TextView weekday;
+    @Bind(R.id.date)
+    TextView date;
+    @Bind(R.id.indicator)
+    TextView indicator;
 
     public ScheduleDateLayout(Context context) {
         super(context);
@@ -64,7 +62,7 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
     }
 
     public void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.layout_segment, this, true);
+        LayoutInflater.from(context).inflate(R.layout.layout_schedule_date, this, true);
         ButterKnife.bind(this);
         setOnClickListener(this);
     }
@@ -92,22 +90,20 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
     @Override
     public void onCheckChange(boolean isChecked) {
         if (isChecked) {
-            segmentImg.setImageDrawable(drawables[1]);
-            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
+            weekday.setTextColor(Color.argb(255, 255, 255, 255));
+            date.setTextColor(Color.argb(255, 255, 255, 255));
+            indicator.setTextColor(Color.argb(255, 255, 255, 255));
+
         } else {
-            segmentImg.setImageDrawable(drawables[0]);
-            segmentText.setTextColor(Color.argb(255, 102, 102, 102));
+            weekday.setTextColor(Color.argb(153, 255, 255, 255));
+            date.setTextColor(Color.argb(153, 255, 255, 255));
+            indicator.setTextColor(Color.argb(0, 255, 255, 255));
         }
     }
 
-    public void setDrawables(Drawable[] drawables) {
-        this.drawables = drawables;
-        segmentImg.setImageDrawable(drawables[0]);
-    }
-
-    public void setText(String s) {
-        this.text = s;
-        segmentText.setText(text);
+    public void setWeekday(String week, String d) {
+        weekday.setText(week);
+        date.setText(d);
     }
 
     @Override

@@ -42,7 +42,6 @@ import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
-import com.qingchengfit.fitcoach.fragment.XWalkFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
@@ -144,7 +143,7 @@ public class MainActivity extends BaseAcitivity {
         initUser();
         initDialog();
         initDrawer();
-
+//        mFragmentManager.beginTransaction().replace(R.id.main_fraglayout,new ScheduesFragment()).commit();
 
     }
 
@@ -231,20 +230,20 @@ public class MainActivity extends BaseAcitivity {
     @Override
     protected void onResume() {
         super.onResume();
-        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
-                .subscribe(qcCoachRespone -> {
-                    runOnUiThread(() -> {
-                        Glide.with(App.AppContex)
-                                .load(qcCoachRespone.getData().getCoach().getAvatar())
-                                .asBitmap()
-                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
-                        drawerName.setText(qcCoachRespone.getData().getCoach().getUsername());
-                    });
-                });
-
+//        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+//                .subscribe(qcCoachRespone -> {
+//                    runOnUiThread(() -> {
+//                        Glide.with(App.AppContex)
+//                                .load(qcCoachRespone.getData().getCoach().getAvatar())
+//                                .asBitmap()
+//                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
+//                        drawerName.setText(qcCoachRespone.getData().getCoach().getUsername());
+//                    });
+//                });
 
 
     }
+
 
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
@@ -252,13 +251,11 @@ public class MainActivity extends BaseAcitivity {
         if (fragments != null) {
             for (int i = 0; i < fragments.size(); i++) {
                 Fragment fragment = fragments.get(i);
-                if (fragment instanceof XWalkFragment) {
-                    ((XWalkFragment) fragment).removeCookie();
-
-
-                } else if (fragment instanceof OriginWebFragment) {
+//                if (fragment instanceof XWalkFragment) {
+//                    ((XWalkFragment) fragment).removeCookie();
+//                } else if (fragment instanceof OriginWebFragment) {
                     ((OriginWebFragment) fragment).removeCookie();
-                }
+//                }
             }
         }
         Intent logout = new Intent(this, LoginActivity.class);
@@ -290,55 +287,6 @@ public class MainActivity extends BaseAcitivity {
 
     }
 
-    public void goXwalkfragment(String url, String from) {
-
-
-        WebFragment fragment =(WebFragment) mFragmentManager.findFragmentByTag(url);
-        if (fragment == null){
-              fragment =  WebFragment.newInstance(url);
-        if (urls.contains(url)) {
-            topFragment = fragment;
-            if (path.size() > 0) {
-                FragmentTransaction ft = mFragmentManager.beginTransaction();
-                for (String str : path) {
-                    Fragment f = mFragmentManager.findFragmentByTag(str);
-                    if (f != null)
-                        ft.remove(f);
-                }
-                ft.commit();
-
-            }
-            path.clear();
-        } else {
-            path.add(url);
-        }
-
-        FragmentTransaction fr = mFragmentManager.beginTransaction();
-        fr.add(R.id.main_fraglayout, fragment, url);
-        fr.addToBackStack(null);
-        fr.commit();
-//        }else
-//            mFragmentManager.popBackStack(url, 0);
-
-
-//        WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag(url);
-//        if (fragment == null) {
-//        WebFragment fragment = WebFragment.newInstance(url);
-//            FragmentTransaction fr = mFragmentManager.beginTransaction();
-//            fr.replace(R.id.main_fraglayout, fragment, url);
-//            fr.addToBackStack(url);
-//        fr.commit();
-
-//        } else {
-//            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).commit();
-//            if (fragment instanceof XWalkFragment)
-//                ((XWalkFragment) fragment).startLoadUrl(url);
-//            else if (fragment instanceof OriginWebFragment) {
-//                ((OriginWebFragment) fragment).startLoadUrl(url);
-//            }
-//        }
-//        topFragment = fragment;
-    }
 
     /**
      * 初始化侧滑,从后台拉去
@@ -383,9 +331,7 @@ public class MainActivity extends BaseAcitivity {
                     return Observable.just("");
                 })
                 .delay(1, TimeUnit.SECONDS)
-                .subscribe(s -> runOnUiThread(() -> {
-                    initVersion();
-                }));
+                .subscribe(s -> runOnUiThread(this::initVersion));
 
     }
 
@@ -395,7 +341,6 @@ public class MainActivity extends BaseAcitivity {
                 runOnUiThread(() -> {
                     drawerRadiogroup.getChildAt(0).performClick();
                 });
-
             }
         } else {
             goXwalkfragment(url, "");
@@ -471,7 +416,7 @@ public class MainActivity extends BaseAcitivity {
                         if (count == 0) {
 //                            drawerRadiogroup.getChildAt(0).performClick();
                             drawerRadiogroup.check(0);
-                            Fragment fragment = XWalkFragment.newInstance(btnInfo.intentUrl);
+                            Fragment fragment = OriginWebFragment.newInstance(btnInfo.intentUrl);
                             mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, fragment, btnInfo.intentUrl)
                                     .commit();
                             topFragment = fragment;
@@ -558,6 +503,7 @@ public class MainActivity extends BaseAcitivity {
     protected void onStop() {
         super.onStop();
         mainDrawerlayout.closeDrawers();
+
     }
 
     @Override
@@ -567,25 +513,74 @@ public class MainActivity extends BaseAcitivity {
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
+    public void goXwalkfragment(String url, String from) {
+
+
+        WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag("one");
+        FragmentTransaction fr = mFragmentManager.beginTransaction();
+        if (fragment == null) {
+            fragment = WebFragment.newInstance(url);
+            fr.replace(R.id.main_fraglayout, fragment, "one");
+//            fr.show(fragment);
+            fr.commit();
+            topFragment = fragment;
+        } else {
+            ((OriginWebFragment) fragment).startLoadUrl(url);
+        }
+//        if (topFragment != null)
+//            fr.hide(topFragment);
+
+
+//        topFragment = fragment;
+//        if (urls.contains(url)) {
+//            if (path.size() > 0) {
+//                FragmentTransaction ft = mFragmentManager.beginTransaction();
+//                for (String str : path) {
+//                    Fragment f = mFragmentManager.findFragmentByTag(str);
+//                    if (f != null)
+//                        ft.remove(f);
+//                }
+//                ft.commit();
+//
+//            }
+//            path.clear();
+//            path.add(url);
+//        } else {
+//            path.add(url);
+//        }
+//
+
+    }
+
+
     @Override
     public void onBackPressed() {
-        if (topFragment == null || topFragment.getTag() == null || urls.size() == 0) {
+        if (((OriginWebFragment) topFragment).canGoBack()) {
+            ((OriginWebFragment) topFragment).goBack();
+        } else {
             dialog.show();
-            return;
         }
 
-        if (path.size() > 0) {
-            mFragmentManager.popBackStack();
-            mFragmentManager.beginTransaction().remove(mFragmentManager.findFragmentByTag(path.get(path.size() - 1))).commit();
-            path.remove(path.size() - 1);
-        } else {
-            if (topFragment.getTag().equalsIgnoreCase(urls.get(0))) {
-                dialog.show();
-            } else {
-                if (drawerRadiogroup.getChildCount() > 0)
-                    drawerRadiogroup.getChildAt(0).performClick();
-            }
-        }
+//        if (topFragment == null || topFragment.getTag() == null || urls.size() == 0) {
+//            dialog.show();
+//            return;
+//        }
+//
+//        if (path.size() > 1) {
+//            Fragment fragment = mFragmentManager.findFragmentByTag(path.get(path.size() - 2));
+//            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).remove(topFragment).commit();
+//            path.remove(path.size() - 1);
+//            topFragment = fragment;
+//        } else {
+//            if (topFragment.getTag().equalsIgnoreCase(urls.get(0))) {
+//                dialog.show();
+//            } else {
+//                if (drawerRadiogroup.getChildCount() > 0)
+//                    drawerRadiogroup.getChildAt(0).performClick();
+//            }
+//        }
+
+
 //        super.onBackPressed();
 //       if (mFragmentManager.getFragments().size() >1)
 //           mFragmentManager.popBackStack();
