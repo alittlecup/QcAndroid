@@ -34,6 +34,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
+import com.qingchengfit.fitcoach.bean.TitleBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public class OriginWebFragment extends WebFragment {
     private Gson gson;
     private Observable<NewPushMsg> mObservable;
     private List<Integer> mlastPosition = new ArrayList<>();
+
     public OriginWebFragment() {
     }
 
@@ -101,7 +103,6 @@ public class OriginWebFragment extends WebFragment {
             }
 
 
-
         });
 
 
@@ -109,9 +110,42 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                toolbar.setTitle(title);
-                toolbar.getMenu().clear();
-                toolbar.inflateMenu(R.menu.menu_delete);
+                if (title.contains("clientJsonBegin")) {
+                    String[] strings = title.split("clientJsonBegin");
+                    toolbar.setTitle(strings[0]);
+                    String jsonStr = strings[1].replace("clientJsonBegin", "");
+                    Gson gson = new Gson();
+                    TitleBean titleBean = gson.fromJson(jsonStr, TitleBean.class);
+                    toolbar.getMenu().clear();
+                    switch (titleBean.navIcon) {
+                        case 0:
+                            break;
+                        case 1:
+                            toolbar.setNavigationIcon(R.drawable.ic_cross_white);
+                            break;
+                        case 2:
+                            toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                            break;
+                        default:
+                            break;
+                    }
+                    switch (titleBean.actionIcon) {
+                        case 0:
+                            break;
+                        case 1:
+                            toolbar.inflateMenu(R.menu.add);
+                            break;
+                        case 2:
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                } else {
+                    toolbar.setTitle(title);
+                }
+
             }
 
             @Override
@@ -119,7 +153,6 @@ public class OriginWebFragment extends WebFragment {
                 super.getVisitedHistory(callback);
 
             }
-
         });
         webview.getSettings().setJavaScriptEnabled(true);
 //        webview.setInitialScale(getScale());
