@@ -169,6 +169,7 @@ public class OriginWebFragment extends WebFragment {
     public void goBack() {
         WebBackForwardList webBackForwardList = webview.copyBackForwardList();
         webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
+        mlastPosition.remove(mlastPosition.size() - 1);
 //        if (mlastPosition.size()>0){
 //            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
 //            mlastPosition.remove(mlastPosition.size()-1);
