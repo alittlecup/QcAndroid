@@ -239,7 +239,7 @@ public class QcCloudClient {
         rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
 
         //获取教练日程
-        @GET("/api/coaches/{id}/systems/schedules/")
+        @GET("/api/coaches/{id}/schedules/")
         rx.Observable<QcResponse> qcGetCoachSchedule(@Path("id") int id);
 
 

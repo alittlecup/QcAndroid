@@ -1,7 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+                android:layout_marginTop="30dp"
+    >
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/item_schedule_time"
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        tools:text="9:00"
+        />
+
+    <ImageView
+        android:id="@+id/item_schedule_status"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="3dp"
+        tools:src="@drawable/ic_calendar"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/item_schedule_classname"
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="Gravity"
+            />
+
+        <TextView
+            android:id="@+id/item_schedule_gymname"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/ic_course_location"
+            android:drawablePadding="5dp"
+            android:maxLength="10"
+            tools:text="中美引力工作室"
+            />
+
+        <TextView
+            android:id="@+id/item_schedule_num"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/ic_course_people"
+            android:drawablePadding="5dp"
+            android:maxLength="10"
+            tools:text="共报名5人"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_schedule_classpic"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:scaleType="center"
+        tools:src="@drawable/test_pic"
+        />
+</RelativeLayout>

@@ -24,6 +24,7 @@
             >
 
             <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:id="@+id/schedule_date_0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -31,6 +32,7 @@
             </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
 
             <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:id="@+id/schedule_date_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -38,6 +40,16 @@
             </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
 
             <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:id="@+id/schedule_date_2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+
+
+            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:id="@+id/schedule_date_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -45,6 +57,7 @@
             </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
 
             <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:id="@+id/schedule_date_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -52,13 +65,7 @@
             </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
 
             <com.qingchengfit.fitcoach.component.ScheduleDateLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
-
-            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
+                android:id="@+id/schedule_date_5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

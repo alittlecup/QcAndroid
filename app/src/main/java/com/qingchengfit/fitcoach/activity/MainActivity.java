@@ -41,6 +41,7 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
+import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
@@ -141,10 +142,10 @@ public class MainActivity extends BaseAcitivity {
         mFragmentManager = getSupportFragmentManager();
         mMainObservabel = RxBus.getBus().register(RxBus.OPEN_DRAWER);
         mMainObservabel.subscribe((Action1) o -> mainDrawerlayout.openDrawer(Gravity.LEFT));
-        initUser();
-        initDialog();
-        initDrawer();
-//        mFragmentManager.beginTransaction().replace(R.id.main_fraglayout,new ScheduesFragment()).commit();
+//        initUser();
+//        initDialog();
+//        initDrawer();
+        mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, new ScheduesFragment()).commit();
 
     }
 

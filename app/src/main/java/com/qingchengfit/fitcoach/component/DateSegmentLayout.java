@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.paper.paperbaselibrary.utils.DateUtils;
 
@@ -51,7 +52,12 @@ public class DateSegmentLayout extends CustomSetmentLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         for (int i = 0; i < getChildCount(); i++) {
-//            ((ScheduleDateLayout) getChildAt(i)).setSegmentListener(v ->
+            ((ScheduleDateLayout) getChildAt(i)).setSegmentListener(new ScheduleDateLayout.SegmentListener() {
+                @Override
+                public void onSegmentClick(View v) {
+                    DateSegmentLayout.super.onSegmentClick(v.getId());
+                }
+            });
 //                    onSegmentClick(v.getId()));
         }
 
