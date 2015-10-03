@@ -15,7 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.DateSegmentLayout;
 import com.qingchengfit.fitcoach.component.LoopView;
@@ -30,6 +34,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,10 +54,13 @@ public class ScheduesFragment extends Fragment {
     @Bind(R.id.schedule_no_tv)
 
     TextView scheduleNoTv;
+    @Bind(R.id.calendarView)
+    MaterialCalendarView calendarView;
+    @Bind(R.id.shadow_item_container)
+    MaterialShadowContainerView shadowItemContainer;
 
     public ScheduesFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +71,7 @@ public class ScheduesFragment extends Fragment {
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
         if (TextUtils.isEmpty(id)) {
+
         }
         Coach coach = gson.fromJson(id, Coach.class);
         QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id)).subscribe();
@@ -73,9 +82,23 @@ public class ScheduesFragment extends Fragment {
         ScheduesAdapter scheduesAdapter = new ScheduesAdapter(scheduleBeans);
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.setAdapter(scheduesAdapter);
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(MaterialCalendarView materialCalendarView, CalendarDay calendarDay, boolean b) {
+                shadowItemContainer.setVisibility(View.GONE);
+            }
+        });
         return view;
     }
 
+    @OnClick(R.id.schedule_calendar_ic)
+    public void onCalendarClick() {
+        if (shadowItemContainer.getVisibility() == View.VISIBLE) {
+            shadowItemContainer.setVisibility(View.GONE);
+        } else {
+            shadowItemContainer.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     public void onDestroyView() {
@@ -145,7 +168,8 @@ public class ScheduesFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            listener.onItemClick(v, (int) v.getTag());
+            if (listener != null)
+                listener.onItemClick(v, (int) v.getTag());
         }
     }
 

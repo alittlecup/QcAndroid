@@ -90,6 +90,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/schedule_calendar_ic"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_centerInParent="true"
@@ -140,6 +141,31 @@
             android:text="暂无日程安排"
             android:visibility="gone"
             />
+
+        <com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView
+            android:id="@+id/shadow_item_container"
+            style="@style/ms9_DefaultShadowStyle"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:ms9_shadowElevation="4dp"
+            app:ms9_shadowTranslationZ="2dp"
+
+            >
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:mcv_selectionColor="@color/primary"
+                app:mcv_showOtherDates="all"
+
+                />
+        </com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView>
     </RelativeLayout>
 
 

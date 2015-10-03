@@ -229,6 +229,9 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.10'
     compile files('libs/pushservice-4.5.3.48.jar')
     compile 'com.android.support:cardview-v7:23.0.1'
+
+    compile 'com.prolificinteractive:material-calendarview:1.0.1' //日历
+    compile 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:0.6.4'
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 }
