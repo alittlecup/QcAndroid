@@ -254,8 +254,8 @@ public class RegisterFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        RxBus.getBus().unregister(RecieveMsg.class, mRecieveMsgOb);
-        RxBus.getBus().unregister(SendSmsCode.class, mSendsmsOb);
+        RxBus.getBus().unregister(RecieveMsg.class.getName(), mRecieveMsgOb);
+        RxBus.getBus().unregister(SendSmsCode.class.getName(), mSendsmsOb);
     }
 
     public class InternalHandler extends Handler {

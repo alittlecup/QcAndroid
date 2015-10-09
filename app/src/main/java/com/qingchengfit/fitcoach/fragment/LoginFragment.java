@@ -226,9 +226,10 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
         if (loginview != null)
             loginview.unRegiste();
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+
     }
 }

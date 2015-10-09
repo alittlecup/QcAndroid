@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.h6ah4i.android.materialshadowninepatch.MaterialShadowContainerView;
+import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -27,6 +27,8 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
+import com.wangjie.shadowviewhelper.ShadowProperty;
+import com.wangjie.shadowviewhelper.ShadowViewHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,8 +58,6 @@ public class ScheduesFragment extends Fragment {
     TextView scheduleNoTv;
     @Bind(R.id.calendarView)
     MaterialCalendarView calendarView;
-    @Bind(R.id.shadow_item_container)
-    MaterialShadowContainerView shadowItemContainer;
 
     public ScheduesFragment() {
     }
@@ -82,21 +82,36 @@ public class ScheduesFragment extends Fragment {
         ScheduesAdapter scheduesAdapter = new ScheduesAdapter(scheduleBeans);
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.setAdapter(scheduesAdapter);
+
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(MaterialCalendarView materialCalendarView, CalendarDay calendarDay, boolean b) {
-                shadowItemContainer.setVisibility(View.GONE);
+                calendarView.setVisibility(View.GONE);
+                drawerRadiogroup.setDate(calendarDay.getDate());
             }
         });
+        ShadowProperty shadowProperty = new ShadowProperty()
+                .setShadowColor(0x77000000)
+//                        .setShadowDy(MeasureUtils.dpToPx(0.5f, getResources()))
+                .setShadowRadius(MeasureUtils.dpToPx(3f, getResources()));
+        ShadowViewHelper.bindShadowHelper(shadowProperty
+                , calendarView
+        );
+
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) calendarView.getLayoutParams();
+        lp.leftMargin = -shadowProperty.getShadowOffset();
+        lp.rightMargin = -shadowProperty.getShadowOffset();
+        lp.topMargin = -shadowProperty.getShadowOffset();
+        calendarView.setLayoutParams(lp);
         return view;
     }
 
-    @OnClick(R.id.schedule_calendar_ic)
+    @OnClick(R.id.schedule_calendar)
     public void onCalendarClick() {
-        if (shadowItemContainer.getVisibility() == View.VISIBLE) {
-            shadowItemContainer.setVisibility(View.GONE);
+        if (calendarView.getVisibility() == View.VISIBLE) {
+            calendarView.setVisibility(View.GONE);
         } else {
-            shadowItemContainer.setVisibility(View.VISIBLE);
+            calendarView.setVisibility(View.VISIBLE);
         }
     }
 

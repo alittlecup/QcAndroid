@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.http.bean.User;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
 
@@ -65,7 +66,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
-
+        LeakCanary.install(this);
         AppContex = getApplicationContext();
 //        refWatcher = LeakCanary.install(this);
 //        CrashHandler.getInstance().init(this);

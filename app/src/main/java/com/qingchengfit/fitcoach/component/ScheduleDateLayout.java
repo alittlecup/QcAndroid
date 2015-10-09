@@ -84,7 +84,7 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
     }
 
     public void setCheck(boolean isCheck) {
-
+        onCheckChange(isCheck);
     }
 
     @Override
@@ -92,12 +92,12 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
         if (isChecked) {
             weekday.setTextColor(Color.argb(255, 255, 255, 255));
             date.setTextColor(Color.argb(255, 255, 255, 255));
-            indicator.setTextColor(Color.argb(255, 255, 255, 255));
+            indicator.setVisibility(VISIBLE);
 
         } else {
             weekday.setTextColor(Color.argb(153, 255, 255, 255));
             date.setTextColor(Color.argb(153, 255, 255, 255));
-            indicator.setTextColor(Color.argb(0, 255, 255, 255));
+            indicator.setVisibility(INVISIBLE);
         }
     }
 

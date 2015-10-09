@@ -92,6 +92,14 @@ public class LoginActivity extends AppCompatActivity {
 //        }
 //    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        getContentResolver().unregisterContentObserver(smsObserver);
+    }
+
     class LoginFragAdapter extends FragmentPagerAdapter{
 
         public LoginFragAdapter(FragmentManager fm) {

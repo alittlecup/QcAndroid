@@ -195,14 +195,15 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile project(':paperbaselibrary')
     compile 'com.umeng.analytics:analytics:latest.integration'
-    compile 'com.getbase:floatingactionbutton:1.10.0'
+//    compile 'com.getbase:floatingactionbutton:1.10.0'
+//    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
     compile 'me.relex:circleindicator:1.1.5@aar'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile files('libs/pushservice-4.5.1.8.jar')
-    compile files('libs/jg_filter_sdk_1.1.jar')
-    compile files('libs/mid-sdk-2.20.jar')
-    compile files('libs/Xg_sdk_v2.38_20150616_1057.jar')
+//    compile files('libs/pushservice-4.5.1.8.jar')
+//    compile files('libs/jg_filter_sdk_1.1.jar')
+//    compile files('libs/mid-sdk-2.20.jar')
+//    compile files('libs/Xg_sdk_v2.38_20150616_1057.jar')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
     compile files('libs/MobLogCollector.jar')
     compile files('libs/MobTools.jar')
@@ -231,7 +232,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.1'
 
     compile 'com.prolificinteractive:material-calendarview:1.0.1' //日历
-    compile 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:0.6.4'
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+    compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
+//    compile 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:0.6.4'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 }

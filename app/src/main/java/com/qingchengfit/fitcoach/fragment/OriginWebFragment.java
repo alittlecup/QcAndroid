@@ -239,7 +239,7 @@ public class OriginWebFragment extends WebFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        RxBus.getBus().unregister(NewPushMsg.class, mObservable);
+        RxBus.getBus().unregister(NewPushMsg.class.getSimpleName(), mObservable);
     }
 
 

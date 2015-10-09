@@ -43,9 +43,14 @@ public class DateSegmentLayout extends CustomSetmentLayout {
         int x = calendar.get(Calendar.DAY_OF_WEEK);
 
         for (int i = 0; i < 6; i++) {
-            calendar.add(Calendar.DATE, 1);
+
             ((ScheduleDateLayout) getChildAt(i)).setWeekday(mWeek[(x + i) % 7], DateUtils.getOnlyDay(calendar.getTime()));
+            if (i == 0)
+                ((ScheduleDateLayout) getChildAt(i)).setCheck(true);
+            else ((ScheduleDateLayout) getChildAt(i)).setCheck(false);
+            calendar.add(Calendar.DATE, 1);
         }
+
     }
 
     @Override
