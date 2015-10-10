@@ -155,32 +155,9 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="fix :add shadow">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_statament_custom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_statament_month.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_statament_today.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_statament_week.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_statement_order.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_statement_sales.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/DataStatementFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/DrawerFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/adapter/SpinnerAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementGlanceFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/floatingactionbutton_1_10_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_data_statement.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_glance.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/library_2_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spinner_checkview.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spinner_item.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_drawer.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_drawer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" afterPath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="statement native">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementDetailFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_detail.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
@@ -346,17 +323,18 @@
       <file leaf-file-name="fragment_statement_glance.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_glance.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.214286">
-              <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+            <state vertical-scroll-proportion="-3.0714285">
+              <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
               <folding>
-                <element signature="e#1459#1494#0" expanded="true" />
-                <element signature="e#2598#2633#0" expanded="true" />
-                <element signature="e#3248#3283#0" expanded="true" />
-                <element signature="e#4386#4421#0" expanded="true" />
-                <element signature="e#5036#5071#0" expanded="true" />
-                <element signature="e#6175#6210#0" expanded="true" />
-                <element signature="e#6825#6860#0" expanded="true" />
-                <element signature="e#7957#7992#0" expanded="true" />
+                <element signature="e#373#1168#0" expanded="false" />
+                <element signature="e#1460#1495#0" expanded="true" />
+                <element signature="e#2599#2634#0" expanded="true" />
+                <element signature="e#3249#3284#0" expanded="true" />
+                <element signature="e#4387#4422#0" expanded="true" />
+                <element signature="e#5037#5072#0" expanded="true" />
+                <element signature="e#6176#6211#0" expanded="true" />
+                <element signature="e#6826#6861#0" expanded="true" />
+                <element signature="e#7958#7993#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -392,7 +370,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementGlanceFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -400,22 +378,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpinnerAdapter.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/adapter/SpinnerAdapter.java">
+      <file leaf-file-name="fragment_statement_detail.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_detail.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1440678">
-              <caret line="34" column="17" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.8435583">
+              <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#796#797#0" expanded="true" />
-                <element signature="e#820#821#0" expanded="true" />
-                <element signature="e#877#878#0" expanded="true" />
-                <element signature="e#904#905#0" expanded="true" />
-                <element signature="e#961#962#0" expanded="true" />
-                <element signature="e#985#986#0" expanded="true" />
-                <element signature="e#1942#1943#0" expanded="true" />
-                <element signature="e#1994#1995#0" expanded="true" />
+                <element signature="e#1533#1568#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StatementDetailFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementDetailFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="54" selection-start-line="27" selection-start-column="54" selection-end-line="27" selection-end-column="54" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -4240,7 +4223,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/CommonInputView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java" />
@@ -4288,9 +4270,10 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/spinner_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_glance.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementGlanceFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/spinner_checkview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/adapter/SpinnerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementGlanceFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_detail.xml" />
       </list>
     </option>
   </component>
@@ -5189,12 +5172,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00123" summary="fix little">
-      <created>1442810222317</created>
-      <option name="number" value="00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1442810222318</updated>
-    </task>
     <task id="LOCAL-00124" summary="fix searchview add hot result">
       <created>1442820305715</created>
       <option name="number" value="00124" />
@@ -5483,7 +5460,13 @@
       <option name="project" value="LOCAL" />
       <updated>1444375949413</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="statement native">
+      <created>1444464179978</created>
+      <option name="number" value="00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1444464179978</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TodoView">
@@ -5507,7 +5490,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4236006" sideWeight="0.48460293" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28038898" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28038898" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267776" sideWeight="0.49520767" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30711043" sideWeight="0.4878444" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24054463" sideWeight="0.49675852" order="10" side_tool="false" content_ui="tabs" />
@@ -5577,7 +5560,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="enhance : 加载页面策略修改,每一个页面新建一个fragment" />
     <MESSAGE value="fix bugs 建议栏点击不选中" />
     <MESSAGE value="fix bug:添加认证 名称不能选" />
     <MESSAGE value="fix bugs, commoninputtype" />
@@ -5602,7 +5584,8 @@
     <MESSAGE value="fix :native schedules halfdone" />
     <MESSAGE value="fix :native schedules schedule" />
     <MESSAGE value="fix :add shadow" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix :add shadow" />
+    <MESSAGE value="statement native" />
+    <option name="LAST_COMMIT_MESSAGE" value="statement native" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -5614,26 +5597,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_record_edit.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3317757">
-          <caret line="150" column="22" selection-start-line="150" selection-start-column="22" selection-end-line="150" selection-end-column="22" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5303738">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/RecordEditFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32894737">
@@ -5949,8 +5912,8 @@
         <state vertical-scroll-proportion="-4.178571">
           <caret line="142" column="37" selection-start-line="142" selection-start-column="37" selection-end-line="142" selection-end-column="37" />
           <folding>
-            <element signature="e#6270#6303#0" expanded="true" />
-            <element signature="e#6339#6374#0" expanded="true" />
+            <element signature="e#6299#6332#0" expanded="true" />
+            <element signature="e#6372#6407#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -5971,7 +5934,7 @@
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="17" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
           <folding>
-            <element signature="e#0#3069#0" expanded="false" />
+            <element signature="e#0#3070#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -6003,26 +5966,6 @@
           <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_glance.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.214286">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-          <folding>
-            <element signature="e#1459#1494#0" expanded="true" />
-            <element signature="e#2598#2633#0" expanded="true" />
-            <element signature="e#3248#3283#0" expanded="true" />
-            <element signature="e#4386#4421#0" expanded="true" />
-            <element signature="e#5036#5071#0" expanded="true" />
-            <element signature="e#6175#6210#0" expanded="true" />
-            <element signature="e#6825#6860#0" expanded="true" />
-            <element signature="e#7957#7992#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spinner_checkview.xml">
@@ -6060,7 +6003,7 @@
         <state vertical-scroll-proportion="0.2607362">
           <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
           <folding>
-            <element signature="e#477#512#0" expanded="true" />
+            <element signature="e#488#494#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -6068,20 +6011,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementGlanceFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/adapter/SpinnerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1440678">
-          <caret line="34" column="17" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.48022598">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#796#797#0" expanded="true" />
@@ -6090,10 +6023,62 @@
             <element signature="e#904#905#0" expanded="true" />
             <element signature="e#961#962#0" expanded="true" />
             <element signature="e#985#986#0" expanded="true" />
-            <element signature="e#1942#1943#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
+            <element signature="e#1944#1945#0" expanded="true" />
+            <element signature="e#1996#1997#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementGlanceFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="54" selection-start-line="27" selection-start-column="54" selection-end-line="27" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_glance.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.0714285">
+          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+          <folding>
+            <element signature="e#373#1168#0" expanded="false" />
+            <element signature="e#1460#1495#0" expanded="true" />
+            <element signature="e#2599#2634#0" expanded="true" />
+            <element signature="e#3249#3284#0" expanded="true" />
+            <element signature="e#4387#4422#0" expanded="true" />
+            <element signature="e#5037#5072#0" expanded="true" />
+            <element signature="e#6176#6211#0" expanded="true" />
+            <element signature="e#6826#6861#0" expanded="true" />
+            <element signature="e#7958#7993#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_statement_detail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8435583">
+          <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+          <folding>
+            <element signature="e#1533#1568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
   </component>
