@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
@@ -58,6 +60,10 @@ public class ScheduesFragment extends Fragment {
     TextView scheduleNoTv;
     @Bind(R.id.calendarView)
     MaterialCalendarView calendarView;
+    @Bind(R.id.web_floatbtn)
+    FloatingActionsMenu webFloatbtn;
+    private FloatingActionButton btn1;
+    private FloatingActionButton btn2;
 
     public ScheduesFragment() {
     }
@@ -103,6 +109,14 @@ public class ScheduesFragment extends Fragment {
         lp.rightMargin = -shadowProperty.getShadowOffset();
         lp.topMargin = -shadowProperty.getShadowOffset();
         calendarView.setLayoutParams(lp);
+        btn1 = new FloatingActionButton(getActivity());
+        btn1.setIcon(R.drawable.ic_baseinfo_city);
+//
+        btn2 = new FloatingActionButton(getActivity());
+        btn2.setIcon(R.drawable.ic_baseinfo_phone);
+
+        webFloatbtn.addButton(btn1);
+        webFloatbtn.addButton(btn2);
         return view;
     }
 
@@ -172,7 +186,6 @@ public class ScheduesFragment extends Fragment {
             holder.itemScheduleStatus.setImageDrawable(new LoopView("#63d2f3"));
             holder.itemScheduleClassname.setText(bean.cname);
             holder.itemScheduleGymname.setText(bean.name);
-
         }
 
 

@@ -119,5 +119,4 @@
         <item name="android:windowExitAnimation">@anim/timepicker_anim_exit_bottom</item>
         <!-- 指定消失的动画xml -->
     </style>
-
 </resources>

@@ -1,0 +1,250 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.DataStatementFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/cyan"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+
+        >
+
+        <Spinner
+            android:id="@+id/spinner_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Qc.toolbarStyle"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_statament_month"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月(xxx-xxxx)"
+
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月(xxx-xxxx)"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <include
+            layout="@layout/divider_white"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            >
+
+        </include>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_statament_week"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月(xxx-xxxx)"
+
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月(xxx-xxxx)"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <include
+            layout="@layout/divider_white"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            >
+
+        </include>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_statament_today"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月(xxx-xxxx)"
+
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月(xxx-xxxx)"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <include
+            layout="@layout/divider_white"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            >
+
+        </include>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_statament_custom"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自定义报表"
+
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="根据自定义条件生成报表"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <include
+            layout="@layout/divider_white"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            >
+
+        </include>
+    </RelativeLayout>
+</LinearLayout>
