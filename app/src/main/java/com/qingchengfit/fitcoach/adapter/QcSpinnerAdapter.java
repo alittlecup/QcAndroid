@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.adapter;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.LoopView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,24 +29,26 @@ import butterknife.ButterKnife;
  * <p>
  * Created by Paper on 15/10/10 2015.
  */
-public class SpinnerAdapter extends BaseAdapter {
+public class QcSpinnerAdapter extends BaseAdapter {
+    List<SpinData> datas;
 
-    public SpinnerAdapter() {
+    public QcSpinnerAdapter(List d) {
+        this.datas = d;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return datas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return datas.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -55,8 +61,25 @@ public class SpinnerAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        SpinData spinData = datas.get(position);
+        viewHolder.spinnerTv.setText(spinData.text);
+        if (TextUtils.isEmpty(spinData.color)) {
+            viewHolder.spinnerIcon.setVisibility(View.GONE);
+        } else {
+            viewHolder.spinnerIcon.setVisibility(View.VISIBLE);
+            viewHolder.spinnerIcon.setImageDrawable(new LoopView(spinData.color));
+        }
         return convertView;
+    }
+
+    public static class SpinData {
+        public String color;
+        public String text;
+
+        public SpinData(String color, String text) {
+            this.color = color;
+            this.text = text;
+        }
     }
 
     /**

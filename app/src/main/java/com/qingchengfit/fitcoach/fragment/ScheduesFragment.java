@@ -43,7 +43,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduesFragment extends Fragment {
+public class ScheduesFragment extends MainBaseFragment {
     public static final String TAG = ScheduesFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -73,6 +73,8 @@ public class ScheduesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
         ButterKnife.bind(this, view);
+        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         drawerRadiogroup.setDate(new Date());
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");

@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -36,10 +37,12 @@ public class LoopView extends Drawable {
 
     }
 
+
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawCircle(12, 12, 6, mPaint);
-        canvas.drawCircle(12, 12, 4, mWhitePain);
+        Rect rect = getBounds();
+        canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 8, mPaint);
+        canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 12, mWhitePain);
     }
 
     @Override

@@ -40,8 +40,9 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
+import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
-import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
+import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
@@ -62,7 +63,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,7 +72,7 @@ import rx.functions.Action1;
 
 //import javax.inject.Inject;
 
-public class MainActivity extends BaseAcitivity {
+public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     public static final String ACTION = "main_action";
     public static final int LOGOUT = 0;
@@ -125,6 +125,10 @@ public class MainActivity extends BaseAcitivity {
     private MaterialDialog downloadDialog;
     private String url;
     private File newAkp;
+
+    private ScheduesFragment mScheduesFragment;
+    private DataStatementFragment mDataStatementFragment;
+
 //    @Override
 //    protected void onXWalkReady() {
 //
@@ -142,10 +146,10 @@ public class MainActivity extends BaseAcitivity {
         mFragmentManager = getSupportFragmentManager();
         mMainObservabel = RxBus.getBus().register(RxBus.OPEN_DRAWER);
         mMainObservabel.subscribe((Action1) o -> mainDrawerlayout.openDrawer(Gravity.LEFT));
-//        initUser();
-//        initDialog();
-//        initDrawer();
-        mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, new StatementGlanceFragment()).commit();
+        initUser();
+        initDialog();
+        initDrawer();
+
 
     }
 
@@ -202,11 +206,11 @@ public class MainActivity extends BaseAcitivity {
                         newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
                         if (!newAkp.exists()) {
                             try {
-                                newAkp.createNewFile();
+                                boolean ret = newAkp.createNewFile();
                             } catch (IOException e) {
                             }
                         }
-                        runOnUiThread(() -> updateDialog.show());
+                        runOnUiThread(updateDialog::show);
 
                     }
 
@@ -268,7 +272,7 @@ public class MainActivity extends BaseAcitivity {
 //                if (fragment instanceof XWalkFragment) {
 //                    ((XWalkFragment) fragment).removeCookie();
 //                } else if (fragment instanceof OriginWebFragment) {
-                    ((OriginWebFragment) fragment).removeCookie();
+                ((OriginWebFragment) fragment).removeCookie();
 //                }
             }
         }
@@ -330,23 +334,72 @@ public class MainActivity extends BaseAcitivity {
         Coach coach = gson.fromJson(id, Coach.class);
         App.coachid = Integer.parseInt(coach.id);
 
-        QcCloudClient.getApi().getApi
-                .getDrawerInfo(coach.id)
-                .flatMap(qcResponDrawer -> {
-                    if (qcResponDrawer.status == 200) {
-                        for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
-                            setupBtn(qcResponDrawer.data.guide.get(i), i);
-                        }
-                        runOnUiThread(() -> {
-                            setupModules(qcResponDrawer.data.modules);
-                        });
-                    } else if (qcResponDrawer.error_code.equals("400001")) {
-                        logout();
-                    }
-                    return Observable.just("");
-                })
-                .delay(1, TimeUnit.SECONDS)
-                .subscribe(s -> runOnUiThread(this::initVersion));
+        mScheduesFragment = new ScheduesFragment();
+        mDataStatementFragment = new DataStatementFragment();
+
+
+        SegmentLayout button = new SegmentLayout(this);
+        button.setText("日程安排");
+        button.setId(ids[0]);
+        button.setDrawables(R.drawable.ic_drawer_schedule_normal, R.drawable.ic_drawer_schedule_checked);
+        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        SegmentLayout button2 = new SegmentLayout(this);
+        button2.setId(ids[1]);
+        button2.setText("数据报表");
+        button2.setDrawables(R.drawable.ic_drawer_statistic_normal, R.drawable.ic_drawer_statistic_checked);
+        drawerRadiogroup.addView(button2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        SegmentLayout button3 = new SegmentLayout(this);
+        button3.setText("数据报表");
+        button3.setId(ids[2]);
+        button3.setDrawables(R.drawable.ic_drawer_meeting_normal, R.drawable.ic_drawer_meeting_checked);
+        drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+
+        button.setOnClickListener(v -> {
+            mainDrawerlayout.closeDrawers();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.main_fraglayout, mScheduesFragment)
+//                    .addToBackStack("schedules")
+                    .commit();
+        });
+        button2.setOnClickListener(v -> {
+            mainDrawerlayout.closeDrawers();
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.main_fraglayout, mDataStatementFragment)
+//                    .addToBackStack("statement")
+                    .commit();
+        });
+
+        button.performClick();
+        DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+        item.setTitle("我的学员");
+        item.setCount("100");
+        drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        DrawerModuleItem item1 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+        item1.setTitle("我的课程计划");
+        item1.setCount("100");
+        drawerModules.addView(item1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        DrawerModuleItem item2 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+        item2.setTitle("我的健身房");
+        item2.setCount("100");
+        drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+
+//        QcCloudClient.getApi().getApi
+//                .getDrawerInfo(coach.id)
+//                .flatMap(qcResponDrawer -> {
+//                    if (qcResponDrawer.status == 200) {
+//                        for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
+//                            setupBtn(qcResponDrawer.data.guide.get(i), i);
+//                        }
+//                        runOnUiThread(() -> {
+//                            setupModules(qcResponDrawer.data.modules);
+//                        });
+//                    } else if (qcResponDrawer.error_code.equals("400001")) {
+//                        logout();
+//                    }
+//                    return Observable.just("");
+//                })
+//                .delay(1, TimeUnit.SECONDS)
+//                .subscribe(s -> runOnUiThread(this::initVersion));
 
     }
 
@@ -512,6 +565,7 @@ public class MainActivity extends BaseAcitivity {
         startActivity(new Intent(this, MyHomeActivity.class));
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
 //        mainDrawerlayout.closeDrawer(Gravity.LEFT);
+
     }
 
     @Override
@@ -570,11 +624,12 @@ public class MainActivity extends BaseAcitivity {
 
     @Override
     public void onBackPressed() {
-        if (((OriginWebFragment) topFragment).canGoBack()) {
-            ((OriginWebFragment) topFragment).goBack();
-        } else {
-            dialog.show();
-        }
+        super.onBackPressed();
+//        if (((OriginWebFragment) topFragment).canGoBack()) {
+//            ((OriginWebFragment) topFragment).goBack();
+//        } else {
+//            dialog.show();
+//        }
 
 //        if (topFragment == null || topFragment.getTag() == null || urls.size() == 0) {
 //            dialog.show();
@@ -634,6 +689,11 @@ public class MainActivity extends BaseAcitivity {
 //            if (drawerRadiogroup.getChildCount() > 0)
 //                drawerRadiogroup.getChildAt(0).performClick();
 //        }
+    }
+
+    @Override
+    public void onOpenDrawer() {
+        mainDrawerlayout.openDrawer(Gravity.LEFT);
     }
 
 

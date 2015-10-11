@@ -8,6 +8,7 @@
     <include layout="@layout/common_toolbar"></include>
 
     <RelativeLayout
+        android:id="@+id/statement_order_btn"
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
@@ -48,6 +49,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/statement_sales_btn"
         android:layout_width="match_parent"
         android:layout_height="80dp">
 

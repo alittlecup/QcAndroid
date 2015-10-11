@@ -4,13 +4,21 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.SpinnerBean;
+import com.qingchengfit.fitcoach.component.LoopView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +33,7 @@ public class StatementGlanceFragment extends Fragment {
     @Bind(R.id.spinner_nav)
     Spinner spinnerNav;
     String[] x = {"11111111", "2", "3"};
-    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<SpinnerBean> adapter;
 
     public StatementGlanceFragment() {
         // Required empty public constructor
@@ -39,10 +47,49 @@ public class StatementGlanceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_checkview, x);
-        //设置下拉列表的风格
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //将adapter 添加到spinner中
+        List<SpinnerBean> datas = new ArrayList<>();
+        datas.add(new SpinnerBean("#550000", "测试1"));
+        datas.add(new SpinnerBean("#00ff00", "测试2"));
+        datas.add(new SpinnerBean("#0000ff", "测试3"));
+        adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, datas) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+                }
+                ((TextView) convertView).setText(datas.get(position).text);
+                return convertView;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+                }
+                SpinnerBean bean = getItem(position);
+                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+                if (TextUtils.isEmpty(bean.color)) {
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+                } else {
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+                }
+                return convertView;
+            }
+
+
+        };
+
+//        设置下拉列表的风格
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+//        将adapter 添加到spinner中
+//        List<QcSpinnerAdapter.SpinData> datas = new ArrayList<>();
+//        datas.add(new QcSpinnerAdapter.SpinData("#665500","测试1"));
+//        datas.add(new QcSpinnerAdapter.SpinData("#665577","测试2"));
+//        datas.add(new QcSpinnerAdapter.SpinData("#660077","测试3"));
+//        QcSpinnerAdapter qcSpinnerAdapter = new QcSpinnerAdapter(datas);
+
         spinnerNav.setAdapter(adapter);
 
 

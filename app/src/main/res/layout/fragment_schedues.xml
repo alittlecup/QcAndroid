@@ -7,9 +7,30 @@
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.ScheduesFragment">
 
-    <include layout="@layout/common_toolbar">
-    </include>
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/cyan"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+
+        >
+
+        <Spinner
+            android:id="@+id/spinner_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Qc.toolbarStyle"
+
+            />
+    </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -150,6 +171,7 @@
                 android:layout_height="380dp"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"
+                android:visibility="gone"
                 app:mcv_selectionColor="@color/primary"
                 app:mcv_showOtherDates="all"
                 />

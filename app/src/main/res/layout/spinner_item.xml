@@ -4,6 +4,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical"
+
     >
 
     <ImageView
@@ -12,6 +13,8 @@
         android:layout_height="20dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:foregroundGravity="center"
+        android:scaleType="center"
         />
 
     <TextView
@@ -19,6 +22,11 @@
         style="@style/Qc.TextCommonBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/spinner_icon"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:singleLine="true"
+        android:text="hahah"
         />
 </RelativeLayout>

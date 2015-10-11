@@ -105,6 +105,13 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
         segmentImg.setImageDrawable(drawables[0]);
     }
 
+    public void setDrawables(int res0, int res1) {
+        this.drawables = new Drawable[]{getContext().getResources().getDrawable(res0),
+                getContext().getResources().getDrawable(res1)};
+        segmentImg.setImageDrawable(drawables[0]);
+
+    }
+
     public void setText(String s) {
         this.text = s;
         segmentText.setText(text);
