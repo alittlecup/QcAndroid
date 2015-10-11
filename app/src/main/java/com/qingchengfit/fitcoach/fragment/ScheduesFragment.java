@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,6 +65,7 @@ public class ScheduesFragment extends MainBaseFragment {
     FloatingActionsMenu webFloatbtn;
     private FloatingActionButton btn1;
     private FloatingActionButton btn2;
+    private FloatingActionButton btn3;
 
     public ScheduesFragment() {
     }
@@ -113,12 +115,22 @@ public class ScheduesFragment extends MainBaseFragment {
         calendarView.setLayoutParams(lp);
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_baseinfo_city);
+        btn1.setColorNormal(Color.GREEN);
+        btn1.setTitle("设置休息");
 //
         btn2 = new FloatingActionButton(getActivity());
         btn2.setIcon(R.drawable.ic_baseinfo_phone);
+        btn2.setColorNormal(Color.BLUE);
+        btn2.setTitle("代约团课");
+
+        btn3 = new FloatingActionButton(getActivity());
+        btn3.setIcon(R.drawable.ic_baseinfo_phone);
+        btn3.setColorNormal(Color.CYAN);
+        btn3.setTitle("代约私教");
 
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
+        webFloatbtn.addButton(btn3);
         return view;
     }
 

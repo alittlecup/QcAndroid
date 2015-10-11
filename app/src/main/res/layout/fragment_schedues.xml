@@ -185,6 +185,9 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            app:fab_addButtonColorNormal="@color/text_red"
+            app:fab_labelStyle="@style/ThemeOverlay.AppCompat.Dark"
+            app:fab_labelsPosition="left"
             />
     </RelativeLayout>
 
