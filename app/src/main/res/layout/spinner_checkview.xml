@@ -5,6 +5,7 @@
                  android:background="@color/transparent"
                  android:drawablePadding="5dp"
                  android:orientation="vertical"
+                 android:paddingRight="10dp"
                  android:textAppearance="@style/ToolbarStyle"
     >
 

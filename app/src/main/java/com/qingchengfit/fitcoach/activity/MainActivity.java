@@ -41,6 +41,7 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
+import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
@@ -128,7 +129,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     private ScheduesFragment mScheduesFragment;
     private DataStatementFragment mDataStatementFragment;
-
+    private MyStudentFragment mMyStudentFragment;
 //    @Override
 //    protected void onXWalkReady() {
 //
@@ -336,7 +337,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         mScheduesFragment = new ScheduesFragment();
         mDataStatementFragment = new DataStatementFragment();
-
+        mMyStudentFragment = new MyStudentFragment();
 
         SegmentLayout button = new SegmentLayout(this);
         button.setText("日程安排");
@@ -354,14 +355,14 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         button3.setDrawables(R.drawable.ic_drawer_meeting_normal, R.drawable.ic_drawer_meeting_checked);
         drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
-        button.setOnClickListener(v -> {
+        button.setListener(v -> {
             mainDrawerlayout.closeDrawers();
             mFragmentManager.beginTransaction()
                     .replace(R.id.main_fraglayout, mScheduesFragment)
 //                    .addToBackStack("schedules")
                     .commit();
         });
-        button2.setOnClickListener(v -> {
+        button2.setListener(v -> {
             mainDrawerlayout.closeDrawers();
             mFragmentManager.beginTransaction()
                     .replace(R.id.main_fraglayout, mDataStatementFragment)
@@ -382,7 +383,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         item2.setTitle("我的健身房");
         item2.setCount("100");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-
+        item.setOnClickListener(v -> changeMainFragment(mMyStudentFragment));
 //        QcCloudClient.getApi().getApi
 //                .getDrawerInfo(coach.id)
 //                .flatMap(qcResponDrawer -> {
@@ -415,6 +416,13 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         }
     }
 
+    private void changeMainFragment(Fragment fragment) {
+        mainDrawerlayout.closeDrawers();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.main_fraglayout, fragment)
+//                    .addToBackStack("statement")
+                .commit();
+    }
 
     @UiThread
     private void setupModules(List<DrawerModule> modules) {
