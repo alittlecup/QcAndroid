@@ -4,7 +4,6 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,11 +47,11 @@ public class StatementGlanceFragment extends Fragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         List<SpinnerBean> datas = new ArrayList<>();
+        datas.add(new SpinnerBean("", "全部预约报表", true));
         datas.add(new SpinnerBean("#550000", "测试1"));
         datas.add(new SpinnerBean("#00ff00", "测试2"));
         datas.add(new SpinnerBean("#0000ff", "测试3"));
         adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, datas) {
-
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
@@ -61,7 +60,6 @@ public class StatementGlanceFragment extends Fragment {
                 ((TextView) convertView).setText(datas.get(position).text);
                 return convertView;
             }
-
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
@@ -69,27 +67,18 @@ public class StatementGlanceFragment extends Fragment {
                 }
                 SpinnerBean bean = getItem(position);
                 ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-                if (TextUtils.isEmpty(bean.color)) {
+                if (bean.isTitle) {
                     ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
                 } else {
+                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
                     ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
                     ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
                 }
                 return convertView;
             }
-
-
         };
-
-//        设置下拉列表的风格
         adapter.setDropDownViewResource(R.layout.spinner_item);
-//        将adapter 添加到spinner中
-//        List<QcSpinnerAdapter.SpinData> datas = new ArrayList<>();
-//        datas.add(new QcSpinnerAdapter.SpinData("#665500","测试1"));
-//        datas.add(new QcSpinnerAdapter.SpinData("#665577","测试2"));
-//        datas.add(new QcSpinnerAdapter.SpinData("#660077","测试3"));
-//        QcSpinnerAdapter qcSpinnerAdapter = new QcSpinnerAdapter(datas);
-
         spinnerNav.setAdapter(adapter);
 
 

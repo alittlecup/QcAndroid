@@ -20,18 +20,25 @@ import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
  * Created by Paper on 15/10/12 2015.
  */
 public class WebActivity extends BaseAcitivity {
-
+    OriginWebFragment originWebFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");
+            originWebFragment = (OriginWebFragment) OriginWebFragment.newInstance(url);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.web_frag_layout, OriginWebFragment.newInstance(url))
+                    .replace(R.id.web_frag_layout, originWebFragment)
                     .commit();
         }
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        if (originWebFragment.canGoBack()) {
+            originWebFragment.goBack();
+        } else
+            super.onBackPressed();
     }
 }

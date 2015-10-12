@@ -42,6 +42,7 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
+import com.qingchengfit.fitcoach.fragment.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
@@ -131,6 +132,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private ScheduesFragment mScheduesFragment;
     private DataStatementFragment mDataStatementFragment;
     private MyStudentFragment mMyStudentFragment;
+    private MainWebFragment mMeetingFragment;
 //    @Override
 //    protected void onXWalkReady() {
 //
@@ -334,7 +336,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mScheduesFragment = new ScheduesFragment();
         mDataStatementFragment = new DataStatementFragment();
         mMyStudentFragment = new MyStudentFragment();
-
+        mMeetingFragment = MainWebFragment.newInstance("http://teacher.qingchengfit.cn/meetings/");
         SegmentLayout button = new SegmentLayout(this);
         button.setText("日程安排");
         button.setId(View.generateViewId());
@@ -352,23 +354,16 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
         button.setListener(v -> {
-            mainDrawerlayout.closeDrawers();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.main_fraglayout, mScheduesFragment)
-//                    .addToBackStack("schedules")
-                    .commit();
+            changeFragment(mScheduesFragment);
         });
 
         button2.setListener(v -> {
-            mainDrawerlayout.closeDrawers();
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.main_fraglayout, mDataStatementFragment)
-//                    .addToBackStack("statement")
-                    .commit();
+            changeFragment(mDataStatementFragment);
         });
 
-        button.performClick();
+        button3.setListener(v1 -> changeFragment(mMeetingFragment));
 
+        button.performClick();
         DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item.setTitle("我的学员");
         item.setCount("100");
@@ -381,7 +376,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         item2.setTitle("我的健身房");
         item2.setCount("100");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-        item.setOnClickListener(v -> changeMainFragment(mMyStudentFragment));
+        item.setOnClickListener(v -> changeFragment(mMyStudentFragment));
+        item1.setOnClickListener(v -> changeFragment(mMyStudentFragment));
+        item2.setOnClickListener(v -> changeFragment(mMyStudentFragment));
 
 //        QcCloudClient.getApi().getApi
 //                .getDrawerInfo(coach.id)
@@ -403,6 +400,21 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     }
 
+    public void changeFragment(Fragment fragment) {
+        mainDrawerlayout.closeDrawers();
+        if (topFragment != fragment) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            if (mFragmentManager.getFragments() == null || !mFragmentManager.getFragments().contains(fragment))
+                fragmentTransaction.add(R.id.main_fraglayout, fragment);
+            if (topFragment != null)
+                fragmentTransaction.hide(topFragment);
+
+            fragmentTransaction.show(fragment);
+            fragmentTransaction.commit();
+            topFragment = fragment;
+        }
+    }
+
     public void guideTo(String url) {
         if (TextUtils.isEmpty(url)) {
             if (drawerRadiogroup.getChildCount() > 0) {
@@ -415,13 +427,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         }
     }
 
-    private void changeMainFragment(Fragment fragment) {
-        mainDrawerlayout.closeDrawers();
-        mFragmentManager.beginTransaction()
-                .replace(R.id.main_fraglayout, fragment)
-//                    .addToBackStack("statement")
-                .commit();
-    }
 
     @UiThread
     private void setupModules(List<DrawerModule> modules) {

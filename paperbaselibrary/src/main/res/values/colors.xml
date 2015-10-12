@@ -7,8 +7,12 @@
     <color name="cyan">#00BFBF</color>
     <color name="transparent">#00ffffff</color>
     <color name="halftransparent">#3300bfbf</color>
+    <color name="halftransparent_grey">#99000000</color>
     <color name="grey">#555555</color>
     <color name="warm_grey">#9b9b9b</color>
     <color name="orange">#e08f00</color>
     <color name="red">#ff5151</color>
+    <color name="green">#66bb6a</color>
+    <color name="blue">#2ab6f6</color>
+    <color name="purple">#ba68c8</color>
 </resources>

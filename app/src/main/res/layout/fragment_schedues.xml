@@ -139,6 +139,8 @@
             android:id="@+id/schedule_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="50dp"
             >
         </android.support.v7.widget.RecyclerView>
 
@@ -176,6 +178,48 @@
                 app:mcv_showOtherDates="all"
                 />
 
+        <LinearLayout
+            android:id="@+id/schedule_expend_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/halftransparent_grey"
+            android:gravity="end|bottom"
+            android:orientation="vertical"
+            android:paddingBottom="120dp"
+            android:paddingRight="40dp"
+            android:visibility="gone"
+            >
+
+            <Button
+                android:id="@+id/schedule_rest_btn"
+                style="@style/ToolbarStyle"
+                android:layout_width="175dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/green"
+                android:text="设置休息"
+                />
+
+            <Button
+                android:id="@+id/schedule_group_btn"
+                style="@style/ToolbarStyle"
+                android:layout_width="175dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/blue"
+                android:text="代约团课"
+                />
+
+            <Button
+                android:id="@+id/schedule_private_btn"
+                style="@style/ToolbarStyle"
+                android:layout_width="175dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/purple"
+                android:text="代约私教"
+                />
+        </LinearLayout>
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/web_floatbtn"
             android:layout_width="wrap_content"

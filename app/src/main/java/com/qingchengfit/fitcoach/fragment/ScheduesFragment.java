@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,6 +30,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
@@ -80,6 +81,8 @@ public class ScheduesFragment extends MainBaseFragment {
     FloatingActionsMenu webFloatbtn;
     @Bind(R.id.spinner_nav)
     Spinner spinnerNav;
+    @Bind(R.id.schedule_expend_view)
+    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
     private FloatingActionButton btn2;
     private FloatingActionButton btn3;
@@ -110,6 +113,7 @@ public class ScheduesFragment extends MainBaseFragment {
             handleResponse(qcSchedulesResponse);
         }
     };
+    private Coach coach;
 
 
     public ScheduesFragment() {
@@ -134,9 +138,9 @@ public class ScheduesFragment extends MainBaseFragment {
         if (TextUtils.isEmpty(id)) {
 
         }
-        Coach coach = gson.fromJson(id, Coach.class);
+        coach = gson.fromJson(id, Coach.class);
         HashMap<String, String> params = new HashMap<>();
-        params.put("date", DateUtils.getServerDateDay(new Date(1438056000000l)));
+        params.put("date", DateUtils.getServerDateDay(new Date()));
 
 
         mSpinnerDatas = new ArrayList<>();
@@ -220,27 +224,57 @@ public class ScheduesFragment extends MainBaseFragment {
         lp.rightMargin = -shadowProperty.getShadowOffset();
         lp.topMargin = -shadowProperty.getShadowOffset();
         calendarView.setLayoutParams(lp);
-        btn1 = new FloatingActionButton(getActivity());
-        btn1.setIcon(R.drawable.ic_baseinfo_city);
-        btn1.setColorNormal(Color.GREEN);
-        btn1.setTitle("设置休息");
+//        btn1 = new FloatingActionButton(getActivity());
+//        btn1.setIcon(R.drawable.ic_baseinfo_city);
+//        btn1.setColorNormal(Color.GREEN);
+//        btn1.setTitle("设置休息");
 //
-        btn2 = new FloatingActionButton(getActivity());
-        btn2.setIcon(R.drawable.ic_baseinfo_phone);
-        btn2.setColorNormal(Color.BLUE);
-        btn2.setTitle("代约团课");
+//        btn2 = new FloatingActionButton(getActivity());
+//
+//        btn2.setColorNormal(Color.BLUE);
+//        btn2.setTitle("代约团课");
+//
+//        btn3 = new FloatingActionButton(getActivity());
+//        btn3.setIcon(R.drawable.ic_baseinfo_phone);
+//        btn3.setColorNormal(Color.CYAN);
+//        btn3.setTitle("代约私教");
+//
+//        btn1.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=rest"));
+//        btn2.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson"));
+//        btn3.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson"));
+//
+//        webFloatbtn.addButton(btn1);
+//        webFloatbtn.addButton(btn2);
+//        webFloatbtn.addButton(btn3);
+        webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+                scheduleExpendView.setVisibility(View.VISIBLE);
+            }
 
-        btn3 = new FloatingActionButton(getActivity());
-        btn3.setIcon(R.drawable.ic_baseinfo_phone);
-        btn3.setColorNormal(Color.CYAN);
-        btn3.setTitle("代约私教");
+            @Override
+            public void onMenuCollapsed() {
+                scheduleExpendView.setVisibility(View.GONE);
+            }
+        });
 
-        webFloatbtn.addButton(btn1);
-        webFloatbtn.addButton(btn2);
-        webFloatbtn.addButton(btn3);
-
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(1, params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+        QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id), params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
         return view;
+    }
+
+    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
+    public void onAction(View v) {
+        switch (v.getId()) {
+            case R.id.schedule_rest_btn:
+                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=rest");
+                break;
+            case R.id.schedule_private_btn:
+                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+                break;
+            case R.id.schedule_group_btn:
+                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+                break;
+        }
     }
 
     /**
@@ -252,7 +286,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.getServerDateDay(date));
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(1, params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+        QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id), params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
     }
 
     private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
@@ -281,6 +315,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
                 bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
                 bean.gymname = system.system.name;
+                bean.intent_url = rest.url;
                 scheduleBeans.add(bean);
 
             }
