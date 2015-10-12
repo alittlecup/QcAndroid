@@ -3,6 +3,8 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 
@@ -33,10 +36,11 @@ public class MyStudentFragment extends MainBaseFragment {
     Button searchviewCancle;
     @Bind(R.id.searchview)
     LinearLayout searchview;
+    @Bind(R.id.recyclerview)
+    RecyclerView recyclerview;
 
 
     public MyStudentFragment() {
-        // Required empty public constructor
     }
 
 
@@ -60,6 +64,9 @@ public class MyStudentFragment extends MainBaseFragment {
             }
             return true;
         });
+        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
         return view;
     }
 
@@ -74,4 +81,46 @@ public class MyStudentFragment extends MainBaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
+    /**
+     * recycle adapter
+     */
+    public static class StudentsHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.item_student_header)
+        ImageView itemStudentHeader;
+        @Bind(R.id.item_student_name)
+        TextView itemStudentName;
+        @Bind(R.id.item_student_phonenum)
+        TextView itemStudentPhonenum;
+        @Bind(R.id.item_student_gymname)
+        TextView itemStudentGymname;
+
+        public StudentsHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(itemView);
+        }
+    }
+
+    public class StudentAdapter extends RecyclerView.Adapter<StudentsHolder> {
+
+        public StudentAdapter() {
+        }
+
+        @Override
+        public StudentsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new StudentsHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_student, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(StudentsHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+    }
+
 }

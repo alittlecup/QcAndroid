@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -341,17 +342,17 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         SegmentLayout button = new SegmentLayout(this);
         button.setText("日程安排");
-        button.setId(ids[0]);
+        button.setId(View.generateViewId());
         button.setDrawables(R.drawable.ic_drawer_schedule_normal, R.drawable.ic_drawer_schedule_checked);
         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         SegmentLayout button2 = new SegmentLayout(this);
-        button2.setId(ids[1]);
+        button2.setId(View.generateViewId());
         button2.setText("数据报表");
         button2.setDrawables(R.drawable.ic_drawer_statistic_normal, R.drawable.ic_drawer_statistic_checked);
         drawerRadiogroup.addView(button2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         SegmentLayout button3 = new SegmentLayout(this);
-        button3.setText("数据报表");
-        button3.setId(ids[2]);
+        button3.setText("会议培训");
+        button3.setId(View.generateViewId());
         button3.setDrawables(R.drawable.ic_drawer_meeting_normal, R.drawable.ic_drawer_meeting_checked);
         drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
@@ -362,6 +363,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //                    .addToBackStack("schedules")
                     .commit();
         });
+
         button2.setListener(v -> {
             mainDrawerlayout.closeDrawers();
             mFragmentManager.beginTransaction()
@@ -371,6 +373,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         });
 
         button.performClick();
+
         DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item.setTitle("我的学员");
         item.setCount("100");
@@ -384,6 +387,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         item2.setCount("100");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item.setOnClickListener(v -> changeMainFragment(mMyStudentFragment));
+
 //        QcCloudClient.getApi().getApi
 //                .getDrawerInfo(coach.id)
 //                .flatMap(qcResponDrawer -> {
