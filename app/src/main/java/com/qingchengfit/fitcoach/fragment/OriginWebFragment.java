@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -246,7 +247,16 @@ public class OriginWebFragment extends WebFragment {
     @Override
     public void removeCookie() {
         if (cookieManager != null) {
-            cookieManager.removeAllCookie();
+            if (Build.VERSION.SDK_INT < 21) {
+                cookieManager.removeAllCookie();
+            } else {
+                cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+                    @Override
+                    public void onReceiveValue(Boolean value) {
+
+                    }
+                });
+            }
         }
     }
 

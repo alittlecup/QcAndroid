@@ -35,6 +35,13 @@ public class WebActivity extends BaseAcitivity {
     }
 
     @Override
+    protected void onDestroy() {
+        originWebFragment.removeCookie();
+        super.onDestroy();
+
+    }
+
+    @Override
     public void onBackPressed() {
         if (originWebFragment.canGoBack()) {
             originWebFragment.goBack();
