@@ -37,6 +37,12 @@ public class DateUtils {
         return formatter.format(d);
     }
 
+    public static String getServerDateDay(Date d) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        return formatter.format(d);
+    }
+
     public static String getOnlyDay(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM.dd", Locale.CHINA);
@@ -50,6 +56,10 @@ public class DateUtils {
         return formatter.format(d);
     }
 
+    public static String getTimeHHMM(Date d) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
+        return formatter.format(d);
+    }
     public static String formatDateToServer(String s) {
 
         return s.replace(".", "-");

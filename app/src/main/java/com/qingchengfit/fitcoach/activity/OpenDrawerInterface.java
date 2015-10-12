@@ -15,4 +15,6 @@ package com.qingchengfit.fitcoach.activity;
  */
 public interface OpenDrawerInterface {
     void onOpenDrawer();
+
+    void goWeb(String url);
 }

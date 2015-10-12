@@ -152,7 +152,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initDialog();
         initDrawer();
 
-
     }
 
     private void initVersion() {
@@ -267,17 +266,13 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
-        List<Fragment> fragments = mFragmentManager.getFragments();
-        if (fragments != null) {
-            for (int i = 0; i < fragments.size(); i++) {
-                Fragment fragment = fragments.get(i);
-//                if (fragment instanceof XWalkFragment) {
-//                    ((XWalkFragment) fragment).removeCookie();
-//                } else if (fragment instanceof OriginWebFragment) {
-                ((OriginWebFragment) fragment).removeCookie();
-//                }
-            }
-        }
+//        List<Fragment> fragments = mFragmentManager.getFragments();
+//        if (fragments != null) {
+//            for (int i = 0; i < fragments.size(); i++) {
+//                Fragment fragment = fragments.get(i);
+//                ((OriginWebFragment) fragment).removeCookie();
+//            }
+//        }
         Intent logout = new Intent(this, LoginActivity.class);
         logout.putExtra("isRegiste", 0);
 
@@ -706,6 +701,14 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     public void onOpenDrawer() {
         mainDrawerlayout.openDrawer(Gravity.LEFT);
+    }
+
+    @Override
+    public void goWeb(String url) {
+        Intent toWeb = new Intent(this, WebActivity.class);
+        toWeb.putExtra("url", url);
+        startActivity(toWeb);
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
     }
 
 

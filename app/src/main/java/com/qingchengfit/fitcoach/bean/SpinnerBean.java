@@ -16,9 +16,17 @@ package com.qingchengfit.fitcoach.bean;
 public class SpinnerBean {
     public String color;
     public String text;
+    public boolean isTitle;
+
+    public SpinnerBean(String color, String text, boolean isTitle) {
+        this.color = color;
+        this.text = text;
+        this.isTitle = isTitle;
+    }
 
     public SpinnerBean(String color, String text) {
         this.color = color;
         this.text = text;
+        this.isTitle = false;
     }
 }

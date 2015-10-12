@@ -224,6 +224,11 @@
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".activity.WebActivity"
+            android:label="@string/title_activity_notification"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

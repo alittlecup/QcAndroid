@@ -1,7 +1,5 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * power by
  * <p>
@@ -16,18 +14,13 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/10/3 2015.
  */
 public class ScheduleBean {
-    @SerializedName("name")
-    public String name;
-
-    @SerializedName("url")
-    public String url;
-
-    @SerializedName("id")
-    public int id;
-    @SerializedName("color")
-    public String color;
-    @SerializedName("cname")
-    public String cname;
-    @SerializedName("is_personal_system")
-    public String is_personal_system;
+    public long time;       //时间
+    public String color;    //颜色
+    public String title;  //课程名称
+    public String gymname;//健身房名称
+    public int count; //预约人数
+    public long timeEnd; //结束时间
+    public String pic_url; //图片
+    public String intent_url;
+    public int type;//0  休息  1:schedule
 }

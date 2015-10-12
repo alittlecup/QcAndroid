@@ -126,14 +126,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="75dp"
-            android:background="@color/less_black"
-            >
-
-        </View>
+        <!--<View-->
+        <!--android:layout_width="2dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="75dp"-->
+        <!--android:background="@color/text_grey"-->
+        <!-->-->
+        <!---->
+        <!--</View>-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/schedule_rv"
@@ -185,7 +185,8 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            app:fab_addButtonColorNormal="@color/text_red"
+            app:fab_addButtonColorNormal="@color/red"
+            app:fab_addButtonColorPressed="@color/text_red"
             app:fab_labelStyle="@style/ThemeOverlay.AppCompat.Dark"
             app:fab_labelsPosition="left"
             />

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,35 +12,49 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
+import com.qingchengfit.fitcoach.activity.NotificationActivity;
+import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DateSegmentLayout;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import com.wangjie.shadowviewhelper.ShadowProperty;
 import com.wangjie.shadowviewhelper.ShadowViewHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,9 +78,39 @@ public class ScheduesFragment extends MainBaseFragment {
     MaterialCalendarView calendarView;
     @Bind(R.id.web_floatbtn)
     FloatingActionsMenu webFloatbtn;
+    @Bind(R.id.spinner_nav)
+    Spinner spinnerNav;
     private FloatingActionButton btn1;
     private FloatingActionButton btn2;
     private FloatingActionButton btn3;
+    private ArrayList<ScheduleBean> scheduleBeans;
+    private ScheduesAdapter scheduesAdapter;
+    private ArrayList<SpinnerBean> mSpinnerDatas;
+    private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
+    private String curentGym;
+    private QcSchedulesResponse mQcSchedulesResponse;
+    /**
+     * 处理网络返回
+     */
+    Observer<QcSchedulesResponse> mHttpCallBack = new Observer<QcSchedulesResponse>() {
+
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(QcSchedulesResponse qcSchedulesResponse) {
+            mQcSchedulesResponse = qcSchedulesResponse;
+            handleResponse(qcSchedulesResponse);
+        }
+    };
+
 
     public ScheduesFragment() {
     }
@@ -77,6 +122,12 @@ public class ScheduesFragment extends MainBaseFragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+        toolbar.inflateMenu(R.menu.menu_alert);
+        toolbar.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(getActivity(), NotificationActivity.class));
+            getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+            return true;
+        });
         drawerRadiogroup.setDate(new Date());
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
@@ -84,15 +135,70 @@ public class ScheduesFragment extends MainBaseFragment {
 
         }
         Coach coach = gson.fromJson(id, Coach.class);
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id)).subscribe();
-        List<ScheduleBean> scheduleBeans = new ArrayList<>();
-        scheduleBeans.add(new ScheduleBean());
-        scheduleBeans.add(new ScheduleBean());
-        scheduleBeans.add(new ScheduleBean());
-        ScheduesAdapter scheduesAdapter = new ScheduesAdapter(scheduleBeans);
-        scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        scheduleRv.setAdapter(scheduesAdapter);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("date", DateUtils.getServerDateDay(new Date(1438056000000l)));
 
+
+        mSpinnerDatas = new ArrayList<>();
+        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, mSpinnerDatas) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+                }
+                ((TextView) convertView).setText(mSpinnerDatas.get(position).text);
+                return convertView;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+                }
+                SpinnerBean bean = getItem(position);
+                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+                if (bean.isTitle) {
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
+                } else {
+                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+                }
+                return convertView;
+            }
+        };
+
+//        设置下拉列表的风格
+        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
+        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0)
+                    curentGym = "";
+                else
+                    curentGym = mSpinnerDatas.get(position).text;
+                handleResponse(mQcSchedulesResponse);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        scheduleBeans = new ArrayList<>();
+        scheduesAdapter = new ScheduesAdapter(scheduleBeans);
+        scheduesAdapter.setListener((v, pos) -> {
+            String url = scheduesAdapter.datas.get(pos).intent_url;
+            if (!TextUtils.isEmpty(url)) {
+                openDrawerInterface.goWeb(url);
+            }
+        });
+        scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        scheduleRv.setAdapter(scheduesAdapter);
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(MaterialCalendarView materialCalendarView, CalendarDay calendarDay, boolean b) {
@@ -100,6 +206,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 drawerRadiogroup.setDate(calendarDay.getDate());
             }
         });
+        drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
         ShadowProperty shadowProperty = new ShadowProperty()
                 .setShadowColor(0x77000000)
 //                        .setShadowDy(MeasureUtils.dpToPx(0.5f, getResources()))
@@ -131,7 +238,83 @@ public class ScheduesFragment extends MainBaseFragment {
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
+
+        QcCloudClient.getApi().getApi.qcGetCoachSchedule(1, params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
         return view;
+    }
+
+    /**
+     * 获取某日日程
+     *
+     * @param date
+     */
+
+    private void goDateSchedule(Date date) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("date", DateUtils.getServerDateDay(date));
+        QcCloudClient.getApi().getApi.qcGetCoachSchedule(1, params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+    }
+
+    private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
+        if (qcSchedulesResponse == null)
+            return;
+        List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+        scheduleBeans.clear();
+        mSpinnerDatas.clear();
+        mSpinnerDatas.add(new SpinnerBean("", "全部日程", true));
+        for (int i = 0; i < systems.size(); i++) {
+            QcSchedulesResponse.System system = systems.get(i);
+
+            List<QcSchedulesResponse.Rest> rests = system.rests;
+            List<QcSchedulesResponse.Schedule> schedules = system.schedules;
+            String syscolor = system.system.color;
+            SpinnerBean spinnerbean = new SpinnerBean(syscolor, system.system.name);
+            mSpinnerDatas.add(spinnerbean);
+
+            if (!TextUtils.isEmpty(curentGym) && !curentGym.equalsIgnoreCase(system.system.name))
+                continue;
+            for (int j = 0; j < rests.size(); j++) {
+                QcSchedulesResponse.Rest rest = rests.get(j);
+                ScheduleBean bean = new ScheduleBean();
+                bean.type = 0;
+                bean.color = syscolor;
+                bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
+                bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
+                bean.gymname = system.system.name;
+                scheduleBeans.add(bean);
+
+            }
+            for (int k = 0; k < schedules.size(); k++) {
+                QcSchedulesResponse.Schedule schedule = schedules.get(k);
+                ScheduleBean bean = new ScheduleBean();
+                bean.type = 1;
+                bean.gymname = system.system.cname;
+                bean.color = syscolor;
+                bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
+                bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();
+                bean.count = schedule.count;
+                bean.pic_url = schedule.course.photo;
+                bean.title = schedule.course.name;
+                bean.intent_url = schedule.url;
+                scheduleBeans.add(bean);
+            }
+
+        }
+        Collections.sort(scheduleBeans, new ScheduleCompare());
+        getActivity().runOnUiThread(() -> {
+            scheduesAdapter.notifyDataSetChanged();
+            spinnerBeanArrayAdapter.notifyDataSetChanged();
+            if (scheduleBeans.size() > 0) {
+                scheduleNoImg.setVisibility(View.GONE);
+                scheduleNoTv.setVisibility(View.GONE);
+                scheduleRv.setVisibility(View.VISIBLE);
+
+            } else {
+                scheduleRv.setVisibility(View.GONE);
+                scheduleNoImg.setVisibility(View.VISIBLE);
+                scheduleNoTv.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @OnClick(R.id.schedule_calendar)
@@ -196,10 +379,41 @@ public class ScheduesFragment extends MainBaseFragment {
 
         @Override
         public void onBindViewHolder(SchedulesVH holder, int position) {
+            holder.itemView.setTag(position);
             ScheduleBean bean = datas.get(position);
-            holder.itemScheduleStatus.setImageDrawable(new LoopView("#63d2f3"));
-            holder.itemScheduleClassname.setText(bean.cname);
-            holder.itemScheduleGymname.setText(bean.name);
+            if (bean.type == 0) {
+                holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
+                StringBuffer sb = new StringBuffer();
+                sb.append(DateUtils.getTimeHHMM(new Date(bean.time)));
+                sb.append("-");
+                sb.append(DateUtils.getTimeHHMM(new Date(bean.timeEnd)));
+                sb.append(" 休息");
+                holder.itemScheduleClassname.setText(sb.toString());
+                holder.itemScheduleGymname.setText(bean.gymname);
+                holder.itemScheduleNum.setVisibility(View.GONE);
+                holder.itemScheduleClasspic.setVisibility(View.GONE);
+
+            } else if (bean.type == 1) {
+                holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
+                holder.itemScheduleClassname.setText(bean.title);
+                holder.itemScheduleGymname.setText(bean.gymname);
+                Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
+                holder.itemScheduleNum.setVisibility(View.VISIBLE);
+                holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
+
+                holder.itemScheduleNum.setText(bean.count + "人已预约");
+            }
+
+            if (bean.timeEnd < new Date().getTime()) {
+                holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_grey));
+                holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_grey));
+                holder.itemScheduleStatus.setImageResource(R.drawable.ic_schedule_hook);
+            } else {
+                holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_black));
+                holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_black));
+                holder.itemScheduleStatus.setImageDrawable(new LoopView(bean.color));
+            }
+
         }
 
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 
 import butterknife.Bind;
@@ -28,6 +29,11 @@ public class DataStatementFragment extends MainBaseFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtil.e("fragmentOncreate");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

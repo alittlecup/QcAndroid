@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@drawable/qc_spinner_selector"
                 android:orientation="vertical"
 
     >
 
     <ImageView
         android:id="@+id/spinner_icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:foregroundGravity="center"
@@ -28,5 +28,17 @@
         android:padding="15dp"
         android:singleLine="true"
         android:text="hahah"
+        />
+
+    <ImageView
+        android:id="@+id/spinner_up"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:foregroundGravity="center"
+        android:scaleType="center"
+        android:src="@drawable/ic_spinner_close"
         />
 </RelativeLayout>

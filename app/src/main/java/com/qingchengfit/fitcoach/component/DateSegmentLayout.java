@@ -23,7 +23,9 @@ import java.util.Date;
  * Created by Paper on 15/9/29 2015.
  */
 public class DateSegmentLayout extends CustomSetmentLayout {
-    String[] mWeek = {"MON", "TUS", "WEN", "TUR", "FRI", "SAT", "SUN"};
+    public static String[] mWeek = {"MON", "TUS", "WEN", "TUR", "FRI", "SAT", "SUN"};
+    private Calendar curDate;
+    private OnDateChangeListener onDateChangeListener;
 
     public DateSegmentLayout(Context context) {
         super(context);
@@ -37,13 +39,26 @@ public class DateSegmentLayout extends CustomSetmentLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    public OnDateChangeListener getOnDateChangeListener() {
+        return onDateChangeListener;
+    }
+
+    public void setOnDateChangeListener(OnDateChangeListener onDateChangeListener) {
+        this.onDateChangeListener = onDateChangeListener;
+    }
+
     public void setDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        curDate = Calendar.getInstance();
+        curDate.setTime(date);
+
+        if (onDateChangeListener != null)
+            onDateChangeListener.onDateChange(date);
         int x = calendar.get(Calendar.DAY_OF_WEEK);
 
         for (int i = 0; i < 6; i++) {
-
+            ((ScheduleDateLayout) getChildAt(i)).setViewdate(calendar.getTime());
             ((ScheduleDateLayout) getChildAt(i)).setWeekday(mWeek[(x + i) % 7], DateUtils.getOnlyDay(calendar.getTime()));
             if (i == 0)
                 ((ScheduleDateLayout) getChildAt(i)).setCheck(true);
@@ -57,14 +72,23 @@ public class DateSegmentLayout extends CustomSetmentLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         for (int i = 0; i < getChildCount(); i++) {
+            final int finalI = i;
             ((ScheduleDateLayout) getChildAt(i)).setSegmentListener(new ScheduleDateLayout.SegmentListener() {
                 @Override
                 public void onSegmentClick(View v) {
                     DateSegmentLayout.super.onSegmentClick(v.getId());
+                    if (onDateChangeListener != null) {
+
+                        onDateChangeListener.onDateChange(((ScheduleDateLayout) v).getViewdate());
+                    }
                 }
             });
-//                    onSegmentClick(v.getId()));
         }
 
     }
+
+    public interface OnDateChangeListener {
+        void onDateChange(Date date);
+    }
+
 }

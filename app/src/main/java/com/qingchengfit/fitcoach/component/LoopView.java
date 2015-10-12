@@ -29,7 +29,13 @@ public class LoopView extends Drawable {
         this.mPaint.setAntiAlias(true);
         this.mPaint.setStyle(Paint.Style.STROKE);
         this.mPaint.setStrokeWidth(4);
-        this.mPaint.setColor(Color.parseColor(color));
+        int col;
+        try {
+            col = Color.parseColor(color);
+        } catch (Exception e) {
+            col = Color.GREEN;
+        }
+        this.mPaint.setColor(col);
         mWhitePain = new Paint();
         mWhitePain.setAntiAlias(true);
         mWhitePain.setStyle(Paint.Style.FILL);
@@ -41,8 +47,8 @@ public class LoopView extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         Rect rect = getBounds();
-        canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 8, mPaint);
-        canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 12, mWhitePain);
+        canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 2, mPaint);
+        canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 4, mWhitePain);
     }
 
     @Override

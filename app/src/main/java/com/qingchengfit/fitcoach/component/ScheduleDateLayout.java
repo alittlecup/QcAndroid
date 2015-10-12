@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
 
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -37,6 +39,7 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
     TextView date;
     @Bind(R.id.indicator)
     TextView indicator;
+    private Date Viewdate;
 
     public ScheduleDateLayout(Context context) {
         super(context);
@@ -115,12 +118,20 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
 
     }
 
+    public Date getViewdate() {
+        return Viewdate;
+    }
+
+    public void setViewdate(Date viewdate) {
+        Viewdate = viewdate;
+    }
+
     public interface TouchUpListener {
         void onTouchUp(View v);
     }
 
     public interface SegmentListener {
         void onSegmentClick(View v);
-    }
 
+    }
 }

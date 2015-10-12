@@ -38,6 +38,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
@@ -240,7 +241,7 @@ public class QcCloudClient {
 
         //获取教练日程
         @GET("/api/coaches/{id}/schedules/")
-        rx.Observable<QcResponse> qcGetCoachSchedule(@Path("id") int id);
+        rx.Observable<QcSchedulesResponse> qcGetCoachSchedule(@Path("id") int id, @QueryMap Map<String, String> params);
 
 
 
