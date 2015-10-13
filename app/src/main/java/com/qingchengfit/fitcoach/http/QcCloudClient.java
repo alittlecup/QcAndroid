@@ -24,11 +24,13 @@ import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
+import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
+import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
 import com.qingchengfit.fitcoach.http.bean.QcResponCoachSys;
 import com.qingchengfit.fitcoach.http.bean.QcResponCode;
@@ -41,6 +43,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
+import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.squareup.okhttp.Cache;
@@ -242,6 +245,19 @@ public class QcCloudClient {
         //获取教练日程
         @GET("/api/coaches/{id}/schedules/")
         rx.Observable<QcSchedulesResponse> qcGetCoachSchedule(@Path("id") int id, @QueryMap Map<String, String> params);
+
+        //获取教练预约概览
+        @GET("/api/coaches/{id}/schedules/reports/glance/")
+        rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
+
+        //获取教练系统
+        @GET("/api/coaches/{id}/systems/")
+        rx.Observable<QcCoachSystemResponse> qcGetCoachSystem(@Path("id") int id);
+
+        //获取教练报表强详情
+        @GET("/api/coaches/{id}/systems/report/schedules")
+        rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+
 
 
 

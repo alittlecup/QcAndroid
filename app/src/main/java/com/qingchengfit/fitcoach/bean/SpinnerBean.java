@@ -17,16 +17,21 @@ public class SpinnerBean {
     public String color;
     public String text;
     public boolean isTitle;
+    public int id;
 
     public SpinnerBean(String color, String text, boolean isTitle) {
         this.color = color;
         this.text = text;
         this.isTitle = isTitle;
+        this.id = 0;
     }
 
-    public SpinnerBean(String color, String text) {
+    public SpinnerBean(String color, String text, int id) {
         this.color = color;
         this.text = text;
         this.isTitle = false;
+
+        this.id = id;
+
     }
 }

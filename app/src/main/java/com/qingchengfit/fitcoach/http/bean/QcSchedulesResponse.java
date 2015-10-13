@@ -31,9 +31,9 @@ public class QcSchedulesResponse extends QcResponse {
         @SerializedName("rests")
         public List<Rest> rests;
         @SerializedName("system")
-        public SubSystem system;
+        public QcCoachSystem system;
         @SerializedName("schedules")
-        public List<Schedule> schedules;
+        public List<QcScheduleBean> schedules;
 
     }
 
@@ -53,53 +53,11 @@ public class QcSchedulesResponse extends QcResponse {
         public String username;
     }
 
-    public static class SubSystem {
-        @SerializedName("name")
-        public String name;
-        @SerializedName("url")
-        public String url;
-        @SerializedName("color")
-        public String color;
-        @SerializedName("cname")
-        public String cname;
-        @SerializedName("id")
-        public int id;
-        @SerializedName("is_personal_system")
-        public boolean is_personal_system;
-
-    }
-
-    public static class Schedule {
-        @SerializedName("count")
-        public int count;
-        @SerializedName("end")
-        public String end;
-        @SerializedName("start")
-        public String start;
-        @SerializedName("id")
-        public int id;
-        @SerializedName("url")
-        public String url;
-        @SerializedName("shop")
-        public Shop shop;
-        @SerializedName("course")
-        public Course course;
 
 
-    }
 
-    public static class Shop {
-        @SerializedName("name")
-        public String name;
-    }
 
-    public static class Course {
-        @SerializedName("name")
-        public String name;
-        @SerializedName("photo")
-        public String photo;
 
-    }
 
 
 }

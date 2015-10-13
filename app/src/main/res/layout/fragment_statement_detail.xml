@@ -2,6 +2,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/white"
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.StatementDetailFragment">
 
@@ -41,7 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:padding="20dp"
-            android:src="@drawable/ic_arrow_left"
+            android:src="@drawable/ic_triangle_left"
             />
 
         <ImageView
@@ -62,6 +63,7 @@
             >
 
             <TextView
+                android:id="@+id/statement_detail_time"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,6 +71,7 @@
                 />
 
             <TextView
+                android:id="@+id/item_statement_detail_content"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,6 +84,8 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
         >
 
     </android.support.v7.widget.RecyclerView>

@@ -229,6 +229,11 @@
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".activity.FragActivity"
+            android:label="@string/title_activity_notification"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

@@ -40,6 +40,7 @@ import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import com.wangjie.shadowviewhelper.ShadowProperty;
@@ -90,7 +91,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private ScheduesAdapter scheduesAdapter;
     private ArrayList<SpinnerBean> mSpinnerDatas;
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
-    private String curentGym;
+    private int curentGym = 0;
     private QcSchedulesResponse mQcSchedulesResponse;
     /**
      * 处理网络返回
@@ -144,6 +145,7 @@ public class ScheduesFragment extends MainBaseFragment {
 
 
         mSpinnerDatas = new ArrayList<>();
+        mSpinnerDatas.add(new SpinnerBean("", "全部日程", true));
         spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, mSpinnerDatas) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -179,10 +181,7 @@ public class ScheduesFragment extends MainBaseFragment {
         spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0)
-                    curentGym = "";
-                else
-                    curentGym = mSpinnerDatas.get(position).text;
+                curentGym = mSpinnerDatas.get(position).id;
                 handleResponse(mQcSchedulesResponse);
             }
 
@@ -300,12 +299,12 @@ public class ScheduesFragment extends MainBaseFragment {
             QcSchedulesResponse.System system = systems.get(i);
 
             List<QcSchedulesResponse.Rest> rests = system.rests;
-            List<QcSchedulesResponse.Schedule> schedules = system.schedules;
+            List<QcScheduleBean> schedules = system.schedules;
             String syscolor = system.system.color;
-            SpinnerBean spinnerbean = new SpinnerBean(syscolor, system.system.name);
+            SpinnerBean spinnerbean = new SpinnerBean(syscolor, system.system.name, system.system.id);
             mSpinnerDatas.add(spinnerbean);
 
-            if (!TextUtils.isEmpty(curentGym) && !curentGym.equalsIgnoreCase(system.system.name))
+            if (curentGym != 0 && curentGym != system.system.id)
                 continue;
             for (int j = 0; j < rests.size(); j++) {
                 QcSchedulesResponse.Rest rest = rests.get(j);
@@ -320,7 +319,7 @@ public class ScheduesFragment extends MainBaseFragment {
 
             }
             for (int k = 0; k < schedules.size(); k++) {
-                QcSchedulesResponse.Schedule schedule = schedules.get(k);
+                QcScheduleBean schedule = schedules.get(k);
                 ScheduleBean bean = new ScheduleBean();
                 bean.type = 1;
                 bean.gymname = system.system.cname;
@@ -392,6 +391,7 @@ public class ScheduesFragment extends MainBaseFragment {
 
         private List<ScheduleBean> datas;
         private OnRecycleItemClickListener listener;
+
 
         public ScheduesAdapter(List datas) {
             this.datas = datas;

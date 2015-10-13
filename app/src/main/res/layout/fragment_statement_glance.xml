@@ -30,8 +30,10 @@
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/statement_glance_month"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:background="@drawable/qc_backgroud_selector">
 
         <ImageView
             android:layout_width="40dp"
@@ -50,6 +52,7 @@
             >
 
             <TextView
+                android:id="@+id/statment_glance_month_title"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,6 +61,7 @@
                 />
 
             <TextView
+                android:id="@+id/statment_glance_month_data"
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,8 +89,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/statement_glance_week"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:background="@drawable/qc_backgroud_selector">
 
         <ImageView
             android:layout_width="40dp"
@@ -105,6 +111,7 @@
             >
 
             <TextView
+                android:id="@+id/statment_glance_week_title"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,6 +120,7 @@
                 />
 
             <TextView
+                android:id="@+id/statment_glance_week_data"
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,8 +148,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/statement_glance_today"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:background="@drawable/qc_backgroud_selector">
 
         <ImageView
             android:layout_width="40dp"
@@ -160,6 +170,7 @@
             >
 
             <TextView
+                android:id="@+id/statment_glance_today_title"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,6 +179,7 @@
                 />
 
             <TextView
+                android:id="@+id/statment_glance_today_data"
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -195,8 +207,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/statement_glance_custom"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:background="@drawable/qc_backgroud_selector">
 
         <ImageView
             android:layout_width="40dp"

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,19 +50,13 @@ public class DataStatementFragment extends MainBaseFragment {
 
     @OnClick(R.id.statement_order_btn)
     public void clickOrder() {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fraglayout, new StatementGlanceFragment())
-                .addToBackStack(null)
-                .commit();
+        Intent it = new Intent(getActivity(), FragActivity.class);
+        getActivity().startActivity(it);
     }
 
     @OnClick(R.id.statement_sales_btn)
     public void clickSales() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.main_fraglayout, new StatementGlanceFragment())
-                .addToBackStack(null)
-                .commit();
+
     }
 
 
