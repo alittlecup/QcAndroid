@@ -22,7 +22,7 @@ public class StatementCompare implements Comparator<StatementBean> {
 
     @Override
     public int compare(StatementBean lhs, StatementBean rhs) {
-        if (lhs.date.getTime() > rhs.date.getTime()) {
+        if (lhs.date.getTime() >= rhs.date.getTime()) {
             return -1;
         } else return 1;
     }

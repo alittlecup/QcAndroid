@@ -23,6 +23,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StatementBean;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -307,7 +308,7 @@ public class StatementDetailFragment extends Fragment {
 
         public StatementDetailVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
 
     }
@@ -343,23 +344,29 @@ public class StatementDetailFragment extends Fragment {
             holder.itemView.setTag(position);
             StatementBean bean = datas.get(position);
             String now = DateUtils.getOnlyDay(bean.date);
-            boolean top = false, bottom = false;
-            if (!day.equalsIgnoreCase(now)) {
-                top = true;
+
+            if (position == 0 || !now.equalsIgnoreCase(DateUtils.getOnlyDay(datas.get(position - 1).date))) {
+                holder.itemStatementDetailHeaderdivier.setVisibility(View.VISIBLE);
+                holder.itemStatementDetailDay.setVisibility(View.VISIBLE);
+                holder.itemStatementDetailMonth.setVisibility(View.VISIBLE);
+            } else {
+                holder.itemStatementDetailHeaderdivier.setVisibility(View.INVISIBLE);
+                holder.itemStatementDetailDay.setVisibility(View.INVISIBLE);
+                holder.itemStatementDetailMonth.setVisibility(View.INVISIBLE);
             }
 
-            if (position == datas.size() - 1) {
-                bottom = true;
-            }
+            if (position == getItemCount() - 1) {
+                holder.itemStatementDetailBottomdivier.setVisibility(View.VISIBLE);
+            } else
+                holder.itemStatementDetailBottomdivier.setVisibility(View.GONE);
 
-            holder.itemStatementDetailBottomdivier.setVisibility(bottom ? View.VISIBLE : View.GONE);
-            holder.itemStatementDetailHeaderdivier.setVisibility(top ? View.VISIBLE : View.GONE);
+
             holder.itemStatementDetailName.setText(bean.title);
             holder.itemStatementDetailContent.setText(bean.content);
-            holder.itemStatementDetailDay.setText(bean.date.getDay());
-            holder.itemStatementDetailMonth.setText(bean.date.getMonth() + "月");
+            holder.itemStatementDetailDay.setText(now.substring(3, 5));
+            holder.itemStatementDetailMonth.setText(now.substring(0, 2) + "月");
 
-            Glide.with(App.AppContex).load(bean.picture).into(holder.itemStatementDetailPic);
+            Glide.with(App.AppContex).load(bean.picture).asBitmap().into(new CircleImgWrapper(holder.itemStatementDetailPic, App.AppContex));
 
         }
 

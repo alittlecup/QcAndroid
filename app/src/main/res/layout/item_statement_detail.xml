@@ -15,28 +15,16 @@
 
     </View>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        >
 
         <View
             android:id="@+id/item_statement_detail_bottomdivier"
-            android:layout_width="97.5dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
             android:background="@color/divider_grey"
             >
         </View>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_grey"
-            >
-        </View>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,6 +84,7 @@
         android:layout_height="45dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="75dp"
+        android:background="@color/white"
         />
 
     <LinearLayout

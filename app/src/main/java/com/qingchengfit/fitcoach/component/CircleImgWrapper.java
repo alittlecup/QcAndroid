@@ -39,6 +39,7 @@ public class CircleImgWrapper extends BitmapImageViewTarget {
         RoundedBitmapDrawable circularBitmapDrawable =
                 RoundedBitmapDrawableFactory.create(context.get().getResources(), resource);
         circularBitmapDrawable.setCircular(true);
+
         imageView.setImageDrawable(circularBitmapDrawable);
     }
 }
