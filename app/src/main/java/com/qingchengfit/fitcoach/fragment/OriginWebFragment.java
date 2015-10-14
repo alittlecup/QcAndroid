@@ -78,6 +78,7 @@ public class OriginWebFragment extends WebFragment {
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
 
         webview.setWebViewClient(new WebViewClient() {
