@@ -19,7 +19,7 @@ import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StatementGlanceFragment extends Fragment {
-    public static final String TAG = StatementGlanceFragment.class.getName();
+public class SaleGlanceFragment extends Fragment {
+    public static final String TAG = SaleGlanceFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.spinner_nav)
@@ -52,23 +52,22 @@ public class StatementGlanceFragment extends Fragment {
     TextView statmentGlanceTodayData;
     private ArrayAdapter<SpinnerBean> adapter;
     private ArrayList<SpinnerBean> spinnerBeans;
-    private QcReportGlanceResponse response;
+    private QcSaleGlanceResponse response;
     private int curSystem = 0;
 
-    public StatementGlanceFragment() {
+    public SaleGlanceFragment() {
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "全部预约报表", true));
+        spinnerBeans.add(new SpinnerBean("", "全部销售报表", true));
         adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -116,32 +115,30 @@ public class StatementGlanceFragment extends Fragment {
 //                    response = qcReportGlanceResponse;
 //                    handleReponse(qcReportGlanceResponse);
 //                });
-        QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid).subscribeOn(Schedulers.newThread())
-                .subscribe(qcReportGlanceResponse -> {
-                    response = qcReportGlanceResponse;
-                    handleReponse(qcReportGlanceResponse);
+        QcCloudClient.getApi().getApi.qcGetCoachSaleGlance(App.coachid).subscribeOn(Schedulers.newThread())
+                .subscribe(qcSaleGlanceResponse -> {
+                    response = qcSaleGlanceResponse;
+                    handleReponse(qcSaleGlanceResponse);
                 });
         return view;
     }
 
-    public void handleReponse(QcReportGlanceResponse qcReportGlanceResponse) {
+    public void handleReponse(QcSaleGlanceResponse qcReportGlanceResponse) {
         if (qcReportGlanceResponse == null)
             return;
-        List<QcReportGlanceResponse.System> systems = qcReportGlanceResponse.data.systems;
+        List<QcSaleGlanceResponse.System> systems = qcReportGlanceResponse.data.systems;
         spinnerBeans.clear();
-        spinnerBeans.add(new SpinnerBean("", "全部预约报表", true));
+        spinnerBeans.add(new SpinnerBean("", "全部销售报表", true));
         StringBuffer monthTitle = new StringBuffer();
         StringBuffer weekTitle = new StringBuffer();
         StringBuffer dayTitle = new StringBuffer();
         monthTitle.append("本月");
         weekTitle.append("本周");
         dayTitle.append("今日");
-        int monthClassNum = 0, weekClassNum = 0, dayClassNum = 0,
-                monthOrderNum = 0, weekOrderNum = 0, dayOrderNum = 0,
-                monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
+        int monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
 
         for (int i = 0; i < systems.size(); i++) {
-            QcReportGlanceResponse.System system = systems.get(i);
+            QcSaleGlanceResponse.System system = systems.get(i);
             if (system.system == null)
                 continue;
             spinnerBeans.add(new SpinnerBean(system.system.color, system.system.name, system.system.id));
@@ -153,20 +150,17 @@ public class StatementGlanceFragment extends Fragment {
 
             if (curSystem != 0 && curSystem != system.system.id)
                 continue;
-            monthOrderNum += system.month.order_count;
-            monthServerNum += system.month.user_count;
-            weekOrderNum += system.week.order_count;
-            weekServerNum += system.week.user_count;
-            dayOrderNum = +system.today.order_count;
-            dayServerNum += system.today.user_count;
+            monthServerNum += system.month.total_cost;
+            weekServerNum += system.week.total_cost;
+            dayServerNum += system.today.total_cost;
         }
 
         StringBuffer monthContent = new StringBuffer();
         StringBuffer weekContent = new StringBuffer();
         StringBuffer dayContent = new StringBuffer();
-        monthContent.append(monthOrderNum).append("次预约,服务").append(monthServerNum).append("人次");
-        weekContent.append(weekOrderNum).append("次预约,服务").append(weekServerNum).append("人次");
-        dayContent.append(dayOrderNum).append("次预约,服务").append(dayServerNum).append("人次");
+        monthContent.append("实收金额¥").append(monthServerNum);
+        weekContent.append("实收金额¥").append(weekServerNum);
+        dayContent.append("实收金额¥").append(dayServerNum);
 
         getActivity().runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
@@ -183,7 +177,7 @@ public class StatementGlanceFragment extends Fragment {
     @OnClick(R.id.statement_glance_month)
     public void onClickMonth() {
         getFragmentManager().beginTransaction()
-                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(2))
+                .add(R.id.web_frag_layout, SaleDetailFragment.newInstance(2))
                 .addToBackStack(null)
                 .commit();
     }
@@ -191,7 +185,7 @@ public class StatementGlanceFragment extends Fragment {
     @OnClick(R.id.statement_glance_week)
     public void onClickWeek() {
         getFragmentManager().beginTransaction()
-                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(1))
+                .add(R.id.web_frag_layout, SaleDetailFragment.newInstance(1))
                 .addToBackStack(null)
                 .commit();
     }
@@ -199,7 +193,7 @@ public class StatementGlanceFragment extends Fragment {
     @OnClick(R.id.statement_glance_today)
     public void onClickToday() {
         getFragmentManager().beginTransaction()
-                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(0))
+                .add(R.id.web_frag_layout, SaleDetailFragment.newInstance(0))
                 .addToBackStack(null)
                 .commit();
     }

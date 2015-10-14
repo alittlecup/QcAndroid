@@ -51,12 +51,15 @@ public class DataStatementFragment extends MainBaseFragment {
     @OnClick(R.id.statement_order_btn)
     public void clickOrder() {
         Intent it = new Intent(getActivity(), FragActivity.class);
+        it.putExtra("type", 0);
         getActivity().startActivity(it);
     }
 
     @OnClick(R.id.statement_sales_btn)
     public void clickSales() {
-
+        Intent it = new Intent(getActivity(), FragActivity.class);
+        it.putExtra("type", 1);
+        getActivity().startActivity(it);
     }
 
 

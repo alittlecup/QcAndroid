@@ -56,7 +56,7 @@
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月(xxx-xxxx)"
+                android:text="本月"
 
                 />
 
@@ -65,7 +65,6 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月(xxx-xxxx)"
                 />
         </LinearLayout>
 
@@ -115,7 +114,7 @@
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月(xxx-xxxx)"
+                android:text="本周"
 
                 />
 
@@ -124,7 +123,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月(xxx-xxxx)"
+
                 />
         </LinearLayout>
 
@@ -174,7 +173,7 @@
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月(xxx-xxxx)"
+                android:text="今日"
 
                 />
 
@@ -183,7 +182,6 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本月(xxx-xxxx)"
                 />
         </LinearLayout>
 

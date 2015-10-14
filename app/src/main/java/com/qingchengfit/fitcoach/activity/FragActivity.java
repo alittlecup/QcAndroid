@@ -1,10 +1,11 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
+import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 
 /**
@@ -22,16 +23,27 @@ import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
  */
 public class FragActivity extends BaseAcitivity {
 
-    OriginWebFragment originWebFragment;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        int type = getIntent().getIntExtra("type", 0);
+        switch (type) {
+            case 0:
+                fragment = new StatementGlanceFragment();
+                break;
+            case 1:
+                fragment = new SaleGlanceFragment();
+                break;
+            default:
+                break;
+        }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.web_frag_layout, new StatementGlanceFragment())
+                .replace(R.id.web_frag_layout, fragment)
                 .commit();
-        
+
     }
 
     @Override

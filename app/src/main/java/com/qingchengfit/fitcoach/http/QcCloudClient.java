@@ -41,6 +41,8 @@ import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
+import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
@@ -252,6 +254,10 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/schedules/reports/glance/")
         rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
 
+        //获取教练预约概览
+        @GET("/api/coaches/{id}/sale/reports/glance/")
+        rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
+
         //获取教练系统
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcCoachSystemResponse> qcGetCoachSystem(@Path("id") int id);
@@ -259,6 +265,10 @@ public class QcCloudClient {
         //获取教练报表强详情
         @GET("/api/coaches/{id}/systems/report/schedules")
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+
+        //获取教练销售详情
+        @GET("/api/coaches/{id}/systems/report/sale")
+        rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id, @QueryMap Map<String, String> params);
 
 
         //获取教练课程
@@ -269,8 +279,6 @@ public class QcCloudClient {
         //获取教练某个系统下的学员
         @GET("/api/coaches/{id}/systems/users")
         rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id, @QueryMap Map<String, String> params);
-
-
 
 
     }
