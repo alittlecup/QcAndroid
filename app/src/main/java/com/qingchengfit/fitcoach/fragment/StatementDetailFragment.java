@@ -32,12 +32,16 @@ import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Func1;
@@ -48,6 +52,9 @@ import rx.schedulers.Schedulers;
  */
 public class StatementDetailFragment extends Fragment {
     public static final String TAG = StatementDetailFragment.class.getName();
+    public static final int TYPE_MONTH = 2;
+    public static final int TYPE_WEEK = 1;
+    public static final int TYPE_DAY = 0;
     @Bind(R.id.spinner_nav)
     Spinner spinnerNav;
     @Bind(R.id.toolbar)
@@ -75,6 +82,11 @@ public class StatementDetailFragment extends Fragment {
 
         }
     };
+    @Bind(R.id.statement_detail_less)
+    ImageView statementDetailLess;
+    @Bind(R.id.statement_detail_more)
+    ImageView statementDetailMore;
+
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<StatementBean> statementBeans = new ArrayList<>();
     private List<Integer> mSystemsId = new ArrayList<>();
@@ -82,7 +94,7 @@ public class StatementDetailFragment extends Fragment {
     private HashMap<Integer, Integer> mOrderNum = new HashMap<>();
     private HashMap<Integer, Integer> mServerNum = new HashMap<>();
     private HashMap<Integer, List<StatementBean>> mAllStatemet = new HashMap<>();
-    private int daydivider = 0;
+
     /**
      * 初始化 spinner
      */
@@ -92,23 +104,71 @@ public class StatementDetailFragment extends Fragment {
     /**
      * 报表参数
      */
-    private String start = "2015-07-22";
-    private String end = "2015-08-22";
+
+    private String start;
+    private String end;
     private int course_id = 0;
     private int user_id = 0;
-
+    private int mDividerType = 0;
+    private Calendar curCalendar;
 
     public StatementDetailFragment() {
 
     }
 
-    public static StatementDetailFragment newInstance() {
+    public static StatementDetailFragment newInstance(int type) {
 
         Bundle args = new Bundle();
+        args.putInt("type", type);
+        StatementDetailFragment fragment = new StatementDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static StatementDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int userId, int courseId) {
+        Bundle args = new Bundle();
+        args.putInt("type", type);
+        args.putString("start", starttime);
+        args.putString("end", endtime);
+        args.putInt("system", sysId);
+        args.putInt("course", courseId);
+        args.putInt("user", userId);
 
         StatementDetailFragment fragment = new StatementDetailFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mDividerType = getArguments().getInt("type");
+        }
+        curCalendar = Calendar.getInstance();
+        start = DateUtils.getServerDateDay(new Date());
+        switch (mDividerType) {
+            case 0:
+                end = start;
+                break;
+            case 1:
+                start = DateUtils.getMondayOfThisWeek(curCalendar.getTime());
+                end = DateUtils.getSundayOfThisWeek(curCalendar.getTime());
+
+                break;
+            case 2:
+                start = DateUtils.getStartDayOfMonth(curCalendar.getTime());
+                end = DateUtils.getEndDayOfMonth(curCalendar.getTime());
+                break;
+            case 3:
+                start = getArguments().getString("start");
+                end = getArguments().getString("end");
+                curSystemId = getArguments().getInt("system");
+                course_id = getArguments().getInt("course");
+                user_id = getArguments().getInt("user");
+            default:
+                break;
+        }
     }
 
     @Override
@@ -122,6 +182,13 @@ public class StatementDetailFragment extends Fragment {
         mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(mStatementDetailAdapter);
+        if (mDividerType == 3) {
+            statementDetailLess.setVisibility(View.GONE);
+            statementDetailMore.setVisibility(View.GONE);
+        } else {
+            statementDetailLess.setVisibility(View.VISIBLE);
+            statementDetailMore.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
@@ -180,7 +247,7 @@ public class StatementDetailFragment extends Fragment {
             }
         });
 
-
+        //获取用户拥有系统信息
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
                     List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
@@ -208,7 +275,6 @@ public class StatementDetailFragment extends Fragment {
                 .flatMap(new Func1<Integer, Observable<Boolean>>() {
                     @Override
                     public Observable<Boolean> call(Integer integer) {
-
                         return QcCloudClient.getApi().getApi.qcGetStatementDatail(1, getParams(integer))
                                 .flatMap(qcStatementDetailRespone -> {
                                     mCourseNum.put(integer, qcStatementDetailRespone.data.stat.course_count);
@@ -265,6 +331,10 @@ public class StatementDetailFragment extends Fragment {
 
         getActivity().runOnUiThread(() -> {
             mStatementDetailAdapter.notifyDataSetChanged();
+            if (statementBeans.size() > 0) {
+                recyclerview.setVisibility(View.VISIBLE);
+            } else recyclerview.setVisibility(View.GONE);
+
             statementDetailTime.setText(sb1.toString());
             itemStatementDetailContent.setText(sb2.toString());
         });
@@ -288,6 +358,57 @@ public class StatementDetailFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+
+    @OnClick(R.id.statement_detail_less)
+    public void onClickLess() {
+        changeCalendar(-1);
+
+    }
+
+    @OnClick(R.id.statement_detail_more)
+    public void onClickMore() {
+        changeCalendar(1);
+    }
+
+    /**
+     * 增加或者减少 +1 -1
+     *
+     * @param symbol
+     */
+    private void changeCalendar(int symbol) {
+        Observable.just("")
+                .subscribeOn(Schedulers.io())
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .map(s1 -> {
+                    switch (mDividerType) {
+                        case 0:
+                            curCalendar.add(Calendar.DAY_OF_YEAR, symbol);
+                            start = DateUtils.getServerDateDay(curCalendar.getTime());
+                            end = start;
+                            break;
+                        case 1:
+                            curCalendar.add(Calendar.WEEK_OF_YEAR, symbol);
+                            start = DateUtils.getMondayOfThisWeek(curCalendar.getTime());
+                            end = DateUtils.getSundayOfThisWeek(curCalendar.getTime());
+                            break;
+                        case 2:
+                            curCalendar.add(Calendar.MONTH, symbol);
+                            start = DateUtils.getStartDayOfMonth(curCalendar.getTime());
+                            end = DateUtils.getEndDayOfMonth(curCalendar.getTime());
+                            break;
+                        default:
+                            break;
+                    }
+
+                    return s1;
+                })
+                .subscribe(s -> queryStatement());
+    }
+
+
+    /**
+     * recycle view
+     */
     class StatementDetailVH extends RecyclerView.ViewHolder {
         @Bind(R.id.item_statement_detail_bottomdivier)
         View itemStatementDetailBottomdivier;

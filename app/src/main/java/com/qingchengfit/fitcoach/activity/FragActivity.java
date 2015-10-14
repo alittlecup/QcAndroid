@@ -31,7 +31,7 @@ public class FragActivity extends BaseAcitivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.web_frag_layout, new StatementGlanceFragment())
                 .commit();
-
+        
     }
 
     @Override

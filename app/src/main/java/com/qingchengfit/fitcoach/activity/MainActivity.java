@@ -51,6 +51,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
+import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
@@ -71,6 +72,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
 import rx.functions.Action1;
 
 //import javax.inject.Inject;
@@ -81,20 +83,18 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     public static final int LOGOUT = 0;
     public static final int NOTIFICATION = 1;
     private static final String TAG = MainActivity.class.getName();
-    private static int ids[] = {
-            R.id.segmentbtn_0,
-            R.id.segmentbtn_1,
-            R.id.segmentbtn_2,
-            R.id.segmentbtn_3,
-            R.id.segmentbtn_4,
-            R.id.segmentbtn_5,
-            R.id.segmentbtn_6,
-            R.id.segmentbtn_7,
-            R.id.segmentbtn_8,
-            R.id.segmentbtn_9,
-    };
-    ////    @Bind(R.id.float_btn)
-//    FloatingActionButton mFloatBtn;
+    //    private static int ids[] = {
+//            R.id.segmentbtn_0,
+//            R.id.segmentbtn_1,
+//            R.id.segmentbtn_2,
+//            R.id.segmentbtn_3,
+//            R.id.segmentbtn_4,
+//            R.id.segmentbtn_5,
+//            R.id.segmentbtn_6,
+//            R.id.segmentbtn_7,
+//            R.id.segmentbtn_8,
+//            R.id.segmentbtn_9,
+//    };
     FragmentManager mFragmentManager;
     @Bind(R.id.main_drawerlayout)
     DrawerLayout mainDrawerlayout;
@@ -153,58 +153,71 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initUser();
         initDialog();
         initDrawer();
-
+        initVersion();
     }
 
     private void initVersion() {
-        updateDialog = new MaterialDialog.Builder(this)
-                .title("前方发现新版本!!")
-                .content("是否马上更新?")
-                .positiveText("更新")
-                .negativeText("下次再说")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                        updateDialog.dismiss();
-                        if (url != null) {
-                            //TODO download app
-                            downloadDialog.show();
-                            mDownloadThread = new AsyncDownloader();
-                            mDownloadThread.execute(url);
-                        }
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        updateDialog.dismiss();
-                    }
-                })
-                .build();
-        downloadDialog = new MaterialDialog.Builder(this)
-                .title("正在飞速为您下载")
-                .progress(false, 100)
-                .cancelable(false)
-                .positiveText("后台更新")
-                .negativeText("取消更新")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        mDownloadThread.cancel(true);
-                    }
-                })
-                .build();
         LogUtil.e("version:" + AppUtils.getAppVer(this));
         QcCloudClient.getApi().getApi.qcGetVersion()
-                .subscribe(qcVersionResponse -> {
-                    if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
+                .subscribe(new Observer<QcVersionResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        LogUtil.e("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtil.e("onError");
+                    }
+
+                    @Override
+                    public void onNext(QcVersionResponse qcVersionResponse) {
+                        if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
+                            updateDialog = new MaterialDialog.Builder(MainActivity.this)
+                                    .title("前方发现新版本!!")
+                                    .content("是否马上更新?")
+                                    .positiveText("更新")
+                                    .negativeText("下次再说")
+                                    .callback(new MaterialDialog.ButtonCallback() {
+                                        @Override
+                                        public void onPositive(MaterialDialog dialog) {
+                                            super.onPositive(dialog);
+                                            updateDialog.dismiss();
+                                            if (url != null) {
+                                                //TODO download app
+                                                downloadDialog.show();
+                                                mDownloadThread = new AsyncDownloader();
+                                                mDownloadThread.execute(url);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onNegative(MaterialDialog dialog) {
+                                            super.onNegative(dialog);
+                                            updateDialog.dismiss();
+                                        }
+                                    })
+                                    .build();
+                            downloadDialog = new MaterialDialog.Builder(MainActivity.this)
+                                    .title("正在飞速为您下载")
+                                    .progress(false, 100)
+                                    .cancelable(false)
+                                    .positiveText("后台更新")
+                                    .negativeText("取消更新")
+                                    .callback(new MaterialDialog.ButtonCallback() {
+                                        @Override
+                                        public void onPositive(MaterialDialog dialog) {
+                                            super.onPositive(dialog);
+                                        }
+
+                                        @Override
+                                        public void onNegative(MaterialDialog dialog) {
+                                            super.onNegative(dialog);
+                                            mDownloadThread.cancel(true);
+                                        }
+                                    })
+                                    .build();
+
                         url = qcVersionResponse.getData().getDownload().getAndroid();
                         newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
                         if (!newAkp.exists()) {
@@ -216,8 +229,12 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         runOnUiThread(updateDialog::show);
 
                     }
-
+                    }
                 });
+//        QcCloudClient.getApi().getApi.qcGetVersion()
+//                .subscribe(qcVersionResponse -> {
+//
+//                });
     }
 
     private void initUser() {
@@ -484,7 +501,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         button.setDrawables(drawables.toArray(new Drawable[2]));
 //                        button.setButtonDrawable(drawable1);
 //                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
-                        button.setId(ids[count]);
+                        button.setId(View.generateViewId());
                         button.setListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl, null);

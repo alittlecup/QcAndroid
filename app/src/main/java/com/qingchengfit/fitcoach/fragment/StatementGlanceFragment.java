@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
+import com.qingchengfit.fitcoach.component.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
@@ -109,6 +110,11 @@ public class StatementGlanceFragment extends Fragment {
 
             }
         });
+//        QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid).subscribeOn(Schedulers.newThread())
+//                .subscribe(qcReportGlanceResponse -> {
+//                    response = qcReportGlanceResponse;
+//                    handleReponse(qcReportGlanceResponse);
+//                });
         QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcReportGlanceResponse -> {
                     response = qcReportGlanceResponse;
@@ -176,24 +182,33 @@ public class StatementGlanceFragment extends Fragment {
     @OnClick(R.id.statement_glance_month)
     public void onClickMonth() {
         getFragmentManager().beginTransaction()
-                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance())
+                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(2))
                 .addToBackStack(null)
                 .commit();
     }
 
     @OnClick(R.id.statement_glance_week)
     public void onClickWeek() {
-
+        getFragmentManager().beginTransaction()
+                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(1))
+                .addToBackStack(null)
+                .commit();
     }
 
     @OnClick(R.id.statement_glance_today)
     public void onClickToday() {
-
+        getFragmentManager().beginTransaction()
+                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(0))
+                .addToBackStack(null)
+                .commit();
     }
 
     @OnClick(R.id.statement_glance_custom)
     public void onClickCustom() {
-
+        getFragmentManager().beginTransaction()
+                .add(R.id.web_frag_layout, new CustomStatmentFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
 

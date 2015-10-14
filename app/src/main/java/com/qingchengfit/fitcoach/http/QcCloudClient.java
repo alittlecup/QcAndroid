@@ -25,6 +25,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
+import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
@@ -44,6 +45,7 @@ import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
+import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.squareup.okhttp.Cache;
@@ -257,6 +259,16 @@ public class QcCloudClient {
         //获取教练报表强详情
         @GET("/api/coaches/{id}/systems/report/schedules")
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+
+
+        //获取教练课程
+        @GET("/api/coaches/{id}/systems/courses/")
+        rx.Observable<QcCourseResponse> qcGetSystemCourses(@Path("id") int id, @QueryMap Map<String, String> params);
+
+
+        //获取教练某个系统下的学员
+        @GET("/api/coaches/{id}/systems/users")
+        rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id, @QueryMap Map<String, String> params);
 
 
 

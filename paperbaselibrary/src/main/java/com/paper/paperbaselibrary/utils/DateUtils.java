@@ -2,6 +2,7 @@ package com.paper.paperbaselibrary.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -64,5 +65,54 @@ public class DateUtils {
 
         return s.replace(".", "-");
     }
+
+    /**
+     * 得到本周周一
+     *
+     * @return yyyy-MM-dd
+     */
+    public static String getMondayOfThisWeek(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
+        if (day_of_week == 0)
+            day_of_week = 7;
+        c.add(Calendar.DATE, -day_of_week + 1);
+        return getServerDateDay(c.getTime());
+    }
+
+    /**
+     * 得到本周周日
+     *
+     * @return yyyy-MM-dd
+     */
+    public static String getSundayOfThisWeek(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
+        if (day_of_week == 0)
+            day_of_week = 7;
+        c.add(Calendar.DATE, -day_of_week + 7);
+        return getServerDateDay(c.getTime());
+    }
+
+    public static String getEndDayOfMonth(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MONTH, 1);
+        c.set(Calendar.DAY_OF_MONTH, 0);
+
+        return getServerDateDay(c.getTime());
+    }
+
+    public static String getStartDayOfMonth(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        return getServerDateDay(c.getTime());
+    }
+
+
+
 
 }

@@ -17,6 +17,7 @@ import java.util.List;
  * <p>
  * Created by Paper on 15/10/13 2015.
  */
+
 public class QcStatementDetailRespone extends QcResponse {
     @SerializedName("data")
     public DetailData data;
