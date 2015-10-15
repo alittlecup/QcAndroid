@@ -19,7 +19,7 @@ import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
  * <p>
  * Created by Paper on 15/10/12 2015.
  */
-public class WebActivity extends BaseAcitivity {
+public class WebActivity extends BaseAcitivity implements WebActivityInterface {
     OriginWebFragment originWebFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,6 @@ public class WebActivity extends BaseAcitivity {
     @Override
     protected void onDestroy() {
         originWebFragment.removeCookie();
-        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
         super.onDestroy();
 
     }
@@ -46,8 +45,16 @@ public class WebActivity extends BaseAcitivity {
     public void onBackPressed() {
         if (originWebFragment.canGoBack()) {
             originWebFragment.goBack();
-        } else
-            super.onBackPressed();
+        } else {
+            setResult(-1);
+            this.finish();
+        }
+
     }
 
+    @Override
+    public void onfinish() {
+        setResult(1);
+        this.finish();
+    }
 }

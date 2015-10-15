@@ -33,6 +33,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.activity.WebActivityInterface;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.bean.TitleBean;
@@ -58,8 +59,23 @@ public class OriginWebFragment extends WebFragment {
     private Gson gson;
     private Observable<NewPushMsg> mObservable;
     private List<Integer> mlastPosition = new ArrayList<>();
+    private List<String> mTitleStack = new ArrayList<>();
+    private WebActivityInterface mActivityCallback;
+
 
     public OriginWebFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivityCallback = (WebActivityInterface) context;
+    }
+
+    @Override
+    public void onDetach() {
+        mActivityCallback = null;
+        super.onDetach();
     }
 
     @Override
@@ -98,6 +114,7 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading" + url);
+                mTitleStack.add(toolbar.getTitle().toString());
                 WebBackForwardList webBackForwardList = webview.copyBackForwardList();
                 mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                 LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
@@ -196,14 +213,18 @@ public class OriginWebFragment extends WebFragment {
     @Override
     public Boolean canGoBack() {
 
-        if (webview != null)
-            return webview.canGoBack();
+        if (webview != null) {
+            return mlastPosition.size() > 0;
+        }
+
         else return false;
     }
 
     public void goBack() {
         WebBackForwardList webBackForwardList = webview.copyBackForwardList();
         webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
+        toolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
+        mTitleStack.remove(mTitleStack.size() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
 //        if (mlastPosition.size()>0){
 //            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
@@ -294,6 +315,12 @@ public class OriginWebFragment extends WebFragment {
             openmainDrawer();
 
         }
+
+        @JavascriptInterface
+        public void completeAction() {
+            mActivityCallback.onfinish();
+        }
+
 
         @JavascriptInterface
         public String getContacts() {

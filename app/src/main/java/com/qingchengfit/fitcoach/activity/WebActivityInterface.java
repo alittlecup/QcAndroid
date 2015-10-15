@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.bean;
+package com.qingchengfit.fitcoach.activity;
 
 /**
  * power by
@@ -13,12 +13,6 @@ package com.qingchengfit.fitcoach.bean;
  * <p>
  * Created by Paper on 15/10/15 2015.
  */
-public class StudentBean {
-    public String name;
-    public String phoneStr;
-    public String gymStr;
-    public String headerPic;
-    public boolean gender;//此处服务器返回为"男" "女"
-    public String systemUrl;
-    public int id;
+public interface WebActivityInterface {
+    public void onfinish();
 }

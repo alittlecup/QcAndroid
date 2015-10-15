@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
@@ -106,6 +107,18 @@ public class MyStudentFragment extends MainBaseFragment {
         setUpSeachView();
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mStudentAdapter = new StudentAdapter(adapterData);
+        mStudentAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+
+                StringBuffer sb = new StringBuffer();
+                sb.append(adapterData.get(pos).systemUrl)
+                        .append("/mobile/students/")
+                        .append(adapterData.get(pos).id)
+                        .append("/details/");
+                openDrawerInterface.goWeb(sb.toString());
+            }
+        });
         recyclerview.setAdapter(mStudentAdapter);
         //获取原始数据
         QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
@@ -165,6 +178,8 @@ public class MyStudentFragment extends MainBaseFragment {
                 bean.gymStr = ship.system.name;
                 bean.headerPic = student.avatar;
                 bean.name = student.username;
+                bean.systemUrl = ship.system.url;
+                bean.id = student.id;
                 StringBuffer sb = new StringBuffer();
                 sb.append("联系电话:").append(student.phone);
                 bean.phoneStr = sb.toString();
@@ -253,7 +268,7 @@ public class MyStudentFragment extends MainBaseFragment {
 
     @OnClick(R.id.student_add)
     public void onAddstudent() {
-        openDrawerInterface.goWeb("");
+        openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/add/students/");
     }
 
 
