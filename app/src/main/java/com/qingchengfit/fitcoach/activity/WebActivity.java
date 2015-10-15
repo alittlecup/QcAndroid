@@ -37,6 +37,7 @@ public class WebActivity extends BaseAcitivity {
     @Override
     protected void onDestroy() {
         originWebFragment.removeCookie();
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
         super.onDestroy();
 
     }
@@ -48,4 +49,5 @@ public class WebActivity extends BaseAcitivity {
         } else
             super.onBackPressed();
     }
+
 }

@@ -43,6 +43,7 @@ import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
 import com.qingchengfit.fitcoach.fragment.MainWebFragment;
+import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.MyGymsFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
@@ -136,6 +137,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private MyStudentFragment mMyStudentFragment;
     private MainWebFragment mMeetingFragment;
     private MyGymsFragment mMyGymsFragment;
+    private MyCoursePlanFragment mMyCoursePlanFragment;
 //    @Override
 //    protected void onXWalkReady() {
 //
@@ -362,6 +364,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mMyStudentFragment = new MyStudentFragment();
         mMeetingFragment = MainWebFragment.newInstance("http://teacher.qingchengfit.cn/meetings/");
         mMyGymsFragment = new MyGymsFragment();
+        mMyCoursePlanFragment = new MyCoursePlanFragment();
 
         SegmentLayout button = new SegmentLayout(this);
         button.setText("日程安排");
@@ -403,7 +406,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         item2.setCount("100");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item.setOnClickListener(v -> changeFragment(mMyStudentFragment));
-        item1.setOnClickListener(v -> changeFragment(mMyStudentFragment));
+        item1.setOnClickListener(v -> changeFragment(mMyCoursePlanFragment));
         item2.setOnClickListener(v -> changeFragment(mMyGymsFragment));
 
 //        QcCloudClient.getApi().getApi
@@ -662,7 +665,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (topFragment != mScheduesFragment) {
+            changeFragment(mScheduesFragment);
+        } else
+            dialog.show();
 //        if (((OriginWebFragment) topFragment).canGoBack()) {
 //            ((OriginWebFragment) topFragment).goBack();
 //        } else {

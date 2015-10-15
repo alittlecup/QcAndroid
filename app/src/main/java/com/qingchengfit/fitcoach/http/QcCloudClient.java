@@ -21,6 +21,7 @@ import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
+import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
@@ -289,6 +290,11 @@ public class QcCloudClient {
         //获取教练所有学员
         @GET("/api/coaches/{id}/users")
         rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
+
+        //获取所有课程计划
+        @GET("/api/coaches/{id}/plans")
+        rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id);
+
 
 
     }
