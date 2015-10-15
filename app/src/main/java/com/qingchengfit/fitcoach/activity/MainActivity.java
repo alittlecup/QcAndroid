@@ -74,6 +74,7 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 //import javax.inject.Inject;
 
@@ -154,6 +155,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initDialog();
         initDrawer();
         initVersion();
+
     }
 
     private void initVersion() {
@@ -231,13 +233,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                     }
                     }
                 });
-//        QcCloudClient.getApi().getApi.qcGetVersion()
-//                .subscribe(qcVersionResponse -> {
-//
-//                });
+
     }
 
     private void initUser() {
+
         String u = PreferenceUtils.getPrefString(this, "user_info", "");
         if (!TextUtils.isEmpty(u)) {
             user = gson.fromJson(u, User.class);
@@ -246,6 +246,18 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             //TODO ERROR
         }
         drawerName.setText(user.username);
+
+        //初始化initCoach
+        String id = PreferenceUtils.getPrefString(this, "coach", "");
+        if (TextUtils.isEmpty(id)) {
+            //TODO error
+        }
+        Coach coach = gson.fromJson(id, Coach.class);
+        App.coachid = Integer.parseInt(coach.id);
+
+        //获取用户拥有的系统
+        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                .subscribe(qcCoachSystemResponse -> PreferenceUtils.setPrefString(App.AppContex, "systems", gson.toJson(qcCoachSystemResponse)));
     }
 
     @Override
@@ -342,13 +354,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                     .into(new CircleImgWrapper(headerIcon, App.AppContex));
         }
 
-
-        String id = PreferenceUtils.getPrefString(this, "coach", "");
-        if (TextUtils.isEmpty(id)) {
-            //TODO error
-        }
-        Coach coach = gson.fromJson(id, Coach.class);
-        App.coachid = Integer.parseInt(coach.id);
 
         mScheduesFragment = new ScheduesFragment();
         mDataStatementFragment = new DataStatementFragment();

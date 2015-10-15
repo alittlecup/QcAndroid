@@ -13,20 +13,28 @@
         android:background="@color/cyan"
         android:gravity="center_vertical"
         android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+
         app:theme="@style/Qc.toolbarStyle"
         app:titleTextAppearance="@style/ToolbarStyle"
+
         >
+
+        <Spinner
+            android:id="@+id/spinner_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Qc.toolbarStyle"
+            />
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/searchview"
         android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:visibility="gone"
         >
 
         <FrameLayout
