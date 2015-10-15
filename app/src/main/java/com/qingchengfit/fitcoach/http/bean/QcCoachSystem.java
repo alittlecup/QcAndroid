@@ -28,4 +28,5 @@ public class QcCoachSystem {
     public int id;
     @SerializedName("is_personal_system")
     public boolean is_personal_system;
+
 }

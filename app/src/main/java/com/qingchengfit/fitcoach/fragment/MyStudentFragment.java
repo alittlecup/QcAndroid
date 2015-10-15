@@ -65,6 +65,8 @@ public class MyStudentFragment extends MainBaseFragment {
     RecyclerView recyclerview;
     @Bind(R.id.spinner_nav)
     Spinner spinnerNav;
+    @Bind(R.id.student_no_layout)
+    LinearLayout studentNoLayout;
     private QcAllStudentResponse mQcAllStudentResponse;
     private List<StudentBean> adapterData = new ArrayList<>();
     private StudentAdapter mStudentAdapter;
@@ -94,9 +96,9 @@ public class MyStudentFragment extends MainBaseFragment {
             if (item.getItemId() == R.id.action_search) {
                 searchview.setVisibility(View.VISIBLE);
             } else if (item.getItemId() == R.id.action_add_mannul) {
-
+                onAddstudent();//手动添加学员
             } else if (item.getItemId() == R.id.action_add_phone) {
-
+                addStudentFromContact();
             }
             return true;
         });
@@ -115,6 +117,13 @@ public class MyStudentFragment extends MainBaseFragment {
         return view;
     }
 
+    /**
+     * 从通讯录读取学员
+     */
+    private void addStudentFromContact() {
+        //TODO
+    }
+
     private void setUpSeachView() {
         searchviewEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,8 +138,6 @@ public class MyStudentFragment extends MainBaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-
                 Observable.just("")
                         .subscribe(s1 -> {
                             keyWord = s.toString().trim();
@@ -171,7 +178,14 @@ public class MyStudentFragment extends MainBaseFragment {
             adapterData.addAll(tmp);
         }
 
-        getActivity().runOnUiThread(mStudentAdapter::notifyDataSetChanged);
+        getActivity().runOnUiThread(() -> {
+            if (adapterData.size() == 0) {
+                studentNoLayout.setVisibility(View.VISIBLE);
+            } else {
+                studentNoLayout.setVisibility(View.GONE);
+                mStudentAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     public void setUpNaviSpinner() {
@@ -237,10 +251,11 @@ public class MyStudentFragment extends MainBaseFragment {
 
     }
 
-
-    public void refreshUi() {
-
+    @OnClick(R.id.student_add)
+    public void onAddstudent() {
+        openDrawerInterface.goWeb("");
     }
+
 
     @OnClick(R.id.searchview_clear)
     public void onClear() {

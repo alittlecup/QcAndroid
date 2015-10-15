@@ -43,6 +43,7 @@ import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
 import com.qingchengfit.fitcoach.fragment.MainWebFragment;
+import com.qingchengfit.fitcoach.fragment.MyGymsFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
@@ -134,6 +135,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private DataStatementFragment mDataStatementFragment;
     private MyStudentFragment mMyStudentFragment;
     private MainWebFragment mMeetingFragment;
+    private MyGymsFragment mMyGymsFragment;
 //    @Override
 //    protected void onXWalkReady() {
 //
@@ -359,6 +361,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mDataStatementFragment = new DataStatementFragment();
         mMyStudentFragment = new MyStudentFragment();
         mMeetingFragment = MainWebFragment.newInstance("http://teacher.qingchengfit.cn/meetings/");
+        mMyGymsFragment = new MyGymsFragment();
+
         SegmentLayout button = new SegmentLayout(this);
         button.setText("日程安排");
         button.setId(View.generateViewId());
@@ -400,7 +404,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item.setOnClickListener(v -> changeFragment(mMyStudentFragment));
         item1.setOnClickListener(v -> changeFragment(mMyStudentFragment));
-        item2.setOnClickListener(v -> changeFragment(mMyStudentFragment));
+        item2.setOnClickListener(v -> changeFragment(mMyGymsFragment));
 
 //        QcCloudClient.getApi().getApi
 //                .getDrawerInfo(coach.id)
