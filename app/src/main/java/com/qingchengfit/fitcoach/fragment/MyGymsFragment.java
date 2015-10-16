@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -57,7 +58,7 @@ public class MyGymsFragment extends MainBaseFragment {
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
-            LogUtil.e("添加健身房");
+
             return true;
         });
 
@@ -65,6 +66,14 @@ public class MyGymsFragment extends MainBaseFragment {
         mGymAdapter = new GymsAdapter(adapterData);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mGymAdapter);
+        mGymAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                toWeb.putExtra("url", adapterData.get(pos).url + "/mobile/coach/shop/welcome/");
+                startActivityForResult(toWeb, 404);
+            }
+        });
         QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid).subscribeOn(Schedulers.io())
                 .subscribe(qcCoachSystemDetailResponse -> {
                     adapterData.addAll(qcCoachSystemDetailResponse.date.systems);

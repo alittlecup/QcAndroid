@@ -33,5 +33,7 @@ public class QcAllCoursePlanResponse extends QcResponse {
         public List<String> tags;
         @SerializedName("name")
         public String name;
+        @SerializedName("id")
+        public int id;
     }
 }

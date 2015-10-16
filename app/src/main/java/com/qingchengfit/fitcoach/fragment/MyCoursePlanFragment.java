@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -55,13 +57,23 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
-            LogUtil.e("添加健身房");
+            Intent toWeb = new Intent(getActivity(), WebActivity.class);
+            toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
+            startActivityForResult(toWeb, 404);
             return true;
         });
 
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mGymAdapter = new GymsAdapter(adapterData);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        mGymAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                toWeb.putExtra("url", Configs.Server + "mobile/plans/" + adapterData.get(pos).id + "/");
+                startActivityForResult(toWeb, 404);
+            }
+        });
         recyclerview.setAdapter(mGymAdapter);
         QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
                 .subscribe(qcAllCoursePlanResponse -> {

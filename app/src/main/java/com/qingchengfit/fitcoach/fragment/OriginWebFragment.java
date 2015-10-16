@@ -3,10 +3,12 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -95,9 +97,16 @@ public class OriginWebFragment extends WebFragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        toolbar.setTitle("");
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
 
         webview.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                LogUtil.e("url:" + url);
+            }
 
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -114,10 +123,12 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading" + url);
-                mTitleStack.add(toolbar.getTitle().toString());
-                WebBackForwardList webBackForwardList = webview.copyBackForwardList();
-                mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
-                LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
+                if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
+                    mTitleStack.add(toolbar.getTitle().toString());
+                    WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+                    mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                    LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
+                }
                 return super.shouldOverrideUrlLoading(view, url);
             }
 

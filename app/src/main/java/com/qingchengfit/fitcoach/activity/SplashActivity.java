@@ -22,7 +22,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.relex.circleindicator.CircleIndicator;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -43,8 +42,8 @@ public class SplashActivity extends BaseAcitivity {
 
     @Bind(R.id.splash_viewpager)
     ViewPager splashViewpager;
-    @Bind(R.id.splash_indicator)
-    CircleIndicator splashIndicator;
+//    @Bind(R.id.splash_indicator)
+//    CircleIndicator splashIndicator;
 
     List<View> imageViews = new ArrayList<>();
     @Bind(R.id.main_loading)
@@ -75,9 +74,9 @@ public class SplashActivity extends BaseAcitivity {
 //            ImageView imageViewlast = new ImageView(this);
 //            imageViews.add(imageViewlast);
 //            imageViewlast.setId(R.id.splash_last);
-            PreferenceUtils.setPrefBoolean(this,"first",false);
+            PreferenceUtils.setPrefBoolean(this, "first", false);
             splashViewpager.setAdapter(new ImagesAdapter(imageViews));
-            splashIndicator.setViewPager(splashViewpager);
+//            splashIndicator.setViewPager(splashViewpager);
 //            splashViewpager.setPageTransformer(true, (page, position) -> {
 //                LogUtil.d("page:" + page.getId() + "    positon:" + position);
 //                if (page.getId() == R.id.splash_last && position < 0.5) {
