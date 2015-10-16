@@ -86,8 +86,7 @@ public class SaleDetailFragment extends Fragment {
 
     private String start;
     private String end;
-    private int course_id = 0;
-    private int user_id = 0;
+    private int card_id = 0;
     private int mDividerType = 0;
     private Calendar curCalendar;
 
@@ -104,14 +103,14 @@ public class SaleDetailFragment extends Fragment {
         return fragment;
     }
 
-    public static SaleDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int userId, int courseId) {
+    public static SaleDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int cardId) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putString("start", starttime);
         args.putString("end", endtime);
         args.putInt("system", sysId);
-        args.putInt("course", courseId);
-        args.putInt("user", userId);
+        args.putInt("card", cardId);
+
 
         SaleDetailFragment fragment = new SaleDetailFragment();
         fragment.setArguments(args);
@@ -143,8 +142,8 @@ public class SaleDetailFragment extends Fragment {
                 start = getArguments().getString("start");
                 end = getArguments().getString("end");
                 curSystemId = getArguments().getInt("system");
-                course_id = getArguments().getInt("course");
-                user_id = getArguments().getInt("user");
+                card_id = getArguments().getInt("card");
+
             default:
                 break;
         }
@@ -155,6 +154,9 @@ public class SaleDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_statement_detail, container, false);
+        view.setOnTouchListener((v, event) -> {
+            return true;
+        });
         ButterKnife.bind(this, view);
         setupToolbar();
         setUpNaviSpinner();
@@ -322,10 +324,8 @@ public class SaleDetailFragment extends Fragment {
         params.put("start", start);
         params.put("end", end);
         params.put("system_id", Integer.toString(system_id));
-        if (course_id != 0)
-            params.put("course_id", Integer.toString(course_id));
-        if (user_id != 0)
-            params.put("user_id", Integer.toString(user_id));
+        if (card_id != 0)
+            params.put("card_tpl_id", Integer.toString(card_id));
         return params;
     }
 

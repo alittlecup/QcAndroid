@@ -7,24 +7,14 @@
         android:duration="@integer/loading_time">
     </item>
     <item
-        android:drawable="@drawable/loading_gif_01"
-        android:duration="@integer/loading_time">
-    </item>
-    <item
         android:drawable="@drawable/loading_gif_02"
         android:duration="@integer/loading_time">
     </item>
-    <item
-        android:drawable="@drawable/loading_gif_03"
-        android:duration="@integer/loading_time"></item>
     <item
         android:drawable="@drawable/loading_gif_04"
         android:duration="@integer/loading_time"></item>
     <item
         android:drawable="@drawable/loading_gif_05"
-        android:duration="@integer/loading_time"></item>
-    <item
-        android:drawable="@drawable/loading_gif_06"
         android:duration="@integer/loading_time"></item>
     <item
         android:drawable="@drawable/loading_gif_07"
@@ -36,19 +26,10 @@
         android:drawable="@drawable/loading_gif_07"
         android:duration="@integer/loading_time"></item>
     <item
-        android:drawable="@drawable/loading_gif_06"
-        android:duration="@integer/loading_time"></item>
-    <item
         android:drawable="@drawable/loading_gif_05"
         android:duration="@integer/loading_time"></item>
     <item
-        android:drawable="@drawable/loading_gif_04"
-        android:duration="@integer/loading_time"></item>
-    <item
         android:drawable="@drawable/loading_gif_03"
-        android:duration="@integer/loading_time"></item>
-    <item
-        android:drawable="@drawable/loading_gif_02"
         android:duration="@integer/loading_time"></item>
     <item
         android:drawable="@drawable/loading_gif_01"

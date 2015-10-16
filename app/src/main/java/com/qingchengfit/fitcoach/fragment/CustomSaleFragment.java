@@ -19,9 +19,7 @@ import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
-import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
-import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
-import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,8 +49,8 @@ public class CustomSaleFragment extends Fragment {
     CommonInputView customStatmentEnd;
     @Bind(R.id.custom_statment_course)
     CommonInputView customStatmentCourse;
-    @Bind(R.id.custom_statment_student)
-    CommonInputView customStatmentStudent;
+//    @Bind(R.id.custom_statment_student)
+//    CommonInputView customStatmentStudent;
 
     private Calendar date;
     private List<SpinnerBean> spinnerBeans = new ArrayList<>();
@@ -62,8 +60,8 @@ public class CustomSaleFragment extends Fragment {
     private int chooseGymId = 0;
     private int chooseUserId = 0;
     private int chooseCoursId = 0;
-    private List<QcStudentBean> studentBeans;
-    private Observer<QcStudentResponse> studentResponseObserver = new Observer<QcStudentResponse>() {
+    private List<QcSystemCardsResponse.Card> studentBeans;
+    private Observer<QcSystemCardsResponse> studentResponseObserver = new Observer<QcSystemCardsResponse>() {
         @Override
         public void onCompleted() {
         }
@@ -73,18 +71,18 @@ public class CustomSaleFragment extends Fragment {
         }
 
         @Override
-        public void onNext(QcStudentResponse qcStudentResponse) {
-            studentBeans = qcStudentResponse.data.users;
+        public void onNext(QcSystemCardsResponse qcSystemCardsResponse) {
+            studentBeans = qcSystemCardsResponse.data.card_tpls;
             studentStrings.clear();
             studentStrings.add("全部学员");
-            for (QcStudentBean studentBean : studentBeans) {
-                studentStrings.add(studentBean.username);
+            for (QcSystemCardsResponse.Card studentBean : studentBeans) {
+                studentStrings.add(studentBean.name);
             }
 
         }
     };
-    private List<QcCourseResponse.Course> courses;
-    private Observer<QcCourseResponse> courseResponseObserver = new Observer<QcCourseResponse>() {
+    private List<QcSystemCardsResponse.Card> courses;
+    private Observer<QcSystemCardsResponse> courseResponseObserver = new Observer<QcSystemCardsResponse>() {
         @Override
         public void onCompleted() {
         }
@@ -94,11 +92,11 @@ public class CustomSaleFragment extends Fragment {
         }
 
         @Override
-        public void onNext(QcCourseResponse qcCourseResponse) {
-            courses = qcCourseResponse.data.courses;
+        public void onNext(QcSystemCardsResponse qcSystemCardsResponse) {
+            courses = qcSystemCardsResponse.data.card_tpls;
             courseStrings.clear();
-            courseStrings.add("全部课程");
-            for (QcCourseResponse.Course studentBean : courses) {
+            courseStrings.add("全部会员卡");
+            for (QcSystemCardsResponse.Card studentBean : courses) {
                 courseStrings.add(studentBean.name);
             }
 
@@ -133,7 +131,7 @@ public class CustomSaleFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_statment, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle("自定义报表");
+        toolbar.setTitle("自定义销售报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         initView();
@@ -142,17 +140,17 @@ public class CustomSaleFragment extends Fragment {
     }
 
     private void initView() {
-        customStatmentCourse.setContent("所有课程");
+        customStatmentCourse.setContent("所有会员卡");
         customStatmentStart.setContent(DateUtils.getServerDateDay(new Date()));
         customStatmentEnd.setContent(DateUtils.getServerDateDay(new Date()));
-        customStatmentGym.setContent("选择健身房");
-        customStatmentStudent.setContent("所有学员");
+        customStatmentGym.setContent("所有健身房");
+//        customStatmentStudent.setContent("所有学员");
     }
 
     @OnClick(R.id.custom_statment_course)
     public void onClickCourse() {
         new MaterialDialog.Builder(getContext())
-                .title("请选择课程")
+                .title("请选择会员卡")
                 .items(courseStrings.toArray(new String[courseStrings.size()]))
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
@@ -174,7 +172,7 @@ public class CustomSaleFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 customStatmentEnd.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
             }
-        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_YEAR)).show();
+        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick(R.id.custom_statment_start)
@@ -184,7 +182,7 @@ public class CustomSaleFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 customStatmentStart.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
             }
-        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_YEAR)).show();
+        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick(R.id.custom_statment_gym)
@@ -199,16 +197,15 @@ public class CustomSaleFragment extends Fragment {
                         customStatmentGym.setContent(text.toString());
                         chooseGymId = spinnerBeans.get(which).id;
                         if (which == 0) {
-                            customStatmentStudent.setVisibility(View.GONE);
+
                             customStatmentCourse.setVisibility(View.GONE);
                         } else {
                             HashMap<String, String> params = new HashMap<String, String>();
                             params.put("system_id", Integer.toString(chooseGymId));
 
-                            QcCloudClient.getApi().getApi.qcGetSystemStudent(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(studentResponseObserver);
-                            QcCloudClient.getApi().getApi.qcGetSystemCourses(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
+                            QcCloudClient.getApi().getApi.qcGetSystemCard(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
 
-                            customStatmentStudent.setVisibility(View.VISIBLE);
+
                             customStatmentCourse.setVisibility(View.VISIBLE);
                         }
                     }
@@ -216,31 +213,31 @@ public class CustomSaleFragment extends Fragment {
                 .show();
     }
 
-    @OnClick(R.id.custom_statment_student)
-    public void onClickStudent() {
-        new MaterialDialog.Builder(getContext())
-                .title("请选择学员")
-                .items(studentStrings.toArray(new String[studentStrings.size()]))
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-                        customStatmentStudent.setContent(charSequence.toString());
-                        if (i == 0) {
-                            chooseUserId = 0;
-                        } else {
-                            chooseUserId = studentBeans.get(i - 1).id;
-                        }
-                    }
-                }).show();
-
-    }
+//    @OnClick(R.id.custom_statment_student)
+//    public void onClickStudent() {
+//        new MaterialDialog.Builder(getContext())
+//                .title("请选择学员")
+//                .items(studentStrings.toArray(new String[studentStrings.size()]))
+//                .itemsCallback(new MaterialDialog.ListCallback() {
+//                    @Override
+//                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+//                        customStatmentStudent.setContent(charSequence.toString());
+//                        if (i == 0) {
+//                            chooseUserId = 0;
+//                        } else {
+//                            chooseUserId = studentBeans.get(i - 1).id;
+//                        }
+//                    }
+//                }).show();
+//
+//    }
 
     @OnClick(R.id.custom_statment_generate)
     public void onClickGenerate() {
         getFragmentManager().beginTransaction()
-                .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(3,
+                .add(R.id.web_frag_layout, SaleDetailFragment.newInstance(3,
                         customStatmentStart.getContent(), customStatmentEnd.getContent(),
-                        chooseGymId, chooseUserId, chooseUserId))
+                        chooseGymId, chooseCoursId))
                 .addToBackStack(null)
                 .commit();
     }

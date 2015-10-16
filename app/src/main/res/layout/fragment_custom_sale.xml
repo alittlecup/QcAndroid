@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/backgroud_grey"
               android:orientation="vertical"
-              tools:context="com.qingchengfit.fitcoach.component.CustomStatmentFragment"
+              tools:context="com.qingchengfit.fitcoach.fragment.CustomStatmentFragment"
     >
 
     <include layout="@layout/common_toolbar">

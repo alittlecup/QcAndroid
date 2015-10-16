@@ -43,7 +43,10 @@
         <item name="android:scrollbars">none</item>
     </style>
 
-
+    <style name="ToolbarStyle.Overflow" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
     <style name="Qc.TextCommonGrey" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_grey</item>
         <item name="android:textSize">@dimen/common_font</item>
@@ -112,6 +115,21 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowFrame">@null</item>
     </style>
+
+    <style name="LoadingDialog.Style" parent="AlertDialog.AppCompat">
+        <!-- 背景颜色及透明程度 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- 是否有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+
     <!-- 时间选择器popwidnow 显示消失动画 -->
     <style name="timepopwindow_anim_style">
         <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>

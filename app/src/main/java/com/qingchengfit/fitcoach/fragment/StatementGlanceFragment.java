@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
-import com.qingchengfit.fitcoach.component.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;

@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.activity;
+package com.qingchengfit.fitcoach.http.bean;
 
 /**
  * power by
@@ -11,14 +11,12 @@ package com.qingchengfit.fitcoach.activity;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
  * <p>
- * Created by Paper on 15/10/11 2015.
+ * Created by Paper on 15/10/16 2015.
  */
-public interface OpenDrawerInterface {
-    void onOpenDrawer();
+public class PostStudents {
+    public String users;
 
-    void goWeb(String url);
-
-    void showLoading();
-
-    void hideLoading();
+    public PostStudents(String users) {
+        this.users = users;
+    }
 }

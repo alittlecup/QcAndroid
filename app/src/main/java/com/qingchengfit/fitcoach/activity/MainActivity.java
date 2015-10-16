@@ -40,6 +40,7 @@ import com.qingchengfit.fitcoach.bean.RecievePush;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
+import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
 import com.qingchengfit.fitcoach.fragment.MainWebFragment;
@@ -138,10 +139,12 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private MainWebFragment mMeetingFragment;
     private MyGymsFragment mMyGymsFragment;
     private MyCoursePlanFragment mMyCoursePlanFragment;
+
 //    @Override
 //    protected void onXWalkReady() {
 //
 //    }
+private LoadingDialog loadingDialog;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -162,6 +165,37 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     }
 
+    /**
+     * loading dialog
+     */
+//    private MaterialDialog loadingDialog;
+    public void initLoadingDialog() {
+//        View view = LayoutInflater.from(this).inflate(R.layout.loading_view, null);
+//        ImageView img = (ImageView)view.findViewById(R.id.loading_img);
+//        Glide.with(App.AppContex).load(R.drawable.ic_loading_gif).into(img);
+//        loadingDialog = new MaterialDialog.Builder(this)
+//                .customView(view,false)
+//
+//                .backgroundColor(getResources().getColor(R.color.transparent))
+//                .autoDismiss(false)
+//                .cancelable(false)
+//                .build();
+        loadingDialog = new LoadingDialog(this);
+    }
+
+    @Override
+    public void showLoading() {
+        if (loadingDialog == null)
+            initLoadingDialog();
+        loadingDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (loadingDialog.isShowing())
+            loadingDialog.hide();
+    }
+
     private void initVersion() {
         LogUtil.e("version:" + AppUtils.getAppVer(this));
         QcCloudClient.getApi().getApi.qcGetVersion()
@@ -179,50 +213,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                     @Override
                     public void onNext(QcVersionResponse qcVersionResponse) {
                         if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
-                            updateDialog = new MaterialDialog.Builder(MainActivity.this)
-                                    .title("前方发现新版本!!")
-                                    .content("是否马上更新?")
-                                    .positiveText("更新")
-                                    .negativeText("下次再说")
-                                    .callback(new MaterialDialog.ButtonCallback() {
-                                        @Override
-                                        public void onPositive(MaterialDialog dialog) {
-                                            super.onPositive(dialog);
-                                            updateDialog.dismiss();
-                                            if (url != null) {
-                                                //TODO download app
-                                                downloadDialog.show();
-                                                mDownloadThread = new AsyncDownloader();
-                                                mDownloadThread.execute(url);
-                                            }
-                                        }
 
-                                        @Override
-                                        public void onNegative(MaterialDialog dialog) {
-                                            super.onNegative(dialog);
-                                            updateDialog.dismiss();
-                                        }
-                                    })
-                                    .build();
-                            downloadDialog = new MaterialDialog.Builder(MainActivity.this)
-                                    .title("正在飞速为您下载")
-                                    .progress(false, 100)
-                                    .cancelable(false)
-                                    .positiveText("后台更新")
-                                    .negativeText("取消更新")
-                                    .callback(new MaterialDialog.ButtonCallback() {
-                                        @Override
-                                        public void onPositive(MaterialDialog dialog) {
-                                            super.onPositive(dialog);
-                                        }
-
-                                        @Override
-                                        public void onNegative(MaterialDialog dialog) {
-                                            super.onNegative(dialog);
-                                            mDownloadThread.cancel(true);
-                                        }
-                                    })
-                                    .build();
 
                         url = qcVersionResponse.getData().getDownload().getAndroid();
                         newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
@@ -232,7 +223,53 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                             } catch (IOException e) {
                             }
                         }
-                        runOnUiThread(updateDialog::show);
+                            runOnUiThread(() -> {
+                                updateDialog = new MaterialDialog.Builder(MainActivity.this)
+                                        .title("前方发现新版本!!")
+                                        .content("是否马上更新?")
+                                        .positiveText("更新")
+                                        .negativeText("下次再说")
+                                        .callback(new MaterialDialog.ButtonCallback() {
+                                            @Override
+                                            public void onPositive(MaterialDialog dialog) {
+                                                super.onPositive(dialog);
+                                                updateDialog.dismiss();
+                                                if (url != null) {
+                                                    //TODO download app
+                                                    downloadDialog.show();
+                                                    mDownloadThread = new AsyncDownloader();
+                                                    mDownloadThread.execute(url);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onNegative(MaterialDialog dialog) {
+                                                super.onNegative(dialog);
+                                                updateDialog.dismiss();
+                                            }
+                                        })
+                                        .build();
+                                downloadDialog = new MaterialDialog.Builder(MainActivity.this)
+                                        .title("正在飞速为您下载")
+                                        .progress(false, 100)
+                                        .cancelable(false)
+                                        .positiveText("后台更新")
+                                        .negativeText("取消更新")
+                                        .callback(new MaterialDialog.ButtonCallback() {
+                                            @Override
+                                            public void onPositive(MaterialDialog dialog) {
+                                                super.onPositive(dialog);
+                                            }
+
+                                            @Override
+                                            public void onNegative(MaterialDialog dialog) {
+                                                super.onNegative(dialog);
+                                                mDownloadThread.cancel(true);
+                                            }
+                                        })
+                                        .build();
+                                updateDialog.show();
+                            });
 
                     }
                     }
@@ -619,6 +656,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mDownloadThread != null)
+            mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }

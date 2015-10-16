@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.component;
+package com.qingchengfit.fitcoach.fragment;
 
 
 import android.app.DatePickerDialog;
@@ -16,7 +16,7 @@ import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
-import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
+import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
@@ -136,6 +136,9 @@ public class CustomStatmentFragment extends Fragment {
         toolbar.setTitle("自定义报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        view.setOnTouchListener((v, event) -> {
+            return true;
+        });
         initView();
 
         return view;
@@ -174,7 +177,7 @@ public class CustomStatmentFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 customStatmentEnd.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
             }
-        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_YEAR)).show();
+        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick(R.id.custom_statment_start)
@@ -184,7 +187,7 @@ public class CustomStatmentFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 customStatmentStart.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
             }
-        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_YEAR)).show();
+        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick(R.id.custom_statment_gym)
@@ -240,7 +243,7 @@ public class CustomStatmentFragment extends Fragment {
         getFragmentManager().beginTransaction()
                 .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(3,
                         customStatmentStart.getContent(), customStatmentEnd.getContent(),
-                        chooseGymId, chooseUserId, chooseUserId))
+                        chooseGymId, chooseUserId, chooseCoursId))
                 .addToBackStack(null)
                 .commit();
     }

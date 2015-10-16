@@ -100,12 +100,12 @@ public class ScheduesFragment extends MainBaseFragment {
 
         @Override
         public void onCompleted() {
-
+//            openDrawerInterface.hideLoading();//run On ui
         }
 
         @Override
         public void onError(Throwable e) {
-
+            openDrawerInterface.hideLoading();
         }
 
         @Override
@@ -256,7 +256,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 scheduleExpendView.setVisibility(View.GONE);
             }
         });
-
+//        openDrawerInterface.showLoading();
         QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id), params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
         return view;
     }
@@ -285,6 +285,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.getServerDateDay(date));
+//        openDrawerInterface.showLoading();
         QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id), params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
     }
 

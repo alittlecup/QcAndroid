@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
-import com.qingchengfit.fitcoach.component.CustomStatmentFragment;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
@@ -66,6 +65,9 @@ public class SaleGlanceFragment extends Fragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        view.setOnTouchListener((v, event) -> {
+            return true;
+        });
         spinnerBeans = new ArrayList<>();
         spinnerBeans.add(new SpinnerBean("", "全部销售报表", true));
         adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
@@ -201,7 +203,7 @@ public class SaleGlanceFragment extends Fragment {
     @OnClick(R.id.statement_glance_custom)
     public void onClickCustom() {
         getFragmentManager().beginTransaction()
-                .add(R.id.web_frag_layout, new CustomStatmentFragment())
+                .add(R.id.web_frag_layout, new CustomSaleFragment())
                 .addToBackStack(null)
                 .commit();
     }

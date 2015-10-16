@@ -20,6 +20,7 @@ import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
+import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
@@ -51,6 +52,7 @@ import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.squareup.okhttp.Cache;
@@ -295,6 +297,9 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/plans")
         rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id);
 
+        //获取所有健身房充值卡
+        @GET("/api/coaches/{id}/systems/cardtpls/")
+        rx.Observable<QcSystemCardsResponse> qcGetSystemCard(@Path("id") int id, @QueryMap Map<String, String> params);
 
 
     }
@@ -364,6 +369,14 @@ public class QcCloudClient {
 
         @POST("/api/coaches/{id}/change/description/")
         rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);
+
+        //上传手机用户
+        @POST("/api/coaches/{id}/systems/users/bulk/create/")
+        rx.Observable<QcResponse> qcPostCreatStudents(@Path("id") int id, @Body PostStudents students);
+
+
+
+
     }
 
     public interface DownLoadApi {
