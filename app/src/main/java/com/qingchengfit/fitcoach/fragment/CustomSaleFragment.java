@@ -129,7 +129,7 @@ public class CustomSaleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_custom_statment, container, false);
+        View view = inflater.inflate(R.layout.fragment_custom_sale, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("自定义销售报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);

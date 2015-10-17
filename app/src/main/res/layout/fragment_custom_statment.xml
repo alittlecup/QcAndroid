@@ -43,18 +43,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_clickable="true"
-        app:civ_lable="选择会员卡"
+        app:civ_lable="选择课程"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
-    <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
-    <!--android:id="@+id/custom_statment_student"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:civ_clickable="true"-->
-    <!--app:civ_lable="选择学员"-->
-    <!-->-->
-    <!--</com.qingchengfit.fitcoach.component.CommonInputView>-->
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/custom_statment_student"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_clickable="true"
+        app:civ_lable="选择学员"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
 
     <include layout="@layout/divider_grey">
     </include>

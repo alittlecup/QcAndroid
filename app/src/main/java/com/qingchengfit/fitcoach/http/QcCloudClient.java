@@ -30,6 +30,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
+import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
@@ -301,6 +302,8 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/systems/cardtpls/")
         rx.Observable<QcSystemCardsResponse> qcGetSystemCard(@Path("id") int id, @QueryMap Map<String, String> params);
 
+        @GET("/api/android/coaches/{id}/")
+        rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id);
 
     }
 

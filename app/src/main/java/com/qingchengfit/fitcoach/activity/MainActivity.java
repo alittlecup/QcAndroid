@@ -445,7 +445,36 @@ private LoadingDialog loadingDialog;
         item.setOnClickListener(v -> changeFragment(mMyStudentFragment));
         item1.setOnClickListener(v -> changeFragment(mMyCoursePlanFragment));
         item2.setOnClickListener(v -> changeFragment(mMyGymsFragment));
+        mainDrawerlayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
 
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid).subscribeOn(Schedulers.io())
+                        .subscribe(qcDrawerResponse -> {
+                            runOnUiThread(() -> {
+                                Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
+                                drawerName.setText(qcDrawerResponse.data.coach.username);
+                                item.setCount(qcDrawerResponse.data.user_count);
+                                item1.setCount(qcDrawerResponse.data.plan_count);
+                                item2.setCount(qcDrawerResponse.data.system_count);
+                            });
+                        });
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
 //        QcCloudClient.getApi().getApi
 //                .getDrawerInfo(coach.id)
 //                .flatMap(qcResponDrawer -> {

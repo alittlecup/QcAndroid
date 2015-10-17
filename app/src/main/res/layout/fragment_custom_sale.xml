@@ -47,14 +47,14 @@
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_student"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="选择是否首次充值"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
+    <!--android:id="@+id/custom_statment_student"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:civ_clickable="true"-->
+    <!--app:civ_lable="选择是否首次充值"-->
+    <!-->-->
+    <!--</com.qingchengfit.fitcoach.component.CommonInputView>-->
 
     <include layout="@layout/divider_grey">
     </include>
