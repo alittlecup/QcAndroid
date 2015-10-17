@@ -3,6 +3,9 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -129,7 +132,11 @@ public class MyHomeFragment extends Fragment {
                     i = mHomeBgHeight;
                 else if (i < 0)
                     i = 0;
-                toolbar.setBackgroundColor(Color.argb(255 * i / mHomeBgHeight, 32, 191, 189));
+                Drawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
+                drawable.setAlpha(255 * i / mHomeBgHeight);
+                if (Build.VERSION.SDK_INT < 16) {
+                    toolbar.setBackgroundDrawable(drawable);
+                } else toolbar.setBackground(drawable);
             }
         });
 
@@ -156,7 +163,7 @@ public class MyHomeFragment extends Fragment {
 
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new CircleImgWrapper(myhomeHeader,App.AppContex));
+                    .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
         } else {
             Glide.with(App.AppContex)
                     .load(userAvatar)

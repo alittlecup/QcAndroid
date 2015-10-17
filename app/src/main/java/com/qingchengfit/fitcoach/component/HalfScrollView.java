@@ -37,6 +37,7 @@ public class HalfScrollView extends ScrollView {
     private HalfViewListener listener;
     private Scroller mScroller;
     private int scrollpos;
+
     public HalfScrollView(Context context) {
         super(context);
         init();
@@ -92,7 +93,9 @@ public class HalfScrollView extends ScrollView {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        firstheight = tab.getTop();
+        int[] location = new int[2];
+        tab.getLocationOnScreen(location);
+        firstheight = location[1];
         scrollTo(0, scrollpos);
     }
 
@@ -159,7 +162,7 @@ public class HalfScrollView extends ScrollView {
     public boolean onTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
         float scrolly = getScrollY();
-        float y = ev.getY();
+        float y = ev.getRawY();
 //        LogUtil.e("scroll:" + scrolly + "   " + ViewCompat.canScrollHorizontally(getChildAt(0), 1));
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
@@ -181,6 +184,9 @@ public class HalfScrollView extends ScrollView {
 //                    ViewCompat.animate(this).rotationYBy(firstheight).start();
 //                    isSecondView = true;
 //                }
+                if (y > firstheight)
+                    fullScroll(View.FOCUS_DOWN);
+
                 return super.onTouchEvent(ev);
 
             case MotionEvent.ACTION_MOVE:
