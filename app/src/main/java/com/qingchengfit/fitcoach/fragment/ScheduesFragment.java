@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
+import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
@@ -34,10 +35,13 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
+import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.DateSegmentLayout;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.component.ScheduleActionPopWin;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
@@ -82,8 +86,8 @@ public class ScheduesFragment extends MainBaseFragment {
     FloatingActionsMenu webFloatbtn;
     @Bind(R.id.spinner_nav)
     Spinner spinnerNav;
-    @Bind(R.id.schedule_expend_view)
-    LinearLayout scheduleExpendView;
+    //    @Bind(R.id.schedule_expend_view)
+//    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
     private FloatingActionButton btn2;
     private FloatingActionButton btn3;
@@ -114,6 +118,9 @@ public class ScheduesFragment extends MainBaseFragment {
             handleResponse(qcSchedulesResponse);
         }
     };
+    private Date mCurDate = new Date();
+    private ScheduleActionPopWin scheduleActionPopWin;
+    private DatePicker mDatePicker;
     private Coach coach;
 
 
@@ -248,31 +255,67 @@ public class ScheduesFragment extends MainBaseFragment {
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
-                scheduleExpendView.setVisibility(View.VISIBLE);
+                if (scheduleActionPopWin == null) {
+                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
+                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            webFloatbtn.collapse();
+                        }
+                    });
+                    scheduleActionPopWin.setActionCallback(v -> {
+                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
+                        startActivity(toWeb);
+                    }, v2 -> {
+                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+                        startActivity(toWeb);
+                    }, v3 -> {
+                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+                        startActivity(toWeb);
+                    });
+                }
+
+                scheduleActionPopWin.show(webFloatbtn);
             }
 
             @Override
             public void onMenuCollapsed() {
-                scheduleExpendView.setVisibility(View.GONE);
+                scheduleActionPopWin.dismiss();
             }
         });
 //        openDrawerInterface.showLoading();
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id), params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+        goDateSchedule(mCurDate);
         return view;
     }
 
-    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
-    public void onAction(View v) {
-        switch (v.getId()) {
-            case R.id.schedule_rest_btn:
-                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=rest");
-                break;
-            case R.id.schedule_private_btn:
-                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson");
-                break;
-            case R.id.schedule_group_btn:
-                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson");
-                break;
+
+//    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
+//    public void onAction(View v) {
+//        switch (v.getId()) {
+//            case R.id.schedule_rest_btn:
+//                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+//                toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
+//                startActivity(toWeb);
+//                break;
+//            case R.id.schedule_private_btn:
+//                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+//                break;
+//            case R.id.schedule_group_btn:
+//                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+//                break;
+//        }
+//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode < 0) {
+
+        } else {
+            goDateSchedule(mCurDate);
         }
     }
 
@@ -290,9 +333,10 @@ public class ScheduesFragment extends MainBaseFragment {
     }
 
     private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
-        if (qcSchedulesResponse == null)
+        if (qcSchedulesResponse == null || qcSchedulesResponse.data.systems == null)
             return;
         List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+
         scheduleBeans.clear();
         mSpinnerDatas.clear();
         mSpinnerDatas.add(new SpinnerBean("", "全部日程", true));
@@ -354,11 +398,33 @@ public class ScheduesFragment extends MainBaseFragment {
 
     @OnClick(R.id.schedule_calendar)
     public void onCalendarClick() {
-        if (calendarView.getVisibility() == View.VISIBLE) {
-            calendarView.setVisibility(View.GONE);
-        } else {
-            calendarView.setVisibility(View.VISIBLE);
+//        if (calendarView.getVisibility() == View.VISIBLE) {
+//            calendarView.setVisibility(View.GONE);
+//        } else {
+//            calendarView.setVisibility(View.VISIBLE);
+//        }
+        if (mDatePicker == null) {
+            mDatePicker = new DatePicker(getContext());
+            mDatePicker.setDayClickListener(new RobotoCalendarView.RobotoCalendarListener() {
+                @Override
+                public void onDateSelected(Date date) {
+
+                }
+
+                @Override
+                public void onRightButtonClick() {
+
+                }
+
+                @Override
+                public void onLeftButtonClick() {
+
+                }
+            });
         }
+        if (mDatePicker.isShowing())
+            mDatePicker.hide();
+        else mDatePicker.show();
     }
 
     @Override

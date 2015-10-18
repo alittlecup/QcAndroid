@@ -161,7 +161,7 @@ private LoadingDialog loadingDialog;
         initUser();
         initDialog();
         initDrawer();
-        initVersion();
+//        initVersion();
 
     }
 

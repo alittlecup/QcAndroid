@@ -255,9 +255,12 @@ public class OriginWebFragment extends WebFragment {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         if (sessionid != null) {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
-            setCookie("", "qc_session_id", sessionid);
+
+            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+
+
         } else {
             ((MainActivity) getActivity()).logout();
         }
