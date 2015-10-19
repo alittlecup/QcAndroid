@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.fragment.NotificationFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NotificationActivity extends BaseAcitivity implements FragmentCallBack {
+public class NotificationActivity extends BaseAcitivity implements FragmentCallBack, WebActivityInterface {
     public static final String TAG = NotificationActivity.class.getName();
 
     FragmentManager mFragmentManager;
@@ -76,4 +76,8 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
     }
 
 
+    @Override
+    public void onfinish() {
+
+    }
 }
