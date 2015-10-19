@@ -171,8 +171,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
 		/* draw underline */
         if (mUnderlineHeight != 0) {
             mRectPaint.setColor(mUnderlineColor);
-            canvas.drawRect(0, height - mUnderlineHeight,
-                    mTabsContainer.getWidth(), height, mRectPaint);
+            canvas.drawRect(0, height - mUnderlineHeight - 2,
+                    mTabsContainer.getWidth(), height - 2, mRectPaint);
         }
     }
 

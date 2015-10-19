@@ -1,5 +1,9 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * power by
  * <p>
@@ -11,11 +15,15 @@ package com.qingchengfit.fitcoach.http.bean;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
  * <p>
- * Created by Paper on 15/8/6 2015.
+ * Created by Paper on 15/10/19 2015.
  */
-public class ResponseResult {
-    public final static int SUCCESS = 200;
+public class QcScheduleGlanceResponse extends QcResponse {
 
-    public final static String error_no_login = "400001";
+    @SerializedName("data")
+    public Dates data;
 
+    public static class Dates {
+        @SerializedName("dates")
+        public List<String> dates;
+    }
 }

@@ -55,6 +55,7 @@ import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
@@ -161,7 +162,7 @@ private LoadingDialog loadingDialog;
         initUser();
         initDialog();
         initDrawer();
-//        initVersion();
+        initVersion();
 
     }
 
@@ -215,14 +216,14 @@ private LoadingDialog loadingDialog;
                         if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
 
 
-                        url = qcVersionResponse.getData().getDownload().getAndroid();
-                        newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
-                        if (!newAkp.exists()) {
-                            try {
-                                boolean ret = newAkp.createNewFile();
-                            } catch (IOException e) {
+                            url = qcVersionResponse.getData().getDownload().getAndroid();
+                            newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
+                            if (!newAkp.exists()) {
+                                try {
+                                    boolean ret = newAkp.createNewFile();
+                                } catch (IOException e) {
+                                }
                             }
-                        }
                             runOnUiThread(() -> {
                                 updateDialog = new MaterialDialog.Builder(MainActivity.this)
                                         .title("前方发现新版本!!")
@@ -271,7 +272,7 @@ private LoadingDialog loadingDialog;
                                 updateDialog.show();
                             });
 
-                    }
+                        }
                     }
                 });
 
@@ -298,7 +299,14 @@ private LoadingDialog loadingDialog;
 
         //获取用户拥有的系统
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
-                .subscribe(qcCoachSystemResponse -> PreferenceUtils.setPrefString(App.AppContex, "systems", gson.toJson(qcCoachSystemResponse)));
+                .subscribe(qcCoachSystemResponse -> {
+                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS)
+                        PreferenceUtils.setPrefString(App.AppContex, "systems", gson.toJson(qcCoachSystemResponse));
+                    else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                        logout();
+                    }
+
+                });
     }
 
     @Override
@@ -894,4 +902,6 @@ private LoadingDialog loadingDialog;
 
         }
     }
+
+
 }

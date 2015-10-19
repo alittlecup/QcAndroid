@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -108,6 +110,17 @@ public class ScheduleListFragment extends Fragment {
         });
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.setAdapter(scheduesAdapter);
+        scheduesAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                String url = scheduesAdapter.datas.get(pos).intent_url;
+                if (!TextUtils.isEmpty(url)) {
+                    Intent it = new Intent(getActivity(), WebActivity.class);
+                    it.putExtra("url", url);
+                    startActivityForResult(it, 113);
+                }
+            }
+        });
         goDateSchedule(mCurDate);
         return view;
     }
@@ -183,6 +196,13 @@ public class ScheduleListFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0) {
+            goDateSchedule(mCurDate);
+        }
+    }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {
         @Bind(R.id.item_schedule_time)
@@ -281,6 +301,4 @@ public class ScheduleListFragment extends Fragment {
                 listener.onItemClick(v, (int) v.getTag());
         }
     }
-
-
 }

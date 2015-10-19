@@ -255,13 +255,15 @@ public class ScheduesFragment extends MainBaseFragment {
     private void setUpViewPager() {
         scheduleVp.setAdapter(new FragmentAdapter(getChildFragmentManager()));
         scheduleVp.setOffscreenPageLimit(1);
+        scheduleVp.setCurrentItem(30, false);
         scheduleTab.setViewPager(scheduleVp);
+
     }
 
     public void setUpNaviSpinner() {
 
         spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "所有学员", true));
+        spinnerBeans.add(new SpinnerBean("", "全部日程", true));
 
         String systemStr = PreferenceUtils.getPrefString(App.AppContex, "systems", "");
         if (!TextUtils.isEmpty(systemStr)) {
@@ -364,10 +366,7 @@ public class ScheduesFragment extends MainBaseFragment {
         if (qcSchedulesResponse == null || qcSchedulesResponse.data.systems == null)
             return;
         List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
-
         scheduleBeans.clear();
-
-
         for (int i = 0; i < systems.size(); i++) {
             QcSchedulesResponse.System system = systems.get(i);
 
@@ -443,17 +442,37 @@ public class ScheduesFragment extends MainBaseFragment {
                 @Override
                 public void onRightButtonClick() {
                     mDatePicker.addMonth();
+                    updateCalendar();
                 }
 
                 @Override
                 public void onLeftButtonClick() {
                     mDatePicker.minlusMonth();
+                    updateCalendar();
                 }
             });
         }
         if (mDatePicker.isShowing())
             mDatePicker.hide();
-        else mDatePicker.show();
+        else {
+            mDatePicker.show();
+            updateCalendar();
+        }
+    }
+
+    public void updateCalendar() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("from_date", DateUtils.getStartDayOfMonth(mDatePicker.getmCurCalendar().getTime()));
+        params.put("to_date", DateUtils.getEndDayOfMonth(mDatePicker.getmCurCalendar().getTime()));
+        QcCloudClient.getApi().getApi.qcGetScheduleGlance(App.coachid, params).subscribeOn(Schedulers.io())
+                .subscribe(qcScheduleGlanceResponse -> {
+                    for (String day : qcScheduleGlanceResponse.data.dates) {
+                        getActivity().runOnUiThread(() -> {
+                            mDatePicker.markDay(day);
+                        });
+
+                    }
+                });
     }
 
     @Override
@@ -485,7 +504,7 @@ public class ScheduesFragment extends MainBaseFragment {
     public class FragmentAdapter extends FragmentPagerAdapter {
 
         private String[] weekDays = new String[]{
-                "周一", "周二", "周三", "周四", "周五", "周六", "周日"
+                "周日", "周一", "周二", "周三", "周四", "周五", "周六"
         };
 
         public FragmentAdapter(FragmentManager fm) {
@@ -495,23 +514,23 @@ public class ScheduesFragment extends MainBaseFragment {
         @Override
         public Fragment getItem(int position) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_MONTH, position);
+            calendar.add(Calendar.DAY_OF_MONTH, position - 30);
             return ScheduleListFragment.newInstance(calendar.getTime().getTime());
         }
 
         @Override
         public int getCount() {
-            return 30;
+            return 60;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_MONTH, position);
+            calendar.add(Calendar.DAY_OF_MONTH, position - 30);
             StringBuffer sb = new StringBuffer();
             sb.append(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
             sb.append("\n");
-            sb.append(calendar.get(Calendar.MONTH));
+            sb.append(calendar.get(Calendar.MONTH) + 1);
             sb.append(".");
             sb.append(calendar.get(Calendar.DAY_OF_MONTH));
             return sb.toString();

@@ -7,13 +7,14 @@
 
     <ImageView
         android:id="@+id/leftButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
         android:paddingLeft="@dimen/padding"
-        android:src="@drawable/arrow_blue_left_selector"/>
+        android:scaleType="center"
+        android:src="@drawable/ic_triangle_left"/>
 
     <TextView
         android:id="@+id/dateTitle"
@@ -28,12 +29,14 @@
 
     <ImageView
         android:id="@+id/rightButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
         android:paddingRight="@dimen/padding"
-        android:src="@drawable/arrow_blue_right_selector"/>
+        android:scaleType="center"
+        android:src="@drawable/ic_arrow_right"/>
 
 </RelativeLayout>

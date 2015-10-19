@@ -9,10 +9,10 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.marcohc.robotocalendar.RobotoCalendarView;
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -48,8 +48,8 @@ public class DatePicker extends Dialog {
         robotoCalendarView.setRobotoCalendarListener(listener);
     }
 
-    public void markDay(Date date) {
-        robotoCalendarView.markDayAsSelectedDay(date);
+    public Calendar getmCurCalendar() {
+        return mCurCalendar;
     }
 
 
@@ -69,12 +69,22 @@ public class DatePicker extends Dialog {
     public void addMonth() {
 
         mCurCalendar.add(Calendar.MONTH, 1);
-        robotoCalendarView.initializeCalendar(mCurCalendar);
+        updateCalendar();
+
     }
 
     public void minlusMonth() {
         mCurCalendar.add(Calendar.MONTH, -1);
+        updateCalendar();
+
+    }
+
+    private void updateCalendar() {
         robotoCalendarView.initializeCalendar(mCurCalendar);
+    }
+
+    public void markDay(String day) {
+        robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.RED_COLOR, DateUtils.formatDateFromString(day));
     }
 
 

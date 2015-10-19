@@ -79,7 +79,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:tag="dayOfWeek7"
-        android:text="D"
+        android:text="六"
         android:textColor="@color/day_of_week_color"
         />
 

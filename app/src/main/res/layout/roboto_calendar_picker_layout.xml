@@ -12,6 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/divider_white"
+        >
+
+    </View>
     <include
         layout="@layout/roboto_calendar_week_days_layout"
         android:layout_width="match_parent"

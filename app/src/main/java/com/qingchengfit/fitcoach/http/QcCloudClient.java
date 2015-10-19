@@ -48,6 +48,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
@@ -304,6 +305,9 @@ public class QcCloudClient {
 
         @GET("/api/android/coaches/{id}/")
         rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id);
+
+        @GET("/api/coaches/{id}/schedules/glance/")
+        rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id, @QueryMap Map<String, String> params);
 
     }
 

@@ -32,6 +32,16 @@ public class DateUtils {
         return date;
     }
 
+    public static Date formatDateFromString(String s) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        Date date = null;
+        try {
+            date = formatter.parse(s);
+        } catch (ParseException e) {
+        }
+        return date;
+    }
+
     public static String getDateDay(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd", Locale.CHINA);
