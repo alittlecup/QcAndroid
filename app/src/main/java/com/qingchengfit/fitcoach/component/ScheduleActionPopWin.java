@@ -33,8 +33,9 @@ public class ScheduleActionPopWin {
         view = LayoutInflater.from(context).inflate(R.layout.dialog_schedule_action, null);
         popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable());
-
         popupWindow.setOutsideTouchable(true);
+
+
     }
 
     public void setActionCallback(View.OnClickListener rest, View.OnClickListener group, View.OnClickListener privat) {
@@ -47,7 +48,7 @@ public class ScheduleActionPopWin {
     public void show(View v) {
         int[] location = new int[2];
         v.getLocationOnScreen(location);
-        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - 200, location[1] - popupWindow.getHeight() - 300);
+        popupWindow.showAtLocation(v.getRootView(), Gravity.NO_GRAVITY, location[0] - 200, location[1] - popupWindow.getHeight() - 300);
 //        popupWindow.showAsDropDown(v,0,-300);
         popupWindow.update();
 //        popupWindow.showAtLocation(v,Gravity.BOTTOM,0,30);

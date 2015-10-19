@@ -129,6 +129,7 @@ public class ScheduleListFragment extends Fragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.getServerDateDay(date));
         QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+
     }
 
     private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
@@ -178,12 +179,15 @@ public class ScheduleListFragment extends Fragment {
         Collections.sort(scheduleBeans, new ScheduleCompare());
         getActivity().runOnUiThread(() -> {
             scheduesAdapter.notifyDataSetChanged();
+
             if (scheduleBeans.size() > 0) {
-                scheduleNoSchedule.setVisibility(View.GONE);
+                if (scheduleNoSchedule != null)
+                    scheduleNoSchedule.setVisibility(View.GONE);
                 scheduleRv.setVisibility(View.VISIBLE);
 
             } else {
-                scheduleRv.setVisibility(View.GONE);
+                if (scheduleRv != null)
+                    scheduleRv.setVisibility(View.GONE);
                 scheduleNoSchedule.setVisibility(View.VISIBLE);
             }
         });

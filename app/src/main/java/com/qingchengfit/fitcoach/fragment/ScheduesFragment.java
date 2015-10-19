@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -132,6 +132,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private Coach coach;
     private ArrayList<SpinnerBean> spinnerBeans;
     private List<Integer> mSystemsId = new ArrayList<>();
+    private FragmentAdapter mFragmentAdapter;
 
 
     public ScheduesFragment() {
@@ -253,7 +254,8 @@ public class ScheduesFragment extends MainBaseFragment {
     }
 
     private void setUpViewPager() {
-        scheduleVp.setAdapter(new FragmentAdapter(getChildFragmentManager()));
+        mFragmentAdapter = new FragmentAdapter(getChildFragmentManager());
+        scheduleVp.setAdapter(mFragmentAdapter);
         scheduleVp.setOffscreenPageLimit(1);
         scheduleVp.setCurrentItem(30, false);
         scheduleTab.setViewPager(scheduleVp);
@@ -339,15 +341,7 @@ public class ScheduesFragment extends MainBaseFragment {
 //        }
 //    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode < 0) {
 
-        } else {
-            goDateSchedule(mCurDate);
-        }
-    }
 
     /**
      * 获取某日日程
@@ -356,10 +350,10 @@ public class ScheduesFragment extends MainBaseFragment {
      */
 
     private void goDateSchedule(Date date) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("date", DateUtils.getServerDateDay(date));
-//        openDrawerInterface.showLoading();
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(Integer.parseInt(coach.id), params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+        mFragmentAdapter.setCurCenterDay(date);
+        mFragmentAdapter.notifyDataSetChanged();
+        scheduleTab.notifyDataSetChanged();
+        scheduleVp.setCurrentItem(30, false);
     }
 
     private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
@@ -424,11 +418,6 @@ public class ScheduesFragment extends MainBaseFragment {
 
     @OnClick(R.id.schedule_calendar)
     public void onCalendarClick() {
-//        if (calendarView.getVisibility() == View.VISIBLE) {
-//            calendarView.setVisibility(View.GONE);
-//        } else {
-//            calendarView.setVisibility(View.VISIBLE);
-//        }
         if (mDatePicker == null) {
             mDatePicker = new DatePicker(getContext());
             mDatePicker.setDayClickListener(new RobotoCalendarView.RobotoCalendarListener() {
@@ -501,19 +490,24 @@ public class ScheduesFragment extends MainBaseFragment {
         }
     }
 
-    public class FragmentAdapter extends FragmentPagerAdapter {
+    public class FragmentAdapter extends FragmentStatePagerAdapter {
 
         private String[] weekDays = new String[]{
                 "周日", "周一", "周二", "周三", "周四", "周五", "周六"
         };
-
+        private Date curDate = new Date();
         public FragmentAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        public void setCurCenterDay(Date day) {
+            curDate = day;
         }
 
         @Override
         public Fragment getItem(int position) {
             Calendar calendar = Calendar.getInstance();
+            calendar.setTime(curDate);
             calendar.add(Calendar.DAY_OF_MONTH, position - 30);
             return ScheduleListFragment.newInstance(calendar.getTime().getTime());
         }
@@ -526,6 +520,7 @@ public class ScheduesFragment extends MainBaseFragment {
         @Override
         public CharSequence getPageTitle(int position) {
             Calendar calendar = Calendar.getInstance();
+            calendar.setTime(curDate);
             calendar.add(Calendar.DAY_OF_MONTH, position - 30);
             StringBuffer sb = new StringBuffer();
             sb.append(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
@@ -534,6 +529,11 @@ public class ScheduesFragment extends MainBaseFragment {
             sb.append(".");
             sb.append(calendar.get(Calendar.DAY_OF_MONTH));
             return sb.toString();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 
