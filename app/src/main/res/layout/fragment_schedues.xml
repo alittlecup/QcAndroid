@@ -38,77 +38,68 @@
         android:orientation="horizontal"
         >
 
-        <com.qingchengfit.fitcoach.component.DateSegmentLayout
-            android:id="@+id/drawer_radiogroup"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            >
+        <!--<com.qingchengfit.fitcoach.component.DateSegmentLayout-->
+        <!--android:id="@+id/drawer_radiogroup"-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:orientation="horizontal"-->
+        <!-->-->
 
-            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
-                android:id="@+id/schedule_date_0"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+        <!--<com.qingchengfit.fitcoach.component.ScheduleDateLayout-->
+        <!--android:id="@+id/schedule_date_0"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!-->-->
+        <!--</com.qingchengfit.fitcoach.component.ScheduleDateLayout>-->
 
-            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
-                android:id="@+id/schedule_date_1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+        <!--<com.qingchengfit.fitcoach.component.ScheduleDateLayout-->
+        <!--android:id="@+id/schedule_date_1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!-->-->
+        <!--</com.qingchengfit.fitcoach.component.ScheduleDateLayout>-->
 
-            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
-                android:id="@+id/schedule_date_2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+        <!--<com.qingchengfit.fitcoach.component.ScheduleDateLayout-->
+        <!--android:id="@+id/schedule_date_2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!-->-->
+        <!--</com.qingchengfit.fitcoach.component.ScheduleDateLayout>-->
 
 
-            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
-                android:id="@+id/schedule_date_3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
-
-            <com.qingchengfit.fitcoach.component.ScheduleDateLayout
-                android:id="@+id/schedule_date_4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-            </com.qingchengfit.fitcoach.component.ScheduleDateLayout>
+        <!--<com.qingchengfit.fitcoach.component.ScheduleDateLayout-->
+        <!--android:id="@+id/schedule_date_3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!-->-->
+        <!--</com.qingchengfit.fitcoach.component.ScheduleDateLayout>-->
 
             <!--<com.qingchengfit.fitcoach.component.ScheduleDateLayout-->
-            <!--android:id="@+id/schedule_date_5"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!-->-->
+        <!--android:id="@+id/schedule_date_4"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!-->-->
             <!--</com.qingchengfit.fitcoach.component.ScheduleDateLayout>-->
 
-        </com.qingchengfit.fitcoach.component.DateSegmentLayout>
+        <!--&lt;!&ndash;<com.qingchengfit.fitcoach.component.ScheduleDateLayout&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/schedule_date_5"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+        <!--&lt;!&ndash;>&ndash;&gt;-->
+        <!--&lt;!&ndash;</com.qingchengfit.fitcoach.component.ScheduleDateLayout>&ndash;&gt;-->
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/disable"
-            >
-        </View>
+        <!--</com.qingchengfit.fitcoach.component.DateSegmentLayout>-->
+
 
         <RelativeLayout
             android:id="@+id/schedule_calendar"
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="match_parent">
 
             <ImageView
@@ -120,6 +111,22 @@
                 />
         </RelativeLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/disable"
+            >
+        </View>
+
+        <com.qingchengfit.fitcoach.component.PagerSlidingTabStrip
+            android:id="@+id/schedule_tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </com.qingchengfit.fitcoach.component.PagerSlidingTabStrip>
     </LinearLayout>
 
     <RelativeLayout
@@ -192,6 +199,16 @@
 
 
         </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/schedule_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            >
+        </android.support.v4.view.ViewPager>
+
+
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/web_floatbtn"
             android:layout_width="wrap_content"

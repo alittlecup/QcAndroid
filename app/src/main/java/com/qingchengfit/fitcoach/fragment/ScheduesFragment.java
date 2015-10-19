@@ -4,6 +4,9 @@ package com.qingchengfit.fitcoach.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,17 +40,20 @@ import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
-import com.qingchengfit.fitcoach.component.DateSegmentLayout;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
 import com.qingchengfit.fitcoach.component.ScheduleActionPopWin;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
+import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,8 +72,8 @@ public class ScheduesFragment extends MainBaseFragment {
     public static final String TAG = ScheduesFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.drawer_radiogroup)
-    DateSegmentLayout drawerRadiogroup;
+    //    @Bind(R.id.drawer_radiogroup)
+//    DateSegmentLayout drawerRadiogroup;
     @Bind(R.id.schedule_calendar)
     RelativeLayout scheduleCalendar;
     @Bind(R.id.schedule_rv)
@@ -83,6 +89,10 @@ public class ScheduesFragment extends MainBaseFragment {
     FloatingActionsMenu webFloatbtn;
     @Bind(R.id.spinner_nav)
     Spinner spinnerNav;
+    @Bind(R.id.schedule_tab)
+    PagerSlidingTabStrip scheduleTab;
+    @Bind(R.id.schedule_vp)
+    ViewPager scheduleVp;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -90,10 +100,10 @@ public class ScheduesFragment extends MainBaseFragment {
     private FloatingActionButton btn3;
     private ArrayList<ScheduleBean> scheduleBeans;
     private ScheduesAdapter scheduesAdapter;
-    private ArrayList<SpinnerBean> mSpinnerDatas;
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
-    private int curentGym = 0;
+    private int curSystemId = 0;
     private QcSchedulesResponse mQcSchedulesResponse;
+
     /**
      * 处理网络返回
      */
@@ -120,6 +130,8 @@ public class ScheduesFragment extends MainBaseFragment {
     private ScheduleActionPopWin scheduleActionPopWin;
     private DatePicker mDatePicker;
     private Coach coach;
+    private ArrayList<SpinnerBean> spinnerBeans;
+    private List<Integer> mSystemsId = new ArrayList<>();
 
 
     public ScheduesFragment() {
@@ -138,64 +150,16 @@ public class ScheduesFragment extends MainBaseFragment {
             getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
             return true;
         });
-        drawerRadiogroup.setDate(new Date());
+//        drawerRadiogroup.setDate(new Date());
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
         if (TextUtils.isEmpty(id)) {
 
         }
         coach = gson.fromJson(id, Coach.class);
-        HashMap<String, String> params = new HashMap<>();
-        params.put("date", DateUtils.getServerDateDay(new Date()));
-
-
-        mSpinnerDatas = new ArrayList<>();
-        mSpinnerDatas.add(new SpinnerBean("", "全部日程", true));
-        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, mSpinnerDatas) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-                }
-                ((TextView) convertView).setText(mSpinnerDatas.get(position).text);
-                return convertView;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-                }
-                SpinnerBean bean = getItem(position);
-                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-                if (bean.isTitle) {
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-                } else {
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-                }
-                return convertView;
-            }
-        };
-
-//        设置下拉列表的风格
-        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
-        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                curentGym = mSpinnerDatas.get(position).id;
-                handleResponse(mQcSchedulesResponse);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
+        //初始化title下拉
+        setUpNaviSpinner();
+        setUpViewPager();
         scheduleBeans = new ArrayList<>();
         scheduesAdapter = new ScheduesAdapter(scheduleBeans);
         scheduesAdapter.setListener((v, pos) -> {
@@ -211,10 +175,10 @@ public class ScheduesFragment extends MainBaseFragment {
             @Override
             public void onDateSelected(MaterialCalendarView materialCalendarView, CalendarDay calendarDay, boolean b) {
                 calendarView.setVisibility(View.GONE);
-                drawerRadiogroup.setDate(calendarDay.getDate());
+//                drawerRadiogroup.setDate(calendarDay.getDate());
             }
         });
-        drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
+//        drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
 //        ShadowProperty shadowProperty = new ShadowProperty()
 //                .setShadowColor(0x77000000)
 //                .setShadowRadius(MeasureUtils.dpToPx(3f, getResources()));
@@ -284,10 +248,77 @@ public class ScheduesFragment extends MainBaseFragment {
             }
         });
 //        openDrawerInterface.showLoading();
-        goDateSchedule(mCurDate);
+//        goDateSchedule(mCurDate);
         return view;
     }
 
+    private void setUpViewPager() {
+        scheduleVp.setAdapter(new FragmentAdapter(getChildFragmentManager()));
+        scheduleVp.setOffscreenPageLimit(1);
+        scheduleTab.setViewPager(scheduleVp);
+    }
+
+    public void setUpNaviSpinner() {
+
+        spinnerBeans = new ArrayList<>();
+        spinnerBeans.add(new SpinnerBean("", "所有学员", true));
+
+        String systemStr = PreferenceUtils.getPrefString(App.AppContex, "systems", "");
+        if (!TextUtils.isEmpty(systemStr)) {
+            QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
+            List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+            mSystemsId.clear();
+            for (int i = 0; i < systems.size(); i++) {
+                QcCoachSystem system = systems.get(i);
+                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                mSystemsId.add(system.id);
+            }
+        }
+
+        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+                }
+                ((TextView) convertView).setText(spinnerBeans.get(position).text);
+                return convertView;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+                }
+                SpinnerBean bean = getItem(position);
+                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+                if (bean.isTitle) {
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
+                } else {
+                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+                }
+                return convertView;
+            }
+        };
+        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
+        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
 
 //    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
 //    public void onAction(View v) {
@@ -335,8 +366,8 @@ public class ScheduesFragment extends MainBaseFragment {
         List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
 
         scheduleBeans.clear();
-        mSpinnerDatas.clear();
-        mSpinnerDatas.add(new SpinnerBean("", "全部日程", true));
+
+
         for (int i = 0; i < systems.size(); i++) {
             QcSchedulesResponse.System system = systems.get(i);
 
@@ -344,9 +375,8 @@ public class ScheduesFragment extends MainBaseFragment {
             List<QcScheduleBean> schedules = system.schedules;
             String syscolor = system.system.color;
             SpinnerBean spinnerbean = new SpinnerBean(syscolor, system.system.name, system.system.id);
-            mSpinnerDatas.add(spinnerbean);
 
-            if (curentGym != 0 && curentGym != system.system.id)
+            if (curSystemId != 0 && curSystemId != system.system.id)
                 continue;
             for (int j = 0; j < rests.size(); j++) {
                 QcSchedulesResponse.Rest rest = rests.get(j);
@@ -452,6 +482,42 @@ public class ScheduesFragment extends MainBaseFragment {
         }
     }
 
+    public class FragmentAdapter extends FragmentPagerAdapter {
+
+        private String[] weekDays = new String[]{
+                "周一", "周二", "周三", "周四", "周五", "周六", "周日"
+        };
+
+        public FragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, position);
+            return ScheduleListFragment.newInstance(calendar.getTime().getTime());
+        }
+
+        @Override
+        public int getCount() {
+            return 30;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, position);
+            StringBuffer sb = new StringBuffer();
+            sb.append(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
+            sb.append("\n");
+            sb.append(calendar.get(Calendar.MONTH));
+            sb.append(".");
+            sb.append(calendar.get(Calendar.DAY_OF_MONTH));
+            return sb.toString();
+        }
+    }
+
     class ScheduesAdapter extends RecyclerView.Adapter<SchedulesVH> implements View.OnClickListener {
 
 
@@ -529,5 +595,6 @@ public class ScheduesFragment extends MainBaseFragment {
                 listener.onItemClick(v, (int) v.getTag());
         }
     }
+
 
 }

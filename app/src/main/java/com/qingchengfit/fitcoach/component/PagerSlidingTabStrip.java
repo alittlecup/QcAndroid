@@ -55,11 +55,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
     private int mLastScrollX = 0;
     private int mNumPadding = 8;
     private int mTabPadding = 25;
-    private int mTabTextSize = 16;
+    private int mTabTextSize = 14;
     private int mNumTextSize = 10;
-    private int mTabTextColor = 0xFF232323;
-    private int mIndicatorColor = 0xFFFF8050;
-    private int mUnderlineColor = 0xFFDDDDDD;
+    private int mTabTextColor = 0xaaffffff;
+    private int mIndicatorColor = 0xFFffffff;
+    private int mUnderlineColor = 0xFFffffff;
     private int mNumTextColor = Color.WHITE;
     private int mNumBackground = 0xFFFF8050;
     private float mCornerRadius = 4f;
@@ -237,7 +237,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
         TextView tab = new TextView(getContext());
         tab.setText(title);
         tab.setGravity(Gravity.CENTER);
-        tab.setSingleLine();
+
+//        tab.setSingleLine();
 
         addTab(position, tab);
     }
