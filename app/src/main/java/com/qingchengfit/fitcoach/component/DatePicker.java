@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.qingchengfit.fitcoach.R;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * power by
@@ -30,13 +32,15 @@ public class DatePicker extends Dialog {
 
 
     private final RobotoCalendarView robotoCalendarView;
-
+    private Calendar mCurCalendar;
+    private int mMonthOffset = 0;
     public DatePicker(Context context) {
         super(context, R.style.ChoosePicDialogStyle);
         View view = getLayoutInflater().inflate(R.layout.dialog_datepicker, null);
         setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         robotoCalendarView = (RobotoCalendarView) findViewById(R.id.calendarView);
-        robotoCalendarView.markDayAsCurrentDay(new Date());
+        mCurCalendar = Calendar.getInstance(Locale.getDefault());
+        robotoCalendarView.markDayAsCurrentDay(mCurCalendar.getTime());
 
     }
 
@@ -61,4 +65,18 @@ public class DatePicker extends Dialog {
         window.setWindowAnimations(R.style.ButtomDialogStyle);
         super.show();
     }
+
+    public void addMonth() {
+
+        mCurCalendar.add(Calendar.MONTH, 1);
+        robotoCalendarView.initializeCalendar(mCurCalendar);
+    }
+
+    public void minlusMonth() {
+        mCurCalendar.add(Calendar.MONTH, -1);
+        robotoCalendarView.initializeCalendar(mCurCalendar);
+    }
+
+
+
 }

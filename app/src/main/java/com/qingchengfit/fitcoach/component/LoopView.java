@@ -33,7 +33,7 @@ public class LoopView extends Drawable {
         try {
             col = Color.parseColor(color);
         } catch (Exception e) {
-            col = Color.GREEN;
+            col = Color.CYAN;
         }
         this.mPaint.setColor(col);
         mWhitePain = new Paint();

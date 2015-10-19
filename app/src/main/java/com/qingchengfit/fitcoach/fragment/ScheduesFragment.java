@@ -25,7 +25,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -47,8 +46,6 @@ import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
-import com.wangjie.shadowviewhelper.ShadowProperty;
-import com.wangjie.shadowviewhelper.ShadowViewHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -118,6 +115,7 @@ public class ScheduesFragment extends MainBaseFragment {
             handleResponse(qcSchedulesResponse);
         }
     };
+
     private Date mCurDate = new Date();
     private ScheduleActionPopWin scheduleActionPopWin;
     private DatePicker mDatePicker;
@@ -217,19 +215,18 @@ public class ScheduesFragment extends MainBaseFragment {
             }
         });
         drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
-        ShadowProperty shadowProperty = new ShadowProperty()
-                .setShadowColor(0x77000000)
-//                        .setShadowDy(MeasureUtils.dpToPx(0.5f, getResources()))
-                .setShadowRadius(MeasureUtils.dpToPx(3f, getResources()));
-        ShadowViewHelper.bindShadowHelper(shadowProperty
-                , calendarView
-        );
-
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) calendarView.getLayoutParams();
-        lp.leftMargin = -shadowProperty.getShadowOffset();
-        lp.rightMargin = -shadowProperty.getShadowOffset();
-        lp.topMargin = -shadowProperty.getShadowOffset();
-        calendarView.setLayoutParams(lp);
+//        ShadowProperty shadowProperty = new ShadowProperty()
+//                .setShadowColor(0x77000000)
+//                .setShadowRadius(MeasureUtils.dpToPx(3f, getResources()));
+//        ShadowViewHelper.bindShadowHelper(shadowProperty
+//                , calendarView
+//        );
+//
+//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) calendarView.getLayoutParams();
+//        lp.leftMargin = -shadowProperty.getShadowOffset();
+//        lp.rightMargin = -shadowProperty.getShadowOffset();
+//        lp.topMargin = -shadowProperty.getShadowOffset();
+//        calendarView.setLayoutParams(lp);
 //        btn1 = new FloatingActionButton(getActivity());
 //        btn1.setIcon(R.drawable.ic_baseinfo_city);
 //        btn1.setColorNormal(Color.GREEN);
@@ -406,19 +403,21 @@ public class ScheduesFragment extends MainBaseFragment {
         if (mDatePicker == null) {
             mDatePicker = new DatePicker(getContext());
             mDatePicker.setDayClickListener(new RobotoCalendarView.RobotoCalendarListener() {
+
                 @Override
                 public void onDateSelected(Date date) {
-
+                    goDateSchedule(date);
+                    mDatePicker.dismiss();
                 }
 
                 @Override
                 public void onRightButtonClick() {
-
+                    mDatePicker.addMonth();
                 }
 
                 @Override
                 public void onLeftButtonClick() {
-
+                    mDatePicker.minlusMonth();
                 }
             });
         }
