@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -28,8 +29,10 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
+import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -42,6 +45,8 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -73,10 +78,14 @@ public class MyStudentFragment extends MainBaseFragment {
     Spinner spinnerNav;
     @Bind(R.id.student_no_layout)
     LinearLayout studentNoLayout;
+    @Bind(R.id.alphabetview)
+    AlphabetView alphabetView;
+    private LinearLayoutManager mLinearLayoutManager;
     private QcAllStudentResponse mQcAllStudentResponse;
     private List<StudentBean> adapterData = new ArrayList<>();
     private StudentAdapter mStudentAdapter;
     private String keyWord;//搜索关键字
+    private HashMap<String, Integer> alphabetSort = new HashMap<>();
     /**
      * 初始化spinner
      */
@@ -110,7 +119,8 @@ public class MyStudentFragment extends MainBaseFragment {
         });
         setUpNaviSpinner();
         setUpSeachView();
-        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerview.setLayoutManager(mLinearLayoutManager);
         mStudentAdapter = new StudentAdapter(adapterData);
         mStudentAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
@@ -131,7 +141,14 @@ public class MyStudentFragment extends MainBaseFragment {
                     mQcAllStudentResponse = qcAllStudentResponse;
                     handleResponse(qcAllStudentResponse);
                 });
-
+        alphabetView.setOnAlphabetChange(new AlphabetView.OnAlphabetChange() {
+            @Override
+            public void onChange(int position, String s) {
+                if (alphabetSort.get(s) != null) {
+                    mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get(s), 0);
+                }
+            }
+        });
         return view;
     }
 
@@ -139,7 +156,6 @@ public class MyStudentFragment extends MainBaseFragment {
      * 从通讯录读取学员
      */
     private void addStudentFromContact() {
-        //TODO
         openDrawerInterface.showLoading();
         Observable.just("")
                 .subscribeOn(Schedulers.io())
@@ -147,7 +163,6 @@ public class MyStudentFragment extends MainBaseFragment {
                     @Override
                     public String call(String s) {
                         return new Gson().toJson(PhoneFuncUtils.initContactList(getContext()));
-
                     }
                 })
                 .flatMap(new Func1<String, Observable<QcResponse>>() {
@@ -158,12 +173,18 @@ public class MyStudentFragment extends MainBaseFragment {
                 }).subscribe(new Observer<QcResponse>() {
             @Override
             public void onCompleted() {
-                getActivity().runOnUiThread(() -> openDrawerInterface.hideLoading());
+                getActivity().runOnUiThread(() -> {
+                    openDrawerInterface.hideLoading();
+                    Toast.makeText(getContext(), "导入联系人完成", Toast.LENGTH_SHORT).show();
+                });
             }
 
             @Override
             public void onError(Throwable e) {
-                getActivity().runOnUiThread(() -> openDrawerInterface.hideLoading());
+                getActivity().runOnUiThread(() -> {
+                    openDrawerInterface.hideLoading();
+                    Toast.makeText(getContext(), "导入联系人失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                });
             }
 
             @Override
@@ -217,10 +238,16 @@ public class MyStudentFragment extends MainBaseFragment {
                 bean.name = student.username;
                 bean.systemUrl = ship.system.url;
                 bean.id = student.id;
+                if (TextUtils.isEmpty(student.head)) {
+                    bean.head = "~";
+                } else {
+                    bean.head = student.head.toUpperCase();
+                }
+
                 StringBuffer sb = new StringBuffer();
                 sb.append("联系电话:").append(student.phone);
                 bean.phoneStr = sb.toString();
-                if (student.gender.equalsIgnoreCase("男"))
+                if (student.gender.equalsIgnoreCase("0"))
                     bean.gender = true;
                 else bean.gender = false;
                 if (TextUtils.isEmpty(keyWord) || bean.name.contains(keyWord)
@@ -228,6 +255,20 @@ public class MyStudentFragment extends MainBaseFragment {
                     tmp.add(bean);
             }
             adapterData.addAll(tmp);
+        }
+
+        if (adapterData.size() > 0) {
+            alphabetSort.clear();
+            Collections.sort(adapterData, new StudentCompare());
+            String tag = "";
+            for (int i = 0; i < adapterData.size(); i++) {
+                StudentBean bean = adapterData.get(i);
+                if (!bean.head.equalsIgnoreCase(tag)) {
+                    bean.isTag = true;
+                    tag = bean.head;
+                    alphabetSort.put(tag, i);
+                } else bean.isTag = false;
+            }
         }
 
         getActivity().runOnUiThread(() -> {
@@ -347,6 +388,10 @@ public class MyStudentFragment extends MainBaseFragment {
         TextView itemStudentPhonenum;
         @Bind(R.id.item_student_gymname)
         TextView itemStudentGymname;
+        @Bind(R.id.item_student_gender)
+        ImageView itemStudentGender;
+        @Bind(R.id.item_student_alpha)
+        TextView itemStudentAlpha;
 
         public StudentsHolder(View itemView) {
             super(itemView);
@@ -382,10 +427,14 @@ public class MyStudentFragment extends MainBaseFragment {
             holder.itemStudentName.setText(studentBean.name);
             holder.itemStudentPhonenum.setText(studentBean.phoneStr);
             if (studentBean.gender) {//男
-
+                holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
             } else {
-
+                holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_female);
             }
+            if (studentBean.isTag) {
+                holder.itemStudentAlpha.setText(studentBean.head);
+                holder.itemStudentAlpha.setVisibility(View.VISIBLE);
+            } else holder.itemStudentAlpha.setVisibility(View.GONE);
             Glide.with(App.AppContex).load(studentBean.headerPic).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
 
         }

@@ -36,7 +36,6 @@ import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
-import com.qingchengfit.fitcoach.component.ScheduleActionPopWin;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
@@ -85,7 +84,6 @@ public class ScheduesFragment extends MainBaseFragment {
     private int curSystemId = 0;
     private QcSchedulesResponse mQcSchedulesResponse;
     private Date mCurDate = new Date();
-    private ScheduleActionPopWin scheduleActionPopWin;
     private DatePicker mDatePicker;
     private Coach coach;
     private ArrayList<SpinnerBean> spinnerBeans;

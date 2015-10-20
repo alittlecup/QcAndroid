@@ -20,5 +20,7 @@ public class StudentBean {
     public String headerPic;
     public boolean gender;//此处服务器返回为"男" "女"
     public String systemUrl;
+    public String head;
     public int id;
+    public boolean isTag;
 }

@@ -26,4 +26,8 @@ public class QcStudentBean {
     public String avatar;
     @SerializedName("gender")
     public String gender;
+    @SerializedName("head")
+    public String head;
+    public String tag;
+
 }

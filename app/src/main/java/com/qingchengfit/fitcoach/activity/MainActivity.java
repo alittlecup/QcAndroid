@@ -40,7 +40,6 @@ import com.qingchengfit.fitcoach.bean.RecievePush;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
-import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
 import com.qingchengfit.fitcoach.fragment.MainWebFragment;
@@ -145,7 +144,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //    protected void onXWalkReady() {
 //
 //    }
-private LoadingDialog loadingDialog;
+private MaterialDialog loadingDialog;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -181,7 +180,11 @@ private LoadingDialog loadingDialog;
 //                .autoDismiss(false)
 //                .cancelable(false)
 //                .build();
-        loadingDialog = new LoadingDialog(this);
+        loadingDialog = new MaterialDialog.Builder(this)
+                .content("请稍后")
+                .progress(true, 0)
+                .build();
+
     }
 
     @Override

@@ -180,6 +180,7 @@
         android:orientation="vertical"
         android:paddingBottom="100dp"
         android:paddingRight="20dp"
+        android:visibility="gone"
         >
 
         <Button

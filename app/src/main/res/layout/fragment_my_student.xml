@@ -85,10 +85,21 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
             android:clipToPadding="false"
-            android:paddingTop="10dp"
             >
         </android.support.v7.widget.RecyclerView>
+
+        <com.qingchengfit.fitcoach.component.AlphabetView
+            android:id="@+id/alphabetview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            >
+
+        </com.qingchengfit.fitcoach.component.AlphabetView>
 
         <LinearLayout
             android:id="@+id/student_no_layout"
@@ -123,6 +134,7 @@
                 android:text="添加学员"
                 />
         </LinearLayout>
+
     </FrameLayout>
 
 

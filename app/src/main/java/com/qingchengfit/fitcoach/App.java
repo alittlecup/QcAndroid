@@ -77,8 +77,10 @@ public class App extends Application {
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override
             public void handleError(Throwable e) {
+
+                e.printStackTrace();
                 if (e != null)
-                    LogUtil.e("rxError:" + e.getMessage());
+                    LogUtil.e("rxError:" + e.getMessage() + e.getCause());
             }
         });
 
