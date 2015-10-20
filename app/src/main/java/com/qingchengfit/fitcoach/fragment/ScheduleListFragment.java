@@ -178,17 +178,17 @@ public class ScheduleListFragment extends Fragment {
         }
         Collections.sort(scheduleBeans, new ScheduleCompare());
         getActivity().runOnUiThread(() -> {
-            scheduesAdapter.notifyDataSetChanged();
+            if (scheduleNoSchedule != null) {
+                scheduesAdapter.notifyDataSetChanged();
 
-            if (scheduleBeans.size() > 0) {
-                if (scheduleNoSchedule != null)
+                if (scheduleBeans.size() > 0) {
                     scheduleNoSchedule.setVisibility(View.GONE);
-                scheduleRv.setVisibility(View.VISIBLE);
+                    scheduleRv.setVisibility(View.VISIBLE);
 
-            } else {
-                if (scheduleRv != null)
+                } else {
                     scheduleRv.setVisibility(View.GONE);
-                scheduleNoSchedule.setVisibility(View.VISIBLE);
+                    scheduleNoSchedule.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

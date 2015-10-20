@@ -378,12 +378,12 @@ public class ScheduesFragment extends MainBaseFragment {
         params.put("to_date", DateUtils.getEndDayOfMonth(mDatePicker.getmCurCalendar().getTime()));
         QcCloudClient.getApi().getApi.qcGetScheduleGlance(App.coachid, params).subscribeOn(Schedulers.io())
                 .subscribe(qcScheduleGlanceResponse -> {
-                    for (String day : qcScheduleGlanceResponse.data.dates) {
-                        getActivity().runOnUiThread(() -> {
+                    getActivity().runOnUiThread(() -> {
+                        for (String day : qcScheduleGlanceResponse.data.dates) {
                             mDatePicker.markDay(day);
-                        });
-
-                    }
+                        }
+                        mDatePicker.markCurDay();
+                    });
                 });
     }
 

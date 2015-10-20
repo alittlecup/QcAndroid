@@ -419,7 +419,7 @@ public class RobotoCalendarView extends LinearLayout {
         clearDayOfTheMonthStyle(lastSelectedDay);
 
         markDayAsCurrentDay(lastCurrentDay);
-
+        markDayAsCurrentDay(currentDate);
         // Store current values as last values
         storeLastValues(currentDate);
 
@@ -455,7 +455,7 @@ public class RobotoCalendarView extends LinearLayout {
 
         // Draw day with style
         underline.setVisibility(View.VISIBLE);
-        underline.setBackgroundResource(style);
+        underline.setBackgroundResource(R.drawable.red_dot);
     }
 
     public void setRobotoCalendarListener(RobotoCalendarListener robotoCalendarListener) {

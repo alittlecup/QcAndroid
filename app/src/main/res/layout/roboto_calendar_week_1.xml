@@ -14,11 +14,29 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer1">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground1"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground1"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,13 +57,15 @@
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView1"/>
+                android:tag="firstUnderlineView1"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
+                android:background="@drawable/red_dot"
                 android:tag="secondUnderlineView1"/>
         </LinearLayout>
     </RelativeLayout>
@@ -57,15 +77,32 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer2">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground2"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground2"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
             android:gravity="center_vertical|center_horizontal"
             android:orientation="vertical">
@@ -77,19 +114,22 @@
                 android:gravity="center"
                 android:tag="dayOfMonthText2"
                 android:text="2"
+
                 />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView2"/>
+                android:tag="firstUnderlineView2"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
+                android:background="@drawable/red_dot"
                 android:tag="secondUnderlineView2"/>
         </LinearLayout>
     </RelativeLayout>
@@ -101,11 +141,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer3">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground3"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground3"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,13 +184,15 @@
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView3"/>
+                android:tag="firstUnderlineView3"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
+                android:background="@drawable/red_dot"
                 android:tag="secondUnderlineView3"/>
         </LinearLayout>
     </RelativeLayout>
@@ -145,11 +204,29 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer4">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground4"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground4"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -165,20 +242,24 @@
                 android:gravity="center"
                 android:tag="dayOfMonthText4"
                 android:text="4"
+
                 />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView4"/>
+                android:tag="firstUnderlineView4"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
-                android:tag="secondUnderlineView4"/>
+                android:background="@drawable/red_dot"
+                android:tag="secondUnderlineView4"
+                />
         </LinearLayout>
     </RelativeLayout>
 
@@ -189,11 +270,29 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer5">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground5"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground5"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -215,13 +314,15 @@
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView5"/>
+                android:tag="firstUnderlineView5"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
+                android:background="@drawable/red_dot"
                 android:tag="secondUnderlineView5"/>
         </LinearLayout>
     </RelativeLayout>
@@ -233,11 +334,29 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer6">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground6"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground6"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -259,13 +378,15 @@
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView6"/>
+                android:tag="firstUnderlineView6"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
+                android:background="@drawable/red_dot"
                 android:tag="secondUnderlineView6"/>
         </LinearLayout>
     </RelativeLayout>
@@ -277,11 +398,29 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer7">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground7"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground7"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -303,13 +442,14 @@
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:background="@color/blue"
-                android:tag="firstUnderlineView7"/>
+                android:tag="firstUnderlineView7"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="@dimen/underline_weight"
                 android:layout_height="@dimen/underline_height"
                 android:layout_marginTop="1dp"
-                android:background="@color/red"
+                android:background="@drawable/red_dot"
                 android:tag="secondUnderlineView7"/>
         </LinearLayout>
     </RelativeLayout>

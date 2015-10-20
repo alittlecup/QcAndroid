@@ -13,6 +13,7 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -40,7 +41,9 @@ public class DatePicker extends Dialog {
         setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         robotoCalendarView = (RobotoCalendarView) findViewById(R.id.calendarView);
         mCurCalendar = Calendar.getInstance(Locale.getDefault());
-        robotoCalendarView.markDayAsCurrentDay(mCurCalendar.getTime());
+
+        robotoCalendarView.markDayAsSelectedDay(new Date());
+
 
     }
 
@@ -84,9 +87,11 @@ public class DatePicker extends Dialog {
     }
 
     public void markDay(String day) {
-        robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.RED_COLOR, DateUtils.formatDateFromString(day));
+        robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.RED_COLOR, DateUtils.formatDateFromString(day));
     }
 
-
+    public void markCurDay() {
+        robotoCalendarView.markDayAsSelectedDay(new Date());
+    }
 
 }

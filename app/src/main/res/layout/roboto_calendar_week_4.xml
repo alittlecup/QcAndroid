@@ -14,12 +14,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer22">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground22"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground22"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,11 +74,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer23">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground23"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground23"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,11 +135,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer24">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground24"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground24"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,11 +196,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer25">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground25"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground25"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -190,11 +257,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer26">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground26"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground26"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -234,11 +318,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer27">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground27"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground27"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -278,11 +379,28 @@
         android:layout_weight="1"
         android:tag="dayOfMonthContainer28">
 
-        <RelativeLayout
-            android:layout_width="@dimen/day_of_month_background_size"
-            android:layout_height="@dimen/day_of_month_background_size"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
-            android:tag="dayOfMonthBackground28"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="@dimen/day_of_month_background_size"
+                android:layout_height="@dimen/day_of_month_background_size"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="4dp"
+                android:tag="dayOfMonthBackground28"
+                />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="invisible"
+                ></View>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

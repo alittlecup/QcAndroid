@@ -16,9 +16,9 @@
     <!-- weekRowLayout -->
     <dimen name="week_bottom_padding">5dp</dimen>
     <!-- Day of the month -->
-    <dimen name="underline_weight">6dp</dimen>
-    <dimen name="underline_height">2dp</dimen>
-    <dimen name="day_of_month_background_size">32dp</dimen>
+    <dimen name="underline_weight">4dp</dimen>
+    <dimen name="underline_height">4dp</dimen>
+    <dimen name="day_of_month_background_size">23dp</dimen>
     <dimen name="dayOfMonthIndicatorSize">3dp</dimen>
     <dimen name="dayOfMonthImageMarginTop">20dp</dimen>
     <dimen name="padding">8dp</dimen>

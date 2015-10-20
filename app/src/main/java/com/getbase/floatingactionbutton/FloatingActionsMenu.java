@@ -212,7 +212,7 @@ public class FloatingActionsMenu extends ViewGroup {
             switch (mExpandDirection) {
                 case EXPAND_UP:
                 case EXPAND_DOWN:
-                    mMaxButtonWidth = Math.max(mMaxButtonWidth, child.getMeasuredWidth()) + 100;
+                    mMaxButtonWidth = Math.max(mMaxButtonWidth, child.getMeasuredWidth());
                     height += child.getMeasuredHeight() + MeasureUtils.dpToPx(30f, getResources());
                     break;
                 case EXPAND_LEFT:

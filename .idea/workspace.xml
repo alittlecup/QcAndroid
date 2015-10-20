@@ -165,28 +165,25 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="fix bug">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/fab_bg_mini.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/fab_bg_normal.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/AddFloatingActionButton.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionButton.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionsMenu.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/TouchDelegateGroup.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/floatingactionbutton_1_10_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/material_calendarview_1_0_1.xml" afterPath="" />
+    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="fix calendar">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/red_dot.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionsMenu.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionsMenu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/circle.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/circle.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/ids.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/ids.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" afterPath="$PROJECT_DIR$/paperbaselibrary/paperbaselibrary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/selector_green_btn.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/selector_green_btn.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_1.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_2.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_3.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_3.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_4.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_4.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_5.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_5.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_6.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_6.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
@@ -358,53 +355,17 @@
     <favorites_list name="android-fitcoach" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ScheduesFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="102" column="56" selection-start-line="102" selection-start-column="56" selection-end-line="102" selection-end-column="56" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FloatingActionsMenu.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionsMenu.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.6037736">
-              <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_schedues.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5252809">
-              <caret line="187" column="45" selection-start-line="187" selection-start-column="45" selection-end-line="187" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
         <option value="valueResourceFile" />
-        <option value="resourceFile" />
         <option value="Interface" />
         <option value="layoutResourceFile_vertical" />
         <option value="Class" />
+        <option value="resourceFile" />
       </list>
     </option>
     <option name="SCHEME" value="Project" />
@@ -2766,7 +2727,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5777303900000" />
+        <entry key="$PROJECT_DIR$" value="5777378054000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -3591,14 +3552,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/anim_loading.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/OpenDrawerInterface.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/bean/PostStudents.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java" />
-        <option value="$PROJECT_DIR$/paperbaselibrary/src/main/res/values/integers.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/LoadingDialog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/loading_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_custom_statment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_custom_sale.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/CustomSaleFragment.java" />
@@ -3614,11 +3567,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/LoopView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/BlankFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedulelist.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java" />
         <option value="$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/DateUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_datepicker.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/bean/QcScheduleGlanceResponse.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_days_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PagerSlidingTabStrip.java" />
@@ -3628,20 +3579,30 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleActionDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleActionPopWin.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/NotificationActivity.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/ids.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/selector_green_btn.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/AddFloatingActionButton.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionButton.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_schedues.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionsMenu.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/red_dot.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_1.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/circle.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_4.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_2.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_3.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_5.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_6.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java" />
       </list>
     </option>
   </component>
@@ -4046,6 +4007,40 @@
               <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robotocalendar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-fitcoach" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android-fitcoach" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -4138,7 +4133,7 @@
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/loginlibrary" />
     <property name="FullScreen" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi" />
-    <property name="SearchEverywhereHistoryKey" value="Sche&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_schedues.xml&#10;sty&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;styles&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;bui&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Schedu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;Result&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.http.bean.ResponseResult&#10;Calend&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java&#10;Tab&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/PagerSlidingTabStrip.java&#10;Ro&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java&#10;Qc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/bean/QcScheduleGlanceResponse.java&#10;Date&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java&#10;MyStu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java&#10;Schedules&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.ScheduesFragment.SchedulesVH&#10;Loop&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.component.LoopView&#10;bu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Configs&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;b&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;sche&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_schedues.xml&#10;buil&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Or&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Phon&#9;PSI&#9;JAVA://com.paper.paperbaselibrary.utils.PhoneFuncUtils&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Schedues&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Myho&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.MyHomeActivity&#10;State&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.StatementDetailFragment&#10;Cust&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/CustomSaleFragment.java&#10;Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Load&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/LoadingDialog.java&#10;loading&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/loading_view.xml&#10;Origin&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Mystud&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java&#10;Sched&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Mystu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java&#10;App&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/App.java&#10;CustomSt&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.CustomStatmentFragment&#10;Cu&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.CustomStatmentFragment&#10;Custom&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.component.CustomSetmentLayout&#10;Spla&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;build&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;grad&#9;ACTION&#9;ActivateGradleToolWindow&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyGymsFragment.java&#10;MyC&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment&#10;Android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Web&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/WebActivity.java&#10;main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;QcClou&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java&#10;Detail&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/StatementDetailFragment.java&#10;Student&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.MyStudentFragment" />
+    <property name="SearchEverywhereHistoryKey" value="Robo&#9;PSI&#9;JAVA://com.marcohc.robotocalendar.RobotoCalendarView&#10;circ&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/drawable/circle.xml&#10;bui&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Sche&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;ScheduleL&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java&#10;sty&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;styles&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Schedu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java&#10;Result&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.http.bean.ResponseResult&#10;Calend&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java&#10;Tab&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/PagerSlidingTabStrip.java&#10;Ro&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java&#10;Qc&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/http/bean/QcScheduleGlanceResponse.java&#10;Date&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java&#10;MyStu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java&#10;Schedules&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.ScheduesFragment.SchedulesVH&#10;Loop&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.component.LoopView&#10;bu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Configs&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/Configs.java&#10;b&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;sche&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/fragment_schedues.xml&#10;buil&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;Or&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Phon&#9;PSI&#9;JAVA://com.paper.paperbaselibrary.utils.PhoneFuncUtils&#10;style&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/values/styles.xml&#10;Schedues&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Myho&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.activity.MyHomeActivity&#10;State&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.StatementDetailFragment&#10;Cust&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/CustomSaleFragment.java&#10;Spl&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Load&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/component/LoadingDialog.java&#10;loading&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/loading_view.xml&#10;Origin&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/OriginWebFragment.java&#10;Mystud&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java&#10;Sched&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java&#10;Mystu&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java&#10;App&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/App.java&#10;CustomSt&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.CustomStatmentFragment&#10;Cu&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.CustomStatmentFragment&#10;Custom&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.component.CustomSetmentLayout&#10;Spla&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/res/layout/activity_splash.xml&#10;build&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/build.gradle&#10;grad&#9;ACTION&#9;ActivateGradleToolWindow&#10;My&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyGymsFragment.java&#10;MyC&#9;PSI&#9;JAVA://com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment&#10;Android&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/AndroidManifest.xml&#10;Web&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/WebActivity.java&#10;main&#9;FILE&#9;file:///Users/peggy/AndroidStudioProjects/android-fitcoach/app/src/main/java/com/qingchengfit/fitcoach/activity/MainActivity.java" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -4485,12 +4480,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00150" summary="fix bugs, commoninputtype">
-      <created>1443285225520</created>
-      <option name="number" value="00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1443285225520</updated>
-    </task>
     <task id="LOCAL-00151" summary="fix bugs, add animation">
       <created>1443287756883</created>
       <option name="number" value="00151" />
@@ -4779,7 +4768,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445248899779</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="fix floataction">
+      <created>1445319408350</created>
+      <option name="number" value="00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1445319408351</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4793,7 +4788,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1276" height="777" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30257186" sideWeight="0.4943274" order="13" side_tool="false" content_ui="tabs" />
@@ -4802,8 +4797,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47352496" sideWeight="0.5235008" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37821484" sideWeight="0.4764992" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36790925" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37821484" sideWeight="0.4764992" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36790925" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267776" sideWeight="0.49520767" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30711043" sideWeight="0.4878444" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24054463" sideWeight="0.49675852" order="10" side_tool="false" content_ui="tabs" />
@@ -4876,8 +4871,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="fix :add shadow" />
-    <MESSAGE value="statement native" />
     <MESSAGE value="fix native drawer" />
     <MESSAGE value="add native students" />
     <MESSAGE value="fix floatActionMenu" />
@@ -4901,7 +4894,9 @@
     <MESSAGE value="fix schedule 页面 viewpager" />
     <MESSAGE value="fix schedule 页面 calendar" />
     <MESSAGE value="fix bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
+    <MESSAGE value="fix floataction" />
+    <MESSAGE value="fix calendar" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix calendar" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -4921,70 +4916,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/CustomStatmentFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.3913043">
-          <caret line="125" column="20" selection-start-line="125" selection-start-column="20" selection-end-line="125" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/CustomSaleFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="51" selection-start-line="99" selection-start-column="51" selection-end-line="99" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/bean/QcDrawerResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.04347826">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/bean/Contact.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6956522">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/paperbaselibrary/src/main/java/com/paper/paperbaselibrary/utils/PhoneFuncUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Applications/sdk/sources/android-23/android/view/TouchDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.1220339">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/arrow_blue_left_selector.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.375">
-          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Applications/sdk/sources/android-23/android/view/LayoutInflater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.8372092">
-          <caret line="611" column="0" selection-start-line="611" selection-start-column="0" selection-end-line="611" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/PicChooseDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12144703">
-          <caret line="31" column="42" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/LoopView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.328125">
@@ -4996,13 +4927,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="0" selection-start-line="170" selection-start-column="0" selection-end-line="170" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -5024,13 +4948,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="310" column="0" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -5088,26 +5005,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_picker_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42696628">
-          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-          <folding>
-            <element signature="e#354#370#0" expanded="true" />
-            <element signature="e#406#422#0" expanded="true" />
-            <element signature="e#990#1006#0" expanded="true" />
-            <element signature="e#1444#1472#0" expanded="true" />
-            <element signature="e#1682#1710#0" expanded="true" />
-            <element signature="e#1920#1948#0" expanded="true" />
-            <element signature="e#2158#2186#0" expanded="true" />
-            <element signature="e#2396#2424#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/activity/OpenDrawerInterface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47135416">
@@ -5143,24 +5040,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3359375">
-          <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/ScheduleActionDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6640625">
           <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0859375">
-          <caret line="139" column="30" selection-start-line="139" selection-start-column="30" selection-end-line="139" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -5175,13 +5058,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.72067">
           <caret line="159" column="35" selection-start-line="159" selection-start-column="35" selection-end-line="159" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="199" column="54" selection-start-line="199" selection-start-column="54" selection-end-line="199" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -5217,14 +5093,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="47" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/selector_green_btn.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0859375">
@@ -5247,25 +5115,25 @@
         <state vertical-scroll-proportion="0.6404834">
           <caret line="207" column="34" selection-start-line="207" selection-start-column="34" selection-end-line="207" selection-end-column="34" />
           <folding>
-            <element signature="e#1932#1933#0" expanded="true" />
-            <element signature="e#1961#1962#0" expanded="true" />
-            <element signature="e#3476#3477#0" expanded="true" />
-            <element signature="e#3541#3542#0" expanded="true" />
-            <element signature="e#4038#4039#0" expanded="true" />
-            <element signature="e#4060#4061#0" expanded="true" />
-            <element signature="e#4506#4507#0" expanded="true" />
-            <element signature="e#4535#4536#0" expanded="true" />
-            <element signature="e#4882#4883#0" expanded="true" />
-            <element signature="e#4912#4913#0" expanded="true" />
-            <element signature="e#5266#5267#0" expanded="true" />
-            <element signature="e#5297#5298#0" expanded="true" />
-            <element signature="e#5871#5872#0" expanded="true" />
-            <element signature="e#5913#5914#0" expanded="true" />
-            <element signature="e#5961#5962#0" expanded="true" />
-            <element signature="e#6150#6151#0" expanded="true" />
-            <element signature="e#6200#6201#0" expanded="true" />
-            <element signature="e#6230#6231#0" expanded="true" />
-            <element signature="e#6253#6254#0" expanded="true" />
+            <element signature="e#1854#1855#0" expanded="false" />
+            <element signature="e#1889#1890#0" expanded="false" />
+            <element signature="e#3503#3504#0" expanded="false" />
+            <element signature="e#3574#3575#0" expanded="false" />
+            <element signature="e#3769#3770#0" expanded="false" />
+            <element signature="e#3797#3798#0" expanded="false" />
+            <element signature="e#4450#4451#0" expanded="false" />
+            <element signature="e#4485#4486#0" expanded="false" />
+            <element signature="e#4872#4873#0" expanded="false" />
+            <element signature="e#4908#4909#0" expanded="false" />
+            <element signature="e#5304#5305#0" expanded="false" />
+            <element signature="e#5341#5342#0" expanded="false" />
+            <element signature="e#5983#5984#0" expanded="false" />
+            <element signature="e#6027#6028#0" expanded="false" />
+            <element signature="e#6081#6082#0" expanded="false" />
+            <element signature="e#6112#6113#0" expanded="false" />
+            <element signature="e#6168#6169#0" expanded="false" />
+            <element signature="e#6200#6201#0" expanded="false" />
+            <element signature="e#6229#6230#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -5292,14 +5160,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6179775">
           <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38020834">
-          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -5331,21 +5191,442 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/Applications/sdk/extras/android/m2repository/com/android/support/support-v4/23.0.1/support-v4-23.0.1-sources.jar!/android/support/v4/app/Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="767" column="25" selection-start-line="767" selection-start-column="25" selection-end-line="767" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduleListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38020834">
+          <caret line="134" column="30" selection-start-line="134" selection-start-column="17" selection-end-line="134" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/getbase/floatingactionbutton/FloatingActionsMenu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6037736">
-          <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.5726257">
+          <caret line="212" column="31" selection-start-line="212" selection-start-column="31" selection-end-line="212" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyStudentFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9944134">
+          <caret line="156" column="9" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/red_dot.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2692308">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="11" selection-start-line="102" selection-start-column="11" selection-end-line="102" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_1.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6123595">
+          <caret line="398" column="50" selection-start-line="398" selection-start-column="50" selection-end-line="398" selection-end-column="50" />
+          <folding>
+            <element signature="e#626#1427#0" expanded="false" />
+            <element signature="e#938#975#0" expanded="true" />
+            <element signature="e#1014#1051#0" expanded="true" />
+            <element signature="e#2057#2082#0" expanded="true" />
+            <element signature="e#2121#2146#0" expanded="true" />
+            <element signature="e#2363#2388#0" expanded="true" />
+            <element signature="e#2427#2452#0" expanded="true" />
+            <element signature="e#3212#3249#0" expanded="true" />
+            <element signature="e#3288#3325#0" expanded="true" />
+            <element signature="e#4340#4365#0" expanded="true" />
+            <element signature="e#4404#4429#0" expanded="true" />
+            <element signature="e#4646#4671#0" expanded="true" />
+            <element signature="e#4710#4735#0" expanded="true" />
+            <element signature="e#5495#5532#0" expanded="true" />
+            <element signature="e#5571#5608#0" expanded="true" />
+            <element signature="e#6630#6655#0" expanded="true" />
+            <element signature="e#6694#6719#0" expanded="true" />
+            <element signature="e#6936#6961#0" expanded="true" />
+            <element signature="e#7000#7025#0" expanded="true" />
+            <element signature="e#7786#7823#0" expanded="true" />
+            <element signature="e#7862#7899#0" expanded="true" />
+            <element signature="e#8922#8947#0" expanded="true" />
+            <element signature="e#8986#9011#0" expanded="true" />
+            <element signature="e#9228#9253#0" expanded="true" />
+            <element signature="e#9292#9317#0" expanded="true" />
+            <element signature="e#10095#10132#0" expanded="true" />
+            <element signature="e#10171#10208#0" expanded="true" />
+            <element signature="e#11230#11255#0" expanded="true" />
+            <element signature="e#11294#11319#0" expanded="true" />
+            <element signature="e#11536#11561#0" expanded="true" />
+            <element signature="e#11600#11625#0" expanded="true" />
+            <element signature="e#12385#12422#0" expanded="true" />
+            <element signature="e#12461#12498#0" expanded="true" />
+            <element signature="e#13521#13546#0" expanded="true" />
+            <element signature="e#13585#13610#0" expanded="true" />
+            <element signature="e#13827#13852#0" expanded="true" />
+            <element signature="e#13891#13916#0" expanded="true" />
+            <element signature="e#14676#14713#0" expanded="true" />
+            <element signature="e#14752#14789#0" expanded="true" />
+            <element signature="e#15812#15837#0" expanded="true" />
+            <element signature="e#15876#15901#0" expanded="true" />
+            <element signature="e#16101#16126#0" expanded="true" />
+            <element signature="e#16165#16190#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/circle.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37760416">
+          <caret line="20" column="49" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_2.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.098314606">
+          <caret line="366" column="50" selection-start-line="366" selection-start-column="50" selection-end-line="366" selection-end-column="50" />
+          <folding>
+            <element signature="e#675#712#0" expanded="true" />
+            <element signature="e#747#784#0" expanded="true" />
+            <element signature="e#1512#1537#0" expanded="true" />
+            <element signature="e#1576#1601#0" expanded="true" />
+            <element signature="e#1759#1784#0" expanded="true" />
+            <element signature="e#1823#1848#0" expanded="true" />
+            <element signature="e#2601#2638#0" expanded="true" />
+            <element signature="e#2677#2714#0" expanded="true" />
+            <element signature="e#3721#3746#0" expanded="true" />
+            <element signature="e#3785#3810#0" expanded="true" />
+            <element signature="e#3968#3993#0" expanded="true" />
+            <element signature="e#4032#4057#0" expanded="true" />
+            <element signature="e#4811#4848#0" expanded="true" />
+            <element signature="e#4887#4924#0" expanded="true" />
+            <element signature="e#5933#5958#0" expanded="true" />
+            <element signature="e#5997#6022#0" expanded="true" />
+            <element signature="e#6181#6206#0" expanded="true" />
+            <element signature="e#6245#6270#0" expanded="true" />
+            <element signature="e#7025#7062#0" expanded="true" />
+            <element signature="e#7101#7138#0" expanded="true" />
+            <element signature="e#8147#8172#0" expanded="true" />
+            <element signature="e#8211#8236#0" expanded="true" />
+            <element signature="e#8395#8420#0" expanded="true" />
+            <element signature="e#8459#8484#0" expanded="true" />
+            <element signature="e#9239#9276#0" expanded="true" />
+            <element signature="e#9315#9352#0" expanded="true" />
+            <element signature="e#10361#10386#0" expanded="true" />
+            <element signature="e#10425#10450#0" expanded="true" />
+            <element signature="e#10609#10634#0" expanded="true" />
+            <element signature="e#10673#10698#0" expanded="true" />
+            <element signature="e#11453#11490#0" expanded="true" />
+            <element signature="e#11529#11566#0" expanded="true" />
+            <element signature="e#12575#12600#0" expanded="true" />
+            <element signature="e#12639#12664#0" expanded="true" />
+            <element signature="e#12823#12848#0" expanded="true" />
+            <element signature="e#12887#12912#0" expanded="true" />
+            <element signature="e#13667#13704#0" expanded="true" />
+            <element signature="e#13743#13780#0" expanded="true" />
+            <element signature="e#14789#14814#0" expanded="true" />
+            <element signature="e#14853#14878#0" expanded="true" />
+            <element signature="e#15037#15062#0" expanded="true" />
+            <element signature="e#15101#15126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_4.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5702247">
+          <caret line="379" column="51" selection-start-line="379" selection-start-column="51" selection-end-line="379" selection-end-column="51" />
+          <folding>
+            <element signature="e#939#976#0" expanded="true" />
+            <element signature="e#1015#1052#0" expanded="true" />
+            <element signature="e#2060#2085#0" expanded="true" />
+            <element signature="e#2124#2149#0" expanded="true" />
+            <element signature="e#2308#2333#0" expanded="true" />
+            <element signature="e#2372#2397#0" expanded="true" />
+            <element signature="e#3152#3189#0" expanded="true" />
+            <element signature="e#3228#3265#0" expanded="true" />
+            <element signature="e#4274#4299#0" expanded="true" />
+            <element signature="e#4338#4363#0" expanded="true" />
+            <element signature="e#4522#4547#0" expanded="true" />
+            <element signature="e#4586#4611#0" expanded="true" />
+            <element signature="e#5366#5403#0" expanded="true" />
+            <element signature="e#5442#5479#0" expanded="true" />
+            <element signature="e#6488#6513#0" expanded="true" />
+            <element signature="e#6552#6577#0" expanded="true" />
+            <element signature="e#6736#6761#0" expanded="true" />
+            <element signature="e#6800#6825#0" expanded="true" />
+            <element signature="e#7580#7617#0" expanded="true" />
+            <element signature="e#7656#7693#0" expanded="true" />
+            <element signature="e#8702#8727#0" expanded="true" />
+            <element signature="e#8766#8791#0" expanded="true" />
+            <element signature="e#8950#8975#0" expanded="true" />
+            <element signature="e#9014#9039#0" expanded="true" />
+            <element signature="e#9794#9831#0" expanded="true" />
+            <element signature="e#9870#9907#0" expanded="true" />
+            <element signature="e#10916#10941#0" expanded="true" />
+            <element signature="e#10980#11005#0" expanded="true" />
+            <element signature="e#11164#11189#0" expanded="true" />
+            <element signature="e#11228#11253#0" expanded="true" />
+            <element signature="e#12008#12045#0" expanded="true" />
+            <element signature="e#12084#12121#0" expanded="true" />
+            <element signature="e#13130#13155#0" expanded="true" />
+            <element signature="e#13194#13219#0" expanded="true" />
+            <element signature="e#13378#13403#0" expanded="true" />
+            <element signature="e#13442#13467#0" expanded="true" />
+            <element signature="e#14222#14259#0" expanded="true" />
+            <element signature="e#14298#14335#0" expanded="true" />
+            <element signature="e#15344#15369#0" expanded="true" />
+            <element signature="e#15408#15433#0" expanded="true" />
+            <element signature="e#15592#15617#0" expanded="true" />
+            <element signature="e#15656#15681#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_3.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1966292">
+          <caret line="382" column="51" selection-start-line="382" selection-start-column="51" selection-end-line="382" selection-end-column="51" />
+          <folding>
+            <element signature="e#939#976#0" expanded="true" />
+            <element signature="e#1015#1052#0" expanded="true" />
+            <element signature="e#2061#2086#0" expanded="true" />
+            <element signature="e#2125#2150#0" expanded="true" />
+            <element signature="e#2309#2334#0" expanded="true" />
+            <element signature="e#2373#2398#0" expanded="true" />
+            <element signature="e#3153#3190#0" expanded="true" />
+            <element signature="e#3229#3266#0" expanded="true" />
+            <element signature="e#4275#4300#0" expanded="true" />
+            <element signature="e#4339#4364#0" expanded="true" />
+            <element signature="e#4523#4548#0" expanded="true" />
+            <element signature="e#4587#4612#0" expanded="true" />
+            <element signature="e#5367#5404#0" expanded="true" />
+            <element signature="e#5443#5480#0" expanded="true" />
+            <element signature="e#6489#6514#0" expanded="true" />
+            <element signature="e#6553#6578#0" expanded="true" />
+            <element signature="e#6737#6762#0" expanded="true" />
+            <element signature="e#6801#6826#0" expanded="true" />
+            <element signature="e#7581#7618#0" expanded="true" />
+            <element signature="e#7657#7694#0" expanded="true" />
+            <element signature="e#8703#8728#0" expanded="true" />
+            <element signature="e#8767#8792#0" expanded="true" />
+            <element signature="e#8951#8976#0" expanded="true" />
+            <element signature="e#9015#9040#0" expanded="true" />
+            <element signature="e#9795#9832#0" expanded="true" />
+            <element signature="e#9871#9908#0" expanded="true" />
+            <element signature="e#10917#10942#0" expanded="true" />
+            <element signature="e#10981#11006#0" expanded="true" />
+            <element signature="e#11165#11190#0" expanded="true" />
+            <element signature="e#11229#11254#0" expanded="true" />
+            <element signature="e#12009#12046#0" expanded="true" />
+            <element signature="e#12085#12122#0" expanded="true" />
+            <element signature="e#13131#13156#0" expanded="true" />
+            <element signature="e#13195#13220#0" expanded="true" />
+            <element signature="e#13379#13404#0" expanded="true" />
+            <element signature="e#13443#13468#0" expanded="true" />
+            <element signature="e#14223#14260#0" expanded="true" />
+            <element signature="e#14299#14336#0" expanded="true" />
+            <element signature="e#15345#15370#0" expanded="true" />
+            <element signature="e#15409#15434#0" expanded="true" />
+            <element signature="e#15593#15618#0" expanded="true" />
+            <element signature="e#15657#15682#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_5.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.19382022">
+          <caret line="389" column="0" selection-start-line="389" selection-start-column="0" selection-end-line="389" selection-end-column="0" />
+          <folding>
+            <element signature="e#939#976#0" expanded="true" />
+            <element signature="e#1015#1052#0" expanded="true" />
+            <element signature="e#2061#2086#0" expanded="true" />
+            <element signature="e#2125#2150#0" expanded="true" />
+            <element signature="e#2309#2334#0" expanded="true" />
+            <element signature="e#2373#2398#0" expanded="true" />
+            <element signature="e#3153#3190#0" expanded="true" />
+            <element signature="e#3229#3266#0" expanded="true" />
+            <element signature="e#4275#4300#0" expanded="true" />
+            <element signature="e#4339#4364#0" expanded="true" />
+            <element signature="e#4523#4548#0" expanded="true" />
+            <element signature="e#4587#4612#0" expanded="true" />
+            <element signature="e#5367#5404#0" expanded="true" />
+            <element signature="e#5443#5480#0" expanded="true" />
+            <element signature="e#6489#6514#0" expanded="true" />
+            <element signature="e#6553#6578#0" expanded="true" />
+            <element signature="e#6737#6762#0" expanded="true" />
+            <element signature="e#6801#6826#0" expanded="true" />
+            <element signature="e#7581#7618#0" expanded="true" />
+            <element signature="e#7657#7694#0" expanded="true" />
+            <element signature="e#8703#8728#0" expanded="true" />
+            <element signature="e#8767#8792#0" expanded="true" />
+            <element signature="e#8951#8976#0" expanded="true" />
+            <element signature="e#9015#9040#0" expanded="true" />
+            <element signature="e#9795#9832#0" expanded="true" />
+            <element signature="e#9871#9908#0" expanded="true" />
+            <element signature="e#10917#10942#0" expanded="true" />
+            <element signature="e#10981#11006#0" expanded="true" />
+            <element signature="e#11165#11190#0" expanded="true" />
+            <element signature="e#11229#11254#0" expanded="true" />
+            <element signature="e#12009#12046#0" expanded="true" />
+            <element signature="e#12085#12122#0" expanded="true" />
+            <element signature="e#13131#13156#0" expanded="true" />
+            <element signature="e#13195#13220#0" expanded="true" />
+            <element signature="e#13379#13404#0" expanded="true" />
+            <element signature="e#13443#13468#0" expanded="true" />
+            <element signature="e#14223#14260#0" expanded="true" />
+            <element signature="e#14299#14336#0" expanded="true" />
+            <element signature="e#15345#15370#0" expanded="true" />
+            <element signature="e#15409#15434#0" expanded="true" />
+            <element signature="e#15593#15618#0" expanded="true" />
+            <element signature="e#15657#15682#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_week_6.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5702247">
+          <caret line="382" column="51" selection-start-line="382" selection-start-column="51" selection-end-line="382" selection-end-column="51" />
+          <folding>
+            <element signature="e#939#976#0" expanded="true" />
+            <element signature="e#1015#1052#0" expanded="true" />
+            <element signature="e#2061#2086#0" expanded="true" />
+            <element signature="e#2125#2150#0" expanded="true" />
+            <element signature="e#2309#2334#0" expanded="true" />
+            <element signature="e#2373#2398#0" expanded="true" />
+            <element signature="e#3153#3190#0" expanded="true" />
+            <element signature="e#3229#3266#0" expanded="true" />
+            <element signature="e#4275#4300#0" expanded="true" />
+            <element signature="e#4339#4364#0" expanded="true" />
+            <element signature="e#4523#4548#0" expanded="true" />
+            <element signature="e#4587#4612#0" expanded="true" />
+            <element signature="e#5367#5404#0" expanded="true" />
+            <element signature="e#5443#5480#0" expanded="true" />
+            <element signature="e#6489#6514#0" expanded="true" />
+            <element signature="e#6553#6578#0" expanded="true" />
+            <element signature="e#6737#6762#0" expanded="true" />
+            <element signature="e#6801#6826#0" expanded="true" />
+            <element signature="e#7581#7618#0" expanded="true" />
+            <element signature="e#7657#7694#0" expanded="true" />
+            <element signature="e#8703#8728#0" expanded="true" />
+            <element signature="e#8767#8792#0" expanded="true" />
+            <element signature="e#8951#8976#0" expanded="true" />
+            <element signature="e#9015#9040#0" expanded="true" />
+            <element signature="e#9795#9832#0" expanded="true" />
+            <element signature="e#9871#9908#0" expanded="true" />
+            <element signature="e#10917#10942#0" expanded="true" />
+            <element signature="e#10981#11006#0" expanded="true" />
+            <element signature="e#11165#11190#0" expanded="true" />
+            <element signature="e#11229#11254#0" expanded="true" />
+            <element signature="e#12009#12046#0" expanded="true" />
+            <element signature="e#12085#12122#0" expanded="true" />
+            <element signature="e#13131#13156#0" expanded="true" />
+            <element signature="e#13195#13220#0" expanded="true" />
+            <element signature="e#13379#13404#0" expanded="true" />
+            <element signature="e#13443#13468#0" expanded="true" />
+            <element signature="e#14223#14260#0" expanded="true" />
+            <element signature="e#14299#14336#0" expanded="true" />
+            <element signature="e#15345#15370#0" expanded="true" />
+            <element signature="e#15409#15434#0" expanded="true" />
+            <element signature="e#15593#15618#0" expanded="true" />
+            <element signature="e#15657#15682#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/roboto_calendar_picker_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71348315">
+          <caret line="66" column="43" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/ScheduesFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="56" selection-start-line="102" selection-start-column="56" selection-end-line="102" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.7083333">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6197917">
+          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/component/DatePicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7786458">
+          <caret line="93" column="60" selection-start-line="93" selection-start-column="60" selection-end-line="93" selection-end-column="60" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1706#1707#0" expanded="true" />
+            <element signature="e#1741#1742#0" expanded="true" />
+            <element signature="e#2489#2490#0" expanded="true" />
+            <element signature="e#2556#2557#0" expanded="true" />
+            <element signature="e#2757#2758#0" expanded="true" />
+            <element signature="e#2824#2825#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/marcohc/robotocalendar/RobotoCalendarView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71428573">
+          <caret line="127" column="63" selection-start-line="127" selection-start-column="63" selection-end-line="127" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -5354,8 +5635,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5252809">
-          <caret line="187" column="45" selection-start-line="187" selection-start-column="45" selection-end-line="187" selection-end-column="45" />
+        <state vertical-scroll-proportion="1.0">
+          <caret line="196" column="9" selection-start-line="196" selection-start-column="9" selection-end-line="196" selection-end-column="9" />
           <folding />
         </state>
       </provider>
