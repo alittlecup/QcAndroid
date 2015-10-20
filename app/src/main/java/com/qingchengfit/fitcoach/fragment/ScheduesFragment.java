@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -163,35 +162,7 @@ public class ScheduesFragment extends MainBaseFragment {
 //        webFloatbtn.addButton(btn1);
 //        webFloatbtn.addButton(btn2);
 //        webFloatbtn.addButton(btn3);
-        Button button = new Button(getContext());
-        button.setText("设置休息");
 
-        button.setBackgroundColor(getResources().getColor(R.color.green));
-        Button button1 = new Button(getContext());
-        button1.setText("代约私教");
-        button1.setBackgroundColor(getResources().getColor(R.color.blue));
-        Button button2 = new Button(getContext());
-        button2.setText("代约团课");
-        button2.setBackgroundColor(getResources().getColor(R.color.purple));
-
-        webFloatbtn.addButton(button);
-        webFloatbtn.addButton(button1);
-        webFloatbtn.addButton(button2);
-        button.setOnClickListener(v -> {
-            Intent toWeb = new Intent(getActivity(), WebActivity.class);
-            toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
-            startActivity(toWeb);
-        });
-        button1.setOnClickListener(v -> {
-            Intent toWeb = new Intent(getActivity(), WebActivity.class);
-            toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=privatelesson");
-            startActivity(toWeb);
-        });
-        button2.setOnClickListener(v -> {
-            Intent toWeb = new Intent(getActivity(), WebActivity.class);
-            toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=grouplesson");
-            startActivity(toWeb);
-        });
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
@@ -307,22 +278,22 @@ public class ScheduesFragment extends MainBaseFragment {
 
     }
 
-//    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
-//    public void onAction(View v) {
-//        switch (v.getId()) {
-//            case R.id.schedule_rest_btn:
-//                Intent toWeb = new Intent(getActivity(), WebActivity.class);
-//                toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
-//                startActivity(toWeb);
-//                break;
-//            case R.id.schedule_private_btn:
-//                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson");
-//                break;
-//            case R.id.schedule_group_btn:
-//                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson");
-//                break;
-//        }
-//    }
+    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
+    public void onAction(View v) {
+        switch (v.getId()) {
+            case R.id.schedule_rest_btn:
+                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
+                startActivity(toWeb);
+                break;
+            case R.id.schedule_private_btn:
+                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+                break;
+            case R.id.schedule_group_btn:
+                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+                break;
+        }
+    }
 
 
     /**

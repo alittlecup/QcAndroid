@@ -171,14 +171,47 @@
 
     </RelativeLayout>
 
-    <View
+    <LinearLayout
         android:id="@+id/schedule_floatbg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/halftransparent_grey"
-        android:visibility="gone"
+        android:gravity="bottom|right"
+        android:orientation="vertical"
+        android:paddingBottom="100dp"
+        android:paddingRight="20dp"
         >
-    </View>
+
+        <Button
+            android:id="@+id/schedule_rest_btn"
+            style="@style/ToolbarStyle"
+            android:layout_width="175dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/green"
+            android:text="设置休息"
+            />
+
+        <Button
+            android:id="@+id/schedule_group_btn"
+            style="@style/ToolbarStyle"
+            android:layout_width="175dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/blue"
+            android:text="代约团课"
+            />
+
+        <Button
+            android:id="@+id/schedule_private_btn"
+            style="@style/ToolbarStyle"
+            android:layout_width="175dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/purple"
+            android:text="代约私教"
+            />
+    </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/web_floatbtn"
@@ -195,4 +228,5 @@
         app:fab_labelStyle="@style/floataction_style"
         app:fab_labelsPosition="left"
         />
+
 </RelativeLayout>
