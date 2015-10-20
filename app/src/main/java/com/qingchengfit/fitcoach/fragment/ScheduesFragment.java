@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -16,9 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,13 +27,9 @@ import com.google.gson.Gson;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
@@ -48,13 +42,11 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
-import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +54,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observer;
 import rx.schedulers.Schedulers;
 
 /**
@@ -74,17 +65,6 @@ public class ScheduesFragment extends MainBaseFragment {
     Toolbar toolbar;
     //    @Bind(R.id.drawer_radiogroup)
 //    DateSegmentLayout drawerRadiogroup;
-    @Bind(R.id.schedule_calendar)
-    RelativeLayout scheduleCalendar;
-    @Bind(R.id.schedule_rv)
-    RecyclerView scheduleRv;
-    @Bind(R.id.schedule_no_img)
-    ImageView scheduleNoImg;
-    @Bind(R.id.schedule_no_tv)
-
-    TextView scheduleNoTv;
-    @Bind(R.id.calendarView)
-    MaterialCalendarView calendarView;
     @Bind(R.id.web_floatbtn)
     FloatingActionsMenu webFloatbtn;
     @Bind(R.id.spinner_nav)
@@ -93,6 +73,8 @@ public class ScheduesFragment extends MainBaseFragment {
     PagerSlidingTabStrip scheduleTab;
     @Bind(R.id.schedule_vp)
     ViewPager scheduleVp;
+    @Bind(R.id.schedule_floatbg)
+    View scheduleFloatbg;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -103,29 +85,6 @@ public class ScheduesFragment extends MainBaseFragment {
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private int curSystemId = 0;
     private QcSchedulesResponse mQcSchedulesResponse;
-
-    /**
-     * 处理网络返回
-     */
-    Observer<QcSchedulesResponse> mHttpCallBack = new Observer<QcSchedulesResponse>() {
-
-        @Override
-        public void onCompleted() {
-//            openDrawerInterface.hideLoading();//run On ui
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            openDrawerInterface.hideLoading();
-        }
-
-        @Override
-        public void onNext(QcSchedulesResponse qcSchedulesResponse) {
-            mQcSchedulesResponse = qcSchedulesResponse;
-            handleResponse(qcSchedulesResponse);
-        }
-    };
-
     private Date mCurDate = new Date();
     private ScheduleActionPopWin scheduleActionPopWin;
     private DatePicker mDatePicker;
@@ -169,16 +128,6 @@ public class ScheduesFragment extends MainBaseFragment {
                 openDrawerInterface.goWeb(url);
             }
         });
-        scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        scheduleRv.setAdapter(scheduesAdapter);
-        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(MaterialCalendarView materialCalendarView, CalendarDay calendarDay, boolean b) {
-                calendarView.setVisibility(View.GONE);
-//                drawerRadiogroup.setDate(calendarDay.getDate());
-            }
-        });
 //        drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
 //        ShadowProperty shadowProperty = new ShadowProperty()
 //                .setShadowColor(0x77000000)
@@ -194,7 +143,7 @@ public class ScheduesFragment extends MainBaseFragment {
 //        calendarView.setLayoutParams(lp);
 //        btn1 = new FloatingActionButton(getActivity());
 //        btn1.setIcon(R.drawable.ic_baseinfo_city);
-//        btn1.setColorNormal(Color.GREEN);
+//        btn1.setCustomBackground(R.drawable.selector_green_btn);
 //        btn1.setTitle("设置休息");
 //
 //        btn2 = new FloatingActionButton(getActivity());
@@ -214,39 +163,73 @@ public class ScheduesFragment extends MainBaseFragment {
 //        webFloatbtn.addButton(btn1);
 //        webFloatbtn.addButton(btn2);
 //        webFloatbtn.addButton(btn3);
+        Button button = new Button(getContext());
+        button.setText("设置休息");
+
+        button.setBackgroundColor(getResources().getColor(R.color.green));
+        Button button1 = new Button(getContext());
+        button1.setText("代约私教");
+        button1.setBackgroundColor(getResources().getColor(R.color.blue));
+        Button button2 = new Button(getContext());
+        button2.setText("代约团课");
+        button2.setBackgroundColor(getResources().getColor(R.color.purple));
+
+        webFloatbtn.addButton(button);
+        webFloatbtn.addButton(button1);
+        webFloatbtn.addButton(button2);
+        button.setOnClickListener(v -> {
+            Intent toWeb = new Intent(getActivity(), WebActivity.class);
+            toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
+            startActivity(toWeb);
+        });
+        button1.setOnClickListener(v -> {
+            Intent toWeb = new Intent(getActivity(), WebActivity.class);
+            toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+            startActivity(toWeb);
+        });
+        button2.setOnClickListener(v -> {
+            Intent toWeb = new Intent(getActivity(), WebActivity.class);
+            toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+            startActivity(toWeb);
+        });
+
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
-                if (scheduleActionPopWin == null) {
-                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
-                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
-                        @Override
-                        public void onDismiss() {
-                            webFloatbtn.collapse();
-                        }
-                    });
-                    scheduleActionPopWin.setActionCallback(v -> {
-                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
-                        startActivity(toWeb);
-                    }, v2 -> {
-                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=privatelesson");
-                        startActivity(toWeb);
-                    }, v3 -> {
-                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=grouplesson");
-                        startActivity(toWeb);
-                    });
-                }
-
-                scheduleActionPopWin.show(webFloatbtn);
+                scheduleFloatbg.setVisibility(View.VISIBLE);
+//                if (scheduleActionPopWin == null) {
+//                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
+//                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
+//                        @Override
+//                        public void onDismiss() {
+//                            webFloatbtn.collapse();
+//                        }
+//                    });
+//                    scheduleActionPopWin.setActionCallback(v -> {
+//                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+//                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
+//                        startActivity(toWeb);
+//                    }, v2 -> {
+//                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+//                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+//                        startActivity(toWeb);
+//                    }, v3 -> {
+//                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+//                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+//                        startActivity(toWeb);
+//                    });
+//                }
+//
+//                scheduleActionPopWin.show(webFloatbtn);
             }
 
             @Override
             public void onMenuCollapsed() {
-                scheduleActionPopWin.dismiss();
+                scheduleFloatbg.setVisibility(View.GONE);
             }
+        });
+        scheduleFloatbg.setOnClickListener(v -> {
+            webFloatbtn.collapse();
         });
 //        openDrawerInterface.showLoading();
 //        goDateSchedule(mCurDate);
@@ -342,7 +325,6 @@ public class ScheduesFragment extends MainBaseFragment {
 //    }
 
 
-
     /**
      * 获取某日日程
      *
@@ -356,65 +338,6 @@ public class ScheduesFragment extends MainBaseFragment {
         scheduleVp.setCurrentItem(30, false);
     }
 
-    private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
-        if (qcSchedulesResponse == null || qcSchedulesResponse.data.systems == null)
-            return;
-        List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
-        scheduleBeans.clear();
-        for (int i = 0; i < systems.size(); i++) {
-            QcSchedulesResponse.System system = systems.get(i);
-
-            List<QcSchedulesResponse.Rest> rests = system.rests;
-            List<QcScheduleBean> schedules = system.schedules;
-            String syscolor = system.system.color;
-            SpinnerBean spinnerbean = new SpinnerBean(syscolor, system.system.name, system.system.id);
-
-            if (curSystemId != 0 && curSystemId != system.system.id)
-                continue;
-            for (int j = 0; j < rests.size(); j++) {
-                QcSchedulesResponse.Rest rest = rests.get(j);
-                ScheduleBean bean = new ScheduleBean();
-                bean.type = 0;
-                bean.color = syscolor;
-                bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
-                bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
-                bean.gymname = system.system.name;
-                bean.intent_url = rest.url;
-                scheduleBeans.add(bean);
-
-            }
-            for (int k = 0; k < schedules.size(); k++) {
-                QcScheduleBean schedule = schedules.get(k);
-                ScheduleBean bean = new ScheduleBean();
-                bean.type = 1;
-                bean.gymname = system.system.cname;
-                bean.color = syscolor;
-                bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
-                bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();
-                bean.count = schedule.count;
-                bean.pic_url = schedule.course.photo;
-                bean.title = schedule.course.name;
-                bean.intent_url = schedule.url;
-                scheduleBeans.add(bean);
-            }
-
-        }
-        Collections.sort(scheduleBeans, new ScheduleCompare());
-        getActivity().runOnUiThread(() -> {
-            scheduesAdapter.notifyDataSetChanged();
-            spinnerBeanArrayAdapter.notifyDataSetChanged();
-            if (scheduleBeans.size() > 0) {
-                scheduleNoImg.setVisibility(View.GONE);
-                scheduleNoTv.setVisibility(View.GONE);
-                scheduleRv.setVisibility(View.VISIBLE);
-
-            } else {
-                scheduleRv.setVisibility(View.GONE);
-                scheduleNoImg.setVisibility(View.VISIBLE);
-                scheduleNoTv.setVisibility(View.VISIBLE);
-            }
-        });
-    }
 
     @OnClick(R.id.schedule_calendar)
     public void onCalendarClick() {
@@ -496,6 +419,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 "周日", "周一", "周二", "周三", "周四", "周五", "周六"
         };
         private Date curDate = new Date();
+
         public FragmentAdapter(FragmentManager fm) {
             super(fm);
         }

@@ -138,6 +138,11 @@
         <!-- 指定消失的动画xml -->
     </style>
 
+    <style name="floataction_style" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
     <style name="MonthTitle">
         <item name="android:textSize">16sp</item>
@@ -150,6 +155,7 @@
         <item name="android:textColor">@color/day_of_month</item>
         <item name="fontPath">fonts/Roboto-Regular.ttf</item>
     </style>
+
 
     <style name="DayOfTheMonth">
         <item name="android:textSize">14sp</item>

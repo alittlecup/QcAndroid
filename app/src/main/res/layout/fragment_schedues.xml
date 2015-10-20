@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
@@ -32,8 +32,10 @@
             />
     </android.support.v7.widget.Toolbar>
     <LinearLayout
+        android:id="@+id/schedule_calendar_header"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/primary"
         android:orientation="horizontal"
         >
@@ -131,7 +133,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/schedule_calendar_header">
 
         <!--<View-->
         <!--android:layout_width="2dp"-->
@@ -142,48 +145,6 @@
         <!---->
         <!--</View>-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/schedule_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="50dp"
-            >
-        </android.support.v7.widget.RecyclerView>
-
-        <ImageView
-            android:id="@+id/schedule_no_img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
-            android:src="@drawable/schedules_no_data"
-            android:visibility="gone"
-            />
-
-        <TextView
-            android:id="@+id/schedule_no_tv"
-            style="@style/TextStyle.common"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/schedule_no_img"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="暂无日程安排"
-            android:visibility="gone"
-            />
-
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/calendarView"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="380dp"
-                android:layout_marginBottom="2dp"
-                android:background="@color/white"
-                android:visibility="gone"
-                app:mcv_selectionColor="@color/primary"
-                app:mcv_showOtherDates="all"
-                />
 
         <LinearLayout
             android:id="@+id/schedule_expend_view"
@@ -208,22 +169,30 @@
             >
         </android.support.v4.view.ViewPager>
 
-
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/web_floatbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            app:fab_addButtonColorNormal="@color/red"
-            app:fab_addButtonColorPressed="@color/text_red"
-            app:fab_labelStyle="@style/ThemeOverlay.AppCompat.Dark"
-            app:fab_labelsPosition="left"
-            />
     </RelativeLayout>
 
+    <View
+        android:id="@+id/schedule_floatbg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/halftransparent_grey"
+        android:visibility="gone"
+        >
+    </View>
 
-</LinearLayout>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/web_floatbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:fab_addButtonColorNormal="@color/red"
+        app:fab_addButtonColorPressed="@color/text_red"
+        app:fab_labelStyle="@style/floataction_style"
+        app:fab_labelsPosition="left"
+        />
+</RelativeLayout>

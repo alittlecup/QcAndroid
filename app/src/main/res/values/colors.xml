@@ -29,8 +29,8 @@
     <color name="calendar_background">#FFFFFF</color>
 
     <!-- General -->
-    <color name="green">#339DB5</color>
-    <color name="red">#e98885</color>
+    <!--<color name="green">#339DB5</color>-->
+    <!--<color name="red">#e98885</color>-->
     <color name="blue">#55c6da</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
