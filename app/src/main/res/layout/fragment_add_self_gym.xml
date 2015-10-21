@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.AddSelfGymFragment">
+
+    <include layout="@layout/common_toolbar">
+    </include>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/addselfgym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:civ_lable="健身房名称"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/addselfgym_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:civ_clickable="true"
+        app:civ_lable="营业时间"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="注：每名教练只能添加一个个人健身房"
+        android:textColor="@color/red"
+        />
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        >
+    </include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="添加个人健身房有什么用途？"
+        android:textColor="@color/primary"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="用途1: 如果您所在的健身房还未使用「青橙健身房管理系统」，您可以使用“个人健身房”管理您的学员和课程预约；"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="用途2: 用于管理除所属健身房外的工作。"
+        />
+
+    <Button
+        android:id="@+id/addselfgym_comfirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_comfirm"
+        />
+
+
+</LinearLayout>
