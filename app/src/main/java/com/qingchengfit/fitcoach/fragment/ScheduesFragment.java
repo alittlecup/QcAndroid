@@ -292,6 +292,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 sb.append("mobile/coaches/systems/?action=grouplesson");
                 break;
         }
+        webFloatbtn.collapse();
         Intent toWeb = new Intent(getActivity(), WebActivity.class);
         toWeb.putExtra("url", sb.toString());
         startActivityForResult(toWeb, 404);
@@ -301,9 +302,10 @@ public class ScheduesFragment extends MainBaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode > 0) {
-            ScheduleListFragment f = (ScheduleListFragment) mFragmentAdapter.getItem(scheduleVp.getCurrentItem());
-            if (f != null)
-                f.refresh();
+//            ScheduleListFragment f = (ScheduleListFragment) mFragmentAdapter.getItem(scheduleVp.getCurrentItem());
+//            if (f != null)
+//                f.refresh();
+            mFragmentAdapter.notifyDataSetChanged();
         }
     }
 
