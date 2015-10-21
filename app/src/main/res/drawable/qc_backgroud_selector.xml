@@ -2,8 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true" >
         <shape android:shape="rectangle">
-            <solid android:color="@color/halftransparent"></solid>
-            <stroke android:color="@color/halftransparent"></stroke>
+            <solid android:color="@color/halftransparent_grey"></solid>
+            <stroke android:color="@color/halftransparent_grey"></stroke>
+
         </shape>
     </item>
 

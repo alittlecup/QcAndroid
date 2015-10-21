@@ -87,18 +87,18 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     public static final int LOGOUT = 0;
     public static final int NOTIFICATION = 1;
     private static final String TAG = MainActivity.class.getName();
-    //    private static int ids[] = {
-//            R.id.segmentbtn_0,
-//            R.id.segmentbtn_1,
-//            R.id.segmentbtn_2,
-//            R.id.segmentbtn_3,
-//            R.id.segmentbtn_4,
-//            R.id.segmentbtn_5,
-//            R.id.segmentbtn_6,
-//            R.id.segmentbtn_7,
-//            R.id.segmentbtn_8,
-//            R.id.segmentbtn_9,
-//    };
+    private static int ids[] = {
+            R.id.segmentbtn_0,
+            R.id.segmentbtn_1,
+            R.id.segmentbtn_2,
+            R.id.segmentbtn_3,
+            R.id.segmentbtn_4,
+            R.id.segmentbtn_5,
+            R.id.segmentbtn_6,
+            R.id.segmentbtn_7,
+            R.id.segmentbtn_8,
+            R.id.segmentbtn_9,
+    };
     FragmentManager mFragmentManager;
     @Bind(R.id.main_drawerlayout)
     DrawerLayout mainDrawerlayout;
@@ -680,8 +680,10 @@ private MaterialDialog loadingDialog;
 //                    .commit();
 //        }
 //        topFragment = myHomeFragment;
-        startActivity(new Intent(this, MyHomeActivity.class));
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+//        startActivity(new Intent(this,MyHomeActivity.class));
+        startActivityForResult(new Intent(this, MyHomeActivity.class), 9);
+        mainDrawerlayout.closeDrawers();
+//        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
 //        mainDrawerlayout.closeDrawer(Gravity.LEFT);
 
     }
@@ -827,6 +829,37 @@ private MaterialDialog loadingDialog;
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0) {
+            switch (resultCode) {
+                case 1:
+                    changeFragment(mScheduesFragment);
+                    break;
+                case 2:
+                    changeFragment(mDataStatementFragment);
+                    break;
+                case 3:
+                    changeFragment(mMeetingFragment);
+                    break;
+                case 4:
+                    changeFragment(mMyStudentFragment);
+                    break;
+                case 5:
+                    changeFragment(mMyCoursePlanFragment);
+                    break;
+                case 6:
+                    changeFragment(mMyGymsFragment);
+                    break;
+                default:
+                    changeFragment(mScheduesFragment);
+                    break;
+
+
+            }
+        }
+    }
 
     /**
      * 新版本下载

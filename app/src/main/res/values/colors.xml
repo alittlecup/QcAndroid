@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="accent">#20bfbe</color>
-    <color name="primary">#20bfbe</color>// 32 191 189
-    <color name="primary_dark">#00a2a2</color>
-    <color name="primary_light">#1a20bfbe</color>
 
-    <color name="text_grey">@color/warm_grey</color>
+
+<color name="text_grey">@color/warm_grey</color>
     <color name="text_black">@color/cm_black</color>
     <color name="backgroud_grey">#f4f4f4</color>
     <!--<color name="backgroud_grey">#aaaaaa</color>-->

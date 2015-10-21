@@ -5,8 +5,39 @@
                 android:background="@color/white"
                 tools:context="com.qingchengfit.fitcoach.activity.MyHomeActivity">
 
-    <FrameLayout
-        android:id="@+id/myhome_fraglayout"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/main_drawerlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        >
+
+        <FrameLayout
+            android:id="@+id/myhome_fraglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="304dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:clickable="true"
+            >
+
+            <include layout="@layout/layout_drawer"
+                >
+            </include>
+        </FrameLayout>
+        <!--&lt;!&ndash;<android.support.design.widget.NavigationView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/main_navi"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="300dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_gravity="start"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:menu="@menu/drawer_menu"&ndash;&gt;-->
+
+        <!--&lt;!&ndash;>&ndash;&gt;-->
+        <!--</android.support.design.widget.NavigationView>-->
+    </android.support.v4.widget.DrawerLayout>
+
 </RelativeLayout>

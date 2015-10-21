@@ -103,46 +103,29 @@ public class HalfScrollView extends ScrollView {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
-//        this.onInterceptTouchEvent(ev);
-//        return true;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        int action = ev.getAction();
-
-        if (!isSecondView)
-            return true;
-        switch (action & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN:
-                lastY = ev.getY();
-                lastX = ev.getX();
-                super.onTouchEvent(ev);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float y = lastY;
-                lastY = ev.getY();
-                if (ev.getY() - y > 5 && canChildUp())
-                    return true;
-                else return false;
-//                if (isSecondView && Math.abs(ev.getX() - lastX) > 10) {
-//                    lastX = ev.getX();
-//                    return false;
-//                }
-//
-//                if (ev.getY() - lastY > 20 && isSecondView && !canChildVScroll(-1)) {
-//                    lastY = ev.getY();
-//                    return true;
-//                } else if (ev.getY() - lastY > 20 && isSecondView && canChildVScroll(-1)) {
-//                    lastY = ev.getY();
-//                    return false;
-//                } else if (ev.getY() - lastY < 20 && isSecondView && (canChildVScroll(1) || (canChildVScroll(-1)))) {
-//                    lastY = ev.getY();
-//                    return false;
-//                }
-//                lastY = ev.getY();
-        }
         return super.onInterceptTouchEvent(ev);
+//        int action = ev.getAction();
+//
+//        if (!isSecondView)
+//            return true;
+//        switch (action & MotionEvent.ACTION_MASK) {
+//            case MotionEvent.ACTION_DOWN:
+//                lastY = ev.getY();
+//                lastX = ev.getX();
+//                super.onTouchEvent(ev);
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                float y = lastY;
+//                lastY = ev.getY();
+//                if (ev.getY() - y > 5 && canChildUp())
+//                    return true;
+//                else return false;
+//        }
+//        return super.onInterceptTouchEvent(ev);
     }
 
     public boolean canChildUp() {
@@ -151,10 +134,6 @@ public class HalfScrollView extends ScrollView {
         MyhomeViewPager viewPager = (MyhomeViewPager) v.getChildAt(v.getChildCount() - 1);
         ViewGroup vg2 = (ViewGroup) viewPager.getChildAt(0);
         return viewPager.canScrollup();
-//        if (direct > 0)
-//            return ViewCompat.canScrollVertically(vg2.getChildAt(0), direct);
-//        else
-//            return ViewCompat.canScrollVertically(vg2.getChildAt(0), direct) && viewPager.getCurrentItem() == 0;
     }
 
 
@@ -175,31 +154,10 @@ public class HalfScrollView extends ScrollView {
                 break;
             case MotionEvent.ACTION_UP:
 
-//                if (isSecondView && scrolly < firstheight - 200) {
-//                    smoothScrollTo(0, 0);
-//                    ViewCompat.animate(this).rotationYBy(-firstheight).start();
-//                    isSecondView = false;
-//                } else if (!isSecondView && scrolly > 200) {
-//                    smoothScrollTo(0, firstheight);
-//                    ViewCompat.animate(this).rotationYBy(firstheight).start();
-//                    isSecondView = true;
-//                }
-                if (y > firstheight)
-                    fullScroll(View.FOCUS_DOWN);
 
                 return super.onTouchEvent(ev);
 
             case MotionEvent.ACTION_MOVE:
-//                if (y - lastY > 20 && !canChildVScroll(-1) && isSecondView) {
-//                    lastY = y;
-//                    return super.onTouchEvent(ev);
-//                }else if (!isSecondView){
-//                    return super.onTouchEvent(ev);
-//                }
-//                else {
-//                    lastY = y;
-//                    return false;
-//                }
 
                 return super.onTouchEvent(ev);
         }

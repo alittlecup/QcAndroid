@@ -93,7 +93,8 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
     public void onCheckChange(boolean isChecked) {
         if (isChecked) {
             segmentImg.setImageDrawable(drawables[1]);
-            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
+//            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
+            segmentText.setTextColor(getResources().getColor(R.color.primary));
         } else {
             segmentImg.setImageDrawable(drawables[0]);
             segmentText.setTextColor(Color.argb(255, 102, 102, 102));

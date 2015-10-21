@@ -176,7 +176,8 @@
                 </RelativeLayout>
 
 
-                <com.qingchengfit.fitcoach.component.MyhomeViewPager
+                <!--<com.qingchengfit.fitcoach.component.MyhomeViewPager-->
+                <android.support.v4.view.ViewPager
                     android:id="@+id/myhome_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="700dp"
@@ -187,43 +188,6 @@
         </LinearLayout>
 
     </com.qingchengfit.fitcoach.component.HalfScrollView>
-    <!--<android.support.design.widget.AppBarLayout-->
-    <!--android:id="@+id/myhome_appBar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!---->
-    <!-->-->
-    <!--<android.support.design.widget.CollapsingToolbarLayout-->
-    <!--android:id="@+id/myhome_coolaosingtoorbar"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:minHeight="100dp"-->
-    <!--app:collapsedTitleTextAppearance="@style/ToolbarStyle"-->
-    <!--app:expandedTitleTextAppearance="@style/TextTranparents"-->
-    <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
-    <!-->-->
-
-
-    <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-    <!--</android.support.design.widget.AppBarLayout>-->
-
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--android:background="@color/primary"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="?attr/actionBarSize"-->
-    <!--app:layout_scrollFlags="scroll|enterAlways"-->
-    <!--app:titleTextAppearance="@style/ToolbarStyle"-->
-    <!-->-->
-    <!--</android.support.v7.widget.Toolbar>-->
-    <!--<FrameLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?android:actionBarSize">-->
-    <!-- -->
-    <!-- -->
-    <!--</FrameLayout>-->
     <include
         layout="@layout/common_toolbar"
         >

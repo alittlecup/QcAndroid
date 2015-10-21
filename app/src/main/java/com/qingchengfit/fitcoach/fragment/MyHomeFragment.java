@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,10 +31,10 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
-import com.qingchengfit.fitcoach.component.MyhomeViewPager;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class MyHomeFragment extends Fragment {
     @Bind(R.id.myhome_tab_layout)
     RelativeLayout myhomeTabLayout;
     @Bind(R.id.myhome_viewpager)
-    MyhomeViewPager myhomeViewpager;
+    ViewPager myhomeViewpager;
     @Bind(R.id.halfscroll_first)
     LinearLayout halfscrollFirst;
     private int mHomeBgHeight = 1;
@@ -94,17 +95,18 @@ public class MyHomeFragment extends Fragment {
         ButterKnife.bind(this, view);
         gson = new Gson();
         toolbar.setTitle("我的主页");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> {
-            getActivity().onBackPressed();
-            getActivity().overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
+//            getActivity().onBackPressed();
+//            getActivity().overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
+            ((MyHomeActivity) getActivity()).openDrawer();
         });
         toolbar.inflateMenu(R.menu.menu_myhome);
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_settings) {
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
-                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+//                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
             }
             return true;
         });
