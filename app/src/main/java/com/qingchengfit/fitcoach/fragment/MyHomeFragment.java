@@ -82,9 +82,7 @@ public class MyHomeFragment extends Fragment {
     //    @Bind(R.id.myhome_coolaosingtoorbar)
     //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
-
     public MyHomeFragment() {
-
     }
 
 
