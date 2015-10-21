@@ -125,6 +125,7 @@ public class ScheduleListFragment extends Fragment {
         return view;
     }
 
+
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.getServerDateDay(date));
@@ -204,8 +205,12 @@ public class ScheduleListFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode > 0) {
-            goDateSchedule(mCurDate);
+            refresh();
         }
+    }
+
+    public void refresh() {
+        goDateSchedule(mCurDate);
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {

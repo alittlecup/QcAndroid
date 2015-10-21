@@ -117,14 +117,15 @@ public class ScheduesFragment extends MainBaseFragment {
         //初始化title下拉
         setUpNaviSpinner();
         setUpViewPager();
-        scheduleBeans = new ArrayList<>();
-        scheduesAdapter = new ScheduesAdapter(scheduleBeans);
-        scheduesAdapter.setListener((v, pos) -> {
-            String url = scheduesAdapter.datas.get(pos).intent_url;
-            if (!TextUtils.isEmpty(url)) {
-                openDrawerInterface.goWeb(url);
-            }
-        });
+//        scheduleBeans = new ArrayList<>();
+//        scheduesAdapter = new ScheduesAdapter(scheduleBeans);
+//        scheduesAdapter.setListener((v, pos) -> {
+//            String url = scheduesAdapter.datas.get(pos).intent_url;
+//            if (!TextUtils.isEmpty(url)) {
+//                openDrawerInterface.goWeb(url);
+//            }
+//        });
+
 //        drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
 //        ShadowProperty shadowProperty = new ShadowProperty()
 //                .setShadowColor(0x77000000)
@@ -278,28 +279,39 @@ public class ScheduesFragment extends MainBaseFragment {
 
     @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
     public void onAction(View v) {
+        StringBuffer sb = new StringBuffer(Configs.Server);
         switch (v.getId()) {
             case R.id.schedule_rest_btn:
-                Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
-                startActivity(toWeb);
+
+                sb.append("mobile/coaches/systems/?action=rest");
                 break;
             case R.id.schedule_private_btn:
-                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson");
+                sb.append("mobile/coaches/systems/?action=privatelesson");
                 break;
             case R.id.schedule_group_btn:
-                openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson");
+                sb.append("mobile/coaches/systems/?action=grouplesson");
                 break;
         }
+        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+        toWeb.putExtra("url", sb.toString());
+        startActivityForResult(toWeb, 404);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0) {
+            ScheduleListFragment f = (ScheduleListFragment) mFragmentAdapter.getItem(scheduleVp.getCurrentItem());
+            if (f != null)
+                f.refresh();
+        }
+    }
 
     /**
      * 获取某日日程
      *
      * @param date
      */
-
     private void goDateSchedule(Date date) {
         mFragmentAdapter.setCurCenterDay(date);
         mFragmentAdapter.notifyDataSetChanged();

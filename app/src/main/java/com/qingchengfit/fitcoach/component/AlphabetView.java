@@ -91,9 +91,12 @@ public class AlphabetView extends LinearLayout {
         float y = event.getY() - getPaddingTop();
         switch (MotionEventCompat.getActionMasked(event)) {
             case MotionEvent.ACTION_DOWN:
-                return true;
+//                return true;
+//            case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_MOVE:
                 int position = (int) y / cellHeight;
+                if (position < 0)
+                    position = 0;
                 if (position < alphabetStrings.length && onAlphabetChange != null) {
                     onAlphabetChange.onChange(position, alphabetStrings[position]);
                     LogUtil.d("move:" + position + "  " + alphabetStrings[position]);

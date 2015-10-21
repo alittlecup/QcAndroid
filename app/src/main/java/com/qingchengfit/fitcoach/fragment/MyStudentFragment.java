@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.AlphabetView;
@@ -175,6 +177,12 @@ public class MyStudentFragment extends MainBaseFragment {
             public void onCompleted() {
                 getActivity().runOnUiThread(() -> {
                     openDrawerInterface.hideLoading();
+                    //获取原始数据
+                    QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+                            .subscribe(qcAllStudentResponse -> {
+                                mQcAllStudentResponse = qcAllStudentResponse;
+                                handleResponse(qcAllStudentResponse);
+                            });
                     Toast.makeText(getContext(), "导入联系人完成", Toast.LENGTH_SHORT).show();
                 });
             }
@@ -346,9 +354,25 @@ public class MyStudentFragment extends MainBaseFragment {
 
     @OnClick(R.id.student_add)
     public void onAddstudent() {
-        openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/add/students/");
+//        openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/add/students/");
+        Intent it = new Intent(getContext(), WebActivity.class);
+        it.putExtra("url", Configs.Server + "mobile/coaches/add/students/");
+        startActivityForResult(it, 404);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0) {
+            //获取原始数据
+            QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+                    .subscribe(qcAllStudentResponse -> {
+                        mQcAllStudentResponse = qcAllStudentResponse;
+                        handleResponse(qcAllStudentResponse);
+                    });
+        }
+    }
 
     @OnClick(R.id.searchview_clear)
     public void onClear() {

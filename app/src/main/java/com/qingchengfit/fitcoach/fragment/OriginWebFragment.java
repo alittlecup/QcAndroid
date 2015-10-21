@@ -10,11 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -34,9 +32,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.WebActivityInterface;
-import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.bean.TitleBean;
 
@@ -45,7 +41,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +54,7 @@ public class OriginWebFragment extends WebFragment {
     Toolbar toolbar;
     private String base_url;
     private Gson gson;
-    private Observable<NewPushMsg> mObservable;
+    //    private Observable<NewPushMsg> mObservable;
     private List<Integer> mlastPosition = new ArrayList<>();
     private List<String> mTitleStack = new ArrayList<>();
     private WebActivityInterface mActivityCallback;
@@ -201,24 +196,13 @@ public class OriginWebFragment extends WebFragment {
         webview.getSettings().setAppCachePath(cacheDirPath);
         // 开启Application Cache功能
         webview.getSettings().setAppCacheEnabled(true);
-
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         initCookie();
-        mObservable = RxBus.getBus().register(NewPushMsg.class);
-        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
+//        mObservable = RxBus.getBus().register(NewPushMsg.class);
+//        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
         webview.loadUrl(base_url);
-//        webview.loadUrl("http://www.baidu.com");
         return view;
-    }
-
-    private int getScale() {
-        Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int width = display.getWidth();
-//        Double val = new Double(width)/new Double(PIC_WIDTH);
-//        val = val * 100d;
-//        return val.intValue();
-        return 1;
     }
 
     @Override
@@ -226,9 +210,7 @@ public class OriginWebFragment extends WebFragment {
 
         if (webview != null) {
             return mlastPosition.size() > 0;
-        }
-
-        else return false;
+        } else return false;
     }
 
     public void goBack() {
@@ -252,31 +234,26 @@ public class OriginWebFragment extends WebFragment {
     }
 
     private void initCookie() {
-        String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
+        String sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
         if (sessionid != null) {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
-
             setCookie("http://192.168.31.108", "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
-
-
         } else {
-            ((MainActivity) getActivity()).logout();
+            //TODO logout
         }
-//        List<MutiSysSession> mutiSysSessions = gson.fromJson(PreferenceUtils.getPrefString(getActivity(), "sessions", ""), new TypeToken<List<MutiSysSession>>() {
-//        }.getType());
-//        for (MutiSysSession sysSession : mutiSysSessions) {
-//            setCookie(sysSession.url, "sessionid", sysSession.session_id);
-//        }
     }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (webview != null)
+            webview.destroy();
         ButterKnife.unbind(this);
-        RxBus.getBus().unregister(NewPushMsg.class.getSimpleName(), mObservable);
+//        RxBus.getBus().unregister(NewPushMsg.class.getSimpleName(), mObservable);
+
     }
 
 

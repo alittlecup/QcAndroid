@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.Utils;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 
 import java.util.Comparator;
@@ -23,7 +22,7 @@ public class StudentCompare implements Comparator<StudentBean> {
 
     @Override
     public int compare(StudentBean lhs, StudentBean rhs) {
-        LogUtil.e("l:" + lhs.head.charAt(0) + "  " + rhs.head.charAt(0));
+//        LogUtil.e("l:" + lhs.head.charAt(0) + "  " + rhs.head.charAt(0));
 //        if (lhs.head.charAt(0) <= rhs.head.charAt(0)) {
 //            return -1;
 //        } else return 1;

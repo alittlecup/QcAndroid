@@ -91,7 +91,11 @@ public class DatePicker extends Dialog {
     }
 
     public void markCurDay() {
-        robotoCalendarView.markDayAsSelectedDay(new Date());
+        if (mCurCalendar.get(Calendar.MONTH) == new Date().getMonth() &&
+                mCurCalendar.get(Calendar.YEAR) == new Date().getYear()
+                ) {
+            robotoCalendarView.markDayAsSelectedDay(new Date());
+        }
     }
 
 }

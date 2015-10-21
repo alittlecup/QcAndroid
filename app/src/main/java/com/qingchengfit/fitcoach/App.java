@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.io.File;
 
@@ -45,10 +46,7 @@ public class App extends Application {
     public static User gUser;
     public static int coachid;
 //    private ApplicationComponet componet;
-
-    public static void setgUser(User ser) {
-        gUser = ser;
-    }
+private RefWatcher refWatcher;
 
 //    public ApplicationComponet getComponet() {
 //        if (componet != null)
@@ -56,19 +54,27 @@ public class App extends Application {
 //        else return null;
 //    }
 
+    public static void setgUser(User ser) {
+        gUser = ser;
+    }
+
     //
 //    public void setComponet(ApplicationComponet componet) {
 //        this.componet = componet;
 //    }
+    public static RefWatcher getRefWatcher() {
+        App application = (App) App.AppContex;
+        return application.refWatcher;
+    }
 
     //
     @Override
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
         AppContex = getApplicationContext();
-//        refWatcher = LeakCanary.install(this);
+        refWatcher = LeakCanary.install(this);
 //        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();

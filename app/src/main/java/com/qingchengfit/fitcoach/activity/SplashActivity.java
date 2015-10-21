@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
@@ -88,36 +89,28 @@ public class SplashActivity extends BaseAcitivity {
                     .subscribeOn(Schedulers.newThread())
                     .flatMap(s -> {
                         try {
-                            Thread.sleep(3000);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                         }
                         return Observable.just("");
                     }).subscribe(s1 -> {
-                if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
-                    Intent toMain = new Intent(this, MainActivity.class);
-                    startActivity(toMain);
-                    this.finish();
-                } else {
-                    goLogin(0);
-                }
+                runOnUiThread(() -> {
+                    if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
+                        Intent toMain = new Intent(this, MainActivity.class);
+                        startActivity(toMain);
+                        this.finish();
+                    } else {
+                        goLogin(0);
+                    }
+                });
+
             });
         }
 
 
-        // 开启logcat输出，方便debug，发布时请关闭
-        // XGPushConfig.enableDebug(this, true);
-        // 如果需要知道注册是否成功，请使用registerPush(getApplicationContext(), XGIOperateCallback)带callback版本
-        // 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
-        // 具体可参考详细的开发指南
-        // 传递的参数为ApplicationContext
-
-        // 2.36（不包括）之前的版本需要调用以下2行代码
-//        Intent service = new Intent(context, XGPushService.class);
-//        context.startService(service);
-
-
     }
 
+    @UiThread
     public void goLogin(int registe) {
         Intent toLogin = new Intent(this, LoginActivity.class);
         toLogin.putExtra("isRegiste", registe);

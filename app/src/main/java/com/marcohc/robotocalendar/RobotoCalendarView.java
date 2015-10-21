@@ -192,11 +192,11 @@ public class RobotoCalendarView extends LinearLayout {
         String dateText = new DateFormatSymbols(locale).getMonths()[currentCalendar.get(Calendar.MONTH)].toString();
         dateText = dateText.substring(0, 1).toUpperCase() + dateText.subSequence(1, dateText.length());
         Calendar calendar = Calendar.getInstance();
-        if (currentCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
-            dateTitle.setText(dateText);
-        } else {
-            dateTitle.setText(dateText + " " + currentCalendar.get(Calendar.YEAR));
-        }
+//        if (currentCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
+//            dateTitle.setText(dateText);
+//        } else {
+        dateTitle.setText(currentCalendar.get(Calendar.YEAR) + "  " + dateText);
+//        }
     }
 
     @SuppressLint("DefaultLocale")
