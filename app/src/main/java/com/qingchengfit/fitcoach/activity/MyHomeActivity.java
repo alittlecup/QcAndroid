@@ -155,6 +155,7 @@ public class MyHomeActivity extends AppCompatActivity {
         mainDrawerlayout.closeDrawers();
         setResult(page);
         this.finish();
+        overridePendingTransition(R.anim.null_anim, R.anim.null_anim);
     }
 
     @Override

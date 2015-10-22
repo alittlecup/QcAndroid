@@ -1,12 +1,18 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <include layout="@layout/common_toolbar">
+    </include>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
         >
 
 
@@ -15,11 +21,10 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
             android:orientation="vertical"
-            tools:context="com.qingchengfit.fitcoach.component.AddGymFragment">
+            android:paddingBottom="100dp"
+            tools:context="com.qingchengfit.fitcoach.fragment.AddBelongGymFragment">
 
-            <!-- TODO: Update blank fragment layout -->
-            <include layout="@layout/common_toolbar">
-            </include>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -140,12 +145,15 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/add_gym_private_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            android:layout_gravity="bottom"
-            android:text="我知道了"
-            />
-    </FrameLayout>
-</ScrollView>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/add_gym_private_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:text="我知道了"
+        />
+</RelativeLayout>

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -28,6 +28,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -41,7 +42,7 @@ public class MyGymsFragment extends MainBaseFragment {
     RecyclerView recyclerview;
     private GymsAdapter mGymAdapter;
     private List<QcCoachSystemDetailResponse.CoachSystemDetail> adapterData = new ArrayList<>();
-
+    private boolean mHasPrivate = false;
 
     public MyGymsFragment() {
     }
@@ -56,8 +57,20 @@ public class MyGymsFragment extends MainBaseFragment {
         toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-        toolbar.inflateMenu(R.menu.add);
+        toolbar.inflateMenu(R.menu.add_gym);
         toolbar.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(getActivity(), FragActivity.class);
+            if (item.getItemId() == R.id.action_add_self) {
+                if (mHasPrivate) {
+                    intent.putExtra("type", 2);
+                } else {
+                    intent.putExtra("type", 3);
+                }
+                startActivityForResult(intent, 11);
+            } else if (item.getItemId() == R.id.action_add_public) {
+                intent.putExtra("type", 4);
+                startActivityForResult(intent, 11);
+            }
 
             return true;
         });
@@ -69,17 +82,42 @@ public class MyGymsFragment extends MainBaseFragment {
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                toWeb.putExtra("url", adapterData.get(pos).url + "/mobile/coach/shop/welcome/");
+                Intent toWeb = new Intent(getActivity(), FragActivity.class);
+                toWeb.putExtra("host", adapterData.get(pos).url);
+                toWeb.putExtra("id", adapterData.get(pos).id);
+                toWeb.putExtra("type", 5);
                 startActivityForResult(toWeb, 404);
+//                Intent toWeb = new Intent(getActivity() , WebActivity.class);
+//                toWeb.putExtra("url",adapterData.get(pos).url+"/mobile/coach/shop/welcome/");
+//                startActivity(toWeb);
             }
         });
-        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid).subscribeOn(Schedulers.io())
-                .subscribe(qcCoachSystemDetailResponse -> {
+        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map(qcCoachSystemDetailResponse -> {
+                    adapterData.clear();
                     adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
-                    getActivity().runOnUiThread(mGymAdapter::notifyDataSetChanged);
-                });
+                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
+                        if (systemDetail.is_personal_system) {
+                            mHasPrivate = true;
+                            break;
+                        } else mHasPrivate = false;
+
+                    }
+                    return true;
+                })
+                .subscribe(aBoolean -> mGymAdapter.notifyDataSetChanged());
         return view;
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0) {
+
+        }
     }
 
     @Override

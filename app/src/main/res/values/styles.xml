@@ -43,10 +43,7 @@
         <item name="android:scrollbars">none</item>
     </style>
 
-    <style name="ToolbarStyle.Overflow" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/text_black</item>
-    </style>
+
     <style name="Qc.TextCommonGrey" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_grey</item>
         <item name="android:textSize">@dimen/common_font</item>

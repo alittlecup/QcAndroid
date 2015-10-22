@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.component;
+package com.qingchengfit.fitcoach.fragment;
 
 
 import android.os.Bundle;
@@ -18,31 +18,34 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddGymFragment extends Fragment {
-    public static final String TAG = AddGymFragment.class.getName();
+public class AddSelfNotiFragment extends Fragment {
+    public static final String TAG = AddSelfNotiFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.add_gym_private_btn)
     Button addGymPrivateBtn;
 
 
-    public AddGymFragment() {
+    public AddSelfNotiFragment() {
+        // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_belong_gym, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_self_noti, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle("添加所属健身房");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        toolbar.setTitle("添加个人健身房");
         return view;
     }
 
+
     @OnClick(R.id.add_gym_private_btn)
-    public void onClick() {
+    public void onclick() {
         getActivity().onBackPressed();
     }
 

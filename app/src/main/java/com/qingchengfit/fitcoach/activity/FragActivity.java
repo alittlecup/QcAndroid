@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
+import com.qingchengfit.fitcoach.fragment.AddSelfGymFragment;
+import com.qingchengfit.fitcoach.fragment.AddSelfNotiFragment;
+import com.qingchengfit.fitcoach.fragment.GymDetailFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 
@@ -30,6 +34,8 @@ public class FragActivity extends BaseAcitivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         int type = getIntent().getIntExtra("type", 0);
+
+
         switch (type) {
             case 0:
                 fragment = new StatementGlanceFragment();
@@ -37,6 +43,19 @@ public class FragActivity extends BaseAcitivity {
             case 1:
                 fragment = new SaleGlanceFragment();
                 break;
+            case 2:
+                fragment = new AddSelfNotiFragment();
+                break;
+            case 3:
+                fragment = new AddSelfGymFragment();
+                break;
+            case 4:
+                fragment = new AddBelongGymFragment();
+                break;
+            case 5:
+                int id = getIntent().getIntExtra("id", 1);
+                String host = getIntent().getStringExtra("host");
+                fragment = GymDetailFragment.newInstance(id, host);
             default:
                 break;
         }
@@ -48,10 +67,21 @@ public class FragActivity extends BaseAcitivity {
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (fragment instanceof GymDetailFragment && fragment.isVisible()) {
+            if (((GymDetailFragment) fragment).canGoBack()) {
+                ((GymDetailFragment) fragment).goBack();
+            } else this.finish();
+        } else if (getSupportFragmentManager().popBackStackImmediate()) {
 
+        } else {
+
+            this.finish();
+        }
+    }
 }

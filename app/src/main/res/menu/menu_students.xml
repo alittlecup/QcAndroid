@@ -15,17 +15,17 @@
         android:title="add"
         app:showAsAction="always"
         >
-        <item
-            android:id="@+id/action_add_mannul"
-            android:title="手动添加学员"
-            >
-
-        </item>
-        <item
-            android:id="@+id/action_add_phone"
-            android:title="通讯录添加学员"
-            >
-
-        </item>
+        <menu>
+            <item
+                android:id="@+id/action_add_mannul"
+                android:title="手动添加学员"
+                >
+            </item>
+            <item
+                android:id="@+id/action_add_phone"
+                android:title="通讯录添加学员"
+                >
+            </item>
+        </menu>
     </item>
 </menu>

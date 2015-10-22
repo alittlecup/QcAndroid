@@ -232,8 +232,6 @@ dependencies {
     compile files('libs/pushservice-4.5.3.48.jar')
     compile 'com.android.support:cardview-v7:23.0.1'
 
-//    compile 'com.prolificinteractive:material-calendarview:1.0.1' //日历
-//    compile 'com.github.marcohc:robotocalendarview:1.1.0'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 
 

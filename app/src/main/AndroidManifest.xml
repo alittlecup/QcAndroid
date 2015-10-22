@@ -234,6 +234,13 @@
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".activity.LoadResActivity"
+            android:alwaysRetainTaskState="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:process=":mini"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
