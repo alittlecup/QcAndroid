@@ -109,12 +109,13 @@ public class WheelTime {
 
         wv_hours = (WheelView) view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-        wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
+//        wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
+        wv_hours.setLabel(":");
         wv_hours.setCurrentItem(h);
 
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+//        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
 
         // 添加"年"监听

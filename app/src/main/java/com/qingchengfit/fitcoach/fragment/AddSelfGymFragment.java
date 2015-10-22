@@ -78,6 +78,10 @@ public class AddSelfGymFragment extends Fragment {
     @OnClick(R.id.addselfgym_time)
     public void onChangeTime() {
 //        startActivityForResult();
+        getFragmentManager().beginTransaction().
+                replace(R.id.web_frag_layout, new GymTimeFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
 
