@@ -40,8 +40,6 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     RecyclerView recyclerview;
     private GymsAdapter mGymAdapter;
     private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
-
-
     public MyCoursePlanFragment() {
     }
 

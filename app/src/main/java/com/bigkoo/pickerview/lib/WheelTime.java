@@ -194,6 +194,8 @@ public class WheelTime {
                 break;
             case HOURS_MINS:
                 textSize = (screenheight / 100) * 4;
+                wv_hours.setCyclic(true);
+                wv_mins.setCyclic(true);
                 wv_year.setVisibility(View.GONE);
                 wv_month.setVisibility(View.GONE);
                 wv_day.setVisibility(View.GONE);

@@ -67,8 +67,6 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         ScreenInfo screenInfo2 = new ScreenInfo((Activity) context);
         wheelTime_end = new WheelTime(timepickerviewend, TimePopupWindow.Type.HOURS_MINS);
         wheelTime_end.screenheight = screenInfo1.getHeight();
-        wheelTime_end.setCyclic(true);
-        wheelTime_start.setCyclic(true);
 
         //默认选中当前时间
         Calendar calendar = Calendar.getInstance();

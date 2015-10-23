@@ -8,24 +8,5 @@
         android:title="@string/action_settings"
         app:showAsAction="always"
         >
-        <menu>
-            <item
-                android:id="@+id/action_add_self"
-
-                android:orderInCategory="100"
-                android:title="添加个人健身房"
-                app:showAsAction="always"
-                >
-
-            </item>
-            <item
-                android:id="@+id/action_add_public"
-                android:orderInCategory="100"
-                android:title="添加所属健身房"
-                app:showAsAction="always"
-                >
-
-            </item>
-        </menu>
     </item>
 </menu>

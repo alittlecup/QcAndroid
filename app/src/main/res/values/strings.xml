@@ -63,5 +63,6 @@
     <string name="add_gym_private_06">您在该健身房预留的手机号与当前登录的手机号不一致</string>
     <string name="add_gym_private_07">方法1: 让该健身房的工作人员在「青橙健身房管理系统」中修改您的手机号；</string>
     <string name="add_gym_private_08">方法2: 在“我的主页中”修改手机号，使其与在「青橙健身房管理系统」中预留的手机号一致。</string>
+    <string name="title_activity_change_time">ChangeTimeActivity</string>
 
 </resources>

@@ -20,6 +20,7 @@ import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
+import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
@@ -36,6 +37,7 @@ import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
+import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
 import com.qingchengfit.fitcoach.http.bean.QcResponCoachSys;
@@ -309,6 +311,9 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/schedules/glance/")
         rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id, @QueryMap Map<String, String> params);
 
+        @GET("/api/coaches/{id}/personal/system/")
+        rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
+
     }
 
 
@@ -381,7 +386,8 @@ public class QcCloudClient {
         @POST("/api/coaches/{id}/systems/users/bulk/create/")
         rx.Observable<QcResponse> qcPostCreatStudents(@Path("id") int id, @Body PostStudents students);
 
-
+        @PUT("/api/coaches/{id}/personal/system/")
+        rx.Observable<QcResponse> qcPostPrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
 
     }

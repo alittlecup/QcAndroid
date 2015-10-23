@@ -682,6 +682,7 @@ private MaterialDialog loadingDialog;
 //        topFragment = myHomeFragment;
 //        startActivity(new Intent(this,MyHomeActivity.class));
         startActivityForResult(new Intent(this, MyHomeActivity.class), 9);
+        overridePendingTransition(R.anim.null_anim, R.anim.null_anim);
         mainDrawerlayout.closeDrawers();
 //        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
 //        mainDrawerlayout.closeDrawer(Gravity.LEFT);

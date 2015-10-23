@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;
@@ -61,10 +62,17 @@ public class GymTimeFragment extends Fragment {
 
     @OnClick(R.id.gymtime_mon)
     public void onClick() {
+        timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date start, Date end) {
+                StringBuffer sb = new StringBuffer();
+                sb.append(DateUtils.getTimeHHMM(start)).append("-").append(DateUtils.getTimeHHMM(end));
+                gymtimeMon.setContent(sb.toString());
+            }
+        });
         timeDialogWindow.showAtLocation(new Date());
     }
 
-    ;
 
 
     @Override
