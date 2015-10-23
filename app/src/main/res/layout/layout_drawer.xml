@@ -36,7 +36,7 @@
             android:layout_toRightOf="@id/header_icon"
             android:baseline="32dp"
             android:drawableRight="@drawable/ic_arrow_right_white"
-            android:text="MARK DOWN"
+
             android:textColor="@color/white"
             android:textSize="16sp"
             />

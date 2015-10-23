@@ -98,4 +98,9 @@ public class DatePicker extends Dialog {
         }
     }
 
+    @Override
+    public void hide() {
+        super.hide();
+        mCurCalendar.setTime(new Date());
+    }
 }
