@@ -197,6 +197,7 @@ private MaterialDialog loadingDialog;
         if (mDownloadThread != null)
             mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
+
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 

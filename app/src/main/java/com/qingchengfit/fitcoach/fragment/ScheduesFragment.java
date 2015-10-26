@@ -139,28 +139,31 @@ public class ScheduesFragment extends MainBaseFragment {
 //        lp.rightMargin = -shadowProperty.getShadowOffset();
 //        lp.topMargin = -shadowProperty.getShadowOffset();
 //        calendarView.setLayoutParams(lp);
-//        btn1 = new FloatingActionButton(getActivity());
-//        btn1.setIcon(R.drawable.ic_baseinfo_city);
-//        btn1.setCustomBackground(R.drawable.selector_green_btn);
-//        btn1.setTitle("设置休息");
+        btn1 = new FloatingActionButton(getActivity());
+        btn1.setIcon(R.drawable.ic_action_rest);
+        btn1.setColorNormal(getResources().getColor(R.color.green));
+        btn1.setTitle("设置休息");
 //
-//        btn2 = new FloatingActionButton(getActivity());
-//
-//        btn2.setColorNormal(Color.BLUE);
-//        btn2.setTitle("代约团课");
-//
-//        btn3 = new FloatingActionButton(getActivity());
-//        btn3.setIcon(R.drawable.ic_baseinfo_phone);
-//        btn3.setColorNormal(Color.CYAN);
-//        btn3.setTitle("代约私教");
+        btn2 = new FloatingActionButton(getActivity());
+        btn2.setIcon(R.drawable.ic_action_group);
+        btn2.setColorNormal(getResources().getColor(R.color.blue));
+        btn2.setTitle("代约团课");
+
+        btn3 = new FloatingActionButton(getActivity());
+        btn3.setIcon(R.drawable.ic_action_private);
+        btn3.setColorNormal(getResources().getColor(R.color.purple));
+        btn3.setTitle("代约私教");
 //
 //        btn1.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=rest"));
 //        btn2.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson"));
 //        btn3.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson"));
 //
-//        webFloatbtn.addButton(btn1);
-//        webFloatbtn.addButton(btn2);
-//        webFloatbtn.addButton(btn3);
+        btn1.setOnClickListener(v1 -> onAction(1));
+        btn2.setOnClickListener(v1 -> onAction(2));
+        btn3.setOnClickListener(v1 -> onAction(3));
+        webFloatbtn.addButton(btn1);
+        webFloatbtn.addButton(btn2);
+        webFloatbtn.addButton(btn3);
 
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
@@ -277,18 +280,18 @@ public class ScheduesFragment extends MainBaseFragment {
 
     }
 
-    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
-    public void onAction(View v) {
+    //    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
+    public void onAction(int v) {
         StringBuffer sb = new StringBuffer(Configs.Server);
-        switch (v.getId()) {
-            case R.id.schedule_rest_btn:
+        switch (v) {
+            case 1:
 
                 sb.append("mobile/coaches/systems/?action=rest");
                 break;
-            case R.id.schedule_private_btn:
+            case 2:
                 sb.append("mobile/coaches/systems/?action=privatelesson");
                 break;
-            case R.id.schedule_group_btn:
+            case 3:
                 sb.append("mobile/coaches/systems/?action=grouplesson");
                 break;
         }

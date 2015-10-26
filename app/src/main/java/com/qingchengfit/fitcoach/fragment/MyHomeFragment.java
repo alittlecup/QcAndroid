@@ -11,7 +11,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -35,6 +34,7 @@ import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
+import com.qingchengfit.fitcoach.component.MyhomeViewPager;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class MyHomeFragment extends Fragment {
     @Bind(R.id.myhome_tab_layout)
     RelativeLayout myhomeTabLayout;
     @Bind(R.id.myhome_viewpager)
-    ViewPager myhomeViewpager;
+    MyhomeViewPager myhomeViewpager;
     @Bind(R.id.halfscroll_first)
     LinearLayout halfscrollFirst;
     private int mHomeBgHeight = 1;
@@ -91,7 +91,7 @@ public class MyHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_home, container, false);
         ButterKnife.bind(this, view);
         gson = new Gson();
         toolbar.setTitle("我的主页");

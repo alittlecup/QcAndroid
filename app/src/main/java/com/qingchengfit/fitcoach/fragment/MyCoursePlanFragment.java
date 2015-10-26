@@ -140,7 +140,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                 sb.append(",");
             }
 
-            holder.itemGymPhonenum.setText(sb.substring(0, sb.length() - 1));
+//            holder.itemGymPhonenum.setText(sb.substring(0, sb.length() - 1));
             holder.itemIsPersonal.setVisibility(View.GONE);
             holder.itemGymHeader.setVisibility(View.GONE);
         }

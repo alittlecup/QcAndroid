@@ -29,6 +29,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
@@ -42,7 +43,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.WebActivityInterface;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
-import com.qingchengfit.fitcoach.bean.TitleBean;
+import com.qingchengfit.fitcoach.bean.ToolbarAction;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -64,6 +65,8 @@ public class OriginWebFragment extends WebFragment {
     CookieManager cookieManager;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.toobar_action)
+    TextView toobarAction;
     private String base_url;
     private Gson gson;
     //    private Observable<NewPushMsg> mObservable;
@@ -176,41 +179,41 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.contains("clientJsonBegin")) {
-                    String[] strings = title.split("clientJsonBegin");
-                    toolbar.setTitle(strings[0]);
-                    String jsonStr = strings[1].replace("clientJsonBegin", "");
-                    Gson gson = new Gson();
-                    TitleBean titleBean = gson.fromJson(jsonStr, TitleBean.class);
-                    toolbar.getMenu().clear();
-                    switch (titleBean.navIcon) {
-                        case 0:
-                            break;
-                        case 1:
-                            toolbar.setNavigationIcon(R.drawable.ic_cross_white);
-                            break;
-                        case 2:
-                            toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-                            break;
-                        default:
-                            break;
-                    }
-                    switch (titleBean.actionIcon) {
-                        case 0:
-                            break;
-                        case 1:
-                            toolbar.inflateMenu(R.menu.add);
-                            break;
-                        case 2:
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                } else {
-                    toolbar.setTitle(title);
-                }
+//                if (title.contains("clientJsonBegin")) {
+//                    String[] strings = title.split("clientJsonBegin");
+//                    toolbar.setTitle(strings[0]);
+//                    String jsonStr = strings[1].replace("clientJsonBegin", "");
+//                    Gson gson = new Gson();
+//                    TitleBean titleBean = gson.fromJson(jsonStr, TitleBean.class);
+//                    toolbar.getMenu().clear();
+//                    switch (titleBean.navIcon) {
+//                        case 0:
+//                            break;
+//                        case 1:
+//                            toolbar.setNavigationIcon(R.drawable.ic_cross_white);
+//                            break;
+//                        case 2:
+//                            toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                    switch (titleBean.actionIcon) {
+//                        case 0:
+//                            break;
+//                        case 1:
+//                            toolbar.inflateMenu(R.menu.add);
+//                            break;
+//                        case 2:
+//                            break;
+//
+//                        default:
+//                            break;
+//                    }
+//
+//                } else {
+                toolbar.setTitle(title);
+//                }
 
             }
 
@@ -223,7 +226,7 @@ public class OriginWebFragment extends WebFragment {
         webview.getSettings().setJavaScriptEnabled(true);
 //        webview.setInitialScale(getScale());
         String s = webview.getSettings().getUserAgentString();
-        webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
+        webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android");
         webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
         // 开启DOM storage API 功能
         webview.getSettings().setDomStorageEnabled(true);
@@ -240,6 +243,11 @@ public class OriginWebFragment extends WebFragment {
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         initCookie();
+        //toolbar action callback
+        toobarAction.setOnClickListener(v -> {
+            if (webview != null)
+                webview.loadUrl("javascript:window.nativeLinkWeb.setAction();");
+        });
 //        mObservable = RxBus.getBus().register(NewPushMsg.class);
 //        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
         webview.loadUrl(base_url);
@@ -247,7 +255,6 @@ public class OriginWebFragment extends WebFragment {
     }
 
     //最后在OnActivityResult中接受返回的结果
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_UPLOAD_FILE_CODE && resultCode == Activity.RESULT_OK) {
@@ -408,6 +415,23 @@ public class OriginWebFragment extends WebFragment {
         public void openDrawer() {
             openmainDrawer();
 
+        }
+
+        @JavascriptInterface
+        public void setAction(String s) {
+            LogUtil.e("setAction:" + s);
+            ToolbarAction toolStr = gson.fromJson(s, ToolbarAction.class);
+
+            getActivity().runOnUiThread(() -> {
+                if (TextUtils.isEmpty(toolStr.name)) {
+                    toobarAction.setVisibility(View.GONE);
+                } else {
+                    toobarAction.setVisibility(View.VISIBLE);
+                    toobarAction.setText(toolStr.name);
+
+                }
+
+            });
         }
 
         @JavascriptInterface
