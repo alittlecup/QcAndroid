@@ -364,10 +364,10 @@ public class QcCloudClient {
         @POST("/api/experiences/")
         rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
 
-        @PUT("/api/experiences/{id}")
+        @PUT("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
 
-        @DELETE("/api/experiences/{id}")
+        @DELETE("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);
 
         @POST("/api/gym/")
@@ -389,6 +389,8 @@ public class QcCloudClient {
         @PUT("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcPostPrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
+        @POST("/api/coaches/{id}/personal/system/")
+        rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
     }
 

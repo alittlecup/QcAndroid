@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
@@ -94,8 +93,9 @@ public class StudentJudgeFragment extends BaseFragment {
             );
 
             String count = Integer.toString(mEntityls.getTotal_count());
+//            String count = "1000";
             SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
-            s.setSpan(new ForegroundColorSpan(Color.argb(255, 31, 192, 189)), 4, 4 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primary)), 4, 4 + count.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             studentJudgeText.setText(s);
         } else {
             if (!isPrepared || !isVisible)
@@ -117,7 +117,7 @@ public class StudentJudgeFragment extends BaseFragment {
 
                         String count = Integer.toString(mEntityls.getTotal_count());
                         SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
-                        s.setSpan(new ForegroundColorSpan(Color.CYAN), 4, 4 + count.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                        s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primary)), 4, 4 + count.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                         studentJudgeText.setText(s);
                     }
                 });

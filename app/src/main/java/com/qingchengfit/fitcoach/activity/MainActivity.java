@@ -53,6 +53,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
+import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
@@ -76,6 +77,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -163,6 +165,39 @@ private MaterialDialog loadingDialog;
         initDrawer();
         initVersion();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+//                .subscribe(qcCoachRespone -> {
+//                    runOnUiThread(() -> {
+//                        Glide.with(App.AppContex)
+//                                .load(qcCoachRespone.getData().getCoach().getAvatar())
+//                                .asBitmap()
+//                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
+//                        drawerName.setText(qcCoachRespone.getData().getCoach().getUsername());
+//                    });
+//                });
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mainDrawerlayout.closeDrawers();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDownloadThread != null)
+            mDownloadThread.cancel(true);
+        RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
+//        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
     /**
@@ -308,7 +343,6 @@ private MaterialDialog loadingDialog;
                     else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
                         logout();
                     }
-
                 });
     }
 
@@ -327,23 +361,6 @@ private MaterialDialog loadingDialog;
                 goXwalkfragment(recievePush.url, null);
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
-//                .subscribe(qcCoachRespone -> {
-//                    runOnUiThread(() -> {
-//                        Glide.with(App.AppContex)
-//                                .load(qcCoachRespone.getData().getCoach().getAvatar())
-//                                .asBitmap()
-//                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
-//                        drawerName.setText(qcCoachRespone.getData().getCoach().getUsername());
-//                    });
-//                });
-
-
     }
 
 
@@ -391,20 +408,20 @@ private MaterialDialog loadingDialog;
      */
     private void initDrawer() {
         LogUtil.d(PhoneInfoUtils.getHandSetInfo());
-        int gender = R.drawable.img_default_female;
-        if (user.gender == 0)
-            gender = R.drawable.img_default_male;
-        if (TextUtils.isEmpty(user.avatar)) {
-            Glide.with(App.AppContex)
-                    .load(gender)
-                    .asBitmap()
-                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
-        } else {
-            Glide.with(App.AppContex)
-                    .load(user.avatar)
-                    .asBitmap()
-                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
-        }
+//        int gender = R.drawable.img_default_female;
+//        if (user.gender == 0)
+//            gender = R.drawable.img_default_male;
+//        if (TextUtils.isEmpty(user.avatar)) {
+//            Glide.with(App.AppContex)
+//                    .load(gender)
+//                    .asBitmap()
+//                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
+//        } else {
+//            Glide.with(App.AppContex)
+//                    .load(user.avatar)
+//                    .asBitmap()
+//                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
+//        }
 
 
         mScheduesFragment = new ScheduesFragment();
@@ -464,15 +481,17 @@ private MaterialDialog loadingDialog;
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid).subscribeOn(Schedulers.io())
+                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(qcDrawerResponse -> {
-                            runOnUiThread(() -> {
+
                                 Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
                                 drawerName.setText(qcDrawerResponse.data.coach.username);
                                 item.setCount(qcDrawerResponse.data.user_count);
                                 item1.setCount(qcDrawerResponse.data.plan_count);
                                 item2.setCount(qcDrawerResponse.data.system_count);
-                            });
+                            PreferenceUtils.setPrefString(App.AppContex, "drawer_info", new Gson().toJson(qcDrawerResponse));
                         });
             }
 
@@ -486,23 +505,21 @@ private MaterialDialog loadingDialog;
 
             }
         });
-//        QcCloudClient.getApi().getApi
-//                .getDrawerInfo(coach.id)
-//                .flatMap(qcResponDrawer -> {
-//                    if (qcResponDrawer.status == 200) {
-//                        for (int i = 0; i < qcResponDrawer.data.guide.size(); i++) {
-//                            setupBtn(qcResponDrawer.data.guide.get(i), i);
-//                        }
-//                        runOnUiThread(() -> {
-//                            setupModules(qcResponDrawer.data.modules);
-//                        });
-//                    } else if (qcResponDrawer.error_code.equals("400001")) {
-//                        logout();
-//                    }
-//                    return Observable.just("");
-//                })
-//                .delay(1, TimeUnit.SECONDS)
-//                .subscribe(s -> runOnUiThread(this::initVersion));
+
+        /**
+         * load cache
+         */
+        String cache = PreferenceUtils.getPrefString(App.AppContex, "drawer_info", "");
+        if (!TextUtils.isEmpty(cache)) {
+            QcDrawerResponse qcDrawerResponse = gson.fromJson(cache, QcDrawerResponse.class);
+            Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
+            drawerName.setText(qcDrawerResponse.data.coach.username);
+            item.setCount(qcDrawerResponse.data.user_count);
+            item1.setCount(qcDrawerResponse.data.plan_count);
+            item2.setCount(qcDrawerResponse.data.system_count);
+            PreferenceUtils.setPrefString(App.AppContex, "drawer_info", new Gson().toJson(qcDrawerResponse));
+        }
+
 
     }
 
@@ -687,22 +704,6 @@ private MaterialDialog loadingDialog;
 //        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
 //        mainDrawerlayout.closeDrawer(Gravity.LEFT);
 
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mainDrawerlayout.closeDrawers();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mDownloadThread != null)
-            mDownloadThread.cancel(true);
-        RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
-//        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
     public void goXwalkfragment(String url, String from) {

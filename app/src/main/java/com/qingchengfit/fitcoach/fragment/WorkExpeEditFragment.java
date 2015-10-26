@@ -33,6 +33,7 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -119,19 +120,37 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    return false;
+                    QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
+                            .subscribe(aBoolean -> {
+                                if (aBoolean) {
+                                    getActivity().onBackPressed();
+                                    Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
+                            });
+                    return true;
                 }
             });
-            workexpeditStartTime.setContent(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            workexpeditStartEnd.setContent(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
+            workexpeditStartTime.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            workexpeditStartEnd.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
             workexpeditDescripe.setText(experiencesEntity.getDescription());
             workexpeditPosition.setContent(experiencesEntity.getPosition());
-            workexpeditGymName.setContent(experiencesEntity.getGym().getName());
+            if (experiencesEntity.getGym() != null) {
+                workexpeditGymName.setContent(experiencesEntity.getGym().getName());
+                addWorkExperience.setGym_id(experiencesEntity.getId());
+            }
             workexpeditGroupClass.setContent(Integer.toString(experiencesEntity.getGroup_course()));
             workexpeditGroupNum.setContent(Integer.toString(experiencesEntity.getGroup_user()));
             workexpeditPrivateClass.setContent(Integer.toString(experiencesEntity.getPrivate_course()));
             workexpeditPrivateNum.setContent(Integer.toString(experiencesEntity.getPrivate_user()));
             workexpeditSale.setContent(Integer.toString(experiencesEntity.getSale()));
+        } else {
+            workexpeditStartTime.setContent(DateUtils.getDateDay(new Date()));
+            workexpeditStartEnd.setContent(DateUtils.getDateDay(new Date()));
+
         }
 
 
@@ -154,6 +173,10 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             Toast.makeText(getContext(), "请填写完整信息", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (addWorkExperience.getGym_id() == 0) {
+            Toast.makeText(getContext(), "请选择健身房", Toast.LENGTH_SHORT).show();
+            return;
+        }
         addWorkExperience.setStart(DateUtils.formatDateToServer(starttime));
         addWorkExperience.setEnd(DateUtils.formatDateToServer(endtime));
         addWorkExperience.setDescription(description);
@@ -163,6 +186,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         addWorkExperience.setPrivate_course(privateClass);
         addWorkExperience.setPrivate_user(privateNum);
         addWorkExperience.setSale(sale);
+
         Action1 qcResponseAction = (Action1<QcResponse>) qcResponse -> {
             getActivity().runOnUiThread(() -> {
                 if (qcResponse.status == ResponseResult.SUCCESS) {

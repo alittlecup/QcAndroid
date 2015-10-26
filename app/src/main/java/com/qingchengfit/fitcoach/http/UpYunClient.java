@@ -46,6 +46,7 @@ public class UpYunClient {
         boolean ret = false;
         try {
             upYun.setContentMD5(UpYun.md5(file));
+
             ret = upYun.writeFile(path + userid + ".png", file, true);
         } catch (IOException e) {
             LogUtil.d("Upyun", "upload headerimg err:" + e.getMessage());

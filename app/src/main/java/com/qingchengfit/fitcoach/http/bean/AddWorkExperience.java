@@ -29,6 +29,7 @@ public class AddWorkExperience {
 
     public AddWorkExperience(int coach_id) {
         this.coach_id = coach_id;
+        this.gym_id = 0;
     }
 
     public AddWorkExperience(int coach_id, int gym_id, String start, String end, String position, String description, String group_course, String group_user, String private_course, String private_user, String sale) {

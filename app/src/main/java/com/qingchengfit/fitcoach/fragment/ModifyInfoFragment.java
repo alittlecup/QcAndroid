@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
+import com.paper.paperbaselibrary.utils.BitmapUtils;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
@@ -46,6 +48,7 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -334,23 +337,27 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
-        if (resultCode == -1) {
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
                 filepath = FileUtils.getPath(getActivity(), data.getData());
-            else filepath = FILE_PATH;
+            else filepath = Configs.CameraPic;
             LogUtil.d(filepath);
             Observable.just(filepath)
-                    .subscribeOn(Schedulers.newThread())
+                    .subscribeOn(Schedulers.io())
                     .subscribe(s -> {
-                        File upFile = new File(s);
-                        boolean reslut = UpYunClient.upLoadImg("/header/", coach.id, upFile);
+                        String filename = UUID.randomUUID().toString();
+                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
+                        File upFile = new File(Configs.ExternalCache + filename);
+
+                        boolean reslut = UpYunClient.upLoadImg("/header/" + coach.id + "/", filename, upFile);
                         if (reslut) {
                             LogUtil.d("success");
-                            getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(Uri.fromFile(upFile))
+                            String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";
+                            getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(pppurl)
                                     .transform(new GlideCircleTransform(App.AppContex))
                                     .into(modifyinfoHeaderPic));
-                            mModifyCoachInfo.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
-                            user.setAvatar(UpYunClient.UPYUNPATH + "header/" + coach.id + ".png");
+                            mModifyCoachInfo.setAvatar(pppurl);
+                            user.setAvatar(pppurl);
 
                         } else {
                             //upload failed TODO

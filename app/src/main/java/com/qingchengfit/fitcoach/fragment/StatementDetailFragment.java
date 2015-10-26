@@ -361,6 +361,7 @@ public class StatementDetailFragment extends Fragment {
 
     @OnClick(R.id.statement_detail_less)
     public void onClickLess() {
+
         changeCalendar(-1);
 
     }

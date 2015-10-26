@@ -58,6 +58,7 @@ public class DatePicker extends Dialog {
 
     @Override
     public void show() {
+        mCurCalendar.setTime(new Date());
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -67,6 +68,8 @@ public class DatePicker extends Dialog {
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.ButtomDialogStyle);
         super.show();
+        updateCalendar();
+        robotoCalendarView.markDayAsSelectedDay(new Date());
     }
 
     public void addMonth() {
@@ -101,6 +104,6 @@ public class DatePicker extends Dialog {
     @Override
     public void hide() {
         super.hide();
-        mCurCalendar.setTime(new Date());
+
     }
 }

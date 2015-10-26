@@ -37,7 +37,7 @@ public class AddSelfNotiFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_self_noti, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setTitle("添加个人健身房");
         return view;
