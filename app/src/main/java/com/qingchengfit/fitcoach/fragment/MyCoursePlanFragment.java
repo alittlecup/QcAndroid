@@ -139,8 +139,9 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                 sb.append(s);
                 sb.append(",");
             }
-
-//            holder.itemGymPhonenum.setText(sb.substring(0, sb.length() - 1));
+            if (sb.length() > 2) {
+                holder.itemGymPhonenum.setText(sb.substring(0, sb.length() - 1));
+            }
             holder.itemIsPersonal.setVisibility(View.GONE);
             holder.itemGymHeader.setVisibility(View.GONE);
         }
