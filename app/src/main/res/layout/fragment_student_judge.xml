@@ -33,18 +33,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.7"
+                android:textColor="@color/orange"
+                android:textSize="30sp"
                 />
 
             <RatingBar
                 android:id="@+id/student_judge_coach_star"
-                style="@android:style/Widget.Holo.RatingBar.Small"
+                style="@style/Qc.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:isIndicator="true"
                 android:numStars="5"
                 android:rating="4.7"
-                android:stepSize="0.5"
+                android:stepSize="0.1"
 
                 />
         </LinearLayout>
@@ -69,11 +71,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.7"
+                android:textColor="@color/orange"
+                android:textSize="30sp"
                 />
 
             <RatingBar
                 android:id="@+id/student_judge_course_star"
-                style="@android:style/Widget.Holo.RatingBar.Small"
+                style="@style/Qc.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -114,7 +118,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider_white"
-        ></View>
+        >
+    </View>
 
     <com.qingchengfit.fitcoach.component.TagGroup
 

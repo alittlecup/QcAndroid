@@ -160,4 +160,7 @@
         <item name="fontPath">fonts/Roboto-Light.ttf</item>
     </style>
 
+    <style name="Qc.RatingBar" parent="android:Widget.Holo.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
+    </style>
 </resources>
