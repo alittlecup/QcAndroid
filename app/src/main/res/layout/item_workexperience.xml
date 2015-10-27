@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@color/transparent"
-            android:button="@drawable/ic_drawer_meeting_selector"
+            android:button="@drawable/ic_open_selector"
             android:gravity="center"
             android:padding="16dp"
             android:text="展开"

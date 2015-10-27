@@ -38,6 +38,7 @@
                 android:id="@+id/myhome_bg"
                 android:layout_width="match_parent"
                 android:layout_height="172dp"
+                android:background="@drawable/img_selfinfo_bg"
                 />
 
             <ImageView
@@ -52,10 +53,11 @@
 
             <ImageView
                 android:id="@+id/myhome_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_alignBottom="@id/myhome_header"
                 android:layout_alignRight="@id/myhome_header"
+                android:layout_margin="5dp"
                 />
 
             <TextView

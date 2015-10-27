@@ -107,25 +107,36 @@ public class HalfScrollView extends ScrollView {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
-//        int action = ev.getAction();
-//
+
+
+//        return super.onInterceptTouchEvent(ev);
+        int action = ev.getAction();
+
 //        if (!isSecondView)
 //            return true;
-//        switch (action & MotionEvent.ACTION_MASK) {
-//            case MotionEvent.ACTION_DOWN:
-//                lastY = ev.getY();
-//                lastX = ev.getX();
-//                super.onTouchEvent(ev);
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                float y = lastY;
-//                lastY = ev.getY();
-//                if (ev.getY() - y > 5 && canChildUp())
-//                    return true;
-//                else return false;
-//        }
-//        return super.onInterceptTouchEvent(ev);
+        switch (action & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                lastY = ev.getY();
+                lastX = ev.getX();
+                super.onTouchEvent(ev);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float y = lastY;
+                lastY = ev.getY();
+                if (isSecondView) {
+                    if (canChildUp()) {
+
+                        if (ev.getY() - y > 5)
+                            return true;
+                        else if (canScrollDown())
+                            return false;
+                    } else return false;
+                }
+                break;
+
+
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
     public boolean canChildUp() {
@@ -134,6 +145,13 @@ public class HalfScrollView extends ScrollView {
         MyhomeViewPager viewPager = (MyhomeViewPager) v.getChildAt(v.getChildCount() - 1);
         ViewGroup vg2 = (ViewGroup) viewPager.getChildAt(0);
         return viewPager.canScrollup();
+    }
+
+    public boolean canScrollDown() {
+        ViewGroup vg = (ViewGroup) getChildAt(0);
+        ViewGroup v = (ViewGroup) vg.getChildAt(vg.getChildCount() - 1);
+        MyhomeViewPager viewPager = (MyhomeViewPager) v.getChildAt(v.getChildCount() - 1);
+        return viewPager.canScrollDown();
     }
 
 
