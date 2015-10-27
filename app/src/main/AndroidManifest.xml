@@ -68,8 +68,12 @@
             android:value="55bf26f3e0f55a750f00139e" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Qingcheng" />
-
+            android:value="Qingcheng"
+            />
+        <meta-data
+            android:name="BUG_HD_SDK_GENERAL_KEY"
+            android:value="930b34879429924954de5a056bb5eba7"
+            />
         <activity
             android:name=".activity.MainActivity"
             android:hardwareAccelerated="true"

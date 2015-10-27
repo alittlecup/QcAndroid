@@ -210,7 +210,7 @@ public class BaseInfoFragment extends BaseFragment {
                     holder.itemContent.setVisibility(View.GONE);
                     holder.itemImg.setVisibility(View.VISIBLE);
                     holder.itemLabel.setVisibility(View.GONE);
-                    Glide.with(App.AppContex).load(baseInfoBean.content).asBitmap().into(new ScaleWidthWrapper(holder.itemImg, App.AppContex));
+                    Glide.with(App.AppContex).load(baseInfoBean.content).asBitmap().into(new ScaleWidthWrapper(holder.itemImg));
                 }
             }
         }

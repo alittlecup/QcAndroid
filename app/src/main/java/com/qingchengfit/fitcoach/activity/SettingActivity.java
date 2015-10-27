@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
@@ -21,6 +22,8 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     FragmentManager fragmentManager;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    private MaterialDialog loadingDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,23 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     @Override
     public void showToolbar() {
         toolbar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void ShowLoading() {
+        if (loadingDialog == null)
+            loadingDialog = new MaterialDialog.Builder(this)
+                    .content("请稍后")
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .build();
+        loadingDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (loadingDialog.isShowing())
+            loadingDialog.hide();
     }
 
     @Override

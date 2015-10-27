@@ -45,6 +45,8 @@ public class UpYunClient {
         UpYun upYun = init();
         boolean ret = false;
         try {
+
+            upYun.setDebug(true);
             upYun.setContentMD5(UpYun.md5(file));
 
             ret = upYun.writeFile(path + userid + ".png", file, true);

@@ -224,6 +224,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         citiesChooser.setOnCityChoosenListener((provice, city, district, id) -> {
             mofifyinfoCity.setContent(provice + city);
             mModifyCoachInfo.setDistrict_id(Integer.toString(id));
+            citiesChooser.hide();
         });
         citiesChooser.show(modifyinfoBrief);
 

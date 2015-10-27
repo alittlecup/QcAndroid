@@ -29,4 +29,8 @@ public interface FragmentCallBack {
 
     public void showToolbar();
 
+    public void ShowLoading();
+
+    public void hideLoading();
+
 }

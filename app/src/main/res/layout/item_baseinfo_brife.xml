@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:scaleType="matrix"
+            android:scaleType="center"
             android:src="@drawable/test_pic"
             />
 

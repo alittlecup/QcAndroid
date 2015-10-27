@@ -343,7 +343,6 @@ public class OriginWebFragment extends WebFragment {
         BitmapFactory.decodeFile(file.getAbsolutePath(), options);
         int imageWidth = options.outWidth;
         int imageHeight = options.outHeight;
-        System.out.println("  imageWidth = " + imageWidth + " imageHeight = " + imageHeight);
         int widthSample = (int) (imageWidth / (dMetrics.density * 90));
         int heightSample = (int) (imageHeight / (dMetrics.density * 90));
         System.out.println("widthSample = " + widthSample + " heightSample = " + heightSample);

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.paper.paperbaselibrary.utils.BitmapUtils;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
@@ -27,6 +28,7 @@ import com.qingchengfit.fitcoach.Utils.HTMLUtils;
 import com.qingchengfit.fitcoach.bean.BriefInfo;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
@@ -136,7 +138,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     }
 
 
-    public void onSave(){
+    public void onSave() {
         QcCloudClient.getApi().postApi.qcModifyDes(App.coachid, new ModifyDes(HTMLUtils.toHTML(mListData))).subscribeOn(Schedulers.newThread())
                 .subscribe(qcResponse -> {
                     getActivity().runOnUiThread(() -> {
@@ -209,16 +211,21 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
+            fragmentCallBack.ShowLoading();
             Observable.just(f)
-                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(Schedulers.io())
                     .subscribe(s -> {
+//                        String filename = UUID.randomUUID().toString();
+//                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
                         String filename = UUID.randomUUID().toString();
-                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
+                        BitmapUtils.compressPic(s.getAbsolutePath(), Configs.ExternalCache + filename);
+                        File upFile = new File(Configs.ExternalCache + filename);
+                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, upFile);
                         Observable.just(reslut)
-                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(aBoolean -> {
+                                    fragmentCallBack.hideLoading();
                                     if (aBoolean) {
-
                                         BriefInfo briefInfo = new BriefInfo(null, UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
                                         mListData.add(briefInfo);
                                         adapter.notifyDataSetChanged();
@@ -234,13 +241,17 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             Observable.just(f)
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(s -> {
+//                        String filename = UUID.randomUUID().toString();
+//                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
                         String filename = UUID.randomUUID().toString();
-                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
+                        BitmapUtils.compressPic(s.getAbsolutePath(), Configs.ExternalCache + filename);
+                        File upFile = new File(Configs.ExternalCache + filename);
+                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, upFile);
+
                         Observable.just(reslut)
-                                .subscribeOn(AndroidSchedulers.mainThread())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(aBoolean -> {
                                     if (aBoolean) {
-
                                         mListData.get(requestCode % 100).setImg(UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
                                         adapter.notifyDataSetChanged();
                                     } else {
@@ -299,6 +310,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 
         private List<BriefInfo> datas;
         private OnRecycleItemClickListener listener;
+
         public ModifyBrifeAdapter(List datas) {
             this.datas = datas;
         }
@@ -343,7 +355,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             else holder.itemModifybriefDown.setEnabled(true);
 
             if (briefInfo.getImg() != null) {
-                Glide.with(App.AppContex).load(briefInfo.getImg()).into(holder.itemModifybriefImg);
+                Glide.with(App.AppContex).load(briefInfo.getImg()).asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
             } else {

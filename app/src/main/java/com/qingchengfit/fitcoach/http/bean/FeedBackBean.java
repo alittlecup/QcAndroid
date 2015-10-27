@@ -16,11 +16,20 @@ package com.qingchengfit.fitcoach.http.bean;
 public class FeedBackBean {
     String email;
     String content;
+    String photo;
 
     public FeedBackBean(String email, String content) {
         this.email = email;
         this.content = content;
+        this.photo = "";
     }
+
+    public FeedBackBean(String email, String content, String photo) {
+        this.email = email;
+        this.content = content;
+        this.photo = photo;
+    }
+
 
     public String getEmail() {
         return email;

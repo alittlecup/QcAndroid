@@ -1,14 +1,10 @@
 package com.qingchengfit.fitcoach.component;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.widget.ImageView;
 
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.paper.paperbaselibrary.utils.MeasureUtils;
-
-import java.lang.ref.WeakReference;
 
 /**
  * power by
@@ -24,20 +20,22 @@ import java.lang.ref.WeakReference;
  * Created by Paper on 15/10/1 2015.
  */
 public class ScaleWidthWrapper extends BitmapImageViewTarget {
-    WeakReference<Context> context;
+    //    WeakReference<Context> context;
     ImageView imageView;
 
-    public ScaleWidthWrapper(ImageView view, Context context) {
+    public ScaleWidthWrapper(ImageView view) {
         super(view);
         this.imageView = view;
-        this.context = new WeakReference<Context>(context);
+//        this.context = new WeakReference<Context>(context);
     }
 
     @Override
     protected void setResource(Bitmap resource) {
-        int SrcWidth = MeasureUtils.getScreenWidth(context.get().getResources());
+        int SrcWidth = imageView.getWidth();
         float scale = (float) SrcWidth / (float) resource.getWidth();
         Matrix matrix = new Matrix();
+        if (scale > 1)
+            scale = 1;
         matrix.postScale(scale, scale);
         resource = Bitmap.createBitmap(resource, 0, 0, resource.getWidth(), resource.getHeight(), matrix, true);
         imageView.setImageBitmap(resource);

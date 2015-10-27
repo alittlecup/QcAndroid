@@ -75,6 +75,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.fir.sdk.FIR;
+import im.fir.sdk.callback.VersionCheckCallback;
+import im.fir.sdk.version.AppVersion;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -238,6 +241,77 @@ private MaterialDialog loadingDialog;
 
     private void initVersion() {
         LogUtil.e("version:" + AppUtils.getAppVer(this));
+        FIR.checkForUpdateInFIR("f60e7b4d8b237b271ef3a7741372f220", new VersionCheckCallback() {
+            @Override
+            public void onSuccess(AppVersion appVersion, boolean b) {
+                LogUtil.e(" fir:success" + appVersion);
+                updateDialog = new MaterialDialog.Builder(MainActivity.this)
+                        .title("前方发现新版本!!")
+                        .content(appVersion.getChangeLog())
+                        .positiveText("更新")
+                        .negativeText("下次再说")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                updateDialog.dismiss();
+                                if (url != null) {
+                                    //TODO download app
+                                    downloadDialog.show();
+                                    mDownloadThread = new AsyncDownloader();
+                                    mDownloadThread.execute(url);
+                                }
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                updateDialog.dismiss();
+                            }
+                        })
+                        .build();
+                downloadDialog = new MaterialDialog.Builder(MainActivity.this)
+                        .title("正在飞速为您下载")
+                        .progress(false, 100)
+                        .cancelable(false)
+                        .positiveText("后台更新")
+                        .negativeText("取消更新")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                mDownloadThread.cancel(true);
+                            }
+                        })
+                        .build();
+                updateDialog.show();
+            }
+
+            @Override
+            public void onFail(String s, int i) {
+                LogUtil.e(" fir:fail" + s);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+
+            @Override
+            public void onStart() {
+                LogUtil.e(" fir:start");
+            }
+
+            @Override
+            public void onFinish() {
+                LogUtil.e(" fir:onFinish");
+            }
+        });
         QcCloudClient.getApi().getApi.qcGetVersion()
                 .subscribe(new Observer<QcVersionResponse>() {
                     @Override
@@ -264,51 +338,7 @@ private MaterialDialog loadingDialog;
                                 }
                             }
                             runOnUiThread(() -> {
-                                updateDialog = new MaterialDialog.Builder(MainActivity.this)
-                                        .title("前方发现新版本!!")
-                                        .content("是否马上更新?")
-                                        .positiveText("更新")
-                                        .negativeText("下次再说")
-                                        .callback(new MaterialDialog.ButtonCallback() {
-                                            @Override
-                                            public void onPositive(MaterialDialog dialog) {
-                                                super.onPositive(dialog);
-                                                updateDialog.dismiss();
-                                                if (url != null) {
-                                                    //TODO download app
-                                                    downloadDialog.show();
-                                                    mDownloadThread = new AsyncDownloader();
-                                                    mDownloadThread.execute(url);
-                                                }
-                                            }
 
-                                            @Override
-                                            public void onNegative(MaterialDialog dialog) {
-                                                super.onNegative(dialog);
-                                                updateDialog.dismiss();
-                                            }
-                                        })
-                                        .build();
-                                downloadDialog = new MaterialDialog.Builder(MainActivity.this)
-                                        .title("正在飞速为您下载")
-                                        .progress(false, 100)
-                                        .cancelable(false)
-                                        .positiveText("后台更新")
-                                        .negativeText("取消更新")
-                                        .callback(new MaterialDialog.ButtonCallback() {
-                                            @Override
-                                            public void onPositive(MaterialDialog dialog) {
-                                                super.onPositive(dialog);
-                                            }
-
-                                            @Override
-                                            public void onNegative(MaterialDialog dialog) {
-                                                super.onNegative(dialog);
-                                                mDownloadThread.cancel(true);
-                                            }
-                                        })
-                                        .build();
-                                updateDialog.show();
                             });
 
                         }

@@ -33,7 +33,6 @@ public class CitiesChooser {
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
     private OptionsDialog pwOptions;
     private OnCityChoosenListener onCityChoosenListener;
-
     public CitiesChooser(Context context) {
         pwOptions = new OptionsDialog(context);
         Gson gson = new Gson();
@@ -76,16 +75,13 @@ public class CitiesChooser {
     }
 
     public void show(View v) {
-//        pwOptions.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-//        pwOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int i, int i1, int i2) {
-//
-//            }
-//        });
         pwOptions.show();
-
     }
+
+    public void hide() {
+        pwOptions.hide();
+    }
+
 
 
     public interface OnCityChoosenListener {

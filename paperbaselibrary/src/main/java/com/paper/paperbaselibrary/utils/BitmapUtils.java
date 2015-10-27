@@ -25,6 +25,7 @@ public class BitmapUtils {
     public static void compressPic(String filePath, String outFile) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
         options.inSampleSize = calculateInSampleSize(options, 480, 800);//自定义一个宽和高
         options.inJustDecodeBounds = false;
         Bitmap bitmapmini = BitmapFactory.decodeFile(filePath, options);
@@ -36,7 +37,7 @@ public class BitmapUtils {
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         final int height = options.outHeight;//获取图片的高
         final int width = options.outWidth;//获取图片的框
-        int inSampleSize = 4;
+        int inSampleSize = 1;
         if (height > reqHeight || width > reqWidth) {
             final int heightRatio = Math.round((float) height / (float) reqHeight);
             final int widthRatio = Math.round((float) width / (float) reqWidth);
@@ -58,7 +59,7 @@ public class BitmapUtils {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+        mBitmap.compress(Bitmap.CompressFormat.PNG, 90, fOut);
         try {
             fOut.flush();
         } catch (IOException e) {

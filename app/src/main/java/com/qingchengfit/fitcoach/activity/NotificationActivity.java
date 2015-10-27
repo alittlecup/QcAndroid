@@ -76,6 +76,16 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
 
     }
 
+    @Override
+    public void ShowLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
 
     @Override
     public void onfinish() {

@@ -24,6 +24,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import im.fir.sdk.FIR;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
@@ -100,6 +101,7 @@ private RefWatcher refWatcher;
     //
     @Override
     public void onCreate() {
+        FIR.init(this);
         super.onCreate();
         MultiDex.install(this);
 //        LeakCanary.install(this);
