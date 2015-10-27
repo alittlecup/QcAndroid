@@ -76,13 +76,14 @@ public class DatePicker extends Dialog {
 
         mCurCalendar.add(Calendar.MONTH, 1);
         updateCalendar();
+        markCurDay();
 
     }
 
     public void minlusMonth() {
         mCurCalendar.add(Calendar.MONTH, -1);
         updateCalendar();
-
+        markCurDay();
     }
 
     private void updateCalendar() {

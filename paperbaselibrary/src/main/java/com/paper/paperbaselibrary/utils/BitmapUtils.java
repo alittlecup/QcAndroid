@@ -50,7 +50,7 @@ public class BitmapUtils {
         try {
             f.createNewFile();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         FileOutputStream fOut = null;
         try {

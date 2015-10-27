@@ -8,11 +8,11 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="always"/>
-    <!--<item-->
-    <!--android:id="@+id/action_myhome_share"-->
-    <!--android:icon="@drawable/ic_action_share"-->
-    <!--android:orderInCategory="90"-->
-    <!--android:title="@string/actionbar_share"-->
-    <!--app:showAsAction="always"-->
-    <!--/>-->
+    <item
+        android:id="@+id/action_myhome_share"
+        android:icon="@drawable/ic_action_share"
+        android:orderInCategory="90"
+        android:title="分享"
+        app:showAsAction="always"
+        />
 </menu>

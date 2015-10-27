@@ -15,7 +15,7 @@ import com.qingchengfit.fitcoach.fragment.SettingFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
+public class SettingActivity extends BaseAcitivity implements FragmentCallBack, WebActivityInterface {
 
     public static String TAG = SettingActivity.class.getName();
     FragmentManager fragmentManager;
@@ -73,6 +73,11 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack {
     @Override
     public void showToolbar() {
         toolbar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onfinish() {
+
     }
 
 

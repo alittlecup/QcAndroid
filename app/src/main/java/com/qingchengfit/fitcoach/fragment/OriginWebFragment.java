@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
@@ -31,6 +32,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -74,7 +76,7 @@ public class OriginWebFragment extends WebFragment {
     private List<String> mTitleStack = new ArrayList<>();
     private WebActivityInterface mActivityCallback;
     private ValueCallback<Uri> mUploadFile;
-
+    private boolean isTitle;
 
     public OriginWebFragment() {
     }
@@ -97,6 +99,7 @@ public class OriginWebFragment extends WebFragment {
         gson = new Gson();
         if (getArguments() != null) {
             base_url = getArguments().getString(BASE_URL);
+            isTitle = getArguments().getBoolean("isTitle");
         }
     }
 
@@ -106,9 +109,13 @@ public class OriginWebFragment extends WebFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
         ButterKnife.bind(this, view);
+
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setTitle("");
+        if (isTitle)
+            toolbar.setVisibility(View.GONE);
+
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
 
         webview.setWebViewClient(new WebViewClient() {
@@ -166,6 +173,7 @@ public class OriginWebFragment extends WebFragment {
                 startActivityForResult(Intent.createChooser(createCameraIntent(), "Image Browser"), REQUEST_UPLOAD_FILE_CODE);
             }
 
+
             private Intent createCameraIntent() {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//拍照
                 //=======================================================
@@ -175,6 +183,48 @@ public class OriginWebFragment extends WebFragment {
                 return cameraIntent;
             }
 
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                new MaterialDialog.Builder(getContext())
+                        .title(message)
+                        .cancelable(false)
+                        .positiveText("Ok")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                result.confirm();
+                            }
+                        })
+                        .show();
+                return true;
+            }
+
+            @Override
+            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                new MaterialDialog.Builder(getContext())
+                        .title(message)
+                        .positiveText("Ok")
+                        .negativeText("取消")
+                        .cancelable(false)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                result.confirm();
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                result.cancel();
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+                return true;
+            }
 
             @Override
             public void onReceivedTitle(WebView view, String title) {
@@ -246,7 +296,7 @@ public class OriginWebFragment extends WebFragment {
         //toolbar action callback
         toobarAction.setOnClickListener(v -> {
             if (webview != null)
-                webview.loadUrl("javascript:window.nativeLinkWeb.setAction();");
+                webview.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
         });
 //        mObservable = RxBus.getBus().register(NewPushMsg.class);
 //        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));

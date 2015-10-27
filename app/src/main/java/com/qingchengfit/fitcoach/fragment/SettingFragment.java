@@ -107,7 +107,7 @@ public class SettingFragment extends BaseSettingFragment {
                 fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
                 break;
             case R.id.setting_aboutus:
-                fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/"));
+                fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/", true));
                 fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
 //
 //  mFragmentManager.beginTransaction()

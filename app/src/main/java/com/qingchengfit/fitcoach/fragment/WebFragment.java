@@ -32,6 +32,20 @@ public class WebFragment extends Fragment {
         return fragment;
     }
 
+    public static WebFragment newInstance(String baseUrl, boolean isTitle) {
+        WebFragment fragment;
+//        if (App.canXwalk) {
+//            fragment = new XWalkFragment();
+//        } else {
+        fragment = new OriginWebFragment();
+//        }
+        Bundle args = new Bundle();
+        args.putBoolean("isTitle", isTitle);
+        args.putString(BASE_URL, baseUrl);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public void removeCookie() {
 
     }

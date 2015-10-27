@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -107,6 +108,8 @@ public class MyHomeFragment extends Fragment {
             if (item.getItemId() == R.id.action_myhome_settings) {
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
 //                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+            } else if (item.getItemId() == R.id.action_myhome_share) {
+                ShareUtils.oneKeyShared(App.AppContex, "", "", "测试");
             }
             return true;
         });

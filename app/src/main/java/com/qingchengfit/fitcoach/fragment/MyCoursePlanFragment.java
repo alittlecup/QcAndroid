@@ -55,7 +55,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
-            Intent toWeb = new Intent(getActivity(), WebActivity.class);
+            Intent toWeb = new Intent(getContext(), WebActivity.class);
             toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
             startActivityForResult(toWeb, 404);
             return true;
@@ -67,7 +67,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                Intent toWeb = new Intent(getContext(), WebActivity.class);
                 toWeb.putExtra("url", Configs.Server + "mobile/plans/" + adapterData.get(pos).id + "/");
                 startActivityForResult(toWeb, 404);
             }
@@ -79,6 +79,12 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                     getActivity().runOnUiThread(mGymAdapter::notifyDataSetChanged);
                 });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override

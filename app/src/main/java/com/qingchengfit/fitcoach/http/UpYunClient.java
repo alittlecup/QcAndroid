@@ -49,8 +49,11 @@ public class UpYunClient {
 
             ret = upYun.writeFile(path + userid + ".png", file, true);
         } catch (IOException e) {
-            LogUtil.d("Upyun", "upload headerimg err:" + e.getMessage());
+            LogUtil.d("upload headerimg err:" + e.getMessage());
             RevenUtils.sendException("upLoadImg", "UpYunClient", e);
+        } catch (Exception e) {
+            LogUtil.e("upload headerimg eer:" + e.getMessage());
+            e.printStackTrace();
         }
         return ret;
     }
