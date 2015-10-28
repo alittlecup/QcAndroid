@@ -34,6 +34,7 @@ public class DatePicker extends Dialog {
 
     private final RobotoCalendarView robotoCalendarView;
     private Calendar mCurCalendar;
+    private Calendar today;
     private int mMonthOffset = 0;
     public DatePicker(Context context) {
         super(context, R.style.ChoosePicDialogStyle);
@@ -41,7 +42,7 @@ public class DatePicker extends Dialog {
         setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         robotoCalendarView = (RobotoCalendarView) findViewById(R.id.calendarView);
         mCurCalendar = Calendar.getInstance(Locale.getDefault());
-
+        today = Calendar.getInstance(Locale.getDefault());
         robotoCalendarView.markDayAsSelectedDay(new Date());
 
 
@@ -76,14 +77,14 @@ public class DatePicker extends Dialog {
 
         mCurCalendar.add(Calendar.MONTH, 1);
         updateCalendar();
-        markCurDay();
+
 
     }
 
     public void minlusMonth() {
         mCurCalendar.add(Calendar.MONTH, -1);
         updateCalendar();
-        markCurDay();
+
     }
 
     private void updateCalendar() {
@@ -95,8 +96,8 @@ public class DatePicker extends Dialog {
     }
 
     public void markCurDay() {
-        if (mCurCalendar.get(Calendar.MONTH) == new Date().getMonth() &&
-                mCurCalendar.get(Calendar.YEAR) == new Date().getYear()
+        if (mCurCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
+                mCurCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)
                 ) {
             robotoCalendarView.markDayAsSelectedDay(new Date());
         }
