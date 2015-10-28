@@ -49,21 +49,24 @@
         <item name="android:textSize">@dimen/common_font</item>
         <item name="android:gravity">center_vertical</item>
     </style>
-     <style name="Qc.TextCommonBlack" parent="Base.TextAppearance.AppCompat">
+
+    <style name="Qc.TextCommonBlack" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/common_font</item>
-         <item name="android:gravity">center_vertical</item>
-     </style>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
     <style name="Qc.TextCommonWhite" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/large_font</item>
     </style>
+
     <style name="Qc.CommonBtn" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/selector_prime_btn</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="Qc.EditTextStyle" parent="Base.Widget.AppCompat.EditText">
         <item name="android:drawablePadding">@dimen/qc_edit_drawable_padding</item>
         <item name="android:gravity">center_vertical</item>
@@ -73,6 +76,7 @@
         <item name="android:textColorHint">@color/warm_grey</item>
 
     </style>
+
     <style name="Qc.EditHintStyle" parent="TextAppearance.AppCompat">
         <item name="android:paddingLeft">@dimen/qc_edit_drawable_padding</item>
     </style>
@@ -163,4 +167,8 @@
     <style name="Qc.RatingBar" parent="android:Widget.Holo.RatingBar.Small">
         <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

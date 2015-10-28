@@ -18,9 +18,10 @@ public class StudentBean {
     public String phoneStr;
     public String gymStr;
     public String headerPic;
-    public boolean gender;//此处服务器返回为"男" "女"
+    public boolean gender;
     public String systemUrl;
     public String head;
     public int id;
     public boolean isTag;
+    public boolean isChosen;
 }

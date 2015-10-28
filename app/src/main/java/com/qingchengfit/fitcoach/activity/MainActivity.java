@@ -243,6 +243,9 @@ private MaterialDialog loadingDialog;
             @Override
             public void onSuccess(AppVersion appVersion, boolean b) {
                 LogUtil.e(" fir:success" + appVersion);
+                if (appVersion.getVersionCode() <= AppUtils.getAppVerCode(App.AppContex))
+                    return;
+
                 url = appVersion.getUpdateUrl();
                 updateDialog = new MaterialDialog.Builder(MainActivity.this)
                         .title("前方发现新版本!!")
