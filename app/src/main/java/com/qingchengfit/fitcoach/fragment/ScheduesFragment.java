@@ -159,8 +159,8 @@ public class ScheduesFragment extends MainBaseFragment {
 //        btn3.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson"));
 //
         btn1.setOnClickListener(v1 -> onAction(1));
-        btn2.setOnClickListener(v1 -> onAction(2));
-        btn3.setOnClickListener(v1 -> onAction(3));
+        btn2.setOnClickListener(v1 -> onAction(3));
+        btn3.setOnClickListener(v1 -> onAction(2));
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
