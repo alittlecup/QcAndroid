@@ -20,6 +20,7 @@
     <color name="halftrans_background">#33000000</color>
     <color name="grey">#555555</color>
     <color name="warm_grey">#9b9b9b</color>
+    <color name="less_grey">#dddddd</color>
     <color name="orange">#e08f00</color>
     <color name="red">#ff5151</color>
     <color name="green">#66bb6a</color>
