@@ -54,7 +54,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
     @Override
     public void onfinish() {
-        setResult(1);
+
+        setResult(1001);
         this.finish();
     }
 }

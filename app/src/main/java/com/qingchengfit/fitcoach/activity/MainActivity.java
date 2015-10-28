@@ -886,7 +886,7 @@ private MaterialDialog loadingDialog;
                     changeFragment(mMyGymsFragment);
                     break;
                 default:
-                    changeFragment(mScheduesFragment);
+//                    changeFragment(mScheduesFragment);
                     break;
 
 

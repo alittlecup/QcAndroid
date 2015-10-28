@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -41,6 +42,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     private GymsAdapter mGymAdapter;
     private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
     public MyCoursePlanFragment() {
+
     }
 
 
@@ -57,7 +59,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         toolbar.setOnMenuItemClickListener(item -> {
             Intent toWeb = new Intent(getContext(), WebActivity.class);
             toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
-            startActivityForResult(toWeb, 404);
+            startActivityForResult(toWeb, 10001);
             return true;
         });
 
@@ -69,14 +71,16 @@ public class MyCoursePlanFragment extends MainBaseFragment {
             public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
                 toWeb.putExtra("url", Configs.Server + "mobile/plans/" + adapterData.get(pos).id + "/");
-                startActivityForResult(toWeb, 404);
+                startActivityForResult(toWeb, pos);
             }
         });
         recyclerview.setAdapter(mGymAdapter);
         QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcAllCoursePlanResponse -> {
+                    adapterData.clear();
                     adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                    getActivity().runOnUiThread(mGymAdapter::notifyDataSetChanged);
+                    mGymAdapter.notifyDataSetChanged();
                 });
         return view;
     }
@@ -84,7 +88,27 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+//        if (resultCode == Activity.RESULT_OK){
+        if (requestCode >= 0 && requestCode < 10000) {
+            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(qcAllCoursePlanResponse -> {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        mGymAdapter.notifyItemChanged(requestCode);
+                    });
+        } else {
+            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(qcAllCoursePlanResponse -> {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        mGymAdapter.notifyDataSetChanged();
+                        recyclerview.scrollToPosition(adapterData.size() - 1);
+                    });
+        }
+//        }
     }
 
     @Override
@@ -110,8 +134,6 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     }
 
     class GymsAdapter extends RecyclerView.Adapter<GymsVH> implements View.OnClickListener {
-
-
         private List<QcAllCoursePlanResponse.Plan> datas;
         private OnRecycleItemClickListener listener;
 

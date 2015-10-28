@@ -37,12 +37,15 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -81,12 +84,47 @@ public class MyHomeFragment extends Fragment {
     private int mHomeBgHeight = 1;
 
     private Gson gson;
+    Observer<QcMyhomeResponse> qcMyhomeResponseObserver = new Observer<QcMyhomeResponse>() {
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(QcMyhomeResponse qcMyhomeResponse) {
+            myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
+            myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
+            List<Fragment> fragments = new ArrayList<>();
+            fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
+            fragments.add(new RecordComfirmFragment());
+            fragments.add(new WorkExperienceFragment());
+            fragments.add(new StudentJudgeFragment());
+            FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
+            getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
+                    StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
+                            , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
+            myhomeViewpager.setAdapter(adatper);
+            myhomeViewpager.setOffscreenPageLimit(4);
+            myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
+            myhomeTab.setupWithViewPager(myhomeViewpager);
+            myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
+            myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
+            initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
+        }
+    };
     //    @Bind(R.id.myhome_coolaosingtoorbar)
     //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
+    private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
+
+
     public MyHomeFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -174,47 +212,12 @@ public class MyHomeFragment extends Fragment {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
         }
-
     }
 
     private void initUser() {
-
-        QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcMyhomeResponse -> {
-                    getActivity().runOnUiThread(() -> {
-                        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
-                        myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
-                        List<Fragment> fragments = new ArrayList<>();
-                        fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
-                        fragments.add(new RecordComfirmFragment());
-                        fragments.add(new WorkExperienceFragment());
-                        fragments.add(new StudentJudgeFragment());
-                        FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
-                        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
-                                StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
-                                        , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
-                        myhomeViewpager.setAdapter(adatper);
-                        myhomeViewpager.setOffscreenPageLimit(4);
-                        myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
-                        myhomeTab.setupWithViewPager(myhomeViewpager);
-                        myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
-                        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
-                        initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
-                    });
-
-
-                });
-
-//        String u = PreferenceUtils.getPrefString(App.AppContex, "user_info", "");
-//        if (!TextUtils.isEmpty(u)) {
-//            user = gson.fromJson(u, User.class);
-//
-//        } else {
-//            TODO ERROR
-//        }
-
-
+        qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+                .observeOn(AndroidSchedulers.mainThread());
+        qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
     }
 
     @Override
