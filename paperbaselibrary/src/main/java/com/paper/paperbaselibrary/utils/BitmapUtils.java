@@ -29,8 +29,12 @@ public class BitmapUtils {
         options.inSampleSize = calculateInSampleSize(options, 480, 800);//自定义一个宽和高
         options.inJustDecodeBounds = false;
         Bitmap bitmapmini = BitmapFactory.decodeFile(filePath, options);
-        saveMyBitmap(outFile, bitmapmini);
-        bitmapmini.recycle();
+        if (bitmapmini != null) {
+            saveMyBitmap(outFile, bitmapmini);
+            bitmapmini.recycle();
+        }
+
+
     }
 
     //计算图片的缩放值

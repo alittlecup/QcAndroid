@@ -18,6 +18,9 @@ public class FeedBackBean {
     String content;
     String photo;
 
+    public FeedBackBean() {
+    }
+
     public FeedBackBean(String email, String content) {
         this.email = email;
         this.content = content;
@@ -30,6 +33,13 @@ public class FeedBackBean {
         this.photo = photo;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public String getEmail() {
         return email;
