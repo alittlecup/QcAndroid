@@ -54,7 +54,6 @@ import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
-import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.okhttp.Call;
@@ -79,7 +78,6 @@ import im.fir.sdk.FIR;
 import im.fir.sdk.callback.VersionCheckCallback;
 import im.fir.sdk.version.AppVersion;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -245,6 +243,7 @@ private MaterialDialog loadingDialog;
             @Override
             public void onSuccess(AppVersion appVersion, boolean b) {
                 LogUtil.e(" fir:success" + appVersion);
+                url = appVersion.getUpdateUrl();
                 updateDialog = new MaterialDialog.Builder(MainActivity.this)
                         .title("前方发现新版本!!")
                         .content(appVersion.getChangeLog())
@@ -312,38 +311,38 @@ private MaterialDialog loadingDialog;
                 LogUtil.e(" fir:onFinish");
             }
         });
-        QcCloudClient.getApi().getApi.qcGetVersion()
-                .subscribe(new Observer<QcVersionResponse>() {
-                    @Override
-                    public void onCompleted() {
-                        LogUtil.e("onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.e("onError");
-                    }
-
-                    @Override
-                    public void onNext(QcVersionResponse qcVersionResponse) {
-                        if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
-
-
-                            url = qcVersionResponse.getData().getDownload().getAndroid();
-                            newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
-                            if (!newAkp.exists()) {
-                                try {
-                                    boolean ret = newAkp.createNewFile();
-                                } catch (IOException e) {
-                                }
-                            }
-                            runOnUiThread(() -> {
-
-                            });
-
-                        }
-                    }
-                });
+//        QcCloudClient.getApi().getApi.qcGetVersion()
+//                .subscribe(new Observer<QcVersionResponse>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        LogUtil.e("onCompleted");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        LogUtil.e("onError");
+//                    }
+//
+//                    @Override
+//                    public void onNext(QcVersionResponse qcVersionResponse) {
+//                        if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
+//
+//
+//                            url = qcVersionResponse.getData().getDownload().getAndroid();
+//                            newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
+//                            if (!newAkp.exists()) {
+//                                try {
+//                                    boolean ret = newAkp.createNewFile();
+//                                } catch (IOException e) {
+//                                }
+//                            }
+//                            runOnUiThread(() -> {
+//
+//                            });
+//
+//                        }
+//                    }
+//                });
 
     }
 
