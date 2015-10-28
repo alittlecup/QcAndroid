@@ -269,6 +269,7 @@ public class ScheduesFragment extends MainBaseFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
+                mFragmentAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -419,7 +420,7 @@ public class ScheduesFragment extends MainBaseFragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             calendar.add(Calendar.DAY_OF_MONTH, position - 30);
-            return ScheduleListFragment.newInstance(calendar.getTime().getTime());
+            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId);
         }
 
         @Override

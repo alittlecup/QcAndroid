@@ -78,10 +78,11 @@ public class ScheduleListFragment extends Fragment {
     public ScheduleListFragment() {
     }
 
-    public static ScheduleListFragment newInstance(Long date) {
+    public static ScheduleListFragment newInstance(Long date, int curentGym) {
 
         Bundle args = new Bundle();
         args.putLong("date", date);
+        args.putInt("gym", curentGym);
         ScheduleListFragment fragment = new ScheduleListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -92,6 +93,7 @@ public class ScheduleListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCurDate = new Date(getArguments().getLong("date"));
+            curentGym = getArguments().getInt("gym");
         } else mCurDate = new Date();
     }
 
