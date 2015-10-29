@@ -8,192 +8,204 @@
     tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment"
     >
 
-    <com.qingchengfit.fitcoach.component.HalfScrollView
-        android:id="@+id/myhome_scroller"
+    <android.support.v4.widget.SwipeRefreshLayout
+
+        android:id="@+id/sfl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical"
-        android:scrollbars="none"
+        android:layout_height="match_parent"
         >
 
-        <LinearLayout
-            android:id="@+id/halfscroll_first"
+        <com.qingchengfit.fitcoach.component.HalfScrollView
+            android:id="@+id/myhome_scroller"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroud_grey"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical"
+            android:scrollbars="none"
             >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                >
-
-                <ImageView
-                    android:id="@+id/myhome_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="172dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/img_selfinfo_bg"
-                    />
-
-                <ImageView
-                    android:id="@+id/myhome_header"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="130dp"
-                    android:scaleType="fitXY"
-
-                    />
-
-                <ImageView
-                    android:id="@+id/myhome_gender"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignBottom="@id/myhome_header"
-                    android:layout_alignRight="@id/myhome_header"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_gender_signal_female"
-                    />
-                <TextView
-                    android:id="@+id/myhome_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/myhome_header"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
-                <TextView
-
-                    android:id="@+id/myhome_brief"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/myhome_name"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:maxWidth="250dp"
-                    />
-                <TextView
-                    android:id="@+id/myhome_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/myhome_brief"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@drawable/ic_location"
-                    android:drawablePadding="10dp"
-                    android:text="北京"
-                    />
-
-                <ImageView
-                    android:id="@+id/myhome_sawtooth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/myhome_location"
-                    android:layout_marginTop="10dp"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider_grey"
-                ></View>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider_grey"
-                ></View>
-
-            <FrameLayout
-                android:id="@+id/myhome_student_judge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                ></FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider_grey"
-                ></View>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider_grey"
-                ></View>
-
-
-
             <LinearLayout
+                android:id="@+id/halfscroll_first"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="match_parent"
+                android:background="@color/backgroud_grey"
                 android:orientation="vertical"
                 >
 
                 <RelativeLayout
-                    android:id="@+id/myhome_tab_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    android:layout_gravity="bottom"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     >
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/myhome_tab"
-
+                    <ImageView
+                        android:id="@+id/myhome_bg"
                         android:layout_width="match_parent"
-                        android:layout_height="?android:attr/actionBarSize"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        app:tabGravity="center"
-                        app:tabIndicatorColor="@color/primary"
-                        app:tabIndicatorHeight="3dp"
-                        app:tabSelectedTextColor="@color/primary_dark"
-                        app:tabTextAppearance="@style/Qc.TextCommonGrey"
-                        app:tabTextColor="@color/text_grey"
-                        >
-                    </android.support.design.widget.TabLayout>
+                        android:layout_height="172dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_selfinfo_bg"
+                        />
 
-                    <View
+                    <ImageView
+                        android:id="@+id/myhome_header"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginTop="130dp"
+                        android:scaleType="fitXY"
+
+                        />
+
+                    <ImageView
+                        android:id="@+id/myhome_gender"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignBottom="@id/myhome_header"
+                        android:layout_alignRight="@id/myhome_header"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_gender_signal_female"
+                        />
+
+                    <TextView
+                        android:id="@+id/myhome_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/myhome_header"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="0dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+
+                        android:id="@+id/myhome_brief"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/myhome_name"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:maxWidth="250dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/myhome_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/myhome_brief"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/ic_location"
+                        android:drawablePadding="10dp"
+                        android:text="北京"
+                        />
+
+                    <ImageView
+                        android:id="@+id/myhome_sawtooth"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/warm_grey"
-                        >
-                    </View>
-
-
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/myhome_location"
+                        android:layout_marginTop="10dp"/>
                 </RelativeLayout>
 
-
-                <com.qingchengfit.fitcoach.component.MyhomeViewPager
-                    android:id="@+id/myhome_viewpager"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="700dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_grey"
+                    ></View>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/divider_grey"
+                    ></View>
+
+                <FrameLayout
+                    android:id="@+id/myhome_student_judge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
-                    />
+                    ></FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_grey"
+                    ></View>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/divider_grey"
+                    ></View>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/myhome_tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:layout_gravity="bottom"
+                        android:background="@color/white"
+                        >
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/myhome_tab"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="?android:attr/actionBarSize"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            app:tabGravity="center"
+                            app:tabIndicatorColor="@color/primary"
+                            app:tabIndicatorHeight="3dp"
+                            app:tabSelectedTextColor="@color/primary_dark"
+                            app:tabTextAppearance="@style/Qc.TextCommonGrey"
+                            app:tabTextColor="@color/text_grey"
+                            >
+                        </android.support.design.widget.TabLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/warm_grey"
+                            >
+                        </View>
+
+
+                    </RelativeLayout>
+
+
+                    <com.qingchengfit.fitcoach.component.MyhomeViewPager
+                        android:id="@+id/myhome_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="700dp"
+                        android:background="@color/white"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+        </com.qingchengfit.fitcoach.component.HalfScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    </com.qingchengfit.fitcoach.component.HalfScrollView>
     <include
         layout="@layout/common_toolbar"
         >
     </include>
 
 
-
 </RelativeLayout>
+
+

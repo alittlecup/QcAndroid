@@ -54,12 +54,6 @@ public class BaseInfoFragment extends BaseFragment {
     public BaseInfoFragment() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment BaseInfoFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static BaseInfoFragment newInstance(String param1, String param2) {
         BaseInfoFragment fragment = new BaseInfoFragment();
@@ -92,9 +86,9 @@ public class BaseInfoFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared || !isVisible) {
-            return;
-        }
+//        if (!isPrepared || !isVisible) {
+//            return;
+//        }
         if (TextUtils.isEmpty(mCoachInfo))
             return;
         QcMyhomeResponse.DataEntity.CoachEntity coachEntity = gson.fromJson(mCoachInfo, QcMyhomeResponse.DataEntity.CoachEntity.class);

@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
@@ -36,7 +38,6 @@ import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import java.util.ArrayList;
@@ -46,7 +47,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +81,8 @@ public class MyHomeFragment extends Fragment {
     MyhomeViewPager myhomeViewpager;
     @Bind(R.id.halfscroll_first)
     LinearLayout halfscrollFirst;
+    @Bind(R.id.sfl)
+    SwipeRefreshLayout sfl;
     private int mHomeBgHeight = 1;
 
     private Gson gson;
@@ -97,24 +99,7 @@ public class MyHomeFragment extends Fragment {
 
         @Override
         public void onNext(QcMyhomeResponse qcMyhomeResponse) {
-            myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
-            myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
-            List<Fragment> fragments = new ArrayList<>();
-            fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
-            fragments.add(new RecordComfirmFragment());
-            fragments.add(new WorkExperienceFragment());
-            fragments.add(new StudentJudgeFragment());
-            FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
-            getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
-                    StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
-                            , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
-            myhomeViewpager.setAdapter(adatper);
-            myhomeViewpager.setOffscreenPageLimit(4);
-            myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
-            myhomeTab.setupWithViewPager(myhomeViewpager);
-            myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
-            myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
-            initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
+            handleResponse(qcMyhomeResponse);
         }
     };
     //    @Bind(R.id.myhome_coolaosingtoorbar)
@@ -136,8 +121,6 @@ public class MyHomeFragment extends Fragment {
         toolbar.setTitle("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> {
-//            getActivity().onBackPressed();
-//            getActivity().overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
             ((MyHomeActivity) getActivity()).openDrawer();
         });
         toolbar.inflateMenu(R.menu.menu_myhome);
@@ -145,9 +128,8 @@ public class MyHomeFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_settings) {
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
-//                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
             } else if (item.getItemId() == R.id.action_myhome_share) {
-                ShareUtils.oneKeyShared(App.AppContex, "", "", "测试");
+                ShareUtils.oneKeyShared(App.AppContex, "", "", "测试");//分享
             }
             return true;
         });
@@ -182,8 +164,42 @@ public class MyHomeFragment extends Fragment {
         });
 
 //        Glide.with(App.AppContex).load(R.drawable.img_selfinfo_bg).into(myhomeBg);
-
+        initSRL();
         return view;
+    }
+
+    public void initSRL() {
+        sfl.setColorSchemeResources(R.color.primary);
+        sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initUser();
+            }
+        });
+    }
+
+
+    public void handleResponse(QcMyhomeResponse qcMyhomeResponse) {
+        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
+        myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
+        fragments.add(new RecordComfirmFragment());
+        fragments.add(new WorkExperienceFragment());
+        fragments.add(new StudentJudgeFragment());
+        FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
+        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
+                StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
+                        , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
+        myhomeViewpager.setAdapter(adatper);
+        myhomeViewpager.setOffscreenPageLimit(4);
+        myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
+        myhomeTab.setupWithViewPager(myhomeViewpager);
+        myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
+        myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
+        initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
+        PreferenceUtils.setPrefString(App.AppContex, "cache_myhome", gson.toJson(qcMyhomeResponse));
+        sfl.setRefreshing(false);
     }
 
     public void initHead(String userAvatar, int userGender) {
@@ -215,9 +231,15 @@ public class MyHomeFragment extends Fragment {
     }
 
     private void initUser() {
-        qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
-                .observeOn(AndroidSchedulers.mainThread());
-        qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
+        String cache = PreferenceUtils.getPrefString(App.AppContex, "cache_myhome", "");
+        if (!TextUtils.isEmpty(cache)) {
+            handleResponse(gson.fromJson(cache, QcMyhomeResponse.class));
+        }
+
+//        qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+//                .observeOn(AndroidSchedulers.mainThread());
+//        qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
+
     }
 
     @Override
