@@ -21,16 +21,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
+import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
@@ -39,11 +38,9 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 
 import java.util.ArrayList;
@@ -55,8 +52,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.Observer;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -158,50 +153,54 @@ public class MyStudentFragment extends MainBaseFragment {
      * 从通讯录读取学员
      */
     private void addStudentFromContact() {
-        openDrawerInterface.showLoading();
-        Observable.just("")
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, String>() {
-                    @Override
-                    public String call(String s) {
-                        return new Gson().toJson(PhoneFuncUtils.initContactList(getContext()));
-                    }
-                })
-                .flatMap(new Func1<String, Observable<QcResponse>>() {
-                    @Override
-                    public Observable<QcResponse> call(String s) {
-                        return QcCloudClient.getApi().postApi.qcPostCreatStudents(App.coachid, new PostStudents(s)).subscribeOn(Schedulers.io());
-                    }
-                }).subscribe(new Observer<QcResponse>() {
-            @Override
-            public void onCompleted() {
-                getActivity().runOnUiThread(() -> {
-                    openDrawerInterface.hideLoading();
-                    //获取原始数据
-                    QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
-                            .subscribe(qcAllStudentResponse -> {
-                                mQcAllStudentResponse = qcAllStudentResponse;
-                                handleResponse(qcAllStudentResponse);
-                            });
-                    Toast.makeText(getContext(), "导入联系人完成", Toast.LENGTH_SHORT).show();
-                });
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                getActivity().runOnUiThread(() -> {
-                    openDrawerInterface.hideLoading();
-                    Toast.makeText(getContext(), "导入联系人失败,请稍后再试", Toast.LENGTH_SHORT).show();
-                });
-            }
-
-            @Override
-            public void onNext(QcResponse qcResponse) {
-
-            }
-        });
+        startActivityForResult(new Intent(getContext(), ChooseStudentActivity.class), 400);
+//        openDrawerInterface.showLoading();
+//        Observable.just("")
+//                .subscribeOn(Schedulers.io())
+//                .map(new Func1<String, String>() {
+//                    @Override
+//                    public String call(String s) {
+//                        return new Gson().toJson(PhoneFuncUtils.initContactList(getContext()));
+//                    }
+//                })
+//                .flatMap(new Func1<String, Observable<QcResponse>>() {
+//                    @Override
+//                    public Observable<QcResponse> call(String s) {
+//                        return QcCloudClient.getApi().postApi.qcPostCreatStudents(App.coachid, new PostStudents(s)).subscribeOn(Schedulers.io());
+//                    }
+//                }).subscribe(new Observer<QcResponse>() {
+//            @Override
+//            public void onCompleted() {
+//                getActivity().runOnUiThread(() -> {
+//                    openDrawerInterface.hideLoading();
+//                    //获取原始数据
+//                    QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+//                            .subscribe(qcAllStudentResponse -> {
+//                                mQcAllStudentResponse = qcAllStudentResponse;
+//                                handleResponse(qcAllStudentResponse);
+//                            });
+//                    Toast.makeText(getContext(), "导入联系人完成", Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                getActivity().runOnUiThread(() -> {
+//                    openDrawerInterface.hideLoading();
+//                    Toast.makeText(getContext(), "导入联系人失败,请稍后再试", Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//
+//            @Override
+//            public void onNext(QcResponse qcResponse) {
+//
+//            }
+//        });
 
     }
+
+
+
 
     private void setUpSeachView() {
         searchviewEt.addTextChangedListener(new TextWatcher() {

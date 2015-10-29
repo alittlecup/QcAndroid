@@ -488,6 +488,11 @@ public class OriginWebFragment extends WebFragment {
             mActivityCallback.onfinish();
         }
 
+        @JavascriptInterface
+        public void setTitle(String s) {
+            toolbar.setTitle(s);
+        }
+
 
         @JavascriptInterface
         public String getContacts() {
