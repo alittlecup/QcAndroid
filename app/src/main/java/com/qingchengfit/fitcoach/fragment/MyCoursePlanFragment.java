@@ -89,15 +89,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        if (resultCode == Activity.RESULT_OK){
-        if (requestCode >= 0 && requestCode < 10000) {
-            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(qcAllCoursePlanResponse -> {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        mGymAdapter.notifyItemChanged(requestCode);
-                    });
-        } else {
+
+        if (resultCode > 1000) {
             QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -107,8 +100,15 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                         mGymAdapter.notifyDataSetChanged();
                         recyclerview.scrollToPosition(adapterData.size() - 1);
                     });
+        } else if (requestCode >= 0 && requestCode < 10000) {
+            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(qcAllCoursePlanResponse -> {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        mGymAdapter.notifyItemChanged(requestCode);
+                    });
         }
-//        }
     }
 
     @Override
