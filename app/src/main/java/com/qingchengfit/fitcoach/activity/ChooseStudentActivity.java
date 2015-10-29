@@ -88,6 +88,9 @@ public class ChooseStudentActivity extends BaseAcitivity {
                     s.isChosen = true;
                     chosenCount++;
                 }
+                if (chosenCount == studentBeans.size())
+                    choosestudentAll.setChecked(true);
+                else choosestudentAll.setChecked(false);
                 studentAdapter.notifyItemChanged(pos);
                 choosestudentChooseNum.setText(Integer.toString(chosenCount));
             }
