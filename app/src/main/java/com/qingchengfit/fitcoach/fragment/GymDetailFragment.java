@@ -17,6 +17,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -45,16 +46,18 @@ public class GymDetailFragment extends Fragment {
     private List<Integer> mlastPosition = new ArrayList<>();        //记录webview位置
     private List<String> mTitleStack = new ArrayList<>();           //记录标题
     private CookieManager cookieManager;
-
+    private MaterialDialog alertDialog;
+    private boolean isPrivate;
 
     public GymDetailFragment() {
     }
 
-    public static GymDetailFragment newInstance(int id, String host) {
+    public static GymDetailFragment newInstance(int id, String host, boolean isTag) {
 
         Bundle args = new Bundle();
         args.putInt("id", id);
         args.putString("host", host + "/mobile/coach/shop/welcome/");
+        args.putBoolean("isPrivate", isTag);
         GymDetailFragment fragment = new GymDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -66,7 +69,7 @@ public class GymDetailFragment extends Fragment {
         if (getArguments() != null) {
             id = getArguments().getInt("id");
             host = getArguments().getString("host");
-
+            isPrivate = getArguments().getBoolean("isPrivate");
         }
     }
 
@@ -81,10 +84,21 @@ public class GymDetailFragment extends Fragment {
         toolbar.setTitle("");
         toolbar.inflateMenu(R.menu.menu_edit);
         toolbar.setOnMenuItemClickListener(item -> {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.web_frag_layout, AddSelfGymFragment.newInstance(id))
-                    .addToBackStack(null)
-                    .commit();
+            if (isPrivate) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.web_frag_layout, AddSelfGymFragment.newInstance(id))
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                if (alertDialog == null) {
+                    alertDialog = new MaterialDialog.Builder(getContext())
+                            .content("您不能编辑所属健身房的信息，请先与健身房管理员联系获得权限")
+                            .autoDismiss(true)
+                            .positiveText("我知道了")
+                            .build();
+                }
+                alertDialog.show();
+            }
             return true;
         });
         webview.setWebViewClient(new WebViewClient() {

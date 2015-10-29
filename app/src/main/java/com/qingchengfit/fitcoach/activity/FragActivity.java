@@ -55,7 +55,8 @@ public class FragActivity extends BaseAcitivity {
             case 5:
                 int id = getIntent().getIntExtra("id", 1);
                 String host = getIntent().getStringExtra("host");
-                fragment = GymDetailFragment.newInstance(id, host);
+                boolean isPrivate = getIntent().getBooleanExtra("isPrivate", false);
+                fragment = GymDetailFragment.newInstance(id, host, isPrivate);
             default:
                 break;
         }

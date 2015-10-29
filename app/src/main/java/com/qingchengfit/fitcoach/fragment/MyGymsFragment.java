@@ -85,6 +85,7 @@ public class MyGymsFragment extends MainBaseFragment {
                 Intent toWeb = new Intent(getActivity(), FragActivity.class);
                 toWeb.putExtra("host", adapterData.get(pos).url);
                 toWeb.putExtra("id", adapterData.get(pos).id);
+                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
                 toWeb.putExtra("type", 5);
                 startActivityForResult(toWeb, 404);
 //                Intent toWeb = new Intent(getActivity() , WebActivity.class);
