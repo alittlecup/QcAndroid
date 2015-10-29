@@ -128,10 +128,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:clickable="false"
         app:atg_backgroundColor="@color/white"
         app:atg_borderColor="@color/text_black"
         app:atg_borderStrokeWidth="1dp"
         app:atg_checkedBackgroundColor="@color/white"
+        app:atg_isAppendMode="false"
         app:atg_textColor="@color/text_black"
         >
     </com.qingchengfit.fitcoach.component.TagGroup>

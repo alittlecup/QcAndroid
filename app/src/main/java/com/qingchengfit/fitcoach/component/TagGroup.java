@@ -432,13 +432,6 @@ public class TagGroup extends ViewGroup {
     }
 
     /**
-     * @see #setTags(String...)
-     */
-    public void setTags(List<String> tagList) {
-        setTags(tagList.toArray(new String[tagList.size()]));
-    }
-
-    /**
      * Set the tags. It will remove all previous tags first.
      *
      * @param tags the tag list to set.
@@ -452,6 +445,13 @@ public class TagGroup extends ViewGroup {
         if (isAppendMode) {
             appendInputTag();
         }
+    }
+
+    /**
+     * @see #setTags(String...)
+     */
+    public void setTags(List<String> tagList) {
+        setTags(tagList.toArray(new String[tagList.size()]));
     }
 
     /**
@@ -958,26 +958,26 @@ public class TagGroup extends ViewGroup {
             }
 
             if (isPressed) {
-                mBackgroundPaint.setColor(pressedBackgroundColor);
+//                mBackgroundPaint.setColor(pressedBackgroundColor);
             }
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            canvas.drawArc(mLeftCornerRectF, -180, 90, true, mBackgroundPaint);
-            canvas.drawArc(mLeftCornerRectF, -270, 90, true, mBackgroundPaint);
-            canvas.drawArc(mRightCornerRectF, -90, 90, true, mBackgroundPaint);
-            canvas.drawArc(mRightCornerRectF, 0, 90, true, mBackgroundPaint);
-            canvas.drawRect(mHorizontalBlankFillRectF, mBackgroundPaint);
-            canvas.drawRect(mVerticalBlankFillRectF, mBackgroundPaint);
+//            canvas.drawArc(mLeftCornerRectF, -180, 90, true, mBackgroundPaint);
+//            canvas.drawArc(mLeftCornerRectF, -270, 90, true, mBackgroundPaint);
+//            canvas.drawArc(mRightCornerRectF, -90, 90, true, mBackgroundPaint);
+//            canvas.drawArc(mRightCornerRectF, 0, 90, true, mBackgroundPaint);
+//            canvas.drawRect(mHorizontalBlankFillRectF, mBackgroundPaint);
+//            canvas.drawRect(mVerticalBlankFillRectF, mBackgroundPaint);
 
             if (isChecked) {
                 canvas.save();
                 canvas.rotate(45, mCheckedMarkerBound.centerX(), mCheckedMarkerBound.centerY());
-                canvas.drawLine(mCheckedMarkerBound.left, mCheckedMarkerBound.centerY(),
-                        mCheckedMarkerBound.right, mCheckedMarkerBound.centerY(), mCheckedMarkerPaint);
-                canvas.drawLine(mCheckedMarkerBound.centerX(), mCheckedMarkerBound.top,
-                        mCheckedMarkerBound.centerX(), mCheckedMarkerBound.bottom, mCheckedMarkerPaint);
+//                canvas.drawLine(mCheckedMarkerBound.left, mCheckedMarkerBound.centerY(),
+//                        mCheckedMarkerBound.right, mCheckedMarkerBound.centerY(), mCheckedMarkerPaint);
+//                canvas.drawLine(mCheckedMarkerBound.centerX(), mCheckedMarkerBound.top,
+//                        mCheckedMarkerBound.centerX(), mCheckedMarkerBound.bottom, mCheckedMarkerPaint);
                 canvas.restore();
             }
 
