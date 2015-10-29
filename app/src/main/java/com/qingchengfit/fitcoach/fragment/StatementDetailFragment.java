@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
@@ -44,6 +46,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -83,9 +86,9 @@ public class StatementDetailFragment extends Fragment {
         }
     };
     @Bind(R.id.statement_detail_less)
-    ImageView statementDetailLess;
+    ImageButton statementDetailLess;
     @Bind(R.id.statement_detail_more)
-    ImageView statementDetailMore;
+    ImageButton statementDetailMore;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<StatementBean> statementBeans = new ArrayList<>();
@@ -111,7 +114,7 @@ public class StatementDetailFragment extends Fragment {
     private int user_id = 0;
     private int mDividerType = 0;
     private Calendar curCalendar;
-
+    private MaterialDialog loadingDialog;
     public StatementDetailFragment() {
 
     }
@@ -137,6 +140,21 @@ public class StatementDetailFragment extends Fragment {
         StatementDetailFragment fragment = new StatementDetailFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void showLoading() {
+        if (loadingDialog == null)
+            loadingDialog = new MaterialDialog.Builder(getActivity())
+                    .content("请稍后")
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .build();
+        loadingDialog.show();
+    }
+
+    public void hideLoading() {
+        if (loadingDialog != null && loadingDialog.isShowing())
+            loadingDialog.dismiss();
     }
 
     @Override
@@ -189,7 +207,7 @@ public class StatementDetailFragment extends Fragment {
             statementDetailLess.setVisibility(View.VISIBLE);
             statementDetailMore.setVisibility(View.VISIBLE);
         }
-
+        statementDetailMore.setEnabled(false);//初始化右键不可点
         return view;
     }
 
@@ -269,13 +287,15 @@ public class StatementDetailFragment extends Fragment {
         mServerNum.clear();
         mAllStatemet.clear();
         mCourseNum.clear();
-
+        getActivity().runOnUiThread(() -> showLoading());
         Observable.from(mSystemsId)
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Func1<Integer, Observable<Boolean>>() {
                     @Override
                     public Observable<Boolean> call(Integer integer) {
                         return QcCloudClient.getApi().getApi.qcGetStatementDatail(App.coachid, getParams(integer))
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(qcStatementDetailRespone -> {
                                     mCourseNum.put(integer, qcStatementDetailRespone.data.stat.course_count);
                                     mOrderNum.put(integer, qcStatementDetailRespone.data.stat.order_count);
@@ -330,6 +350,7 @@ public class StatementDetailFragment extends Fragment {
         sb2.append(courseC).append("节课程  ").append(orderC).append("人预约  服务").append(serverC).append("人次");
 
         getActivity().runOnUiThread(() -> {
+            hideLoading();
             mStatementDetailAdapter.notifyDataSetChanged();
             if (statementBeans.size() > 0) {
                 recyclerview.setVisibility(View.VISIBLE);
@@ -400,6 +421,15 @@ public class StatementDetailFragment extends Fragment {
                         default:
                             break;
                     }
+
+                    getActivity().runOnUiThread(() -> {
+                        if (DateUtils.getDateDay(curCalendar.getTime()).equalsIgnoreCase(DateUtils.getDateDay(new Date()))) {
+                            statementDetailMore.setEnabled(false);
+                        } else {
+                            statementDetailMore.setEnabled(true);
+                        }
+                    });
+
 
                     return s1;
                 })

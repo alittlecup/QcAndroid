@@ -36,24 +36,25 @@
 
         >
 
-        <ImageView
+        <ImageButton
             android:id="@+id/statement_detail_less"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="@color/transparent"
             android:padding="25dp"
             android:src="@drawable/ic_triangle_left"
             />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/statement_detail_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="@color/transparent"
             android:padding="20dp"
-            android:src="@drawable/ic_arrow_right"
+            android:src="@drawable/btn_right"
             />
 
         <LinearLayout
@@ -110,17 +111,24 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:clipToPadding="false"
-            android:paddingBottom="50dp"
-            android:visibility="gone"
             >
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clipToPadding="false"
+                android:paddingBottom="50dp"
+                android:visibility="gone"
+                >
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
     </FrameLayout>
 
 </LinearLayout>

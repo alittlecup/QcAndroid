@@ -193,8 +193,6 @@ public class ChooseStudentActivity extends BaseAcitivity {
         TextView itemStudentPhonenum;
         @Bind(R.id.item_checkbox)
         CheckBox itemCheckbox;
-        @Bind(R.id.item_student_gender)
-        ImageView itemStudentGender;
         @Bind(R.id.item_student_alpha)
         TextView itemStudentAlpha;
 
@@ -230,12 +228,9 @@ public class ChooseStudentActivity extends BaseAcitivity {
 
 
             holder.itemStudentName.setText(studentBean.name);
-            holder.itemStudentPhonenum.setText(studentBean.phoneStr);
-            if (studentBean.gender) {//男
-                holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
-            } else {
-                holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_female);
-            }
+
+            holder.itemStudentPhonenum.setText("联系电话:" + studentBean.phoneStr);
+
             if (studentBean.isChosen) {
                 holder.itemCheckbox.setChecked(true);
             } else holder.itemCheckbox.setChecked(false);

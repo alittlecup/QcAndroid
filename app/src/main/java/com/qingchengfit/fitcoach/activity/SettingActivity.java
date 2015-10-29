@@ -92,7 +92,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     @Override
     public void hideLoading() {
         if (loadingDialog.isShowing())
-            loadingDialog.hide();
+            loadingDialog.dismiss();
     }
 
     @Override

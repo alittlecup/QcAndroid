@@ -2,12 +2,14 @@ package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.paper.paperbaselibrary.utils.MeasureUtils;
+import com.qingchengfit.fitcoach.R;
 
 /**
  * power by
@@ -42,7 +44,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      * 来绘制个性分割线
      */
     private Paint mPaint;
-
+    private Context context;
     /**
      * 构造方法传入布局方向，不可不传
      *
@@ -54,9 +56,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         if (orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL) {
             throw new IllegalArgumentException("请传入正确的参数");
         }
+        this.context = context;
 //        mItemSize = (float) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TypedValue.COMPLEX_UNIT_PX, context.getResources().getDisplayMetrics());
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.argb(200, 238, 238, 238));
+        mPaint.setColor(context.getResources().getColor(R.color.divider_grey));
          /*设置填充*/
         mPaint.setStyle(Paint.Style.FILL);
     }
@@ -119,9 +122,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == LinearLayoutManager.VERTICAL) {
-            outRect.set(0, 0, 0, mItemSize);
+            outRect.set(0, 0, 0, MeasureUtils.dpToPx((float) mItemSize, context.getResources()));
         } else {
-            outRect.set(0, 0, mItemSize, 0);
+            outRect.set(0, 0, MeasureUtils.dpToPx((float) mItemSize, context.getResources()), 0);
         }
     }
 }

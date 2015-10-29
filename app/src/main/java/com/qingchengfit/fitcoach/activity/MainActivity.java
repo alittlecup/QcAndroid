@@ -232,6 +232,13 @@ private MaterialDialog loadingDialog;
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putInt("mLastIndex", mLastIndex);
+
+    }
+
+    @Override
     public void hideLoading() {
         if (loadingDialog.isShowing())
             loadingDialog.hide();
