@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.App;
@@ -27,6 +29,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -39,8 +42,13 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     Toolbar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.course_add)
+    Button courseAdd;
+    @Bind(R.id.no_data)
+    LinearLayout noData;
     private GymsAdapter mGymAdapter;
     private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
+
     public MyCoursePlanFragment() {
 
     }
@@ -80,9 +88,23 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                 .subscribe(qcAllCoursePlanResponse -> {
                     adapterData.clear();
                     adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                    mGymAdapter.notifyDataSetChanged();
+                    if (adapterData.size() == 0) {
+                        noData.setVisibility(View.VISIBLE);
+                    } else {
+                        noData.setVisibility(View.GONE);
+                        mGymAdapter.notifyDataSetChanged();
+                    }
+
+
                 });
         return view;
+    }
+
+    @OnClick(R.id.course_add)
+    public void onAddCourse() {
+        Intent toWeb = new Intent(getContext(), WebActivity.class);
+        toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
+        startActivityForResult(toWeb, 10001);
     }
 
     @Override

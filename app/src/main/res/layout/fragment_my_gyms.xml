@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -9,11 +9,46 @@
     </include>
 
     <android.support.v7.widget.RecyclerView
+
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:clipToPadding="false"
         >
 
     </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/img_no_comment"
+            />
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="您还没有添加任何课程计划"
+
+            />
+
+        <Button
+            android:id="@+id/course_add"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginTop="20dp"
+            android:text="添加课程计划"
+            />
+    </LinearLayout>
+</RelativeLayout>
