@@ -29,8 +29,7 @@ public class UpYunClient {
 
     public static UpYun init() {
         UpYun upyun = new UpYun("zoneke-img", "qcandroid", "07279e9e81c661b259f93a457d6491af");
-        upyun.setDebug(true);
-        upyun.setTimeout(60);
+        upyun.setTimeout(30);
         upyun.setApiDomain(UpYun.ED_AUTO);
         return upyun;
     }
@@ -46,7 +45,6 @@ public class UpYunClient {
         boolean ret = false;
         try {
 
-            upYun.setDebug(true);
             upYun.setContentMD5(UpYun.md5(file));
 
             ret = upYun.writeFile(path + userid + ".png", file, true);

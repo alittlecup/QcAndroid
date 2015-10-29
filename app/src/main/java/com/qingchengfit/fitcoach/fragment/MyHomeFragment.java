@@ -38,6 +38,7 @@ import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.HalfScrollView;
 import com.qingchengfit.fitcoach.component.MyhomeViewPager;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -236,9 +238,9 @@ public class MyHomeFragment extends Fragment {
             handleResponse(gson.fromJson(cache, QcMyhomeResponse.class));
         }
 
-//        qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
-//                .observeOn(AndroidSchedulers.mainThread());
-//        qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
+        qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+                .observeOn(AndroidSchedulers.mainThread());
+        qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
 
     }
 

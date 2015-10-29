@@ -211,6 +211,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
         android:gravity="bottom|center_horizontal"
-        android:text="青橙科技"
+        android:text=""
         />
 </LinearLayout>

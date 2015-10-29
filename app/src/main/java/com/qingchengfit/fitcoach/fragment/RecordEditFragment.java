@@ -23,6 +23,7 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.BitmapUtils;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
@@ -43,6 +44,7 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
 import java.util.Date;
+import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -286,22 +288,29 @@ public class RecordEditFragment extends BaseSettingFragment {
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = FILE_PATH;
             LogUtil.d(filepath);
+            fragmentCallBack.ShowLoading();
             Observable.just(filepath)
-                    .subscribeOn(Schedulers.newThread())
+                    .subscribeOn(Schedulers.io())
                     .subscribe(s -> {
-                        File upFile = new File(s);
-                        boolean reslut = UpYunClient.upLoadImg("/certificate/", Integer.toString(App.coachid), upFile);
-                        if (reslut) {
-                            LogUtil.d("success");
-                            getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(Uri.fromFile(upFile))
-                                    .into(recordeditImg));
-                            recordeditImg.setVisibility(View.VISIBLE);
-                            addCertificate.setPhoto(UpYunClient.UPYUNPATH + "certificate/" + Integer.toString(App.coachid) + ".png");
+                        String filename = UUID.randomUUID().toString();
+                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
+                        File upFile = new File(Configs.ExternalCache + filename);
+                        boolean reslut = UpYunClient.upLoadImg("/certificate/", filename, upFile);
+                        getActivity().runOnUiThread(() -> {
+                            fragmentCallBack.hideLoading();
 
+                            if (reslut) {
 
-                        } else {
-                            Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
-                        }
+                                LogUtil.d("success");
+                                Glide.with(App.AppContex).load(Uri.fromFile(upFile))
+                                        .into(recordeditImg);
+                                recordeditImg.setVisibility(View.VISIBLE);
+                                addCertificate.setPhoto(UpYunClient.UPYUNPATH + "/certificate/" + filename + ".png");
+
+                            } else {
+                                Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     });
 
         } else if (requestCode == 10010 && resultCode > 0) {
