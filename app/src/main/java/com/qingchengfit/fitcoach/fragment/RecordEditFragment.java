@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
@@ -99,7 +100,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     private Gson gson = new Gson();
     private QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity;
     private AddCertificate addCertificate;
-
+    private MaterialDialog delDialog;
     public RecordEditFragment() {
     }
 
@@ -121,6 +122,33 @@ public class RecordEditFragment extends BaseSettingFragment {
         return fragment;
     }
 
+    private void showDialog() {
+        if (delDialog == null) {
+            delDialog = new MaterialDialog.Builder(getContext())
+                    .autoDismiss(true)
+                    .title("是否确定删除")
+                    .positiveText("确定")
+                    .negativeText("取消")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> onResult(qcResponse));
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            dialog.dismiss();
+                        }
+                    })
+                    .cancelable(false)
+                    .build();
+        }
+        delDialog.show();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,16 +162,16 @@ public class RecordEditFragment extends BaseSettingFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
         fragmentCallBack.onToolbarClickListener(item1 -> {
             if (certificatesEntity != null) {
-                QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
+                showDialog();
             }
             return true;
-        });//TODO 删除该条记录
+        });
         if (addCertificate == null)
             addCertificate = new AddCertificate(App.coachid);
         if (mContent != null) {

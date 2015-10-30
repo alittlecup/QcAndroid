@@ -52,6 +52,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     RelativeLayout recordConfirmNone;
     private WorkExepAdapter adapter;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

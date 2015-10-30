@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
@@ -83,6 +84,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
     private AddWorkExperience addWorkExperience;
+    private MaterialDialog delDialog;
 
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
 
@@ -93,6 +95,43 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         WorkExpeEditFragment fragment = new WorkExpeEditFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void showDialog() {
+        if (delDialog == null) {
+            delDialog = new MaterialDialog.Builder(getContext())
+                    .autoDismiss(true)
+                    .title("是否确定删除")
+                    .positiveText("确定")
+                    .negativeText("取消")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
+                                    .subscribe(aBoolean -> {
+                                        if (aBoolean) {
+                                            getActivity().onBackPressed();
+                                            Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
+                                        } else
+                                            Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
+                                    });
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            dialog.dismiss();
+                        }
+                    })
+                    .cancelable(false)
+                    .build();
+        }
+        delDialog.show();
     }
 
     @Override
@@ -120,17 +159,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
-                            .subscribe(aBoolean -> {
-                                if (aBoolean) {
-                                    getActivity().onBackPressed();
-                                    Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
-                                } else
-                                    Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
-                            });
+                    showDialog();
                     return true;
                 }
             });

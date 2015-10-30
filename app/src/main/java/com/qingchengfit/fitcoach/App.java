@@ -116,9 +116,11 @@ private RefWatcher refWatcher;
             @Override
             public void handleError(Throwable e) {
 
-                e.printStackTrace();
-                if (e != null)
+                if (e != null) {
                     LogUtil.e("rxError:" + e.getMessage() + e.getCause());
+                    e.printStackTrace();
+
+                }
             }
         });
 

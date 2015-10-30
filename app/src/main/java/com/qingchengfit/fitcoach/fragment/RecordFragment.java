@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,20 +43,16 @@ public class RecordFragment extends BaseSettingFragment {
     RelativeLayout recordConfirmNone;
     private RecordComfirmAdapter adapter;
 
-    public RecordFragment() {
-    }
 
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         ButterKnife.bind(this, view);
-
+        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
             fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
-            return true;
-
+            return false;
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -84,10 +81,10 @@ public class RecordFragment extends BaseSettingFragment {
         return view;
     }
 
+
     @Override
-    public void onResume() {
-        super.onResume();
-        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
