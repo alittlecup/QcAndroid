@@ -22,7 +22,6 @@ import android.webkit.WebViewClient;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -112,7 +111,7 @@ public class MainWebFragment extends MainBaseFragment {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.d("shouldOverrideUrlLoading" + url);
+
                 if (!url.equalsIgnoreCase(base_url)) {
                     openDrawerInterface.goWeb(url);
                     return true;
@@ -120,7 +119,11 @@ public class MainWebFragment extends MainBaseFragment {
                     return super.shouldOverrideUrlLoading(view, url);
             }
 
-
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+//                super.onReceivedError(view, errorCode, description, failingUrl);
+                webview.loadUrl("");
+            }
         });
 
 

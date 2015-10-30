@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,9 @@ import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -48,7 +52,7 @@ public class GymDetailFragment extends Fragment {
     private CookieManager cookieManager;
     private MaterialDialog alertDialog;
     private boolean isPrivate;
-
+    private MaterialDialog delDialog;
     public GymDetailFragment() {
     }
 
@@ -61,6 +65,26 @@ public class GymDetailFragment extends Fragment {
         GymDetailFragment fragment = new GymDetailFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void showDialog() {
+        if (delDialog == null) {
+            delDialog = new MaterialDialog.Builder(getContext())
+                    .autoDismiss(true)
+                    .title("请检查您的网络")
+                    .positiveText("确定")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+
+                            dialog.dismiss();
+                        }
+                    })
+                    .cancelable(false)
+                    .build();
+        }
+        delDialog.show();
     }
 
     @Override
@@ -92,7 +116,7 @@ public class GymDetailFragment extends Fragment {
             } else {
                 if (alertDialog == null) {
                     alertDialog = new MaterialDialog.Builder(getContext())
-                            .content("您不能编辑所属健身房的信息，请先与健身房管理员联系获得权限")
+                            .content("您不能直接编辑所属健身房信息，请联系健身房管理员在青橙后台修改")
                             .autoDismiss(true)
                             .positiveText("我知道了")
                             .build();
@@ -106,12 +130,14 @@ public class GymDetailFragment extends Fragment {
                                      @Override
                                      public void onPageStarted(WebView view, String url, Bitmap favicon) {
                                          super.onPageStarted(view, url, favicon);
+                                         LogUtil.e("url:" + url);
+
                                      }
 
                                      @Override
                                      public void onPageFinished(WebView view, String url) {
                                          super.onPageFinished(view, url);
-
+                                         LogUtil.e("url:" + url);
                                      }
 
                                      @Override
@@ -122,18 +148,39 @@ public class GymDetailFragment extends Fragment {
 
                                      @Override
                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+                                         LogUtil.e("url:" + url);
                                          if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
                                              mTitleStack.add(toolbar.getTitle().toString());
                                              WebBackForwardList webBackForwardList = webview.copyBackForwardList();
                                              mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                                             toolbar.getMenu().clear();
                                              LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                                          }
                                          return super.shouldOverrideUrlLoading(view, url);
                                      }
 
+                                     @Override
+                                     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+//                                         super.onReceivedHttpError(view, request, errorResponse);
+                                         toolbar.getMenu().clear();
 
+                                     }
+
+                                     @Override
+                                     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                                         super.onReceivedError(view, request, error);
+                                         LogUtil.e("onReceivedError 1");
+                                     }
+
+                                     @Override
+                                     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                         LogUtil.e("onReceivedError");
+                                         webview.loadUrl("");
+                                         showDialog();
+//                                         super.onReceivedError(view, errorCode, description, failingUrl);
+                                     }
                                  }
+
 
         );
 
@@ -141,6 +188,14 @@ public class GymDetailFragment extends Fragment {
         webview.setWebChromeClient(new
 
                                            WebChromeClient() {
+
+
+                                               @Override
+                                               public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                                                   LogUtil.e("showfilechooser");
+                                                   return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
+                                               }
+
                                                @Override
                                                public void onReceivedTitle(WebView view, String title) {
                                                    super.onReceivedTitle(view, title);
@@ -156,7 +211,6 @@ public class GymDetailFragment extends Fragment {
 
         );
         webview.getSettings().
-
                 setJavaScriptEnabled(true);
 
         String s = webview.getSettings().getUserAgentString();
@@ -242,6 +296,9 @@ public class GymDetailFragment extends Fragment {
         toolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
+        if (!canGoBack()) {
+            toolbar.inflateMenu(R.menu.menu_edit);
+        }
     }
 
 }

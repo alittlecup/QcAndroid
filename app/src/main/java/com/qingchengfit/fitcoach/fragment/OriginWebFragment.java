@@ -27,6 +27,8 @@ import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -77,8 +79,28 @@ public class OriginWebFragment extends WebFragment {
     private WebActivityInterface mActivityCallback;
     private ValueCallback<Uri> mUploadFile;
     private boolean isTitle;
-
+    private MaterialDialog delDialog;
     public OriginWebFragment() {
+    }
+
+    private void showDialog() {
+        if (delDialog == null) {
+            delDialog = new MaterialDialog.Builder(getContext())
+                    .autoDismiss(true)
+                    .title("请检查您的网络")
+                    .positiveText("确定")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+
+                            dialog.dismiss();
+                        }
+                    })
+                    .cancelable(false)
+                    .build();
+        }
+        delDialog.show();
     }
 
     @Override
@@ -150,11 +172,29 @@ public class OriginWebFragment extends WebFragment {
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+//                super.onReceivedError(view, errorCode, description, failingUrl);
+                LogUtil.e("errorCode:" + errorCode);
+                toolbar.setTitle("");
+                webview.loadUrl("");
+                showDialog();
 
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+            }
         });
 
 
         webview.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                LogUtil.e("showfilechooser");
+                return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
+            }
 
             // Andorid 4.1+
             public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String capture) {

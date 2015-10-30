@@ -115,6 +115,7 @@ public class StatementDetailFragment extends Fragment {
     private int mDividerType = 0;
     private Calendar curCalendar;
     private MaterialDialog loadingDialog;
+
     public StatementDetailFragment() {
 
     }
@@ -297,22 +298,26 @@ public class StatementDetailFragment extends Fragment {
                         return QcCloudClient.getApi().getApi.qcGetStatementDatail(App.coachid, getParams(integer))
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(qcStatementDetailRespone -> {
-                                    mCourseNum.put(integer, qcStatementDetailRespone.data.stat.course_count);
-                                    mOrderNum.put(integer, qcStatementDetailRespone.data.stat.order_count);
-                                    mServerNum.put(integer, qcStatementDetailRespone.data.stat.user_count);
+                                    if (qcStatementDetailRespone.data.stat != null) {
+                                        mCourseNum.put(integer, qcStatementDetailRespone.data.stat.course_count);
+                                        mOrderNum.put(integer, qcStatementDetailRespone.data.stat.order_count);
+                                        mServerNum.put(integer, qcStatementDetailRespone.data.stat.user_count);
+                                    }
                                     List<QcScheduleBean> beans = qcStatementDetailRespone.data.schedules;
                                     List<StatementBean> statementBeans = new ArrayList<StatementBean>();
-                                    for (int i = 0; i < beans.size(); i++) {
-                                        QcScheduleBean b = beans.get(i);
-                                        StatementBean bean = new StatementBean();
-                                        bean.title = b.course.name;
-                                        bean.picture = b.course.photo;
-                                        bean.date = DateUtils.formatDateFromServer(b.start);
-                                        StringBuffer sb = new StringBuffer();
-                                        sb.append(DateUtils.getTimeHHMM(bean.date)).append("-").append(DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(b.end)))
-                                                .append("  ").append(b.users).append("  ").append(b.count).append("人");
-                                        bean.content = sb.toString();
-                                        statementBeans.add(bean);
+                                    if (beans != null) {
+                                        for (int i = 0; i < beans.size(); i++) {
+                                            QcScheduleBean b = beans.get(i);
+                                            StatementBean bean = new StatementBean();
+                                            bean.title = b.course.name;
+                                            bean.picture = b.course.photo;
+                                            bean.date = DateUtils.formatDateFromServer(b.start);
+                                            StringBuffer sb = new StringBuffer();
+                                            sb.append(DateUtils.getTimeHHMM(bean.date)).append("-").append(DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(b.end)))
+                                                    .append("  ").append(b.users).append("  ").append(b.count).append("人");
+                                            bean.content = sb.toString();
+                                            statementBeans.add(bean);
+                                        }
                                     }
                                     mAllStatemet.put(integer, statementBeans);
                                     return Observable.just(true);
@@ -337,9 +342,12 @@ public class StatementDetailFragment extends Fragment {
         for (Integer key : mAllStatemet.keySet()) {
             if (curSystemId != 0 && curSystemId != key)
                 continue;
-            orderC += mOrderNum.get(key);
-            serverC += mServerNum.get(key);
-            courseC += mCourseNum.get(key);
+            if (mOrderNum.get(key) != null)
+                orderC += mOrderNum.get(key);
+            if (mServerNum.get(key) != null)
+                serverC += mServerNum.get(key);
+            if (mCourseNum.get(key) != null)
+                courseC += mCourseNum.get(key);
             statementBeans.addAll(mAllStatemet.get(key));
         }
 
