@@ -233,6 +233,12 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     }
 
+
+    @OnClick(R.id.workexpedit_expe_layout)
+    public void onDescripte() {
+        workexpeditDescripe.requestFocus();
+    }
+
     @OnClick(R.id.workexpedit_gym_name)
     public void onClickGym() {
         Intent toSearch = new Intent(getActivity(), SearchActivity.class);

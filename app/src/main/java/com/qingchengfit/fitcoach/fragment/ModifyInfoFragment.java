@@ -230,8 +230,13 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     }
 
+    @OnClick(R.id.modifyinfo_sign_layout)
+    public void onClickSign() {
+        modifyinfoSignEt.requestFocus();
+    }
 
-    @OnClick(R.id.modifyinfo_header_pic)
+
+    @OnClick(R.id.modifyinfo_header_layout)
     public void onChangeHeader() {
 
         PicChooseDialog dialog = new PicChooseDialog(getActivity());
