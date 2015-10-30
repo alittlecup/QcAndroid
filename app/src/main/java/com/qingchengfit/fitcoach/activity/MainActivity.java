@@ -468,17 +468,17 @@ private MaterialDialog loadingDialog;
 
         SegmentLayout button = new SegmentLayout(this);
         button.setText("日程安排");
-        button.setId(View.generateViewId());
+        button.setId(ids[0]);
         button.setDrawables(R.drawable.ic_drawer_schedule_normal, R.drawable.ic_drawer_schedule_checked);
         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         SegmentLayout button2 = new SegmentLayout(this);
-        button2.setId(View.generateViewId());
+        button2.setId(ids[1]);
         button2.setText("数据报表");
         button2.setDrawables(R.drawable.ic_drawer_statistic_normal, R.drawable.ic_drawer_statistic_checked);
         drawerRadiogroup.addView(button2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         SegmentLayout button3 = new SegmentLayout(this);
         button3.setText("会议培训");
-        button3.setId(View.generateViewId());
+        button3.setId(ids[2]);
         button3.setDrawables(R.drawable.ic_drawer_meeting_normal, R.drawable.ic_drawer_meeting_checked);
         drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
