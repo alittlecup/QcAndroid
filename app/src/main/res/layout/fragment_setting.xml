@@ -89,6 +89,7 @@
     <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
     <!--android:background="@color/divider_white"-->
     <!--></View>-->
+    <include layout="@layout/divider_grey"></include>
     <RelativeLayout
         android:id="@+id/setting_modifypw"
         android:layout_width="match_parent"
@@ -146,6 +147,7 @@
     <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
     <!--android:background="@color/divider_white"-->
     <!--></View>-->
+    <include layout="@layout/divider_grey"></include>
 
     <RelativeLayout
         android:id="@+id/setting_advice"

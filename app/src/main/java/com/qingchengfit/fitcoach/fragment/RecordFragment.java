@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 
@@ -57,6 +58,7 @@ public class RecordFragment extends BaseSettingFragment {
 
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
                 if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {

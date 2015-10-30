@@ -198,8 +198,6 @@ private MaterialDialog loadingDialog;
         if (mDownloadThread != null)
             mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
-
-//        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
     /**
@@ -233,8 +231,6 @@ private MaterialDialog loadingDialog;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putInt("mLastIndex", mLastIndex);
 
     }
 
@@ -254,6 +250,7 @@ private MaterialDialog loadingDialog;
                     return;
 
                 url = appVersion.getUpdateUrl();
+                newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + appVersion.getVersionName() + ".apk");
                 updateDialog = new MaterialDialog.Builder(MainActivity.this)
                         .title("前方发现新版本!!")
                         .content(appVersion.getChangeLog())
@@ -363,10 +360,8 @@ private MaterialDialog loadingDialog;
             user = gson.fromJson(u, User.class);
             App.setgUser(user);
         } else {
-            //TODO ERROR
         }
         drawerName.setText(user.username);
-
         //初始化initCoach
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {
