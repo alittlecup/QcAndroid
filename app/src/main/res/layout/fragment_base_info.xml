@@ -21,12 +21,12 @@
         >
     </View>
 
-    <TextView
-        style="@style/Qc.TextCommonGrey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/myhome_baseinfo_introduce"
-        />
+    <!--<TextView-->
+    <!--style="@style/Qc.TextCommonGrey"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/myhome_baseinfo_introduce"-->
+    <!--/>-->
 
     <TextView
         style="@style/Qc.TextCommonBlack"

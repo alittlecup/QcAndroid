@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -22,6 +25,7 @@ import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -148,6 +152,21 @@ public class MyHomeActivity extends AppCompatActivity {
 
             }
         });
+
+        /**
+         * load cache
+         */
+        String cache = PreferenceUtils.getPrefString(App.AppContex, "drawer_info", "");
+        if (!TextUtils.isEmpty(cache)) {
+            QcDrawerResponse qcDrawerResponse = new Gson().fromJson(cache, QcDrawerResponse.class);
+            Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
+            drawerName.setText(qcDrawerResponse.data.coach.username);
+            item.setCount(qcDrawerResponse.data.user_count);
+            item1.setCount(qcDrawerResponse.data.plan_count);
+            item2.setCount(qcDrawerResponse.data.system_count);
+            PreferenceUtils.setPrefString(App.AppContex, "drawer_info", new Gson().toJson(qcDrawerResponse));
+        }
+
     }
 
 

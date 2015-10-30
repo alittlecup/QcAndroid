@@ -94,7 +94,7 @@ public class StudentJudgeFragment extends BaseFragment {
 
             String count = Integer.toString(mEntityls.getTotal_count());
 //            String count = "1000";
-            SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
+            SpannableString s = new SpannableString("评分基于\n" + count + "条评论");
             s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primary)), 4, 4 + count.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             studentJudgeText.setText(s);
         } else {
