@@ -45,8 +45,10 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.WebActivityInterface;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
+import com.qingchengfit.fitcoach.bean.ShareBean;
 import com.qingchengfit.fitcoach.bean.ToolbarAction;
 
 import java.io.File;
@@ -497,6 +499,12 @@ public class OriginWebFragment extends WebFragment {
         @JavascriptInterface
         public String getToken() {
             return PreferenceUtils.getPrefString(App.AppContex, "token", "");
+        }
+
+        @JavascriptInterface
+        public void shareInfo(String json) {
+            ShareBean bean = gson.fromJson(json, ShareBean.class);
+            ShareUtils.oneKeyShared(getContext(), bean.title, bean.imgUrl, bean.desc, bean.title);
         }
 
 
