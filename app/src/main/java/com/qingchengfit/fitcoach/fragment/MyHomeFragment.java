@@ -131,7 +131,7 @@ public class MyHomeFragment extends Fragment {
             if (item.getItemId() == R.id.action_myhome_settings) {
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
             } else if (item.getItemId() == R.id.action_myhome_share) {
-                ShareUtils.oneKeyShared(App.AppContex, "", "", "测试");//分享
+                ShareUtils.oneKeyShared(App.AppContex, "", "", "测试", "");//分享
             }
             return true;
         });

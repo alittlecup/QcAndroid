@@ -66,8 +66,9 @@ public class RecordFragment extends BaseSettingFragment {
 //                        ComfirmDetailFragment fragment =
 //                                ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
                         RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)));
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment)
-                                .show(fragment).addToBackStack("").commit();
+//                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment)
+//                                .show(fragment).addToBackStack("").commit();
+                        fragmentCallBack.onFragmentChange(fragment);
                     });
                     recyclerview.setAdapter(adapter);
                 } else {
@@ -82,10 +83,6 @@ public class RecordFragment extends BaseSettingFragment {
     }
 
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     @Override
     public void onDestroyView() {
