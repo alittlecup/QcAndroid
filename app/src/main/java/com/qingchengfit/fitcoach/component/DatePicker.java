@@ -88,7 +88,9 @@ public class DatePicker extends Dialog {
     }
 
     private void updateCalendar() {
+
         robotoCalendarView.initializeCalendar(mCurCalendar);
+        markCurDay();
     }
 
     public void markDay(String day) {
