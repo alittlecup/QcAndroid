@@ -130,6 +130,7 @@ public class LoginView extends RelativeLayout {
                 mCheckCodeInputLaout.getEditText().setText("");
             }
         });
+        mForgotPwBtn.toggle();
 
         mPhoneNumInputLayout.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
