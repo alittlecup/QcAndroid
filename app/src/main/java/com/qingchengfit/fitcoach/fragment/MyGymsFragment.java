@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +41,8 @@ public class MyGymsFragment extends MainBaseFragment {
     Toolbar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private GymsAdapter mGymAdapter;
     private List<QcCoachSystemDetailResponse.CoachSystemDetail> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
@@ -93,6 +96,36 @@ public class MyGymsFragment extends MainBaseFragment {
 //                startActivity(toWeb);
             }
         });
+//        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .map(qcCoachSystemDetailResponse -> {
+//                    adapterData.clear();
+//                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
+//                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
+//                        if (systemDetail.is_personal_system) {
+//                            mHasPrivate = true;
+//                            break;
+//                        } else mHasPrivate = false;
+//
+//                    }
+//                    return true;
+//                })
+//                .subscribe(aBoolean -> mGymAdapter.notifyDataSetChanged());
+        freshData();
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                freshData();
+            }
+        });
+
+        return view;
+
+    }
+
+    public void freshData() {
         QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -108,10 +141,12 @@ public class MyGymsFragment extends MainBaseFragment {
                     }
                     return true;
                 })
-                .subscribe(aBoolean -> mGymAdapter.notifyDataSetChanged());
-        return view;
-
+                .subscribe(aBoolean -> {
+                    mGymAdapter.notifyDataSetChanged();
+                    refresh.setRefreshing(false);
+                });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

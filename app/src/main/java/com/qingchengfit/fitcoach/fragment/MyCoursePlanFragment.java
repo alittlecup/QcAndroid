@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +47,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     Button courseAdd;
     @Bind(R.id.no_data)
     LinearLayout noData;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private GymsAdapter mGymAdapter;
     private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
 
@@ -83,6 +86,32 @@ public class MyCoursePlanFragment extends MainBaseFragment {
             }
         });
         recyclerview.setAdapter(mGymAdapter);
+//        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(qcAllCoursePlanResponse -> {
+//                    adapterData.clear();
+//                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+//                    if (adapterData.size() == 0) {
+//                        noData.setVisibility(View.VISIBLE);
+//                    } else {
+//                        noData.setVisibility(View.GONE);
+//                        mGymAdapter.notifyDataSetChanged();
+//                    }
+//
+//
+//                });
+        freshData();
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                freshData();
+            }
+        });
+        return view;
+    }
+
+    public void freshData() {
         QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcAllCoursePlanResponse -> {
@@ -95,10 +124,10 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                         mGymAdapter.notifyDataSetChanged();
                     }
 
-
+                    refresh.setRefreshing(false);
                 });
-        return view;
     }
+
 
     @OnClick(R.id.course_add)
     public void onAddCourse() {

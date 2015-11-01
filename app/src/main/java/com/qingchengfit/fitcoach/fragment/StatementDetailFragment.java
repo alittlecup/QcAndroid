@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -89,6 +90,8 @@ public class StatementDetailFragment extends Fragment {
     ImageButton statementDetailLess;
     @Bind(R.id.statement_detail_more)
     ImageButton statementDetailMore;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<StatementBean> statementBeans = new ArrayList<>();
@@ -209,6 +212,13 @@ public class StatementDetailFragment extends Fragment {
             statementDetailMore.setVisibility(View.VISIBLE);
         }
         statementDetailMore.setEnabled(false);//初始化右键不可点
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryStatement();
+            }
+        });
         return view;
     }
 
@@ -366,6 +376,7 @@ public class StatementDetailFragment extends Fragment {
 
             statementDetailTime.setText(sb1.toString());
             itemStatementDetailContent.setText(sb2.toString());
+            refresh.setRefreshing(false);
         });
     }
 

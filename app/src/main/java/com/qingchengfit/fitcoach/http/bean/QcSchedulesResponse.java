@@ -22,6 +22,22 @@ public class QcSchedulesResponse extends QcResponse {
     @SerializedName("data")
     public Data data;
 
+    private QcSchedulesResponse() {
+    }
+
+    public static QcSchedulesResponse newInstance() {
+        QcSchedulesResponse qcMyhomeResponse = new QcSchedulesResponse();
+        return qcMyhomeResponse;
+    }
+
+    public void cache() {
+
+    }
+
+    public void queryResponse() {
+
+    }
+
     public static class Data {
         @SerializedName("systems")
         public List<System> systems;
@@ -52,12 +68,5 @@ public class QcSchedulesResponse extends QcResponse {
         @SerializedName("username")
         public String username;
     }
-
-
-
-
-
-
-
 
 }

@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -77,6 +78,10 @@ public class MyStudentFragment extends MainBaseFragment {
     LinearLayout studentNoLayout;
     @Bind(R.id.alphabetview)
     AlphabetView alphabetView;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
+    @Bind(R.id.student_add)
+    Button studentAdd;
     private LinearLayoutManager mLinearLayoutManager;
     private QcAllStudentResponse mQcAllStudentResponse;
     private List<StudentBean> adapterData = new ArrayList<>();
@@ -146,6 +151,18 @@ public class MyStudentFragment extends MainBaseFragment {
                 }
             }
         });
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //获取原始数据
+                QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+                        .subscribe(qcAllStudentResponse -> {
+                            mQcAllStudentResponse = qcAllStudentResponse;
+                            handleResponse(qcAllStudentResponse);
+                        });
+            }
+        });
         return view;
     }
 
@@ -198,8 +215,6 @@ public class MyStudentFragment extends MainBaseFragment {
 //        });
 
     }
-
-
 
 
     private void setUpSeachView() {
@@ -285,6 +300,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 studentNoLayout.setVisibility(View.GONE);
                 mStudentAdapter.notifyDataSetChanged();
             }
+            refresh.setRefreshing(false);
         });
     }
 

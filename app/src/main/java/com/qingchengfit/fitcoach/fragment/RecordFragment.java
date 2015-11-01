@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,8 @@ public class RecordFragment extends BaseSettingFragment {
     TextView recordComfirmNoTxt;
     @Bind(R.id.record_confirm_none)
     RelativeLayout recordConfirmNone;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private RecordComfirmAdapter adapter;
 
 
@@ -56,6 +59,19 @@ public class RecordFragment extends BaseSettingFragment {
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        freshData();
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                freshData();
+            }
+        });
+        return view;
+    }
+
+    public void freshData() {
+
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
                 if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
@@ -63,11 +79,7 @@ public class RecordFragment extends BaseSettingFragment {
                     recordConfirmNone.setVisibility(View.GONE);
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
-//                        ComfirmDetailFragment fragment =
-//                                ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
                         RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)));
-//                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment)
-//                                .show(fragment).addToBackStack("").commit();
                         fragmentCallBack.onFragmentChange(fragment);
                     });
                     recyclerview.setAdapter(adapter);
@@ -77,11 +89,10 @@ public class RecordFragment extends BaseSettingFragment {
                     recordComfirmNoTxt.setText("您还没有添加任何认证信息请点击添加按钮");
                     recordConfirmNone.setVisibility(View.VISIBLE);
                 }
+                refresh.setRefreshing(false);
             });
         });
-        return view;
     }
-
 
 
     @Override

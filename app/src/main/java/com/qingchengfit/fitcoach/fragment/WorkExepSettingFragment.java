@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,6 +51,8 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     TextView recordComfirmNoTxt;
     @Bind(R.id.record_confirm_none)
     RelativeLayout recordConfirmNone;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private WorkExepAdapter adapter;
 
 
@@ -69,7 +72,19 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
+        freshData();
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                freshData();
+            }
+        });
 
+        return view;
+    }
+
+    public void freshData() {
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
                         getActivity().runOnUiThread(() -> {
@@ -90,10 +105,11 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
                                 recordComfirmNoTxt.setText("您还没有添加任何工作经历请点击添加按钮");
                                 recordConfirmNone.setVisibility(View.VISIBLE);
                             }
+                            refresh.setRefreshing(false);
                         })
         );
-        return view;
     }
+
 
     @Override
     public void onDestroyView() {

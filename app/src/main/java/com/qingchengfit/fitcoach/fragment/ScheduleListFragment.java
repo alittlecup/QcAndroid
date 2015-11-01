@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -36,6 +37,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -51,6 +53,8 @@ public class ScheduleListFragment extends Fragment {
     TextView scheduleNoTv;
     @Bind(R.id.schedule_no_schedule)
     LinearLayout scheduleNoSchedule;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
 
     private Date mCurDate;                              //当前日期
     private ArrayList<ScheduleBean> scheduleBeans = new ArrayList<>();      //列表数据
@@ -124,6 +128,15 @@ public class ScheduleListFragment extends Fragment {
             }
         });
         goDateSchedule(mCurDate);
+
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
         return view;
     }
 
@@ -131,7 +144,10 @@ public class ScheduleListFragment extends Fragment {
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.getServerDateDay(date));
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params).subscribeOn(Schedulers.newThread()).subscribe(mHttpCallBack);
+        QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mHttpCallBack);
 
     }
 
@@ -193,6 +209,8 @@ public class ScheduleListFragment extends Fragment {
                     scheduleNoSchedule.setVisibility(View.VISIBLE);
                 }
             }
+
+            refresh.setRefreshing(false);
         });
     }
 
@@ -213,6 +231,7 @@ public class ScheduleListFragment extends Fragment {
 
     public void refresh() {
         goDateSchedule(mCurDate);
+
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {
