@@ -41,6 +41,8 @@ public class StudentJudgeFragment extends BaseFragment {
     RatingBar studentJudgeCourseStar;
     @Bind(R.id.student_judge_text)
     TextView studentJudgeText;
+    @Bind(R.id.student_judge_tag_count)
+    TextView studentJudgeTagCount;
     private String[] mTags;
 
     public StudentJudgeFragment() {
@@ -88,6 +90,7 @@ public class StudentJudgeFragment extends BaseFragment {
             studentJudgeCoachStar.setRating((float) mEntityls.getCoach_score());
             studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
             studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
+            studentJudgeTagCount.setText("擅长(" + mTags.length + ")");
             tagGroup.setTags(
                     mTags
             );
@@ -126,7 +129,6 @@ public class StudentJudgeFragment extends BaseFragment {
             });
         }
     }
-
 
 
     @Override

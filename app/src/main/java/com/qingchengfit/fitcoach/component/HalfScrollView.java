@@ -125,15 +125,33 @@ public class HalfScrollView extends ScrollView {
                 lastY = ev.getY();
                 if (isSecondView) {
                     if (canChildUp()) {
-
-                        if (ev.getY() - y > 5)
+                        if (ev.getY() - y > 5) {
                             return true;
+                        }
                         else if (canScrollDown())
                             return false;
                     } else return false;
                 }
                 break;
-
+            case MotionEvent.ACTION_UP:
+                float y1 = lastY;
+                lastY = ev.getY();
+                if (isSecondView) {
+                    if (canChildUp()) {
+                        if (ev.getY() - y1 > 5) {
+                            smoothScrollTo(0, 0);
+                            return true;
+                        } else if (canScrollDown())
+                            return false;
+                    } else return false;
+                } else {
+                    if (ev.getY() - y1 > 5) {
+                        smoothScrollTo(0, 0);
+                    } else if (ev.getY() - y1 < -5) {
+                        smoothScrollTo(0, getHeight());
+                    }
+                }
+                break;
 
         }
         return super.onInterceptTouchEvent(ev);
@@ -173,7 +191,7 @@ public class HalfScrollView extends ScrollView {
             case MotionEvent.ACTION_UP:
 
 
-                return super.onTouchEvent(ev);
+                break;
 
             case MotionEvent.ACTION_MOVE:
 
@@ -190,6 +208,13 @@ public class HalfScrollView extends ScrollView {
             if (ViewCompat.canScrollVertically(this, 1)) {
                 isSecondView = false;
             } else isSecondView = true;
+            if (oldt - t > 10) {
+                smoothScrollTo(0, 0);
+            } else if (t - oldt > 10) {
+                smoothScrollTo(0, getHeight());
+            }
+        } else {
+
         }
 //        if (t < firstheight) {
 //            isSecondView = false;

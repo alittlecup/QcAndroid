@@ -158,7 +158,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_info, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, 0, "修改资料");
+        fragmentCallBack.onToolbarMenu(0, 0, "基本信息设置");
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
 //        if (!restoreStateFromArguments()) {
@@ -351,6 +351,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = Configs.CameraPic;
             LogUtil.d(filepath);
+            fragmentCallBack.ShowLoading();
             Observable.just(filepath)
                     .subscribeOn(Schedulers.io())
                     .subscribe(s -> {
@@ -359,19 +360,22 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                         File upFile = new File(Configs.ExternalCache + filename);
 
                         boolean reslut = UpYunClient.upLoadImg("/header/" + coach.id + "/", filename, upFile);
-                        if (reslut) {
-                            LogUtil.d("success");
-                            String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";
-                            getActivity().runOnUiThread(() -> Glide.with(App.AppContex).load(pppurl)
-                                    .transform(new GlideCircleTransform(App.AppContex))
-                                    .into(modifyinfoHeaderPic));
-                            mModifyCoachInfo.setAvatar(pppurl);
-                            user.setAvatar(pppurl);
+                        getActivity().runOnUiThread(() -> {
+                            if (reslut) {
+                                LogUtil.d("success");
+                                String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";
+                                Glide.with(App.AppContex).load(pppurl)
+                                        .transform(new GlideCircleTransform(App.AppContex))
+                                        .into(modifyinfoHeaderPic);
+                                mModifyCoachInfo.setAvatar(pppurl);
+                                user.setAvatar(pppurl);
 
-                        } else {
-                            //upload failed TODO
-                            LogUtil.d("update img false");
-                        }
+                            } else {
+                                //upload failed TODO
+                                LogUtil.d("update img false");
+                            }
+                        });
+
                     });
 
         }

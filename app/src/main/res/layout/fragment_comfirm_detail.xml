@@ -24,7 +24,6 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="ACE健身教练资格认证"
             android:textSize="18sp"
             android:textStyle="bold"
             />
@@ -40,7 +39,8 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/ic_oganazation"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_baseinfo_city"
                 />
 
             <TextView
@@ -72,6 +72,40 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_start_time"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qc_edit_drawable_padding"
+                android:text="发证日期:"
+                />
+
+            <TextView
+                android:id="@+id/comfirm_createtime"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            >
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_schedule"
                 />
 
@@ -80,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/qc_edit_drawable_padding"
-                android:text="有效期:"
+                android:text="有效日期:"
                 />
 
             <TextView
@@ -159,21 +193,14 @@
 
         <ImageView
             android:id="@+id/comfirm_img"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:minHeight="@dimen/qc_item_height"
-            android:src="@drawable/test_pic"
+
             />
 
 
-        <TextView
-            android:id="@+id/comfirm_createtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="( 发证日期:20150818)"
-            />
     </LinearLayout>
 
     <ImageView
@@ -184,6 +211,5 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="?android:actionBarSize"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/img_record_comfirmed"
         />
 </RelativeLayout>

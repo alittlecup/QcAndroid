@@ -41,7 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_gravity="right|center_vertical"
+            android:padding="5dp"
             android:text="已确认"
+            android:textColor="@color/white"
             />
     </RelativeLayout>
 
@@ -111,6 +113,7 @@
         app:atg_borderStrokeWidth="1dp"
         app:atg_checkedBackgroundColor="@color/white"
         app:atg_textColor="@color/text_black"
+
         >
     </com.qingchengfit.fitcoach.component.TagGroup>
 
@@ -133,24 +136,25 @@
     <!--android:layout_marginLeft="10dp"-->
     <!--/>-->
     <!--</LinearLayout>-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <ToggleButton
-            android:id="@+id/item_studio_expaned"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@color/transparent"
-            android:button="@drawable/ic_open_selector"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="展开"
-            android:textOff="展开"
-            android:textOn="收起"
-            />
-    </RelativeLayout>
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<ToggleButton-->
+    <!--android:id="@+id/item_studio_expaned"-->
+    <!--style="@style/Qc.TextCommonBlack"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:background="@color/transparent"-->
+    <!--android:button="@drawable/ic_open_selector"-->
+    <!--android:gravity="center"-->
+    <!--android:padding="16dp"-->
+    <!--android:text="展开"-->
+    <!--android:textOff="展开"-->
+    <!--android:textOn="收起"-->
+    <!--/>-->
+    <!--</RelativeLayout>-->
 
 </LinearLayout>

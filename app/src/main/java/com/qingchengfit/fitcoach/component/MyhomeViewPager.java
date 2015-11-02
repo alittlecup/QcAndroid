@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -124,7 +125,9 @@ public class MyhomeViewPager extends ViewPager {
     }
 
     public boolean canScrollup() {
-        scrollView = ((ViewGroup) getChildAt(getCurrentItem())).getChildAt(0);
+//        scrollView = (((ViewGroup) getChildAt(getCurrentItem())).getChildAt(0));
+        FragmentStatePagerAdapter adapter = (FragmentStatePagerAdapter) getAdapter();
+        scrollView = ((ViewGroup) adapter.getItem(getCurrentItem()).getView()).getChildAt(0);
 //        if (getCurrentItem() == 0) {
             return !ViewCompat.canScrollVertically(scrollView, -1);
 //        } else {

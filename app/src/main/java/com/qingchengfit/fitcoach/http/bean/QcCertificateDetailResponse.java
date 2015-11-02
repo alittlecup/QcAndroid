@@ -114,6 +114,7 @@ public class QcCertificateDetailResponse {
             private String photo;
             private String grade;
             private String created_at;
+            private String start;
             private OrganizationEntity organization;
             private int type;
             private int id;
@@ -137,6 +138,14 @@ public class QcCertificateDetailResponse {
 
             public void setDate_of_issue(String date_of_issue) {
                 this.date_of_issue = date_of_issue;
+            }
+
+            public String getStart() {
+                return start;
+            }
+
+            public void setStart(String start) {
+                this.start = start;
             }
 
             public CoachEntity getCoach() {

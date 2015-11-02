@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 
 import butterknife.Bind;
@@ -77,16 +78,18 @@ public class ComfirmDetailFragment extends Fragment {
                             recorddetailHost.setText(qcCertificateDetailResponse.getData().getCertificate().getOrganization().getName());
                             recorddetailScore.setText(qcCertificateDetailResponse.getData().getCertificate().getGrade());
 //                            recorddetailComment.setText(qcCertificateDetailResponse.getData().getCertificate().get);
-                            StringBuffer sb = new StringBuffer();
-                            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getCreated_at())));
-                            sb.append("-");
-                            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
-                            recorddetailTime.setText(sb.toString());
+//                            StringBuffer sb = new StringBuffer();
+//                            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getCreated_at())));
+//                            sb.append("-");
+//                            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
+
+                            recorddetailTime.setText(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
+                            comfirmCreatetime.setText(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getStart())));
                             if (qcCertificateDetailResponse.getData().getCertificate().is_authenticated()) {
                                 Glide.with(getActivity()).load(R.drawable.img_record_comfirmed).into(recordComfirmImg);
                             } else
                                 Glide.with(getActivity()).load(R.drawable.img_record_uncomfirmed).into(recordComfirmImg);
-                            Glide.with(getActivity()).load(qcCertificateDetailResponse.getData().getCertificate().getPhoto()).into(comfirmImg);
+                            Glide.with(getActivity()).load(qcCertificateDetailResponse.getData().getCertificate().getPhoto()).asBitmap().into(new ScaleWidthWrapper(comfirmImg));
                         })
         );
         return view;

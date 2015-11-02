@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.paper.paperbaselibrary.component.GridViewInScroll;
 import com.paper.paperbaselibrary.utils.DateUtils;
@@ -22,7 +21,6 @@ import com.qingchengfit.fitcoach.component.TagGroup;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -114,21 +112,21 @@ public class WorkExperienceFragment extends BaseFragment {
         GridViewInScroll itemStudioClasses;
         @Bind(R.id.item_tag_group)
         TagGroup itemTagGroup;
-        @Bind(R.id.item_studio_expaned)
-        ToggleButton itemStudioExpaned;
+//        @Bind(R.id.item_studio_expaned)
+//        ToggleButton itemStudioExpaned;
 
         public WorkExperienceVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemStudioExpaned.setOnCheckedChangeListener((compoundButton, b) -> {
-                if (b) {
-                    itemStudioClasses.setVisibility(View.VISIBLE);
-                    itemTagGroup.setVisibility(View.VISIBLE);
-                } else {
-                    itemTagGroup.setVisibility(View.GONE);
-                    itemStudioClasses.setVisibility(View.GONE);
-                }
-            });
+//            itemStudioExpaned.setOnCheckedChangeListener((compoundButton, b) -> {
+//                if (b) {
+//                    itemStudioClasses.setVisibility(View.VISIBLE);
+//                    itemTagGroup.setVisibility(View.VISIBLE);
+//                } else {
+//                    itemTagGroup.setVisibility(View.GONE);
+//                    itemStudioClasses.setVisibility(View.GONE);
+//                }
+//            });
 
         }
     }
@@ -192,17 +190,21 @@ public class WorkExperienceFragment extends BaseFragment {
             ss.append("-");
             ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
             holder.itemTime.setText(ss.toString());
-            holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
-            List<String> aaaas = new ArrayList<>();
-            aaaas.add("12");
-            aaaas.add("12");
-            aaaas.add("12");
-            aaaas.add("12");
-            GridInScrollAdapter adapter1 = new GridInScrollAdapter(aaaas);
-            holder.itemStudioClasses.setAdapter(adapter1);
-            if (experiencesEntity.getIs_authenticated())
+//            holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
+//            List<String> aaaas = new ArrayList<>();
+//            aaaas.add("12");
+//            aaaas.add("12");
+//            aaaas.add("12");
+//            aaaas.add("12");
+//            GridInScrollAdapter adapter1 = new GridInScrollAdapter(aaaas);
+//            holder.itemStudioClasses.setAdapter(adapter1);
+            if (experiencesEntity.getIs_authenticated()) {
                 holder.itemStudioComfirm.setText("已确认");
-            else holder.itemStudioComfirm.setText("未确认");
+                holder.itemStudioComfirm.setBackgroundResource(R.drawable.bg_tag_green);
+            } else {
+                holder.itemStudioComfirm.setText("待确认");
+                holder.itemStudioComfirm.setBackgroundResource(R.drawable.bg_tag_red);
+            }
         }
 
         @Override

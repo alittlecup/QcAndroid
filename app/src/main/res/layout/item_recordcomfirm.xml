@@ -11,44 +11,57 @@
                     android:padding="@dimen/activity_horizontal_margin"
         >
 
-        <TextView
-            android:id="@+id/recordcomfirm_title"
-            style="@style/Qc.TextCommonBlack"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="中国健身大会"
-            />
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            >
 
-        <TextView
-            android:id="@+id/recordcomfirm_subtitle"
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recordcomfirm_title"
-            android:text="中国健身大会"
-            />
+            <TextView
+                android:id="@+id/recordcomfirm_title"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中国健身大会"
+                />
 
-        <TextView
-            android:id="@+id/recordcomfirm_time"
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recordcomfirm_subtitle"
-            android:text="有效期:2015.08.01-2015.08.01"
-            />
+            <TextView
+                android:id="@+id/recordcomfirm_subtitle"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recordcomfirm_title"
+                android:layout_marginTop="4dp"
+                android:text="中国健身大会"
+                />
+
+            <TextView
+                android:id="@+id/recordcomfirm_time"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recordcomfirm_subtitle"
+                android:layout_marginTop="4dp"
+                android:text="有效期:2015.08.01-2015.08.01"
+                />
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_arrow_right"
             />
 
         <ImageView
             android:id="@+id/recordcomfirm_comfirm"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="25dp"
             android:src="@drawable/img_record_comfirmed"
             />

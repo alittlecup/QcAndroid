@@ -2,10 +2,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -46,6 +42,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -127,7 +124,7 @@ public class MyHomeFragment extends Fragment {
             ((MyHomeActivity) getActivity()).openDrawer();
         });
         toolbar.inflateMenu(R.menu.menu_myhome);
-        toolbar.setBackgroundColor(Color.TRANSPARENT);
+//        toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_settings) {
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
@@ -151,20 +148,21 @@ public class MyHomeFragment extends Fragment {
 
             }
         });
-        myhomeScroller.setListener(new HalfScrollView.HalfViewListener() {
-            @Override
-            public void onScroll(int i) {
-                if (i > mHomeBgHeight)
-                    i = mHomeBgHeight;
-                else if (i < 0)
-                    i = 0;
-                Drawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
-                drawable.setAlpha(255 * i / mHomeBgHeight);
-                if (Build.VERSION.SDK_INT < 16) {
-                    toolbar.setBackgroundDrawable(drawable);
-                } else toolbar.setBackground(drawable);
-            }
-        });
+        //toolbar 变透明,保留,以后版本需要
+//        myhomeScroller.setListener(new HalfScrollView.HalfViewListener() {
+//            @Override
+//            public void onScroll(int i) {
+//                if (i > mHomeBgHeight)
+//                    i = mHomeBgHeight;
+//                else if (i < 0)
+//                    i = 0;
+//                Drawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
+//                drawable.setAlpha(255 * i / mHomeBgHeight);
+//                if (Build.VERSION.SDK_INT < 16) {
+//                    toolbar.setBackgroundDrawable(drawable);
+//                } else toolbar.setBackground(drawable);
+//            }
+//        });
 
 //        Glide.with(App.AppContex).load(R.drawable.img_selfinfo_bg).into(myhomeBg);
         initSRL();
@@ -173,11 +171,11 @@ public class MyHomeFragment extends Fragment {
 
     public void initSRL() {
         sfl.setColorSchemeResources(R.color.primary);
+        sfl.setProgressViewOffset(true, 140, 240);
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 initUser();
-//                adatper.notifyDataSetChanged();
             }
         });
     }
@@ -186,16 +184,19 @@ public class MyHomeFragment extends Fragment {
     public void handleResponse(QcMyhomeResponse qcMyhomeResponse) {
         myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
         myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
-        List<Fragment> fragments = new ArrayList<>();
+        ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
         fragments.add(new RecordComfirmFragment());
         fragments.add(new WorkExperienceFragment());
         fragments.add(new StudentJudgeFragment());
         adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
-        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
-                StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
-                        , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
+        StudentJudgeFragment fragment = StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
+                , qcMyhomeResponse.getData().getCoach().getEvaluate());
+        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge, fragment).
+                commit();
+
         myhomeViewpager.setAdapter(adatper);
+
         myhomeViewpager.setOffscreenPageLimit(4);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(myhomeViewpager);
@@ -205,6 +206,12 @@ public class MyHomeFragment extends Fragment {
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "_cache_myhome", gson.toJson(qcMyhomeResponse));
 //        String key = CacheUtils.hashKeyForDisk(App.coachid+"_cache_myhome");
         sfl.setRefreshing(false);
+    }
+
+    @OnClick(R.id.myhome_student_judge)
+    public void onJudge() {
+        myhomeScroller.fullScroll(View.FOCUS_DOWN);
+        myhomeViewpager.setCurrentItem(3);
     }
 
     public void initHead(String userAvatar, int userGender) {
@@ -222,7 +229,6 @@ public class MyHomeFragment extends Fragment {
         if (TextUtils.isEmpty(userAvatar)) {
             Glide.with(App.AppContex)
                     .load(gender)
-
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
@@ -265,10 +271,21 @@ public class MyHomeFragment extends Fragment {
     class FragmentAdatper extends FragmentStatePagerAdapter {
 
         List<Fragment> fragments;
+        FragmentManager fm;
 
-        public FragmentAdatper(FragmentManager fm, List<Fragment> fs) {
+
+        public FragmentAdatper(FragmentManager fm, ArrayList<Fragment> fs) {
             super(fm);
             this.fragments = fs;
+            this.fm = fm;
+
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container,
+                    position);
+            return fragment;
         }
 
 
@@ -280,7 +297,6 @@ public class MyHomeFragment extends Fragment {
         @Override
         public int getCount() {
             return fragments.size();
-//            return 1;
         }
 
         @Override

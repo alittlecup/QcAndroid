@@ -129,8 +129,6 @@
         app:civ_clickable="true"
         app:civ_lable="城市"
         >
-
-
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
     <com.qingchengfit.fitcoach.component.CommonInputView
