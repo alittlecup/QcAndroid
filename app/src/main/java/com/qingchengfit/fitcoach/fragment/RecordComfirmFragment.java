@@ -66,23 +66,25 @@ public class RecordComfirmFragment extends BaseFragment {
 
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
             getActivity().runOnUiThread(() -> {
-                if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
-                    recordConfirmNone.setVisibility(View.GONE);
-                    recyclerview.setVisibility(View.VISIBLE);
-                    adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
-                    adapter.setListener((v, pos) -> {
-                        ComfirmDetailFragment fragment =
-                                ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+                if (recyclerview != null) {
+                    if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
+                        recordConfirmNone.setVisibility(View.GONE);
+                        recyclerview.setVisibility(View.VISIBLE);
+                        adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+                        adapter.setListener((v, pos) -> {
+                            ComfirmDetailFragment fragment =
+                                    ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
 
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
-                                .show(fragment).addToBackStack("").commit();
-                    });
-                    recyclerview.setAdapter(adapter);
-                } else {
-                    recyclerview.setVisibility(View.GONE);
-                    recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
-                    recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
-                    recordConfirmNone.setVisibility(View.VISIBLE);
+                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+                                    .show(fragment).addToBackStack("").commit();
+                        });
+                        recyclerview.setAdapter(adapter);
+                    } else {
+                        recyclerview.setVisibility(View.GONE);
+                        recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
+                        recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
+                        recordConfirmNone.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         });

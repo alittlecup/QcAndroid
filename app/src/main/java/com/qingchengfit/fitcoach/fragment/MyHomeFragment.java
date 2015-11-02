@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -88,6 +88,11 @@ public class MyHomeFragment extends Fragment {
     private int mHomeBgHeight = 1;
 
     private Gson gson;
+    //    @Bind(R.id.myhome_coolaosingtoorbar)
+    //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
+    private FragmentCallBack fragmentCallBack;
+    private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
+    private FragmentAdatper adatper;
     Observer<QcMyhomeResponse> qcMyhomeResponseObserver = new Observer<QcMyhomeResponse>() {
         @Override
         public void onCompleted() {
@@ -104,10 +109,6 @@ public class MyHomeFragment extends Fragment {
             handleResponse(qcMyhomeResponse);
         }
     };
-    //    @Bind(R.id.myhome_coolaosingtoorbar)
-    //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
-    private FragmentCallBack fragmentCallBack;
-    private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
 
 
     public MyHomeFragment() {
@@ -176,6 +177,7 @@ public class MyHomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 initUser();
+//                adatper.notifyDataSetChanged();
             }
         });
     }
@@ -189,7 +191,7 @@ public class MyHomeFragment extends Fragment {
         fragments.add(new RecordComfirmFragment());
         fragments.add(new WorkExperienceFragment());
         fragments.add(new StudentJudgeFragment());
-        FragmentAdatper adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
+        adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
         getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge,
                 StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
                         , qcMyhomeResponse.getData().getCoach().getEvaluate()), "").commit();
@@ -200,7 +202,8 @@ public class MyHomeFragment extends Fragment {
         myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
         myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
         initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
-        PreferenceUtils.setPrefString(App.AppContex, "cache_myhome", gson.toJson(qcMyhomeResponse));
+        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "_cache_myhome", gson.toJson(qcMyhomeResponse));
+//        String key = CacheUtils.hashKeyForDisk(App.coachid+"_cache_myhome");
         sfl.setRefreshing(false);
     }
 
@@ -233,15 +236,13 @@ public class MyHomeFragment extends Fragment {
     }
 
     private void initUser() {
-        String cache = PreferenceUtils.getPrefString(App.AppContex, "cache_myhome", "");
+        String cache = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "_cache_myhome", "");
         if (!TextUtils.isEmpty(cache)) {
             handleResponse(gson.fromJson(cache, QcMyhomeResponse.class));
         }
-
         qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
                 .observeOn(AndroidSchedulers.mainThread());
         qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
-
     }
 
     @Override
@@ -261,7 +262,7 @@ public class MyHomeFragment extends Fragment {
         public void onTouchEvent(MotionEvent event);
     }
 
-    class FragmentAdatper extends FragmentPagerAdapter {
+    class FragmentAdatper extends FragmentStatePagerAdapter {
 
         List<Fragment> fragments;
 
@@ -280,6 +281,11 @@ public class MyHomeFragment extends Fragment {
         public int getCount() {
             return fragments.size();
 //            return 1;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
 
         @Override

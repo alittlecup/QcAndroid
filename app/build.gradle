@@ -6,9 +6,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'packer'                     //版本管理 多渠道打包
 
-
-
-
 //apt {
 //    arguments {
 //        androidManifestFile variant.outputs[0].processResources.manifestFile
@@ -29,6 +26,7 @@ packer {
     buildNumberTypeMatcher = ['release', 'beta']
 
 }
+
 
 def getDate() {
     def date = new Date()

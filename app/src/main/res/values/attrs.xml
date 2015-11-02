@@ -11,6 +11,7 @@
         <attr name="atg_textColor" format="color"/>
         <!-- The tag view background color. -->
         <attr name="atg_backgroundColor" format="color"/>
+        <attr name="atg_backgroundRes" format="integer"/>
 
         <!-- The dash outline border color, when in append mode. -->
         <attr name="atg_dashBorderColor" format="color"/>

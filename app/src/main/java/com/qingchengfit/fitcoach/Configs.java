@@ -29,7 +29,6 @@ public class Configs {
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
 
-
     //app名称
     public static String APPNAME = "QingChengCoach";
 

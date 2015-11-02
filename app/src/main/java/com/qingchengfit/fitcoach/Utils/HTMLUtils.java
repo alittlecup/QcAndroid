@@ -59,14 +59,17 @@ public class HTMLUtils {
                         isImg = false;
                     } else if ("img".equals(parser.getName())) {
                         isImg = true;
+                        if (parser.getAttributeCount() > 0)
+                            breif.setImg(parser.getAttributeValue(0));
+
                     }
 
                     break;
                 case XmlPullParser.TEXT:
                     if (isImg) {
-                        String img = parser.getText();
-                        String img_out = img.substring(6, img.length() - 2);
-                        breif.setImg(img_out);
+//                        String img = parser.getText();
+//                        String img_out = img.substring(6, img.length() - 2);
+//                        breif.setImg(img_out);
                     } else {
                         String content = parser.getText();
                         breif.setText(content);
@@ -97,9 +100,9 @@ public class HTMLUtils {
                 sb.append(info.getText());
                 sb.append("</p>");
             } else {
-                sb.append("<img> src=\"");
+                sb.append("<img src=\"");
                 sb.append(info.getImg());
-                sb.append("\" </img>");
+                sb.append("\" />");
             }
         }
         return sb.toString();

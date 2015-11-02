@@ -117,28 +117,6 @@ public class ScheduesFragment extends MainBaseFragment {
         //初始化title下拉
         setUpNaviSpinner();
         setUpViewPager();
-//        scheduleBeans = new ArrayList<>();
-//        scheduesAdapter = new ScheduesAdapter(scheduleBeans);
-//        scheduesAdapter.setListener((v, pos) -> {
-//            String url = scheduesAdapter.datas.get(pos).intent_url;
-//            if (!TextUtils.isEmpty(url)) {
-//                openDrawerInterface.goWeb(url);
-//            }
-//        });
-
-//        drawerRadiogroup.setOnDateChangeListener(this::goDateSchedule);
-//        ShadowProperty shadowProperty = new ShadowProperty()
-//                .setShadowColor(0x77000000)
-//                .setShadowRadius(MeasureUtils.dpToPx(3f, getResources()));
-//        ShadowViewHelper.bindShadowHelper(shadowProperty
-//                , calendarView
-//        );
-//
-//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) calendarView.getLayoutParams();
-//        lp.leftMargin = -shadowProperty.getShadowOffset();
-//        lp.rightMargin = -shadowProperty.getShadowOffset();
-//        lp.topMargin = -shadowProperty.getShadowOffset();
-//        calendarView.setLayoutParams(lp);
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
         btn1.setColorNormal(getResources().getColor(R.color.green));

@@ -165,6 +165,8 @@ public class TagGroup extends ViewGroup {
      */
     private int verticalPadding;
 
+    private int TagBackground;
+
     /**
      * Listener used to dispatch tag change event.
      */
@@ -185,7 +187,7 @@ public class TagGroup extends ViewGroup {
     }
 
     public TagGroup(Context context, AttributeSet attrs) {
-        this(context, attrs, me.gujun.android.taggroup.R.attr.tagGroupStyle);
+        this(context, attrs, R.attr.tagGroupStyle);
     }
 
     public TagGroup(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -198,27 +200,28 @@ public class TagGroup extends ViewGroup {
         default_vertical_padding = dp2px(3.0f);
 
         // Load styled attributes.
-        final TypedArray a = context.obtainStyledAttributes(attrs, me.gujun.android.taggroup.R.styleable.TagGroup, defStyleAttr, me.gujun.android.taggroup.R.style.TagGroup);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TagGroup, defStyleAttr, R.style.TagGroup);
         try {
-            isAppendMode = a.getBoolean(me.gujun.android.taggroup.R.styleable.TagGroup_atg_isAppendMode, false);
-            inputHint = a.getText(me.gujun.android.taggroup.R.styleable.TagGroup_atg_inputHint);
-            borderColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_borderColor, default_border_color);
-            textColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_textColor, default_text_color);
-            backgroundColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_backgroundColor, default_background_color);
-            dashBorderColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_dashBorderColor, default_dash_border_color);
-            inputHintColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_inputHintColor, default_input_hint_color);
-            inputTextColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_inputTextColor, default_input_text_color);
-            checkedBorderColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_checkedBorderColor, default_checked_border_color);
-            checkedTextColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_checkedTextColor, default_checked_text_color);
-            checkedMarkerColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_checkedMarkerColor, default_checked_marker_color);
-            checkedBackgroundColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_checkedBackgroundColor, default_checked_background_color);
-            pressedBackgroundColor = a.getColor(me.gujun.android.taggroup.R.styleable.TagGroup_atg_pressedBackgroundColor, default_pressed_background_color);
-            borderStrokeWidth = a.getDimension(me.gujun.android.taggroup.R.styleable.TagGroup_atg_borderStrokeWidth, default_border_stroke_width);
-            textSize = a.getDimension(me.gujun.android.taggroup.R.styleable.TagGroup_atg_textSize, default_text_size);
-            horizontalSpacing = (int) a.getDimension(me.gujun.android.taggroup.R.styleable.TagGroup_atg_horizontalSpacing, default_horizontal_spacing);
-            verticalSpacing = (int) a.getDimension(me.gujun.android.taggroup.R.styleable.TagGroup_atg_verticalSpacing, default_vertical_spacing);
-            horizontalPadding = (int) a.getDimension(me.gujun.android.taggroup.R.styleable.TagGroup_atg_horizontalPadding, default_horizontal_padding);
-            verticalPadding = (int) a.getDimension(me.gujun.android.taggroup.R.styleable.TagGroup_atg_verticalPadding, default_vertical_padding);
+            isAppendMode = a.getBoolean(R.styleable.TagGroup_atg_isAppendMode, false);
+            inputHint = a.getText(R.styleable.TagGroup_atg_inputHint);
+            borderColor = a.getColor(R.styleable.TagGroup_atg_borderColor, default_border_color);
+            textColor = a.getColor(R.styleable.TagGroup_atg_textColor, default_text_color);
+            backgroundColor = a.getColor(R.styleable.TagGroup_atg_backgroundColor, default_background_color);
+            dashBorderColor = a.getColor(R.styleable.TagGroup_atg_dashBorderColor, default_dash_border_color);
+            inputHintColor = a.getColor(R.styleable.TagGroup_atg_inputHintColor, default_input_hint_color);
+            inputTextColor = a.getColor(R.styleable.TagGroup_atg_inputTextColor, default_input_text_color);
+            checkedBorderColor = a.getColor(R.styleable.TagGroup_atg_checkedBorderColor, default_checked_border_color);
+            checkedTextColor = a.getColor(R.styleable.TagGroup_atg_checkedTextColor, default_checked_text_color);
+            checkedMarkerColor = a.getColor(R.styleable.TagGroup_atg_checkedMarkerColor, default_checked_marker_color);
+            checkedBackgroundColor = a.getColor(R.styleable.TagGroup_atg_checkedBackgroundColor, default_checked_background_color);
+            pressedBackgroundColor = a.getColor(R.styleable.TagGroup_atg_pressedBackgroundColor, default_pressed_background_color);
+            borderStrokeWidth = a.getDimension(R.styleable.TagGroup_atg_borderStrokeWidth, default_border_stroke_width);
+            textSize = a.getDimension(R.styleable.TagGroup_atg_textSize, default_text_size);
+            horizontalSpacing = (int) a.getDimension(R.styleable.TagGroup_atg_horizontalSpacing, default_horizontal_spacing);
+            verticalSpacing = (int) a.getDimension(R.styleable.TagGroup_atg_verticalSpacing, default_vertical_spacing);
+            horizontalPadding = (int) a.getDimension(R.styleable.TagGroup_atg_horizontalPadding, default_horizontal_padding);
+            verticalPadding = (int) a.getDimension(R.styleable.TagGroup_atg_verticalPadding, default_vertical_padding);
+            TagBackground = a.getInteger(R.styleable.TagGroup_atg_backgroundRes, R.drawable.bg_tagview);
         } finally {
             a.recycle();
         }
@@ -432,6 +435,13 @@ public class TagGroup extends ViewGroup {
     }
 
     /**
+     * @see #setTags(String...)
+     */
+    public void setTags(List<String> tagList) {
+        setTags(tagList.toArray(new String[tagList.size()]));
+    }
+
+    /**
      * Set the tags. It will remove all previous tags first.
      *
      * @param tags the tag list to set.
@@ -445,13 +455,6 @@ public class TagGroup extends ViewGroup {
         if (isAppendMode) {
             appendInputTag();
         }
-    }
-
-    /**
-     * @see #setTags(String...)
-     */
-    public void setTags(List<String> tagList) {
-        setTags(tagList.toArray(new String[tagList.size()]));
     }
 
     /**
@@ -880,7 +883,8 @@ public class TagGroup extends ViewGroup {
                     }
                 });
             }
-            this.setBackgroundResource(R.drawable.bg_tagview);
+
+            this.setBackgroundResource(TagBackground);
             invalidatePaint();
         }
 

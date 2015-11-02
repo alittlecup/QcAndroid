@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,27 +63,31 @@ public class WorkExperienceFragment extends BaseFragment {
 
     @Override
     protected void lazyLoad() {
-//        if (!isPrepared || isVisible) {
-//            return;
-//        }
+        if (!isPrepared || isVisible) {
+            return;
+        }
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
-                        getActivity().runOnUiThread(() -> {
-                            if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
-                                recyclerview.setVisibility(View.VISIBLE);
-                                recordConfirmNone.setVisibility(View.GONE);
-                                adapter = new WorkExperiencAdapter(qcExperienceResponse.getData().getExperiences());
-                                recyclerview.setAdapter(adapter);
-                            } else {
-                                recyclerview.setVisibility(View.GONE);
-                                recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
-                                recordComfirmNoTxt.setText("您还没有添加任何工作经历请在设置页面中添加");
-                                recordConfirmNone.setVisibility(View.VISIBLE);
+        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcExperienceResponse -> {
+//                                getActivity().runOnUiThread(() -> {
+                            if (recyclerview != null) {
+                                if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
+                                    recyclerview.setVisibility(View.VISIBLE);
+                                    recordConfirmNone.setVisibility(View.GONE);
+                                    adapter = new WorkExperiencAdapter(qcExperienceResponse.getData().getExperiences());
+                                    recyclerview.setAdapter(adapter);
+                                } else {
+                                    recyclerview.setVisibility(View.GONE);
+                                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                                    recordComfirmNoTxt.setText("您还没有添加任何工作经历请在设置页面中添加");
+                                    recordConfirmNone.setVisibility(View.VISIBLE);
 
+                                }
                             }
-                        })
-        );
+                        }
+                );
     }
 
     @Override

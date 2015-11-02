@@ -9,7 +9,9 @@
         android:id="@+id/baseinfo_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:minHeight="@dimen/paper_item_height"
+        android:paddingBottom="50dp"
         >
 
     </com.qingchengfit.fitcoach.component.RecyclerViewInScroll>

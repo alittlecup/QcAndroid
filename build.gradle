@@ -17,13 +17,25 @@ buildscript {
 //        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.6'
         classpath 'me.tatarka:gradle-retrolambda:3.0.1'
         classpath 'com.mcxiaoke.gradle:packer:1.0.4'
-
-
-
+        classpath "com.github.piasy:okbuck-gradle-plugin:0.3.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
+//apply plugin: 'com.github.piasy.okbuck-gradle-plugin'//使用buck编译
+//okbuck {
+//    target "android-23"
+//    keystoreDir ".okbuck/keystore"
+//    signConfigName "release"
+//    overwrite true
+//    resPackages = [
+//            'paperbaselibrary': 'com.paper.paperbaselibrary',
+//            'app': 'com.qingchengfit.fitcoach',
+//    ]
+//}
+
+
+
 allprojects {
     repositories {
         jcenter()
