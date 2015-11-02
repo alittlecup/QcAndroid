@@ -54,6 +54,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -161,12 +162,14 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
 //        if (!restoreStateFromArguments()) {
-            QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id)).subscribe(
-                    qcCoachRespone -> {
-                        user = qcCoachRespone.getData().getCoach();
-                        getActivity().runOnUiThread(this::initInfo);
-                    }
-            );
+        QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        qcCoachRespone -> {
+                            user = qcCoachRespone.getData().getCoach();
+                            getActivity().runOnUiThread(this::initInfo);
+                        }
+                );
 
 //        }else {
 //            mofifyinfoName.setContent("xxxxx");
