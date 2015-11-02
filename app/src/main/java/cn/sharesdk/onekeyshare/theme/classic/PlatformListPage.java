@@ -8,23 +8,29 @@
 
 package cn.sharesdk.onekeyshare.theme.classic;
 
-import static com.mob.tools.utils.R.getStringRes;
-import static com.mob.tools.utils.R.getBitmapRes;
-
-import java.util.ArrayList;
-
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.paper.paperbaselibrary.utils.MeasureUtils;
+import com.qingchengfit.fitcoach.R;
+
+import java.util.ArrayList;
+
 import cn.sharesdk.onekeyshare.PlatformListFakeActivity;
+
+import static com.mob.tools.utils.R.getStringRes;
 
 public class PlatformListPage extends PlatformListFakeActivity implements View.OnClickListener {
 	// page container
@@ -78,6 +84,13 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 		lpLl.gravity = Gravity.BOTTOM;
 		llPage.setLayoutParams(lpLl);
 		flPage.addView(llPage);
+		//
+		TextView textView = new TextView(getContext(), null, R.style.Qc_TextCommonGrey);
+		textView.setText("分享到");
+		textView.setPadding(MeasureUtils.dpToPx(16f, getContext().getResources()), textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
+		textView.setGravity(Gravity.CENTER_VERTICAL);
+		textView.setTextColor(getContext().getResources().getColor(R.color.text_grey));
+		llPage.addView(textView, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(48f, getContext().getResources())));
 
 		// gridview
 		grid = new PlatformGridView(getContext());
@@ -89,20 +102,21 @@ public class PlatformListPage extends PlatformListFakeActivity implements View.O
 
 		// cancel button
 		btnCancel = new Button(getContext());
-		btnCancel.setTextColor(0xff3a65ff);
+		btnCancel.setTextColor(Color.WHITE);
 		btnCancel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 		int resId = getStringRes(getContext(), "cancel");
 		if (resId > 0) {
 			btnCancel.setText(resId);
 		}
 		btnCancel.setPadding(0, 0, 0, com.mob.tools.utils.R.dipToPx(getContext(), 5));
-
-		resId = getBitmapRes(getContext(), "classic_platform_corners_bg");
-		if(resId > 0){
-			btnCancel.setBackgroundResource(resId);
-		}else {
-		    btnCancel.setBackgroundDrawable(new ColorDrawable(0xffffffff));
-		}
+		btnCancel.setBackgroundResource(R.color.primary);
+//		btnCancel.setBackgroundResource(R.drawable.);
+//		resId = getBitmapRes(getContext(), "classic_platform_corners_bg");
+//		if(resId > 0){
+//			btnCancel.setBackgroundResource(resId);
+//		}else {
+//		    btnCancel.setBackgroundDrawable(new ColorDrawable(0xffffffff));
+//		}
 
 		LinearLayout.LayoutParams lpBtn = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, com.mob.tools.utils.R.dipToPx(getContext(), 45));

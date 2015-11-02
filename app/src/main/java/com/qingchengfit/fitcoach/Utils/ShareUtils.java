@@ -22,6 +22,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
  */
 
 public class ShareUtils {
+
     public static void oneKeyShared(Context context, String url, String img, String text, String title) {
         ShareSDK.initSDK(context);
         OnekeyShare oks = new OnekeyShare();

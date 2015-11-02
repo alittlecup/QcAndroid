@@ -63,7 +63,7 @@
         Id="1"
         RedirectUrl="http://www.sharesdk.cn"
         ShareByAppClient="false"
-        SortId="1" />
+        SortId="5"/>
 
     <TencentWeibo
         AppKey="801307650"
@@ -71,7 +71,7 @@
         Enable="false"
         Id="2"
         RedirectUri="http://sharesdk.cn"
-        SortId="2" />
+        SortId="4"/>
 
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <QZone
@@ -80,7 +80,7 @@
         Enable="true"
         Id="3"
         ShareByAppClient="false"
-        SortId="3" />
+        SortId="4"/>
     
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
@@ -100,7 +100,7 @@
         BypassApproval="false"
         Enable="true"
         Id="4"
-        SortId="4" />
+        SortId="1"/>
     
     <WechatMoments
         AppId="wxfd52b612935d84ea"
@@ -108,12 +108,12 @@
         BypassApproval="false"
         Enable="true"
         Id="5"
-        SortId="5" />
+        SortId="2"/>
         
 	<WechatFavorite
         AppId="wx4868b35061f87885"
         AppSecret="64020361b8ec4c99936c0e3999a9f249"
-        Enable="true"
+        Enable="false"
         Id="6"
         SortId="6" />
     
@@ -124,7 +124,7 @@
         Enable="true"
         Id="7"
         ShareByAppClient="true"
-        SortId="7" />
+        SortId="3"/>
     
     <Facebook
         ConsumerKey="107704292745179"
@@ -153,24 +153,24 @@
     <KaiXin
         AppKey="358443394194887cee81ff5890870c7c"
         AppSecret="da32179d859c016169f66d90b6db2a23"
-        Enable="true"
+        Enable="false"
         Id="11"
         RedirectUri="http://www.sharesdk.cn"
         SortId="11" />
     
     <Email
-        Enable="true"
+        Enable="false"
         Id="12"
         SortId="12" />
     
     <ShortMessage
-        Enable="true"
+        Enable="false"
         Id="13"
         SortId="13" />
     
     <Douban
         ApiKey="031a96a3aa8b28af094fc3eaffa17a0d"
-        Enable="true"
+        Enable="false"
         Id="16"
         RedirectUri="http://mob.com"
         Secret="2e675e730571b75d"
@@ -179,7 +179,7 @@
     <YouDao
         ConsumerKey="dcde25dca105bcc36884ed4534dab940"
         ConsumerSecret="d98217b4020e7f1874263795f44838fe"
-        Enable="true"
+        Enable="false"
         HostType="product"
         Id="17"
         RedirectUri="http://www.sharesdk.cn/"

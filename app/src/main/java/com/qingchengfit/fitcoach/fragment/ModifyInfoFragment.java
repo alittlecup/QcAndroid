@@ -361,6 +361,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
                         boolean reslut = UpYunClient.upLoadImg("/header/" + coach.id + "/", filename, upFile);
                         getActivity().runOnUiThread(() -> {
+                            fragmentCallBack.hideLoading();
                             if (reslut) {
                                 LogUtil.d("success");
                                 String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";

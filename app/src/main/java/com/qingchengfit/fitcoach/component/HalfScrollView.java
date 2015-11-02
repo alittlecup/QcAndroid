@@ -118,12 +118,14 @@ public class HalfScrollView extends ScrollView {
             case MotionEvent.ACTION_DOWN:
                 lastY = ev.getY();
                 lastX = ev.getX();
+
                 super.onTouchEvent(ev);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float y = lastY;
                 lastY = ev.getY();
                 if (isSecondView) {
+//                    return false;
                     if (canChildUp()) {
                         if (ev.getY() - y > 5) {
                             return true;
@@ -131,26 +133,26 @@ public class HalfScrollView extends ScrollView {
                         else if (canScrollDown())
                             return false;
                     } else return false;
-                }
+                } else return true;
                 break;
             case MotionEvent.ACTION_UP:
-                float y1 = lastY;
-                lastY = ev.getY();
-                if (isSecondView) {
-                    if (canChildUp()) {
-                        if (ev.getY() - y1 > 5) {
-                            smoothScrollTo(0, 0);
-                            return true;
-                        } else if (canScrollDown())
-                            return false;
-                    } else return false;
-                } else {
-                    if (ev.getY() - y1 > 5) {
-                        smoothScrollTo(0, 0);
-                    } else if (ev.getY() - y1 < -5) {
-                        smoothScrollTo(0, getHeight());
-                    }
-                }
+//                float y1 = lastY;
+//                lastY = ev.getY();
+//                if (isSecondView) {
+//                    if (canChildUp()) {
+//                        if (ev.getY() - y1 > 5) {
+//                            smoothScrollTo(0, 0);
+//                            return true;
+//                        } else if (canScrollDown())
+//                            return false;
+//                    } else return false;
+//                } else {
+//                    if (ev.getY() - y1 > 5) {
+//                        smoothScrollTo(0, 0);
+//                    } else if (ev.getY() - y1 < -5) {
+//                        smoothScrollTo(0, getHeight());
+//                    }
+//                }
                 break;
 
         }
@@ -208,11 +210,11 @@ public class HalfScrollView extends ScrollView {
             if (ViewCompat.canScrollVertically(this, 1)) {
                 isSecondView = false;
             } else isSecondView = true;
-            if (oldt - t > 10) {
-                smoothScrollTo(0, 0);
-            } else if (t - oldt > 10) {
-                smoothScrollTo(0, getHeight());
-            }
+//            if (oldt - t > 10) {
+//                smoothScrollTo(0, 0);
+//            } else if (t - oldt > 10) {
+//                smoothScrollTo(0, getHeight());
+//            }
         } else {
 
         }

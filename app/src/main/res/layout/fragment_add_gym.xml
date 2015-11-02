@@ -16,8 +16,8 @@
         android:id="@+id/addgym_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:layout_marginTop="20dp"
         app:civ_lable="健身房名称"
+        app:civ_nonnull="true"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -39,6 +39,7 @@
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
     <LinearLayout
+        android:id="@+id/decript_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -66,7 +67,6 @@
             android:background="@color/transparent"
             android:gravity="top"
             android:maxLength="50"
-            android:text="进取的人"
             />
 
         <include layout="@layout/divider_grey"></include>

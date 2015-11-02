@@ -83,6 +83,11 @@ public class AddOganasitionFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    @OnClick(R.id.decript_layout)
+    public void onDescripte() {
+        workexpeditDescripe.requestFocus();
+    }
+
     @OnClick(R.id.addgym_addbtn)
     public void onClickAdd() {
         if (TextUtils.isEmpty(addgymName.getContent()))

@@ -48,6 +48,7 @@
         <attr name="civ_lable" format="string"></attr>
         <attr name="civ_clickable" format="boolean"></attr>
         <attr name="civ_inputnum" format="boolean"></attr>
+        <attr name="civ_nonnull" format="boolean"></attr>
 
     </declare-styleable>
 

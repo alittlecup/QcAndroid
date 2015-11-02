@@ -3,6 +3,9 @@ package com.qingchengfit.fitcoach.component;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,6 +36,7 @@ public class CommonInputView extends RelativeLayout {
     private String str_label;
     private boolean isNum;
     private boolean canClick;
+    private boolean canBeNull;
 
     public CommonInputView(Context context) {
         super(context);
@@ -54,6 +58,7 @@ public class CommonInputView extends RelativeLayout {
         str_label = ta.getString(R.styleable.CommonInputView_civ_lable);
         isNum = ta.getBoolean(R.styleable.CommonInputView_civ_inputnum, false);
         canClick = ta.getBoolean(R.styleable.CommonInputView_civ_clickable, false);
+        canBeNull = ta.getBoolean(R.styleable.CommonInputView_civ_nonnull, false);
         ta.recycle();
     }
 
@@ -62,7 +67,14 @@ public class CommonInputView extends RelativeLayout {
         super.onFinishInflate();
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
-        label.setText(str_label);
+        if (!canBeNull)
+            label.setText(str_label);
+        else {
+            SpannableString s = new SpannableString(str_label + "*");
+            int l = s.length();
+            s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            label.setText(s);
+        }
         if (canClick) {
             edit.setClickable(false);
         } else {

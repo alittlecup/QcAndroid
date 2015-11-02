@@ -171,7 +171,7 @@ public class MyHomeFragment extends Fragment {
 
     public void initSRL() {
         sfl.setColorSchemeResources(R.color.primary);
-        sfl.setProgressViewOffset(true, 140, 240);
+        sfl.setProgressViewOffset(true, 50, 100);
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

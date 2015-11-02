@@ -83,8 +83,8 @@
                 android:layout_margin="5dp"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:rating="1"
-                android:stepSize="0.5"
+                android:rating="4.2"
+                android:stepSize="0.1"
                 />
         </LinearLayout>
 
@@ -135,7 +135,9 @@
         style="@style/TagGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:clickable="false"
         app:atg_backgroundColor="@color/white"
         app:atg_backgroundRes="@drawable/tag_left"

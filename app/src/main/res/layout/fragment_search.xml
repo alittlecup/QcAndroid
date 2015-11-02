@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:drawableLeft="@drawable/ic_search_black"
-                android:paddingLeft="5dp"
+                android:paddingLeft="10dp"
 
                 />
 
@@ -59,7 +59,7 @@
             android:id="@+id/search_hottable"
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/qc_item_height"
+            android:layout_height="40dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:text="热门机构"
             />
@@ -99,9 +99,9 @@
                 android:id="@+id/searchresult_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:background="@color/white"
                 android:clipToPadding="true"
-                android:paddingTop="@dimen/activity_vertical_margin"
                 android:visibility="gone"
                 />
 
