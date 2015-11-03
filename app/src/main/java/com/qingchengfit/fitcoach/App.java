@@ -111,7 +111,7 @@ private RefWatcher refWatcher;
 //        LeakCanary.install(this);
         AppContex = getApplicationContext();
         refWatcher = LeakCanary.install(this);
-//        CrashHandler.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
         setupWebView();

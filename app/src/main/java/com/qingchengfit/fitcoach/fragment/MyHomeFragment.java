@@ -188,7 +188,7 @@ public class MyHomeFragment extends Fragment {
         fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
         fragments.add(new RecordComfirmFragment());
         fragments.add(new WorkExperienceFragment());
-        fragments.add(new StudentJudgeFragment());
+        fragments.add(new StudentEvaluateFragment());
         adatper = new FragmentAdatper(getChildFragmentManager(), fragments);
         StudentJudgeFragment fragment = StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
                 , qcMyhomeResponse.getData().getCoach().getEvaluate());

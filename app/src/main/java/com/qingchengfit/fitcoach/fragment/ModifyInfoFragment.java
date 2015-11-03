@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -166,8 +165,10 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         qcCoachRespone -> {
-                            user = qcCoachRespone.getData().getCoach();
-                            getActivity().runOnUiThread(this::initInfo);
+                            if (modifyinfoDesc != null) {
+                                user = qcCoachRespone.getData().getCoach();
+                                getActivity().runOnUiThread(this::initInfo);
+                            }
                         }
                 );
 
@@ -182,7 +183,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
      * 初始化个人信息
      */
     private void initInfo() {
-        if (!restoreStateFromArguments()) {
+//        if (!restoreStateFromArguments()) {
             initHead(user.getAvatar());
             if (user.getDistrict() != null && user.getDistrict().province != null) {
                 mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
@@ -198,7 +199,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                     mModifyCoachInfo.setGender(0);
                 } else mModifyCoachInfo.setGender(1);
             });
-        }
+//        }
     }
 
     public void initHead(String headurl) {
@@ -209,7 +210,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
             Glide.with(App.AppContex)
                     .load(gender)
                     .asBitmap()
-                    .into(new CircleImgWrapper(modifyinfoHeaderPic,App.AppContex));
+                    .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
         } else {
             Glide.with(App.AppContex)
                     .load(headurl)
@@ -307,10 +308,10 @@ public class ModifyInfoFragment extends BaseSettingFragment {
      */
     @OnClick(R.id.modifyinfo_brief)
     public void onClickBrief() {
-//        Fragment fragment = ModifyBrifeFragment.newInstance(user.getDescription());
-//        mFragmentManager.beginTransaction().add(R.id.settting_fraglayout,fragment)
-//                .show(fragment).commit();
-        fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(user.getDescription()));
+        Fragment fragment = ModifyBrifeFragment.newInstance(user.getDescription());
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.settting_fraglayout, fragment)
+                .show(fragment).addToBackStack("").commit();
+//        fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(user.getDescription()));
     }
 
 
@@ -339,8 +340,6 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                 });
 
     }
-
-
 
 
     @Override
@@ -396,37 +395,37 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //        super.onSaveInstanceState(outState);
 //    }
 //
-    private boolean restoreStateFromArguments() {
-        Bundle b = getArguments();
-        saveState = b.getBundle(this.getClass().getName());
-        if (saveState != null) {
-            restoreSave();
-            return true;
-        } else return false;
-    }
-
-    @UiThread
-    private void restoreSave() {
-        if (saveState != null){
-
-            mofifyinfoCity.setContent(saveState.getString("city"));
-            mofifyinfoWechat.setContent(saveState.getString("wechat"));
-            mofifyinfoName.setContent(saveState.getString("name"));
-            modifyinfoDesc.setText(saveState.getString("desc"));
-            initHead(saveState.getString("avatar"));
-        }
-    }
+//    private boolean restoreStateFromArguments() {
+//        Bundle b = getArguments();
+//        saveState = b.getBundle(this.getClass().getName());
+//        if (saveState != null) {
+//            restoreSave();
+//            return true;
+//        } else return false;
+//    }
+//
+//    @UiThread
+//    private void restoreSave() {
+//        if (saveState != null) {
+//
+//            mofifyinfoCity.setContent(saveState.getString("city"));
+//            mofifyinfoWechat.setContent(saveState.getString("wechat"));
+//            mofifyinfoName.setContent(saveState.getString("name"));
+//            modifyinfoDesc.setText(saveState.getString("desc"));
+//            initHead(saveState.getString("avatar"));
+//        }
+//    }
 
 
     @Override
     public void onDestroyView() {
-        Bundle state = new Bundle();
-        state.putString("city", mofifyinfoCity.getContent());
-        state.putString("desc", modifyinfoDesc.getText().toString());
-        state.putString("name", mofifyinfoName.getContent());
-        state.putString("wechat", mofifyinfoWechat.getContent());
-        state.putString("avatar", user.getAvatar());
-        getArguments().putBundle(this.getClass().getName(), state);
+//        Bundle state = new Bundle();
+//        state.putString("city", mofifyinfoCity.getContent());
+//        state.putString("desc", modifyinfoDesc.getText().toString());
+//        state.putString("name", mofifyinfoName.getContent());
+//        state.putString("wechat", mofifyinfoWechat.getContent());
+//        state.putString("avatar", user.getAvatar());
+//        getArguments().putBundle(this.getClass().getName(), state);
         super.onDestroyView();
         ButterKnife.unbind(this);
     }

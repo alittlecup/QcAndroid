@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -86,28 +87,31 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
 
     public void freshData() {
 
-        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid).subscribe(qcExperienceResponse ->
-                        getActivity().runOnUiThread(() -> {
-                            if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
-                                recyclerview.setVisibility(View.VISIBLE);
-                                recordConfirmNone.setVisibility(View.GONE);
-                                adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
-                                adapter.setListener(new OnRecycleItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View v, int pos) {
-                                        fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历", qcExperienceResponse.getData().getExperiences().get(pos)));
-                                    }
-                                });
-                                recyclerview.setAdapter(adapter);
-                            } else {
-                                recyclerview.setVisibility(View.GONE);
-                                recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
-                                recordComfirmNoTxt.setText("您还没有添加任何工作经历请点击添加按钮");
-                                recordConfirmNone.setVisibility(View.VISIBLE);
+        QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcExperienceResponse -> {
+                            if (recyclerview != null) {
+                                if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
+                                    recyclerview.setVisibility(View.VISIBLE);
+                                    recordConfirmNone.setVisibility(View.GONE);
+                                    adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
+                                    adapter.setListener(new OnRecycleItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View v, int pos) {
+                                            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历", qcExperienceResponse.getData().getExperiences().get(pos)));
+                                        }
+                                    });
+                                    recyclerview.setAdapter(adapter);
+                                } else {
+                                    recyclerview.setVisibility(View.GONE);
+                                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                                    recordComfirmNoTxt.setText("您还没有添加任何工作经历请点击添加按钮");
+                                    recordConfirmNone.setVisibility(View.VISIBLE);
+                                }
+                                refresh.setRefreshing(false);
                             }
-                            refresh.setRefreshing(false);
-                        })
-        );
+                        }
+                );
     }
 
 

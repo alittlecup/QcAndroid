@@ -28,13 +28,13 @@
         android:background="@color/transparent"
         android:gravity="right|center_vertical"
         android:inputType="number"
-        android:maxLength="20"
+        android:maxLength="25"
         android:minWidth="30dp"
         />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2px"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:background="@color/divider_white"
         >

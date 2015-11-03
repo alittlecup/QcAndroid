@@ -90,8 +90,14 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     }
 
     @Override
+    public void onBackPressed() {
+        toolbar.getMenu().clear();
+        super.onBackPressed();
+    }
+
+    @Override
     public void hideLoading() {
-        if (loadingDialog.isShowing())
+        if (loadingDialog != null && loadingDialog.isShowing())
             loadingDialog.dismiss();
     }
 

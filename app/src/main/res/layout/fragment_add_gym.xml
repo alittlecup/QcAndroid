@@ -75,9 +75,11 @@
 
     <Button
         android:id="@+id/addgym_addbtn"
-        android:layout_width="270dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="30dp"
         android:text="确定添加"
         />

@@ -25,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,30 +65,31 @@ public class RecordComfirmFragment extends BaseFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
-            getActivity().runOnUiThread(() -> {
-                if (recyclerview != null) {
-                    if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
-                        recordConfirmNone.setVisibility(View.GONE);
-                        recyclerview.setVisibility(View.VISIBLE);
-                        adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
-                        adapter.setListener((v, pos) -> {
-                            ComfirmDetailFragment fragment =
-                                    ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+        QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcCertificatesReponse -> {
 
-                            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
-                                    .show(fragment).addToBackStack("").commit();
-                        });
-                        recyclerview.setAdapter(adapter);
-                    } else {
-                        recyclerview.setVisibility(View.GONE);
-                        recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
-                        recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
-                        recordConfirmNone.setVisibility(View.VISIBLE);
+                    if (recyclerview != null) {
+                        if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
+                            recordConfirmNone.setVisibility(View.GONE);
+                            recyclerview.setVisibility(View.VISIBLE);
+                            adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+                            adapter.setListener((v, pos) -> {
+                                ComfirmDetailFragment fragment =
+                                        ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+
+                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+                                        .show(fragment).addToBackStack("").commit();
+                            });
+                            recyclerview.setAdapter(adapter);
+                        } else {
+                            recyclerview.setVisibility(View.GONE);
+                            recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
+                            recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
+                            recordConfirmNone.setVisibility(View.VISIBLE);
+                        }
                     }
-                }
-            });
-        });
+                });
     }
 
     @Override

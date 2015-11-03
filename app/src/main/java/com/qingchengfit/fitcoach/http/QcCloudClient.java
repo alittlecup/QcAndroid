@@ -23,6 +23,7 @@ import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
+import com.qingchengfit.fitcoach.http.bean.QcAddOrganizationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
@@ -249,11 +250,21 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/evaluate/")
         rx.Observable<QcEvaluateResponse> qcGetEvaluate(@Path("id") int id);
 
-        @GET("/api/gym/")
-        rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);
+        //搜索健身房
+        @GET("/api/gym/search/")
+        rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);        //搜索健身房
 
-        @GET("/api/organizations/")
+        //搜索热门健身房
+        @GET("/api/gym/")
+        rx.Observable<QcSerachGymRepsonse> qcHotGym(@QueryMap Map<String, String> params);
+
+        //搜索机构
+        @GET("/api/organizations/search/")
         rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
+
+        //热门机构
+        @GET("/api/organizations/")
+        rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
 
         //获取教练日程
         @GET("/api/coaches/{id}/schedules/")
@@ -374,7 +385,7 @@ public class QcCloudClient {
         rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymBean addGymBean);
 
         @POST("/api/organizations/")
-        rx.Observable<QcResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
+        rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
 
         @POST("/api/coaches/{id}/change/phone/")
         rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id, @Body ModifyPhoneNum modifyPwBean);

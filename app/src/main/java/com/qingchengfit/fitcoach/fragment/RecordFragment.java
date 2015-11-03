@@ -154,9 +154,9 @@ public class RecordFragment extends BaseSettingFragment {
             holder.recordcomfirmSubtitle.setText(certificatesEntity.getOrganization().getName());
             StringBuffer sb = new StringBuffer();
             sb.append("有效期:");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getCreated_at())));
+            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             sb.append("至");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
 
             holder.recordcomfirmTime.setText(sb.toString());
             if (certificatesEntity.getIs_authenticated())

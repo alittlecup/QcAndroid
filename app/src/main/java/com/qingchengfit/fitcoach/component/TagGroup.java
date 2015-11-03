@@ -166,6 +166,7 @@ public class TagGroup extends ViewGroup {
     private int verticalPadding;
 
     private int TagBackground;
+    private int TagColorCount = 0;
 
     /**
      * Listener used to dispatch tag change event.
@@ -195,7 +196,7 @@ public class TagGroup extends ViewGroup {
         default_border_stroke_width = dp2px(0.5f);
         default_text_size = sp2px(13.0f);
         default_horizontal_spacing = dp2px(8.0f);
-        default_vertical_spacing = dp2px(4.0f);
+        default_vertical_spacing = dp2px(8.0f);
         default_horizontal_padding = dp2px(12.0f);
         default_vertical_padding = dp2px(3.0f);
 
@@ -222,6 +223,7 @@ public class TagGroup extends ViewGroup {
             horizontalPadding = (int) a.getDimension(R.styleable.TagGroup_atg_horizontalPadding, default_horizontal_padding);
             verticalPadding = (int) a.getDimension(R.styleable.TagGroup_atg_verticalPadding, default_vertical_padding);
             TagBackground = a.getResourceId(R.styleable.TagGroup_atg_backgroundRes, R.drawable.bg_tagview);
+            TagColorCount = a.getInt(R.styleable.TagGroup_atg_color_count, 0);
         } finally {
             a.recycle();
         }
@@ -238,6 +240,11 @@ public class TagGroup extends ViewGroup {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return true;
     }
 
     /**
@@ -435,26 +442,28 @@ public class TagGroup extends ViewGroup {
     }
 
     /**
+     * @see #setTags(String...)
+     */
+    public void setTags(List<String> tagList) {
+        setTags(tagList.toArray(new String[tagList.size()]));
+    }
+
+    /**
      * Set the tags. It will remove all previous tags first.
      *
      * @param tags the tag list to set.
      */
     public void setTags(String... tags) {
         removeAllViews();
+        int i = 0;
         for (final String tag : tags) {
-            appendTag(tag);
+            appendTag(tag, i);
+            i++;
         }
 
         if (isAppendMode) {
             appendInputTag();
         }
-    }
-
-    /**
-     * @see #setTags(String...)
-     */
-    public void setTags(List<String> tagList) {
-        setTags(tagList.toArray(new String[tagList.size()]));
     }
 
     /**
@@ -534,8 +543,13 @@ public class TagGroup extends ViewGroup {
      *
      * @param tag the tag to append.
      */
-    protected void appendTag(CharSequence tag) {
+    protected void appendTag(CharSequence tag, int order) {
+
         final TagView newTag = new TagView(getContext(), TagView.STATE_NORMAL, tag);
+        if (order < TagColorCount) {
+            newTag.setBackgroundResource(R.drawable.bg_tagview_oringe);
+            newTag.setTextColor(getResources().getColor(R.color.orange));
+        }
         newTag.setOnClickListener(mInternalTagClickListener);
         addView(newTag);
     }

@@ -84,7 +84,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_modify_pw, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, 0, "修改密码");
+        fragmentCallBack.onToolbarMenu(0, 0, "更改密码");
 
         return view;
     }

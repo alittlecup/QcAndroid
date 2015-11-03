@@ -76,7 +76,7 @@
                 android:layout_height="@dimen/qc_item_height"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                android:text="描述"
+                android:text="职位说明"
                 ></TextView>
 
             <EditText
@@ -89,7 +89,7 @@
                 android:background="@color/transparent"
                 android:gravity="top"
                 android:maxLength="50"
-                android:text="进取的人"
+
                 />
 
             <include layout="@layout/divider_grey"></include>
@@ -152,11 +152,13 @@
 
         <Button
             android:id="@+id/workexpedit_comfirm_btn"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
             android:text="@string/login_comfirm"
             />
     </LinearLayout>

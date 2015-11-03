@@ -5,8 +5,8 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
             android:clipToPadding="true"
-            android:paddingTop="@dimen/activity_vertical_margin"
             android:scrollbars="none"
     >
 
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:background="@color/white"
-                android:gravity="center_vertical"
+                android:paddingBottom="0dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 >
@@ -88,7 +88,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                    android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
                     android:background="@color/divider_white"
                     >
@@ -130,11 +130,20 @@
             </com.qingchengfit.fitcoach.component.CommonInputView>
 
             <com.qingchengfit.fitcoach.component.CommonInputView
+                android:id="@+id/recordedit_datestart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                app:civ_clickable="true"
+                app:civ_lable="@string/recordedit_certificat_timestart"
+                >
+            </com.qingchengfit.fitcoach.component.CommonInputView>
+
+            <com.qingchengfit.fitcoach.component.CommonInputView
                 android:id="@+id/recordedit_dateoff"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 app:civ_clickable="true"
-                app:civ_lable="@string/recordedit_certificat_time"
+                app:civ_lable="@string/recordedit_certificat_timeend"
                 >
             </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -168,11 +177,13 @@
 
                 <ImageView
                     android:id="@+id/recordedit_img"
-                    android:layout_width="360dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:background="@color/white"
-                    android:padding="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/test_pic"
                     android:visibility="gone"
                     />
 

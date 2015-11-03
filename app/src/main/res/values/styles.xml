@@ -48,17 +48,21 @@
         <item name="android:textColor">@color/text_grey</item>
         <item name="android:textSize">@dimen/common_font</item>
         <item name="android:gravity">center_vertical</item>
+
+
     </style>
 
     <style name="Qc.TextCommonBlack" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/common_font</item>
         <item name="android:gravity">center_vertical</item>
+
     </style>
 
     <style name="Qc.TextCommonWhite" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/large_font</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="Qc.CommonBtn" parent="Base.Widget.AppCompat.Button">
@@ -72,7 +76,8 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">14sp</item>
-        <item name="colorControlNormal">@color/warm_grey</item>
+        <item name="colorControlNormal">@color/divider_grey</item>
+
         <item name="android:textColorHint">@color/warm_grey</item>
 
     </style>

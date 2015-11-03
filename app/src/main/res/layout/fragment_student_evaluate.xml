@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.qingchengfit.fitcoach.fragment.StudentEvaluateFragment">
+
+    <com.qingchengfit.fitcoach.component.TagGroup
+        android:id="@+id/evaluate_tags"
+
+        style="@style/TagGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:clickable="false"
+        app:atg_backgroundColor="@color/white"
+        app:atg_borderColor="@color/text_black"
+        app:atg_borderStrokeWidth="1dp"
+        app:atg_checkedBackgroundColor="@color/white"
+        app:atg_color_count="5"
+        app:atg_horizontalSpacing="8dp"
+        app:atg_isAppendMode="false"
+        app:atg_textColor="@color/text_black"
+        app:atg_verticalSpacing="8dp"
+        >
+
+    </com.qingchengfit.fitcoach.component.TagGroup>
+</FrameLayout>

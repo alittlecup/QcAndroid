@@ -36,6 +36,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -51,6 +52,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -95,12 +97,15 @@ public class RecordEditFragment extends BaseSettingFragment {
     ScrollView rootview;
     @Bind(R.id.record_edit_name)
     CommonInputView recordEditName;
+    @Bind(R.id.recordedit_datestart)
+    CommonInputView recordeditDatestart;
     private boolean mTitle;
     private String mContent;
     private Gson gson = new Gson();
     private QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity;
     private AddCertificate addCertificate;
     private MaterialDialog delDialog;
+
     public RecordEditFragment() {
     }
 
@@ -133,6 +138,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
+                            fragmentCallBack.ShowLoading();
                             QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> onResult(qcResponse));
                             dialog.dismiss();
                         }
@@ -177,9 +183,9 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (mContent != null) {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
-            recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
-            recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart() + "-" +
-                    DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())))));
+            recordeditDatestart.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+            recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
             switch (certificatesEntity.getType()) {
@@ -194,8 +200,11 @@ public class RecordEditFragment extends BaseSettingFragment {
                     break;
             }
             if (!TextUtils.isEmpty(certificatesEntity.getPhoto())) {
-                Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).into(recordeditImg);
+                recordeditImg.setVisibility(View.VISIBLE);
+                Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).asBitmap().into(new ScaleWidthWrapper(recordeditImg));
             } else recordeditImg.setVisibility(View.GONE);
+        } else {
+
         }
         recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -235,23 +244,33 @@ public class RecordEditFragment extends BaseSettingFragment {
         addCertificate.setName(recordEditName.getContent());
         addCertificate.setDate_of_issue(DateUtils.formatDateToServer(recordeditDate.getContent()));
         addCertificate.setStart(DateUtils.formatDateToServer(recordeditDate.getContent()));
+        fragmentCallBack.ShowLoading();
         if (mTitle)
             QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
-                    .subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult);
         else
-            QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate).subscribeOn(Schedulers.newThread()).subscribe(this::onResult);
+            QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult);
     }
 
     public void onResult(QcResponse qcResponse) {
         getActivity().runOnUiThread(() -> {
+            fragmentCallBack.hideLoading();
             if (qcResponse.status == ResponseResult.SUCCESS) {
                 getActivity().onBackPressed();
             } else {
-                Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.AppContex, "删除失败:" + qcResponse.msg, Toast.LENGTH_SHORT).show();
             }
 
         });
 
+    }
+
+    @OnClick(R.id.recordedit_datestart)
+    public void onClickStart() {
+        pwTime.setOnTimeSelectListener(date -> {
+            recordeditDatestart.setContent(DateUtils.getDateDay(date));
+        });
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
 
@@ -265,15 +284,17 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_dateoff)
     public void onClickDateoff() {
+
+
         pwTime.setOnTimeSelectListener(date -> {
-            recordeditDateoff.setContent(recordeditDate.getContent() + "-" + DateUtils.getDateDay(date));
+            recordeditDateoff.setContent(DateUtils.getDateDay(date));
             addCertificate.setEnd(DateUtils.formatDateToServer(DateUtils.getDateDay(date)));
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
 
-    @OnClick(R.id.recordedit_upimg)
+    @OnClick({R.id.recordedit_upimg, R.id.recordedit_img})
     public void onUpdatePic() {
         PicChooseDialog dialog = new PicChooseDialog(getActivity());
         dialog.setListener(new View.OnClickListener() {
@@ -331,7 +352,8 @@ public class RecordEditFragment extends BaseSettingFragment {
 
                                 LogUtil.d("success");
                                 Glide.with(App.AppContex).load(Uri.fromFile(upFile))
-                                        .into(recordeditImg);
+                                        .asBitmap()
+                                        .into(new ScaleWidthWrapper(recordeditImg));
                                 recordeditImg.setVisibility(View.VISIBLE);
                                 addCertificate.setPhoto(UpYunClient.UPYUNPATH + "/certificate/" + filename + ".png");
 

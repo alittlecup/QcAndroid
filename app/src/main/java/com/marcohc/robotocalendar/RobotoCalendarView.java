@@ -425,7 +425,7 @@ public class RobotoCalendarView extends LinearLayout {
 
         // Mark current day as selected
         ViewGroup dayOfMonthBackground = getDayOfMonthBackground(currentCalendar);
-        dayOfMonthBackground.setBackgroundResource(R.drawable.circle);
+        dayOfMonthBackground.setBackgroundResource(R.drawable.circle_prime);
     }
 
     private void storeLastValues(Date currentDate) {

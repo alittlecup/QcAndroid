@@ -36,7 +36,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModifyPhoneFragment extends Fragment {
+public class ModifyPhoneFragment extends BaseSettingFragment {
     public static final String TAG = ModifyPhoneFragment.class.getName();
 
     @Bind(R.id.modifyphone_pw)
@@ -70,7 +70,7 @@ public class ModifyPhoneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_phone, container, false);
         ButterKnife.bind(this, view);
-
+        fragmentCallBack.onToolbarMenu(0, 0, "更改手机号码");
         return view;
     }
 

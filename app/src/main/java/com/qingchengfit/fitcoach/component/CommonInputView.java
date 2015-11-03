@@ -70,7 +70,7 @@ public class CommonInputView extends RelativeLayout {
         if (!canBeNull)
             label.setText(str_label);
         else {
-            SpannableString s = new SpannableString(str_label + "*");
+            SpannableString s = new SpannableString(str_label + " *");
             int l = s.length();
             s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             label.setText(s);
@@ -90,7 +90,14 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public void setLabel(String s) {
-        label.setText(s);
+        if (!canBeNull)
+            label.setText(s);
+        else {
+            SpannableString sj = new SpannableString(s + " *");
+            int l = sj.length();
+            sj.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            label.setText(sj);
+        }
     }
 
     public String getContent() {

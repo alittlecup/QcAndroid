@@ -13,18 +13,27 @@
         android:background="@color/primary"
         >
 
-        <ImageView
-            android:id="@+id/header_icon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+        <FrameLayout
+            android:id="@+id/header_icon_out"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="24dp"
             android:layout_marginLeft="24dp"
+            android:background="@drawable/circle_halftrans"
             android:baseline="32dp"
-            android:scaleType="fitXY"
             >
 
-        </ImageView>
+            <ImageView
+                android:id="@+id/header_icon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                >
+            </ImageView>
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/drawer_name"
@@ -34,7 +43,7 @@
             android:layout_marginBottom="48dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_toRightOf="@id/header_icon"
+            android:layout_toRightOf="@id/header_icon_out"
             android:baseline="32dp"
             android:drawableRight="@drawable/ic_arrow_right_white"
 

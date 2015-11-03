@@ -110,7 +110,7 @@ public class GymDetailFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(item -> {
             if (isPrivate) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.web_frag_layout, AddSelfGymFragment.newInstance(id))
+                        .replace(R.id.web_frag_layout, AddSelfGymFragment.newInstance(App.coachid))
                         .addToBackStack(null)
                         .commit();
             } else {

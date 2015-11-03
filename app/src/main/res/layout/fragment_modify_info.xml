@@ -209,7 +209,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:text="自我介绍"
-            android:textColor="@color/text_black"
             />
 
         <ImageView

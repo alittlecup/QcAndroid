@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -114,16 +115,16 @@ public class AddGymFragment extends Fragment {
             return;
 
         AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), "descripe");
-        QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread()).subscribe(qcAddGymResponse -> {
-            getActivity().runOnUiThread(() -> {
-                if (qcAddGymResponse.status == ResponseResult.SUCCESS) {
-                    searchListener.onSearchResult(100, Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
-                } else {
-                    Toast.makeText(getContext(), "添加失败", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        });
+        QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcAddGymResponse -> {
+                            if (qcAddGymResponse.status == ResponseResult.SUCCESS) {
+                                searchListener.onSearchResult(100, Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
+                            } else {
+                                Toast.makeText(getContext(), "添加失败", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
     }
 
     @Override

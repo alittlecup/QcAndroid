@@ -36,6 +36,7 @@
         <attr name="atg_borderStrokeWidth" format="dimension"/>
         <!-- The tag view text size. -->
         <attr name="atg_textSize" format="dimension"/>
+        <attr name="atg_color_count" format="integer"/>
 
         <attr name="atg_horizontalSpacing" format="dimension"/>
         <attr name="atg_verticalSpacing" format="dimension"/>

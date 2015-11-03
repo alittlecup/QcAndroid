@@ -1,11 +1,10 @@
 package com.qingchengfit.fitcoach;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.paper.paperbaselibrary.utils.RevenUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -82,8 +81,12 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 Log.e(TAG, "error : ", e);
             }
             //退出程序
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+//            Looper.prepare();
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(a);
+//            Looper.loop();
         }
     }
 
@@ -97,6 +100,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
+        ex.printStackTrace();
         //使用Toast来显示异常信息
         new Thread() {
             @Override
@@ -109,7 +113,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         //收集设备参数信息
 //        collectDeviceInfo(mContext);
         //保存日志文件
-        RevenUtils.sendException("uncatch", ex.toString(), ex);
+//        RevenUtils.sendException("uncatch", ex.toString(), ex);
 
         return true;
     }

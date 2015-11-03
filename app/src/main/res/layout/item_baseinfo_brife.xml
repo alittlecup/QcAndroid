@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
-            android:background="@color/divider_grey"
+            android:background="@color/divider_white"
 
             >
         </View>
@@ -30,6 +30,7 @@
             android:layout_height="@dimen/qc_item_height"
             android:layout_marginLeft="25dp"
             android:text=""
+            android:visibility="gone"
             />
     </LinearLayout>
 

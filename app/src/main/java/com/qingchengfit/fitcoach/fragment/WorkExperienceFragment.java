@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,9 +170,11 @@ public class WorkExperienceFragment extends BaseFragment {
             QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
 //
             holder.itemStudioName.setText(experiencesEntity.getGym().getName());
-            holder.itemStudioPos.setText("职位:" + experiencesEntity.getPosition());
+            SpannableString ssPosition = new SpannableString("职位: " + experiencesEntity.getPosition());
+//            ssPosition.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3 , Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            holder.itemStudioPos.setText(ssPosition);
             StringBuffer sb = new StringBuffer();
-            sb.append("业绩:");
+            sb.append("业绩: ");
             sb.append("团课");
             sb.append(experiencesEntity.getGroup_course());
             sb.append("节,服务");
@@ -183,8 +186,15 @@ public class WorkExperienceFragment extends BaseFragment {
             sb.append("人次;销售额达");
             sb.append(experiencesEntity.getSale());
             sb.append("元.");
-            holder.itemStudioComplish.setText(sb.toString());
-            holder.itemStudioDes.setText("描述:" + experiencesEntity.getDescription());
+
+            SpannableString sy = new SpannableString(sb.toString());
+//            sy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            holder.itemStudioComplish.setText(sy);
+
+            SpannableString sDes = new SpannableString("描述: " + experiencesEntity.getDescription());
+//            sDes.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            holder.itemStudioDes.setText(sDes);
+
             StringBuffer ss = new StringBuffer();
             ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             ss.append("-");

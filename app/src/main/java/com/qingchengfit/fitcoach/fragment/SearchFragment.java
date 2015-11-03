@@ -39,6 +39,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,6 +113,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (searchviewClear == null)
+                    return;
                 if (s.length() > 0) {
                     searchviewClear.setVisibility(View.VISIBLE);
                 } else {
@@ -153,42 +156,48 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         params.put("is_hot", "1");
 
         if (type == TYPE_GYM) {
-
-            QcCloudClient.getApi().getApi.qcSearchGym(params).subscribe(
-                    qcSerachGymRepsonse -> {
-                        getActivity().runOnUiThread(() -> {
-                            strings.clear();
-                            if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
-                                searchHottable.setText("热门健身房");
-                                searchresultRv.setVisibility(View.VISIBLE);
-                                for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
-                                    strings.add(addGymBean.name);
+            QcCloudClient.getApi().getApi.qcHotGym(params)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            qcSerachGymRepsonse -> {
+                                if (searchHottable != null) {
+                                    strings.clear();
+                                    if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
+                                        searchHottable.setText("热门健身房");
+                                        searchresultRv.setVisibility(View.VISIBLE);
+                                        for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
+                                            strings.add(addGymBean.name);
+                                        }
+                                        adapter.setListener(((v, pos) -> {
+                                            searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                        }));
+                                        adapter.notifyDataSetChanged();
+                                    } else searchresultRv.setVisibility(View.GONE);
                                 }
-                                adapter.setListener(((v, pos) -> {
-                                    searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
-                                }));
-                                adapter.notifyDataSetChanged();
-                            } else searchresultRv.setVisibility(View.GONE);
-                        });
-                    });
+                                ;
+                            });
         } else if (type == TYPE_ORGANASITON) {
-            QcCloudClient.getApi().getApi.qcSearchOrganization(params).subscribe(
-                    qcSearchOrganResponse ->
-                            getActivity().runOnUiThread(() -> {
-                                strings.clear();
-                                if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
-                                    searchHottable.setText("热门机构");
-                                    searchresultRv.setVisibility(View.VISIBLE);
-                                    for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
-                                        strings.add(addGymBean.getName());
-                                    }
-                                    adapter.setListener(((v, pos) -> {
-                                        searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
-                                    }));
-                                    adapter.notifyDataSetChanged();
-                                } else searchresultRv.setVisibility(View.GONE);
-                            })
-            );
+            QcCloudClient.getApi().getApi.qcHotOrganization(params)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            qcSearchOrganResponse -> {
+                                if (searchHottable != null) {
+                                    strings.clear();
+                                    if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
+                                        searchHottable.setText("热门机构");
+                                        searchresultRv.setVisibility(View.VISIBLE);
+                                        for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
+                                            strings.add(addGymBean.getName());
+                                        }
+                                        adapter.setListener(((v, pos) -> {
+                                            searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                        }));
+                                        adapter.notifyDataSetChanged();
+                                    } else searchresultRv.setVisibility(View.GONE);
+                                }
+                                ;
+                            }
+                    );
         }
 
 
@@ -227,41 +236,49 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         params.put("q", keyword);
         if (type == TYPE_GYM) {
 
-            QcCloudClient.getApi().getApi.qcSearchGym(params).subscribe(
-                    qcSerachGymRepsonse -> {
-                        getActivity().runOnUiThread(() -> {
-                            strings.clear();
-                            if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
-                                searchHottable.setText("搜索结果");
-                                searchresultRv.setVisibility(View.VISIBLE);
-                                for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
-                                    strings.add(addGymBean.name);
+            QcCloudClient.getApi().getApi.qcSearchGym(params)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            qcSerachGymRepsonse -> {
+                                if (searchHottable != null) {
+                                    strings.clear();
+                                    if (qcSerachGymRepsonse.getData().getGym().size() > 0) {
+                                        searchHottable.setText("搜索结果");
+                                        searchresultRv.setVisibility(View.VISIBLE);
+                                        for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
+                                            strings.add(addGymBean.name);
+                                        }
+                                        adapter.setListener(((v, pos) -> {
+                                            searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                        }));
+                                        adapter.notifyDataSetChanged();
+                                    } else searchresultRv.setVisibility(View.GONE);
                                 }
-                                adapter.setListener(((v, pos) -> {
-                                    searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
-                                }));
-                                adapter.notifyDataSetChanged();
-                            } else searchresultRv.setVisibility(View.GONE);
-                        });
-                    });
+                                ;
+                            });
         } else if (type == TYPE_ORGANASITON) {
-            QcCloudClient.getApi().getApi.qcSearchOrganization(params).subscribe(
-                    qcSearchOrganResponse ->
-                            getActivity().runOnUiThread(() -> {
-                                strings.clear();
-                                if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
-                                    searchHottable.setText("搜索结果");
-                                    searchresultRv.setVisibility(View.VISIBLE);
-                                    for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
-                                        strings.add(addGymBean.getName());
-                                    }
-                                    adapter.setListener(((v, pos) -> {
-                                        searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
-                                    }));
-                                    adapter.notifyDataSetChanged();
-                                } else searchresultRv.setVisibility(View.GONE);
-                            })
-            );
+            QcCloudClient.getApi().getApi.qcSearchOrganization(params)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            qcSearchOrganResponse ->
+                            {
+                                if (searchHottable != null) {
+                                    strings.clear();
+                                    if (qcSearchOrganResponse.getData().getOrganizations().size() > 0) {
+                                        searchHottable.setText("搜索结果");
+                                        searchresultRv.setVisibility(View.VISIBLE);
+                                        for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
+                                            strings.add(addGymBean.getName());
+                                        }
+                                        adapter.setListener(((v, pos) -> {
+                                            searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                        }));
+                                        adapter.notifyDataSetChanged();
+                                    } else searchresultRv.setVisibility(View.GONE);
+
+                                }
+                            }
+                    );
         }
 
     }

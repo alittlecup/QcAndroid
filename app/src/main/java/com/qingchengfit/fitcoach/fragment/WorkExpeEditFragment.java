@@ -108,16 +108,19 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
+                            fragmentCallBack.ShowLoading();
                             QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
                                     .subscribe(aBoolean -> {
+                                        fragmentCallBack.hideLoading();
                                         if (aBoolean) {
                                             getActivity().onBackPressed();
                                             Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
                                         } else
                                             Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
+
                                     });
                             dialog.dismiss();
                         }

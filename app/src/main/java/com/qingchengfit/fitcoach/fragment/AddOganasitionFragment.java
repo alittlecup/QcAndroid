@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -94,14 +95,14 @@ public class AddOganasitionFragment extends Fragment {
             return;
 
         QcCloudClient.getApi().postApi.qcAddOrganization(new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), "description"))
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcResponse -> {
-                    getActivity().runOnUiThread(() -> {
-                        if (qcResponse.status == ResponseResult.SUCCESS) {
-                            Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
+                    if (qcResponse.status == ResponseResult.SUCCESS) {
+                        searchListener.onSearchResult(100, Integer.parseInt(qcResponse.data.gym.id), qcResponse.data.gym.name);
+                        Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
 //                           searchListener.onSearchResult();
-                        } else Toast.makeText(getActivity(), "添加失败", Toast.LENGTH_SHORT).show();
-                    });
+                    } else Toast.makeText(getActivity(), "添加失败", Toast.LENGTH_SHORT).show();
 
                 });
     }
