@@ -35,6 +35,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -45,7 +46,9 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import butterknife.Bind;
@@ -105,6 +108,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     private QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity;
     private AddCertificate addCertificate;
     private MaterialDialog delDialog;
+    private DialogSheet mDialogSheet;
 
     public RecordEditFragment() {
     }
@@ -185,9 +189,17 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
             recordeditDatestart.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
-            recordeditDateoff.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
+
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
+            Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
+            Calendar c = Calendar.getInstance(Locale.getDefault());
+            c.setTime(d);
+            if (c.get(Calendar.YEAR) == 3000) {
+                recordeditDateoff.setContent("长期有效");
+            } else {
+                recordeditDateoff.setContent(DateUtils.getDateDay(d));
+            }
             switch (certificatesEntity.getType()) {
                 case TYPE_MEETING:
                     recordeditType.check(R.id.recordedit_type_meeting);
@@ -243,7 +255,13 @@ public class RecordEditFragment extends BaseSettingFragment {
         addCertificate.setGrade(recordeditScore.getContent());
         addCertificate.setName(recordEditName.getContent());
         addCertificate.setDate_of_issue(DateUtils.formatDateToServer(recordeditDate.getContent()));
-        addCertificate.setStart(DateUtils.formatDateToServer(recordeditDate.getContent()));
+        addCertificate.setStart(DateUtils.formatDateToServer(recordeditDatestart.getContent()));
+
+        String endtime = recordeditDateoff.getContent().trim();
+        if (endtime.equalsIgnoreCase("长期有效")) {
+            endtime = "3000-1-1";
+        } else endtime = DateUtils.formatDateToServer(recordeditDateoff.getContent());
+        addCertificate.setEnd(endtime);
         fragmentCallBack.ShowLoading();
         if (mTitle)
             QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
@@ -267,6 +285,9 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_datestart)
     public void onClickStart() {
+        if (!TextUtils.isEmpty(recordeditDatestart.getContent())) {
+            pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()));
+        }
         pwTime.setOnTimeSelectListener(date -> {
             recordeditDatestart.setContent(DateUtils.getDateDay(date));
         });
@@ -276,6 +297,9 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_date)
     public void onClickDate() {
+        if (!TextUtils.isEmpty(recordeditDate.getContent())) {
+            pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDate.getContent()));
+        }
         pwTime.setOnTimeSelectListener(date -> {
             recordeditDate.setContent(DateUtils.getDateDay(date));
         });
@@ -284,13 +308,41 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_dateoff)
     public void onClickDateoff() {
+        if (mDialogSheet == null) {
+            mDialogSheet = DialogSheet.builder(getContext())
+                    .addButton("长期有效", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialogSheet.dismiss();
+                            recordeditDateoff.setContent("长期有效");
+                        }
+                    })
+                    .addButton("选择日期", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialogSheet.dismiss();
+                            if (!TextUtils.isEmpty(recordeditDateoff.getContent())) {
+                                pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDateoff.getContent()));
+                            }
+                            pwTime.setOnTimeSelectListener(date -> {
+                                recordeditDateoff.setContent(DateUtils.getDateDay(date));
+                                pwTime.dismiss();
+                            });
+                            pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
 
 
-        pwTime.setOnTimeSelectListener(date -> {
-            recordeditDateoff.setContent(DateUtils.getDateDay(date));
-            addCertificate.setEnd(DateUtils.formatDateToServer(DateUtils.getDateDay(date)));
-        });
-        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
+                        }
+                    });
+        }
+
+        mDialogSheet.show();
+
+
+//        pwTime.setOnTimeSelectListener(date -> {
+//            recordeditDateoff.setContent(DateUtils.getDateDay(date));
+//            addCertificate.setEnd(DateUtils.formatDateToServer(DateUtils.getDateDay(date)));
+//        });
+//        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
 

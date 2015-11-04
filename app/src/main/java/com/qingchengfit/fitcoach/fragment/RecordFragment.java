@@ -23,7 +23,10 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -156,9 +159,15 @@ public class RecordFragment extends BaseSettingFragment {
             sb.append("有效期:");
             sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             sb.append("至");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
-
-            holder.recordcomfirmTime.setText(sb.toString());
+            Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
+            Calendar c = Calendar.getInstance(Locale.getDefault());
+            c.setTime(d);
+            if (c.get(Calendar.YEAR) == 3000)
+                holder.recordcomfirmTime.setText("有效期:长期有效");
+            else {
+                sb.append(DateUtils.getDateDay(d));
+                holder.recordcomfirmTime.setText(sb.toString());
+            }
             if (certificatesEntity.getIs_authenticated())
                 Glide.with(App.AppContex).load(R.drawable.img_record_comfirmed).into(holder.recordcomfirmImg);
             else

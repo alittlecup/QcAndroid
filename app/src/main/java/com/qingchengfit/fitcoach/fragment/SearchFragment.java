@@ -98,10 +98,10 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         if (type == TYPE_ORGANASITON) {
-            searchviewEt.setHint("搜索机构");
+            searchviewEt.setHint("搜索机构(至少输入三个字符)");
             searchresultBtn.setText("添加主办机构");
         } else if (type == TYPE_GYM) {
-            searchviewEt.setHint("搜索健身房");
+            searchviewEt.setHint("搜索健身房(至少输入三个字符)");
             searchresultBtn.setText("添加健身房");
         }
 

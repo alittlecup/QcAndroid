@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -81,6 +82,8 @@ public class CommonInputView extends RelativeLayout {
             edit.setClickable(true);
             setOnClickListener(v -> {
                 edit.setClickable(true);
+                edit.performClick();
+                AppUtils.showKeyboard(getContext(), edit);
                 edit.requestFocus();
             });
         }

@@ -23,7 +23,10 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -173,8 +176,14 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             holder.itemWorkexpeName.setText(experiencesEntity.getGym().getName());
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            stringBuffer.append("至");
-            stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
+            stringBuffer.append("-");
+            Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
+            Calendar c = Calendar.getInstance(Locale.getDefault());
+            c.setTime(d);
+            if (c.get(Calendar.YEAR) == 3000)
+                stringBuffer.append("至今");
+            else
+                stringBuffer.append(DateUtils.getDateMonth(d));
             holder.itemWorkexpeTime.setText(stringBuffer.toString());
         }
 

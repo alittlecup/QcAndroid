@@ -23,13 +23,16 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -85,6 +88,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
     private AddWorkExperience addWorkExperience;
     private MaterialDialog delDialog;
+    private DialogSheet mDialogSheet;
+
 
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
 
@@ -167,12 +172,22 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                 }
             });
             workexpeditStartTime.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            workexpeditStartEnd.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
+            Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
+            Calendar c = Calendar.getInstance(Locale.getDefault());
+            c.setTime(d);
+            if (c.get(Calendar.YEAR) == 3000) {
+                workexpeditStartEnd.setContent("至今");
+            } else {
+                workexpeditStartEnd.setContent(DateUtils.getDateDay(d));
+            }
+
+
+
             workexpeditDescripe.setText(experiencesEntity.getDescription());
             workexpeditPosition.setContent(experiencesEntity.getPosition());
             if (experiencesEntity.getGym() != null) {
                 workexpeditGymName.setContent(experiencesEntity.getGym().getName());
-                addWorkExperience.setGym_id(experiencesEntity.getId());
+                addWorkExperience.setGym_id(experiencesEntity.getGym().getId());
             }
             workexpeditGroupClass.setContent(Integer.toString(experiencesEntity.getGroup_course()));
             workexpeditGroupNum.setContent(Integer.toString(experiencesEntity.getGroup_user()));
@@ -210,6 +225,9 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             return;
         }
         addWorkExperience.setStart(DateUtils.formatDateToServer(starttime));
+        if (endtime.equalsIgnoreCase("至今")) {
+            endtime = "3000-1-1";
+        }
         addWorkExperience.setEnd(DateUtils.formatDateToServer(endtime));
         addWorkExperience.setDescription(description);
         addWorkExperience.setGroup_course(groupCount);
@@ -251,19 +269,43 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.workexpedit_start_time)
     public void onStartTime() {
+        pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
         pwTime.setOnTimeSelectListener(date -> {
-
             workexpeditStartTime.setContent(DateUtils.getDateDay(date));
+            pwTime.dismiss();
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
     @OnClick(R.id.workexpedit_start_end)
     public void onEndTime() {
-        pwTime.setOnTimeSelectListener(date -> {
-            workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
-        });
-        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
+        if (mDialogSheet == null) {
+            mDialogSheet = DialogSheet.builder(getContext())
+                    .addButton("至今", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialogSheet.dismiss();
+                            workexpeditStartEnd.setContent("至今");
+                        }
+                    })
+                    .addButton("选择日期", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mDialogSheet.dismiss();
+                            pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
+                            pwTime.setOnTimeSelectListener(date -> {
+                                workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
+                                pwTime.dismiss();
+                            });
+                            pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
+
+
+                        }
+                    });
+        }
+
+        mDialogSheet.show();
+
     }
 
 

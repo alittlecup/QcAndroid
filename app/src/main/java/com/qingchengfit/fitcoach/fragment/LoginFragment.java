@@ -102,7 +102,7 @@ public class LoginFragment extends Fragment {
                             } else {
 
                                 getActivity().runOnUiThread(() -> {
-                                    Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
                                     Snackbar
                                             .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
                                             .show();

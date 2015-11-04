@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
@@ -39,11 +40,13 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
 
     @Override
     public void onFragmentChange(Fragment fragment) {
+        AppUtils.hideKeyboard(this);
         fragmentManager.beginTransaction()
                 .replace(R.id.settting_fraglayout, fragment)
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_right_out, R.anim.slide_left_in)
                 .addToBackStack(null)
                 .commit();
+
     }
 
     public void onFragmentChange(Fragment fragment, boolean addtoStack) {
@@ -91,6 +94,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
 
     @Override
     public void onBackPressed() {
+        AppUtils.hideKeyboard(this);
         toolbar.getMenu().clear();
         super.onBackPressed();
     }

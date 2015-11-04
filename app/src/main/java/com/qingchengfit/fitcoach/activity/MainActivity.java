@@ -526,7 +526,7 @@ private MaterialDialog loadingDialog;
                                 item.setCount(qcDrawerResponse.data.user_count);
                                 item1.setCount(qcDrawerResponse.data.plan_count);
                                 item2.setCount(qcDrawerResponse.data.system_count);
-                            PreferenceUtils.setPrefString(App.AppContex, "drawer_info", new Gson().toJson(qcDrawerResponse));
+                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
                         });
             }
 
@@ -544,7 +544,7 @@ private MaterialDialog loadingDialog;
         /**
          * load cache
          */
-        String cache = PreferenceUtils.getPrefString(App.AppContex, "drawer_info", "");
+        String cache = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "drawer_info", "");
         if (!TextUtils.isEmpty(cache)) {
             QcDrawerResponse qcDrawerResponse = gson.fromJson(cache, QcDrawerResponse.class);
             Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
@@ -552,7 +552,7 @@ private MaterialDialog loadingDialog;
             item.setCount(qcDrawerResponse.data.user_count);
             item1.setCount(qcDrawerResponse.data.plan_count);
             item2.setCount(qcDrawerResponse.data.system_count);
-            PreferenceUtils.setPrefString(App.AppContex, "drawer_info", new Gson().toJson(qcDrawerResponse));
+            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
         }
 
 

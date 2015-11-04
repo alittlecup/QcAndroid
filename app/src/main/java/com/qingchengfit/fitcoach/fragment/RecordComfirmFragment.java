@@ -21,7 +21,10 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -158,10 +161,19 @@ public class RecordComfirmFragment extends BaseFragment {
                 Glide.with(App.AppContex).load(R.drawable.img_record_uncomfirmed).into(holder.img);
             StringBuffer sb = new StringBuffer();
             sb.append("有效期:  ");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getCreated_at())));
+            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
             sb.append("-");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
-            holder.recordcomfirmTime.setText(sb.toString());
+            Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
+            Calendar c = Calendar.getInstance(Locale.getDefault());
+            c.setTime(d);
+            if (c.get(Calendar.YEAR) == 3000)
+
+                holder.recordcomfirmTime.setText("长期有效");
+            else {
+                sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
+                holder.recordcomfirmTime.setText(sb.toString());
+            }
+
 
         }
 

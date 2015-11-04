@@ -22,7 +22,10 @@ import com.qingchengfit.fitcoach.component.TagGroup;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -198,7 +201,13 @@ public class WorkExperienceFragment extends BaseFragment {
             StringBuffer ss = new StringBuffer();
             ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             ss.append("-");
-            ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getEnd())));
+            Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
+            Calendar c = Calendar.getInstance(Locale.getDefault());
+            c.setTime(d);
+            if (c.get(Calendar.YEAR) == 3000)
+                ss.append("至今");
+            else
+                ss.append(DateUtils.getDateMonth(d));
             holder.itemTime.setText(ss.toString());
 //            holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
 //            List<String> aaaas = new ArrayList<>();
