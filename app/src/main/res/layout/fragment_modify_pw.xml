@@ -16,15 +16,51 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         >
 
-        <EditText
 
-            android:id="@+id/modifypw_ori_pw"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
+            >
+
+            <EditText
+                android:id="@+id/modifyphone_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:background="@color/transparent"
+                android:hint="请输入手机号"
+                android:inputType="number"
+                />
+
+            <TextView
+                android:id="@+id/modifyphone_getcode_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/checkcode_line"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="@string/login_getcode"
+
+                />
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/divider_white"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            >
+        </include>
+
+        <EditText
+            android:id="@+id/modifyphone_code"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+
             android:background="@color/transparent"
-            android:hint="原密码"
-            android:inputType="textPassword"
-            android:maxLength="16"
+            android:hint="手机验证码"
+            android:inputType="number"
             />
 
         <include
@@ -33,6 +69,7 @@
             android:layout_height="1dp"
             >
         </include>
+
         <EditText
             android:id="@+id/modifypw_new_pw"
             android:layout_width="match_parent"

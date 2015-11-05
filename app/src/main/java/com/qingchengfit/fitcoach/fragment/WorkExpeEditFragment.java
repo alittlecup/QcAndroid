@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -84,6 +86,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @Bind(R.id.rootview)
     ScrollView rootview;
     TimeDialogWindow pwTime;
+    @Bind(R.id.workexpedit_expe_layout)
+    LinearLayout workexpeditExpeLayout;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
     private AddWorkExperience addWorkExperience;
@@ -180,7 +184,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             } else {
                 workexpeditStartEnd.setContent(DateUtils.getDateDay(d));
             }
-
 
 
             workexpeditDescripe.setText(experiencesEntity.getDescription());
@@ -293,6 +296,19 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     public void onStartTime() {
         pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
         pwTime.setOnTimeSelectListener(date -> {
+            if (date.getTime() > new Date().getTime()) {
+                Toast.makeText(App.AppContex, "起始时间不能晚于今天", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!TextUtils.equals("至今", workexpeditStartEnd.getContent()) &&
+                    DateUtils.formatDateFromStringDot(workexpeditStartEnd.getContent()).getTime()
+                            < DateUtils.formatDateFromStringDot(workexpeditStartTime.getContent()).getTime()) {
+                Toast.makeText(App.AppContex, "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
             workexpeditStartTime.setContent(DateUtils.getDateDay(date));
             pwTime.dismiss();
         });
@@ -316,6 +332,10 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                             mDialogSheet.dismiss();
                             pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
                             pwTime.setOnTimeSelectListener(date -> {
+                                if (date.getTime() < DateUtils.formatDateFromStringDot(workexpeditStartTime.getContent()).getTime()) {
+                                    Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
                                 pwTime.dismiss();
                             });

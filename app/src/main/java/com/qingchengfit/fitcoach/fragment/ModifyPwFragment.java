@@ -1,22 +1,31 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,8 +44,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @Bind(R.id.modifypw_ori_pw)
-    EditText modifypwOriPw;
+
     @Bind(R.id.modifypw_new_pw)
     EditText modifypwNewPw;
     @Bind(R.id.modifypw_comfirm_pw)
@@ -44,11 +52,17 @@ public class ModifyPwFragment extends BaseSettingFragment {
     @Bind(R.id.modifypw_comfirm_btn)
     Button modifypwComfirmBtn;
     Gson gson = new Gson();
+    @Bind(R.id.modifyphone_phone)
+    EditText modifyphonePhone;
+    @Bind(R.id.modifyphone_getcode_btn)
+    TextView modifyphoneGetcodeBtn;
+    @Bind(R.id.modifyphone_code)
+    EditText modifyphoneCode;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-
+    private PostMsgHandler handler;
     public ModifyPwFragment() {
     }
 
@@ -93,14 +107,21 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
     @OnClick(R.id.modifypw_comfirm_btn)
     public void onConfirm() {
-        String old = modifypwOriPw.getText().toString().trim();
+        if (TextUtils.isEmpty(modifyphoneCode.getText())) {
+            Toast.makeText(getContext(), "请填写验证码", Toast.LENGTH_LONG).show();
+            return;
+        }
+        String phone = modifyphonePhone.getText().toString().trim();
+        String code = modifyphoneCode.getText().toString().trim();
         String now = modifypwNewPw.getText().toString().trim();
         String re = modifypwComfirmPw.getText().toString().trim();
 
-        if (old.length() < 6) {
-            Toast.makeText(getContext(), "请填写初始密码", Toast.LENGTH_LONG).show();
+        if (phone.length() < 11) {
+            Toast.makeText(getContext(), "请填写正确的手机号", Toast.LENGTH_LONG).show();
             return;
         }
+
+
         if (!now.equals(re)) {
             Toast.makeText(getContext(), "新密码不一致", Toast.LENGTH_LONG).show();
             return;
@@ -115,7 +136,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
 //        }
 //        Coach coach = gson.fromJson(id, Coach.class);
         fragmentCallBack.ShowLoading("请稍后");
-        QcCloudClient.getApi().postApi.qcMoidfyPw(App.coachid, new ModifyPwBean(old, now))
+        QcCloudClient.getApi().postApi.qcMoidfyPw(App.coachid, new ModifyPwBean(phone, code, now))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcResponse>() {
@@ -144,10 +165,81 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
     }
 
+    /**
+     * 获取验证码
+     */
+    @OnClick(R.id.modifyphone_getcode_btn)
+    public void getCode() {
+        String phone = modifyphonePhone.getText().toString().trim();
+        if (phone.length() < 11) {
+            Toast.makeText(App.AppContex, getString(R.string.err_login_phonenum), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        QcCloudClient.getApi()
+                .postApi
+                .qcGetCode(new GetCodeBean(phone))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcResponse qcResponse) {
+
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            LogUtil.d("succ");
+                            handler.sendEmptyMessage(0);
+                        } else {
+                            LogUtil.d(":" + qcResponse.msg);
+                        }
+                    }
+                });
+
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    public class PostMsgHandler extends Handler {
+        WeakReference<Context> context;
+        int count = 60;
+
+        PostMsgHandler(Context c) {
+            context = new WeakReference<Context>(c);
+
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(Integer.toString(count));
+            stringBuffer.append(getString(R.string.login_resend_msg));
+
+            modifyphoneGetcodeBtn.setText(stringBuffer.toString());
+            if (count == 60)
+                modifyphoneGetcodeBtn.setEnabled(false);
+            if (count > 0) {
+                count--;
+                handler.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                count = 60;
+                modifyphoneGetcodeBtn.setEnabled(true);
+                modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+            }
+        }
     }
 }

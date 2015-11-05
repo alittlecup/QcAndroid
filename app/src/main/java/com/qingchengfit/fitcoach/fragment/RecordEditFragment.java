@@ -297,7 +297,16 @@ public class RecordEditFragment extends BaseSettingFragment {
             pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()));
         }
         pwTime.setOnTimeSelectListener(date -> {
+            if (!TextUtils.equals(recordeditDateoff.getContent(), "长期有效") &&
+                    DateUtils.formatDateFromStringDot(recordeditDateoff.getContent()).getTime()
+                            < DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()).getTime()
+                    ) {
+                Toast.makeText(App.AppContex, "生效日期不能晚于失效日期", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             recordeditDatestart.setContent(DateUtils.getDateDay(date));
+            pwTime.dismiss();
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
@@ -333,6 +342,13 @@ public class RecordEditFragment extends BaseSettingFragment {
                                 pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDateoff.getContent()));
                             }
                             pwTime.setOnTimeSelectListener(date -> {
+                                if (date.getTime()
+                                        < DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()).getTime()
+                                        ) {
+                                    Toast.makeText(App.AppContex, "失效日期不能早于生效日期", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
                                 recordeditDateoff.setContent(DateUtils.getDateDay(date));
                                 pwTime.dismiss();
                             });
@@ -397,7 +413,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = FILE_PATH;
             LogUtil.d(filepath);
-            fragmentCallBack.ShowLoading("正在上网");
+            fragmentCallBack.ShowLoading("正在上传");
             Observable.just(filepath)
                     .subscribeOn(Schedulers.io())
                     .subscribe(s -> {

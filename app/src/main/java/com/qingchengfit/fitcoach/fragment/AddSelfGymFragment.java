@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,13 @@ public class AddSelfGymFragment extends Fragment {
 
     @OnClick(R.id.addselfgym_comfirm)
     public void onComfirm() {
+        if (TextUtils.isEmpty(addselfgymName.getContent())) {
+            Toast.makeText(App.AppContex, "健身房名称不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        postPrivateGym.name = addselfgymName.getContent();
+
         QcCloudClient.getApi().postApi.qcPostPrivateGym(App.coachid, postPrivateGym)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

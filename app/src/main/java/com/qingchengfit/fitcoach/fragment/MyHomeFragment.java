@@ -224,7 +224,7 @@ public class MyHomeFragment extends Fragment {
         myhomeTab.setupWithViewPager(myhomeViewpager);
         myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
         myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
-        initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), 0);//TODO
+        initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), qcMyhomeResponse.getData().getCoach().getGender());//TODO
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "_cache_myhome", gson.toJson(qcMyhomeResponse));
 //        String key = CacheUtils.hashKeyForDisk(App.coachid+"_cache_myhome");
         sfl.setRefreshing(false);

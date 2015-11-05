@@ -115,10 +115,19 @@ public class QcCertificateDetailResponse {
             private String grade;
             private String created_at;
             private String start;
+            private String end;
             private OrganizationEntity organization;
             private int type;
             private int id;
             private boolean is_authenticated;
+
+            public String getEnd() {
+                return end;
+            }
+
+            public void setEnd(String end) {
+                this.end = end;
+            }
 
             public OrganizationEntity getOrganization() {
                 return organization;

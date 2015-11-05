@@ -209,6 +209,11 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //        mofifyinfoWeibo.setContent(user.get);
             modifyinfoSignEt.setText(user.getShort_description());
             mModifyCoachInfo.setGender(user.getGender());
+        if (user.getGender() == 0) {
+            compleGender.check(R.id.comple_gender_male);
+        } else {
+            compleGender.check(R.id.comple_gender_female);
+        }
             compleGender.setOnCheckedChangeListener((group, checkedId) -> {
                 if (checkedId == R.id.comple_gender_male) {
                     mModifyCoachInfo.setGender(0);
@@ -338,7 +343,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
         mModifyCoachInfo.setWeixin(mofifyinfoWechat.getContent());
         mModifyCoachInfo.setShort_description(modifyinfoSignEt.getText().toString());
-        mModifyCoachInfo.setUsername(modifyinfoName.getText().toString());
+        mModifyCoachInfo.setUsername(mofifyinfoName.getContent().trim());
         fragmentCallBack.ShowLoading("请稍后");
 
         QcCloudClient.getApi().postApi.qcModifyCoach(Integer.parseInt(coach.id), mModifyCoachInfo)

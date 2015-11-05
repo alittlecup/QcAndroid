@@ -161,14 +161,13 @@ public class RecordComfirmFragment extends BaseFragment {
                 Glide.with(App.AppContex).load(R.drawable.img_record_uncomfirmed).into(holder.img);
             StringBuffer sb = new StringBuffer();
             sb.append("有效期:  ");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
+            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             sb.append("-");
             Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
             if (c.get(Calendar.YEAR) == 3000)
-
-                holder.recordcomfirmTime.setText("长期有效");
+                holder.recordcomfirmTime.setText("有效期: 长期有效");
             else {
                 sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
                 holder.recordcomfirmTime.setText(sb.toString());

@@ -15,20 +15,30 @@ package com.qingchengfit.fitcoach.http.bean;
  */
 public class ModifyPwBean {
 
-    public String oldpassword;
+    public String phone;
+    public String code;
     public String password;
 
-    public ModifyPwBean(String oldpassword, String password) {
-        this.oldpassword = oldpassword;
+    public ModifyPwBean(String phone, String code, String password) {
+        this.phone = phone;
+        this.code = code;
         this.password = password;
     }
 
-    public String getOldpassword() {
-        return oldpassword;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setOldpassword(String oldpassword) {
-        this.oldpassword = oldpassword;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getPassword() {

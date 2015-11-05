@@ -16,6 +16,10 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -73,6 +77,9 @@ public class ComfirmDetailFragment extends Fragment {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         QcCloudClient.getApi().getApi.qcGetCertificateDetail(id).subscribe(qcCertificateDetailResponse ->
+                {
+
+                    if (recorddetailTitle != null) {
                         getActivity().runOnUiThread(() -> {
                             recorddetailTitle.setText(qcCertificateDetailResponse.getData().getCertificate().getName());
                             recorddetailHost.setText(qcCertificateDetailResponse.getData().getCertificate().getOrganization().getName());
@@ -83,14 +90,29 @@ public class ComfirmDetailFragment extends Fragment {
 //                            sb.append("-");
 //                            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
 
-                            recorddetailTime.setText(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
-                            comfirmCreatetime.setText(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getStart())));
+//                            recorddetailTime.setText(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
+                            StringBuffer sb = new StringBuffer();
+                            sb.append("有效期:  ");
+                            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getStart())));
+                            sb.append("-");
+                            Date d = DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getEnd());
+                            Calendar c = Calendar.getInstance(Locale.getDefault());
+                            c.setTime(d);
+                            if (c.get(Calendar.YEAR) == 3000)
+                                recorddetailTime.setText("长期有效");
+                            else {
+                                sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getEnd())));
+                                recorddetailTime.setText(sb.toString());
+                            }
+                            comfirmCreatetime.setText(DateUtils.getDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getDate_of_issue())));
                             if (qcCertificateDetailResponse.getData().getCertificate().is_authenticated()) {
                                 Glide.with(getActivity()).load(R.drawable.img_record_comfirmed).into(recordComfirmImg);
                             } else
                                 Glide.with(getActivity()).load(R.drawable.img_record_uncomfirmed).into(recordComfirmImg);
                             Glide.with(getActivity()).load(qcCertificateDetailResponse.getData().getCertificate().getPhoto()).asBitmap().into(new ScaleWidthWrapper(comfirmImg));
-                        })
+                        });
+                    }
+                }
         );
         return view;
     }
