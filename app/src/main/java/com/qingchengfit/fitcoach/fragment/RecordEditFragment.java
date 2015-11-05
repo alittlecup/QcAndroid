@@ -29,7 +29,6 @@ import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -72,7 +71,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     public static final int TYPE_COMPETITION = 3;
     private static final String TITLE = "param1";
     private static final String CONTENT = "param2";
-    private static String FILE_PATH = Configs.ExternalPath + "tmp_certificate.png";
+    private static String FILE_PATH = Configs.CameraPic;
     @Bind(R.id.recordedit_host)
     CommonInputView recordeditHost;
     @Bind(R.id.recordedit_type_meeting)
@@ -135,7 +134,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .title("是否确定删除")
+                    .title("删除此条资历?")
                     .positiveText("确定")
                     .negativeText("取消")
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -216,7 +215,8 @@ public class RecordEditFragment extends BaseSettingFragment {
                 Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).asBitmap().into(new ScaleWidthWrapper(recordeditImg));
             } else recordeditImg.setVisibility(View.GONE);
         } else {
-
+            recordeditDatestart.setContent(DateUtils.getDateDay(new Date()));
+            recordeditDateoff.setContent(DateUtils.getDateDay(new Date()));
         }
         recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -248,10 +248,24 @@ public class RecordEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.recordedit_comfirm_btn)
     public void onComplete() {
-        if (TextpaperUtils.isEmpty(recordEditName.getContent(), recordeditDate.getContent(),
-                recordeditDateoff.getContent(), recordeditHost.getContent()
-        ))
-            Toast.makeText(App.AppContex, "请填写完整信息", Toast.LENGTH_SHORT).show();
+
+        if (TextUtils.isEmpty(recordEditName.getContent())) {
+            Toast.makeText(App.AppContex, "请填写认证名称", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(recordeditHost.getContent())) {
+            Toast.makeText(App.AppContex, "请填写主办机构", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(recordeditDate.getContent())) {
+            Toast.makeText(App.AppContex, "请选择发证日期", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(recordeditDateoff.getContent()) || TextUtils.isEmpty(recordeditDatestart.getContent())) {
+            Toast.makeText(App.AppContex, "请填写生效日期和失效日期", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         addCertificate.setGrade(recordeditScore.getContent());
         addCertificate.setName(recordEditName.getContent());
@@ -299,7 +313,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         pwTime.setOnTimeSelectListener(date -> {
             if (!TextUtils.equals(recordeditDateoff.getContent(), "长期有效") &&
                     DateUtils.formatDateFromStringDot(recordeditDateoff.getContent()).getTime()
-                            < DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()).getTime()
+                            < date.getTime()
                     ) {
                 Toast.makeText(App.AppContex, "生效日期不能晚于失效日期", Toast.LENGTH_SHORT).show();
                 return;
@@ -308,6 +322,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditDatestart.setContent(DateUtils.getDateDay(date));
             pwTime.dismiss();
         });
+        pwTime.setRange(1900, 2100);
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
@@ -320,6 +335,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         pwTime.setOnTimeSelectListener(date -> {
             recordeditDate.setContent(DateUtils.getDateDay(date));
         });
+        pwTime.setRange(1900, 2100);
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
@@ -352,6 +368,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                                 recordeditDateoff.setContent(DateUtils.getDateDay(date));
                                 pwTime.dismiss();
                             });
+                            pwTime.setRange(1900, 2100);
                             pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
 
 
@@ -408,6 +425,9 @@ public class RecordEditFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
+        if (recordeditHost == null)
+            return;
+
         if (resultCode == -1) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
                 filepath = FileUtils.getPath(getActivity(), data.getData());

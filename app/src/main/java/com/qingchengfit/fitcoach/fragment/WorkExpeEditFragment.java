@@ -110,7 +110,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .title("是否确定删除")
+                    .title("删除此条工作经历?")
                     .positiveText("确定")
                     .negativeText("取消")
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -209,6 +209,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.workexpedit_comfirm_btn)
     public void onComfirm() {
+
+
         String starttime = DateUtils.formatDateToServer(workexpeditStartTime.getContent());
         String endtime = DateUtils.formatDateToServer(workexpeditStartEnd.getContent());
         String postion = workexpeditPosition.getContent();
@@ -218,12 +220,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         String privateClass = workexpeditPrivateClass.getContent();
         String privateNum = workexpeditPrivateNum.getContent();
         String sale = workexpeditSale.getContent();
-        if (TextpaperUtils.isEmpty(starttime, endtime, postion, groupCount, groupNum, privateClass, privateNum,
-                sale)) {
-            Toast.makeText(getContext(), "请填写完整信息", Toast.LENGTH_SHORT).show();
+        String gym = workexpeditGymName.getContent();
+
+
+        if (TextpaperUtils.isEmpty(postion)) {
+            Toast.makeText(getContext(), "请填写职位信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (addWorkExperience.getGym_id() == 0) {
+        if (addWorkExperience.getGym_id() == 0 || TextUtils.isEmpty(gym)) {
             Toast.makeText(getContext(), "请选择健身房", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -339,6 +343,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                                 workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
                                 pwTime.dismiss();
                             });
+                            pwTime.setRange(1900, 2100);
                             pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
 
 

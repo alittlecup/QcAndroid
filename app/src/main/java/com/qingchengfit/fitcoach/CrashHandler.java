@@ -4,9 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.qingchengfit.fitcoach.activity.MainActivity;
 
@@ -80,7 +78,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
             }
@@ -109,14 +107,14 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
         ex.printStackTrace();
         //使用Toast来显示异常信息
-        new Thread() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
-                Looper.loop();
-            }
-        }.start();
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                Looper.prepare();
+//                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
+//                Looper.loop();
+//            }
+//        }.start();
         //收集设备参数信息
 //        collectDeviceInfo(mContext);
         //保存日志文件

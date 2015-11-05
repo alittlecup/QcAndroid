@@ -113,7 +113,10 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                     choosePic(pos);
                 } else {
                     mTextInputDialog.setOnOkListener(v1 -> {
-                        mListData.get(pos).setText(mTextInputDialog.getContent());
+                        if (TextUtils.isEmpty(mTextInputDialog.getContent())) {
+                            mListData.remove(pos);
+                        } else
+                            mListData.get(pos).setText(mTextInputDialog.getContent());
                         mTextInputDialog.dismiss();
                         adapter.notifyDataSetChanged();
 //                        QcCloudClient.getApi().postApi.qcModifyDes(App.coachid,new ModifyDes(HTMLUtils.toHTML(mListData)))
@@ -129,7 +132,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 //                            }
 //                        });
                     });
-                    mTextInputDialog.show();
+                    mTextInputDialog.show(mListData.get(pos).getText());
                 }
             }
         });
@@ -198,7 +201,10 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     @OnClick(R.id.modifybrief_inserttext)
     public void onInsertText() {
         mTextInputDialog.setOnOkListener(v -> {
-            mListData.add(new BriefInfo(mTextInputDialog.getContent(), null));
+            if (TextUtils.isEmpty(mTextInputDialog.getContent())) {
+
+            } else
+                mListData.add(new BriefInfo(mTextInputDialog.getContent(), null));
             mTextInputDialog.dismiss();
             adapter.notifyDataSetChanged();
 

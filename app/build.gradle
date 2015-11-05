@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 38
-        versionName "0.3.8"
+        versionCode 40
+        versionName "0.4.0"
     }
 //    buildTypes {
 //        release {
@@ -117,13 +117,13 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             debuggable false
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFile = new File(
-                            output.outputFile.parent,
-                            output.outputFile.name.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
-                }
-            }
+//            applicationVariants.all { variant ->
+//                variant.outputs.each { output ->
+//                    output.outputFile = new File(
+//                            output.outputFile.parent,
+//                            output.outputFile.name.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
+//                }
+//            }
             proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
             zipAlignEnabled true
         }
@@ -131,16 +131,16 @@ android {
 //            signingConfig signingConfigs.release
             minifyEnabled false
             debuggable true
-            applicationVariants.all { variant ->
-                def name
-                variant.outputs.each { output ->
-                    name = "app-debug.apk"
-
-                    output.outputFile = new File(
-                            output.outputFile.parent,
-                            "app-debug.apk")
-                }
-            }
+//            applicationVariants.all { variant ->
+//                def name
+//                variant.outputs.each { output ->
+//                    name = "app-debug.apk"
+//
+//                    output.outputFile = new File(
+//                            output.outputFile.parent,
+//                            "app-debug.apk")
+//                }
+//            }
         }
     }
 

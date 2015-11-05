@@ -60,6 +60,11 @@ public class TextInputDialog extends Dialog {
         super.show();
     }
 
+    public void show(String content) {
+        mInputEt.setText(content);
+        show();
+    }
+
     public void setOnOkListener(View.OnClickListener listener) {
         mOkbtn.setOnClickListener(listener);
     }

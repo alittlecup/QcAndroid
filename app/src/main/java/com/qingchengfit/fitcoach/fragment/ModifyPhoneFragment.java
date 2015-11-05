@@ -185,21 +185,22 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
+            if (modifyphoneGetcodeBtn != null) {
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(Integer.toString(count));
-            stringBuffer.append(getString(R.string.login_resend_msg));
+                stringBuffer.append(getString(R.string.login_resend_msg));
 
-            modifyphoneGetcodeBtn.setText(stringBuffer.toString());
-            if (count == 60)
-                modifyphoneGetcodeBtn.setEnabled(false);
-            if (count > 0) {
-                count--;
-                handler.sendEmptyMessageDelayed(0, 1000);
-            } else {
-                count = 60;
-                modifyphoneGetcodeBtn.setEnabled(true);
-                modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+                modifyphoneGetcodeBtn.setText(stringBuffer.toString());
+                if (count == 60)
+                    modifyphoneGetcodeBtn.setEnabled(false);
+                if (count > 0) {
+                    count--;
+                    handler.sendEmptyMessageDelayed(0, 1000);
+                } else {
+                    count = 60;
+                    modifyphoneGetcodeBtn.setEnabled(true);
+                    modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+                }
             }
         }
     }

@@ -35,4 +35,6 @@ public interface FragmentCallBack {
 
     public void fixCount();
 
+//    public void showToast(@DrawableRes int img, String content);
+
 }

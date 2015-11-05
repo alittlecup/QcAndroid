@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
@@ -90,6 +91,8 @@ public class MyHomeFragment extends Fragment {
     private FragmentCallBack fragmentCallBack;
     private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
     private FragmentAdatper adatper;
+    private QcMyhomeResponse qcMyhomeResponse;
+
     Observer<QcMyhomeResponse> qcMyhomeResponseObserver = new Observer<QcMyhomeResponse>() {
         @Override
         public void onCompleted() {
@@ -102,7 +105,10 @@ public class MyHomeFragment extends Fragment {
         }
 
         @Override
-        public void onNext(QcMyhomeResponse qcMyhomeResponse) {
+        public void onNext(QcMyhomeResponse qcMyhomeResponse)
+
+        {
+            MyHomeFragment.this.qcMyhomeResponse = qcMyhomeResponse;
             handleResponse(qcMyhomeResponse);
         }
     };
@@ -129,7 +135,14 @@ public class MyHomeFragment extends Fragment {
             if (item.getItemId() == R.id.action_myhome_settings) {
                 startActivityForResult(new Intent(getActivity(), SettingActivity.class), 333);
             } else if (item.getItemId() == R.id.action_myhome_share) {
-                ShareUtils.oneKeyShared(App.AppContex, "", "", "测试", "");//分享
+                StringBuffer sb = new StringBuffer();
+                sb.append(Configs.Server).append("mobile/coaches/").append(App.coachid).append("/share/index/");
+                if (qcMyhomeResponse != null) {
+                    ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
+                            qcMyhomeResponse.getData().getCoach().getShort_description()
+                            , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
+                    //
+                }
             }
             return true;
         });
@@ -267,7 +280,9 @@ public class MyHomeFragment extends Fragment {
     private void initUser() {
         String cache = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "_cache_myhome", "");
         if (!TextUtils.isEmpty(cache)) {
-            handleResponse(gson.fromJson(cache, QcMyhomeResponse.class));
+            this.qcMyhomeResponse = gson.fromJson(cache, QcMyhomeResponse.class);
+            if (qcMyhomeResponse != null)
+                handleResponse(qcMyhomeResponse);
         }
         qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
                 .observeOn(AndroidSchedulers.mainThread());

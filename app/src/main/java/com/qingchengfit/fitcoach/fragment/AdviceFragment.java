@@ -154,6 +154,8 @@ public class AdviceFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+//        if (settingAdviceMail == null)
+//            return;
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
                 filepath = FileUtils.getPath(getActivity(), data.getData());

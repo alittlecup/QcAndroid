@@ -34,6 +34,7 @@ import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
@@ -163,7 +164,6 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarMenu(0, 0, "基本信息设置");
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
-//        if (!restoreStateFromArguments()) {
         fragmentCallBack.ShowLoading("请稍后");
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id))
                 .observeOn(AndroidSchedulers.mainThread())
@@ -366,7 +366,9 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                         fragmentCallBack.hideLoading();
                         if (qcResponse.status == ResponseResult.SUCCESS) {
                             fragmentCallBack.fixCount();
-                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+
+//                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            ToastUtils.show("修改成功");
                             getActivity().onBackPressed();
 
 
@@ -382,6 +384,8 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
+        if (mModifyCoachInfo == null)
+            return;
         if (resultCode == Activity.RESULT_OK) {
 
 //            if (requestCode == ChoosePicUtils.CHOOSE_CAMERA || requestCode == ChoosePicUtils.CHOOSE_GALLERY ) {

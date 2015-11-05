@@ -63,6 +63,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
     private String mParam2;
 
     private PostMsgHandler handler;
+
     public ModifyPwFragment() {
     }
 
@@ -100,7 +101,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_modify_pw, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "更改密码");
-
+        handler = new PostMsgHandler(getContext());
         return view;
     }
 
@@ -123,7 +124,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
 
         if (!now.equals(re)) {
-            Toast.makeText(getContext(), "新密码不一致", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "密码不一致", Toast.LENGTH_LONG).show();
             return;
         }
         if (now.length() < 6 || now.length() > 16) {
@@ -148,17 +149,18 @@ public class ModifyPwFragment extends BaseSettingFragment {
                     @Override
                     public void onError(Throwable e) {
                         fragmentCallBack.hideLoading();
-                        Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(App.AppContex, "修改失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNext(QcResponse qcResponse) {
                         fragmentCallBack.hideLoading();
                         if (qcResponse.status == ResponseResult.SUCCESS) {
+
+                            Toast.makeText(App.AppContex, "修改成功", Toast.LENGTH_SHORT).show();
                             getActivity().onBackPressed();
-                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -189,7 +191,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Toast.makeText(App.AppContex, "发送验证码失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -224,21 +226,22 @@ public class ModifyPwFragment extends BaseSettingFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (modifyphoneGetcodeBtn != null) {
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append(Integer.toString(count));
+                stringBuffer.append(getString(R.string.login_resend_msg));
 
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(Integer.toString(count));
-            stringBuffer.append(getString(R.string.login_resend_msg));
-
-            modifyphoneGetcodeBtn.setText(stringBuffer.toString());
-            if (count == 60)
-                modifyphoneGetcodeBtn.setEnabled(false);
-            if (count > 0) {
-                count--;
-                handler.sendEmptyMessageDelayed(0, 1000);
-            } else {
-                count = 60;
-                modifyphoneGetcodeBtn.setEnabled(true);
-                modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+                modifyphoneGetcodeBtn.setText(stringBuffer.toString());
+                if (count == 60)
+                    modifyphoneGetcodeBtn.setEnabled(false);
+                if (count > 0) {
+                    count--;
+                    handler.sendEmptyMessageDelayed(0, 1000);
+                } else {
+                    count = 60;
+                    modifyphoneGetcodeBtn.setEnabled(true);
+                    modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+                }
             }
         }
     }

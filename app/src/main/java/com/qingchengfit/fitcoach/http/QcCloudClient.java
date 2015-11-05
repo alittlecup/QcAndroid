@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.http;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
@@ -70,7 +69,6 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.http.Body;
@@ -141,13 +139,13 @@ public class QcCloudClient {
                             }
                         }
                 )
-                .setErrorHandler(cause -> {
-                    LogUtil.e(cause.getCause().getMessage());
-                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
-
-                    }
-                    return null;
-                })
+//                .setErrorHandler(cause -> {
+//                    LogUtil.e(cause.getCause().getMessage());
+//                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
+//
+//                    }
+//                    return null;
+//                })
                 .build();
         RestAdapter restAdapter2 = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
@@ -160,13 +158,13 @@ public class QcCloudClient {
                     }
                 })
                 .setClient(new OkClient(okHttpClient))
-                .setErrorHandler(cause -> {
-                            LogUtil.e(cause.getCause().getMessage());
-                            return null;
-
-                        }
-
-                )
+//                .setErrorHandler(cause -> {
+//                            LogUtil.e(cause.getCause().getMessage());
+//                            return null;
+//
+//                        }
+//
+//                )
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
 //        RestAdapter restAdapter3 = new RestAdapter.Builder()
