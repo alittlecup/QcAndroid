@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bigkoo.pickerview.OptionsDialog;
@@ -57,12 +58,15 @@ public class CitiesChooser {
         }
         pwOptions.setPicker(options1Items, options2Items, options3Items, true);
         pwOptions.setLabels("", "", "");
-        pwOptions.setSelectOptions(3, 3, 3);
+        pwOptions.setSelectOptions(2, 3, 3);
         pwOptions.setOnoptionsSelectListener(new OptionsDialog.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int i, int i1, int i2) {
                 if (onCityChoosenListener != null) {
-                    onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                    if (TextUtils.equals(options1Items.get(i), options2Items.get(i).get(i1))) {
+                        onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                    } else
+                        onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
                 }
             }
         });

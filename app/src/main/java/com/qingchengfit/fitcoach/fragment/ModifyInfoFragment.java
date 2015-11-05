@@ -43,6 +43,7 @@ import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
@@ -53,6 +54,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -116,7 +118,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private CitiesChooser citiesChooser;
     private Bundle saveState;
     private boolean isLoading = false;
-
+    private Uri mAvatarResult;
     public ModifyInfoFragment() {
         // Required empty public constructor
     }
@@ -150,6 +152,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
         isLoading = true;
+
     }
 
     @Override
@@ -161,23 +164,35 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
 //        if (!restoreStateFromArguments()) {
+        fragmentCallBack.ShowLoading("请稍后");
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        qcCoachRespone -> {
-                            if (modifyinfoDesc != null) {
-                                user = qcCoachRespone.getData().getCoach();
-                                getActivity().runOnUiThread(this::initInfo);
-                            }
-                        }
-                );
+                .subscribe(new Observer<QcCoachRespone>() {
+                    @Override
+                    public void onCompleted() {
+                        fragmentCallBack.hideLoading();
+                    }
 
-//        }else {
-//            mofifyinfoName.setContent("xxxxx");
-//        }
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcCoachRespone qcCoachRespone) {
+                        if (modifyinfoDesc != null) {
+                            user = qcCoachRespone.getData().getCoach();
+                            initInfo();
+                            fragmentCallBack.hideLoading();
+                        }
+                    }
+                });
+
+
 
         return view;
     }
+
 
     /**
      * 初始化个人信息
@@ -323,20 +338,37 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
         mModifyCoachInfo.setWeixin(mofifyinfoWechat.getContent());
         mModifyCoachInfo.setShort_description(modifyinfoSignEt.getText().toString());
+        mModifyCoachInfo.setUsername(modifyinfoName.getText().toString());
+        fragmentCallBack.ShowLoading("请稍后");
+
         QcCloudClient.getApi().postApi.qcModifyCoach(Integer.parseInt(coach.id), mModifyCoachInfo)
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(qcResponse -> {
-                    if (qcResponse.status == ResponseResult.SUCCESS) {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override
+                    public void onCompleted() {
 
-                        getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            getActivity().onBackPressed();
-                        });
-
-                    } else {
-                        getActivity().runOnUiThread(() -> Toast.makeText(getContext(), qcResponse.msg, Toast.LENGTH_SHORT).show());
                     }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                        fragmentCallBack.hideLoading();
+                    }
+
+                    @Override
+                    public void onNext(QcResponse qcResponse) {
+                        fragmentCallBack.hideLoading();
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            fragmentCallBack.fixCount();
+                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            getActivity().onBackPressed();
+
+
+                        } else {
+                            Toast.makeText(getContext(), qcResponse.msg, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 });
 
     }
@@ -346,11 +378,32 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
         if (resultCode == Activity.RESULT_OK) {
+
+//            if (requestCode == ChoosePicUtils.CHOOSE_CAMERA || requestCode == ChoosePicUtils.CHOOSE_GALLERY ) {
+//                Intent intent = new Intent("com.android.camera.action.CROP");
+//                intent.setType("image/*");
+//
+//                intent.setData(data.getData());
+//                intent.putExtra("outputX", 300);
+//                intent.putExtra("outputY", 300);
+//                intent.putExtra("aspectX", 1);
+//                intent.putExtra("aspectY", 1);
+//                intent.putExtra("scale", false);
+//                intent.putExtra("return-data", true);
+//                intent.putExtra("return-data", false);
+//
+//                intent.putExtra("output", );
+//            }
+
+
+
+
+
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = Configs.CameraPic;
             LogUtil.d(filepath);
-            fragmentCallBack.ShowLoading();
+            fragmentCallBack.ShowLoading("正在上传");
             Observable.just(filepath)
                     .subscribeOn(Schedulers.io())
                     .subscribe(s -> {

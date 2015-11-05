@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -77,7 +76,7 @@ public class AddGymFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_gym, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_cross_white);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setTitle("添加健身房");
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         citiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
@@ -111,9 +110,10 @@ public class AddGymFragment extends Fragment {
     @OnClick(R.id.addgym_addbtn)
     public void onClickAdd() {
 
-        if (TextUtils.isEmpty(addgymName.getContent()))
+        if (addgymName.getContent().length() < 3) {
+            Toast.makeText(getContext(), "健身房名称不能少于三个字", Toast.LENGTH_SHORT).show();
             return;
-
+        }
         AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), "descripe");
         QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -121,7 +121,7 @@ public class AddGymFragment extends Fragment {
                             if (qcAddGymResponse.status == ResponseResult.SUCCESS) {
                                 searchListener.onSearchResult(100, Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
                             } else {
-                                Toast.makeText(getContext(), "添加失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), qcAddGymResponse.msg, Toast.LENGTH_SHORT).show();
                             }
                         }
                 );

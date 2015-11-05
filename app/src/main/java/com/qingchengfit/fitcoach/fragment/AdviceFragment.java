@@ -27,6 +27,7 @@ import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
+import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.io.File;
@@ -36,6 +37,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -78,18 +81,35 @@ public class AdviceFragment extends BaseSettingFragment {
         feedBackBean.setEmail(email);
         feedBackBean.setContent(email);
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(content)) {
+            fragmentCallBack.ShowLoading("请稍后");
             QcCloudClient.getApi().postApi.qcFeedBack(feedBackBean)
                     .subscribeOn(Schedulers.io())
-                    .subscribe(qcResponse ->
-                                    getActivity().runOnUiThread(() -> {
-                                        if (qcResponse.status == ResponseResult.SUCCESS) {
-                                            Toast.makeText(getContext(), "感谢您的反馈,我们会继续努力", Toast.LENGTH_SHORT).show();
-                                            getActivity().onBackPressed();
-                                        } else {
-                                            Toast.makeText(getContext(), "服务器错误,请稍后再试", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                    );
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<QcEvaluateResponse>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            fragmentCallBack.hideLoading();
+
+                            Toast.makeText(getContext(), "提交失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onNext(QcEvaluateResponse qcEvaluateResponse) {
+                            fragmentCallBack.hideLoading();
+                            if (qcEvaluateResponse.status == ResponseResult.SUCCESS) {
+                                Toast.makeText(getContext(), "感谢您的反馈,我们会继续努力", Toast.LENGTH_SHORT).show();
+                                getActivity().onBackPressed();
+                            } else {
+                                Toast.makeText(getContext(), "服务器错误,请稍后再试", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
         }
     }
 
@@ -138,7 +158,7 @@ public class AdviceFragment extends BaseSettingFragment {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             LogUtil.d(filepath);
-            fragmentCallBack.ShowLoading();
+            fragmentCallBack.ShowLoading("正在上传");
             Observable.just(filepath)
                     .subscribeOn(Schedulers.io())
                     .subscribe(s -> {

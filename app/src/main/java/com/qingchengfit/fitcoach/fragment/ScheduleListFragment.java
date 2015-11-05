@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -134,6 +135,13 @@ public class ScheduleListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refresh();
+            }
+        });
+        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                refresh.setRefreshing(true);
             }
         });
 

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
@@ -24,6 +23,7 @@ import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.lang.ref.WeakReference;
@@ -31,6 +31,8 @@ import java.lang.ref.WeakReference;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -49,7 +51,7 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
     EditText modifyphoneCode;
     @Bind(R.id.modifyphone_comfirm_btn)
     Button modifyphoneComfirmBtn;
-    MaterialDialog materialDialog;
+    //    MaterialDialog materialDialog;
     private  PostMsgHandler handler;
     public ModifyPhoneFragment() {
     }
@@ -58,11 +60,11 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new PostMsgHandler(getContext());
-        materialDialog = new MaterialDialog.Builder(getActivity())
-                .content("修改中请稍后")
-                .progress(true, 0)
-
-                .build();
+//        materialDialog = new MaterialDialog.Builder(getActivity())
+//                .content("修改中请稍后")
+//                .progress(true, 0)
+//
+//                .build();
     }
 
     @Override
@@ -84,19 +86,35 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
             Toast.makeText(App.AppContex, getString(R.string.err_login_phonenum), Toast.LENGTH_SHORT).show();
             return;
         }
+
         QcCloudClient.getApi()
                 .postApi
                 .qcGetCode(new GetCodeBean(phone))
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(qcResponse -> {
-                    if (qcResponse.status == ResponseResult.SUCCESS) {
-                        LogUtil.d("succ");
-                        handler.sendEmptyMessage(0);
-                    } else {
-                        LogUtil.d(":" + qcResponse.msg);
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
-                })
-        ;
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcResponse qcResponse) {
+
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            LogUtil.d("succ");
+                            handler.sendEmptyMessage(0);
+                        } else {
+                            LogUtil.d(":" + qcResponse.msg);
+                        }
+                    }
+                });
+
     }
 
     /**
@@ -112,13 +130,28 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
         ModifyPhoneNum modifyPhoneNum = new ModifyPhoneNum(modifyphonePhone.getText().toString()
                 , modifyphonePw.getText().toString(), modifyphoneCode.getText().toString()
         );
-        materialDialog.show();
+
+        fragmentCallBack.ShowLoading("请稍后");
         QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, modifyPhoneNum)
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(qcResponse -> {
-                    getActivity().runOnUiThread(() -> {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        fragmentCallBack.hideLoading();
+                        Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(QcResponse qcResponse) {
+                        fragmentCallBack.hideLoading();
                         if (qcResponse.status == ResponseResult.SUCCESS) {
-                            materialDialog.dismiss();
+
                             Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
                             handler.removeMessages(0);
                             Intent it = new Intent(getActivity(), MainActivity.class);
@@ -126,12 +159,12 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
                             startActivity(it);
 
                         } else {
-                            materialDialog.dismiss();
+
                             Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
                         }
-                    });
-
+                    }
                 });
+
     }
 
     @Override

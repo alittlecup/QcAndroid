@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +66,7 @@ public class AddOganasitionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_gym, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_cross_white);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setTitle("添加主办机构");
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         addgymName.setLabel("机构名");
@@ -91,8 +90,10 @@ public class AddOganasitionFragment extends Fragment {
 
     @OnClick(R.id.addgym_addbtn)
     public void onClickAdd() {
-        if (TextUtils.isEmpty(addgymName.getContent()))
+        if (addgymName.getContent().length() < 3) {
+            Toast.makeText(getActivity(), "机构名称至少填写三个字", Toast.LENGTH_SHORT).show();
             return;
+        }
 
         QcCloudClient.getApi().postApi.qcAddOrganization(new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), "description"))
                 .subscribeOn(Schedulers.io())
@@ -102,7 +103,7 @@ public class AddOganasitionFragment extends Fragment {
                         searchListener.onSearchResult(100, Integer.parseInt(qcResponse.data.gym.id), qcResponse.data.gym.name);
                         Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
 //                           searchListener.onSearchResult();
-                    } else Toast.makeText(getActivity(), "添加失败", Toast.LENGTH_SHORT).show();
+                    } else Toast.makeText(getActivity(), qcResponse.msg, Toast.LENGTH_SHORT).show();
 
                 });
     }

@@ -29,8 +29,10 @@ public interface FragmentCallBack {
 
     public void showToolbar();
 
-    public void ShowLoading();
+    public void ShowLoading(String content);
 
     public void hideLoading();
+
+    public void fixCount();
 
 }

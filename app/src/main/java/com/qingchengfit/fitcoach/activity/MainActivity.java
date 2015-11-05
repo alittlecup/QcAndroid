@@ -505,9 +505,18 @@ private MaterialDialog loadingDialog;
         item2.setTitle("我的健身房");
         item2.setCount("100");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-        item.setOnClickListener(v -> changeFragment(mMyStudentFragment));
-        item1.setOnClickListener(v -> changeFragment(mMyCoursePlanFragment));
-        item2.setOnClickListener(v -> changeFragment(mMyGymsFragment));
+        item.setOnClickListener(v -> {
+            changeFragment(mMyStudentFragment);
+            drawerRadiogroup.cleanCheck();
+        });
+        item1.setOnClickListener(v -> {
+            changeFragment(mMyCoursePlanFragment);
+            drawerRadiogroup.cleanCheck();
+        });
+        item2.setOnClickListener(v -> {
+            changeFragment(mMyGymsFragment);
+            drawerRadiogroup.cleanCheck();
+        });
         mainDrawerlayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {

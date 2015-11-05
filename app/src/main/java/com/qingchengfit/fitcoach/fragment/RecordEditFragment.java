@@ -142,7 +142,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
-                            fragmentCallBack.ShowLoading();
+                            fragmentCallBack.ShowLoading("请稍后");
                             QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> onResult(qcResponse));
                             dialog.dismiss();
                         }
@@ -252,6 +252,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 recordeditDateoff.getContent(), recordeditHost.getContent()
         ))
             Toast.makeText(App.AppContex, "请填写完整信息", Toast.LENGTH_SHORT).show();
+
         addCertificate.setGrade(recordeditScore.getContent());
         addCertificate.setName(recordEditName.getContent());
         addCertificate.setDate_of_issue(DateUtils.formatDateToServer(recordeditDate.getContent()));
@@ -262,7 +263,13 @@ public class RecordEditFragment extends BaseSettingFragment {
             endtime = "3000-1-1";
         } else endtime = DateUtils.formatDateToServer(recordeditDateoff.getContent());
         addCertificate.setEnd(endtime);
-        fragmentCallBack.ShowLoading();
+        if (DateUtils.formatDateFromString(addCertificate.getStart()).getTime() > DateUtils.formatDateFromString(addCertificate.getEnd()).getTime()) {
+            Toast.makeText(App.AppContex, "失效日期不能小于生效日期", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        fragmentCallBack.ShowLoading("请稍后");
         if (mTitle)
             QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult);
@@ -274,6 +281,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         getActivity().runOnUiThread(() -> {
             fragmentCallBack.hideLoading();
             if (qcResponse.status == ResponseResult.SUCCESS) {
+                fragmentCallBack.fixCount();
                 getActivity().onBackPressed();
             } else {
                 Toast.makeText(App.AppContex, "删除失败:" + qcResponse.msg, Toast.LENGTH_SHORT).show();
@@ -389,7 +397,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = FILE_PATH;
             LogUtil.d(filepath);
-            fragmentCallBack.ShowLoading();
+            fragmentCallBack.ShowLoading("正在上网");
             Observable.just(filepath)
                     .subscribeOn(Schedulers.io())
                     .subscribe(s -> {

@@ -67,6 +67,15 @@ public class CustomSetmentLayout extends LinearLayout {
         }
     }
 
+    public void cleanCheck() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View v = getChildAt(i);
+            if (v instanceof onSegmentChangeListener) {
+                ((onSegmentChangeListener) v).onCheckChange(false);
+            }
+        }
+    }
+
     public void check(int index) {
         if (getChildCount() > 0) {
             ((SegmentLayout) getChildAt(0)).onCheckChange(true);

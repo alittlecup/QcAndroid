@@ -53,10 +53,6 @@ public class MyhomeViewPager extends ViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         View v = ((ViewGroup) getChildAt(getCurrentItem())).getChildAt(0);
-//        if (ViewCompat.canScrollVertically(v,1)||ViewCompat.canScrollVertically(v,-1)){
-//
-//            return false;
-//        }
         final int action = MotionEventCompat.getActionMasked(ev);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -95,23 +91,6 @@ public class MyhomeViewPager extends ViewPager {
                 break;
             case MotionEvent.ACTION_MOVE:
 
-//                float y = touchY;
-//                float x = touchX;
-//                touchX = ev.getX();
-//                touchY = ev.getY();
-//                if (ev.getY() - y >= senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, -1)) {
-//                    if (getCurrentItem() != 0 && canSwipe) {
-//                        setCurrentItem(getCurrentItem() - 1, true);
-//                        canSwipe = false;
-//                        return true;
-//                    }
-//                } else if (ev.getY() - y <= -senseY && Math.abs(ev.getX() - x) < 10 && !ViewCompat.canScrollVertically(v, 1)) {
-//                    if (getCurrentItem() != getAdapter().getCount() - 1 && canSwipe) {
-//                        setCurrentItem(getCurrentItem() + 1, true);
-//                        canSwipe = false;
-//                        return true;
-//                    }
-//                }
 
 
                 return super.onTouchEvent(ev);

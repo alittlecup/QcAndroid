@@ -77,12 +77,17 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
     }
 
     @Override
-    public void ShowLoading() {
+    public void ShowLoading(String content) {
 
     }
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void fixCount() {
 
     }
 

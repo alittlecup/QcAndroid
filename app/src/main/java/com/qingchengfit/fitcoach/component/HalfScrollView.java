@@ -57,6 +57,7 @@ public class HalfScrollView extends ScrollView {
     public void init() {
         mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
         mScroller = new Scroller(getContext());
+        setOverScrollMode(OVER_SCROLL_NEVER);
 
     }
 
@@ -124,17 +125,17 @@ public class HalfScrollView extends ScrollView {
             case MotionEvent.ACTION_MOVE:
                 float y = lastY;
                 lastY = ev.getY();
+                float x = lastX;
+                lastX = ev.getX();
                 if (isSecondView) {
 //                    return false;
                     if (canChildUp()) {
-                        if (ev.getY() - y > 5) {
+                        if (ev.getY() - y > 5 && Math.abs(lastX - x) < 5) {
                             return true;
-                        }
-                        else if (canScrollDown())
-                            return false;
+                        } else return false;
                     } else return false;
-                } else return true;
-                break;
+                } else return super.onInterceptTouchEvent(ev);
+
             case MotionEvent.ACTION_UP:
 //                float y1 = lastY;
 //                lastY = ev.getY();
@@ -224,6 +225,7 @@ public class HalfScrollView extends ScrollView {
         if (listener != null)
             listener.onScroll(t);
     }
+
 
     public HalfViewListener getListener() {
         return listener;

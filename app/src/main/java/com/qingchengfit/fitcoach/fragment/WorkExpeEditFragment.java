@@ -37,8 +37,8 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -113,7 +113,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
-                            fragmentCallBack.ShowLoading();
+                            fragmentCallBack.ShowLoading("请稍后");
                             QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -206,8 +206,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     @OnClick(R.id.workexpedit_comfirm_btn)
     public void onComfirm() {
-        String starttime = workexpeditStartTime.getContent();
-        String endtime = workexpeditStartEnd.getContent();
+        String starttime = DateUtils.formatDateToServer(workexpeditStartTime.getContent());
+        String endtime = DateUtils.formatDateToServer(workexpeditStartEnd.getContent());
         String postion = workexpeditPosition.getContent();
         String description = workexpeditDescripe.getText().toString();
         String groupCount = workexpeditGroupClass.getContent();
@@ -224,11 +224,17 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             Toast.makeText(getContext(), "请选择健身房", Toast.LENGTH_SHORT).show();
             return;
         }
-        addWorkExperience.setStart(DateUtils.formatDateToServer(starttime));
+
+
         if (endtime.equalsIgnoreCase("至今")) {
             endtime = "3000-1-1";
         }
-        addWorkExperience.setEnd(DateUtils.formatDateToServer(endtime));
+        if (DateUtils.formatDateFromString(starttime).getTime() > DateUtils.formatDateFromString(endtime).getTime()) {
+            Toast.makeText(getContext(), "结束时间不能早于开始时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        addWorkExperience.setStart(starttime);
+        addWorkExperience.setEnd(endtime);
         addWorkExperience.setDescription(description);
         addWorkExperience.setGroup_course(groupCount);
         addWorkExperience.setGroup_user(groupNum);
@@ -237,20 +243,36 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         addWorkExperience.setPrivate_user(privateNum);
         addWorkExperience.setSale(sale);
 
-        Action1 qcResponseAction = (Action1<QcResponse>) qcResponse -> {
-            getActivity().runOnUiThread(() -> {
+
+        Observer<QcResponse> qcResponseAction = new Observer<QcResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                fragmentCallBack.hideLoading();
+                Toast.makeText(App.AppContex, "提交失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(QcResponse qcResponse) {
+                fragmentCallBack.hideLoading();
                 if (qcResponse.status == ResponseResult.SUCCESS) {
+                    fragmentCallBack.fixCount();
                     getActivity().onBackPressed();
+
                 } else {
                     Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
                 }
-            });
-
+            }
         };
+        fragmentCallBack.ShowLoading("请稍后");
         if (experiencesEntity == null)
-            QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.newThread()).subscribe(qcResponseAction);
+            QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponseAction);
         else
-            QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience).subscribeOn(Schedulers.newThread()).subscribe(qcResponseAction);
+            QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponseAction);
 
     }
 

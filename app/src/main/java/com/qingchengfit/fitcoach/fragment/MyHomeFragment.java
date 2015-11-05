@@ -83,7 +83,7 @@ public class MyHomeFragment extends Fragment {
     @Bind(R.id.sfl)
     SwipeRefreshLayout sfl;
     private int mHomeBgHeight = 1;
-
+    private boolean isFresh = false;
     private Gson gson;
     //    @Bind(R.id.myhome_coolaosingtoorbar)
     //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
@@ -127,7 +127,7 @@ public class MyHomeFragment extends Fragment {
 //        toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_settings) {
-                getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivityForResult(new Intent(getActivity(), SettingActivity.class), 333);
             } else if (item.getItemId() == R.id.action_myhome_share) {
                 ShareUtils.oneKeyShared(App.AppContex, "", "", "测试", "");//分享
             }
@@ -148,6 +148,8 @@ public class MyHomeFragment extends Fragment {
 
             }
         });
+
+
         //toolbar 变透明,保留,以后版本需要
 //        myhomeScroller.setListener(new HalfScrollView.HalfViewListener() {
 //            @Override
@@ -169,9 +171,29 @@ public class MyHomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFresh) {
+            QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(qcMyhomeResponseObserver);
+            isFresh = false;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0)
+            isFresh = true;
+//            initUser();
+
+    }
+
     public void initSRL() {
         sfl.setColorSchemeResources(R.color.primary);
-        sfl.setProgressViewOffset(true, MeasureUtils.dpToPx(70f, getResources()), MeasureUtils.dpToPx(100f, getResources()));
+        sfl.setProgressViewOffset(true, MeasureUtils.dpToPx(50f, getResources()), MeasureUtils.dpToPx(70f, getResources()));
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -213,6 +235,7 @@ public class MyHomeFragment extends Fragment {
         myhomeScroller.fullScroll(View.FOCUS_DOWN);
         myhomeViewpager.setCurrentItem(3);
     }
+
 
     public void initHead(String userAvatar, int userGender) {
         int gender = R.drawable.img_default_female;

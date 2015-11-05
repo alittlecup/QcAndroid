@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -98,22 +99,49 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
         if (old.length() < 6) {
             Toast.makeText(getContext(), "请填写初始密码", Toast.LENGTH_LONG).show();
+            return;
         }
-        if (!now.equals(re))
+        if (!now.equals(re)) {
             Toast.makeText(getContext(), "新密码不一致", Toast.LENGTH_LONG).show();
-        if (now.length() < 6 || now.length() > 16)
-            Toast.makeText(getContext(), "密码长度请保持6-16位", Toast.LENGTH_LONG).show();
-        String id = PreferenceUtils.getPrefString(App.AppContex, "coach", "");
-        if (TextUtils.isEmpty(id)) {
-            //TODO error
+            return;
         }
-        Coach coach = gson.fromJson(id, Coach.class);
-        QcCloudClient.getApi().postApi.qcMoidfyPw(Integer.parseInt(coach.id), new ModifyPwBean(old, now))
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(qcResponse -> getActivity().runOnUiThread(() -> {
-                    getActivity().onBackPressed();
-                    Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                }));
+        if (now.length() < 6 || now.length() > 16) {
+            Toast.makeText(getContext(), "密码长度请保持6-16位", Toast.LENGTH_LONG).show();
+            return;
+        }
+//        String id = PreferenceUtils.getPrefString(App.AppContex, "coach", "");
+//        if (TextUtils.isEmpty(id)) {
+//            //TODO error
+//        }
+//        Coach coach = gson.fromJson(id, Coach.class);
+        fragmentCallBack.ShowLoading("请稍后");
+        QcCloudClient.getApi().postApi.qcMoidfyPw(App.coachid, new ModifyPwBean(old, now))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        fragmentCallBack.hideLoading();
+                        Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(QcResponse qcResponse) {
+                        fragmentCallBack.hideLoading();
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            getActivity().onBackPressed();
+                            Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
     }
 
 

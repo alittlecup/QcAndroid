@@ -1,10 +1,14 @@
 package com.qingchengfit.fitcoach;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.qingchengfit.fitcoach.activity.MainActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -82,10 +86,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
             //退出程序
 //            Looper.prepare();
-            Intent a = new Intent(Intent.ACTION_MAIN);
-            a.addCategory(Intent.CATEGORY_HOME);
-            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(a);
+            Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
+            PendingIntent restartIntent = PendingIntent.getActivity(
+                    mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            // 退出程序
+            AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
+            ((App) mContext).finishActivity();
 //            Looper.loop();
         }
     }

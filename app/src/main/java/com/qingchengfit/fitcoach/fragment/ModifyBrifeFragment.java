@@ -211,7 +211,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
-            fragmentCallBack.ShowLoading();
+            fragmentCallBack.ShowLoading("正在上传");
             Observable.just(f)
                     .observeOn(Schedulers.io())
                     .subscribe(s -> {
@@ -238,6 +238,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 
         } else {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
+            fragmentCallBack.ShowLoading("正在上传");
             Observable.just(f)
                     .subscribeOn(Schedulers.newThread())
                     .subscribe(s -> {

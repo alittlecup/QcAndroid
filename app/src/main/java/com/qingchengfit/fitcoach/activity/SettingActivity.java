@@ -24,7 +24,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     private MaterialDialog loadingDialog;
-
+    private int result = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +82,15 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     }
 
     @Override
-    public void ShowLoading() {
+    public void ShowLoading(String content) {
         if (loadingDialog == null)
             loadingDialog = new MaterialDialog.Builder(this)
                     .content("请稍后")
                     .progress(true, 0)
                     .cancelable(false)
                     .build();
+        if (content != null)
+            loadingDialog.setContent(content);
         loadingDialog.show();
     }
 
@@ -106,12 +108,21 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     }
 
     @Override
+    public void fixCount() {
+        result++;
+    }
+
+    @Override
     public void onfinish() {
 
     }
 
-
-//    @Override
+    @Override
+    public void finish() {
+        setResult(result);
+        super.finish();
+    }
+    //    @Override
 //    public void onBackPressed() {
 //        if (fragmentManager.getBackStackEntryCount() == 1) {
 //            super.onBackPressed();

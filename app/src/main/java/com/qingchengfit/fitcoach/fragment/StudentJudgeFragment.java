@@ -18,6 +18,8 @@ import com.qingchengfit.fitcoach.component.TagGroup;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -86,10 +88,17 @@ public class StudentJudgeFragment extends BaseFragment {
 
 
         if (mTags != null && mEntityls != null) {
-            studentJudgeCoachScore.setText(mEntityls.getCoach_score() + "");
-            studentJudgeCoachStar.setRating((float) mEntityls.getCoach_score());
-            studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
-            studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
+            DecimalFormat format = new DecimalFormat("#.0");
+            String coachScroe = format.format(mEntityls.getCoach_score());
+            if (mEntityls.getCoach_score() == 0)
+                coachScroe = "0.0";
+            studentJudgeCoachScore.setText(coachScroe);
+            studentJudgeCoachStar.setRating(Float.parseFloat(coachScroe));
+            String courseScroe = format.format(mEntityls.getCourse_score());
+            if (mEntityls.getCourse_score() == 0)
+                courseScroe = "0.0";
+            studentJudgeCourseScore.setText(courseScroe);
+            studentJudgeCourseStar.setRating(Float.parseFloat(courseScroe));
             studentJudgeTagCount.setText("擅长(" + mTags.length + ")");
             tagGroup.setTags(
                     mTags
