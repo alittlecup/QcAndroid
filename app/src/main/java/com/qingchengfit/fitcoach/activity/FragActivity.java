@@ -32,7 +32,7 @@ public class FragActivity extends BaseAcitivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+        setContentView(R.layout.activity_frag);
         int type = getIntent().getIntExtra("type", 0);
 
 

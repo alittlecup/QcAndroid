@@ -28,7 +28,6 @@ import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PhoneInfoUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
@@ -36,6 +35,7 @@ import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.RecievePush;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
@@ -78,6 +78,7 @@ import im.fir.sdk.FIR;
 import im.fir.sdk.callback.VersionCheckCallback;
 import im.fir.sdk.version.AppVersion;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -119,6 +120,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     TextView drawerName;
     AsyncDownloader mDownloadThread;
     HashMap<String, Fragment> fragments = new HashMap<>();
+    private boolean mGoMyhome = false;
     //    @Bind(R.id.main_navi)
 //    NavigationView mainNavi;
     private User user;
@@ -143,11 +145,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private MyGymsFragment mMyGymsFragment;
     private MyCoursePlanFragment mMyCoursePlanFragment;
 
-//    @Override
+    //    @Override
 //    protected void onXWalkReady() {
 //
 //    }
-private MaterialDialog loadingDialog;
+    private MaterialDialog loadingDialog;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -401,16 +403,8 @@ private MaterialDialog loadingDialog;
 
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
-//        List<Fragment> fragments = mFragmentManager.getFragments();
-//        if (fragments != null) {
-//            for (int i = 0; i < fragments.size(); i++) {
-//                Fragment fragment = fragments.get(i);
-//                ((OriginWebFragment) fragment).removeCookie();
-//            }
-//        }
         Intent logout = new Intent(this, LoginActivity.class);
         logout.putExtra("isRegiste", 0);
-
         startActivity(logout);
 
         this.finish();
@@ -442,21 +436,6 @@ private MaterialDialog loadingDialog;
      * 初始化侧滑,从后台拉去
      */
     private void initDrawer() {
-        LogUtil.d(PhoneInfoUtils.getHandSetInfo());
-//        int gender = R.drawable.img_default_female;
-//        if (user.gender == 0)
-//            gender = R.drawable.img_default_male;
-//        if (TextUtils.isEmpty(user.avatar)) {
-//            Glide.with(App.AppContex)
-//                    .load(gender)
-//                    .asBitmap()
-//                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
-//        } else {
-//            Glide.with(App.AppContex)
-//                    .load(user.avatar)
-//                    .asBitmap()
-//                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
-//        }
 
 
         mScheduesFragment = new ScheduesFragment();
@@ -528,20 +507,37 @@ private MaterialDialog loadingDialog;
                 QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(qcDrawerResponse -> {
+                        .subscribe(new Observer<QcDrawerResponse>() {
+                            @Override
+                            public void onCompleted() {
 
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                            }
+
+                            @Override
+                            public void onNext(QcDrawerResponse qcDrawerResponse) {
                                 Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
                                 drawerName.setText(qcDrawerResponse.data.coach.username);
                                 item.setCount(qcDrawerResponse.data.user_count);
                                 item1.setCount(qcDrawerResponse.data.plan_count);
                                 item2.setCount(qcDrawerResponse.data.system_count);
-                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
+                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
+
+                            }
                         });
+
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-
+                if (mGoMyhome) {
+                    startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
+                    mGoMyhome = false;
+                }
             }
 
             @Override
@@ -563,8 +559,6 @@ private MaterialDialog loadingDialog;
             item2.setCount(qcDrawerResponse.data.system_count);
             PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
         }
-
-
     }
 
     public void changeFragment(Fragment fragment) {
@@ -673,119 +667,25 @@ private MaterialDialog loadingDialog;
                 })
         ;
     }
-// public void setupBtn(DrawerGuide btnInfo, int count) {
-//        SegmentButton button = new SegmentButton(this);
-//
-//        List<Drawable> drawables = new ArrayList<>();
-//        Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
-//                .flatMap(s -> {
-//                    File f = new File(Configs.ExternalPath, s.substring(s.length() - 20, s.length()));
-//                    if (!f.exists()) {
-////                        Response response = QcCloudClient.getApi().downLoadApi
-////                                .qcDownload(s);
-//                        OkHttpClient httpClient = new OkHttpClient();
-//                        Request request = new Request.Builder().url(s).build();
-//
-//                        try {
-//                            Response response = httpClient.newCall(request).execute();
-//                            FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
-////                            FileOutputStream output = new FileOutputStream(f);
-////                            IOUtils.write(response.body().bytes(), output);
-////                            FileUtils.copyInputStreamToFile(response.body().byteStream(),f);
-//
-//                        } catch (FileNotFoundException e) {
-//                            RevenUtils.sendException("initDrawer", TAG, e);
-//                        } catch (IOException e) {
-//                            RevenUtils.sendException("initDrawer", TAG, e);
-//                        }
-//                    }
-//                    return Observable.just(f.getAbsolutePath());
-//                })
-//                .flatMap(s2 -> {
-//                            drawables.add(Drawable.createFromPath(s2));
-//                            return Observable.just("");
-//                        }
-//                )
-//                .last()
-//                .subscribe(s1 -> {
-//                    runOnUiThread(() -> {
-//                        StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
-//                        button.setText(btnInfo.guideText);
-//                        button.setButtonDrawable(drawable1);
-//                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
-//                        button.setOnClickListener(view -> {
-//                            mainDrawerlayout.closeDrawer(Gravity.LEFT);
-//                            goXwalkfragment(btnInfo.intentUrl);
-//                        });
-//                        urls.add(btnInfo.intentUrl);
-////                        fragments.put( btnInfo.intentUrl,  WebFragment.newInstance(btnInfo.intentUrl));
-//                        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-//                        if (count == 0) {
-//                            drawerRadiogroup.getChildAt(0).performClick();
-//                        }
-//                    });
-//
-//                })
-//        ;
-//    }
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
-
-//        if (mFragmentManager.getFragments().contains(myHomeFragment)) {
-//            mFragmentManager.beginTransaction().hide(topFragment).show(myHomeFragment).commit();
-//        } else {
-//            mFragmentManager.beginTransaction()
-//                    .add(R.id.main_fraglayout, myHomeFragment)
-//                    .show(myHomeFragment)
-//                    .commit();
-//        }
-//        topFragment = myHomeFragment;
-//        startActivity(new Intent(this,MyHomeActivity.class));
-        startActivityForResult(new Intent(this, MyHomeActivity.class), 9);
-        overridePendingTransition(R.anim.null_anim, R.anim.null_anim);
+        mGoMyhome = true;
         mainDrawerlayout.closeDrawers();
-//        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
-//        mainDrawerlayout.closeDrawer(Gravity.LEFT);
-
     }
 
     public void goXwalkfragment(String url, String from) {
-
 
         WebFragment fragment = (WebFragment) mFragmentManager.findFragmentByTag("one");
         FragmentTransaction fr = mFragmentManager.beginTransaction();
         if (fragment == null) {
             fragment = WebFragment.newInstance(url);
             fr.replace(R.id.main_fraglayout, fragment, "one");
-//            fr.show(fragment);
             fr.commit();
             topFragment = fragment;
         } else {
             ((OriginWebFragment) fragment).startLoadUrl(url);
         }
-//        if (topFragment != null)
-//            fr.hide(topFragment);
-
-
-//        topFragment = fragment;
-//        if (urls.contains(url)) {
-//            if (path.size() > 0) {
-//                FragmentTransaction ft = mFragmentManager.beginTransaction();
-//                for (String str : path) {
-//                    Fragment f = mFragmentManager.findFragmentByTag(str);
-//                    if (f != null)
-//                        ft.remove(f);
-//                }
-//                ft.commit();
-//
-//            }
-//            path.clear();
-//            path.add(url);
-//        } else {
-//            path.add(url);
-//        }
-//
 
     }
 
@@ -796,70 +696,6 @@ private MaterialDialog loadingDialog;
             changeFragment(mScheduesFragment);
         } else
             dialog.show();
-//        if (((OriginWebFragment) topFragment).canGoBack()) {
-//            ((OriginWebFragment) topFragment).goBack();
-//        } else {
-//            dialog.show();
-//        }
-
-//        if (topFragment == null || topFragment.getTag() == null || urls.size() == 0) {
-//            dialog.show();
-//            return;
-//        }
-//
-//        if (path.size() > 1) {
-//            Fragment fragment = mFragmentManager.findFragmentByTag(path.get(path.size() - 2));
-//            mFragmentManager.beginTransaction().hide(topFragment).show(fragment).remove(topFragment).commit();
-//            path.remove(path.size() - 1);
-//            topFragment = fragment;
-//        } else {
-//            if (topFragment.getTag().equalsIgnoreCase(urls.get(0))) {
-//                dialog.show();
-//            } else {
-//                if (drawerRadiogroup.getChildCount() > 0)
-//                    drawerRadiogroup.getChildAt(0).performClick();
-//            }
-//        }
-
-
-//        super.onBackPressed();
-//       if (mFragmentManager.getFragments().size() >1)
-//           mFragmentManager.popBackStack();
-//
-//       else
-//           dialog.show();
-//
-//    }
-
-
-        //    @Override
-//    public void onBackPressed() {
-//        mainDrawerlayout.closeDrawers();
-//        if (topFragment == null) {
-//            this.finish();
-//            return;
-//        }
-
-
-//        if (topFragment instanceof XWalkFragment) {
-//            if (((XWalkFragment) topFragment).canGoBack()) {
-//                ((XWalkFragment) topFragment).goBack();
-//                return;
-//            }
-//
-//        } else if (topFragment instanceof OriginWebFragment) {
-//            if (((OriginWebFragment) topFragment).canGoBack()) {
-//                ((OriginWebFragment) topFragment).goBack();
-//                return;
-//            }
-//        }
-
-//        if (topFragment.getTag() != null && topFragment.getTag().endsWith(urls.get(0))) {
-//            dialog.show();
-//        } else {
-//            if (drawerRadiogroup.getChildCount() > 0)
-//                drawerRadiogroup.getChildAt(0).performClick();
-//        }
     }
 
     @Override

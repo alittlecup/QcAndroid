@@ -72,6 +72,10 @@
         <meta-data
             android:name="BUG_HD_SDK_GENERAL_KEY"
             android:value="930b34879429924954de5a056bb5eba7"/>
+        <meta-data
+            android:name="QBSDKAppKey"
+            android:value="TeeyzJqRvbGpXbgInHh5BxHx">
+        </meta-data>
 
         <activity
             android:name=".activity.MainActivity"

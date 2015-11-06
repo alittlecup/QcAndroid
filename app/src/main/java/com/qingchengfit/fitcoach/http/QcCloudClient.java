@@ -139,6 +139,15 @@ public class QcCloudClient {
                             }
                         }
                 )
+//                .setErrorHandler(new ErrorHandler() {
+//                    @Override
+//                    public Throwable handleError(RetrofitError cause) {
+//                        if (cause.getKind() == RetrofitError.Kind.NETWORK) {
+//                            ToastUtils.show(R.drawable.ic_share_fail,"网络错误");
+//                        }
+//                        return null;
+//                    }
+//                })
 //                .setErrorHandler(cause -> {
 //                    LogUtil.e(cause.getCause().getMessage());
 //                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
@@ -158,13 +167,15 @@ public class QcCloudClient {
                     }
                 })
                 .setClient(new OkClient(okHttpClient))
-//                .setErrorHandler(cause -> {
-//                            LogUtil.e(cause.getCause().getMessage());
-//                            return null;
-//
+//                .setErrorHandler(new ErrorHandler() {
+//                    @Override
+//                    public Throwable handleError(RetrofitError cause) {
+//                        if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
+//                            ToastUtils.show(R.drawable.ic_share_fail,"网络错误");
 //                        }
-//
-//                )
+//                        return null;
+//                    }
+//                })
 //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
 //        RestAdapter restAdapter3 = new RestAdapter.Builder()

@@ -1,7 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/webview_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
+    android:layout_height="match_parent"
               android:orientation="vertical"
              tools:context="com.qingchengfit.fitcoach.fragment.OriginWebFragment">
 
@@ -18,7 +20,6 @@
         app:popupTheme="@style/ToolbarStyle.Overflow"
         app:theme="@style/Qc.toolbarStyle"
         app:titleTextAppearance="@style/ToolbarStyle"
-
         >
 
         <TextView
@@ -32,12 +33,13 @@
             tools:text="测试"
             />
     </android.support.v7.widget.Toolbar>
-    <WebView
+
+    <com.tencent.smtt.sdk.WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
         >
 
-    </WebView>
+    </com.tencent.smtt.sdk.WebView>
 </LinearLayout>

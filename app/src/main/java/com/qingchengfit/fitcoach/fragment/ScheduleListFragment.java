@@ -21,6 +21,7 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -66,11 +67,14 @@ public class ScheduleListFragment extends Fragment {
 
         @Override
         public void onCompleted() {
-//            openDrawerInterface.hideLoading();//run On ui
         }
 
         @Override
         public void onError(Throwable e) {
+            e.printStackTrace();
+            ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+            if (refresh != null)
+                refresh.setRefreshing(false);
         }
 
         @Override
@@ -204,6 +208,8 @@ public class ScheduleListFragment extends Fragment {
 
         }
         Collections.sort(scheduleBeans, new ScheduleCompare());
+        if (getActivity() == null)
+            return;
         getActivity().runOnUiThread(() -> {
             if (scheduleNoSchedule != null) {
                 scheduesAdapter.notifyDataSetChanged();
@@ -311,7 +317,6 @@ public class ScheduleListFragment extends Fragment {
                 Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
                 holder.itemScheduleNum.setVisibility(View.VISIBLE);
                 holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
-
                 holder.itemScheduleNum.setText(bean.count + "人已预约");
             }
 
