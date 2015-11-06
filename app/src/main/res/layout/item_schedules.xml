@@ -9,84 +9,120 @@
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="75dp"
-        android:background="@color/divider_white"
+        android:background="@color/divider_grey"
         >
     </View>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
         >
-
-        <TextView
-            android:id="@+id/item_schedule_time"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            tools:text="9:00"
-            />
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/item_schedule_time"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:paddingTop="0dp"
+                android:textColor="@color/most_black"
+                tools:text="9:00"
+                />
+            <TextView
+                android:id="@+id/item_schedule_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_rect"
+                android:padding="3dp"
+                android:text="已完成"
+                android:textSize="11sp"
+                />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/item_schedule_status"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="3dp"
-            tools:src="@drawable/ic_calendar"
+            android:layout_marginTop="28dp"
+            tools:src="@drawable/ic_schedule_hook"
             />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:orientation="vertical"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_timeline_card"
+            android:paddingBottom="15dp"
+            android:paddingTop="0dp"
             >
 
-            <TextView
-                android:id="@+id/item_schedule_classname"
-                style="@style/Qc.TextCommonBlack"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                tools:text="Gravity"
-                />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="13dp"
+                android:orientation="vertical"
+                >
 
-            <TextView
-                android:id="@+id/item_schedule_gymname"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/ic_course_location"
-                android:drawablePadding="5dp"
-                android:maxLength="10"
-                tools:text="中美引力工作室"
-                />
+                <TextView
+                    android:id="@+id/item_schedule_classname"
+                    style="@style/Qc.TextCommonBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/most_black"
+                    android:textStyle="bold"
+                    tools:text="Gravity"
+                    />
 
-            <TextView
-                android:id="@+id/item_schedule_num"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/ic_course_people"
-                android:drawablePadding="5dp"
-                android:maxLength="10"
-                tools:text="共报名5人"
-                />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/item_schedule_gymname"
+                    style="@style/Qc.TextCommonGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/ic_course_location"
+                    android:drawablePadding="5dp"
+                    android:maxLength="10"
+                    android:textColor="@color/text_black"
+                    tools:text="中美引力工作室"
+                    />
 
-        <ImageView
-            android:id="@+id/item_schedule_classpic"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:scaleType="center"
-            tools:src="@drawable/test_pic"
-            />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/item_schedule_num"
+                    style="@style/Qc.TextCommonGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/ic_course_people"
+                    android:drawablePadding="5dp"
+                    android:maxLength="10"
+                    android:textColor="@color/text_black"
+                    tools:text="共报名5人"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/item_schedule_classpic"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:scaleType="fitXY"
+                tools:src="@drawable/test_pic"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
 
 </FrameLayout>

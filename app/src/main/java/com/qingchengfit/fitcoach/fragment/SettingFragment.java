@@ -121,6 +121,7 @@ public class SettingFragment extends BaseSettingFragment {
             case R.id.setting_logout:
 
                 Intent it = new Intent(getActivity(), MainActivity.class);
+                it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
                 startActivity(it);
                 break;

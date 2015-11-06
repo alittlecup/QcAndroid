@@ -59,6 +59,10 @@ public class PicChooseDialog extends Dialog {
         super.show();
     }
 
+    public void onDismiss(OnDismissListener listener) {
+        this.setOnDismissListener(listener);
+    }
+
     public void setListener(View.OnClickListener camera, View.OnClickListener gallery) {
         view.findViewById(R.id.choosepic_camera).setOnClickListener(camera);
         view.findViewById(R.id.choosepic_galley).setOnClickListener(gallery);

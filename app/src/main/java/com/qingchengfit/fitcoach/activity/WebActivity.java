@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -81,6 +82,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
     private List<String> mTitleStack = new ArrayList<>(); //记录标题
     private MaterialDialog loadingDialog;
     private ValueCallback<Uri> mValueCallback;
+    private PicChooseDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +119,45 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 //            LogUtil.e("  4:"+cookieManager.getCookie(".qingchengfit.cn"));
 //            Toast.makeText(this,cookieResult,Toast.LENGTH_LONG).show();
         }
+        if (dialog == null) {
+            dialog = new PicChooseDialog(WebActivity.this);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
 
+
+                }
+            });
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    mValueCallback.onReceiveValue(null);
+                }
+            });
+            dialog.setListener(v -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent();
+                        // 指定开启系统相机的Action
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                    },
+                    v -> {
+                        //图片选择
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/jpeg");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        } else {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        }
+                    }
+
+            );
+        }
 
     }
 
@@ -127,30 +167,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
             public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
 //                super.openFileChooser(valueCallback, s, s1);
                 mValueCallback = valueCallback;
-                PicChooseDialog dialog = new PicChooseDialog(WebActivity.this);
-                dialog.setListener(v -> {
-                            dialog.dismiss();
-                            Intent intent = new Intent();
-                            // 指定开启系统相机的Action
-                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.addCategory(Intent.CATEGORY_DEFAULT);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
-                        },
-                        v -> {
-                            //图片选择
-                            dialog.dismiss();
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                            intent.addCategory(Intent.CATEGORY_OPENABLE);
-                            intent.setType("image/jpeg");
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                            } else {
-                                startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                            }
-                        }
 
-                );
                 dialog.show();
             }
 
@@ -375,6 +392,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
                                 mValueCallback.onReceiveValue(Uri.fromFile(upFile));
                                 mValueCallback = null;
                             } else {
+                                mValueCallback.onReceiveValue(null);
                                 ToastUtils.show(R.drawable.ic_share_fail, "上传图片失败");
                             }
 //                            if (reslut) {
@@ -388,6 +406,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
                     });
 
+        } else {
+            if (mValueCallback != null)
+                mValueCallback.onReceiveValue(null);
         }
     }
 
@@ -405,7 +426,13 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
     @Override
     protected void onDestroy() {
-//        originWebFragment.removeCookie();
+        dialog = null;
+        mValueCallback = null;
+        if (mWebviewWebView != null) {
+            mWebviewRootLinearLayout.removeView(mWebviewWebView);
+            mWebviewWebView.removeAllViews();
+            mWebviewWebView.destroy();
+        }
         super.onDestroy();
 
     }

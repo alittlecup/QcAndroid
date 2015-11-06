@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
@@ -54,7 +54,7 @@ public class ScheduleListFragment extends Fragment {
     @Bind(R.id.schedule_no_tv)
     TextView scheduleNoTv;
     @Bind(R.id.schedule_no_schedule)
-    LinearLayout scheduleNoSchedule;
+    SwipeRefreshLayout scheduleNoSchedule;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
 
@@ -67,14 +67,20 @@ public class ScheduleListFragment extends Fragment {
 
         @Override
         public void onCompleted() {
+            if (refresh != null) {
+                refresh.setRefreshing(false);
+                scheduleNoSchedule.setRefreshing(false);
+            }
         }
 
         @Override
         public void onError(Throwable e) {
             e.printStackTrace();
             ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
-            if (refresh != null)
+            if (refresh != null) {
                 refresh.setRefreshing(false);
+                scheduleNoSchedule.setRefreshing(false);
+            }
         }
 
         @Override
@@ -113,18 +119,14 @@ public class ScheduleListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
         ButterKnife.bind(this, view);
         scheduesAdapter = new ScheduesAdapter(scheduleBeans);
-        scheduesAdapter.setListener((v, pos) -> {
-            String url = scheduesAdapter.datas.get(pos).intent_url;
-            if (!TextUtils.isEmpty(url)) {
-//                openDrawerInterface.goWeb(url);
-            }
-        });
+
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.setAdapter(scheduesAdapter);
         scheduesAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 String url = scheduesAdapter.datas.get(pos).intent_url;
+                LogUtil.e("pos:" + pos + url);
                 if (!TextUtils.isEmpty(url)) {
                     Intent it = new Intent(getActivity(), WebActivity.class);
                     it.putExtra("url", url);
@@ -141,11 +143,21 @@ public class ScheduleListFragment extends Fragment {
                 refresh();
             }
         });
+        scheduleNoSchedule.setColorSchemeResources(R.color.primary);
+        scheduleNoSchedule.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                refresh.setRefreshing(true);
+                if (refresh != null) {
+                    refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    refresh.setRefreshing(true);
+                }
             }
         });
 
@@ -195,7 +207,7 @@ public class ScheduleListFragment extends Fragment {
                 QcScheduleBean schedule = schedules.get(k);
                 ScheduleBean bean = new ScheduleBean();
                 bean.type = 1;
-                bean.gymname = system.system.cname;
+                bean.gymname = system.system.name;
                 bean.color = syscolor;
                 bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
                 bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();
@@ -222,9 +234,11 @@ public class ScheduleListFragment extends Fragment {
                     scheduleRv.setVisibility(View.GONE);
                     scheduleNoSchedule.setVisibility(View.VISIBLE);
                 }
+
+
             }
 
-            refresh.setRefreshing(false);
+
         });
     }
 
@@ -261,6 +275,8 @@ public class ScheduleListFragment extends Fragment {
         ImageView itemScheduleClasspic;
         @Bind(R.id.item_schedule_status)
         ImageView itemScheduleStatus;
+        @Bind(R.id.item_schedule_done)
+        TextView getItemScheduleDone;
 
         public SchedulesVH(View itemView) {
             super(itemView);
@@ -298,7 +314,7 @@ public class ScheduleListFragment extends Fragment {
         public void onBindViewHolder(SchedulesVH holder, int position) {
             holder.itemView.setTag(position);
             ScheduleBean bean = datas.get(position);
-            if (bean.type == 0) {
+            if (bean.type == 0) { //休息
                 holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
                 StringBuffer sb = new StringBuffer();
                 sb.append(DateUtils.getTimeHHMM(new Date(bean.time)));
@@ -308,26 +324,37 @@ public class ScheduleListFragment extends Fragment {
                 holder.itemScheduleClassname.setText(sb.toString());
                 holder.itemScheduleGymname.setText(bean.gymname);
                 holder.itemScheduleNum.setVisibility(View.GONE);
-                holder.itemScheduleClasspic.setVisibility(View.GONE);
+                holder.itemScheduleClasspic.setScaleType(ImageView.ScaleType.CENTER);
+                Glide.with(App.AppContex).load(R.drawable.ic_schedule_rest).into(holder.itemScheduleClasspic);
 
-            } else if (bean.type == 1) {
+
+            } else if (bean.type == 1) { //预约
                 holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
                 holder.itemScheduleClassname.setText(bean.title);
                 holder.itemScheduleGymname.setText(bean.gymname);
+                holder.itemScheduleClasspic.setScaleType(ImageView.ScaleType.FIT_XY);
                 Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
-                holder.itemScheduleNum.setVisibility(View.VISIBLE);
+
                 holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
-                holder.itemScheduleNum.setText(bean.count + "人已预约");
+
             }
 
-            if (bean.timeEnd < new Date().getTime()) {
+            if (bean.time < new Date().getTime()) {
                 holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_grey));
                 holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_grey));
-                holder.itemScheduleStatus.setImageResource(R.drawable.ic_schedule_hook);
+                holder.itemScheduleStatus.setImageResource(R.drawable.ic_calendar_done);
+                holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_grey));
+                holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_grey));
+                holder.itemScheduleNum.setText("共" + bean.count + "人上课");
+                holder.getItemScheduleDone.setVisibility(View.VISIBLE);
             } else {
-                holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_black));
-                holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_black));
+                holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.most_black));
+                holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.most_black));
+                holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_black));
+                holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_black));
                 holder.itemScheduleStatus.setImageDrawable(new LoopView(bean.color));
+                holder.itemScheduleNum.setText(bean.count + "人已预约");
+                holder.getItemScheduleDone.setVisibility(View.GONE);
             }
 
         }
