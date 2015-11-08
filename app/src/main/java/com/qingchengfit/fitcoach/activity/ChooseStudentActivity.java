@@ -38,6 +38,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -95,36 +97,54 @@ public class ChooseStudentActivity extends BaseAcitivity {
                 choosestudentChooseNum.setText(Integer.toString(chosenCount));
             }
         });
-        Observable.just("")
-                .observeOn(AndroidSchedulers.mainThread())
+        Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                List<Contact> contacts = PhoneFuncUtils.initContactList(ChooseStudentActivity.this);
+                studentBeans.clear();
+                for (Contact contact : contacts) {
+                    StudentBean studentBean = new StudentBean();
+                    studentBean.phoneStr = contact.getPhone();
+                    studentBean.name = contact.getUsername();
+                    studentBean.head = contact.getSortKey();
+                    studentBeans.add(studentBean);
+                }
+                Collections.sort(studentBeans, new StudentCompare());
+                alphabetSort.clear();
+                String tag = "";
+                for (int i = 0; i < studentBeans.size(); i++) {
+                    StudentBean bean = studentBeans.get(i);
+                    if (!bean.head.equalsIgnoreCase(tag)) {
+                        bean.isTag = true;
+                        tag = bean.head;
+                        alphabetSort.put(tag, i);
+                    } else bean.isTag = false;
+                }
+
+                subscriber.onNext("");
+                subscriber.onCompleted();
+//                subscriber.onNext(contacts);
+            }
+        });
+
+        observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .map(s -> PhoneFuncUtils.initContactList(this))
-                .map(contacts -> {
-                    studentBeans.clear();
-                    for (Contact contact : contacts) {
-                        StudentBean studentBean = new StudentBean();
-                        studentBean.phoneStr = contact.getPhone();
-                        studentBean.name = contact.getUsername();
-                        studentBean.head = contact.getSortKey();
-                        studentBeans.add(studentBean);
-                    }
-                    Collections.sort(studentBeans, new StudentCompare());
-                    alphabetSort.clear();
-                    String tag = "";
-                    for (int i = 0; i < studentBeans.size(); i++) {
-                        StudentBean bean = studentBeans.get(i);
-                        if (!bean.head.equalsIgnoreCase(tag)) {
-                            bean.isTag = true;
-                            tag = bean.head;
-                            alphabetSort.put(tag, i);
-                        } else bean.isTag = false;
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
 
-                    return "";
-                })
-                .subscribe(s1 -> {
-                    choosestudentTotalNum.setText("/" + studentBeans.size() + "人");
-                    studentAdapter.notifyDataSetChanged();
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        choosestudentTotalNum.setText("/" + studentBeans.size() + "人");
+                        studentAdapter.notifyDataSetChanged();
+                    }
                 });
         choosestudentAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
