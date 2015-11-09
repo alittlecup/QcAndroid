@@ -39,8 +39,8 @@
 
         <ImageView
             android:id="@+id/schedule_notification"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -49,8 +49,8 @@
 
         <TextView
             android:id="@+id/schedule_notification_count"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
             android:layout_alignRight="@id/schedule_notification"
             android:layout_alignTop="@id/schedule_notification"
             android:background="@drawable/bg_notification"

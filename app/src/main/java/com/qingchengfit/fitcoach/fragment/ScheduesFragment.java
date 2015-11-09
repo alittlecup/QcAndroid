@@ -29,8 +29,10 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.LoopView;
@@ -52,6 +54,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -93,6 +98,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private ArrayList<SpinnerBean> spinnerBeans;
     private List<Integer> mSystemsId = new ArrayList<>();
     private FragmentAdapter mFragmentAdapter;
+    private Observable<NewPushMsg> mObservable;
 
 
     public ScheduesFragment() {
@@ -189,6 +195,24 @@ public class ScheduesFragment extends MainBaseFragment {
         scheduleFloatbg.setOnClickListener(v -> {
             webFloatbtn.collapse();
         });
+        mObservable = RxBus.getBus().register(NewPushMsg.class);
+        mObservable.subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<NewPushMsg>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(NewPushMsg newPushMsg) {
+                        queryNotify();
+                    }
+                });
 //        openDrawerInterface.showLoading();
 //        goDateSchedule(mCurDate);
         return view;
@@ -294,7 +318,7 @@ public class ScheduesFragment extends MainBaseFragment {
     }
 
     public void queryNotify() {
-
+        //TODO 获取未读通知数
     }
 
     @Override
@@ -371,8 +395,9 @@ public class ScheduesFragment extends MainBaseFragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {

@@ -17,6 +17,15 @@ public class Contact {
     private String phone;
     private String username;
     private String sortKey;
+    private String header;
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
 
     public String getSortKey() {
         return sortKey;

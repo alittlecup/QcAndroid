@@ -1,9 +1,11 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
@@ -26,6 +29,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.ArrayList;
@@ -64,6 +68,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
     private StudentAdapter studentAdapter;
     private int chosenCount = 0;
     private HashMap<String, Integer> alphabetSort = new HashMap<>();
+    private MaterialDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
                 choosestudentChooseNum.setText(Integer.toString(chosenCount));
             }
         });
+        ShowLoading("正在获取联系人信息");
         Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
@@ -106,6 +112,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
                     studentBean.phoneStr = contact.getPhone();
                     studentBean.name = contact.getUsername();
                     studentBean.head = contact.getSortKey();
+                    studentBean.headerPic = contact.getHeader();
                     studentBeans.add(studentBean);
                 }
                 Collections.sort(studentBeans, new StudentCompare());
@@ -131,12 +138,12 @@ public class ChooseStudentActivity extends BaseAcitivity {
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onCompleted() {
-
+                        loadingDialog.dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        loadingDialog.dismiss();
                     }
 
                     @Override
@@ -173,6 +180,20 @@ public class ChooseStudentActivity extends BaseAcitivity {
 
     }
 
+
+    public void ShowLoading(String content) {
+        if (loadingDialog == null)
+            loadingDialog = new MaterialDialog.Builder(this)
+                    .content("请稍后")
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .build();
+        if (content != null)
+            loadingDialog.setContent(content);
+        loadingDialog.show();
+    }
+
+
     /**
      * 确认导入
      */
@@ -189,17 +210,31 @@ public class ChooseStudentActivity extends BaseAcitivity {
         }
 
         String s = new Gson().toJson(choosenstudentBeans);
+        ShowLoading("正在导入,请稍后...");
         QcCloudClient.getApi().postApi
                 .qcPostCreatStudents(App.coachid, new PostStudents(s))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcResponse -> {
-                    if (qcResponse.status == ResponseResult.SUCCESS) {
-                        Toast.makeText(App.AppContex, "添加成功", Toast.LENGTH_SHORT).show();
-                        setResult(400);
-                        this.finish();
-                    } else {
-                        Toast.makeText(App.AppContex, "添加失败", Toast.LENGTH_SHORT).show();
+                .subscribe(new Subscriber<QcResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        loadingDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onNext(QcResponse qcResponse) {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            Toast.makeText(App.AppContex, "添加成功", Toast.LENGTH_SHORT).show();
+                            setResult(400);
+                            ChooseStudentActivity.this.finish();
+                        } else {
+                            Toast.makeText(App.AppContex, "添加失败", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -264,7 +299,10 @@ public class ChooseStudentActivity extends BaseAcitivity {
                 holder.itemStudentAlpha.setText(studentBean.head);
                 holder.itemStudentAlpha.setVisibility(View.VISIBLE);
             } else holder.itemStudentAlpha.setVisibility(View.GONE);
-            Glide.with(App.AppContex).load(R.drawable.img_default_male).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
+            if (TextUtils.isEmpty(studentBean.headerPic))
+                Glide.with(App.AppContex).load(R.drawable.ic_default_head_nogender).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
+            else
+                Glide.with(App.AppContex).load(Uri.parse(studentBean.headerPic)).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
 
         }
 

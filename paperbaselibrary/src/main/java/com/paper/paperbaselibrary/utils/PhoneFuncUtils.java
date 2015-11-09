@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 import android.support.annotation.RequiresPermission;
+import android.text.TextUtils;
 
 import com.paper.paperbaselibrary.bean.Contact;
 
@@ -79,7 +80,10 @@ public class PhoneFuncUtils {
             // 有联系人姓名得到对应的拼音
 //            String pinyin = PinyinUtils.getPinyin(contactName);
 //            contact.setPinyin(pinyin);
-
+            String header = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
+            if (!TextUtils.isEmpty(header)) {
+                contact.setHeader(header);
+            } else contact.setHeader("");
             Cursor phoneCursor = context.getContentResolver().query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     null,
@@ -92,6 +96,9 @@ public class PhoneFuncUtils {
                 String phoneNumber = phoneCursor
                         .getString(phoneCursor
                                 .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.length() > 11) {
+                    phoneNumber = phoneNumber.substring(phoneNumber.length() - 11, phoneNumber.length());
+                }
                 if (count == 0)
                     contact.setPhone(phoneNumber);
                 else {
@@ -99,7 +106,9 @@ public class PhoneFuncUtils {
                     contact2.setUsername(contact.getUsername());
                     contact2.setPhone(phoneNumber);
                     contact2.setSortKey(contact.getSortKey());
-                    contactList.add(contact2);
+                    contact2.setHeader(contact.getHeader());
+                    if (isPhoneNum(phoneNumber))
+                        contactList.add(contact2);
                 }
 
                 count++;
@@ -108,9 +117,9 @@ public class PhoneFuncUtils {
             if (!phoneCursor.isClosed()) {
                 phoneCursor.close();
             }
-
-            contactList.add(contact);
-            LogUtil.i("name:" + contact.getUsername() + "  " + contact.getPhone());
+            if (isPhoneNum(contact.getPhone()))
+                contactList.add(contact);
+//            LogUtil.i("name:" + contact.getUsername() + "  " + contact.getPhone());
         }
 
         if (!cursor.isClosed()) {
@@ -304,5 +313,15 @@ public class PhoneFuncUtils {
 //        context.startActivity(intent);
     }
 
+    public static boolean isPhoneNum(String phoneNum) {
 
+        if (TextUtils.isEmpty(phoneNum))
+            return false;
+
+        if (phoneNum.length() < 11)
+            return false;
+
+
+        return true;
+    }
 }

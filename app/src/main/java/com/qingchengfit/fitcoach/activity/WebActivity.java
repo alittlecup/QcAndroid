@@ -437,6 +437,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
         mToolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
+        mToobarActionTextView.setText("");
     }
 
 
