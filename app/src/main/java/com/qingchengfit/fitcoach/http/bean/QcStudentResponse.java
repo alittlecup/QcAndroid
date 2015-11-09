@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class QcStudentResponse extends QcResponse {
 
-    @SerializedName("")
+    @SerializedName("data")
     public Data data;
 
 

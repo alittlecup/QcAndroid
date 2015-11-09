@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.SaleCompare;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.SaleBean;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.LoopView;
@@ -42,6 +44,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -69,6 +72,10 @@ public class SaleDetailFragment extends Fragment {
     ImageButton statementDetailLess;
     @Bind(R.id.statement_detail_more)
     ImageButton statementDetailMore;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
+    @Bind(R.id.refresh_nodata)
+    SwipeRefreshLayout refreshNodata;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<SaleBean> statementBeans = new ArrayList<>();
@@ -94,6 +101,7 @@ public class SaleDetailFragment extends Fragment {
     private Calendar curCalendar;
 
     private MaterialDialog loadingDialog;
+
     public SaleDetailFragment() {
 
     }
@@ -190,6 +198,20 @@ public class SaleDetailFragment extends Fragment {
             statementDetailMore.setVisibility(View.VISIBLE);
         }
         statementDetailMore.setEnabled(false);
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryStatement();
+            }
+        });
+        refreshNodata.setColorSchemeResources(R.color.primary);
+        refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryStatement();
+            }
+        });
         return view;
     }
 
@@ -269,7 +291,10 @@ public class SaleDetailFragment extends Fragment {
 
         mAllHistory.clear();
         mTotalCost.clear();
-        getActivity().runOnUiThread(() -> showLoading());
+        getActivity().runOnUiThread(() -> {
+            if (!refresh.isRefreshing() && !refreshNodata.isRefreshing())
+                showLoading();
+        });
         Observable.from(mSystemsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -303,8 +328,27 @@ public class SaleDetailFragment extends Fragment {
                     }
                 })
                 .last()
-                .subscribe(aBoolean -> {
-                    showData();
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        showData();
+                    }
                 });
 
 
@@ -330,11 +374,17 @@ public class SaleDetailFragment extends Fragment {
         sb2.append("总销售额").append(totalsale).append("元");
 
         getActivity().runOnUiThread(() -> {
+            refresh.setRefreshing(false);
+            refreshNodata.setRefreshing(false);
             hideLoading();
             mStatementDetailAdapter.notifyDataSetChanged();
             if (statementBeans.size() > 0) {
-                recyclerview.setVisibility(View.VISIBLE);
-            } else recyclerview.setVisibility(View.GONE);
+                refreshNodata.setVisibility(View.GONE);
+                refresh.setVisibility(View.VISIBLE);
+            } else {
+                refresh.setVisibility(View.GONE);
+                refreshNodata.setVisibility(View.VISIBLE);
+            }
 
             statementDetailTime.setText(sb1.toString());
             itemStatementDetailContent.setText(sb2.toString());

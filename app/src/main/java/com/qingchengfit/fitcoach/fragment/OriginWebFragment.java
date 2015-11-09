@@ -298,8 +298,6 @@ public class OriginWebFragment extends WebFragment {
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         initCookie();
-        String cookieResult = cookieManager.getCookie("http://192.168.31.108");
-        ToastUtils.show(cookieResult);
 
         return view;
     }

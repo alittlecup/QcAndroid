@@ -150,6 +150,12 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //
 //    }
     private MaterialDialog loadingDialog;
+    private SegmentLayout button;
+    private SegmentLayout button2;
+    private SegmentLayout button3;
+    private DrawerModuleItem item;
+    private DrawerModuleItem item1;
+    private DrawerModuleItem item2;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -445,17 +451,17 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mMyGymsFragment = new MyGymsFragment();
         mMyCoursePlanFragment = new MyCoursePlanFragment();
 
-        SegmentLayout button = new SegmentLayout(this);
+        button = new SegmentLayout(this);
         button.setText("日程安排");
         button.setId(ids[0]);
         button.setDrawables(R.drawable.ic_drawer_schedule_normal, R.drawable.ic_drawer_schedule_checked);
         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-        SegmentLayout button2 = new SegmentLayout(this);
+        button2 = new SegmentLayout(this);
         button2.setId(ids[1]);
         button2.setText("数据报表");
         button2.setDrawables(R.drawable.ic_drawer_statistic_normal, R.drawable.ic_drawer_statistic_checked);
         drawerRadiogroup.addView(button2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-        SegmentLayout button3 = new SegmentLayout(this);
+        button3 = new SegmentLayout(this);
         button3.setText("会议培训");
         button3.setId(ids[2]);
         button3.setDrawables(R.drawable.ic_drawer_meeting_normal, R.drawable.ic_drawer_meeting_checked);
@@ -472,15 +478,15 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         button3.setListener(v1 -> changeFragment(mMeetingFragment));
 
         button.performClick();
-        DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+        item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item.setTitle("我的学员");
         item.setCount("100");
         drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-        DrawerModuleItem item1 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+        item1 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item1.setTitle("我的课程计划");
         item1.setCount("100");
         drawerModules.addView(item1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-        DrawerModuleItem item2 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
+        item2 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item2.setTitle("我的健身房");
         item2.setCount("100");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
@@ -717,22 +723,28 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         if (resultCode > 0) {
             switch (resultCode) {
                 case 1:
-                    changeFragment(mScheduesFragment);
+//                    changeFragment(mScheduesFragment);
+                    button.performClick();
                     break;
                 case 2:
-                    changeFragment(mDataStatementFragment);
+//                    changeFragment(mDataStatementFragment);
+                    button2.performClick();
                     break;
                 case 3:
-                    changeFragment(mMeetingFragment);
+//                    changeFragment(mMeetingFragment);
+                    button3.performClick();
                     break;
                 case 4:
-                    changeFragment(mMyStudentFragment);
+                    item.performClick();
+//                    changeFragment(mMyStudentFragment);
                     break;
                 case 5:
-                    changeFragment(mMyCoursePlanFragment);
+                    item1.performClick();
+//                    changeFragment(mMyCoursePlanFragment);
                     break;
                 case 6:
-                    changeFragment(mMyGymsFragment);
+                    item2.performClick();
+//                    changeFragment(mMyGymsFragment);
                     break;
                 default:
 //                    changeFragment(mScheduesFragment);

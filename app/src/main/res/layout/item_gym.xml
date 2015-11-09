@@ -48,9 +48,9 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="2dp"
-                android:text="个人"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                tools:text="个人"
                 />
         </LinearLayout>
 

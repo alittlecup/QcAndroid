@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -146,9 +145,11 @@ public class ChooseStudentActivity extends BaseAcitivity {
                         studentAdapter.notifyDataSetChanged();
                     }
                 });
-        choosestudentAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        choosestudentAll.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
+//                choosestudentAll.setChecked(!choosestudentAll.isChecked());
+                boolean isChecked = choosestudentAll.isChecked();
                 //全选 和 全不选
                 for (StudentBean s : studentBeans) {
                     s.isChosen = isChecked;
@@ -160,6 +161,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
                 studentAdapter.notifyDataSetChanged();
             }
         });
+
         alphabetview.setOnAlphabetChange(new AlphabetView.OnAlphabetChange() {
             @Override
             public void onChange(int position, String s) {

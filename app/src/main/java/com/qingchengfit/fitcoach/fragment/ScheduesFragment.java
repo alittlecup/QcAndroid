@@ -73,6 +73,10 @@ public class ScheduesFragment extends MainBaseFragment {
     ViewPager scheduleVp;
     @Bind(R.id.schedule_floatbg)
     View scheduleFloatbg;
+    @Bind(R.id.schedule_notification)
+    ImageView scheduleNotification;
+    @Bind(R.id.schedule_notification_count)
+    TextView scheduleNotificationCount;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -101,11 +105,14 @@ public class ScheduesFragment extends MainBaseFragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-        toolbar.inflateMenu(R.menu.menu_alert);
-        toolbar.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(getActivity(), NotificationActivity.class));
-            getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
-            return true;
+//        toolbar.inflateMenu(R.menu.menu_alert);
+
+        scheduleNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NotificationActivity.class));
+//                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+            }
         });
 //        drawerRadiogroup.setDate(new Date());
         Gson gson = new Gson();
@@ -278,6 +285,16 @@ public class ScheduesFragment extends MainBaseFragment {
         Intent toWeb = new Intent(getActivity(), WebActivity.class);
         toWeb.putExtra("url", sb.toString());
         startActivityForResult(toWeb, 404);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        queryNotify();
+    }
+
+    public void queryNotify() {
+
     }
 
     @Override

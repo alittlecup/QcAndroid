@@ -24,6 +24,7 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StatementBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -92,6 +93,8 @@ public class StatementDetailFragment extends Fragment {
     ImageButton statementDetailMore;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
+    @Bind(R.id.refresh_nodata)
+    SwipeRefreshLayout refreshNodata;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<StatementBean> statementBeans = new ArrayList<>();
@@ -219,6 +222,13 @@ public class StatementDetailFragment extends Fragment {
                 queryStatement();
             }
         });
+        refreshNodata.setColorSchemeResources(R.color.primary);
+        refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryStatement();
+            }
+        });
         return view;
     }
 
@@ -298,7 +308,10 @@ public class StatementDetailFragment extends Fragment {
         mServerNum.clear();
         mAllStatemet.clear();
         mCourseNum.clear();
-        getActivity().runOnUiThread(() -> showLoading());
+        getActivity().runOnUiThread(() -> {
+            if (!refresh.isRefreshing() && !refreshNodata.isRefreshing())
+                showLoading();
+        });
         Observable.from(mSystemsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -337,8 +350,26 @@ public class StatementDetailFragment extends Fragment {
                     }
                 })
                 .last()
-                .subscribe(aBoolean -> {
-                    showData();
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        showData();
+                    }
                 });
 
 
@@ -371,12 +402,17 @@ public class StatementDetailFragment extends Fragment {
             hideLoading();
             mStatementDetailAdapter.notifyDataSetChanged();
             if (statementBeans.size() > 0) {
-                recyclerview.setVisibility(View.VISIBLE);
-            } else recyclerview.setVisibility(View.GONE);
+                refresh.setVisibility(View.VISIBLE);
+                refreshNodata.setVisibility(View.GONE);
+            } else {
+                refresh.setVisibility(View.GONE);
+                refreshNodata.setVisibility(View.VISIBLE);
+            }
 
             statementDetailTime.setText(sb1.toString());
             itemStatementDetailContent.setText(sb2.toString());
             refresh.setRefreshing(false);
+            refreshNodata.setRefreshing(false);
         });
     }
 

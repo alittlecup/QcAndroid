@@ -3,12 +3,14 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
@@ -24,7 +27,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -34,6 +39,10 @@ public class NotificationFragment extends BaseSettingFragment {
     RecyclerView recyclerview;
     NotifiAdapter adapter;
     List<QcNotificationResponse.DataEntity.MsgsEntity> list;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
+    @Bind(R.id.refresh_nodata)
+    SwipeRefreshLayout refreshNodata;
 //    @Bind(R.id.pulltorefresh)
 //    PtrFrameLayout pulltorefresh;
 
@@ -83,35 +92,71 @@ public class NotificationFragment extends BaseSettingFragment {
 //
 //            }
 //        });
-        onRefesh();
+//        onRefesh();
+        refresh.setColorSchemeResources(R.color.primary);
+        refreshNodata.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onRefesh();
+            }
+        });
+        refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onRefesh();
+            }
+        });
+        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                refresh.setRefreshing(true);
+                onRefesh();
+            }
+        });
+
         return view;
     }
 
     public void onRefesh() {
         QcCloudClient.getApi().getApi.qcGetMessages()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        qcNotificationResponse -> {
-//                            list.clear();
-//                            list.addAll(qcNotificationResponse.getData().getMsgs());
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    list = qcNotificationResponse.getData().getMsgs();
-                                    adapter = new NotifiAdapter(qcNotificationResponse.getData().getMsgs());
-                                    adapter.setListener((v, pos) -> {
-                                        fragmentCallBack.onFragmentChange(
-                                                WebFragment.newInstance(list.get(pos).getUrl()));
-                                        fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
-                                    });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<QcNotificationResponse>() {
+                    @Override
+                    public void onCompleted() {
 
-                                    recyclerview.setAdapter(adapter);
-//                                    pulltorefresh.refreshComplete();
-                                }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        refresh.setRefreshing(false);
+                        refreshNodata.setRefreshing(false);
+                        ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                    }
+
+                    @Override
+                    public void onNext(QcNotificationResponse qcNotificationResponse) {
+                        list = qcNotificationResponse.getData().getMsgs();
+                        if (list != null && list.size() > 0) {
+                            refresh.setVisibility(View.VISIBLE);
+                            refreshNodata.setVisibility(View.GONE);
+                            adapter = new NotifiAdapter(qcNotificationResponse.getData().getMsgs());
+                            adapter.setListener((v, pos) -> {
+                                fragmentCallBack.onFragmentChange(
+                                        WebFragment.newInstance(list.get(pos).getUrl(), true));
+                                fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
                             });
-
+                            recyclerview.setAdapter(adapter);
+                        } else {
+                            refresh.setVisibility(View.GONE);
+                            refreshNodata.setVisibility(View.VISIBLE);
                         }
-                );
+                        refresh.setRefreshing(false);
+                        refreshNodata.setRefreshing(false);
+
+                    }
+                });
     }
 
 

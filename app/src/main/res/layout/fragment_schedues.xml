@@ -31,6 +31,38 @@
 
             />
     </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/schedule_notification"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_actionbar_notification"
+            />
+
+        <TextView
+            android:id="@+id/schedule_notification_count"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignRight="@id/schedule_notification"
+            android:layout_alignTop="@id/schedule_notification"
+            android:background="@drawable/bg_notification"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            android:visibility="gone"
+            tools:text="1"
+            />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/schedule_calendar_header"
         android:layout_width="match_parent"

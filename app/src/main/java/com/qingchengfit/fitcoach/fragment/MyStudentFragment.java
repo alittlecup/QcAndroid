@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -161,6 +162,13 @@ public class MyStudentFragment extends MainBaseFragment {
                             mQcAllStudentResponse = qcAllStudentResponse;
                             handleResponse(qcAllStudentResponse);
                         });
+            }
+        });
+        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                refresh.setRefreshing(true);
+                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
         return view;

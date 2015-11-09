@@ -171,14 +171,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
                 dialog.show();
             }
 
-            private Intent createCameraIntent() {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//拍照
-                //=======================================================
-                Intent imageIntent = new Intent(Intent.ACTION_GET_CONTENT);//选择图片文件
-                imageIntent.setType("image/*");
-                //=======================================================
-                return cameraIntent;
-            }
+
 
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -281,6 +274,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
                 showNoNet();
 
             }
+
 
         });
 

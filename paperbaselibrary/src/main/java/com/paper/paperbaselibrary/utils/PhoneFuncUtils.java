@@ -87,11 +87,22 @@ public class PhoneFuncUtils {
                             + contactId, null, null);
             if (phoneCursor == null)
                 return null;
+            int count = 0;
             while (phoneCursor.moveToNext()) {
                 String phoneNumber = phoneCursor
                         .getString(phoneCursor
                                 .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                contact.setPhone(phoneNumber);
+                if (count == 0)
+                    contact.setPhone(phoneNumber);
+                else {
+                    Contact contact2 = new Contact();
+                    contact2.setUsername(contact.getUsername());
+                    contact2.setPhone(phoneNumber);
+                    contact2.setSortKey(contact.getSortKey());
+                    contactList.add(contact2);
+                }
+
+                count++;
             }
 
             if (!phoneCursor.isClosed()) {
