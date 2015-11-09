@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,6 +77,8 @@ public class SaleDetailFragment extends Fragment {
     SwipeRefreshLayout refresh;
     @Bind(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
+    @Bind(R.id.statement_detail_change)
+    Button statementDetailChange;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<SaleBean> statementBeans = new ArrayList<>();
@@ -193,6 +196,13 @@ public class SaleDetailFragment extends Fragment {
         if (mDividerType == 3) {
             statementDetailLess.setVisibility(View.GONE);
             statementDetailMore.setVisibility(View.GONE);
+            statementDetailChange.setVisibility(View.VISIBLE);
+            statementDetailChange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
         } else {
             statementDetailLess.setVisibility(View.VISIBLE);
             statementDetailMore.setVisibility(View.VISIBLE);
@@ -336,13 +346,14 @@ public class SaleDetailFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
-                            }
+                        if (getActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                                }
 
-                        });
+                            });
                     }
 
                     @Override
@@ -372,23 +383,23 @@ public class SaleDetailFragment extends Fragment {
         sb1.append(start).append("至").append(end);
         StringBuffer sb2 = new StringBuffer();
         sb2.append("总销售额").append(totalsale).append("元");
+        if (getActivity() != null)
+            getActivity().runOnUiThread(() -> {
+                refresh.setRefreshing(false);
+                refreshNodata.setRefreshing(false);
+                hideLoading();
+                mStatementDetailAdapter.notifyDataSetChanged();
+                if (statementBeans.size() > 0) {
+                    refreshNodata.setVisibility(View.GONE);
+                    refresh.setVisibility(View.VISIBLE);
+                } else {
+                    refresh.setVisibility(View.GONE);
+                    refreshNodata.setVisibility(View.VISIBLE);
+                }
 
-        getActivity().runOnUiThread(() -> {
-            refresh.setRefreshing(false);
-            refreshNodata.setRefreshing(false);
-            hideLoading();
-            mStatementDetailAdapter.notifyDataSetChanged();
-            if (statementBeans.size() > 0) {
-                refreshNodata.setVisibility(View.GONE);
-                refresh.setVisibility(View.VISIBLE);
-            } else {
-                refresh.setVisibility(View.GONE);
-                refreshNodata.setVisibility(View.VISIBLE);
-            }
-
-            statementDetailTime.setText(sb1.toString());
-            itemStatementDetailContent.setText(sb2.toString());
-        });
+                statementDetailTime.setText(sb1.toString());
+                itemStatementDetailContent.setText(sb2.toString());
+            });
     }
 
     private HashMap<String, String> getParams(int system_id) {

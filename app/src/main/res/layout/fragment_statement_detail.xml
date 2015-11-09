@@ -142,6 +142,14 @@
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <Button
+            android:id="@+id/statement_detail_change"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_gravity="bottom"
+            android:text="更改筛选条件"
+            android:visibility="gone"
+            />
     </FrameLayout>
 
 </LinearLayout>
