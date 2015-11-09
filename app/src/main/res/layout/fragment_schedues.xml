@@ -138,8 +138,8 @@
 
             <ImageView
                 android:id="@+id/schedule_calendar_ic"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_calendar"
                 />
@@ -147,10 +147,9 @@
 
         <View
             android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
             android:background="@color/disable"
             >
         </View>

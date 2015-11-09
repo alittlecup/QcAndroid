@@ -146,7 +146,7 @@
 
     <style name="floataction_style" parent="ThemeOverlay.AppCompat">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 
@@ -157,14 +157,14 @@
     </style>
 
     <style name="DayOfTheWeek">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/day_of_month</item>
         <item name="fontPath">fonts/Roboto-Regular.ttf</item>
     </style>
 
 
     <style name="DayOfTheMonth">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/day_of_month</item>
         <item name="fontPath">fonts/Roboto-Light.ttf</item>
     </style>

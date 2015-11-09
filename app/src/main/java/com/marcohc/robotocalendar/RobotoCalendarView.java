@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 
-import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -47,6 +46,7 @@ public class RobotoCalendarView extends LinearLayout {
     // ************************************************************************************************************************************************************************
 
     public static final int RED_COLOR = R.color.red;
+    public static final int GREY_COLOR = R.color.grey;
     public static final int GREEN_COLOR = R.color.green;
     public static final int BLUE_COLOR = R.color.blue;
     public static final int WHITE_COLOR = R.color.white;
@@ -189,13 +189,14 @@ public class RobotoCalendarView extends LinearLayout {
         int color = monthTitleColor;
         dateTitle.setTextColor(color);
 
-        String dateText = new DateFormatSymbols(locale).getMonths()[currentCalendar.get(Calendar.MONTH)].toString();
-        dateText = dateText.substring(0, 1).toUpperCase() + dateText.subSequence(1, dateText.length());
-        Calendar calendar = Calendar.getInstance();
+//        String dateText = new DateFormatSymbols(locale).getMonths()[currentCalendar.get(Calendar.MONTH)].toString();
+//        dateText = dateText.substring(0, 1).toUpperCase() + dateText.subSequence(1, dateText.length());
+        String dateText = Integer.toString(currentCalendar.get(Calendar.MONTH) + 1);
+//        Calendar calendar = Calendar.getInstance();
 //        if (currentCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
 //            dateTitle.setText(dateText);
 //        } else {
-        dateTitle.setText(currentCalendar.get(Calendar.YEAR) + "  " + dateText);
+        dateTitle.setText(currentCalendar.get(Calendar.YEAR) + getResources().getString(R.string.pickerview_year) + dateText + getResources().getString(R.string.pickerview_day));
 //        }
     }
 
@@ -455,7 +456,9 @@ public class RobotoCalendarView extends LinearLayout {
 
         // Draw day with style
         underline.setVisibility(View.VISIBLE);
-        underline.setBackgroundResource(R.drawable.red_dot);
+        if (style == RED_COLOR)
+            underline.setBackgroundResource(R.drawable.red_dot);
+        else underline.setBackgroundResource(R.drawable.grey_dot);
     }
 
     public void setRobotoCalendarListener(RobotoCalendarListener robotoCalendarListener) {

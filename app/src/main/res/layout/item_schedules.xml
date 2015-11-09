@@ -5,13 +5,7 @@
              android:layout_height="match_parent"
     >
 
-    <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="75dp"
-        android:background="@color/divider_grey"
-        >
-    </View>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,10 +33,11 @@
                 android:id="@+id/item_schedule_done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2.5dp"
                 android:background="@drawable/bg_rect"
-                android:padding="3dp"
+                android:padding="2dp"
                 android:text="已完成"
+                android:textColor="#bbbbbb"
                 android:textSize="11sp"
                 />
         </LinearLayout>

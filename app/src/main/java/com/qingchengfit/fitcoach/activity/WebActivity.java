@@ -491,6 +491,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
             runOnUiThread(() -> {
                 if (TextUtils.isEmpty(toolStr.name)) {
+                    mToobarActionTextView.setText("");
                     mToobarActionTextView.setVisibility(View.GONE);
                 } else {
                     mToobarActionTextView.setVisibility(View.VISIBLE);

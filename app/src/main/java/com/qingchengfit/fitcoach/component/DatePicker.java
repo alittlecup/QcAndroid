@@ -93,8 +93,14 @@ public class DatePicker extends Dialog {
     }
 
     public void markDay(String day) {
-        robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.RED_COLOR, DateUtils.formatDateFromString(day));
+        Date makeD = DateUtils.formatDateFromString(day);
+        if (makeD.getTime() < DateUtils.getToadayMidnight())
+            robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.GREY_COLOR, makeD);
+        else robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.RED_COLOR, makeD);
     }
+//    public void markDay(String day,int color) {
+//        robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.GREY_COLOR, DateUtils.formatDateFromString(day));
+//    }
 
     public void markCurDay() {
         if (mCurCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
@@ -109,4 +115,5 @@ public class DatePicker extends Dialog {
         super.hide();
 
     }
+
 }

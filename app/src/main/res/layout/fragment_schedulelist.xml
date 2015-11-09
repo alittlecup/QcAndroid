@@ -2,8 +2,16 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:background="@color/backgroud_grey"
              tools:context="com.qingchengfit.fitcoach.fragment.ScheduleListFragment">
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="75dp"
+        android:background="@color/divider_grey"
+        >
+    </View>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -14,11 +22,12 @@
             android:id="@+id/schedule_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroud_grey"
+
             android:clipToPadding="false"
             android:paddingBottom="50dp"
             >
         </android.support.v7.widget.RecyclerView>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -31,7 +40,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            >
 
 
             <LinearLayout
@@ -50,13 +61,13 @@
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="140dp"
                     android:src="@drawable/schedules_no_data"
                     />
 
                 <TextView
                     android:id="@+id/schedule_no_tv"
-                    style="@style/TextStyle.common"
+                    style="@style/Qc.TextCommonGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/schedule_no_img"
