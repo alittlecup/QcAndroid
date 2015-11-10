@@ -98,6 +98,7 @@ public class MyStudentFragment extends MainBaseFragment {
     private List<Integer> mSystemsId = new ArrayList<>();
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private int curSystemId;     //当前选中system
+    private int curPostion = 0;
 
     public MyStudentFragment() {
     }
@@ -200,7 +201,9 @@ public class MyStudentFragment extends MainBaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
+            int x = curPostion;
             setUpNaviSpinner();
+            spinnerNav.setSelection(x);
         }
     }
 
@@ -396,6 +399,7 @@ public class MyStudentFragment extends MainBaseFragment {
         spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curPostion = position;
                 curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
                 handleResponse(mQcAllStudentResponse);
             }

@@ -91,6 +91,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private ScheduesAdapter scheduesAdapter;
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private int curSystemId = 0;
+    private int curPostion = 0;
     private QcSchedulesResponse mQcSchedulesResponse;
     private Date mCurDate = new Date();
     private DatePicker mDatePicker;
@@ -222,7 +223,9 @@ public class ScheduesFragment extends MainBaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
+            int x = curPostion;
             setUpNaviSpinner();
+            spinnerNav.setSelection(x);
         }
     }
 
@@ -285,6 +288,7 @@ public class ScheduesFragment extends MainBaseFragment {
         spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curPostion = position;
                 curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
                 mFragmentAdapter.notifyDataSetChanged();
             }
