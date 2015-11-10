@@ -48,6 +48,7 @@ public class FragActivity extends BaseAcitivity {
                 break;
             case 3:
                 fragment = new AddSelfGymFragment();
+
                 break;
             case 4:
                 fragment = new AddBelongGymFragment();

@@ -1,5 +1,7 @@
 include ':app'
 include ':paperbaselibrary'
+//include ':core'
+//include ':commons'
 //include ':crosswalkwebview144334317arm'
 //include ':crosswalkwebview15443867arm'
 //include ':crosswalkwebview15443867arm'

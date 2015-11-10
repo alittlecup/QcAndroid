@@ -8,15 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
@@ -149,20 +149,36 @@ public class CustomSaleFragment extends Fragment {
 
     @OnClick(R.id.custom_statment_course)
     public void onClickCourse() {
-        new MaterialDialog.Builder(getContext())
-                .title("请选择会员卡")
-                .items(courseStrings.toArray(new String[courseStrings.size()]))
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-                        customStatmentCourse.setContent(charSequence.toString());
-                        if (i == 0) {
-                            chooseCoursId = 0;
-                        } else {
-                            chooseCoursId = courses.get(i - 1).id;
-                        }
-                    }
-                }).show();
+//        new MaterialDialog.Builder(getContext())
+//                .title("请选择会员卡")
+//                .items(courseStrings.toArray(new String[courseStrings.size()]))
+//                .itemsCallback(new MaterialDialog.ListCallback() {
+//                    @Override
+//                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+//                        customStatmentCourse.setContent(charSequence.toString());
+//                        if (i == 0) {
+//                            chooseCoursId = 0;
+//                        } else {
+//                            chooseCoursId = courses.get(i - 1).id;
+//                        }
+//                    }
+//                }).show();
+        DialogList dialogList = new DialogList(getContext());
+        dialogList.title("请选择会员卡");
+        dialogList.list(courseStrings, new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialogList.dismiss();
+                customStatmentCourse.setContent(courseStrings.get(position));
+                if (position == 0) {
+                    chooseCoursId = 0;
+                } else {
+                    chooseCoursId = courses.get(position - 1).id;
+                }
+            }
+        });
+        dialogList.show();
+
     }
 
     @OnClick(R.id.custom_statment_end)
@@ -187,30 +203,53 @@ public class CustomSaleFragment extends Fragment {
 
     @OnClick(R.id.custom_statment_gym)
     public void onClickGym() {
-        new MaterialDialog.Builder(getContext())
-                .title("请选择健身房")
-                .items(gymStrings.toArray(new String[gymStrings.size()]))
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        LogUtil.e("choose:" + which);
-                        customStatmentGym.setContent(text.toString());
-                        chooseGymId = spinnerBeans.get(which).id;
-                        if (which == 0) {
+        DialogList dialogList = new DialogList(getContext());
+        dialogList.title("请选择健身房");
+        dialogList.list(gymStrings, new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dialogList.dismiss();
+                customStatmentGym.setContent(gymStrings.get(position));
+                chooseGymId = spinnerBeans.get(position).id;
+                if (position == 0) {
 
-                            customStatmentCourse.setVisibility(View.GONE);
-                        } else {
-                            HashMap<String, String> params = new HashMap<String, String>();
-                            params.put("system_id", Integer.toString(chooseGymId));
+                    customStatmentCourse.setVisibility(View.GONE);
+                } else {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("system_id", Integer.toString(chooseGymId));
 
-                            QcCloudClient.getApi().getApi.qcGetSystemCard(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
+                    QcCloudClient.getApi().getApi.qcGetSystemCard(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
 
 
-                            customStatmentCourse.setVisibility(View.VISIBLE);
-                        }
-                    }
-                })
-                .show();
+                    customStatmentCourse.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        dialogList.show();
+//        new MaterialDialog.Builder(getContext())
+//                .title("请选择健身房")
+//                .items(gymStrings.toArray(new String[gymStrings.size()]))
+//                .itemsCallback(new MaterialDialog.ListCallback() {
+//                    @Override
+//                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//                        LogUtil.e("choose:" + which);
+//                        customStatmentGym.setContent(text.toString());
+//                        chooseGymId = spinnerBeans.get(which).id;
+//                        if (which == 0) {
+//
+//                            customStatmentCourse.setVisibility(View.GONE);
+//                        } else {
+//                            HashMap<String, String> params = new HashMap<String, String>();
+//                            params.put("system_id", Integer.toString(chooseGymId));
+//
+//                            QcCloudClient.getApi().getApi.qcGetSystemCard(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
+//
+//
+//                            customStatmentCourse.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                })
+//                .show();
     }
 
 //    @OnClick(R.id.custom_statment_student)

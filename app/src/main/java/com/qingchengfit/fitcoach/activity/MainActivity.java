@@ -367,9 +367,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         if (!TextUtils.isEmpty(u)) {
             user = gson.fromJson(u, User.class);
             App.setgUser(user);
+            drawerName.setText(user.username);
         } else {
         }
-        drawerName.setText(user.username);
+
         //初始化initCoach
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {
@@ -380,10 +381,20 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         //获取用户拥有的系统
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcCoachSystemResponse -> {
-                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS)
-                        PreferenceUtils.setPrefString(App.AppContex, "systems", gson.toJson(qcCoachSystemResponse));
-                    else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                        if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+                                qcCoachSystemResponse.date.systems.size() == 0) {
+                            Intent intent = new Intent(this, FragActivity.class);
+                            intent.putExtra("type", 3);
+                            intent.putExtra("isNew", true);
+                            startActivity(intent);
+                        } else {
+                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
+
+                        }
+                    } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
                         logout();
                     }
                 });
@@ -699,7 +710,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     public void onBackPressed() {
         if (topFragment != mScheduesFragment) {
-            changeFragment(mScheduesFragment);
+//            changeFragment(mScheduesFragment);
+            button.performClick();
         } else
             dialog.show();
     }
