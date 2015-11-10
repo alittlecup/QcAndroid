@@ -1,38 +1,52 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.ValueCallback;
-import android.webkit.WebBackForwardList;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.BitmapUtils;
+import com.paper.paperbaselibrary.utils.ChoosePicUtils;
+import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebBackForwardList;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebStorage;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +67,8 @@ public class GymDetailFragment extends Fragment {
     private MaterialDialog alertDialog;
     private boolean isPrivate;
     private MaterialDialog delDialog;
+    private ValueCallback<Uri> mValueCallback;
+    private PicChooseDialog dialog;
     public GymDetailFragment() {
     }
 
@@ -66,6 +82,7 @@ public class GymDetailFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     private void showDialog() {
         if (delDialog == null) {
@@ -95,7 +112,48 @@ public class GymDetailFragment extends Fragment {
             host = getArguments().getString("host");
             isPrivate = getArguments().getBoolean("isPrivate");
         }
+        if (dialog == null && getActivity() != null) {
+            dialog = new PicChooseDialog(getActivity());
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+
+
+                }
+            });
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    mValueCallback.onReceiveValue(null);
+                }
+            });
+            dialog.setListener(v -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent();
+                        // 指定开启系统相机的Action
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                    },
+                    v -> {
+                        //图片选择
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/jpeg");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        } else {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        }
+                    }
+
+            );
+        }
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,6 +183,7 @@ public class GymDetailFragment extends Fragment {
             }
             return true;
         });
+        initWebSetting();
         webview.setWebViewClient(new WebViewClient() {
 
                                      @Override
@@ -159,18 +218,6 @@ public class GymDetailFragment extends Fragment {
                                          return super.shouldOverrideUrlLoading(view, url);
                                      }
 
-                                     @Override
-                                     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-//                                         super.onReceivedHttpError(view, request, errorResponse);
-                                         toolbar.getMenu().clear();
-
-                                     }
-
-                                     @Override
-                                     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-//                                         super.onReceivedError(view, request, error);
-                                         LogUtil.e("onReceivedError 1");
-                                     }
 
                                      @Override
                                      public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -185,61 +232,68 @@ public class GymDetailFragment extends Fragment {
         );
 
 
-        webview.setWebChromeClient(new
+        webview.setWebChromeClient(new WebChromeClient() {
+                                       @Override
+                                       public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
+//                super.openFileChooser(valueCallback, s, s1);
+                                           mValueCallback = valueCallback;
 
-                                           WebChromeClient() {
+                                           dialog.show();
+                                       }
 
+                                       @Override
+                                       public void onReceivedTitle(WebView view, String title) {
+                                           super.onReceivedTitle(view, title);
+                                           toolbar.setTitle(title);
+                                       }
 
-                                               @Override
-                                               public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-                                                   LogUtil.e("showfilechooser");
-                                                   return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
-                                               }
+                                       @Override
+                                       public void getVisitedHistory(ValueCallback<String[]> callback) {
+                                           super.getVisitedHistory(callback);
 
-                                               @Override
-                                               public void onReceivedTitle(WebView view, String title) {
-                                                   super.onReceivedTitle(view, title);
-                                                   toolbar.setTitle(title);
-                                               }
-
-                                               @Override
-                                               public void getVisitedHistory(ValueCallback<String[]> callback) {
-                                                   super.getVisitedHistory(callback);
-
-                                               }
-                                           }
+                                       }
+                                   }
 
         );
-        webview.getSettings().
-                setJavaScriptEnabled(true);
+
 
         String s = webview.getSettings().getUserAgentString();
         webview.getSettings().
-
                 setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
-//        webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
-//         开启DOM storage API 功能
-//        webview.getSettings().setDomStorageEnabled(true);
-        // 开启database storage API功能
-//        webview.getSettings().setDatabaseEnabled(true);
-//        String cacheDirPath = Configs.ExternalCache;
-//        Log.i("cachePath", cacheDirPath);
-        // 设置数据库缓存路径
-//        webview.getSettings().setDatabasePath(cacheDirPath); // API 19 deprecated
-        // 设置Application caches缓存目录
-//        webview.getSettings().setAppCachePath(cacheDirPath);
-        // 开启Application Cache功能
-//        webview.getSettings().setAppCacheEnabled(true);
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
 
-        initCookie();
+
 
         webview.loadUrl(host);
+        initCookie(host);
         return view;
     }
 
-
+    private void initWebSetting() {
+        WebStorage webStorage = WebStorage.getInstance();
+        // TODO Auto-generated constructor stub
+        WebSettings webSetting = webview.getSettings();
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSetting.setAllowFileAccess(true);
+        webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSetting.setSupportZoom(false);
+        webSetting.setBuiltInZoomControls(false);
+        webSetting.setUseWideViewPort(true);
+        webSetting.setSupportMultipleWindows(true);
+        webSetting.setLoadWithOverviewMode(true);
+        webSetting.setAppCacheEnabled(true);
+        webSetting.setDatabaseEnabled(true);
+        webSetting.setDomStorageEnabled(true);
+        webSetting.setGeolocationEnabled(true);
+        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
+        webSetting.setUserAgentString(webSetting.getUserAgentString() + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android");
+        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
+        webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
+        webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -251,26 +305,86 @@ public class GymDetailFragment extends Fragment {
 
     public void removeCookie() {
         if (cookieManager != null) {
-            if (Build.VERSION.SDK_INT < 21) {
-                cookieManager.removeAllCookie();
-            } else {
-                cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
-                    @Override
-                    public void onReceiveValue(Boolean value) {
-
-                    }
-                });
-            }
+//            if (Build.VERSION.SDK_INT < 21) {
+//                cookieManager.removeAllCookie();
+//            } else {
+//                cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+//                    @Override
+//                    public void onReceiveValue(Boolean value) {
+//
+//                    }
+//                });
+//            }
         }
     }
 
-    private void initCookie() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String filepath = "";
+        if (webview == null)
+            return;
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY) {
+                filepath = FileUtils.getPath(getContext(), data.getData());
+                mValueCallback.onReceiveValue(data.getData());
+                return;
+            } else filepath = Configs.CameraPic;
+            LogUtil.d(filepath);
+//            ShowLoading("正在上传");
+            Observable.just(filepath)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(s -> {
+                        String filename = UUID.randomUUID().toString();
+                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
+                        File upFile = new File(Configs.ExternalCache + filename);
+
+//                        boolean reslut = UpYunClient.upLoadImg("/webup/" + App.coachid + "/", filename, upFile);
+                        getActivity().runOnUiThread(() -> {
+//                            loadingDialog.dismiss();
+                            if (upFile.exists()) {
+//                                ToastUtils.show("上传图片成功");
+                                mValueCallback.onReceiveValue(Uri.fromFile(upFile));
+                                mValueCallback = null;
+                            } else {
+                                mValueCallback.onReceiveValue(null);
+//                                ToastUtils.show(R.drawable.ic_share_fail, "上传图片失败");
+                            }
+//                            if (reslut) {
+//                                LogUtil.d("success");
+//
+//
+//                            } else {
+//                                ToastUtils.show(R.drawable.ic_share_fail,"资源服务器错误");
+//                            }
+                        });
+
+                    });
+
+        } else {
+            if (mValueCallback != null)
+                mValueCallback.onReceiveValue(null);
+        }
+    }
+
+
+    private void initCookie(String url) {
         String sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
+
+
         if (sessionid != null) {
+            try {
+                URI uri = new URI(url);
+                setCookie(uri.getHost(), "qc_session_id", sessionid);
+            } catch (URISyntaxException e) {
+                //e.printStackTrace();
+            }
             setCookie(Configs.ServerIp, "sessionid", sessionid);
-            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
-            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
-            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+//            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
+//            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
+//            setCookie(".qingchengfit.cn", "qc_session_id", sessionid);
+//            setCookie(".cn", "qc_session_id", sessionid);
+//            setCookie(".com", "qc_session_id", sessionid);
+//            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
             //TODO logout
         }
