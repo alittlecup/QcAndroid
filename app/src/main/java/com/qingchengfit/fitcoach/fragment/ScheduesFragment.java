@@ -218,6 +218,14 @@ public class ScheduesFragment extends MainBaseFragment {
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            setUpNaviSpinner();
+        }
+    }
+
     private void setUpViewPager() {
         mFragmentAdapter = new FragmentAdapter(getChildFragmentManager());
         scheduleVp.setAdapter(mFragmentAdapter);
@@ -232,7 +240,7 @@ public class ScheduesFragment extends MainBaseFragment {
         spinnerBeans = new ArrayList<>();
         spinnerBeans.add(new SpinnerBean("", "全部日程", true));
 
-        String systemStr = PreferenceUtils.getPrefString(App.AppContex, "systems", "");
+        String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
         if (!TextUtils.isEmpty(systemStr)) {
             QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
             List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;

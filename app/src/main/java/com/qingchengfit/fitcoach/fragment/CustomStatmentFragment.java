@@ -133,7 +133,7 @@ public class CustomStatmentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_statment, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle("自定义报表");
+        toolbar.setTitle("自定义预约报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         view.setOnTouchListener((v, event) -> {
@@ -168,6 +168,21 @@ public class CustomStatmentFragment extends Fragment {
                         }
                     }
                 }).show();
+
+//        new MaterialDialog.Builder(getContext())
+//                .title("请选择课程")
+//                .items(courseStrings.toArray(new String[courseStrings.size()]))
+//                .itemsCallback(new MaterialDialog.ListCallback() {
+//                    @Override
+//                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
+//                        customStatmentCourse.setContent(charSequence.toString());
+//                        if (i == 0) {
+//                            chooseCoursId = 0;
+//                        } else {
+//                            chooseCoursId = courses.get(i - 1).id;
+//                        }
+//                    }
+//                }).show();
     }
 
     @OnClick(R.id.custom_statment_end)
@@ -194,11 +209,13 @@ public class CustomStatmentFragment extends Fragment {
     public void onClickGym() {
         new MaterialDialog.Builder(getContext())
                 .title("请选择健身房")
+                .autoDismiss(true)
                 .items(gymStrings.toArray(new String[gymStrings.size()]))
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         LogUtil.e("choose:" + which);
+
                         customStatmentGym.setContent(text.toString());
                         chooseGymId = spinnerBeans.get(which).id;
                         if (which == 0) {
@@ -223,6 +240,7 @@ public class CustomStatmentFragment extends Fragment {
     public void onClickStudent() {
         new MaterialDialog.Builder(getContext())
                 .title("请选择学员")
+                .titleColorRes(R.color.text_grey)
                 .items(studentStrings.toArray(new String[studentStrings.size()]))
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override

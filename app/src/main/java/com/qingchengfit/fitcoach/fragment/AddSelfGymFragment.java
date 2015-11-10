@@ -14,14 +14,18 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymCompare;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChangeTimeActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
+import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.lang.reflect.Type;
@@ -31,7 +35,11 @@ import java.util.Collections;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -50,6 +58,8 @@ public class AddSelfGymFragment extends Fragment {
     int id = -1;
     private QcPrivateGymReponse reponse;
     private PostPrivateGym postPrivateGym;
+    private boolean mIsNew;
+
     public AddSelfGymFragment() {
     }
 
@@ -62,11 +72,21 @@ public class AddSelfGymFragment extends Fragment {
         return fragment;
     }
 
+    public static AddSelfGymFragment newInstance(boolean isNew) {
+
+        Bundle args = new Bundle();
+        args.putBoolean("isNew", isNew);
+        AddSelfGymFragment fragment = new AddSelfGymFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             id = getArguments().getInt("id");
+            mIsNew = getArguments().getBoolean("isNew", false);
         }
     }
 
@@ -78,7 +98,15 @@ public class AddSelfGymFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        if (mIsNew) {
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        } else
+            toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         if (id > 0) {
             toolbar.setTitle("修改个人健身房");
         } else {
@@ -124,14 +152,60 @@ public class AddSelfGymFragment extends Fragment {
         QcCloudClient.getApi().postApi.qcPostPrivateGym(App.coachid, postPrivateGym)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcResponse -> {
-                    if (qcResponse.status == ResponseResult.SUCCESS) {
-                        Toast.makeText(App.AppContex, "修改成功", Toast.LENGTH_SHORT);
-                        getActivity().onBackPressed();
-                    } else {
-                        Toast.makeText(App.AppContex, "修改失败", Toast.LENGTH_SHORT);
+                .flatMap(new Func1<QcResponse, Observable<QcCoachSystemResponse>>() {
+                    @Override
+                    public Observable<QcCoachSystemResponse> call(QcResponse qcResponse) {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+
+                            return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread());
+                        } else {
+                            ToastUtils.show(R.drawable.ic_share_fail, "修改失败");
+                        }
+                        return Observable.just(null);
+                    }
+                }, new Func1<Throwable, Observable<QcCoachSystemResponse>>() {
+                    @Override
+                    public Observable<QcCoachSystemResponse> call(Throwable throwable) {
+                        ToastUtils.show(R.drawable.ic_share_fail, "修改失败");
+                        return Observable.just(null);
+                    }
+                }, new Func0<Observable<QcCoachSystemResponse>>() {
+                    @Override
+                    public Observable<QcCoachSystemResponse> call() {
+                        return Observable.just(null);
+                    }
+                })
+                .filter(new Func1<QcCoachSystemResponse, Boolean>() {
+                    @Override
+                    public Boolean call(QcCoachSystemResponse qcCoachSystemResponse) {
+                        if (qcCoachSystemResponse == null)
+                            return false;
+                        else return true;
+
+                    }
+                })
+                .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_success));
+                    }
+
+                    @Override
+                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                        if (getActivity() != null) {
+                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
+                            ToastUtils.show(getString(R.string.common_modify_failed));
+                            getActivity().onBackPressed();
+                        }
                     }
                 });
+
 
     }
 

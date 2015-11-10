@@ -196,6 +196,14 @@ public class MyStudentFragment extends MainBaseFragment {
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            setUpNaviSpinner();
+        }
+    }
+
     /**
      * 从通讯录读取学员
      */

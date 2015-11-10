@@ -125,6 +125,12 @@ public class MyGymsFragment extends MainBaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        freshData();
+    }
+
     public void freshData() {
         QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())

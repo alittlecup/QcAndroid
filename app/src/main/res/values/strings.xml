@@ -66,5 +66,7 @@
     <string name="add_gym_private_08">方法2: 在“我的主页中”修改手机号，使其与在「青橙健身房管理系统」中预留的手机号一致。</string>
     <string name="title_activity_change_time">ChangeTimeActivity</string>
     <string name="title_activity_choose_student">ChooseStudentActivity</string>
+    <string name="common_modify_success">修改失败</string>
+    <string name="common_modify_failed">修改成功</string>
 
 </resources>
