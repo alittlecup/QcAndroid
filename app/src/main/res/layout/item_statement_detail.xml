@@ -10,7 +10,7 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="97.5dp"
-        android:background="@color/divider_grey"
+        android:background="@color/divider_white"
         >
 
     </View>
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/divider_grey"
+            android:background="@color/divider_white"
             >
         </View>
 
@@ -36,14 +36,14 @@
             android:id="@+id/item_statement_detail_headerdivier"
             android:layout_width="97.5dp"
             android:layout_height="1dp"
-            android:background="@color/divider_grey"
+            android:background="@color/divider_white"
             >
         </View>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider_grey"
+            android:background="@color/divider_white"
             >
         </View>
     </LinearLayout>
@@ -63,7 +63,8 @@
             style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="34sp"
+            android:paddingBottom="0dp"
+            android:textSize="28sp"
             tools:text="11"
             />
 
@@ -72,7 +73,9 @@
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:layout_marginTop="-5dp"
+            android:paddingBottom="3dp"
+            android:textSize="12sp"
             tools:text="5月"
             />
 

@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 42
-        versionName "0.4.2"
+        versionCode 43
+        versionName "0.4.3"
     }
 //    buildTypes {
 //        release {
@@ -191,6 +191,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile project(':paperbaselibrary')
+//    compile project(':commons')
+//    compile project(':core')
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
     //    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'

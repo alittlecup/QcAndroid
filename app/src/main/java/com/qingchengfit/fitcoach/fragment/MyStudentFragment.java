@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -113,6 +115,8 @@ public class MyStudentFragment extends MainBaseFragment {
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
                 searchview.setVisibility(View.VISIBLE);
+                searchviewEt.requestFocus();
+                AppUtils.showKeyboard(getContext(), searchviewEt);
             } else if (item.getItemId() == R.id.action_add_mannul) {
                 onAddstudent();//手动添加学员
             } else if (item.getItemId() == R.id.action_add_phone) {
@@ -138,6 +142,24 @@ public class MyStudentFragment extends MainBaseFragment {
             }
         });
         recyclerview.setAdapter(mStudentAdapter);
+        recyclerview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                AppUtils.hideKeyboard(getActivity());
+                if (TextUtils.isEmpty(searchviewEt.getText()))
+                    searchviewCancle.performClick();
+                return false;
+            }
+        });
+        alphabetView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                AppUtils.hideKeyboard(getActivity());
+                if (TextUtils.isEmpty(searchviewEt.getText()))
+                    searchviewCancle.performClick();
+                return false;
+            }
+        });
         //获取原始数据
         QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
                 .subscribe(qcAllStudentResponse -> {
@@ -239,6 +261,10 @@ public class MyStudentFragment extends MainBaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    searchviewClear.setVisibility(View.VISIBLE);
+
+                } else searchviewClear.setVisibility(View.GONE);
                 Observable.just("")
                         .subscribe(s1 -> {
                             keyWord = s.toString().trim();
