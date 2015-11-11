@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -230,7 +229,7 @@ public class NotificationFragment extends BaseSettingFragment {
             holder.itemNotiTime.setText(entity.getCreated_at().replace("T", " "));
             holder.itemNotiSender.setText(entity.getSender());
             Glide.with(App.AppContex).load(entity.getPhoto()).transform(new GlideCircleTransform(getContext())).into(holder.itemNotiIcon);
-            if (TextUtils.isEmpty(entity.getCreated_at())) {
+            if (!entity.is_read()) {
                 holder.itemNotiUnread.setVisibility(View.VISIBLE);
             } else {
                 holder.itemNotiUnread.setVisibility(View.INVISIBLE);

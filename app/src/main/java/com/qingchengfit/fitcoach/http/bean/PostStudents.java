@@ -1,5 +1,9 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import com.qingchengfit.fitcoach.bean.StudentBean;
+
+import java.util.List;
+
 /**
  * power by
  * <p>
@@ -14,15 +18,15 @@ package com.qingchengfit.fitcoach.http.bean;
  * Created by Paper on 15/10/16 2015.
  */
 public class PostStudents {
-    public String users;
+    public List<StudentBean> users;
     public String system_id;
 
-    public PostStudents(String users, String system_id) {
+    public PostStudents(List<StudentBean> users, String system_id) {
         this.users = users;
         this.system_id = system_id;
     }
 
-    public PostStudents(String users) {
+    public PostStudents(List<StudentBean> users) {
         this.users = users;
     }
 }

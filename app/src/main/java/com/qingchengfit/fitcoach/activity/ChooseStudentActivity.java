@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.App;
@@ -211,10 +210,11 @@ public class ChooseStudentActivity extends BaseAcitivity {
             return;
         }
 
-        String s = new Gson().toJson(choosenstudentBeans);
+//        String s = new Gson().toJson(choosenstudentBeans);
+//        LogUtil.e("student:"+s);
         ShowLoading("正在导入,请稍后...");
         QcCloudClient.getApi().postApi
-                .qcPostCreatStudents(App.coachid, new PostStudents(s))
+                .qcPostCreatStudents(App.coachid, new PostStudents(choosenstudentBeans))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcResponse>() {

@@ -101,7 +101,16 @@ public class QcNotificationResponse extends QcResponse {
             private String url;
             private String photo;
             private String created_at;
+            private boolean is_read;
             private int id;
+
+            public boolean is_read() {
+                return is_read;
+            }
+
+            public void setIs_read(boolean is_read) {
+                this.is_read = is_read;
+            }
 
             public String getRead_at() {
                 return read_at;

@@ -2,31 +2,35 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
+            <corners android:radius="10dp"/>
             <solid android:color="@color/primary_dark"></solid>
             <stroke android:color="@color/primary_dark"></stroke>
+            <size android:width="130dp" android:height="50dp"></size>
         </shape>
     </item>
     <item android:drawable="@color/primary"
           android:state_pressed="false">
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
+            <corners android:radius="10dp"/>
             <solid android:color="@color/primary"></solid>
             <stroke android:color="@color/primary"></stroke>
+            <size android:width="130dp" android:height="50dp"></size>
         </shape>
     </item>
     <item android:state_enabled="false" >
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
+            <corners android:radius="10dp"/>
             <solid android:color="@color/warm_grey"></solid>
             <stroke android:color="@color/warm_grey"></stroke>
+            <size android:width="130dp" android:height="50dp"></size>
         </shape>
     </item>
     <item android:drawable="@color/primary">
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
+            <corners android:radius="10dp"/>
             <solid android:color="@color/primary"></solid>
             <stroke android:color="@color/primary"></stroke>
+            <size android:width="130dp" android:height="50dp"></size>
         </shape>
     </item>
 </selector>

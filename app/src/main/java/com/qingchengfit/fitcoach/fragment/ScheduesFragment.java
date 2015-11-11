@@ -337,7 +337,9 @@ public class ScheduesFragment extends MainBaseFragment {
                 .subscribe(qcNotificationResponse -> {
                     if (getActivity() != null) {
                         if (qcNotificationResponse.getData().getUnread_count() > 0) {
-                            scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
+                            if (qcNotificationResponse.getData().getUnread_count() < 100)
+                                scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
+                            else scheduleNotificationCount.setText("99");
                             scheduleNotificationCount.setVisibility(View.VISIBLE);
                         } else {
                             scheduleNotificationCount.setVisibility(View.GONE);

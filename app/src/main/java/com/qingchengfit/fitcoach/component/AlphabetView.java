@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -65,7 +66,8 @@ public class AlphabetView extends LinearLayout {
             textView.setText(alphabetStrings[i]);
             textView.setTextSize(12);
             textView.setTextColor(Color.BLACK);
-            textView.setPadding(10, 0, 10, 0);
+            textView.setGravity(Gravity.CENTER);
+//            textView.setPadding(10, 0, 10, 0);
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(5, 0, 5, 0);

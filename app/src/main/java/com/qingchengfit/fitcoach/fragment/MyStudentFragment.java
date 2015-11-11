@@ -178,7 +178,8 @@ public class MyStudentFragment extends MainBaseFragment {
                 if (alphabetSort.get(s) != null) {
                     mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get(s), 0);
                 } else {
-                    mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get("~"), 0);
+                    if (alphabetSort.get("~") != null)
+                        mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get("~"), 0);
                 }
             }
         });
