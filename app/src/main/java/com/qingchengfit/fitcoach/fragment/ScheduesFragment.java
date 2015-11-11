@@ -331,6 +331,19 @@ public class ScheduesFragment extends MainBaseFragment {
 
     public void queryNotify() {
         //TODO 获取未读通知数
+        QcCloudClient.getApi().getApi.qcGetMessages()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcNotificationResponse -> {
+                    if (getActivity() != null) {
+                        if (qcNotificationResponse.getData().getUnread_count() > 0) {
+                            scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
+                            scheduleNotificationCount.setVisibility(View.VISIBLE);
+                        } else {
+                            scheduleNotificationCount.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
 
     @Override

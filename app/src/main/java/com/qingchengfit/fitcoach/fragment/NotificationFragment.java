@@ -227,7 +227,7 @@ public class NotificationFragment extends BaseSettingFragment {
             holder.itemView.setTag(position);
             QcNotificationResponse.DataEntity.MsgsEntity entity = datas.get(position);
             holder.itemNotiTitle.setText(entity.getTitle());
-            holder.itemNotiTime.setText(entity.getCreated_at());
+            holder.itemNotiTime.setText(entity.getCreated_at().replace("T", " "));
             holder.itemNotiSender.setText(entity.getSender());
             Glide.with(App.AppContex).load(entity.getPhoto()).transform(new GlideCircleTransform(getContext())).into(holder.itemNotiIcon);
             if (TextUtils.isEmpty(entity.getCreated_at())) {

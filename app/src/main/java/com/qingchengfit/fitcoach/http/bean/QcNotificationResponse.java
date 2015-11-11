@@ -41,6 +41,24 @@ public class QcNotificationResponse extends QcResponse {
         private String message;
         private int ret_code;
         private List<MsgsEntity> msgs;
+        private int total_count;
+        private int unread_count;
+
+        public int getTotal_count() {
+            return total_count;
+        }
+
+        public void setTotal_count(int total_count) {
+            this.total_count = total_count;
+        }
+
+        public int getUnread_count() {
+            return unread_count;
+        }
+
+        public void setUnread_count(int unread_count) {
+            this.unread_count = unread_count;
+        }
 
         public String getMessage() {
             return message;
