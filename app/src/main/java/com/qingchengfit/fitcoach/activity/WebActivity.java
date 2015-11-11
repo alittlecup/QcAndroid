@@ -83,7 +83,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
     private MaterialDialog loadingDialog;
     private ValueCallback<Uri> mValueCallback;
     private PicChooseDialog dialog;
-
+    private List<String> hostArray = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,7 +255,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.d("shouldOverrideUrlLoading" + url);
+//                LogUtil.d("shouldOverrideUrlLoading:" + url+" :"+cookieManager.getCookie("url"));
+                initCookie(url);
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
                     mTitleStack.add(mToolbar.getTitle().toString());
                     WebBackForwardList webBackForwardList = mWebviewWebView.copyBackForwardList();
@@ -324,11 +325,13 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
     private void initCookie(String url) {
         String sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
 
-
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
+                hostArray.add(uri.getHost());
+                LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
+                setCookie(uri.getHost(), "sessionid", sessionid);
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
@@ -354,7 +357,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
         sb.append("=");
         sb.append(value).append(";");
         cookieManager.setCookie(url, sb.toString());
-        LogUtil.e(sb.toString());
+//        LogUtil.e(sb.toString());
     }
 
 
@@ -418,11 +421,19 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
         loadingDialog.show();
     }
 
+    public void removeCookies() {
+        cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+        for (String s : hostArray) {
+            cookieManager.setCookie(s, "qc_session_id" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+        }
+    }
+
     @Override
     protected void onDestroy() {
         dialog = null;
         mValueCallback = null;
         if (mWebviewWebView != null) {
+            removeCookies();
             mWebviewRootLinearLayout.removeView(mWebviewWebView);
             mWebviewWebView.removeAllViews();
             mWebviewWebView.destroy();

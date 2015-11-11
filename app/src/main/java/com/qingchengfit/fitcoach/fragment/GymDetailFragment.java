@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -57,6 +58,8 @@ public class GymDetailFragment extends Fragment {
     Toolbar toolbar;
     @Bind(R.id.gymdetail_webview)
     WebView webview;
+    @Bind(R.id.webview_root)
+    LinearLayout webviewRoot;
 
 
     private int id;
@@ -69,6 +72,7 @@ public class GymDetailFragment extends Fragment {
     private MaterialDialog delDialog;
     private ValueCallback<Uri> mValueCallback;
     private PicChooseDialog dialog;
+
     public GymDetailFragment() {
     }
 
@@ -207,7 +211,8 @@ public class GymDetailFragment extends Fragment {
 
                                      @Override
                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                                         LogUtil.e("url:" + url);
+
+
                                          if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
                                              mTitleStack.add(toolbar.getTitle().toString());
                                              WebBackForwardList webBackForwardList = webview.copyBackForwardList();
@@ -215,7 +220,10 @@ public class GymDetailFragment extends Fragment {
                                              toolbar.getMenu().clear();
                                              LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                                          }
-                                         return super.shouldOverrideUrlLoading(view, url);
+                                         Boolean result = super.shouldOverrideUrlLoading(view, url);
+                                         initCookie(url);
+                                         LogUtil.e("url:" + url);
+                                         return result;
                                      }
 
 
@@ -264,7 +272,6 @@ public class GymDetailFragment extends Fragment {
         cookieManager.setAcceptCookie(true);
 
 
-
         webview.loadUrl(host);
         initCookie(host);
         return view;
@@ -294,17 +301,24 @@ public class GymDetailFragment extends Fragment {
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
     }
+
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+
         removeCookie();
-        webview.destroy();
+        if (webview != null) {
+            webviewRoot.removeView(webview);
+            webview.removeAllViews();
+            webview.destroy();
+        }
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
 
     public void removeCookie() {
         if (cookieManager != null) {
+            cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
 //            if (Build.VERSION.SDK_INT < 21) {
 //                cookieManager.removeAllCookie();
 //            } else {
@@ -374,12 +388,14 @@ public class GymDetailFragment extends Fragment {
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
+
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
+                setCookie(uri.getHost(), "sessionid", sessionid);
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
             setCookie(Configs.ServerIp, "sessionid", sessionid);
-//            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
+
 //            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
 //            setCookie(".qingchengfit.cn", "qc_session_id", sessionid);
 //            setCookie(".cn", "qc_session_id", sessionid);
