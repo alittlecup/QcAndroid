@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -108,6 +110,8 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     EditText modifyinfoDesc;
     @Bind(R.id.modifyinfo_inputpan)
     LinearLayout modifyinfoInputpan;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -120,6 +124,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
     private Bundle saveState;
     private boolean isLoading = false;
     private Uri mAvatarResult;
+
     public ModifyInfoFragment() {
         // Required empty public constructor
     }
@@ -164,18 +169,37 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarMenu(0, 0, "基本信息设置");
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
-        fragmentCallBack.ShowLoading("请稍后");
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                refresh.setRefreshing(true);
+            }
+        });
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryData();
+            }
+        });
+        queryData();
+        return view;
+    }
+
+    public void queryData() {
+
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcCoachRespone>() {
                     @Override
                     public void onCompleted() {
-                        fragmentCallBack.hideLoading();
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        refresh.setRefreshing(false);
                     }
 
                     @Override
@@ -183,14 +207,11 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                         if (modifyinfoDesc != null) {
                             user = qcCoachRespone.getData().getCoach();
                             initInfo();
-                            fragmentCallBack.hideLoading();
+                            refresh.setRefreshing(false);
                         }
                     }
+
                 });
-
-
-
-        return view;
     }
 
 
@@ -199,26 +220,26 @@ public class ModifyInfoFragment extends BaseSettingFragment {
      */
     private void initInfo() {
 //        if (!restoreStateFromArguments()) {
-            initHead(user.getAvatar());
-            if (user.getDistrict() != null && user.getDistrict().province != null) {
-                mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
-            }
-            mofifyinfoCity.setContent(user.getDistrictStr());
-            mofifyinfoName.setContent(user.getUsername());
-            mofifyinfoWechat.setContent(user.getWeixin());
+        initHead(user.getAvatar());
+        if (user.getDistrict() != null && user.getDistrict().province != null) {
+            mModifyCoachInfo.setDistrict_id(user.getDistrict().id);
+        }
+        mofifyinfoCity.setContent(user.getDistrictStr());
+        mofifyinfoName.setContent(user.getUsername());
+        mofifyinfoWechat.setContent(user.getWeixin());
 //        mofifyinfoWeibo.setContent(user.get);
-            modifyinfoSignEt.setText(user.getShort_description());
-            mModifyCoachInfo.setGender(user.getGender());
+        modifyinfoSignEt.setText(user.getShort_description());
+        mModifyCoachInfo.setGender(user.getGender());
         if (user.getGender() == 0) {
             compleGender.check(R.id.comple_gender_male);
         } else {
             compleGender.check(R.id.comple_gender_female);
         }
-            compleGender.setOnCheckedChangeListener((group, checkedId) -> {
-                if (checkedId == R.id.comple_gender_male) {
-                    mModifyCoachInfo.setGender(0);
-                } else mModifyCoachInfo.setGender(1);
-            });
+        compleGender.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.comple_gender_male) {
+                mModifyCoachInfo.setGender(0);
+            } else mModifyCoachInfo.setGender(1);
+        });
 //        }
     }
 
@@ -405,9 +426,6 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //            }
 
 
-
-
-
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = Configs.CameraPic;
@@ -451,7 +469,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //        Bundle state = new Bundle();
 //        state.putString("city",mofifyinfoCity.getContent());
 //        state.putString("desc",modifyinfoDesc.getText().toString());
-//        state.putString("name",mofifyinfoName.getContent());
+//        state.putString("username",mofifyinfoName.getContent());
 //        state.putString("wechat", mofifyinfoWechat.getContent());
 //        outState.putBundle(this.getClass().getName(),state);
 //        super.onSaveInstanceState(outState);
@@ -472,7 +490,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //
 //            mofifyinfoCity.setContent(saveState.getString("city"));
 //            mofifyinfoWechat.setContent(saveState.getString("wechat"));
-//            mofifyinfoName.setContent(saveState.getString("name"));
+//            mofifyinfoName.setContent(saveState.getString("username"));
 //            modifyinfoDesc.setText(saveState.getString("desc"));
 //            initHead(saveState.getString("avatar"));
 //        }
@@ -484,7 +502,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 //        Bundle state = new Bundle();
 //        state.putString("city", mofifyinfoCity.getContent());
 //        state.putString("desc", modifyinfoDesc.getText().toString());
-//        state.putString("name", mofifyinfoName.getContent());
+//        state.putString("username", mofifyinfoName.getContent());
 //        state.putString("wechat", mofifyinfoWechat.getContent());
 //        state.putString("avatar", user.getAvatar());
 //        getArguments().putBundle(this.getClass().getName(), state);

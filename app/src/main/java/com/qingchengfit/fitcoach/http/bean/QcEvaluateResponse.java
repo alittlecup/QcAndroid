@@ -19,7 +19,7 @@ import java.util.List;
 public class QcEvaluateResponse extends QcResponse {
 
     /**
-     * data : {"evaluate":{"course_score":5,"total_count":0,"coach_score":5},"tags":[{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]}
+     * data : {"evaluate":{"course_score":5,"total_count":0,"coach_score":5},"tags":[{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]}
      */
 
     private DataEntity data;
@@ -35,7 +35,7 @@ public class QcEvaluateResponse extends QcResponse {
     public static class DataEntity {
         /**
          * evaluate : {"course_score":5,"total_count":0,"coach_score":5}
-         * tags : [{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]
+         * tags : [{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]
          */
 
         private EvaluateEntity evaluate;
@@ -73,7 +73,7 @@ public class QcEvaluateResponse extends QcResponse {
 //            for (int i = 0; i < getTags().size(); i++) {
 //                QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity tagsEntity = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity();
 //                tagsEntity.setCount(getTags().get(i).count);
-//                tagsEntity.setName(getTags().get(i).name);
+//                tagsEntity.setName(getTags().get(i).username);
 //                tags.add(tagsEntity);
 //            }
 //            tagsEntitys.setTags(tags);
@@ -134,7 +134,7 @@ public class QcEvaluateResponse extends QcResponse {
         public static class TagsEntity {
             /**
              * count : 1.2k
-             * name : 减脂
+             * username : 减脂
              */
 
             private String count;

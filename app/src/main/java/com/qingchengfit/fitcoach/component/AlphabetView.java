@@ -28,8 +28,9 @@ import com.qingchengfit.fitcoach.R;
 public class AlphabetView extends LinearLayout {
     public static String[] alphabetStrings = new String[]{
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V"
-            , "W", "X", "Y", "Z", "~"
+            , "W", "X", "Y", "Z", "#"
     };
+    public static String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     public int height;
     public int cellHeight;
     private OnAlphabetChange onAlphabetChange;

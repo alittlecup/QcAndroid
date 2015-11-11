@@ -25,7 +25,7 @@ public class QcMyhomeResponse extends QcResponse {
 
 
     /**
-     * data : {"coach":{"username":"小碗","city":"北京","description":"","tags":{"tags":[{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]},"weixin":"","evaluate":{"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}},"phone":"13501200175","short_description":"我是一名健身教练","id":5}}
+     * data : {"coach":{"username":"小碗","city":"北京","description":"","tags":{"tags":[{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]},"weixin":"","evaluate":{"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}},"phone":"13501200175","short_description":"我是一名健身教练","id":5}}
      */
 
     private DataEntity data;
@@ -40,7 +40,7 @@ public class QcMyhomeResponse extends QcResponse {
 
     public static class DataEntity {
         /**
-         * coach : {"username":"小碗","city":"北京","description":"","tags":{"tags":[{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]},"weixin":"","evaluate":{"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}},"phone":"13501200175","short_description":"我是一名健身教练","id":5}
+         * coach : {"username":"小碗","city":"北京","description":"","tags":{"tags":[{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]},"weixin":"","evaluate":{"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}},"phone":"13501200175","short_description":"我是一名健身教练","id":5}
          */
 
         private CoachEntity coach;
@@ -58,7 +58,7 @@ public class QcMyhomeResponse extends QcResponse {
              * username : 小碗
              * city : 北京
              * description :
-             * tags : {"tags":[{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]}
+             * tags : {"tags":[{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]}
              * weixin :
              * evaluate : {"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}}
              * phone : 13501200175
@@ -342,7 +342,7 @@ public class QcMyhomeResponse extends QcResponse {
 //                    }
 //                };
 //                /**
-//                 * tags : [{"count":"1.2k","name":"减脂"},{"count":"902","name":"增肌"}]
+//                 * tags : [{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]
 //                 */
 //
 //                private List<TagsEntity> tags;

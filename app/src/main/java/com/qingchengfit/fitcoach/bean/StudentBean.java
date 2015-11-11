@@ -14,8 +14,8 @@ package com.qingchengfit.fitcoach.bean;
  * Created by Paper on 15/10/15 2015.
  */
 public class StudentBean {
-    public String name;
-    public String phoneStr;
+    public String username;
+    public String phone;
     public String gymStr;
     public String headerPic;
     public boolean gender;

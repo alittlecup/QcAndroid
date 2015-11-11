@@ -19,7 +19,7 @@ public class QcCertificatesReponse extends QcResponse {
 
 
     /**
-     * data : {"certificates":[{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}],"total_count":1,"current_page":1,"pages":1}
+     * data : {"certificates":[{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"username":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}],"total_count":1,"current_page":1,"pages":1}
      */
 
     private DataEntity data;
@@ -34,7 +34,7 @@ public class QcCertificatesReponse extends QcResponse {
 
     public static class DataEntity {
         /**
-         * certificates : [{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"name":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}]
+         * certificates : [{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"username":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}]
          * total_count : 1
          * current_page : 1
          * pages : 1
@@ -81,7 +81,7 @@ public class QcCertificatesReponse extends QcResponse {
             /**
              * date_of_issue : 2015-09-16T15:08:00
              * coach : {"id":6}
-             * name : 青橙科技
+             * username : 青橙科技
              * photo : http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png
              * grade : 100
              * organization : {}

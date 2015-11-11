@@ -22,7 +22,7 @@ public class QcExperienceResponse extends QcResponse {
 
 
     /**
-     * data : {"total_count":1,"current_page":1,"experiences":[{"coach":{"id":6},"description":"无","is_authenticated":false,"position":"教练","private_course":421,"city":"北京","end":"2015-11-16T15:29:00","name":"中美引力工作室","group_user":123,"sale":10000000,"start":"2015-09-16T15:29:00","group_course":100,"private_user":568}],"pages":1}
+     * data : {"total_count":1,"current_page":1,"experiences":[{"coach":{"id":6},"description":"无","is_authenticated":false,"position":"教练","private_course":421,"city":"北京","end":"2015-11-16T15:29:00","username":"中美引力工作室","group_user":123,"sale":10000000,"start":"2015-09-16T15:29:00","group_course":100,"private_user":568}],"pages":1}
      */
 
     private DataEntity data;
@@ -39,7 +39,7 @@ public class QcExperienceResponse extends QcResponse {
         /**
          * total_count : 1
          * current_page : 1
-         * experiences : [{"coach":{"id":6},"description":"无","is_authenticated":false,"position":"教练","private_course":421,"city":"北京","end":"2015-11-16T15:29:00","name":"中美引力工作室","group_user":123,"sale":10000000,"start":"2015-09-16T15:29:00","group_course":100,"private_user":568}]
+         * experiences : [{"coach":{"id":6},"description":"无","is_authenticated":false,"position":"教练","private_course":421,"city":"北京","end":"2015-11-16T15:29:00","username":"中美引力工作室","group_user":123,"sale":10000000,"start":"2015-09-16T15:29:00","group_course":100,"private_user":568}]
          * pages : 1
          */
 
@@ -98,7 +98,7 @@ public class QcExperienceResponse extends QcResponse {
              * private_course : 421
              * city : 北京
              * end : 2015-11-16T15:29:00
-             * name : 中美引力工作室
+             * username : 中美引力工作室
              * group_user : 123
              * sale : 10000000
              * start : 2015-09-16T15:29:00

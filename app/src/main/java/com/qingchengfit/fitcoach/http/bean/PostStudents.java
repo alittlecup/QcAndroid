@@ -15,6 +15,12 @@ package com.qingchengfit.fitcoach.http.bean;
  */
 public class PostStudents {
     public String users;
+    public String system_id;
+
+    public PostStudents(String users, String system_id) {
+        this.users = users;
+        this.system_id = system_id;
+    }
 
     public PostStudents(String users) {
         this.users = users;

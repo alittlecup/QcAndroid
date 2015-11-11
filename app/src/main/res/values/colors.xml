@@ -5,7 +5,7 @@
 <color name="text_grey">@color/warm_grey</color>
     <color name="text_black">@color/cm_black</color>
     <color name="backgroud_grey">#f4f4f4</color>
-    <!--<color name="backgroud_grey">#aaaaaa</color>-->
+    <!--<color username="backgroud_grey">#aaaaaa</color>-->
     <color name="text_red">#f1693c</color>
     <color name="most_black">#222222</color>
     <color name="cm_black">#666666</color>
@@ -26,8 +26,8 @@
     <color name="calendar_background">#FFFFFF</color>
 
     <!-- General -->
-    <!--<color name="green">#339DB5</color>-->
-    <!--<color name="red">#e98885</color>-->
+    <!--<color username="green">#339DB5</color>-->
+    <!--<color username="red">#e98885</color>-->
     <color name="blue">#55c6da</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

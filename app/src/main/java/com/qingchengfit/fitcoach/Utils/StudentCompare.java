@@ -26,6 +26,14 @@ public class StudentCompare implements Comparator<StudentBean> {
 //        if (lhs.head.charAt(0) <= rhs.head.charAt(0)) {
 //            return -1;
 //        } else return 1;
+
+//        if (TextUtils.equals("#", lhs.head) && TextUtils.equals("#", rhs.head)) {
+//            return 1;
+//        } else if (TextUtils.equals("#", lhs.head))
+//            return 1;
+//        else if (TextUtils.equals("#", rhs.head)) {
+//            return -1;
+//        } else
         return lhs.head.compareTo(rhs.head);
     }
 }

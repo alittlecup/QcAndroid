@@ -109,9 +109,11 @@ public class ChooseStudentActivity extends BaseAcitivity {
                 studentBeans.clear();
                 for (Contact contact : contacts) {
                     StudentBean studentBean = new StudentBean();
-                    studentBean.phoneStr = contact.getPhone();
-                    studentBean.name = contact.getUsername();
-                    studentBean.head = contact.getSortKey();
+                    studentBean.phone = contact.getPhone();
+                    studentBean.username = contact.getUsername();
+                    if (AlphabetView.Alphabet.contains(contact.getSortKey()))
+                        studentBean.head = contact.getSortKey();
+                    else studentBean.head = "~";
                     studentBean.headerPic = contact.getHeader();
                     studentBeans.add(studentBean);
                 }
@@ -174,7 +176,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
             public void onChange(int position, String s) {
                 if (alphabetSort.get(s) != null) {
                     mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get(s), 0);
-                }
+                } else mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get("~"), 0);
             }
         });
 
@@ -255,6 +257,8 @@ public class ChooseStudentActivity extends BaseAcitivity {
         CheckBox itemCheckbox;
         @Bind(R.id.item_student_alpha)
         TextView itemStudentAlpha;
+        @Bind(R.id.item_student_divider)
+        View itemStudentDivder;
 
         public StudentsHolder(View itemView) {
             super(itemView);
@@ -287,18 +291,28 @@ public class ChooseStudentActivity extends BaseAcitivity {
             StudentBean studentBean = datas.get(position);
 
 
-            holder.itemStudentName.setText(studentBean.name);
+            holder.itemStudentName.setText(studentBean.username);
 
-            holder.itemStudentPhonenum.setText("联系电话:" + studentBean.phoneStr);
+            holder.itemStudentPhonenum.setText("联系电话:" + studentBean.phone);
 
             if (studentBean.isChosen) {
                 holder.itemCheckbox.setChecked(true);
             } else holder.itemCheckbox.setChecked(false);
 
             if (studentBean.isTag) {
-                holder.itemStudentAlpha.setText(studentBean.head);
+                if (TextUtils.equals("~", studentBean.head)) {
+                    holder.itemStudentAlpha.setText("#");
+                } else
+                    holder.itemStudentAlpha.setText(studentBean.head);
                 holder.itemStudentAlpha.setVisibility(View.VISIBLE);
             } else holder.itemStudentAlpha.setVisibility(View.GONE);
+
+            if (position < datas.size() - 2 && !TextUtils.equals(studentBean.head, datas.get(position + 1).head)) {
+                holder.itemStudentDivder.setVisibility(View.GONE);
+            } else {
+                holder.itemStudentDivder.setVisibility(View.VISIBLE);
+            }
+
             if (TextUtils.isEmpty(studentBean.headerPic))
                 Glide.with(App.AppContex).load(R.drawable.ic_default_head_nogender).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
             else

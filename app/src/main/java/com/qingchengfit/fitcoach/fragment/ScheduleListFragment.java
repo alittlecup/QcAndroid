@@ -57,6 +57,8 @@ public class ScheduleListFragment extends Fragment {
     SwipeRefreshLayout scheduleNoSchedule;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
+    @Bind(R.id.schedule_timeline)
+    View scheduleTimeline;
 
     private Date mCurDate;                              //当前日期
     private ArrayList<ScheduleBean> scheduleBeans = new ArrayList<>();      //列表数据
@@ -229,10 +231,12 @@ public class ScheduleListFragment extends Fragment {
                 if (scheduleBeans.size() > 0) {
                     scheduleNoSchedule.setVisibility(View.GONE);
                     scheduleRv.setVisibility(View.VISIBLE);
+                    scheduleTimeline.setVisibility(View.VISIBLE);
 
                 } else {
                     scheduleRv.setVisibility(View.GONE);
                     scheduleNoSchedule.setVisibility(View.VISIBLE);
+                    scheduleTimeline.setVisibility(View.VISIBLE);
                 }
 
 

@@ -370,7 +370,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10010 && resultCode > 0) {
-            workexpeditGymName.setContent(data.getStringExtra("name"));
+            workexpeditGymName.setContent(data.getStringExtra("username"));
             addWorkExperience.setGym_id(data.getIntExtra("id", 0));
         }
     }

@@ -8,14 +8,6 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static com.mob.tools.utils.BitmapHelper.captureView;
-import static com.mob.tools.utils.R.getStringRes;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,11 +17,21 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+
+import com.mob.tools.utils.UIHandler;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import com.mob.tools.utils.UIHandler;
+
+import static com.mob.tools.utils.BitmapHelper.captureView;
+import static com.mob.tools.utils.R.getStringRes;
 
 /**
  * 快捷分享的入口
@@ -149,14 +151,16 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 		shareParamsMap.put("titleUrl", titleUrl);
 	}
 
-	/** text是分享文本，所有平台都需要这个字段 */
-	public void setText(String text) {
-		shareParamsMap.put("text", text);
-	}
-
 	/** 获取text字段的值 */
 	public String getText() {
 		return shareParamsMap.containsKey("text") ? String.valueOf(shareParamsMap.get("text")) : null;
+	}
+
+	/**
+	 * text是分享文本，所有平台都需要这个字段
+	 */
+	public void setText(String text) {
+		shareParamsMap.put("text", text);
 	}
 
 	/** imagePath是本地的图片路径，除Linked-In外的所有平台都支持这个字段 */
@@ -241,24 +245,28 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 		shareParamsMap.put("musicUrl", musicUrl);
 	}
 
-	/** 设置自定义的外部回调 */
-	public void setCallback(PlatformActionListener callback) {
-		this.callback = callback;
-	}
-
 	/** 返回操作回调 */
 	public PlatformActionListener getCallback() {
 		return callback;
 	}
 
-	/** 设置用于分享过程中，根据不同平台自定义分享内容的回调 */
-	public void setShareContentCustomizeCallback(ShareContentCustomizeCallback callback) {
-		customizeCallback = callback;
+	/**
+	 * 设置自定义的外部回调
+	 */
+	public void setCallback(PlatformActionListener callback) {
+		this.callback = callback;
 	}
 
 	/** 返回自定义分享内容的回调 */
 	public ShareContentCustomizeCallback getShareContentCustomizeCallback() {
 		return customizeCallback;
+	}
+
+	/**
+	 * 设置用于分享过程中，根据不同平台自定义分享内容的回调
+	 */
+	public void setShareContentCustomizeCallback(ShareContentCustomizeCallback callback) {
+		customizeCallback = callback;
 	}
 
 	/** 设置自己图标和点击事件，可以重复调用添加多次 */
@@ -318,7 +326,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 			plat.SSOSetting(disableSSO);
 			String name = plat.getName();
 
-//			boolean isGooglePlus = "GooglePlus".equals(name);
+//			boolean isGooglePlus = "GooglePlus".equals(username);
 //			if (isGooglePlus && !plat.isValid()) {
 //				Message msg = new Message();
 //				msg.what = MSG_TOAST;

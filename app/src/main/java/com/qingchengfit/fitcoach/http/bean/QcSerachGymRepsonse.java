@@ -19,7 +19,7 @@ public class QcSerachGymRepsonse extends QcResponse {
 
 
     /**
-     * data : {"total_count":4,"gym":[{"contact":"123456","id":2,"name":"测试"},{"contact":"123456","id":3,"name":"测试"},{"contact":"123456","id":4,"name":"测试2"},{"contact":"123456","id":5,"name":"测试3"}],"current_page":1,"pages":1}
+     * data : {"total_count":4,"gym":[{"contact":"123456","id":2,"username":"测试"},{"contact":"123456","id":3,"username":"测试"},{"contact":"123456","id":4,"username":"测试2"},{"contact":"123456","id":5,"username":"测试3"}],"current_page":1,"pages":1}
      */
 
     private DataEntity data;
@@ -35,7 +35,7 @@ public class QcSerachGymRepsonse extends QcResponse {
     public static class DataEntity {
         /**
          * total_count : 4
-         * gym : [{"contact":"123456","id":2,"name":"测试"},{"contact":"123456","id":3,"name":"测试"},{"contact":"123456","id":4,"name":"测试2"},{"contact":"123456","id":5,"name":"测试3"}]
+         * gym : [{"contact":"123456","id":2,"username":"测试"},{"contact":"123456","id":3,"username":"测试"},{"contact":"123456","id":4,"username":"测试2"},{"contact":"123456","id":5,"username":"测试3"}]
          * current_page : 1
          * pages : 1
          */
@@ -81,12 +81,12 @@ public class QcSerachGymRepsonse extends QcResponse {
 //            /**
 //             * contact : 123456
 //             * id : 2
-//             * name : 测试
+//             * username : 测试
 //             */
 //
 //            private String contact;
 //            private int id;
-//            private String name;
+//            private String username;
 //
 //            public void setContact(String contact) {
 //                this.contact = contact;
@@ -96,8 +96,8 @@ public class QcSerachGymRepsonse extends QcResponse {
 //                this.id = id;
 //            }
 //
-//            public void setName(String name) {
-//                this.name = name;
+//            public void setName(String username) {
+//                this.username = username;
 //            }
 //
 //            public String getContact() {
@@ -109,7 +109,7 @@ public class QcSerachGymRepsonse extends QcResponse {
 //            }
 //
 //            public String getName() {
-//                return name;
+//                return username;
 //            }
 //        }
     }

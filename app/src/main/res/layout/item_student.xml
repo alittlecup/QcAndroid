@@ -8,9 +8,11 @@
     <TextView
         android:id="@+id/item_student_alpha"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:background="@color/backgroud_grey"
+        android:paddingBottom="6dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="6dp"
         android:textColor="@color/red"
         android:textSize="18sp"
         tools:text="A"
@@ -73,6 +75,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 tools:text="联系电话:"
                 />
 
@@ -96,12 +99,13 @@
             />
 
         <View
+            android:id="@+id/item_student_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/item_student_header"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/divider_grey"
+            android:background="@color/divider_white"
             >
         </View>
     </RelativeLayout>

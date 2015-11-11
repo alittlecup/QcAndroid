@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -420,6 +421,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
+        PushManager.stopWork(App.AppContex);
         Intent logout = new Intent(this, LoginActivity.class);
         logout.putExtra("isRegiste", 0);
         startActivity(logout);

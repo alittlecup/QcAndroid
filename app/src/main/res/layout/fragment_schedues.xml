@@ -51,8 +51,8 @@
 
         <TextView
             android:id="@+id/schedule_notification_count"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
+            android:layout_width="11dp"
+            android:layout_height="11dp"
             android:layout_alignRight="@id/schedule_notification"
             android:layout_alignTop="@id/schedule_notification"
             android:background="@drawable/bg_notification"

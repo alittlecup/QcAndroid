@@ -43,7 +43,7 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
     public void onSearchResult(int result, int id, String name) {
         Intent it = new Intent();
         it.putExtra("id", id);
-        it.putExtra("name", name);
+        it.putExtra("username", name);
         setResult(result, it);
         this.finish();
     }

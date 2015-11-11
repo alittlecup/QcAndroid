@@ -121,7 +121,7 @@ android {
 //                variant.outputs.each { output ->
 //                    output.outputFile = new File(
 //                            output.outputFile.parent,
-//                            output.outputFile.name.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
+//                            output.outputFile.username.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
 //                }
 //            }
             proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
@@ -132,9 +132,9 @@ android {
             minifyEnabled false
             debuggable true
 //            applicationVariants.all { variant ->
-//                def name
+//                def username
 //                variant.outputs.each { output ->
-//                    name = "app-debug.apk"
+//                    username = "app-debug.apk"
 //
 //                    output.outputFile = new File(
 //                            output.outputFile.parent,

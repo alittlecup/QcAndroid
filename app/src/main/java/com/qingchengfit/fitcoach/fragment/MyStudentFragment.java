@@ -85,6 +85,10 @@ public class MyStudentFragment extends MainBaseFragment {
     SwipeRefreshLayout refresh;
     @Bind(R.id.student_add)
     Button studentAdd;
+    @Bind(R.id.student_no_text)
+    TextView studentNoText;
+    @Bind(R.id.student_no_img)
+    ImageView studentNoImg;
     private LinearLayoutManager mLinearLayoutManager;
     private QcAllStudentResponse mQcAllStudentResponse;
     private List<StudentBean> adapterData = new ArrayList<>();
@@ -94,6 +98,7 @@ public class MyStudentFragment extends MainBaseFragment {
     /**
      * 初始化spinner
      */
+
     private ArrayList<SpinnerBean> spinnerBeans;
     private List<Integer> mSystemsId = new ArrayList<>();
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
@@ -172,9 +177,12 @@ public class MyStudentFragment extends MainBaseFragment {
             public void onChange(int position, String s) {
                 if (alphabetSort.get(s) != null) {
                     mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get(s), 0);
+                } else {
+                    mLinearLayoutManager.scrollToPositionWithOffset(alphabetSort.get("~"), 0);
                 }
             }
         });
+        //初始化下拉刷新
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -187,6 +195,7 @@ public class MyStudentFragment extends MainBaseFragment {
                         });
             }
         });
+        //默认刷新
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -194,7 +203,14 @@ public class MyStudentFragment extends MainBaseFragment {
                 refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -207,57 +223,17 @@ public class MyStudentFragment extends MainBaseFragment {
         }
     }
 
+
     /**
      * 从通讯录读取学员
      */
     private void addStudentFromContact() {
         startActivityForResult(new Intent(getContext(), ChooseStudentActivity.class), 400);
-//        openDrawerInterface.showLoading();
-//        Observable.just("")
-//                .subscribeOn(Schedulers.io())
-//                .map(new Func1<String, String>() {
-//                    @Override
-//                    public String call(String s) {
-//                        return new Gson().toJson(PhoneFuncUtils.initContactList(getContext()));
-//                    }
-//                })
-//                .flatMap(new Func1<String, Observable<QcResponse>>() {
-//                    @Override
-//                    public Observable<QcResponse> call(String s) {
-//                        return QcCloudClient.getApi().postApi.qcPostCreatStudents(App.coachid, new PostStudents(s)).subscribeOn(Schedulers.io());
-//                    }
-//                }).subscribe(new Observer<QcResponse>() {
-//            @Override
-//            public void onCompleted() {
-//                getActivity().runOnUiThread(() -> {
-//                    openDrawerInterface.hideLoading();
-//                    //获取原始数据
-//                    QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
-//                            .subscribe(qcAllStudentResponse -> {
-//                                mQcAllStudentResponse = qcAllStudentResponse;
-//                                handleResponse(qcAllStudentResponse);
-//                            });
-//                    Toast.makeText(getContext(), "导入联系人完成", Toast.LENGTH_SHORT).show();
-//                });
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                getActivity().runOnUiThread(() -> {
-//                    openDrawerInterface.hideLoading();
-//                    Toast.makeText(getContext(), "导入联系人失败,请稍后再试", Toast.LENGTH_SHORT).show();
-//                });
-//            }
-//
-//            @Override
-//            public void onNext(QcResponse qcResponse) {
-//
-//            }
-//        });
-
     }
 
-
+    /**
+     * 初始化搜索组件
+     */
     private void setUpSeachView() {
         searchviewEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -287,6 +263,7 @@ public class MyStudentFragment extends MainBaseFragment {
         });
     }
 
+    //处理http结果
     private void handleResponse(QcAllStudentResponse qcAllStudentResponse) {
         if (qcAllStudentResponse == null)
             return;
@@ -302,10 +279,10 @@ public class MyStudentFragment extends MainBaseFragment {
                 StudentBean bean = new StudentBean();
                 bean.gymStr = ship.system.name;
                 bean.headerPic = student.avatar;
-                bean.name = student.username;
+                bean.username = student.username;
                 bean.systemUrl = ship.system.url;
                 bean.id = student.id;
-                if (TextUtils.isEmpty(student.head)) {
+                if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
                     bean.head = "~";
                 } else {
                     bean.head = student.head.toUpperCase();
@@ -313,12 +290,12 @@ public class MyStudentFragment extends MainBaseFragment {
 
                 StringBuffer sb = new StringBuffer();
                 sb.append("联系电话:").append(student.phone);
-                bean.phoneStr = sb.toString();
+                bean.phone = sb.toString();
                 if (student.gender.equalsIgnoreCase("0"))
                     bean.gender = true;
                 else bean.gender = false;
-                if (TextUtils.isEmpty(keyWord) || bean.name.contains(keyWord)
-                        || bean.gymStr.contains(keyWord) || bean.phoneStr.contains(keyWord))
+                if (TextUtils.isEmpty(keyWord) || bean.username.contains(keyWord)
+                        || bean.gymStr.contains(keyWord) || bean.phone.contains(keyWord))
                     tmp.add(bean);
             }
             adapterData.addAll(tmp);
@@ -337,24 +314,37 @@ public class MyStudentFragment extends MainBaseFragment {
                 } else bean.isTag = false;
             }
         }
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(() -> {
+                if (adapterData.size() == 0) {
+                    studentNoLayout.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(keyWord)) {
+                        studentNoImg.setVisibility(View.GONE);
+                        studentNoText.setText("没有找到相关学员\n您可以添加该学员");
+                    } else {
+                        studentNoImg.setVisibility(View.VISIBLE);
+                        studentNoText.setText("您的所属健身房、个人健身房的学员将会显示在这里");
+                    }
+                    if (curPostion > 0) {
+//                        studentNoText.setText();
 
-        getActivity().runOnUiThread(() -> {
-            if (adapterData.size() == 0) {
-                studentNoLayout.setVisibility(View.VISIBLE);
-            } else {
-                studentNoLayout.setVisibility(View.GONE);
-                mStudentAdapter.notifyDataSetChanged();
-            }
-            refresh.setRefreshing(false);
-        });
+                    }
+                } else {
+                    studentNoLayout.setVisibility(View.GONE);
+                    mStudentAdapter.notifyDataSetChanged();
+                }
+                refresh.setRefreshing(false);
+            });
+        }
     }
 
+    //初始化筛选器
     public void setUpNaviSpinner() {
 
         spinnerBeans = new ArrayList<>();
         spinnerBeans.add(new SpinnerBean("", "所有学员", true));
 
-        String systemStr = PreferenceUtils.getPrefString(App.AppContex, "systems", "");
+        String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
         if (!TextUtils.isEmpty(systemStr)) {
             QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
             List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
@@ -413,6 +403,7 @@ public class MyStudentFragment extends MainBaseFragment {
 
     }
 
+    //新增学员
     @OnClick(R.id.student_add)
     public void onAddstudent() {
 //        openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/add/students/");
@@ -422,6 +413,7 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
 
+    //返回页面时刷新
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -435,13 +427,14 @@ public class MyStudentFragment extends MainBaseFragment {
         }
     }
 
+    //搜索栏清除按钮
     @OnClick(R.id.searchview_clear)
     public void onClear() {
         searchviewEt.setText("");
         handleResponse(mQcAllStudentResponse);
     }
 
-
+    //取消搜索
     @OnClick(R.id.searchview_cancle)
     public void onClickCancel() {
 
@@ -449,15 +442,9 @@ public class MyStudentFragment extends MainBaseFragment {
             searchviewEt.setText("");
             handleResponse(mQcAllStudentResponse);
         }
-
+        AppUtils.hideKeyboard(getActivity());
         searchview.setVisibility(View.GONE);
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
 
@@ -477,6 +464,8 @@ public class MyStudentFragment extends MainBaseFragment {
         ImageView itemStudentGender;
         @Bind(R.id.item_student_alpha)
         TextView itemStudentAlpha;
+        @Bind(R.id.item_student_divider)
+        View itemStudentDivder;
 
         public StudentsHolder(View itemView) {
             super(itemView);
@@ -509,15 +498,23 @@ public class MyStudentFragment extends MainBaseFragment {
             StudentBean studentBean = datas.get(position);
 
             holder.itemStudentGymname.setText(studentBean.gymStr);
-            holder.itemStudentName.setText(studentBean.name);
-            holder.itemStudentPhonenum.setText(studentBean.phoneStr);
+            holder.itemStudentName.setText(studentBean.username);
+            holder.itemStudentPhonenum.setText(studentBean.phone);
             if (studentBean.gender) {//男
                 holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
             } else {
                 holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_female);
             }
+            if (position < datas.size() - 2 && !TextUtils.equals(studentBean.head, datas.get(position + 1).head)) {
+                holder.itemStudentDivder.setVisibility(View.GONE);
+            } else {
+                holder.itemStudentDivder.setVisibility(View.VISIBLE);
+            }
+
             if (studentBean.isTag) {
-                holder.itemStudentAlpha.setText(studentBean.head);
+                if (TextUtils.equals(studentBean.head, "~"))
+                    holder.itemStudentAlpha.setText("#");
+                else holder.itemStudentAlpha.setText(studentBean.head);
                 holder.itemStudentAlpha.setVisibility(View.VISIBLE);
             } else holder.itemStudentAlpha.setVisibility(View.GONE);
             Glide.with(App.AppContex).load(studentBean.headerPic).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));

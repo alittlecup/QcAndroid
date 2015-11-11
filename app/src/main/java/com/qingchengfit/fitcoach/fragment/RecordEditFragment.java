@@ -461,7 +461,7 @@ public class RecordEditFragment extends BaseSettingFragment {
 
         } else if (requestCode == 10010 && resultCode > 0) {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
-            recordeditHost.setContent(data.getStringExtra("name"));
+            recordeditHost.setContent(data.getStringExtra("username"));
         }
 
 

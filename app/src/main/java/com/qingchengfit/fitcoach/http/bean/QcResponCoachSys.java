@@ -18,7 +18,7 @@ import java.util.List;
 public class QcResponCoachSys extends QcResponse {
 
     /**
-     * data : {"systems":[{"name":"青橙健身工作室","id":2,"url":"http://feature2.qingchengfit.cn"},{"name":"","id":3,"url":"http://feature2.qingchengfit.cn"}]}
+     * data : {"systems":[{"username":"青橙健身工作室","id":2,"url":"http://feature2.qingchengfit.cn"},{"username":"","id":3,"url":"http://feature2.qingchengfit.cn"}]}
      */
     private DataEntity data;
 
@@ -32,7 +32,7 @@ public class QcResponCoachSys extends QcResponse {
 
     public static class DataEntity {
         /**
-         * systems : [{"name":"青橙健身工作室","id":2,"url":"http://feature2.qingchengfit.cn"},{"name":"","id":3,"url":"http://feature2.qingchengfit.cn"}]
+         * systems : [{"username":"青橙健身工作室","id":2,"url":"http://feature2.qingchengfit.cn"},{"username":"","id":3,"url":"http://feature2.qingchengfit.cn"}]
          */
         private List<SystemsEntity> systems;
 
@@ -46,7 +46,7 @@ public class QcResponCoachSys extends QcResponse {
 
         public static class SystemsEntity {
             /**
-             * name : 青橙健身工作室
+             * username : 青橙健身工作室
              * id : 2
              * url : http://feature2.qingchengfit.cn
              */

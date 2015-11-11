@@ -74,11 +74,11 @@ public class LoginActivity extends AppCompatActivity {
 //            return;
 //        if (cur.moveToNext()) {
 //            String number = cur.getString(cur.getColumnIndex("address"));// 手机号
-//            String name = cur.getString(cur.getColumnIndex("person"));// 联系人姓名列表
+//            String username = cur.getString(cur.getColumnIndex("person"));// 联系人姓名列表
 //            String body = cur.getString(cur.getColumnIndex("body"));//短信内容
 //
 //			System.out.println(">>>>>>>>>>>>>>>>手机号：" + number);
-//			System.out.println(">>>>>>>>>>>>>>>>联系人姓名列表：" + name);
+//			System.out.println(">>>>>>>>>>>>>>>>联系人姓名列表：" + username);
 //			System.out.println(">>>>>>>>>>>>>>>>短信的内容：" + body);
 //            if(number.equals("106902281006")){//验证发送的短信号码
 //            Pattern pattern = Pattern.compile("[0-9]{6}");//4位数字验证码

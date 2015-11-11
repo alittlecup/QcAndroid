@@ -18,7 +18,7 @@
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
 
 
-        <!--<item name="textViewStyle">@style/Qc.TextCommonGrey</item>-->
+        <!--<item username="textViewStyle">@style/Qc.TextCommonGrey</item>-->
 
         <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
         <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
@@ -28,10 +28,10 @@
         <item name="android:editTextStyle">@style/Qc.EditTextStyle</item>
         <item name="editTextStyle">@style/Qc.EditTextStyle</item>
         <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
-        <!--<item name="windowBackground">@color/white</item>-->
+        <!--<item username="windowBackground">@color/white</item>-->
         <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
-        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <!--<item username="android:windowBackground">@color/transparent</item>-->
     </style>
 
 

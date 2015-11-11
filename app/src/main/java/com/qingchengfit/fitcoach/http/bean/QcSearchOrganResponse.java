@@ -18,7 +18,7 @@ import java.util.List;
 public class QcSearchOrganResponse extends QcResponse {
 
     /**
-     * data : {"organizations":[{"contact":"1616671212","id":2,"name":"中国健身大会"}],"current_page":1,"pages":1,"total_count":1}
+     * data : {"organizations":[{"contact":"1616671212","id":2,"username":"中国健身大会"}],"current_page":1,"pages":1,"total_count":1}
      */
 
     private DataEntity data;
@@ -33,7 +33,7 @@ public class QcSearchOrganResponse extends QcResponse {
 
     public static class DataEntity {
         /**
-         * organizations : [{"contact":"1616671212","id":2,"name":"中国健身大会"}]
+         * organizations : [{"contact":"1616671212","id":2,"username":"中国健身大会"}]
          * current_page : 1
          * pages : 1
          * total_count : 1
@@ -80,7 +80,7 @@ public class QcSearchOrganResponse extends QcResponse {
             /**
              * contact : 1616671212
              * id : 2
-             * name : 中国健身大会
+             * username : 中国健身大会
              */
 
             private String contact;
