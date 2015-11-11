@@ -474,7 +474,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
         @JavascriptInterface
         public void shareInfo(String json) {
             ShareBean bean = new Gson().fromJson(json, ShareBean.class);
-            ShareUtils.oneKeyShared(WebActivity.this, bean.title, bean.imgUrl, bean.desc, bean.title);
+            ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, bean.title);
         }
 
 

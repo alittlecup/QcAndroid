@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.tencent.smtt.sdk.WebView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +32,10 @@ public class NotiDetailFragment extends Fragment {
     ImageView notidetailImg;
     @Bind(R.id.notidetail_content)
     TextView notidetailContent;
+    @Bind(R.id.notidetail_title)
+    TextView notidetailTitle;
+    @Bind(R.id.notidetail_content_webview)
+    WebView notidetailContentWebview;
     private int id = 0;
 
     public NotiDetailFragment() {
@@ -56,13 +64,20 @@ public class NotiDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_noti_detail, container, false);
         ButterKnife.bind(this, view);
+
         if (id != 0)
             QcCloudClient.getApi().getApi.qcGetMsgDetails(id).subscribe(
                     qcNotiDetailResponse -> {
-                        getActivity().runOnUiThread(() -> {
-                            notidetailTime.setText(qcNotiDetailResponse.getData().getCreated_at());
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                notidetailTime.setText(qcNotiDetailResponse.getData().getCreated_at().replace("T", " "));
+                                Glide.with(App.AppContex).load(qcNotiDetailResponse.getData().getPhoto()).asBitmap().into(new CircleImgWrapper(notidetailImg, getContext()));
+                                notidetailSender.setText(qcNotiDetailResponse.getData().getSender());
+                                notidetailTitle.setText(qcNotiDetailResponse.getData().getTitle());
+                                notidetailContentWebview.loadUrl(qcNotiDetailResponse.getData().getUrl());
 //                    notidetailContent.setText(qcNotiDetailResponse.getData());
-                        });
+                            });
+                        }
                     }
             );
         return view;

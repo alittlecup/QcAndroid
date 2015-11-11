@@ -44,6 +44,7 @@ public class QcNotiDetailResponse extends QcResponse {
         private String title;
         private String photo;
         private String created_at;
+        private String url;
         private int id;
 
         public String getRead_at() {
@@ -52,6 +53,14 @@ public class QcNotiDetailResponse extends QcResponse {
 
         public void setRead_at(String read_at) {
             this.read_at = read_at;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
         }
 
         public String getSender() {

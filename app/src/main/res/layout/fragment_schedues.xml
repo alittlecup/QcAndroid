@@ -33,9 +33,11 @@
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:id="@+id/schedule_notification_layout"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentRight="true"
+        >
 
         <ImageView
             android:id="@+id/schedule_notification"

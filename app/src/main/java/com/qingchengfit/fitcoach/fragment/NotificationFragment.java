@@ -143,8 +143,8 @@ public class NotificationFragment extends BaseSettingFragment {
                             refreshNodata.setVisibility(View.GONE);
                             adapter = new NotifiAdapter(qcNotificationResponse.getData().getMsgs());
                             adapter.setListener((v, pos) -> {
-                                fragmentCallBack.onFragmentChange(
-                                        WebFragment.newInstance(list.get(pos).getUrl(), true));
+//                                fragmentCallBack.onFragmentChange(WebFragment.newInstance(list.get(pos).getUrl(), true));
+                                fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
                                 fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
                             });
                             recyclerview.setAdapter(adapter);

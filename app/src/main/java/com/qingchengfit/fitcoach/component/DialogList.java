@@ -60,7 +60,7 @@ public class DialogList extends Dialog {
         TextView textView = new TextView(context, null, R.style.Qc_TextCommonGrey);
 //        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
         textView.setTextColor(context.getResources().getColor(R.color.text_grey));
-        textView.setTextSize(16);
+        textView.setTextSize(14);
         textView.setPadding(MeasureUtils.dpToPx(30f, context.getResources()), textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
         textView.setText(title);
         textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -75,8 +75,13 @@ public class DialogList extends Dialog {
         listView.setAdapter(adapter);
         listView.setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
         listView.setOnItemClickListener(listener);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.qc_dialog_height));
+        int height = 0;
+        if (list.size() < 6) {
+            height = MeasureUtils.dpToPx(48f, context.getResources()) * list.size();
+        } else {
+            height = MeasureUtils.dpToPx(48f, context.getResources()) * 6;
+        }
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
         view.addView(listView, params);
         return this;
     }

@@ -412,6 +412,8 @@ public class QcCloudClient {
         @POST("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
+        @DELETE("/api/coaches/{id}/personal/system/")
+        rx.Observable<QcResponse> qcDelPrivateGym(@Path("id") int id);
     }
 
     public interface DownLoadApi {
