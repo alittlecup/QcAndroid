@@ -12,6 +12,7 @@
 
     <!--common color-->
     <color name="white">#ffffff</color>
+    <color name="text_black">#666666</color>
     <color name="dark_white">#cfcfcf</color>
     <color name="cyan">#00BFBF</color>
     <color name="transparent">#00ffffff</color>

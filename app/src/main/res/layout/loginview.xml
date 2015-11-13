@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_login_phone"
+                android:imeActionLabel="下一个"
                 android:imeOptions="actionNext"
                 android:inputType="phone"
                 android:maxLength="11"
@@ -64,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableLeft="@drawable/ic_pw"
+            android:imeActionLabel="登录"
             android:imeOptions="actionGo"
             android:inputType="textPassword"
 

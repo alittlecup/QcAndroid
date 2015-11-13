@@ -17,7 +17,7 @@
     >
 
     <LinearLayout
-
+        android:id="@+id/registe_rootview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -37,8 +37,11 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_register_username"
                 android:hint="名字"
-                android:imeOptions="actionDone"
+                android:imeActionLabel="下一个"
+                android:imeOptions="actionNext"
+
                 android:maxLength="10"
+                android:singleLine="true"
                 android:textSize="18sp"
                 />
 
@@ -48,7 +51,8 @@
             android:id="@+id/registe_gender"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="15dp"
             android:paddingLeft="5dp"
             >
 
@@ -60,9 +64,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="15dp"
-                android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_register_gender"
                 android:drawablePadding="@dimen/qc_edit_drawable_padding"
+
                 android:text="性别"
                 android:textColor="?android:attr/textColorHint"
                 />
@@ -71,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="5dp"
+                android:layout_marginBottom="12dp"
                 android:background="@color/divider_white"
                 >
 
@@ -132,6 +136,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
                     android:drawableLeft="@drawable/ic_login_phone"
+                    android:hint="手机号"
+                    android:imeActionLabel="下一个"
                     android:imeOptions="actionNext"
                     android:inputType="phone"
                     android:maxLength="11"
@@ -172,8 +178,10 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_register_verify"
                 android:hint="手机验证码"
-                android:imeOptions="actionDone"
+                android:imeActionLabel="下一个"
+                android:imeOptions="actionNext"
                 android:inputType="phone"
+                android:maxLength="6"
                 android:textSize="18sp"
                 />
 
@@ -192,6 +200,7 @@
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ic_pw"
                 android:hint="设置登录密码"
+                android:imeActionLabel="下一个"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLength="16"
@@ -218,6 +227,7 @@
                 android:maxLength="16"
                 android:singleLine="true"
                 android:textSize="18sp"
+
                 />
         </android.support.design.widget.TextInputLayout>
 

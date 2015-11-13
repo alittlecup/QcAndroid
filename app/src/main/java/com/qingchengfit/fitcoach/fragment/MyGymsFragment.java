@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -43,6 +44,8 @@ public class MyGymsFragment extends MainBaseFragment {
     RecyclerView recyclerview;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
+    @Bind(R.id.refresh_nodata)
+    SwipeRefreshLayout refreshNodata;
     private GymsAdapter mGymAdapter;
     private List<QcCoachSystemDetailResponse.CoachSystemDetail> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
@@ -55,7 +58,7 @@ public class MyGymsFragment extends MainBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_gyms_true, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
@@ -120,10 +123,35 @@ public class MyGymsFragment extends MainBaseFragment {
                 freshData();
             }
         });
-
+        refreshNodata.setColorSchemeResources(R.color.primary);
+        refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                freshData();
+            }
+        });
         return view;
 
     }
+
+    @OnClick(R.id.course_add_private)
+    public void onClickprivate() {
+        Intent intent = new Intent(getActivity(), FragActivity.class);
+        if (mHasPrivate) {
+            intent.putExtra("type", 2);
+        } else {
+            intent.putExtra("type", 3);
+        }
+        startActivityForResult(intent, 11);
+    }
+
+    @OnClick(R.id.course_add_belong)
+    public void onClickBelong() {
+        Intent intent = new Intent(getActivity(), FragActivity.class);
+        intent.putExtra("type", 4);
+        startActivityForResult(intent, 11);
+    }
+
 
     @Override
     public void onResume() {
@@ -137,7 +165,17 @@ public class MyGymsFragment extends MainBaseFragment {
                 .subscribeOn(Schedulers.io())
                 .map(qcCoachSystemDetailResponse -> {
                     adapterData.clear();
+
                     adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
+                    if (adapterData.size() > 0) {
+
+                        refresh.setVisibility(View.VISIBLE);
+                        refreshNodata.setVisibility(View.GONE);
+                    } else {
+                        mHasPrivate = false;
+                        refresh.setVisibility(View.GONE);
+                        refreshNodata.setVisibility(View.VISIBLE);
+                    }
                     for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
                         if (systemDetail.is_personal_system) {
                             mHasPrivate = true;
@@ -150,6 +188,7 @@ public class MyGymsFragment extends MainBaseFragment {
                 .subscribe(aBoolean -> {
                     mGymAdapter.notifyDataSetChanged();
                     refresh.setRefreshing(false);
+                    refreshNodata.setRefreshing(false);
                 });
     }
 
@@ -215,7 +254,7 @@ public class MyGymsFragment extends MainBaseFragment {
             holder.itemView.setTag(position);
             QcCoachSystemDetailResponse.CoachSystemDetail detail = datas.get(position);
             holder.itemGymName.setText(detail.name);
-            holder.itemGymPhonenum.setText(detail.courses_count + "门课程," + detail.users_count + "名学员");
+            holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
             if (detail.is_personal_system) {
                 holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_red);
                 holder.itemIsPersonal.setText("个人");

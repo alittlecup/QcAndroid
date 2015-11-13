@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -50,6 +51,8 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +84,8 @@ public class OriginWebFragment extends WebFragment {
     private Toolbar mToolbarToolbar;
     private WebView mWebviewWebView;
     private LinearLayout mWebviewRootLinearLayout;
+    private List<String> hostArray = new ArrayList<>();
+    private String sessionid;
 
     public OriginWebFragment() {
     }
@@ -146,7 +151,11 @@ public class OriginWebFragment extends WebFragment {
             toolbar.setVisibility(View.GONE);
 
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
-
+        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
+        if (!TextUtils.isEmpty(hosts)) {
+            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
+            }.getType());
+        }
         webview.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -171,6 +180,20 @@ public class OriginWebFragment extends WebFragment {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading" + url);
                 if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
+                    URI uri = null;
+                    try {
+                        uri = new URI(url);
+
+                        if (!hostArray.contains(uri.getHost())) {
+                            hostArray.add(uri.getHost());
+                        }
+                        LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                        setCookie(uri.getHost(), "qc_session_id", sessionid);
+                        LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+
+                    } catch (URISyntaxException e) {
+
+                    }
                     mTitleStack.add(toolbar.getTitle().toString());
                     WebBackForwardList webBackForwardList = webview.copyBackForwardList();
                     mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
@@ -297,7 +320,7 @@ public class OriginWebFragment extends WebFragment {
         CookieSyncManager.createInstance(getContext());
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
-        initCookie();
+        initCookie(base_url);
 
         return view;
     }
@@ -390,13 +413,24 @@ public class OriginWebFragment extends WebFragment {
 
     }
 
-    private void initCookie() {
-        String sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
+    private void initCookie(String url) {
+        sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
         if (sessionid != null) {
             setCookie(Configs.ServerIp, "sessionid", sessionid);
-            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
-            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
-            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+            try {
+                URI uri = new URI(url);
+                if (!hostArray.contains(uri.getHost())) {
+                    hostArray.add(uri.getHost());
+                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                    setCookie(uri.getHost(), "qc_session_id", sessionid);
+                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                }
+            } catch (URISyntaxException e) {
+                //e.printStackTrace();
+            }
+//            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
+//            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
+//            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
             //TODO logout
         }
@@ -405,10 +439,11 @@ public class OriginWebFragment extends WebFragment {
 
     @Override
     public void onDestroyView() {
+        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
         //必须先移除webview
         if (webview != null) {
             mWebviewRootLinearLayout.removeView(webview);
-            webview.removeAllViews();
+//            webview.removeAllViews();
             webview.destroy();
         }
         ButterKnife.unbind(this);
@@ -488,7 +523,15 @@ public class OriginWebFragment extends WebFragment {
 
         @JavascriptInterface
         public void setTitle(String s) {
-            toolbar.setTitle(s);
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toolbar.setTitle(s);
+                    }
+                });
+            }
+
         }
 
 

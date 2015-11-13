@@ -8,14 +8,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.webkit.JavascriptInterface;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -34,6 +38,7 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.bean.ShareBean;
 import com.qingchengfit.fitcoach.bean.ToolbarAction;
+import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieManager;
@@ -69,14 +74,15 @@ import rx.schedulers.Schedulers;
  * <p>
  * Created by Paper on 15/10/12 2015.
  */
-public class WebActivity extends BaseAcitivity implements WebActivityInterface {
+public class WebActivity extends BaseAcitivity implements WebActivityInterface, CustomSwipeRefreshLayout.CanChildScrollUpCallback {
     //    OriginWebFragment originWebFragment;
     private TextView mToobarActionTextView;
     private Toolbar mToolbar;
     private WebView mWebviewWebView;
-    private LinearLayout mWebviewRootLinearLayout;
+    //    private LinearLayout mWebviewRootLinearLayout;
     private CookieManager cookieManager;
-
+    private LinearLayout mNoNetwork;
+    private Button mRefresh;
 
     private List<Integer> mlastPosition = new ArrayList<>(); //记录深度
     private List<String> mTitleStack = new ArrayList<>(); //记录标题
@@ -84,6 +90,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
     private ValueCallback<Uri> mValueCallback;
     private PicChooseDialog dialog;
     private List<String> hostArray = new ArrayList<>();
+    private CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
+    private String sessionid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +100,18 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
         mToobarActionTextView = (TextView) findViewById(R.id.toobar_action);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mWebviewWebView = (WebView) findViewById(R.id.webview);
-        mWebviewRootLinearLayout = (LinearLayout) findViewById(R.id.webview_root);
+        mRefreshSwipeRefreshLayout = (CustomSwipeRefreshLayout) findViewById(R.id.refresh);
+//        mWebviewRootLinearLayout = (LinearLayout) findViewById(R.id.webview_root);
+        mNoNetwork = (LinearLayout) findViewById(R.id.no_newwork);
+        mRefresh = (Button) findViewById(R.id.refresh_network);
+        mRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNoNetwork.setVisibility(View.GONE);
+                mWebviewWebView.reload();
+            }
+        });
+        mRefreshSwipeRefreshLayout.setCanChildScrollUpCallback(this);
         initWebSetting();
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         mToolbar.setNavigationOnClickListener(v -> this.onBackPressed());
@@ -103,13 +123,21 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
             if (mWebviewWebView != null)
                 mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
         });
+
+        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
+        if (!TextUtils.isEmpty(hosts)) {
+            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
+            }.getType());
+        }
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");
-            mWebviewWebView.loadUrl(url);
+
             CookieSyncManager.createInstance(this);
             cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
+            mWebviewWebView.loadUrl("");
             initCookie(url);
+            mWebviewWebView.loadUrl(url);
 ////            setCookie(".qingchengfit.cn", "qc_session_id", "abcd");
 //            cookieManager.setCookie("*.qingchengfit.cn","key = abc");
 //            String cookieResult = cookieManager.getCookie("feature3.qingchengfit.cn");
@@ -119,6 +147,22 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 //            LogUtil.e("  4:"+cookieManager.getCookie(".qingchengfit.cn"));
 //            Toast.makeText(this,cookieResult,Toast.LENGTH_LONG).show();
         }
+
+        mRefreshSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
+        mRefreshSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mWebviewWebView.reload();
+            }
+        });
+        mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mRefreshSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
+
         if (dialog == null) {
             dialog = new PicChooseDialog(WebActivity.this);
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -243,6 +287,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                mRefreshSwipeRefreshLayout.setRefreshing(false);
                 super.onPageFinished(view, url);
 
             }
@@ -256,8 +301,22 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                LogUtil.d("shouldOverrideUrlLoading:" + url+" :"+cookieManager.getCookie("url"));
-                initCookie(url);
+
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
+                    URI uri = null;
+                    try {
+                        uri = new URI(url);
+
+                        if (!hostArray.contains(uri.getHost())) {
+                            hostArray.add(uri.getHost());
+                        }
+                        LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                        setCookie(uri.getHost(), "qc_session_id", sessionid);
+                        LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+
+                    } catch (URISyntaxException e) {
+
+                    }
                     mTitleStack.add(mToolbar.getTitle().toString());
                     WebBackForwardList webBackForwardList = mWebviewWebView.copyBackForwardList();
                     mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
@@ -271,7 +330,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 //                super.onReceivedError(view, errorCode, description, failingUrl);
                 LogUtil.e("errorCode:" + errorCode);
                 mToolbar.setTitle("");
-                mWebviewWebView.loadUrl("");
+//                mWebviewWebView.loadUrl("");
                 showNoNet();
 
             }
@@ -293,7 +352,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
      * 显示无网络状态
      */
     private void showNoNet() {
-
+        mNoNetwork.setVisibility(View.VISIBLE);
     }
 
     private void initWebSetting() {
@@ -323,15 +382,17 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
 
     private void initCookie(String url) {
-        String sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
+        sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
 
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
-                hostArray.add(uri.getHost());
-                LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
-                setCookie(uri.getHost(), "qc_session_id", sessionid);
-                setCookie(uri.getHost(), "sessionid", sessionid);
+                if (!hostArray.contains(uri.getHost())) {
+                    hostArray.add(uri.getHost());
+                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                    setCookie(uri.getHost(), "qc_session_id", sessionid);
+                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                }
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
@@ -422,10 +483,11 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
     }
 
     public void removeCookies() {
-        cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-        for (String s : hostArray) {
-            cookieManager.setCookie(s, "qc_session_id" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-        }
+//        cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+//        for (String s : hostArray) {
+//            cookieManager.setCookie(s, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+//        }
+        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
     }
 
     @Override
@@ -434,7 +496,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
         mValueCallback = null;
         if (mWebviewWebView != null) {
             removeCookies();
-            mWebviewRootLinearLayout.removeView(mWebviewWebView);
+            mRefreshSwipeRefreshLayout.removeView(mWebviewWebView);
             mWebviewWebView.removeAllViews();
             mWebviewWebView.destroy();
         }
@@ -470,6 +532,11 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
         setResult(1001);
         this.finish();
+    }
+
+    @Override
+    public boolean canSwipeRefreshChildScrollUp() {
+        return mWebviewWebView.getWebScrollY() > 0;
     }
 
     public class JsInterface {
@@ -520,7 +587,13 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface {
 
         @JavascriptInterface
         public void setTitle(String s) {
-            mToolbar.setTitle(s);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mToolbar.setTitle(s);
+                }
+            });
+
         }
 
 

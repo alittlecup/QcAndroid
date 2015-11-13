@@ -196,7 +196,7 @@ public class RobotoCalendarView extends LinearLayout {
 //        if (currentCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
 //            dateTitle.setText(dateText);
 //        } else {
-        dateTitle.setText(currentCalendar.get(Calendar.YEAR) + getResources().getString(R.string.pickerview_year) + dateText + getResources().getString(R.string.pickerview_day));
+        dateTitle.setText(currentCalendar.get(Calendar.YEAR) + getResources().getString(R.string.pickerview_year) + dateText + getResources().getString(R.string.pickerview_month));
 //        }
     }
 

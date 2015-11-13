@@ -75,8 +75,8 @@
 
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <QZone
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="wxfd52b612935d84ea"
+        AppKey="1ef97c532db3c9aaa0649a705ca2123d"
         Enable="true"
         Id="3"
         ShareByAppClient="false"
@@ -111,16 +111,16 @@
         SortId="2"/>
         
 	<WechatFavorite
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
+        AppId="wxfd52b612935d84ea"
+        AppSecret="1ef97c532db3c9aaa0649a705ca2123d"
         Enable="false"
         Id="6"
         SortId="6" />
     
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 	<QQ
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="wxfd52b612935d84ea"
+        AppKey="1ef97c532db3c9aaa0649a705ca2123d"
         Enable="true"
         Id="7"
         ShareByAppClient="true"

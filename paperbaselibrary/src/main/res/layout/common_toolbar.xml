@@ -8,6 +8,7 @@
     android:background="@color/primary"
     android:gravity="center_vertical"
     android:minHeight="?attr/actionBarSize"
+    android:theme="@style/Qc.toolbarStyle"
 
     app:popupTheme="@style/ToolbarStyle.Overflow"
     app:theme="@style/Qc.toolbarStyle"

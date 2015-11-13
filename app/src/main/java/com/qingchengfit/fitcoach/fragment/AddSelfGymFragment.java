@@ -112,28 +112,61 @@ public class AddSelfGymFragment extends Fragment {
                             QcCloudClient.getApi().postApi.qcDelPrivateGym(App.coachid)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Subscriber<QcResponse>() {
+                                    .flatMap(new Func1<QcResponse, Observable<QcCoachSystemResponse>>() {
+                                        @Override
+                                        public Observable<QcCoachSystemResponse> call(QcResponse qcResponse) {
+                                            if (qcResponse.status == ResponseResult.SUCCESS || getActivity() != null) {
+                                                return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                                                        .observeOn(AndroidSchedulers.mainThread());
+                                            } else {
+                                                return Observable.just(null);
+                                            }
+                                        }
+                                    }, new Func1<Throwable, Observable<? extends QcCoachSystemResponse>>() {
+                                        @Override
+                                        public Observable<? extends QcCoachSystemResponse> call(Throwable throwable) {
+                                            return Observable.just(null);
+                                        }
+                                    }, new Func0<Observable<? extends QcCoachSystemResponse>>() {
+                                        @Override
+                                        public Observable<? extends QcCoachSystemResponse> call() {
+                                            return Observable.just(null);
+                                        }
+                                    })
+                                    .filter(new Func1<QcCoachSystemResponse, Boolean>() {
+                                        @Override
+                                        public Boolean call(QcCoachSystemResponse qcCoachSystemResponse) {
+                                            if (qcCoachSystemResponse == null)
+                                                return false;
+                                            else return true;
+
+                                        }
+                                    })
+                                    .subscribe(new Subscriber<QcCoachSystemResponse>() {
                                         @Override
                                         public void onCompleted() {
-                                            loadingDialog.dismiss();
+
                                         }
 
                                         @Override
                                         public void onError(Throwable e) {
-                                            loadingDialog.dismiss();
-                                            ToastUtils.show(R.drawable.ic_share_fail, "删除失败");
+                                            if (loadingDialog != null)
+                                                loadingDialog.dismiss();
+                                            ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_failed));
                                         }
 
                                         @Override
-                                        public void onNext(QcResponse qcResponse) {
-                                            if (qcResponse.status == ResponseResult.SUCCESS || getActivity() != null) {
+                                        public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                                            if (getActivity() != null) {
+                                                loadingDialog.dismiss();
+                                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
                                                 ToastUtils.show("删除成功");
                                                 getActivity().finish();
-                                            } else {
-                                                ToastUtils.show(R.drawable.ic_share_fail, "删除失败");
+
                                             }
                                         }
                                     });
+
                             dialog.dismiss();
                         }
 
@@ -153,7 +186,7 @@ public class AddSelfGymFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id = getArguments().getInt("id");
+            id = getArguments().getInt("id", 0);
             mIsNew = getArguments().getBoolean("isNew", false);
         }
     }
@@ -171,6 +204,22 @@ public class AddSelfGymFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //展示不可回退
+                    new MaterialDialog.Builder(getContext())
+                            .content("设置好一个健身房后，就能开始使用「健身教练助手」了")
+                            .positiveColorRes(R.color.orange)
+                            .positiveText("我知道了")
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                }
+
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
+                                    super.onNegative(dialog);
+                                }
+                            })
+                            .show();
                 }
             });
         } else
@@ -269,14 +318,14 @@ public class AddSelfGymFragment extends Fragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_success));
+                            ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_failed));
                         }
 
                         @Override
                         public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
                             if (getActivity() != null) {
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
-                                ToastUtils.show(getString(R.string.common_modify_failed));
+                                ToastUtils.show(getString(R.string.common_modify_success));
                                 getActivity().onBackPressed();
                             }
                         }
@@ -326,14 +375,14 @@ public class AddSelfGymFragment extends Fragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.common_modify_success));
+//                            ToastUtils.show(R.drawable.ic_share_fail, ));
                         }
 
                         @Override
                         public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
                             if (getActivity() != null) {
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
-                                ToastUtils.show(getString(R.string.common_modify_failed));
+                                ToastUtils.show("添加成功");
                                 getActivity().onBackPressed();
                             }
                         }

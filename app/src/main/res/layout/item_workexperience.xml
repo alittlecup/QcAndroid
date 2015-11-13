@@ -45,6 +45,7 @@
             android:paddingRight="8dp"
             android:text="已确认"
             android:textColor="@color/white"
+            android:visibility="gone"
             />
     </RelativeLayout>
 

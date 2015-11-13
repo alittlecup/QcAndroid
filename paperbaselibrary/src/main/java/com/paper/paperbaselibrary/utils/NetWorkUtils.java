@@ -30,4 +30,12 @@ public class NetWorkUtils {
         return -1;
     }
 
+
+    public static boolean isNetworkAvailable(Context context) {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        return info.isAvailable();
+    }
+
 }

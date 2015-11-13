@@ -26,6 +26,15 @@
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
+    <Button
+        android:id="@+id/addselfgym_comfirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_comfirm"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -69,16 +78,6 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
         android:text="用途2: 用于管理除所属健身房外的工作。"
-        />
-
-    <Button
-        android:id="@+id/addselfgym_comfirm"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="20dp"
-        android:text="@string/login_comfirm"
         />
 
 

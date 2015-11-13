@@ -10,9 +10,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -88,6 +91,8 @@ public class RegisterFragment extends Fragment {
     @Bind(R.id.registe_username)
     TextInputLayout registeUsername;
     Gson gson;
+    @Bind(R.id.registe_rootview)
+    LinearLayout registeRootview;
     private InternalHandler handler;
     private Observable<RecieveMsg> mRecieveMsgOb;
     private Observable<SendSmsCode> mSendsmsOb;
@@ -109,7 +114,15 @@ public class RegisterFragment extends Fragment {
         registePhoneVerity.setHint(getString(R.string.login_checkcode_hint));
 //        mRecieveMsgOb = RxBus.getBus().register(RecieveMsg.class);
 //        mRecieveMsgOb.subscribe(recieveMsg -> registePhoneVerity.getEditText().setText(recieveMsg.getCode()));
-
+        registeRootview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (getActivity() != null) {
+                    AppUtils.hideKeyboard(getActivity());
+                }
+                return false;
+            }
+        });
         mSendsmsOb = RxBus.getBus().register(SendSmsCode.class.getName(), SendSmsCode.class);
         mSendsmsOb.subscribe(sendSmsCode ->
                 handler.sendEmptyMessage(0));

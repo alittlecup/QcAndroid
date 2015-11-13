@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -34,6 +35,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
@@ -56,6 +58,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
 import rx.schedulers.Schedulers;
 
 /**
@@ -104,6 +107,8 @@ public class MyStudentFragment extends MainBaseFragment {
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private int curSystemId;     //当前选中system
     private int curPostion = 0;
+    private MaterialDialog mAlertPrivate;
+    private List<QcCoachSystem> systems;
 
     public MyStudentFragment() {
     }
@@ -124,9 +129,10 @@ public class MyStudentFragment extends MainBaseFragment {
                 searchviewEt.requestFocus();
                 AppUtils.showKeyboard(getContext(), searchviewEt);
             } else if (item.getItemId() == R.id.action_add_mannul) {
-                onAddstudent();//手动添加学员
+                showAlert(0);
             } else if (item.getItemId() == R.id.action_add_phone) {
-                addStudentFromContact();
+//                addStudentFromContact();
+                showAlert(1);
             }
             return true;
         });
@@ -167,11 +173,12 @@ public class MyStudentFragment extends MainBaseFragment {
             }
         });
         //获取原始数据
-        QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
-                .subscribe(qcAllStudentResponse -> {
-                    mQcAllStudentResponse = qcAllStudentResponse;
-                    handleResponse(qcAllStudentResponse);
-                });
+//        QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+//                .subscribe(qcAllStudentResponse -> {
+//                    mQcAllStudentResponse = qcAllStudentResponse;
+//                    handleResponse(qcAllStudentResponse);
+//                });
+        freshData();
         alphabetView.setOnAlphabetChange(new AlphabetView.OnAlphabetChange() {
             @Override
             public void onChange(int position, String s) {
@@ -188,12 +195,7 @@ public class MyStudentFragment extends MainBaseFragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //获取原始数据
-                QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
-                        .subscribe(qcAllStudentResponse -> {
-                            mQcAllStudentResponse = qcAllStudentResponse;
-                            handleResponse(qcAllStudentResponse);
-                        });
+                freshData();
             }
         });
         //默认刷新
@@ -214,6 +216,28 @@ public class MyStudentFragment extends MainBaseFragment {
         ButterKnife.unbind(this);
     }
 
+    public void freshData() {
+//获取原始数据
+        QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+                .subscribe(new Observer<QcAllStudentResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcAllStudentResponse qcAllStudentResponse) {
+                        mQcAllStudentResponse = qcAllStudentResponse;
+                        handleResponse(qcAllStudentResponse);
+                    }
+                });
+    }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -221,6 +245,8 @@ public class MyStudentFragment extends MainBaseFragment {
             int x = curPostion;
             setUpNaviSpinner();
             spinnerNav.setSelection(x);
+            //获取原始数据
+            freshData();
         }
     }
 
@@ -339,6 +365,84 @@ public class MyStudentFragment extends MainBaseFragment {
         }
     }
 
+    public void showAlert(int type) {
+        if (systems != null && systems.size() > 0) {
+            boolean hasPrivate = false;
+            for (QcCoachSystem system : systems) {
+                if (system.is_personal_system) {
+                    hasPrivate = true;
+                    break;
+                }
+            }
+            if (hasPrivate) {
+                mAlertPrivate = new MaterialDialog.Builder(getContext())
+                        .title("添加学员")
+                        .content("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续")
+                        .positiveColorRes(R.color.orange)
+                        .positiveText("继续")
+                        .negativeText("取消")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                dialog.dismiss();
+                                if (type == 0) {
+                                    onAddstudent();//手动添加学员
+                                } else if (type == 1) {
+                                    addStudentFromContact();
+                                }
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                dialog.dismiss();
+
+
+                            }
+                        })
+                        .build();
+                if (type == 0) {
+                    mAlertPrivate.setTitle("添加学员到个人健身房");
+                    mAlertPrivate.setContent("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续?");
+                } else if (type == 1) {
+                    mAlertPrivate.setTitle("导入学员到个人健身房");
+                    mAlertPrivate.setContent("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续?");
+                }
+                mAlertPrivate.show();
+
+            } else {
+                mAlertPrivate = new MaterialDialog.Builder(getContext())
+                        .title("没有个人健身房")
+                        .content("您还没有添加个人健身房,是否添加个人健身房?")
+                        .positiveText("添加个人健身房")
+                        .positiveColorRes(R.color.orange)
+                        .negativeText("取消")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                dialog.dismiss();
+                                Intent intent = new Intent(getActivity(), FragActivity.class);
+                                intent.putExtra("type", 3);
+
+                                MyStudentFragment.this.startActivityForResult(intent, 405);
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                dialog.dismiss();
+
+                            }
+                        })
+                        .build();
+                mAlertPrivate.show();
+            }
+
+        }
+    }
+
     //初始化筛选器
     public void setUpNaviSpinner() {
 
@@ -348,7 +452,7 @@ public class MyStudentFragment extends MainBaseFragment {
         String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
         if (!TextUtils.isEmpty(systemStr)) {
             QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
-            List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+            systems = qcCoachSystemResponse.date.systems;
             mSystemsId.clear();
             for (int i = 0; i < systems.size(); i++) {
                 QcCoachSystem system = systems.get(i);
@@ -419,12 +523,7 @@ public class MyStudentFragment extends MainBaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode > 0) {
-            //获取原始数据
-            QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
-                    .subscribe(qcAllStudentResponse -> {
-                        mQcAllStudentResponse = qcAllStudentResponse;
-                        handleResponse(qcAllStudentResponse);
-                    });
+            freshData();
         }
     }
 

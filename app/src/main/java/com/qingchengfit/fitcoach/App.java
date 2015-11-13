@@ -114,7 +114,7 @@ public class App extends Application {
         CrashHandler.getInstance().init(this);
         setupFile();
 //        setupGraph();
-        setupWebView();
+//        setupWebView();
 
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override

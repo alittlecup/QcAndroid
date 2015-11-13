@@ -265,13 +265,11 @@ public class GymDetailFragment extends Fragment {
         );
 
 
-        String s = webview.getSettings().getUserAgentString();
-        webview.getSettings().
-                setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
+//        String s = webview.getSettings().getUserAgentString();
+//        webview.getSettings().
+//                setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
-
-
         webview.loadUrl(host);
         initCookie(host);
         return view;

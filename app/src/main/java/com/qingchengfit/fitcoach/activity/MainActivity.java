@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,10 +26,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.NetWorkUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
@@ -37,6 +40,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.RecievePush;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
@@ -54,6 +58,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
+import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
@@ -61,6 +66,8 @@ import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -80,6 +87,7 @@ import im.fir.sdk.callback.VersionCheckCallback;
 import im.fir.sdk.version.AppVersion;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -122,11 +130,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     AsyncDownloader mDownloadThread;
     HashMap<String, Fragment> fragments = new HashMap<>();
     private boolean mGoMyhome = false;
-    //    @Bind(R.id.main_navi)
-//    NavigationView mainNavi;
     private User user;
-    //    private WebFragment xWalkFragment;
-//    private MyHomeFragment myHomeFragment;
     private Fragment topFragment;
     private ArrayList<String> urls = new ArrayList<>();
     private ArrayList<String> path = new ArrayList<>();
@@ -134,6 +138,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private MaterialDialog dialog;
     private Gson gson;
     private Observable mMainObservabel;
+    private Observable mNetworkObservabel;
     private MaterialDialog updateDialog;
     private MaterialDialog downloadDialog;
     private String url;
@@ -157,6 +162,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private DrawerModuleItem item;
     private DrawerModuleItem item1;
     private DrawerModuleItem item2;
+    private Snackbar NonetworkSnack;
 
     //    @Inject RxBus rxBus;
     @Override
@@ -170,6 +176,33 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mFragmentManager = getSupportFragmentManager();
         mMainObservabel = RxBus.getBus().register(RxBus.OPEN_DRAWER);
         mMainObservabel.subscribe((Action1) o -> mainDrawerlayout.openDrawer(Gravity.LEFT));
+        mNetworkObservabel = RxBus.getBus().register(NetworkBean.class.getName());
+        mNetworkObservabel.subscribe(new Observer() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+                if (o instanceof NetworkBean) {
+                    if (NonetworkSnack == null) {
+                        NonetworkSnack = Snackbar.make(mainFraglayout, "您的网络异常,请检查网络连接", Snackbar.LENGTH_INDEFINITE);
+                    }
+                    if (((NetworkBean) o).isAvaliable()) {
+                        NonetworkSnack.dismiss();
+                    } else NonetworkSnack.show();
+                }
+
+            }
+        });
+
+
         initUser();
         initDialog();
         initDrawer();
@@ -207,6 +240,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         if (mDownloadThread != null)
             mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
+        RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
     }
 
     /**
@@ -251,10 +285,15 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     private void initVersion() {
         LogUtil.e("version:" + AppUtils.getAppVer(this));
+        if (!NetWorkUtils.isNetworkAvailable(this)) {
+            NonetworkSnack = Snackbar.make(mainFraglayout, "您的网络异常,请检查网络连接", Snackbar.LENGTH_INDEFINITE);
+            NonetworkSnack.show();
+        }
         FIR.checkForUpdateInFIR("f60e7b4d8b237b271ef3a7741372f220", new VersionCheckCallback() {
             @Override
             public void onSuccess(AppVersion appVersion, boolean b) {
                 LogUtil.e(" fir:success" + appVersion);
+
                 if (appVersion.getVersionCode() <= AppUtils.getAppVerCode(App.AppContex))
                     return;
 
@@ -383,22 +422,36 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         //获取用户拥有的系统
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcCoachSystemResponse -> {
-                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                        if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                                qcCoachSystemResponse.date.systems.size() == 0) {
-                            Intent intent = new Intent(this, FragActivity.class);
-                            intent.putExtra("type", 3);
-                            intent.putExtra("isNew", true);
-                            startActivity(intent);
-                        } else {
-                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
+                .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+                                    qcCoachSystemResponse.date.systems.size() == 0) {
+                                Intent intent = new Intent(MainActivity.this, FragActivity.class);
+                                intent.putExtra("type", 3);
+                                intent.putExtra("isNew", true);
+                                startActivity(intent);
+                            } else {
+                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
+
+                            }
+                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                            logout();
                         }
-                    } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-                        logout();
                     }
                 });
+
     }
 
     @Override
@@ -422,12 +475,33 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     public void logout() {
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
         PushManager.stopWork(App.AppContex);
+        CookieSyncManager.createInstance(this);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        removeCookies(cookieManager);
         Intent logout = new Intent(this, LoginActivity.class);
         logout.putExtra("isRegiste", 0);
         startActivity(logout);
 
         this.finish();
     }
+
+    private void removeCookies(CookieManager cookieManager) {
+        String h = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
+        if (!TextUtils.isEmpty(h)) {
+            ArrayList<String> hosts = gson.fromJson(h, new TypeToken<ArrayList<String>>() {
+            }.getType());
+            for (String host : hosts) {
+                LogUtil.e(host + "  " + cookieManager.getCookie(host));
+                cookieManager.setCookie(host, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+                cookieManager.setCookie(host, "qc_session_id" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+                LogUtil.e(host + "  " + cookieManager.getCookie(host));
+            }
+
+        }
+        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", "");
+    }
+
 
     public void initDialog() {
         dialog = new MaterialDialog.Builder(this)
@@ -493,15 +567,15 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         button.performClick();
         item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item.setTitle("我的学员");
-        item.setCount("100");
+        item.setCount("0");
         drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item1 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
-        item1.setTitle("我的课程计划");
-        item1.setCount("100");
+        item1.setTitle(getString(R.string.my_course_template));
+        item1.setCount("0");
         drawerModules.addView(item1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item2 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item2.setTitle("我的健身房");
-        item2.setCount("100");
+        item2.setCount("0");
         drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item.setOnClickListener(v -> {
             changeFragment(mMyStudentFragment);

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
+import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 
@@ -82,6 +84,8 @@ public class ScheduesFragment extends MainBaseFragment {
     ImageView scheduleNotification;
     @Bind(R.id.schedule_notification_count)
     TextView scheduleNotificationCount;
+    @Bind(R.id.schedule_notification_layout)
+    RelativeLayout scheduleNotificationLayout;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -114,7 +118,7 @@ public class ScheduesFragment extends MainBaseFragment {
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_alert);
 
-        scheduleNotification.setOnClickListener(new View.OnClickListener() {
+        scheduleNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), NotificationActivity.class));
@@ -331,18 +335,32 @@ public class ScheduesFragment extends MainBaseFragment {
 
     public void queryNotify() {
         //TODO 获取未读通知数
+
         QcCloudClient.getApi().getApi.qcGetMessages()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcNotificationResponse -> {
-                    if (getActivity() != null) {
-                        if (qcNotificationResponse.getData().getUnread_count() > 0) {
-                            if (qcNotificationResponse.getData().getUnread_count() < 100)
-                                scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
-                            else scheduleNotificationCount.setText("99");
-                            scheduleNotificationCount.setVisibility(View.VISIBLE);
-                        } else {
-                            scheduleNotificationCount.setVisibility(View.GONE);
+                .subscribe(new Subscriber<QcNotificationResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcNotificationResponse qcNotificationResponse) {
+                        if (getActivity() != null) {
+                            if (qcNotificationResponse.getData().getUnread_count() > 0) {
+                                if (qcNotificationResponse.getData().getUnread_count() < 100)
+                                    scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
+                                else scheduleNotificationCount.setText("99");
+                                scheduleNotificationCount.setVisibility(View.VISIBLE);
+                            } else {
+                                scheduleNotificationCount.setVisibility(View.GONE);
+                            }
                         }
                     }
                 });

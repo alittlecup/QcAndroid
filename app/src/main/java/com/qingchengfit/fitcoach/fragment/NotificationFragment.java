@@ -22,6 +22,8 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -37,14 +39,17 @@ public class NotificationFragment extends BaseSettingFragment {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     NotifiAdapter adapter;
-    List<QcNotificationResponse.DataEntity.MsgsEntity> list;
+    //    List<QcNotificationResponse.DataEntity.MsgsEntity> list;
     @Bind(R.id.refresh)
     SwipeRefreshLayout refresh;
     @Bind(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
-//    @Bind(R.id.pulltorefresh)
+    List<QcNotificationResponse.DataEntity.MsgsEntity> list = new ArrayList<>();
+    //    @Bind(R.id.pulltorefresh)
 //    PtrFrameLayout pulltorefresh;
-
+    private int totalPage = 1;
+    private int curpage = 1;
+    private LinearLayoutManager linearLayoutManager;
 
     public NotificationFragment() {
     }
@@ -56,9 +61,35 @@ public class NotificationFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "全部通知");
-        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new NotifiAdapter(list);
+        recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            private boolean isScrollDown = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int last = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+                    int total = linearLayoutManager.getItemCount();
+                    if (last == (total - 1) && isScrollDown) {
+                        loadingMore();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dx > 0 || dy > 0)
+                    isScrollDown = true;
+                else
+                    isScrollDown = false;
+            }
+        });
 //        final StoreHouseHeader header = new StoreHouseHeader(getContext());
 //        header.setPadding(0, MeasureUtils.dpToPx(15f, getResources()), 0, 0);
 //        header.initWithStringArray(R.array.storehouse);
@@ -97,12 +128,14 @@ public class NotificationFragment extends BaseSettingFragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                list.clear();
                 onRefesh();
             }
         });
         refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                list.clear();
                 onRefesh();
             }
         });
@@ -118,8 +151,17 @@ public class NotificationFragment extends BaseSettingFragment {
         return view;
     }
 
+    private void loadingMore() {
+        if (curpage < totalPage) {
+            curpage++;
+            onRefesh();
+        }
+    }
+
     public void onRefesh() {
-        QcCloudClient.getApi().getApi.qcGetMessages()
+        HashMap<String, Integer> params = new HashMap<String, Integer>();
+        params.put("pn", curpage);
+        QcCloudClient.getApi().getApi.qcGetMessages(params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcNotificationResponse>() {
                     @Override
@@ -136,16 +178,17 @@ public class NotificationFragment extends BaseSettingFragment {
 
                     @Override
                     public void onNext(QcNotificationResponse qcNotificationResponse) {
-                        list = qcNotificationResponse.getData().getMsgs();
+                        totalPage = (qcNotificationResponse.getData().getTotal_count() + 9) / 10;
+                        list.addAll(qcNotificationResponse.getData().getMsgs());
                         if (list != null && list.size() > 0) {
                             refresh.setVisibility(View.VISIBLE);
                             refreshNodata.setVisibility(View.GONE);
-                            adapter = new NotifiAdapter(qcNotificationResponse.getData().getMsgs());
+                            adapter = new NotifiAdapter(list);
                             adapter.setListener((v, pos) -> {
-//                                fragmentCallBack.onFragmentChange(WebFragment.newInstance(list.get(pos).getUrl(), true));
                                 fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
                                 fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
                             });
+//                            adapter.notifyDataSetChanged();
                             recyclerview.setAdapter(adapter);
                         } else {
                             refresh.setVisibility(View.GONE);

@@ -111,7 +111,7 @@ public class MyHomeActivity extends AppCompatActivity {
         item.setCount("100");
         drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         DrawerModuleItem item1 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
-        item1.setTitle("我的课程计划");
+        item1.setTitle(getString(R.string.my_course_template));
         item1.setCount("100");
         drawerModules.addView(item1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         DrawerModuleItem item2 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);

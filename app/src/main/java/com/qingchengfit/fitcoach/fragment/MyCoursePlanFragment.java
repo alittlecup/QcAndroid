@@ -31,6 +31,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -63,7 +64,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle("我的课程计划");
+        toolbar.setTitle(getString(R.string.my_course_template));
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.inflateMenu(R.menu.add);
@@ -111,20 +112,43 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            freshData();
+        }
+    }
+
     public void freshData() {
         QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcAllCoursePlanResponse -> {
-                    adapterData.clear();
-                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                    if (adapterData.size() == 0) {
-                        noData.setVisibility(View.VISIBLE);
-                    } else {
-                        noData.setVisibility(View.GONE);
-                        mGymAdapter.notifyDataSetChanged();
+                .subscribe(new Observer<QcAllCoursePlanResponse>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
 
-                    refresh.setRefreshing(false);
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcAllCoursePlanResponse qcAllCoursePlanResponse) {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        if (adapterData.size() == 0) {
+                            refresh.setVisibility(View.GONE);
+                            noData.setVisibility(View.VISIBLE);
+                        } else {
+                            noData.setVisibility(View.GONE);
+                            refresh.setVisibility(View.VISIBLE);
+                            mGymAdapter.notifyDataSetChanged();
+                        }
+
+                        refresh.setRefreshing(false);
+                    }
                 });
     }
 

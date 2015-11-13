@@ -87,7 +87,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
             PendingIntent restartIntent = PendingIntent.getActivity(
                     mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-            // 退出程序
+//             退出程序
             AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
             mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
             ((App) mContext).finishActivity();

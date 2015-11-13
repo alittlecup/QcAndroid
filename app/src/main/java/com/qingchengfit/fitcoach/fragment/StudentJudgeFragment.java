@@ -99,7 +99,7 @@ public class StudentJudgeFragment extends BaseFragment {
                 courseScroe = "0.0";
             studentJudgeCourseScore.setText(courseScroe);
             studentJudgeCourseStar.setRating(Float.parseFloat(courseScroe));
-            studentJudgeTagCount.setText("擅长(" + mTags.length + ")");
+            studentJudgeTagCount.setText("擅长 " + mTags.length + ":");
             tagGroup.setTags(
                     mTags
             );
@@ -134,6 +134,9 @@ public class StudentJudgeFragment extends BaseFragment {
                 });
 
 
+            }, throwable -> {
+                return;
+            }, () -> {
             });
         }
     }

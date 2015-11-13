@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
@@ -47,7 +48,8 @@ public class FragActivity extends BaseAcitivity {
                 fragment = new AddSelfNotiFragment();
                 break;
             case 3:
-                fragment = new AddSelfGymFragment();
+                boolean isnew = getIntent().getBooleanExtra("isNew", false);
+                fragment = AddSelfGymFragment.newInstance(isnew);
 
                 break;
             case 4:
@@ -75,6 +77,7 @@ public class FragActivity extends BaseAcitivity {
 
     @Override
     public void onBackPressed() {
+        AppUtils.hideKeyboard(this);
         if (fragment instanceof GymDetailFragment && fragment.isVisible()) {
             if (((GymDetailFragment) fragment).canGoBack()) {
                 ((GymDetailFragment) fragment).goBack();

@@ -23,7 +23,9 @@
 
     <style name="ToolbarStyle.Overflow" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:background">@color/transparent</item>
-        <item name="android:textColor">@color/grey</item>
+        <item name="android:textColor">@color/cyan</item>
+        <item name="android:color">@color/cyan</item>
+        <item name="android:textColorPrimaryInverse">@color/cyan</item>
     </style>
     <style name="Qc.toolbarStyle" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:actionMenuTextColor">@color/white</item>

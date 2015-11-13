@@ -64,6 +64,7 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -235,6 +236,8 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/detail/")
         rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
 
+        @GET("/api/messages/")
+        rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
         @GET("/api/messages/")
         rx.Observable<QcNotificationResponse> qcGetMessages();
 

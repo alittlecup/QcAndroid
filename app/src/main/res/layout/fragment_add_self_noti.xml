@@ -82,5 +82,6 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:text="我知道了"
+        android:visibility="gone"
         />
 </RelativeLayout>
