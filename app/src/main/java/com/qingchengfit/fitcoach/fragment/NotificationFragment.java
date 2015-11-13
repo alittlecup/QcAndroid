@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -21,6 +23,7 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +31,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +65,33 @@ public class NotificationFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "全部通知");
+        fragmentCallBack.onToolbarMenu(R.menu.menu_clear_noti, R.drawable.ic_arrow_left, "全部通知");
+        fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                QcCloudClient.getApi().postApi.qcClearNotification()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Observer<QcResponse>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(QcResponse qcResponse) {
+                                list.clear();
+                                onRefesh();
+                            }
+                        });
+                return false;
+            }
+        });
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -147,7 +178,8 @@ public class NotificationFragment extends BaseSettingFragment {
                 onRefesh();
             }
         });
-
+        list.clear();
+        onRefesh();
         return view;
     }
 
@@ -205,7 +237,7 @@ public class NotificationFragment extends BaseSettingFragment {
     @Override
     public void onResume() {
         super.onResume();
-        fragmentCallBack.onToolbarMenu(0, 0, "全部通知");
+
     }
 
     @Override

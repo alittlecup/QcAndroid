@@ -417,6 +417,9 @@ public class QcCloudClient {
 
         @DELETE("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcDelPrivateGym(@Path("id") int id);
+
+        @POST("/api/messages/clear/")
+        rx.Observable<QcResponse> qcClearNotification();
     }
 
     public interface DownLoadApi {
