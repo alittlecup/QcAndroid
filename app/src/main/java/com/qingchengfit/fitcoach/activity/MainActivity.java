@@ -98,6 +98,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     public static final String ACTION = "main_action";
     public static final int LOGOUT = 0;
+    public static final int FINISH = 2;
     public static final int NOTIFICATION = 1;
     private static final String TAG = MainActivity.class.getName();
     private static int ids[] = {
@@ -459,6 +460,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         super.onNewIntent(intent);
         if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
             logout();
+        } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
+            MainActivity.this.finish();
+
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
             if (gson == null) {
                 gson = new Gson();

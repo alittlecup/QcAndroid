@@ -32,7 +32,7 @@
                 android:inputType="phone"
                 android:maxLength="11"
 
-                android:textSize="18sp"
+                android:textSize="@dimen/btn_font"
                 />
 
         </android.support.design.widget.TextInputLayout>
@@ -69,7 +69,7 @@
             android:imeOptions="actionGo"
             android:inputType="textPassword"
 
-            android:textSize="18sp"
+            android:textSize="@dimen/btn_font"
 
             />
         <!--android:text="admin123"
@@ -97,8 +97,8 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:textColor="@color/text_black"
             android:textOff="验证码登录"
-            android:textOn="密码登陆"
-            android:textSize="18sp"
+            android:textOn="密码登录"
+            android:textSize="@dimen/btn_font"
             >
         </ToggleButton>
 

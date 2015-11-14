@@ -68,6 +68,6 @@
     <string name="title_activity_choose_student">ChooseStudentActivity</string>
     <string name="common_modify_failed">修改失败</string>
     <string name="common_modify_success">修改成功</string>
-    <string name="my_course_template">我的课程计划模板</string>
+    <string name="my_course_template">课程计划模板</string>
 
 </resources>

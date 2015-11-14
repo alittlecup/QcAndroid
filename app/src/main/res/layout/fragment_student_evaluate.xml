@@ -28,4 +28,30 @@
         >
 
     </com.qingchengfit.fitcoach.component.TagGroup>
+
+    <LinearLayout
+        android:id="@+id/no_evaluate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="75dp"
+            android:src="@drawable/img_no_comment"
+            />
+
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="还没有学员评价过您哦"
+            />
+
+    </LinearLayout>
 </FrameLayout>

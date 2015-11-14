@@ -57,8 +57,8 @@
     
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo
-        AppKey="568898243"
-        AppSecret="38a4f8204cc784f81f9f0daaf31e02e3"
+        AppKey="2786727551"
+        AppSecret="08b72f6c796e189b5f85b4e9ffe9896c"
         Enable="true"
         Id="1"
         RedirectUrl="http://www.sharesdk.cn"

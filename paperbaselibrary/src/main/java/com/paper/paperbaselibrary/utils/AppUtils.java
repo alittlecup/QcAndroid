@@ -1,13 +1,17 @@
 package com.paper.paperbaselibrary.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import java.util.List;
 
 /**
  * power by
@@ -67,4 +71,17 @@ public class AppUtils {
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
+    public boolean isAppOnForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
+        if (tasksInfo.size() > 0) {
+
+            // 应用程序位于堆栈的顶层
+            if (TextUtils.equals(tasksInfo.get(0).topActivity
+                    .getPackageName(), context.getPackageName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

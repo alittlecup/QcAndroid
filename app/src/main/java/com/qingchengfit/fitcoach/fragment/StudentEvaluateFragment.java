@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -30,6 +31,8 @@ public class StudentEvaluateFragment extends Fragment {
 
     @Bind(R.id.evaluate_tags)
     TagGroup evaluateTags;
+    @Bind(R.id.no_evaluate)
+    LinearLayout noEvaluate;
 
     public StudentEvaluateFragment() {
         // Required empty public constructor
@@ -65,8 +68,16 @@ public class StudentEvaluateFragment extends Fragment {
                     return tags;
                 })
                 .subscribe(strings -> {
-                    if (evaluateTags != null)
+                    if (evaluateTags != null && strings != null && strings.size() > 0) {
                         evaluateTags.setTags(strings);
+                        evaluateTags.setVisibility(View.VISIBLE);
+                        noEvaluate.setVisibility(View.GONE);
+                    } else {
+                        evaluateTags.setVisibility(View.GONE);
+                        noEvaluate.setVisibility(View.VISIBLE);
+                    }
+                }, throwable -> {
+                }, () -> {
                 });
 
         return view;

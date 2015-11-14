@@ -96,7 +96,7 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/qc_item_height"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="擅长(6)"
+            android:text="擅长 "
             />
 
         <TextView
@@ -140,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="(数据来自所上课程编排的课程计划)"
+            android:text="(数据来自课程计划) :"
             android:textSize="12sp"
 
             />

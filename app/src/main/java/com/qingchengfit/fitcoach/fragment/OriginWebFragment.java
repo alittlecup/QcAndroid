@@ -86,6 +86,7 @@ public class OriginWebFragment extends WebFragment {
     private LinearLayout mWebviewRootLinearLayout;
     private List<String> hostArray = new ArrayList<>();
     private String sessionid;
+    private List<String> urls = new ArrayList<>();
 
     public OriginWebFragment() {
     }
@@ -195,9 +196,29 @@ public class OriginWebFragment extends WebFragment {
 
                     }
                     mTitleStack.add(toolbar.getTitle().toString());
-                    WebBackForwardList webBackForwardList = webview.copyBackForwardList();
-                    mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
-                    LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
+                    WebBackForwardList webBackForwardList = mWebviewWebView.copyBackForwardList();
+                    if (uri != null) {
+                        String path = uri.getHost() + uri.getPath();
+                        LogUtil.e("urlpath:" + path);
+                        if (urls.contains(path)) {
+                            int step = urls.size() - urls.indexOf(path);
+                            LogUtil.e("step:" + step);
+                            mlastPosition.add(webBackForwardList.getCurrentIndex() + step);
+                            urls = urls.subList(0, urls.indexOf(path));
+                        } else {
+                            urls.add(path);
+                            mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                        }
+//                        urls.add(path);
+
+
+                    } else {
+                        mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                    }
+//                    mTitleStack.add(toolbar.getTitle().toString());
+//                    WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+//                    mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+//                    LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
@@ -236,7 +257,7 @@ public class OriginWebFragment extends WebFragment {
                 new MaterialDialog.Builder(getContext())
                         .title(message)
                         .cancelable(false)
-                        .positiveText("Ok")
+                        .positiveText("我知道了")
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
@@ -252,7 +273,7 @@ public class OriginWebFragment extends WebFragment {
             public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(getContext())
                         .title(message)
-                        .positiveText("Ok")
+                        .positiveText("确定")
                         .negativeText("取消")
                         .cancelable(false)
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -395,6 +416,7 @@ public class OriginWebFragment extends WebFragment {
 
     public void goBack() {
         WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+        LogUtil.e("goback:" + (mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1));
         webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
         toolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);

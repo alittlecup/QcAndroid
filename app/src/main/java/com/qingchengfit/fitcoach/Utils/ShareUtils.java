@@ -2,10 +2,10 @@ package com.qingchengfit.fitcoach.Utils;
 
 import android.content.Context;
 
-import com.qingchengfit.fitcoach.R;
-
+import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 /**
  * power by
@@ -34,7 +34,7 @@ public class ShareUtils {
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(title);
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://sharesdk.cn");
+//        oks.setTitleUrl("http://sharesdk.cn");
         // text是分享文本，所有平台都需要这个字段
         oks.setText(text);
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -43,12 +43,23 @@ public class ShareUtils {
         oks.setUrl(url);
         oks.setImageUrl(img);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我是测试评论文本");
+        oks.setComment(text);
         // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(context.getString(R.string.app_name));
+        oks.setSite(title);
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://sharesdk.cn");
-
+        oks.setSiteUrl(url);
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform,
+                                cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
+                System.out.println(platform.getName().toString());
+                if ("SinaWeibo".equals(platform.getName())) {
+//                    SpannableString sp = new SpannableString(title);
+//                    sp.setSpan(new URLSpan(url),0,title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    paramsToShare.setText(text + "--" + title + url);
+                }
+            }
+        });
         // 启动分享GUI
         oks.show(context);
 

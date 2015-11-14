@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.component.DialogSheet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +38,7 @@ public class SettingFragment extends BaseSettingFragment {
     @Bind(R.id.setting_aboutus)
     RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
-
+    DialogSheet logoutSheet;
 
     public SettingFragment() {
     }
@@ -52,11 +55,37 @@ public class SettingFragment extends BaseSettingFragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getFragmentManager();
+    }
+
+    public void showDialog() {
+        if (logoutSheet == null) {
+            logoutSheet = DialogSheet.builder(getContext());
+            logoutSheet.addButton("切换账号", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    logoutSheet.dismiss();
+                    Intent it = new Intent(getActivity(), MainActivity.class);
+                    it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
+                    startActivity(it);
+                }
+            }).addButton("退出登录", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    logoutSheet.dismiss();
+                    Intent it = new Intent(getActivity(), MainActivity.class);
+                    it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    it.putExtra(MainActivity.ACTION, MainActivity.FINISH);
+                    startActivity(it);
+                }
+            });
+
+        }
+        logoutSheet.show();
     }
 
     @Override
@@ -64,14 +93,21 @@ public class SettingFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_title));
+        fragmentCallBack.onToolbarMenu(R.menu.menu_logout, 0, getActivity().getString(R.string.setting_title));
+        fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                showDialog();
+                return true;
+            }
+        });
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_title));
+//        fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_title));
     }
 
     @OnClick({R.id.setting_aboutus,

@@ -12,6 +12,7 @@
         android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:scaleType="fitXY"
         />
 
     <LinearLayout

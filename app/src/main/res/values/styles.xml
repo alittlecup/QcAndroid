@@ -31,9 +31,15 @@
         <!--<item username="windowBackground">@color/white</item>-->
         <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
+        <item name="android:datePickerDialogTheme">@style/Qc.Datepicker</item>
         <!--<item username="android:windowBackground">@color/transparent</item>-->
     </style>
 
+    <style name="Qc.Datepicker" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowTitleSize">0dp</item>
+
+    </style>
 
     <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -309,6 +310,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 bean.username = student.username;
                 bean.systemUrl = ship.system.url;
                 bean.id = student.id;
+                bean.color = ship.system.color;
                 if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
                     bean.head = "~";
                 } else {
@@ -566,6 +568,8 @@ public class MyStudentFragment extends MainBaseFragment {
         TextView itemStudentAlpha;
         @Bind(R.id.item_student_divider)
         View itemStudentDivder;
+        @Bind(R.id.item_student_header_loop)
+        RelativeLayout itemHeaderLoop;
 
         public StudentsHolder(View itemView) {
             super(itemView);
@@ -600,6 +604,7 @@ public class MyStudentFragment extends MainBaseFragment {
             holder.itemStudentGymname.setText(studentBean.gymStr);
             holder.itemStudentName.setText(studentBean.username);
             holder.itemStudentPhonenum.setText(studentBean.phone);
+            holder.itemHeaderLoop.setBackground(new LoopView(studentBean.color));
             if (studentBean.gender) {//男
                 holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
             } else {

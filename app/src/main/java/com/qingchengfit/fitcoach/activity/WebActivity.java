@@ -90,6 +90,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     private ValueCallback<Uri> mValueCallback;
     private PicChooseDialog dialog;
     private List<String> hostArray = new ArrayList<>();
+    private List<String> urls = new ArrayList<>();
     private CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
     private String sessionid;
 
@@ -129,6 +130,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
             }.getType());
         }
+
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");
 
@@ -206,6 +208,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     }
 
     private void initChromClient() {
+
         mWebviewWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
@@ -216,13 +219,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             }
 
 
-
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(WebActivity.this)
                         .title(message)
                         .cancelable(false)
-                        .positiveText("Ok")
+                        .positiveText("我知道了")
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
@@ -238,7 +240,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(WebActivity.this)
                         .title(message)
-                        .positiveText("Ok")
+                        .positiveText("确定")
                         .negativeText("取消")
                         .cancelable(false)
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -267,11 +269,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
             }
 
-            @Override
-            public void getVisitedHistory(ValueCallback<String[]> callback) {
-                super.getVisitedHistory(callback);
-
-            }
         });
 
     }
@@ -319,7 +316,29 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                     }
                     mTitleStack.add(mToolbar.getTitle().toString());
                     WebBackForwardList webBackForwardList = mWebviewWebView.copyBackForwardList();
-                    mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+
+                    if (uri != null) {
+                        String path = uri.getHost() + uri.getPath();
+                        if (!path.endsWith("/")) {
+                            return false;
+                        }
+                        if (urls.contains(path)) {
+                            int step = urls.size() - urls.indexOf(path);
+                            mlastPosition = mlastPosition.subList(0, urls.indexOf(path));
+                            mlastPosition.add(webBackForwardList.getCurrentIndex() - step + 1);
+                            urls = urls.subList(0, urls.indexOf(path));
+//                                                     mTitleStack = mTitleStack.subList(0,urls.indexOf(path)+1);
+                        } else {
+                            mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                        }
+                        urls.add(path);
+
+                    } else {
+                        mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                    }
+
+
+
                     LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                 }
                 return super.shouldOverrideUrlLoading(view, url);
@@ -483,10 +502,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     }
 
     public void removeCookies() {
-//        cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-//        for (String s : hostArray) {
-//            cookieManager.setCookie(s, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-//        }
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
     }
 
@@ -506,6 +521,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
     public void goBack() {
         WebBackForwardList webBackForwardList = mWebviewWebView.copyBackForwardList();
+        LogUtil.e("goback:" + (mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1));
         mWebviewWebView.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
         mToolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);
@@ -523,7 +539,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             setResult(-1);
             this.finish();
         }
-//        super.onBackPressed();
 
     }
 
@@ -536,7 +551,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
     @Override
     public boolean canSwipeRefreshChildScrollUp() {
-        return mWebviewWebView.getWebScrollY() > 0;
+        try {
+            return mWebviewWebView.getWebScrollY() > 0;
+        } catch (Exception e) {
+            return true;
+        }
+
     }
 
     public class JsInterface {
@@ -551,8 +571,21 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
         @JavascriptInterface
         public void shareInfo(String json) {
-            ShareBean bean = new Gson().fromJson(json, ShareBean.class);
-            ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, bean.title);
+            LogUtil.e(json);
+            try {
+
+                ShareBean bean = new Gson().fromJson(json, ShareBean.class);
+                ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, bean.title);
+            } catch (Exception e) {
+
+            }
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                }
+//            });
+
         }
 
 
@@ -632,4 +665,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         }
 
     }
+
+
 }

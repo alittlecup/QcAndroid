@@ -28,6 +28,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebBackForwardList;
@@ -72,6 +73,9 @@ public class GymDetailFragment extends Fragment {
     private MaterialDialog delDialog;
     private ValueCallback<Uri> mValueCallback;
     private PicChooseDialog dialog;
+    private List<String> hostArray = new ArrayList<>();
+    private List<String> urls = new ArrayList<>();
+    private String sessionid;
 
     public GymDetailFragment() {
     }
@@ -212,18 +216,54 @@ public class GymDetailFragment extends Fragment {
                                      @Override
                                      public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-
+                                         LogUtil.d("shouldOverrideUrlLoading" + url);
                                          if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
+                                             URI uri = null;
+                                             try {
+                                                 uri = new URI(url);
+
+                                                 if (!hostArray.contains(uri.getHost())) {
+                                                     hostArray.add(uri.getHost());
+                                                 }
+                                                 LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                                                 setCookie(uri.getHost(), "qc_session_id", sessionid);
+                                                 LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+
+                                             } catch (URISyntaxException e) {
+
+                                             }
                                              mTitleStack.add(toolbar.getTitle().toString());
+
                                              WebBackForwardList webBackForwardList = webview.copyBackForwardList();
-                                             mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
-                                             toolbar.getMenu().clear();
-                                             LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
+                                             if (uri != null) {
+                                                 String path = uri.getHost() + uri.getPath();
+                                                 if (!path.endsWith("/")) {
+                                                     return false;
+                                                 }
+                                                 if (urls.contains(path)) {
+                                                     int step = urls.size() - urls.indexOf(path);
+                                                     mlastPosition = mlastPosition.subList(0, urls.indexOf(path));
+                                                     mlastPosition.add(webBackForwardList.getCurrentIndex() - step + 1);
+                                                     urls = urls.subList(0, urls.indexOf(path));
+//                                                     mTitleStack = mTitleStack.subList(0,urls.indexOf(path)+1);
+                                                 } else {
+                                                     mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                                                 }
+                                                 urls.add(path);
+
+                                             } else {
+                                                 mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+                                             }
+
+                                             if (canGoBack()) {
+                                                 toolbar.getMenu().clear();
+                                             }
+//                    mTitleStack.add(toolbar.getTitle().toString());
+//                    WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+//                    mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
+//                    LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                                          }
-                                         Boolean result = super.shouldOverrideUrlLoading(view, url);
-                                         initCookie(url);
-                                         LogUtil.e("url:" + url);
-                                         return result;
+                                         return super.shouldOverrideUrlLoading(view, url);
                                      }
 
 
@@ -247,6 +287,49 @@ public class GymDetailFragment extends Fragment {
                                            mValueCallback = valueCallback;
 
                                            dialog.show();
+                                       }
+
+                                       @Override
+                                       public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                                           new MaterialDialog.Builder(getContext())
+                                                   .title(message)
+                                                   .cancelable(false)
+                                                   .positiveText("我知道了")
+                                                   .callback(new MaterialDialog.ButtonCallback() {
+                                                       @Override
+                                                       public void onPositive(MaterialDialog dialog) {
+                                                           super.onPositive(dialog);
+                                                           result.confirm();
+                                                       }
+                                                   })
+                                                   .show();
+                                           return true;
+                                       }
+
+                                       @Override
+                                       public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                                           new MaterialDialog.Builder(getContext())
+                                                   .title(message)
+                                                   .positiveText("确定")
+                                                   .negativeText("取消")
+                                                   .cancelable(false)
+                                                   .callback(new MaterialDialog.ButtonCallback() {
+                                                       @Override
+                                                       public void onPositive(MaterialDialog dialog) {
+                                                           super.onPositive(dialog);
+                                                           result.confirm();
+                                                           dialog.dismiss();
+                                                       }
+
+                                                       @Override
+                                                       public void onNegative(MaterialDialog dialog) {
+                                                           super.onNegative(dialog);
+                                                           result.cancel();
+                                                           dialog.dismiss();
+                                                       }
+                                                   })
+                                                   .show();
+                                           return true;
                                        }
 
                                        @Override
@@ -380,7 +463,7 @@ public class GymDetailFragment extends Fragment {
 
 
     private void initCookie(String url) {
-        String sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
+        sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
 
 
         if (sessionid != null) {
@@ -420,11 +503,14 @@ public class GymDetailFragment extends Fragment {
 
     public void goBack() {
         WebBackForwardList webBackForwardList = webview.copyBackForwardList();
+        LogUtil.e("goback:" + (mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1));
         webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
         toolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
+        urls.remove(urls.size() - 1);
         if (!canGoBack()) {
+            toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_edit);
         }
     }

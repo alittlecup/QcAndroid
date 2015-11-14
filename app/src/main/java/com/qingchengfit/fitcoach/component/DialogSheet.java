@@ -53,6 +53,7 @@ public class DialogSheet extends Dialog {
     public DialogSheet addButton(String text, View.OnClickListener listener) {
         TextView textView = new TextView(context, null, R.style.Qc_TextCommonBlack);
 //        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
+        textView.setTextColor(getContext().getResources().getColor(R.color.text_black));
         textView.setPadding(30, textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
         textView.setText(text);
         textView.setGravity(Gravity.CENTER_VERTICAL);
