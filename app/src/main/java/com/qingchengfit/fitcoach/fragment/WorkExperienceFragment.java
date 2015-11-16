@@ -88,7 +88,10 @@ public class WorkExperienceFragment extends BaseFragment {
 
                                 }
                             }
+                        }, throwable -> {
+                        }, () -> {
                         }
+
                 );
     }
 

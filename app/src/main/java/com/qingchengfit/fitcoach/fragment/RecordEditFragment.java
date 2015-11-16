@@ -142,7 +142,9 @@ public class RecordEditFragment extends BaseSettingFragment {
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
                             fragmentCallBack.ShowLoading("请稍后");
-                            QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> onResult(qcResponse));
+                            QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> onResult(qcResponse), throwable -> {
+                            }, () -> {
+                            });
                             dialog.dismiss();
                         }
 
@@ -286,9 +288,13 @@ public class RecordEditFragment extends BaseSettingFragment {
         fragmentCallBack.ShowLoading("请稍后");
         if (mTitle)
             QcCloudClient.getApi().postApi.qcEditCertificate(certificatesEntity.getId(), addCertificate)
-                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult);
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult, throwable -> {
+            }, () -> {
+            });
         else
-            QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult);
+            QcCloudClient.getApi().postApi.qcAddCertificate(addCertificate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this::onResult, throwable -> {
+            }, () -> {
+            });
     }
 
     public void onResult(QcResponse qcResponse) {

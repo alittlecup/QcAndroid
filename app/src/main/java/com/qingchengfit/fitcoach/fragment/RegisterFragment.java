@@ -198,6 +198,8 @@ public class RegisterFragment extends Fragment {
                                                 Toast.makeText(App.AppContex, qcResponLogin.msg, Toast.LENGTH_SHORT).show();
                                             });
                                         }
+                                    }, throwable -> {
+                                    }, () -> {
                                     }
                             );
 //                    QcCloudClient.getApi()
@@ -243,6 +245,8 @@ public class RegisterFragment extends Fragment {
                         } else {
 //                            LogUtil.d(":" + qcResponse.msg);
                         }
+                    }, throwable -> {
+                    }, () -> {
                     })
             ;
             RxBus.getBus().post(new SendSmsCode());

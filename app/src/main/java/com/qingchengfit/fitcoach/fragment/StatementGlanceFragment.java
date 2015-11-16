@@ -119,6 +119,8 @@ public class StatementGlanceFragment extends Fragment {
                 .subscribe(qcReportGlanceResponse -> {
                     response = qcReportGlanceResponse;
                     handleReponse(qcReportGlanceResponse);
+                }, throwable -> {
+                }, () -> {
                 });
         return view;
     }

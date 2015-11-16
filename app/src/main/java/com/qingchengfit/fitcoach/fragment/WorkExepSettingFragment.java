@@ -122,6 +122,8 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
                                 }
                                 refresh.setRefreshing(false);
                             }
+                        }, throwable -> {
+                        }, () -> {
                         }
                 );
     }

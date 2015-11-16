@@ -291,6 +291,8 @@ public class SaleDetailFragment extends Fragment {
                     }
                     getActivity().runOnUiThread(spinnerBeanArrayAdapter::notifyDataSetChanged);
                     queryStatement();
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

@@ -70,7 +70,7 @@ public class GymTimeFragment extends Fragment {
                 gymtimeMon.setContent(sb.toString());
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
 

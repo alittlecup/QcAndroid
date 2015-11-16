@@ -315,6 +315,8 @@ public class StatementDetailFragment extends Fragment {
                     }
                     getActivity().runOnUiThread(spinnerBeanArrayAdapter::notifyDataSetChanged);
                     queryStatement();
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

@@ -151,7 +151,10 @@ public class MyStudentFragment extends MainBaseFragment {
                         .append("/mobile/students/")
                         .append(adapterData.get(pos).id)
                         .append("/details/");
-                openDrawerInterface.goWeb(sb.toString());
+//                openDrawerInterface.goWeb(sb.toString());
+                Intent it = new Intent(getContext(), WebActivity.class);
+                it.putExtra("url", sb.toString());
+                MyStudentFragment.this.startActivityForResult(it, 404);
             }
         });
         recyclerview.setAdapter(mStudentAdapter);
@@ -218,7 +221,8 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
     public void freshData() {
-//获取原始数据
+        refresh.setRefreshing(true);
+        //获取原始数据
         QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
                 .subscribe(new Observer<QcAllStudentResponse>() {
                     @Override
@@ -516,15 +520,16 @@ public class MyStudentFragment extends MainBaseFragment {
 //        openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/add/students/");
         Intent it = new Intent(getContext(), WebActivity.class);
         it.putExtra("url", Configs.Server + "mobile/coaches/add/students/");
-        startActivityForResult(it, 404);
+        MyStudentFragment.this.startActivityForResult(it, 404);
     }
+
 
 
     //返回页面时刷新
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
+        if (resultCode > 1000) {
             freshData();
         }
     }

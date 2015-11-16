@@ -105,6 +105,7 @@ public class AddOganasitionFragment extends Fragment {
 //                           searchListener.onSearchResult();
                     } else Toast.makeText(getActivity(), qcResponse.msg, Toast.LENGTH_SHORT).show();
 
+                }, throwable -> {
                 });
     }
 

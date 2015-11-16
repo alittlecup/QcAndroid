@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
@@ -110,8 +111,27 @@ public class ChangeTimeActivity extends BaseAcitivity {
 
     }
 
+    public void setDialogTime(CommonInputView inputView) {
+        try {
+            if (inputView != null && !TextUtils.isEmpty(inputView.getContent())) {
+                String[] time = inputView.getContent().split("-");
+                if (time.length > 1) {
+                    Date start = DateUtils.formatDateHHMM(time[0]);
+                    Date end = DateUtils.formatDateHHMM(time[1]);
+                    timeDialogWindow.setTime(start, end);
+                }
+            }
+        } catch (Exception e) {
+
+        }
+
+
+    }
+
+
     @OnClick(R.id.gymtime_mon)
     public void onClick1() {
+        setDialogTime(gymtimeMon);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -123,11 +143,12 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime1.day = 1;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
     @OnClick(R.id.gymtime_tus)
     public void onClick2() {
+        setDialogTime(gymtimeTus);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -139,11 +160,12 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime2.day = 2;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
     @OnClick(R.id.gymtime_wen)
     public void onClick3() {
+        setDialogTime(gymtimeWen);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -155,11 +177,12 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime3.day = 3;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
     @OnClick(R.id.gymtime_thu)
     public void onClick4() {
+        setDialogTime(gymtimeThu);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -171,11 +194,12 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime4.day = 4;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
     @OnClick(R.id.gymtime_fri)
     public void onClick5() {
+        setDialogTime(gymtimeFri);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -187,11 +211,12 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime5.day = 5;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
     @OnClick(R.id.gymtime_sat)
     public void onClick6() {
+        setDialogTime(gymtimeSat);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -203,11 +228,12 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime6.day = 6;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
     @OnClick(R.id.gymtime_sun)
     public void onClick7() {
+        setDialogTime(gymtimeSun);
         timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date start, Date end) {
@@ -219,7 +245,7 @@ public class ChangeTimeActivity extends BaseAcitivity {
                 openTime7.day = 7;
             }
         });
-        timeDialogWindow.showAtLocation(new Date());
+        timeDialogWindow.showAtLocation();
     }
 
 
@@ -238,13 +264,13 @@ public class ChangeTimeActivity extends BaseAcitivity {
         it.putExtra("time", new Gson().toJson(openTimes));
         setResult(1, it);
         this.finish();
-        overridePendingTransition(R.anim.slide_hold, R.anim.timepicker_anim_exit_bottom);
+//        overridePendingTransition(R.anim.slide_hold, R.anim.timepicker_anim_exit_bottom);
     }
 
     @Override
     public void onBackPressed() {
         setResult(-1);
         finish();
-        overridePendingTransition(R.anim.slide_hold, R.anim.timepicker_anim_exit_bottom);
+//        overridePendingTransition(R.anim.slide_hold, R.anim.timepicker_anim_exit_bottom);
     }
 }

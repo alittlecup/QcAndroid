@@ -121,6 +121,8 @@ public class SaleGlanceFragment extends Fragment {
                 .subscribe(qcSaleGlanceResponse -> {
                     response = qcSaleGlanceResponse;
                     handleReponse(qcSaleGlanceResponse);
+                }, throwable -> {
+                }, () -> {
                 });
         return view;
     }

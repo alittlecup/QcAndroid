@@ -81,6 +81,16 @@ public class DateUtils {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
         return formatter.format(d);
     }
+
+    public static Date formatDateHHMM(String s) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
+        Date date = null;
+        try {
+            date = formatter.parse(s);
+        } catch (ParseException e) {
+        }
+        return date;
+    }
     public static String formatDateToServer(String s) {
 
         return s.replace(".", "-");

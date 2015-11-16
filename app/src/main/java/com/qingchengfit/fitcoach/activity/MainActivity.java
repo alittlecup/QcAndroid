@@ -812,7 +812,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
+//        if (resultCode > 0) {
             switch (resultCode) {
                 case 1:
 //                    changeFragment(mScheduesFragment);
@@ -843,7 +843,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                     break;
 
 
-            }
+//            }
         }
     }
 

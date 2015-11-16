@@ -13,6 +13,7 @@ import com.bigkoo.pickerview.TimePopupWindow;
 import com.bigkoo.pickerview.lib.ScreenInfo;
 import com.bigkoo.pickerview.lib.WheelTime;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -126,21 +127,20 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
     /**
      * 指定选中的时间，显示选择器
      *
-     * @param date
      */
-    public void showAtLocation(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        if (date == null)
-            calendar.setTimeInMillis(System.currentTimeMillis());
-        else
-            calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        wheelTime_start.setPicker(year, month, day, hours, minute);
-        wheelTime_end.setPicker(year, month, day, hours, minute);
+    public void showAtLocation() {
+//        Calendar calendar = Calendar.getInstance();
+//        if (date == null)
+//            calendar.setTimeInMillis(System.currentTimeMillis());
+//        else
+//            calendar.setTime(date);
+//        int year = calendar.get(Calendar.YEAR);
+//        int month = calendar.get(Calendar.MONTH);
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+//        int minute = calendar.get(Calendar.MINUTE);
+//        wheelTime_start.setPicker(year, month, day, hours, minute);
+//        wheelTime_end.setPicker(year, month, day, hours, minute);
 //        update();
 //        super.showAtLocation(parent, gravity, x, y);
         Window window = this.getWindow();
@@ -176,6 +176,10 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
                 try {
                     Date date = WheelTime.dateFormat.parse(wheelTime_start.getTime());
                     Date end = WheelTime.dateFormat.parse(wheelTime_end.getTime());
+                    if (date.getTime() > end.getTime()) {
+                        ToastUtils.show(R.drawable.ic_share_fail, "结束时间不能小于开始时间");
+                        return;
+                    }
                     timeSelectListener.onTimeSelect(date, end);
                 } catch (ParseException e) {
                     e.printStackTrace();

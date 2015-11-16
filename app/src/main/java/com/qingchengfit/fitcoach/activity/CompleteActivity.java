@@ -99,6 +99,9 @@ public class CompleteActivity extends AppCompatActivity {
 
                             }
                         }
+                        , throwable -> {
+                        }, () -> {
+                        }
                 );
     }
 

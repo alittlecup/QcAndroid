@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 52
-        versionName "0.5.2"
+        versionCode 53
+        versionName "0.5.3"
     }
 //    buildTypes {
 //        release {

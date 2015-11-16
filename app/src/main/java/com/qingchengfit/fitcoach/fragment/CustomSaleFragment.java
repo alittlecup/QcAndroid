@@ -122,6 +122,8 @@ public class CustomSaleFragment extends Fragment {
                         spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
                         gymStrings.add(system.name);
                     }
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

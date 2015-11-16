@@ -123,6 +123,8 @@ public class AddGymFragment extends Fragment {
                             } else {
                                 Toast.makeText(getContext(), qcAddGymResponse.msg, Toast.LENGTH_SHORT).show();
                             }
+                        }, throwable -> {
+                        }, () -> {
                         }
                 );
     }

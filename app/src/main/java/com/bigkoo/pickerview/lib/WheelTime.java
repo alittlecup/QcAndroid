@@ -108,13 +108,13 @@ public class WheelTime {
         wv_day.setCurrentItem(day - 1);
 
         wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
+        wv_hours.setAdapter(new NumericWheelAdapter(0, 23, "%02d"));
 //        wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
         wv_hours.setLabel(":");
         wv_hours.setCurrentItem(h);
 
         wv_mins = (WheelView) view.findViewById(R.id.min);
-        wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_mins.setAdapter(new NumericWheelAdapter(0, 59, "%02d"));
 //        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
 
@@ -188,12 +188,12 @@ public class WheelTime {
                 textSize = (screenheight / 100) * 3;
                 break;
             case YEAR_MONTH_DAY:
-                textSize = (screenheight / 100) * 4;
+                textSize = (screenheight / 150) * 4;
                 wv_hours.setVisibility(View.GONE);
                 wv_mins.setVisibility(View.GONE);
                 break;
             case HOURS_MINS:
-                textSize = (screenheight / 100) * 4;
+                textSize = (screenheight / 150) * 4;
                 wv_hours.setCyclic(true);
                 wv_mins.setCyclic(true);
                 wv_year.setVisibility(View.GONE);

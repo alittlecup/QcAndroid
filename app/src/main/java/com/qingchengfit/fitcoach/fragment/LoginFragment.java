@@ -172,6 +172,8 @@ public class LoginFragment extends Fragment {
 
                             }
 
+                        }, throwable -> {
+                        }, () -> {
                         });
 
             }
@@ -205,6 +207,8 @@ public class LoginFragment extends Fragment {
                                     }
                                 });
                             }
+                        }, throwable -> {
+                        }, () -> {
                         });
             }
 

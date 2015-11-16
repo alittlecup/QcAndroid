@@ -68,13 +68,15 @@ public class StudentEvaluateFragment extends Fragment {
                     return tags;
                 })
                 .subscribe(strings -> {
-                    if (evaluateTags != null && strings != null && strings.size() > 0) {
-                        evaluateTags.setTags(strings);
-                        evaluateTags.setVisibility(View.VISIBLE);
-                        noEvaluate.setVisibility(View.GONE);
-                    } else {
-                        evaluateTags.setVisibility(View.GONE);
-                        noEvaluate.setVisibility(View.VISIBLE);
+                    if (evaluateTags != null) {
+                        if (strings != null && strings.size() > 0) {
+                            evaluateTags.setTags(strings);
+                            evaluateTags.setVisibility(View.VISIBLE);
+                            noEvaluate.setVisibility(View.GONE);
+                        } else {
+                            evaluateTags.setVisibility(View.GONE);
+                            noEvaluate.setVisibility(View.VISIBLE);
+                        }
                     }
                 }, throwable -> {
                 }, () -> {

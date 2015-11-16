@@ -152,6 +152,8 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                         }
                     });
 
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

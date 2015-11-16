@@ -92,6 +92,8 @@ public class RecordComfirmFragment extends BaseFragment {
                             recordConfirmNone.setVisibility(View.VISIBLE);
                         }
                     }
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

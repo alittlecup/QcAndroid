@@ -175,6 +175,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                     } else searchresultRv.setVisibility(View.GONE);
                                 }
                                 ;
+                            }, throwable -> {
+                            }, () -> {
                             });
         } else if (type == TYPE_ORGANASITON) {
             QcCloudClient.getApi().getApi.qcHotOrganization(params)
@@ -196,6 +198,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                     } else searchresultRv.setVisibility(View.GONE);
                                 }
                                 ;
+                            }, throwable -> {
+                            }, () -> {
                             }
                     );
         }
@@ -255,6 +259,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                     } else searchresultRv.setVisibility(View.GONE);
                                 }
                                 ;
+                            }, throwable -> {
+                            }, () -> {
                             });
         } else if (type == TYPE_ORGANASITON) {
             QcCloudClient.getApi().getApi.qcSearchOrganization(params)
@@ -277,6 +283,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                     } else searchresultRv.setVisibility(View.GONE);
 
                                 }
+                            }, throwable -> {
+                            }, () -> {
                             }
                     );
         }

@@ -113,6 +113,8 @@ public class ComfirmDetailFragment extends Fragment {
                             Glide.with(getActivity()).load(qcCertificateDetailResponse.getData().getCertificate().getPhoto()).asBitmap().into(new ScaleWidthWrapper(comfirmImg));
                         });
                     }
+                }, throwable -> {
+                }, () -> {
                 }
         );
         view.setOnTouchListener(new View.OnTouchListener() {

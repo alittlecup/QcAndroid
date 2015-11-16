@@ -435,6 +435,8 @@ public class ScheduesFragment extends MainBaseFragment {
                         }
                         mDatePicker.markCurDay();
                     });
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

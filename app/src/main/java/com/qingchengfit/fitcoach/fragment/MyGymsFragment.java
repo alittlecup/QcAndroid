@@ -189,6 +189,8 @@ public class MyGymsFragment extends MainBaseFragment {
                     mGymAdapter.notifyDataSetChanged();
                     refresh.setRefreshing(false);
                     refreshNodata.setRefreshing(false);
+                }, throwable -> {
+                }, () -> {
                 });
     }
 

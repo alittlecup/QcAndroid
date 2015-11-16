@@ -260,6 +260,8 @@ public class AddSelfGymFragment extends Fragment {
                 .subscribe(s -> {
                     addselfgymName.setContent(reponse.data.system.name);
                     addselfgymTime.setContent(s);
+                }, throwable -> {
+                }, () -> {
                 });
         return view;
     }
@@ -398,7 +400,7 @@ public class AddSelfGymFragment extends Fragment {
         Intent it = new Intent(getActivity(), ChangeTimeActivity.class);
         it.putExtra("time", new Gson().toJson(reponse.data.system.openTimes));
         startActivityForResult(it, 222);
-        getActivity().overridePendingTransition(R.anim.timepicker_anim_enter_bottom, R.anim.slide_hold);
+//        getActivity().overridePendingTransition(R.anim.timepicker_anim_enter_bottom, R.anim.slide_hold);
     }
 
     @Override

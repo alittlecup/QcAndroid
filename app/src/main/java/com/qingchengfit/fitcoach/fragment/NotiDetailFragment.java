@@ -77,6 +77,8 @@ public class NotiDetailFragment extends Fragment {
 //                    notidetailContent.setText(qcNotiDetailResponse.getData());
                             });
                         }
+                    }, throwable -> {
+                    }, () -> {
                     }
             );
         return view;

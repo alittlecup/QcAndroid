@@ -102,6 +102,8 @@ public class RecordFragment extends BaseSettingFragment {
                 }
                 refresh.setRefreshing(false);
             });
+        }, throwable -> {
+        }, () -> {
         });
     }
 

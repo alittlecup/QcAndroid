@@ -130,6 +130,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                                         } else
                                             Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
 
+                                    }, throwable -> {
+                                    }, () -> {
                                     });
                             dialog.dismiss();
                         }

@@ -139,6 +139,8 @@ public class MyHomeActivity extends AppCompatActivity {
                                 item1.setCount(qcDrawerResponse.data.plan_count);
                                 item2.setCount(qcDrawerResponse.data.system_count);
                             });
+                        }, throwable -> {
+                        }, () -> {
                         });
             }
 

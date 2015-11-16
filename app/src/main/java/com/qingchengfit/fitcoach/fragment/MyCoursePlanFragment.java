@@ -174,6 +174,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                         adapterData.addAll(qcAllCoursePlanResponse.data.plans);
                         mGymAdapter.notifyDataSetChanged();
                         recyclerview.scrollToPosition(adapterData.size() - 1);
+                    }, throwable -> {
+                    }, () -> {
                     });
         } else if (requestCode >= 0 && requestCode < 10000) {
             QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
@@ -182,6 +184,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                         adapterData.clear();
                         adapterData.addAll(qcAllCoursePlanResponse.data.plans);
                         mGymAdapter.notifyItemChanged(requestCode);
+                    }, throwable -> {
+                    }, () -> {
                     });
         }
     }
