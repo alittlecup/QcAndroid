@@ -177,14 +177,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                     return true;
                 }
             });
-            workexpeditStartTime.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            workexpeditStartTime.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
             if (c.get(Calendar.YEAR) == 3000) {
                 workexpeditStartEnd.setContent("至今");
             } else {
-                workexpeditStartEnd.setContent(DateUtils.getDateDay(d));
+                workexpeditStartEnd.setContent(DateUtils.getServerDateDay(d));
             }
 
 
@@ -200,8 +200,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             workexpeditPrivateNum.setContent(Integer.toString(experiencesEntity.getPrivate_user()));
             workexpeditSale.setContent(Integer.toString(experiencesEntity.getSale()));
         } else {
-            workexpeditStartTime.setContent(DateUtils.getDateDay(new Date()));
-            workexpeditStartEnd.setContent(DateUtils.getDateDay(new Date()));
+            workexpeditStartTime.setContent(DateUtils.getServerDateDay(new Date()));
+            workexpeditStartEnd.setContent(DateUtils.getServerDateDay(new Date()));
 
         }
 
@@ -308,14 +308,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             }
 
             if (!TextUtils.equals("至今", workexpeditStartEnd.getContent()) &&
-                    DateUtils.formatDateFromStringDot(workexpeditStartEnd.getContent()).getTime()
-                            < DateUtils.formatDateFromStringDot(workexpeditStartTime.getContent()).getTime()) {
+                    DateUtils.formatDateFromString(workexpeditStartEnd.getContent()).getTime()
+                            < DateUtils.formatDateFromString(workexpeditStartTime.getContent()).getTime()) {
                 Toast.makeText(App.AppContex, "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
-            workexpeditStartTime.setContent(DateUtils.getDateDay(date));
+            workexpeditStartTime.setContent(DateUtils.getServerDateDay(date));
             pwTime.dismiss();
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
@@ -338,11 +338,11 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                             mDialogSheet.dismiss();
                             pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
                             pwTime.setOnTimeSelectListener(date -> {
-                                if (date.getTime() < DateUtils.formatDateFromStringDot(workexpeditStartTime.getContent()).getTime()) {
+                                if (date.getTime() < DateUtils.formatDateFromString(workexpeditStartTime.getContent()).getTime()) {
                                     Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                workexpeditStartEnd.setContent(DateUtils.getDateDay(date));
+                                workexpeditStartEnd.setContent(DateUtils.getServerDateDay(date));
                                 pwTime.dismiss();
                             });
                             pwTime.setRange(1900, 2100);

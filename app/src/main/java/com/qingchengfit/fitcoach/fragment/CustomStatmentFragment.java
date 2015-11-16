@@ -1,19 +1,23 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
+import android.widget.LinearLayout;
 
+import com.bigkoo.pickerview.TimeDialogWindow;
+import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
@@ -53,6 +57,9 @@ public class CustomStatmentFragment extends Fragment {
     CommonInputView customStatmentCourse;
     @Bind(R.id.custom_statment_student)
     CommonInputView customStatmentStudent;
+    TimeDialogWindow pwTime;
+    @Bind(R.id.rootview)
+    LinearLayout rootview;
 
     private Calendar date;
     private List<SpinnerBean> spinnerBeans = new ArrayList<>();
@@ -63,6 +70,8 @@ public class CustomStatmentFragment extends Fragment {
     private int chooseUserId = 0;
     private int chooseCoursId = 0;
     private List<QcStudentBean> studentBeans;
+
+
     private Observer<QcStudentResponse> studentResponseObserver = new Observer<QcStudentResponse>() {
         @Override
         public void onCompleted() {
@@ -189,22 +198,111 @@ public class CustomStatmentFragment extends Fragment {
 
     @OnClick(R.id.custom_statment_end)
     public void onClickEnd() {
-        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                customStatmentEnd.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
+//        int year = date.get(Calendar.YEAR);
+//        int month = date.get(Calendar.MONTH) + 1;
+//        int day = date.get(Calendar.DAY_OF_MONTH);
+//        if (!TextUtils.isEmpty(customStatmentEnd.getContent())) {
+//            try {
+//                String[] ss = customStatmentEnd.getContent().split("-");
+//                year = Integer.parseInt(ss[0]);
+//                month = Integer.parseInt(ss[1]);
+//                day = Integer.parseInt(ss[2]);
+//            } catch (Exception e) {
+//
+//            }
+//        }
+//        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                String endStr = year + "-" + ++monthOfYear + "-" + dayOfMonth;
+//                try {
+//                    Date end = DateUtils.formatDateFromString(endStr);
+//                    Date start = DateUtils.formatDateFromString(customStatmentStart.getContent());
+//                    LogUtil.e(end.getTime() + "   " + start.getTime());
+//                    if (end.getTime() - start.getTime() < 0) {
+//                        ToastUtils.show(R.drawable.ic_share_fail, "结束日期不能早于开始日期");
+//                    } else if ((end.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
+//                        ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
+//                    } else
+//                        customStatmentEnd.setContent(endStr);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            }
+//        }, year, month, day).show();
+
+        if (pwTime == null)
+            pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        pwTime.setRange(1900, 2100);
+        pwTime.setOnTimeSelectListener(date -> {
+//            customStatmentStart.setContent(DateUtils.getServerDateDay(date));
+            try {
+                Date start = DateUtils.formatDateFromString(customStatmentStart.getContent());
+                LogUtil.e(date.getTime() + "   " + start.getTime());
+                if (date.getTime() - start.getTime() < 0) {
+                    ToastUtils.show(R.drawable.ic_share_fail, "结束日期不能早于开始日期");
+                } else if ((date.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
+                    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
+                } else {
+                    pwTime.dismiss();
+                    customStatmentEnd.setContent(DateUtils.getServerDateDay(date));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
+
+        });
+        Date date = new Date();
+        try {
+            date = DateUtils.formatDateFromString(customStatmentEnd.getContent());
+        } catch (Exception e) {
+
+        }
+
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
+
     }
 
     @OnClick(R.id.custom_statment_start)
     public void onClickStart() {
-        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                customStatmentStart.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
-            }
-        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
+//        int year = date.get(Calendar.YEAR);
+//        int month = date.get(Calendar.MONTH);
+//        int day = date.get(Calendar.DAY_OF_MONTH);
+//        if (!TextUtils.isEmpty(customStatmentStart.getContent())){
+//            try {
+//                String[] ss = customStatmentStart.getContent().split("-");
+//                year = Integer.parseInt(ss[0]);
+//                month = Integer.parseInt(ss[1]);
+//                day = Integer.parseInt(ss[2]);
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }
+//        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//
+//                customStatmentStart.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
+//
+//            }
+//        }, year,month,day).show();
+        if (pwTime == null)
+            pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        pwTime.setRange(1900, 2100);
+        pwTime.setOnTimeSelectListener(date -> {
+            customStatmentStart.setContent(DateUtils.getServerDateDay(date));
+            pwTime.dismiss();
+        });
+        Date date = new Date();
+        try {
+            date = DateUtils.formatDateFromString(customStatmentStart.getContent());
+        } catch (Exception e) {
+
+        }
+
+        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
     }
 
     @OnClick(R.id.custom_statment_gym)

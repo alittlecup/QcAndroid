@@ -20,7 +20,7 @@ import java.util.Locale;
  * Created by Paper on 15/9/16 2015.
  */
 public class DateUtils {
-
+    public static final Long MONTH_TIME = 31 * 24 * 60 * 60 * 1000l;
     public static Date formatDateFromServer(String s) {
         s = s.replace("T", " ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
@@ -28,6 +28,7 @@ public class DateUtils {
         try {
             date = formatter.parse(s);
         } catch (ParseException e) {
+            e.printStackTrace();
         }
         return date;
     }
@@ -38,6 +39,7 @@ public class DateUtils {
         try {
             date = formatter.parse(s);
         } catch (ParseException e) {
+            e.printStackTrace();
         }
         return date;
     }
@@ -66,14 +68,14 @@ public class DateUtils {
 
     public static String getOnlyDay(Date d) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MM.dd", Locale.CHINA);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd", Locale.CHINA);
         return formatter.format(d);
     }
 
 
     public static String getDateMonth(Date d) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM", Locale.CHINA);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         return formatter.format(d);
     }
 

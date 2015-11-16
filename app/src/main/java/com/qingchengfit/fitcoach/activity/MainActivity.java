@@ -669,7 +669,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 fragmentTransaction.hide(topFragment);
 
             fragmentTransaction.show(fragment);
-            fragmentTransaction.commit();
+            fragmentTransaction.commitAllowingStateLoss();
             topFragment = fragment;
         }
     }

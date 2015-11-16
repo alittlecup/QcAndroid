@@ -187,12 +187,12 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             holder.itemWorkexpeName.setText(experiencesEntity.getGym().getName());
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            stringBuffer.append("-");
+            stringBuffer.append(getContext().getString(R.string.comom_time_to));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
             if (c.get(Calendar.YEAR) == 3000)
-                stringBuffer.append("至今");
+                stringBuffer.append(getContext().getString(R.string.common_today));
             else
                 stringBuffer.append(DateUtils.getDateMonth(d));
             holder.itemWorkexpeTime.setText(stringBuffer.toString());

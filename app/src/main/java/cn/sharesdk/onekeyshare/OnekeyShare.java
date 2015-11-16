@@ -597,7 +597,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 
 	// 在状态栏提示分享操作
 	private void showNotification(String text) {
-		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 
 	/** 是否支持QQ,QZone授权登录后发微博 */

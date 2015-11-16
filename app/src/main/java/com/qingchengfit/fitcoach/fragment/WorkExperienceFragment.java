@@ -203,12 +203,12 @@ public class WorkExperienceFragment extends BaseFragment {
 
             StringBuffer ss = new StringBuffer();
             ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            ss.append("-");
+            ss.append(getContext().getString(R.string.comom_time_to));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
             if (c.get(Calendar.YEAR) == 3000)
-                ss.append("至今");
+                ss.append(getContext().getString(R.string.common_today));
             else
                 ss.append(DateUtils.getDateMonth(d));
             holder.itemTime.setText(ss.toString());

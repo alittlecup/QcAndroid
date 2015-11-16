@@ -381,6 +381,7 @@ public class StatementDetailFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    hideLoading();
                                     ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
                                 }
                             });
@@ -498,7 +499,7 @@ public class StatementDetailFragment extends Fragment {
                     }
 
                     getActivity().runOnUiThread(() -> {
-                        if (DateUtils.getDateDay(curCalendar.getTime()).equalsIgnoreCase(DateUtils.getDateDay(new Date()))) {
+                        if (DateUtils.getServerDateDay(curCalendar.getTime()).equalsIgnoreCase(DateUtils.getServerDateDay(new Date()))) {
                             statementDetailMore.setEnabled(false);
                         } else {
                             statementDetailMore.setEnabled(true);
@@ -508,7 +509,9 @@ public class StatementDetailFragment extends Fragment {
 
                     return s1;
                 })
-                .subscribe(s -> queryStatement());
+                .subscribe(s -> queryStatement(), throwable -> {
+                }, () -> {
+                });
     }
 
 

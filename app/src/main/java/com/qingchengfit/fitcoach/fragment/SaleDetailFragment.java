@@ -352,6 +352,7 @@ public class SaleDetailFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    hideLoading();
                                     ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
                                 }
 
@@ -462,7 +463,7 @@ public class SaleDetailFragment extends Fragment {
                             break;
                     }
                     getActivity().runOnUiThread(() -> {
-                        if (DateUtils.getDateDay(curCalendar.getTime()).equalsIgnoreCase(DateUtils.getDateDay(new Date()))) {
+                        if (DateUtils.getServerDateDay(curCalendar.getTime()).equalsIgnoreCase(DateUtils.getServerDateDay(new Date()))) {
                             statementDetailMore.setEnabled(false);
                         } else {
                             statementDetailMore.setEnabled(true);

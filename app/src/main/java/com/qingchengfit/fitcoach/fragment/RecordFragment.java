@@ -167,7 +167,7 @@ public class RecordFragment extends BaseSettingFragment {
             holder.recordcomfirmSubtitle.setText(certificatesEntity.getOrganization().getName());
             StringBuffer sb = new StringBuffer();
             sb.append("有效期:");
-            sb.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+            sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             sb.append("至");
             Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -175,7 +175,7 @@ public class RecordFragment extends BaseSettingFragment {
             if (c.get(Calendar.YEAR) == 3000)
                 holder.recordcomfirmTime.setText("有效期:长期有效");
             else {
-                sb.append(DateUtils.getDateDay(d));
+                sb.append(DateUtils.getServerDateDay(d));
                 holder.recordcomfirmTime.setText(sb.toString());
             }
             if (certificatesEntity.getIs_authenticated())

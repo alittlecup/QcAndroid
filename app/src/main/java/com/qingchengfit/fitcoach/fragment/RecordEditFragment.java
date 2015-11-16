@@ -188,8 +188,8 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (mContent != null) {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
-            recordeditDatestart.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
-            recordeditDate.setContent(DateUtils.getDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            recordeditDatestart.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+            recordeditDate.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
@@ -199,7 +199,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             if (c.get(Calendar.YEAR) == 3000) {
                 recordeditDateoff.setContent("长期有效");
             } else {
-                recordeditDateoff.setContent(DateUtils.getDateDay(d));
+                recordeditDateoff.setContent(DateUtils.getServerDateDay(d));
             }
             switch (certificatesEntity.getType()) {
                 case TYPE_MEETING:
@@ -217,8 +217,8 @@ public class RecordEditFragment extends BaseSettingFragment {
                 Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).asBitmap().into(new ScaleWidthWrapper(recordeditImg));
             } else recordeditImg.setVisibility(View.GONE);
         } else {
-            recordeditDatestart.setContent(DateUtils.getDateDay(new Date()));
-            recordeditDateoff.setContent(DateUtils.getDateDay(new Date()));
+            recordeditDatestart.setContent(DateUtils.getServerDateDay(new Date()));
+            recordeditDateoff.setContent(DateUtils.getServerDateDay(new Date()));
         }
         recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -314,18 +314,18 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_datestart)
     public void onClickStart() {
         if (!TextUtils.isEmpty(recordeditDatestart.getContent())) {
-            pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()));
+            pwTime.setTime(DateUtils.formatDateFromString(recordeditDatestart.getContent()));
         }
         pwTime.setOnTimeSelectListener(date -> {
             if (!TextUtils.equals(recordeditDateoff.getContent(), "长期有效") &&
-                    DateUtils.formatDateFromStringDot(recordeditDateoff.getContent()).getTime()
+                    DateUtils.formatDateFromString(recordeditDateoff.getContent()).getTime()
                             < date.getTime()
                     ) {
                 Toast.makeText(App.AppContex, "生效日期不能晚于失效日期", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            recordeditDatestart.setContent(DateUtils.getDateDay(date));
+            recordeditDatestart.setContent(DateUtils.getServerDateDay(date));
             pwTime.dismiss();
         });
         pwTime.setRange(1900, 2100);
@@ -336,10 +336,10 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_date)
     public void onClickDate() {
         if (!TextUtils.isEmpty(recordeditDate.getContent())) {
-            pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDate.getContent()));
+            pwTime.setTime(DateUtils.formatDateFromString(recordeditDate.getContent()));
         }
         pwTime.setOnTimeSelectListener(date -> {
-            recordeditDate.setContent(DateUtils.getDateDay(date));
+            recordeditDate.setContent(DateUtils.getServerDateDay(date));
         });
         pwTime.setRange(1900, 2100);
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
@@ -361,17 +361,17 @@ public class RecordEditFragment extends BaseSettingFragment {
                         public void onClick(View v) {
                             mDialogSheet.dismiss();
                             if (!TextUtils.isEmpty(recordeditDateoff.getContent())) {
-                                pwTime.setTime(DateUtils.formatDateFromStringDot(recordeditDateoff.getContent()));
+                                pwTime.setTime(DateUtils.formatDateFromString(recordeditDateoff.getContent()));
                             }
                             pwTime.setOnTimeSelectListener(date -> {
                                 if (date.getTime()
-                                        < DateUtils.formatDateFromStringDot(recordeditDatestart.getContent()).getTime()
+                                        < DateUtils.formatDateFromString(recordeditDatestart.getContent()).getTime()
                                         ) {
                                     Toast.makeText(App.AppContex, "失效日期不能早于生效日期", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                recordeditDateoff.setContent(DateUtils.getDateDay(date));
+                                recordeditDateoff.setContent(DateUtils.getServerDateDay(date));
                                 pwTime.dismiss();
                             });
                             pwTime.setRange(1900, 2100);

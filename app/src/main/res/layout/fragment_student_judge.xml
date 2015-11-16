@@ -25,7 +25,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="教练评价"
+                android:text="教练评分"
                 />
 
             <TextView
@@ -63,7 +63,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="课程评价"
+                android:text="课程评分"
                 />
 
             <TextView
