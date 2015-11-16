@@ -134,7 +134,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .title("删除此条资历?")
+                    .content("删除此条资质?")
                     .positiveText("确定")
                     .negativeText("取消")
                     .callback(new MaterialDialog.ButtonCallback() {

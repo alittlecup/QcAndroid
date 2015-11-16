@@ -3,19 +3,19 @@ package com.qingchengfit.fitcoach.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
+import com.qingchengfit.fitcoach.component.CircleIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,18 +43,19 @@ public class SplashActivity extends BaseAcitivity {
 
     @Bind(R.id.splash_viewpager)
     ViewPager splashViewpager;
-//    @Bind(R.id.splash_indicator)
-//    CircleIndicator splashIndicator;
+    @Bind(R.id.splash_indicator)
+    CircleIndicator splashIndicator;
 
     List<View> imageViews = new ArrayList<>();
     @Bind(R.id.main_loading)
     RelativeLayout mainLoading;
     float touchX;
     private int[] mSplashImg = new int[]{
-            R.drawable.img_help1,
-            R.drawable.img_help2,
-            R.drawable.img_help3,
-            R.drawable.img_help4,
+            R.drawable.help1,
+            R.drawable.help2,
+            R.drawable.help3,
+            R.drawable.help4,
+            R.drawable.help5,
     };
 
     @Override
@@ -72,23 +73,27 @@ public class SplashActivity extends BaseAcitivity {
 //        builder.setStatusbarIcon(R.drawable.);
         if (PreferenceUtils.getPrefBoolean(this, "first", true)) {
             mainLoading.setVisibility(View.GONE);
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < mSplashImg.length; i++) {
                 ImageView imageView = new ImageView(this);
                 imageView.setImageResource(mSplashImg[i]);
+//                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//                Glide.with(this).load(mSplashImg[i]).asBitmap().into(new ScaleWidthWrapper(imageView));
                 imageViews.add(imageView);
             }
-//            ImageView imageViewlast = new ImageView(this);
-//            imageViews.add(imageViewlast);
-//            imageViewlast.setId(R.id.splash_last);
-            PreferenceUtils.setPrefBoolean(this, "first", false);
+            ImageView imageViewlast = new ImageView(this);
+            imageViews.add(imageViewlast);
+            imageViewlast.setId(R.id.splash_last);
+
             splashViewpager.setAdapter(new ImagesAdapter(imageViews));
-//            splashIndicator.setViewPager(splashViewpager);
-//            splashViewpager.setPageTransformer(true, (page, position) -> {
-//                LogUtil.d("page:" + page.getId() + "    positon:" + position);
-//                if (page.getId() == R.id.splash_last && position < 0.5) {
-//                    goLogin(1);
-//                }
-//            });
+            splashIndicator.setViewPager(splashViewpager);
+            splashViewpager.setPageTransformer(true, (page, position) -> {
+                LogUtil.d("page:" + page.getId() + "    positon:" + position);
+                if (page.getId() == R.id.splash_last && position < 0.5) {
+                    LogUtil.e("gologin");
+                    splashViewpager.setPageTransformer(true, null);
+                    goLogin(1);
+                }
+            });
         } else {
             Observable.just("")
                     .subscribeOn(Schedulers.newThread())
@@ -134,21 +139,21 @@ public class SplashActivity extends BaseAcitivity {
 
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (splashViewpager.getCurrentItem() != 3)
-            return super.dispatchTouchEvent(ev);
-        switch (MotionEventCompat.getActionMasked(ev)) {
-            case MotionEvent.ACTION_DOWN:
-                touchX = ev.getRawX();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (ev.getRawY() - touchX < -50) {
-                    goLogin(1);
-                }
-                return true;
-        }
-        return super.dispatchTouchEvent(ev);
-
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (splashViewpager.getCurrentItem() != 3)
+//            return super.dispatchTouchEvent(ev);
+//        switch (MotionEventCompat.getActionMasked(ev)) {
+//            case MotionEvent.ACTION_DOWN:
+//                touchX = ev.getRawX();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                if (ev.getRawY() - touchX < -50) {
+//                    goLogin(1);
+//                }
+//                return true;
+//        }
+//        return super.dispatchTouchEvent(ev);
+//
+//    }
 }

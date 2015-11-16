@@ -101,7 +101,7 @@ public class AddSelfGymFragment extends Fragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .title("删除个人健身房?")
+                    .content("删除个人健身房?")
                     .positiveText("确定")
                     .negativeText("取消")
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -207,7 +207,7 @@ public class AddSelfGymFragment extends Fragment {
                     new MaterialDialog.Builder(getContext())
                             .content("设置好一个健身房后，就能开始使用「健身教练助手」了")
                             .positiveColorRes(R.color.orange)
-                            .positiveText("我知道了")
+                            .positiveText(R.string.common_i_konw)
                             .callback(new MaterialDialog.ButtonCallback() {
                                 @Override
                                 public void onPositive(MaterialDialog dialog) {

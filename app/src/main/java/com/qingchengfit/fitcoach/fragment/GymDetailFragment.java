@@ -96,7 +96,7 @@ public class GymDetailFragment extends Fragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .title("请检查您的网络")
+                    .content("请检查您的网络")
                     .positiveText("确定")
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
@@ -184,7 +184,7 @@ public class GymDetailFragment extends Fragment {
                     alertDialog = new MaterialDialog.Builder(getContext())
                             .content("您不能直接编辑所属健身房信息，请联系健身房管理员在青橙后台修改")
                             .autoDismiss(true)
-                            .positiveText("我知道了")
+                            .positiveText(R.string.common_i_konw)
                             .build();
                 }
                 alertDialog.show();
@@ -192,6 +192,12 @@ public class GymDetailFragment extends Fragment {
             return true;
         });
         initWebSetting();
+        webview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
         webview.setWebViewClient(new WebViewClient() {
 
                                      @Override
@@ -218,6 +224,7 @@ public class GymDetailFragment extends Fragment {
 
                                          LogUtil.d("shouldOverrideUrlLoading" + url);
                                          if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
+                                             toolbar.getMenu().clear();
                                              URI uri = null;
                                              try {
                                                  uri = new URI(url);
@@ -292,9 +299,10 @@ public class GymDetailFragment extends Fragment {
                                        @Override
                                        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                                            new MaterialDialog.Builder(getContext())
-                                                   .title(message)
+                                                   .content(message)
                                                    .cancelable(false)
-                                                   .positiveText("我知道了")
+                                                   .positiveText(R.string.common_i_konw)
+                                                   .positiveColorRes(R.color.primary)
                                                    .callback(new MaterialDialog.ButtonCallback() {
                                                        @Override
                                                        public void onPositive(MaterialDialog dialog) {
@@ -309,8 +317,9 @@ public class GymDetailFragment extends Fragment {
                                        @Override
                                        public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
                                            new MaterialDialog.Builder(getContext())
-                                                   .title(message)
+                                                   .content(message)
                                                    .positiveText("确定")
+                                                   .positiveColorRes(R.color.primary)
                                                    .negativeText("取消")
                                                    .cancelable(false)
                                                    .callback(new MaterialDialog.ButtonCallback() {

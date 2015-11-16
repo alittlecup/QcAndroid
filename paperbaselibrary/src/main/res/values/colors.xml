@@ -3,11 +3,11 @@
     <color name="accent">#0db14b</color>
     <color name="primary">#0db14b</color>// 32 191 189
     <color name="primary_dark">#0c9020</color>
-
+    <color name="primary_light">#4ab273</color>
     <!--<color name="accent">#00bfbf</color>-->
     <!--<color name="primary">#00bfbf</color>// 32 191 189-->
     <!--<color name="primary_dark">#00bfbf</color>-->
-    <color name="primary_light">#1a20bfbe</color>
+
     <color name="new_primary">#0db14b</color>
 
     <!--common color-->

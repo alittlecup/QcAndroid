@@ -95,7 +95,7 @@ public class OriginWebFragment extends WebFragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .title("请检查您的网络")
+                    .content("请检查您的网络")
                     .positiveText("确定")
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
@@ -255,9 +255,9 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(getContext())
-                        .title(message)
+                        .content(message)
                         .cancelable(false)
-                        .positiveText("我知道了")
+                        .positiveText(R.string.common_i_konw)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
@@ -272,7 +272,7 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(getContext())
-                        .title(message)
+                        .content(message)
                         .positiveText("确定")
                         .negativeText("取消")
                         .cancelable(false)

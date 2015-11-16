@@ -119,6 +119,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         mToolbar.setTitle("");
         initWebClient();
         initChromClient();
+        mWebviewWebView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
         mWebviewWebView.addJavascriptInterface(new JsInterface(), "NativeMethod");
         mToobarActionTextView.setOnClickListener(v -> {
             if (mWebviewWebView != null)
@@ -222,9 +228,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(WebActivity.this)
-                        .title(message)
+                        .content(message)
                         .cancelable(false)
-                        .positiveText("我知道了")
+                        .positiveText(R.string.common_i_konw)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
@@ -239,7 +245,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             @Override
             public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
                 new MaterialDialog.Builder(WebActivity.this)
-                        .title(message)
+                        .content(message)
                         .positiveText("确定")
                         .negativeText("取消")
                         .cancelable(false)
@@ -300,6 +306,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 //                LogUtil.d("shouldOverrideUrlLoading:" + url+" :"+cookieManager.getCookie("url"));
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
+                    mToolbar.getMenu().clear();
                     URI uri = null;
                     try {
                         uri = new URI(url);
@@ -552,7 +559,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     @Override
     public boolean canSwipeRefreshChildScrollUp() {
         try {
-            return mWebviewWebView.getWebScrollY() > 0;
+            boolean result = mWebviewWebView.getWebScrollY() > 0;
+            return result;
         } catch (Exception e) {
             return true;
         }

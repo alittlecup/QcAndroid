@@ -326,7 +326,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         })
                         .build();
                 downloadDialog = new MaterialDialog.Builder(MainActivity.this)
-                        .title("正在飞速为您下载")
+                        .content("正在飞速为您下载")
                         .progress(false, 100)
                         .cancelable(false)
                         .positiveText("后台更新")
@@ -510,7 +510,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     public void initDialog() {
         dialog = new MaterialDialog.Builder(this)
-                .title("是否确认退出?")
+                .content("是否确认退出?")
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

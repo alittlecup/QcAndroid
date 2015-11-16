@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 54
-        versionName "0.5.4"
+        versionCode 56
+        versionName "0.5.6"
     }
 //    buildTypes {
 //        release {
@@ -196,7 +196,7 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
     //    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
-    compile 'me.relex:circleindicator:1.1.5@aar'
+//    compile 'me.relex:circleindicator:1.1.5@aar'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     //    compile files('libs/pushservice-4.5.1.8.jar')
