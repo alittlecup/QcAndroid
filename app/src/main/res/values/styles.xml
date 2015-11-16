@@ -35,6 +35,10 @@
         <!--<item username="android:windowBackground">@color/transparent</item>-->
     </style>
 
+    <style name="Qc.SplashTheme" parent="@style/AppTheme">
+        <item name="android:windowBackground">@color/primary</item>
+
+    </style>
     <style name="Qc.Datepicker" parent="android:Theme.Holo.Light.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowTitleSize">0dp</item>

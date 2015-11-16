@@ -131,6 +131,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 AppUtils.showKeyboard(getContext(), searchviewEt);
             } else if (item.getItemId() == R.id.action_add_mannul) {
                 showAlert(0);
+//                onAddstudent();//手动添加学员
             } else if (item.getItemId() == R.id.action_add_phone) {
 //                addStudentFromContact();
                 showAlert(1);
@@ -256,6 +257,14 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        int x = curPostion;
+        setUpNaviSpinner();
+        spinnerNav.setSelection(x);
+    }
+
     /**
      * 从通讯录读取学员
      */
@@ -372,81 +381,86 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
     public void showAlert(int type) {
+        String privateName = "";
+        boolean hasPrivate = false;
         if (systems != null && systems.size() > 0) {
-            boolean hasPrivate = false;
+
             for (QcCoachSystem system : systems) {
                 if (system.is_personal_system) {
                     hasPrivate = true;
+                    privateName = system.name;
                     break;
                 }
             }
-            if (hasPrivate) {
-                mAlertPrivate = new MaterialDialog.Builder(getContext())
-                        .title("添加学员")
-                        .content("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续")
-                        .positiveColorRes(R.color.orange)
-                        .positiveText("继续")
-                        .negativeText("取消")
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                dialog.dismiss();
-                                if (type == 0) {
-                                    onAddstudent();//手动添加学员
-                                } else if (type == 1) {
-                                    addStudentFromContact();
-                                }
-                            }
-
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                dialog.dismiss();
-
-
-                            }
-                        })
-                        .build();
-                if (type == 0) {
-                    mAlertPrivate.setTitle("添加学员到个人健身房");
-                    mAlertPrivate.setContent("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续?");
-                } else if (type == 1) {
-                    mAlertPrivate.setTitle("导入学员到个人健身房");
-                    mAlertPrivate.setContent("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续?");
-                }
-                mAlertPrivate.show();
-
-            } else {
-                mAlertPrivate = new MaterialDialog.Builder(getContext())
-                        .title("没有个人健身房")
-                        .content("您还没有添加个人健身房,是否添加个人健身房?")
-                        .positiveText("添加个人健身房")
-                        .positiveColorRes(R.color.orange)
-                        .negativeText("取消")
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                dialog.dismiss();
-                                Intent intent = new Intent(getActivity(), FragActivity.class);
-                                intent.putExtra("type", 3);
-
-                                MyStudentFragment.this.startActivityForResult(intent, 405);
-                            }
-
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                dialog.dismiss();
-
-                            }
-                        })
-                        .build();
-                mAlertPrivate.show();
-            }
-
         }
+        if (hasPrivate) {
+            mAlertPrivate = new MaterialDialog.Builder(getContext())
+//                        .title("添加学员")
+//                        .content("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续")
+                    .positiveColorRes(R.color.orange)
+                    .positiveText("确认导入")
+                    .negativeText("取消")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            dialog.dismiss();
+                            if (type == 0) {
+                                onAddstudent();//手动添加学员
+                            } else if (type == 1) {
+                                addStudentFromContact();
+                            }
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            dialog.dismiss();
+
+
+                        }
+                    })
+                    .build();
+            if (type == 0) {
+                onAddstudent();
+                return;
+//                mAlertPrivate.setTitle("添加学员到个人健身房");
+//                mAlertPrivate.setContent("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续?");
+            } else if (type == 1) {
+                mAlertPrivate.setContent("只能导入到「" + privateName + "」");
+//                    mAlertPrivate.setContent("您只能添加学员到个人健身房,添加所属健身房请联系健身房管理员.是否继续?");
+            }
+            mAlertPrivate.show();
+
+        } else {
+            mAlertPrivate = new MaterialDialog.Builder(getContext())
+//                        .title("没有个人健身房")
+                    .content("您还没有添加个人健身房,是否添加个人健身房?")
+                    .positiveText("添加个人健身房")
+                    .positiveColorRes(R.color.orange)
+                    .negativeText("取消")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            dialog.dismiss();
+                            Intent intent = new Intent(getActivity(), FragActivity.class);
+                            intent.putExtra("type", 3);
+                            MyStudentFragment.this.startActivityForResult(intent, 405);
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .build();
+            mAlertPrivate.show();
+        }
+
+
     }
 
     //初始化筛选器
@@ -522,7 +536,6 @@ public class MyStudentFragment extends MainBaseFragment {
         it.putExtra("url", Configs.Server + "mobile/coaches/add/students/");
         MyStudentFragment.this.startActivityForResult(it, 404);
     }
-
 
 
     //返回页面时刷新

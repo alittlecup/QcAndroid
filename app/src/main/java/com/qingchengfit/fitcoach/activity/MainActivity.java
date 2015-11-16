@@ -483,7 +483,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         removeCookies(cookieManager);
-        Intent logout = new Intent(this, LoginActivity.class);
+        PreferenceUtils.setPrefBoolean(this, "first", true);
+        Intent logout = new Intent(this, SplashActivity.class);
         logout.putExtra("isRegiste", 0);
         startActivity(logout);
 
