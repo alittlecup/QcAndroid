@@ -195,6 +195,7 @@ public class CustomSaleFragment extends Fragment {
         if (pwTime == null)
             pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(1900, 2100);
+
         pwTime.setOnTimeSelectListener(date -> {
 //            customStatmentStart.setContent(DateUtils.getServerDateDay(date));
             try {
@@ -235,8 +236,23 @@ public class CustomSaleFragment extends Fragment {
             pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(date -> {
-            customStatmentStart.setContent(DateUtils.getServerDateDay(date));
-            pwTime.dismiss();
+            try {
+                Date end = DateUtils.formatDateFromString(customStatmentEnd.getContent());
+
+                if (date.getTime() - end.getTime() > 0) {
+                    ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
+                } else if ((end.getTime() - date.getTime()) > DateUtils.MONTH_TIME) {
+                    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
+                } else {
+                    pwTime.dismiss();
+                    customStatmentStart.setContent(DateUtils.getServerDateDay(date));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
         });
         Date date = new Date();
         try {
