@@ -25,7 +25,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="教练评分"
+                android:text="教练评价"
                 />
 
             <TextView
@@ -63,7 +63,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="课程评分"
+                android:text="课程评价"
                 />
 
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="评分来自\n0条信息"
+                android:text="评价来自\n0条信息"
                 />
 
         </RelativeLayout>
@@ -140,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="(数据来自课程计划) :"
+            android:text="(根据课程计划统计) :"
             android:textSize="12sp"
 
             />
