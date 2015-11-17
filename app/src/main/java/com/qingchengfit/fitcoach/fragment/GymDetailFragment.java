@@ -182,7 +182,7 @@ public class GymDetailFragment extends Fragment {
             } else {
                 if (alertDialog == null) {
                     alertDialog = new MaterialDialog.Builder(getContext())
-                            .content("您不能直接编辑所属健身房信息，请联系健身房管理员在青橙后台修改")
+                            .content("无权编辑该健身房信息")
                             .autoDismiss(true)
                             .positiveText(R.string.common_i_konw)
                             .build();

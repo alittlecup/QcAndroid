@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
@@ -129,20 +128,20 @@ public class SplashActivity extends BaseAcitivity {
                 imageView.setBackgroundColor(Color.parseColor(mColors[i]));
                 imageViews.add(imageView);
             }
-            ImageView imageViewlast = new ImageView(this);
-            imageViews.add(imageViewlast);
-            imageViewlast.setId(R.id.splash_last);
+//            ImageView imageViewlast = new ImageView(this);
+//            imageViews.add(imageViewlast);
+//            imageViewlast.setId(R.id.splash_last);
 
             splashViewpager.setAdapter(new ImagesAdapter(imageViews));
             splashIndicator.setViewPager(splashViewpager);
-            splashViewpager.setPageTransformer(true, (page, position) -> {
-                LogUtil.d("page:" + page.getId() + "    positon:" + position);
-                if (page.getId() == R.id.splash_last && position < 0.5) {
-                    LogUtil.e("gologin");
-                    splashViewpager.setPageTransformer(true, null);
-                    goLogin(1);
-                }
-            });
+//            splashViewpager.setPageTransformer(true, (page, position) -> {
+//                LogUtil.d("page:" + page.getId() + "    positon:" + position);
+//                if (page.getId() == R.id.splash_last && position < 0.5) {
+//                    LogUtil.e("gologin");
+//                    splashViewpager.setPageTransformer(true, null);
+//                    goLogin(1);
+//                }
+//            });
         } else {
             goLogin(0);
         }

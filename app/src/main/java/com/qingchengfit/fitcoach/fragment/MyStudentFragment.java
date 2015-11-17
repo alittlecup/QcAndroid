@@ -200,7 +200,8 @@ public class MyStudentFragment extends MainBaseFragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                freshData();
+                if (!refresh.isRefreshing())
+                    freshData();
             }
         });
         //默认刷新

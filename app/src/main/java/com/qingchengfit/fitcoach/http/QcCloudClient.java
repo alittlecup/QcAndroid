@@ -127,10 +127,6 @@ public class QcCloudClient {
                             try {
                                 responToken = getApi.qcGetToken();
                             } catch (Exception e) {
-//                                if (e.getKind() == RetrofitError.Kind.NETWORK) {
-//                                    LogUtil.e("network error!!");
-//                                }
-//                                LogUtil.e(e.getMessage());
                             }
                             if (responToken != null) {
                                 request.addHeader("X-CSRFToken", responToken.data.token);
@@ -233,32 +229,42 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
 
+        //获取用户详情
         @GET("/api/coaches/{id}/detail/")
         rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
 
+
+        //获取通知 分页和不分页接口 ,后者只为拿 未读
         @GET("/api/messages/")
         rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
         @GET("/api/messages/")
         rx.Observable<QcNotificationResponse> qcGetMessages();
 
+        //通知详情
         @GET("/api/messages/{id}/")
         rx.Observable<QcNotiDetailResponse> qcGetMsgDetails(@Path("id") int id);
 
+        //教练详情
         @GET("/api/coaches/{id}/")
         rx.Observable<QcCoachRespone> qcGetCoach(@Path("id") int id);
 
+        @Deprecated //版本号 现在走fir
         @GET("/api/app/version/")
         rx.Observable<QcVersionResponse> qcGetVersion();
 
+        //获取认证列表
         @GET("/api/coaches/{id}/certificates/")
         rx.Observable<QcCertificatesReponse> qcGetCertificates(@Path("id") int id);
 
+        //获取工作经验列表
         @GET("/api/coaches/{id}/experiences/")
         rx.Observable<QcExperienceResponse> qcGetExperiences(@Path("id") int id);
 
+        //获取认证列表
         @GET("/api/certificates/{id}/")
         rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
 
+        //获取评价 评分
         @GET("/api/coaches/{id}/evaluate/")
         rx.Observable<QcEvaluateResponse> qcGetEvaluate(@Path("id") int id);
 
@@ -331,9 +337,11 @@ public class QcCloudClient {
         @GET("/api/android/coaches/{id}/")
         rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id);
 
+        //获取预约预览
         @GET("/api/coaches/{id}/schedules/glance/")
         rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id, @QueryMap Map<String, String> params);
 
+        //获取个人的健身房
         @GET("/api/coaches/{id}/personal/system/")
         rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
 
@@ -365,43 +373,55 @@ public class QcCloudClient {
         @PUT("/api/users/{id}/")
         rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
 
+        //修改教练信息
         @PUT("/api/coaches/{id}/")
         rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body ModifyCoachInfo coachInfo);
 
+        //修改密码
         @POST("/api/coaches/{id}/change/password/")
         rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
 
+        //发送意见
         @POST("/api/feedback/")
         rx.Observable<QcEvaluateResponse> qcFeedBack(@Body FeedBackBean bean);
 
+        //新增认证
         @POST("/api/certificates/")
         rx.Observable<QcResponse> qcAddCertificate(@Body AddCertificate addExperience);
 
+        //修改认证
         @PUT("/api/certificates/{id}/")
         rx.Observable<QcResponse> qcEditCertificate(@Path("id") int id, @Body AddCertificate addExperience);
 
+        //删除认证
         @DELETE("/api/certificates/{id}/")
         rx.Observable<QcResponse> qcDelCertificate(@Path("id") int id);
 
-
+        //新增工作经验
         @POST("/api/experiences/")
         rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
 
+        //修改工作经验
         @PUT("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
 
+        //删除工作经验
         @DELETE("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);
 
+        //新增健身房
         @POST("/api/gym/")
         rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymBean addGymBean);
 
+        //新增组织
         @POST("/api/organizations/")
         rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
 
+        //修改电话号码
         @POST("/api/coaches/{id}/change/phone/")
         rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id, @Body ModifyPhoneNum modifyPwBean);
 
+        //修改个人描述
         @POST("/api/coaches/{id}/change/description/")
         rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);
 
@@ -409,9 +429,11 @@ public class QcCloudClient {
         @POST("/api/coaches/{id}/systems/users/bulk/create/")
         rx.Observable<QcResponse> qcPostCreatStudents(@Path("id") int id, @Body PostStudents students);
 
+        //修改个人健身房
         @PUT("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcPostPrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
+        //新建个人健身房
         @POST("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 

@@ -64,7 +64,7 @@ public class SettingFragment extends BaseSettingFragment {
     public void showDialog() {
         if (logoutSheet == null) {
             logoutSheet = DialogSheet.builder(getContext());
-            logoutSheet.addButton("切换账号", new View.OnClickListener() {
+            logoutSheet.addButton("退出登录", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     logoutSheet.dismiss();
@@ -73,16 +73,18 @@ public class SettingFragment extends BaseSettingFragment {
                     it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
                     startActivity(it);
                 }
-            }).addButton("退出登录", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    logoutSheet.dismiss();
-                    Intent it = new Intent(getActivity(), MainActivity.class);
-                    it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    it.putExtra(MainActivity.ACTION, MainActivity.FINISH);
-                    startActivity(it);
-                }
-            });
+            })
+//                    .addButton("退出应用", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    logoutSheet.dismiss();
+//                    Intent it = new Intent(getActivity(), MainActivity.class);
+//                    it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                    it.putExtra(MainActivity.ACTION, MainActivity.FINISH);
+//                    startActivity(it);
+//                }
+//            })
+            ;
 
         }
         logoutSheet.show();

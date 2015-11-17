@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -217,6 +218,9 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
         if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
             fragmentCallBack.ShowLoading("正在上传");
@@ -364,7 +368,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             else holder.itemModifybriefDown.setEnabled(true);
 
             if (briefInfo.getImg() != null) {
-                Glide.with(App.AppContex).load(briefInfo.getImg()).asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
+                Glide.with(App.AppContex).load(briefInfo.getImg() + "!small").asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
             } else {
