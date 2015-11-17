@@ -245,7 +245,8 @@ public class MyHomeFragment extends Fragment {
 
     @OnClick(R.id.myhome_student_judge)
     public void onJudge() {
-        myhomeScroller.fullScroll(View.FOCUS_DOWN);
+//        myhomeScroller.fullScroll(View.FOCUS_DOWN);
+        myhomeScroller.smoothScrollTo(0, myhomeScroller.getHeight());
         myhomeViewpager.setCurrentItem(3);
     }
 

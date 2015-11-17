@@ -1,9 +1,12 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -57,6 +60,9 @@ public class SplashActivity extends BaseAcitivity {
             R.drawable.help4,
             R.drawable.help5,
     };
+    private String[] mColors = new String[]{
+            "#55b37f", "#5595b3", "#b38855", "#675Eb1", "#9e74b0"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +77,56 @@ public class SplashActivity extends BaseAcitivity {
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "ZVc12KfmeoroYVV0iLcvSCCr");
 //        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder();
 //        builder.setStatusbarIcon(R.drawable.);
+        Observable.just("")
+                .subscribeOn(Schedulers.newThread())
+                .flatMap(s -> {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                    }
+                    return Observable.just("");
+                }).subscribe(s1 -> {
+            runOnUiThread(() -> {
+                if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
+                    Intent toMain = new Intent(this, MainActivity.class);
+                    startActivity(toMain);
+                    this.finish();
+                } else {
+                    goSplashViewpager();
+                    ViewCompat.animate(mainLoading).alpha(0.1f).setDuration(1000).withLayer().setListener(new ViewPropertyAnimatorListener() {
+                        @Override
+                        public void onAnimationStart(View view) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(View view) {
+
+                            mainLoading.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(View view) {
+
+                        }
+                    }).start();
+
+
+                }
+            });
+
+        });
+
+
+    }
+
+    public void goSplashViewpager() {
         if (PreferenceUtils.getPrefBoolean(this, "first", true)) {
-            mainLoading.setVisibility(View.GONE);
+
             for (int i = 0; i < mSplashImg.length; i++) {
                 ImageView imageView = new ImageView(this);
                 imageView.setImageResource(mSplashImg[i]);
-//                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//                Glide.with(this).load(mSplashImg[i]).asBitmap().into(new ScaleWidthWrapper(imageView));
+                imageView.setBackgroundColor(Color.parseColor(mColors[i]));
                 imageViews.add(imageView);
             }
             ImageView imageViewlast = new ImageView(this);
@@ -95,30 +144,11 @@ public class SplashActivity extends BaseAcitivity {
                 }
             });
         } else {
-            Observable.just("")
-                    .subscribeOn(Schedulers.newThread())
-                    .flatMap(s -> {
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                        }
-                        return Observable.just("");
-                    }).subscribe(s1 -> {
-                runOnUiThread(() -> {
-                    if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
-                        Intent toMain = new Intent(this, MainActivity.class);
-                        startActivity(toMain);
-                        this.finish();
-                    } else {
-                        goLogin(0);
-                    }
-                });
-
-            });
+            goLogin(0);
         }
 
-
     }
+
 
     @UiThread
     public void goLogin(int registe) {

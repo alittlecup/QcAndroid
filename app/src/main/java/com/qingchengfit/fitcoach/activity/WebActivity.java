@@ -303,7 +303,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                LogUtil.d("shouldOverrideUrlLoading:" + url+" :"+cookieManager.getCookie("url"));
+                LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
                     mToolbar.getMenu().clear();

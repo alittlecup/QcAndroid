@@ -203,32 +203,35 @@ public class NotificationFragment extends BaseSettingFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        refresh.setRefreshing(false);
-                        refreshNodata.setRefreshing(false);
-                        ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                        if (refresh != null) {
+                            refresh.setRefreshing(false);
+                            refreshNodata.setRefreshing(false);
+                            ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                        }
                     }
 
                     @Override
                     public void onNext(QcNotificationResponse qcNotificationResponse) {
-                        totalPage = (qcNotificationResponse.getData().getTotal_count() + 9) / 10;
-                        list.addAll(qcNotificationResponse.getData().getMsgs());
-                        if (list != null && list.size() > 0) {
-                            refresh.setVisibility(View.VISIBLE);
-                            refreshNodata.setVisibility(View.GONE);
-                            adapter = new NotifiAdapter(list);
-                            adapter.setListener((v, pos) -> {
-                                fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
-                                fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
-                            });
+                        if (refresh != null) {
+                            totalPage = (qcNotificationResponse.getData().getTotal_count() + 9) / 10;
+                            list.addAll(qcNotificationResponse.getData().getMsgs());
+                            if (list != null && list.size() > 0) {
+                                refresh.setVisibility(View.VISIBLE);
+                                refreshNodata.setVisibility(View.GONE);
+                                adapter = new NotifiAdapter(list);
+                                adapter.setListener((v, pos) -> {
+                                    fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
+                                    fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
+                                });
 //                            adapter.notifyDataSetChanged();
-                            recyclerview.setAdapter(adapter);
-                        } else {
-                            refresh.setVisibility(View.GONE);
-                            refreshNodata.setVisibility(View.VISIBLE);
+                                recyclerview.setAdapter(adapter);
+                            } else {
+                                refresh.setVisibility(View.GONE);
+                                refreshNodata.setVisibility(View.VISIBLE);
+                            }
+                            refresh.setRefreshing(false);
+                            refreshNodata.setRefreshing(false);
                         }
-                        refresh.setRefreshing(false);
-                        refreshNodata.setRefreshing(false);
-
                     }
                 });
     }
