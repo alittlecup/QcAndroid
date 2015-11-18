@@ -103,12 +103,18 @@ public class StudentJudgeFragment extends BaseFragment {
             tagGroup.setTags(
                     mTags
             );
-
+            if (mTags.length == 0) {
+                tagGroup.setVisibility(View.GONE);
+            }
             String count = Integer.toString(mEntityls.getTotal_count());
 //            String count = "1000";
+            if (Integer.parseInt(count) > 0) {
             SpannableString s = new SpannableString("评分基于\n" + count + "条评价");
             s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange)), 4, 4 + count.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             studentJudgeText.setText(s);
+            } else {
+                studentJudgeText.setText("暂无评价");
+            }
         } else {
             if (!isPrepared || !isVisible)
                 return;
@@ -123,13 +129,21 @@ public class StudentJudgeFragment extends BaseFragment {
                         studentJudgeCoachStar.setRating((float) mEntityls.getCoach_score());
                         studentJudgeCourseScore.setText(mEntityls.getCourse_score() + "");
                         studentJudgeCourseStar.setRating((float) mEntityls.getCourse_score());
+
                         tagGroup.setTags(
                                 mTags
                         );
+                        if (mTags.length == 0) {
+                            tagGroup.setVisibility(View.GONE);
+                        }
                         String count = Integer.toString(mEntityls.getTotal_count());
-                        SpannableString s = new SpannableString("评论基于\n" + count + "条评论");
-                        s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange)), 4, 4 + count.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-                        studentJudgeText.setText(s);
+                        if (Integer.parseInt(count) > 0) {
+                            SpannableString s = new SpannableString("评分基于\n" + count + "条评价");
+                            s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.orange)), 4, 4 + count.length() + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                            studentJudgeText.setText(s);
+                        } else {
+                            studentJudgeText.setText("暂无评价");
+                        }
                     }
                 });
 
