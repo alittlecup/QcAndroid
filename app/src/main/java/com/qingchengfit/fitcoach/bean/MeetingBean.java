@@ -18,6 +18,10 @@ public class MeetingBean {
     public String time;
     public String address;
     public String img;
+    public String url;
+
+    public MeetingBean() {
+    }
 
     public MeetingBean(String title, String time, String address, String img) {
         this.title = title;

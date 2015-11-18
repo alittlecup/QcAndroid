@@ -47,7 +47,7 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
-import com.qingchengfit.fitcoach.fragment.MainWebFragment;
+import com.qingchengfit.fitcoach.fragment.MeetingFragment;
 import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.MyGymsFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
@@ -148,7 +148,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private ScheduesFragment mScheduesFragment;
     private DataStatementFragment mDataStatementFragment;
     private MyStudentFragment mMyStudentFragment;
-    private MainWebFragment mMeetingFragment;
+    private MeetingFragment mMeetingFragment;
     private MyGymsFragment mMyGymsFragment;
     private MyCoursePlanFragment mMyCoursePlanFragment;
 
@@ -539,7 +539,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mScheduesFragment = new ScheduesFragment();
         mDataStatementFragment = new DataStatementFragment();
         mMyStudentFragment = new MyStudentFragment();
-        mMeetingFragment = MainWebFragment.newInstance("http://teacher.qingchengfit.cn/meetings/");
+//        mMeetingFragment = MainWebFragment.newInstance("http://teacher.qingchengfit.cn/meetings/");
+        mMeetingFragment = new MeetingFragment();
         mMyGymsFragment = new MyGymsFragment();
         mMyCoursePlanFragment = new MyCoursePlanFragment();
 

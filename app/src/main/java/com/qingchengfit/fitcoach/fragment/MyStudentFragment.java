@@ -200,7 +200,6 @@ public class MyStudentFragment extends MainBaseFragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!refresh.isRefreshing())
                     freshData();
             }
         });
@@ -264,6 +263,7 @@ public class MyStudentFragment extends MainBaseFragment {
         int x = curPostion;
         setUpNaviSpinner();
         spinnerNav.setSelection(x);
+        freshData();
     }
 
     /**
@@ -618,6 +618,8 @@ public class MyStudentFragment extends MainBaseFragment {
         @Override
         public void onBindViewHolder(StudentsHolder holder, int position) {
             holder.itemView.setTag(position);
+            if (datas.size() == 0)
+                return;
             StudentBean studentBean = datas.get(position);
 
             holder.itemStudentGymname.setText(studentBean.gymStr);

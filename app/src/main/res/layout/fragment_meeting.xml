@@ -4,10 +4,14 @@
              android:layout_height="match_parent"
              tools:context="com.qingchengfit.fitcoach.fragment.MeetingFragment">
 
+    <include layout="@layout/common_toolbar"></include>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/white"
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
