@@ -173,10 +173,10 @@ public class MyHomeActivity extends AppCompatActivity {
 
 
     private void goPage(int page) {
-        mainDrawerlayout.closeDrawers();
+//        mainDrawerlayout.closeDrawers();
         setResult(page);
         this.finish();
-        overridePendingTransition(R.anim.null_anim, R.anim.null_anim);
+        overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
     }
 
     @Override

@@ -633,7 +633,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             @Override
             public void onDrawerClosed(View drawerView) {
                 if (mGoMyhome) {
-                    startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
+//                    startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
                     mGoMyhome = false;
                 }
             }
@@ -768,8 +768,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
-        mGoMyhome = true;
-        mainDrawerlayout.closeDrawers();
+//        mGoMyhome = true;
+//        mainDrawerlayout.closeDrawers();
+        startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
     }
 
     public void goXwalkfragment(String url, String from) {

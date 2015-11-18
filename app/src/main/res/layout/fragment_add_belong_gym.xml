@@ -25,13 +25,13 @@
             tools:context="com.qingchengfit.fitcoach.fragment.AddBelongGymFragment">
 
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="@string/add_gym_private_01"/>
+                android:text="@string/add_gym_private_01"
+                android:textColor="@color/red"/>
 
             <include
                 layout="@layout/divider_grey"

@@ -56,7 +56,7 @@
     <string name="workexper_title">工作经历</string>
     <string name="title_activity_notification">NotificationActivity</string>
 
-    <string name="add_gym_private_01">您不能自己添加所属健身房，需要由所属健身房添加您为教练，系统即可自动同步。</string>
+    <string name="add_gym_private_01">注: 您不能自己添加&#34;所属健身房&#34;，需要由&#34;所属健身房&#34;添加您为教练，系统即可自动同步。</string>
     <string name="add_gym_private_02">如果您所属的健身房未出现在“我的健身房”列表，可能的原因如下：</string>
     <string name="add_gym_private_03">该健身房未使用「青橙健身房管理系统」</string>
     <string name="add_gym_private_04">方法1: 您可以使用“个人健身房”管理您的学员和课程预约</string>
@@ -72,5 +72,6 @@
     <string name="comom_time_to">至</string>
     <string name="common_today">今</string>
     <string name="common_i_konw">知道了</string>
+    <string name="add_self_gym">添加&#34;个人健身房&#34;有什么用途？</string>
 
 </resources>
