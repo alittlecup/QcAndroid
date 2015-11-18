@@ -283,206 +283,7 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/LoginView.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="updateTo 59 stable">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/bean/QcMeetingResponse.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/res/anim/slide_from_bottom.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/main/res/anim/slide_out_bottom.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/build.gradle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/libs/xwalk_core_library_java.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/jniLibs/armeabi-v7a/libxwalkcore.so" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/bubble.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/bubble_arrow_up.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/color_picker_advanced_select_handle.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/dropdown_popup_background_down.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/dropdown_popup_background_up.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/ic_warning.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/ondemand_overlay.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/refresh_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/refresh_gray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-hdpi/verify_checkmark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/bubble.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/bubble_arrow_up.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/color_picker_advanced_select_handle.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/dropdown_popup_background_down.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/dropdown_popup_background_up.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/ic_warning.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/ondemand_overlay.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/refresh_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/refresh_gray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xhdpi/verify_checkmark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxhdpi/ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxhdpi/ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxhdpi/ic_warning.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxhdpi/refresh_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxhdpi/refresh_gray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxhdpi/verify_checkmark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxxhdpi/ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxxhdpi/ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxxhdpi/ic_warning.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxxhdpi/refresh_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxxhdpi/refresh_gray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable-xxxhdpi/verify_checkmark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/bubble.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/bubble_arrow_up.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/color_button_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/color_picker_advanced_select_handle.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/color_picker_border.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/dropdown_popup_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/dropdown_popup_background_down.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/dropdown_popup_background_up.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/ic_warning.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/ondemand_overlay.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/refresh_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/refresh_gray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/drawable/verify_checkmark.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-land/date_time_picker_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/color_picker_advanced_component.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/color_picker_dialog_content.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/color_picker_dialog_title.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/date_time_suggestion.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/dropdown_item.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/multi_field_time_picker_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/two_field_date_picker.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout-v17/validation_message_bubble.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/color_picker_advanced_component.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/color_picker_dialog_content.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/color_picker_dialog_title.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/date_time_picker_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/date_time_suggestion.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/dropdown_item.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/multi_field_time_picker_dialog.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/two_field_date_picker.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/layout/validation_message_bubble.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/menu/select_action_menu.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/contacts_api.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/device_capabilities_api.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/icudtl.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/launch_screen_api.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/messaging_api.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/presentation_api.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/raw/xwalk.pak" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-am/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-am/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ar/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ar/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-bg/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-bg/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ca/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ca/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-cs/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-cs/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-da/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-da/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-de/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-de/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-el/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-el/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-en-rGB/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-en-rGB/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-es-rUS/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-es-rUS/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-es/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-es/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-fa/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-fa/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-fi/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-fi/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-fr/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-fr/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-hi/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-hi/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-hr/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-hr/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-hu/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-hu/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-in/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-in/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-it/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-it/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-iw/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-iw/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ja/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ja/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ko/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ko/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-lt/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-lt/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-lv/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-lv/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-nb/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-nb/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-nl/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-nl/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-pl/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-pl/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-pt-rBR/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-pt-rBR/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-pt-rPT/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-pt-rPT/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ro/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ro/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ru/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-ru/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sk/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sk/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sl/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sl/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sr/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sr/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sv/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sv/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sw/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-sw/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-th/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-th/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-tl/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-tl/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-tr/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-tr/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-uk/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-uk/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-v17/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-v17/ui_java_styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-v21/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-vi/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-vi/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-zh-rCN/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-zh-rCN/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-zh-rTW/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values-zh-rTW/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/android_content_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/android_ui_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/android_xwalk_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/attrs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/colors.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/ui_java_dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/ui_java_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/ui_java_styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/values.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/xwalk_app_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/xwalk_core_internal_java_strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/res/values/xwalk_resources_list.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview144334317arm/src/main/resources/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/crosswalkwebview15443867arm/src/main/jniLibs/armeabi-v7a/libxwalkdummy.so" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/MyHomeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/http/QcCloudClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StudentJudgeFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/StudentJudgeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExepSettingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExepSettingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/qingchengfit/fitcoach/fragment/WorkExperienceFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_home_test.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_home_test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/packer.properties" afterPath="$PROJECT_DIR$/app/packer.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="86ab7f4c-5810-43ec-945b-56d1124f1e99" name="Default" comment="修改myhome页面 和修改工作经历日期 精确到天" />
     <list id="6c823076-b2ff-4709-a3d2-7af153830253" name="Rejected commit: Default" comment="add drawerview" />
     <list id="ca36b690-c9bc-473a-a575-0680578cca51" name="Rejected commit: Default (2)" comment="complete drawerlayout" />
     <list id="1a4ab358-3fbe-4815-92a0-a64158a9dff5" name="Rejected commit: Default (3)" comment="fix studentjudge &amp;&amp; webview No newwork" />
@@ -4709,12 +4510,6 @@
       <option name="number" value="Default" />
       <updated>1438069284324</updated>
     </task>
-    <task id="LOCAL-00235" summary="update to 0.3.6">
-      <created>1446117709213</created>
-      <option name="number" value="00235" />
-      <option name="project" value="LOCAL" />
-      <updated>1446117709213</updated>
-    </task>
     <task id="LOCAL-00236" summary="修改分隔线">
       <created>1446182507340</created>
       <option name="number" value="00236" />
@@ -5003,7 +4798,13 @@
       <option name="project" value="LOCAL" />
       <updated>1447826588197</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="修改myhome页面 和修改工作经历日期 精确到天">
+      <created>1447835042767</created>
+      <option name="number" value="00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1447835042767</updated>
+    </task>
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="TodoView">
@@ -5108,7 +4909,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="选择本地学员 异步拉去" />
     <MESSAGE value="通讯录 一人多号&#10;通知修改" />
     <MESSAGE value="导入联系人修改" />
     <MESSAGE value="报表页面由于下拉刷新导致的崩溃" />
@@ -5133,7 +4933,8 @@
     <MESSAGE value="updateTo 57" />
     <MESSAGE value="updateTo 58" />
     <MESSAGE value="updateTo 59 stable" />
-    <option name="LAST_COMMIT_MESSAGE" value="updateTo 59 stable" />
+    <MESSAGE value="修改myhome页面 和修改工作经历日期 精确到天" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改myhome页面 和修改工作经历日期 精确到天" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
