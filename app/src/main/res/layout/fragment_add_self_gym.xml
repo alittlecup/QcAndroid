@@ -40,7 +40,7 @@
         android:layout_height="@dimen/qc_item_height"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
-        android:text="注：每名教练只能添加一个个人健身房"
+        android:text="注：每名教练只能添加一个&#34;个人健身房&#34;"
         android:textColor="@color/red"
         />
 
@@ -58,6 +58,7 @@
         android:layout_height="@dimen/qc_item_height"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
+
         android:text="@string/add_self_gym"
         android:textColor="@color/text_black"
         />

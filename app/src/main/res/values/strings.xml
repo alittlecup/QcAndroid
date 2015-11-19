@@ -56,14 +56,14 @@
     <string name="workexper_title">工作经历</string>
     <string name="title_activity_notification">NotificationActivity</string>
 
-    <string name="add_gym_private_01">注: 您不能自己添加&#34;所属健身房&#34;，需要由&#34;所属健身房&#34;添加您为教练，系统即可自动同步。</string>
+    <string name="add_gym_private_01">注: 您不能自己添加“所属健身房”，需要由“所属健身房”添加您为教练，系统即可自动同步。</string>
     <string name="add_gym_private_02">如果您所属的健身房未出现在“我的健身房”列表，可能的原因如下：</string>
     <string name="add_gym_private_03">该健身房未使用「青橙健身房管理系统」</string>
     <string name="add_gym_private_04">方法1: 您可以使用“个人健身房”管理您的学员和课程预约</string>
     <string name="add_gym_private_05">方法2: 邀请健身房的管理人员开通「青橙健身房管理系统」。</string>
     <string name="add_gym_private_06">您在该健身房预留的手机号与当前登录的手机号不一致</string>
     <string name="add_gym_private_07">方法1: 让该健身房的工作人员在「青橙健身房管理系统」中修改您的手机号；</string>
-    <string name="add_gym_private_08">方法2: 在“我的主页中”修改手机号，使其与在「青橙健身房管理系统」中预留的手机号一致。</string>
+    <string name="add_gym_private_08">方法2: 在“我的主页”中修改手机号，使其与在「青橙健身房管理系统」中预留的手机号一致。</string>
     <string name="title_activity_change_time">ChangeTimeActivity</string>
     <string name="title_activity_choose_student">ChooseStudentActivity</string>
     <string name="common_modify_failed">修改失败</string>
@@ -72,6 +72,6 @@
     <string name="comom_time_to">至</string>
     <string name="common_today">今</string>
     <string name="common_i_konw">知道了</string>
-    <string name="add_self_gym">添加&#34;个人健身房&#34;有什么用途？</string>
+    <string name="add_self_gym">添加“个人健身房”有什么用途？</string>
 
 </resources>

@@ -81,7 +81,7 @@ public class PhoneFuncUtils {
 //            String pinyin = PinyinUtils.getPinyin(contactName);
 //            contact.setPinyin(pinyin);
             String header = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
-            header = header.replace(" ", "");
+
             if (!TextUtils.isEmpty(header)) {
                 contact.setHeader(header);
             } else contact.setHeader("");
@@ -97,6 +97,7 @@ public class PhoneFuncUtils {
                 String phoneNumber = phoneCursor
                         .getString(phoneCursor
                                 .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                phoneNumber = phoneNumber.replace(" ", "");
                 if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.length() > 11) {
                     phoneNumber = phoneNumber.substring(phoneNumber.length() - 11, phoneNumber.length());
                 }
