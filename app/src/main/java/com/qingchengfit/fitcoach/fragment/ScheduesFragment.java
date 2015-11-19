@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -86,6 +87,8 @@ public class ScheduesFragment extends MainBaseFragment {
     TextView scheduleNotificationCount;
     @Bind(R.id.schedule_notification_layout)
     RelativeLayout scheduleNotificationLayout;
+    @Bind(R.id.schedule_calendar)
+    RelativeLayout scheduleCalendar;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -392,8 +395,15 @@ public class ScheduesFragment extends MainBaseFragment {
 
     @OnClick(R.id.schedule_calendar)
     public void onCalendarClick() {
+        scheduleCalendar.setClickable(false);
         if (mDatePicker == null) {
             mDatePicker = new DatePicker(getContext());
+            mDatePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    scheduleCalendar.setClickable(true);
+                }
+            });
             mDatePicker.setDayClickListener(new RobotoCalendarView.RobotoCalendarListener() {
 
                 @Override

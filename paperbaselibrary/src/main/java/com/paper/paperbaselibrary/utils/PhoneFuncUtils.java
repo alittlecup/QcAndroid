@@ -81,6 +81,7 @@ public class PhoneFuncUtils {
 //            String pinyin = PinyinUtils.getPinyin(contactName);
 //            contact.setPinyin(pinyin);
             String header = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
+            header = header.replace(" ", "");
             if (!TextUtils.isEmpty(header)) {
                 contact.setHeader(header);
             } else contact.setHeader("");

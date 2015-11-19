@@ -463,7 +463,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 //				if (this == callback) {
 					int resId = getStringRes(context, "sharing");
 					if (resId > 0) {
-						showNotification(context.getString(resId));
+//						showNotification(context.getString(resId));
 					}
 //				}
 			}
@@ -520,7 +520,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 						// 成功
 						int resId = getStringRes(context, "share_completed");
 						if (resId > 0) {
-							showNotification(context.getString(resId));
+//							showNotification(context.getString(resId));
 						}
 					}
 					break;
@@ -597,7 +597,7 @@ public class OnekeyShare implements PlatformActionListener, Callback {
 
 	// 在状态栏提示分享操作
 	private void showNotification(String text) {
-//		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 
 	/** 是否支持QQ,QZone授权登录后发微博 */

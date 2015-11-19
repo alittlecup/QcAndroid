@@ -18,6 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_statement_order"
+
             />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="74dp"
             android:text="预约报表"
+            android:textSize="16sp"
             />
 
         <ImageView
@@ -68,6 +70,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="74dp"
             android:text="销售报表"
+            android:textSize="16sp"
             />
 
         <ImageView
@@ -77,6 +80,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_arrow_right"
+
             />
 
         <include
