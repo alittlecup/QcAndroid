@@ -34,6 +34,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
@@ -344,6 +345,9 @@ public class QcCloudClient {
         //获取个人的健身房
         @GET("/api/coaches/{id}/personal/system/")
         rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
+
+        @GET("/api/meetings/")
+        rx.Observable<QcMeetingResponse> qcGetMeetingList();
 
     }
 

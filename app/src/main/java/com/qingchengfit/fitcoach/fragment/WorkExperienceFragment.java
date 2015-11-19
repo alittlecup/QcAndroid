@@ -212,7 +212,7 @@ public class WorkExperienceFragment extends BaseFragment {
             holder.itemStudioDes.setText(sDes);
 
             StringBuffer ss = new StringBuffer();
-            ss.append(DateUtils.getDateMonth(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            ss.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             ss.append(getContext().getString(R.string.comom_time_to));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -220,7 +220,7 @@ public class WorkExperienceFragment extends BaseFragment {
             if (c.get(Calendar.YEAR) == 3000)
                 ss.append(getContext().getString(R.string.common_today));
             else
-                ss.append(DateUtils.getDateMonth(d));
+                ss.append(DateUtils.getServerDateDay(d));
             holder.itemTime.setText(ss.toString());
 //            holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
 //            List<String> aaaas = new ArrayList<>();

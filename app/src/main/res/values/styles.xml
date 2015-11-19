@@ -36,7 +36,8 @@
     </style>
 
     <style name="Qc.SplashTheme" parent="@style/AppTheme">
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
 
     </style>
     <style name="Qc.Datepicker" parent="android:Theme.Holo.Light.Dialog">

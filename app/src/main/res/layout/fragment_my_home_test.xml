@@ -38,13 +38,11 @@
                     android:background="@color/white"
                     >
 
-                    <ImageView
+                    <View
                         android:id="@+id/myhome_bg"
                         android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        android:layout_marginTop="-178dp"
+                        android:layout_height="172dp"
                         android:background="@color/primary"
-                        android:scaleType="fitXY"
                         />
 
                     <ImageView

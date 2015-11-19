@@ -306,7 +306,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
-                    mToolbar.getMenu().clear();
+                    mToobarActionTextView.setText("");
+                    mToobarActionTextView.setVisibility(View.GONE);
                     URI uri = null;
                     try {
                         uri = new URI(url);
@@ -409,7 +410,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
     private void initCookie(String url) {
         sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
-
+        LogUtil.e("initCookie:" + sessionid);
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);

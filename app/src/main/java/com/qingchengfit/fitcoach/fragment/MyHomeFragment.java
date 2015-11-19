@@ -68,7 +68,7 @@ public class MyHomeFragment extends Fragment {
     @Bind(R.id.myhome_scroller)
     HalfScrollView myhomeScroller;
     @Bind(R.id.myhome_bg)
-    ImageView myhomeBg;
+    View myhomeBg;
     @Bind(R.id.myhome_gender)
     ImageView myhomeGender;
     @Bind(R.id.myhome_location)

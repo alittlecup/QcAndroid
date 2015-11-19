@@ -1,11 +1,12 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +15,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.MeetingBean;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  *
  */
-public class MeetingFragment extends Fragment {
+public class MeetingFragment extends MainBaseFragment {
 
 
     List<MeetingBean> mMeetingDatas = new ArrayList<>();
     private RecyclerView mRecyclerviewRecyclerView;
     private SwipeRefreshLayout mRefreshSwipeRefreshLayout;
+    private Toolbar mToolbar;
+    private MeetingAdapter meetingAdapter;
 
     public MeetingFragment() {
         // Required empty public constructor
@@ -43,11 +55,16 @@ public class MeetingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meeting, container, false);
         mRecyclerviewRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mRefreshSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+        mToolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+        mToolbar.setTitle("会议培训");
+
+        mRefreshSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
         mRefreshSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!mRefreshSwipeRefreshLayout.isRefreshing())
-                    freshData();
+                freshData();
             }
         });
         mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -58,15 +75,56 @@ public class MeetingFragment extends Fragment {
             }
         });
         mRecyclerviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        MeetingAdapter meetingAdapter = new MeetingAdapter(mMeetingDatas);
+        freshData();
+        meetingAdapter = new MeetingAdapter(mMeetingDatas);
+        mRecyclerviewRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerviewRecyclerView.setAdapter(meetingAdapter);
 
+        meetingAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                toWeb.putExtra("url", mMeetingDatas.get(pos).url);
+                startActivity(toWeb);
+            }
+        });
         return view;
     }
 
     private void freshData() {
+        QcCloudClient.getApi().getApi.qcGetMeetingList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcMeetingResponse>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mRefreshSwipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onNext(QcMeetingResponse qcMeetingResponse) {
+                        mMeetingDatas.clear();
+
+                        for (QcMeetingResponse.Meeting meeting : qcMeetingResponse.data.meetings) {
+                            MeetingBean bean = new MeetingBean();
+                            bean.title = meeting.name;
+                            bean.address = meeting.city + "  " + meeting.address;
+                            StringBuffer stringBuffer = new StringBuffer();
+                            stringBuffer.append(DateUtils.getDateDay(DateUtils.formatDateFromServer(meeting.open_start)))
+                                    .append("至").append(DateUtils.getDateDay(DateUtils.formatDateFromServer(meeting.open_end)));
+                            bean.time = stringBuffer.toString();
+                            bean.img = meeting.image;
+                            bean.url = meeting.link;
+                            mMeetingDatas.add(bean);
+                        }
+                        meetingAdapter.notifyDataSetChanged();
+                        mRefreshSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
     /**
