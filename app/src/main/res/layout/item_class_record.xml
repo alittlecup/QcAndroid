@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/classrecord_year"
+        style="@style/Qc.TextCommonGrey"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/backgroud_grey"
+        android:gravity="center"
+        tools:text="2015年上课记录"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="97.5dp"
+            android:background="@color/divider_white"
+            >
+
+        </View>
+
+
+        <View
+            android:id="@+id/item_statement_detail_bottomdivier"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_white"
+            >
+        </View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            >
+
+            <View
+                android:id="@+id/item_statement_detail_headerdivier"
+                android:layout_width="97.5dp"
+                android:layout_height="1dp"
+                android:background="@color/divider_white"
+                >
+            </View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_white"
+                >
+            </View>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/item_statement_detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/item_statement_detail_day"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="0dp"
+                android:textSize="28sp"
+                tools:text="11"
+                />
+
+            <TextView
+                android:id="@+id/item_statement_detail_month"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:paddingBottom="3dp"
+                android:textSize="12sp"
+                tools:text="5月"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/item_statement_detail_pic"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="75dp"
+            android:background="@color/white"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/item_statement_detail_pic"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/item_statement_detail_name"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                tools:text="11"
+                />
+
+            <TextView
+                android:id="@+id/item_statement_detail_content"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="5月"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>
