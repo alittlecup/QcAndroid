@@ -23,5 +23,18 @@ public class StatementBean {
     public String content;
     public boolean header;
     public boolean bottom;
+    public boolean year;
 
+    public StatementBean() {
+    }
+
+    public StatementBean(Date date, String picture, String title, String content, boolean header, boolean bottom, boolean year) {
+        this.date = date;
+        this.picture = picture;
+        this.title = title;
+        this.content = content;
+        this.header = header;
+        this.bottom = bottom;
+        this.year = year;
+    }
 }
