@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="74dp"
-            android:text="预约报表"
+            android:text="课程报表"
             android:textSize="16sp"
             />
 

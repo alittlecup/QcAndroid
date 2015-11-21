@@ -144,7 +144,7 @@ public class CustomStatmentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_statment, container, false);
         ButterKnife.bind(this, view);
-        toolbar.setTitle("自定义预约报表");
+        toolbar.setTitle("自定义课程报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         view.setOnTouchListener((v, event) -> {

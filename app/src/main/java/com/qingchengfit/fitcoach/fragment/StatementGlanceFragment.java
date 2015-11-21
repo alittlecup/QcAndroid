@@ -67,7 +67,7 @@ public class StatementGlanceFragment extends Fragment {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "全部预约报表", true));
+        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
         adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -130,7 +130,7 @@ public class StatementGlanceFragment extends Fragment {
             return;
         List<QcReportGlanceResponse.System> systems = qcReportGlanceResponse.data.systems;
         spinnerBeans.clear();
-        spinnerBeans.add(new SpinnerBean("", "全部预约报表", true));
+        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
         StringBuffer monthTitle = new StringBuffer();
         StringBuffer weekTitle = new StringBuffer();
         StringBuffer dayTitle = new StringBuffer();

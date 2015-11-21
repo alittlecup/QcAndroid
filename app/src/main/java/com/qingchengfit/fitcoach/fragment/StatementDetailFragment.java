@@ -259,7 +259,7 @@ public class StatementDetailFragment extends Fragment {
 
     public void setUpNaviSpinner() {
         spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "全部预约报表", true));
+        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
         spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
