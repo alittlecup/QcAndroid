@@ -40,7 +40,11 @@ allprojects {
 //        mavenCentral()
         maven {
             url 'http://maven.oschina.net/content/groups/public/'
+
 //            url 'https://repos.zeroturnaround.com/nexus/content/repositories/zt-public-releases'
+        }
+        maven {
+            url "http://maven.bughd.com/public"
         }
     }
 }
