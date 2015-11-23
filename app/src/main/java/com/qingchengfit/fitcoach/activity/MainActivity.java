@@ -347,14 +347,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 updateDialog.show();
             }
 
-            @Override
-            public void onFail(String s, int i) {
-                LogUtil.e(" fir:fail" + s);
-            }
 
             @Override
-            public void onError(Exception e) {
-
+            public void onFail(Request request, Exception e) {
+                super.onFail(request, e);
             }
 
             @Override

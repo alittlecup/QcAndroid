@@ -236,6 +236,7 @@ public class ScheduesFragment extends MainBaseFragment {
         }
     }
 
+
     private void setUpViewPager() {
         mFragmentAdapter = new FragmentAdapter(getChildFragmentManager());
         scheduleVp.setAdapter(mFragmentAdapter);
@@ -334,6 +335,9 @@ public class ScheduesFragment extends MainBaseFragment {
     public void onResume() {
         super.onResume();
         queryNotify();
+        int x = curPostion;
+        setUpNaviSpinner();
+        spinnerNav.setSelection(x);
     }
 
     public void queryNotify() {
