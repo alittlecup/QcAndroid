@@ -120,6 +120,12 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        freshData();
+    }
+
     public void freshData() {
         QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
