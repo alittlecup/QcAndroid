@@ -31,7 +31,6 @@
         <!--<item username="windowBackground">@color/white</item>-->
         <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
-        <item name="android:datePickerDialogTheme">@style/Qc.Datepicker</item>
         <!--<item username="android:windowBackground">@color/transparent</item>-->
     </style>
 
