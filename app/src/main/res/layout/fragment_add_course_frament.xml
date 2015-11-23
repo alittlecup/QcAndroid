@@ -1,7 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/bg_grey"
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.AddCourseFrament"
     >
@@ -11,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="85dp"
+        android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         >
@@ -24,9 +27,109 @@
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            tools:src="@drawable/test_pic"
             />
-
     </RelativeLayout>
 
+    <include layout="@layout/divider_grey"/>
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/gym_add_course_type"
+            />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_selector"
+                android:checked="true"
+                android:text="@string/gym_add_course_type_private"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:button="@drawable/radio_selector"
+                android:text="@string/gym_add_course_type_group"
+                />
+
+        </RadioGroup>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/gym_course_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <include
+            layout="@layout/divider_grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_lable="@string/gym_add_course_name"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+
+        <include
+            layout="@layout/divider_grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
+            app:civ_lable="@string/gym_add_course_time"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <Button
+        android:id="@+id/add_gym_course_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_comfirm"
+        />
 </LinearLayout>

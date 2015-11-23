@@ -87,5 +87,11 @@
     <!-- 我的健身房-->
     <string name="gym_add_course">添加课程</string>
     <string name="gym_add_course_pic">课程图片</string>
+    <string name="gym_add_course_type">课程类型</string>
+    <string name="gym_add_course_type_private">私教课</string>
+    <string name="gym_add_course_type_group">团课</string>
+    <string name="gym_add_course_name">名称</string>
+    <string name="gym_add_course_time">时长(min)</string>
+
 
 </resources>
