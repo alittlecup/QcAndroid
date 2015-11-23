@@ -39,7 +39,7 @@ public class QcEvaluateResponse extends QcResponse {
          */
 
         private EvaluateEntity evaluate;
-        private List<TagsEntity> tags;
+        private List<TagsEntity> impression;
 
         public EvaluateEntity getEvaluate() {
             return evaluate;
@@ -50,11 +50,11 @@ public class QcEvaluateResponse extends QcResponse {
         }
 
         public List<TagsEntity> getTags() {
-            return tags;
+            return impression;
         }
 
         public void setTags(List<TagsEntity> tags) {
-            this.tags = tags;
+            this.impression = tags;
         }
 
         public QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity getHomeEvaluate() {
@@ -81,7 +81,7 @@ public class QcEvaluateResponse extends QcResponse {
 //        }
         public String[] getTagArray() {
             List<String> list = new ArrayList<>();
-            for (TagsEntity tag : tags) {
+            for (TagsEntity tag : impression) {
                 StringBuffer sb = new StringBuffer();
                 sb.append(tag.getName());
                 sb.append("  (");
@@ -138,7 +138,7 @@ public class QcEvaluateResponse extends QcResponse {
              */
 
             private String count;
-            private String name;
+            private String comment;
 
             public String getCount() {
                 return count;
@@ -149,11 +149,11 @@ public class QcEvaluateResponse extends QcResponse {
             }
 
             public String getName() {
-                return name;
+                return comment;
             }
 
             public void setName(String name) {
-                this.name = name;
+                this.comment = name;
             }
         }
     }
