@@ -79,4 +79,10 @@
     <string name="workexp_detail_hiden">该工作经历已隐藏</string>
     <string name="workexp_detail_unhiden">同步自［健身房管理系统］</string>
 
+
+    <!-- 课程计划模板-->
+    <string name="add_plan_name">课程计划模板名称</string>
+    <string name="add_plan_type">课程类型</string>
+    <string name="add_plan_action">课程动作</string>
+
 </resources>
