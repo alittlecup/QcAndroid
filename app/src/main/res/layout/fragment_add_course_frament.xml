@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.AddCourseFrament"
+    >
+
+    <include layout="@layout/common_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/gym_add_course_pic"
+            />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>
