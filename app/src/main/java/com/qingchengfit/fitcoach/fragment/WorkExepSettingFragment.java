@@ -89,7 +89,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 refresh.setRefreshing(true);
             }
         });

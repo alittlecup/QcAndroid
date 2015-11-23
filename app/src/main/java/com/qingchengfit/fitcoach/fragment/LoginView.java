@@ -7,6 +7,8 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -119,15 +121,20 @@ public class LoginView extends RelativeLayout {
         mForgotPwBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
+                if (mCheckCodeInputLaout.getEditText() != null) {
+                    if (b) {
 
-                    mGetCodeBtn.setVisibility(VISIBLE);
-                    mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_checkcode_hint));
-                } else {
-                    mGetCodeBtn.setVisibility(GONE);
-                    mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_password_hint));
+                        mGetCodeBtn.setVisibility(VISIBLE);
+                        mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_checkcode_hint));
+
+                        mCheckCodeInputLaout.getEditText().setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        mGetCodeBtn.setVisibility(GONE);
+                        mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_password_hint));
+                        mCheckCodeInputLaout.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    }
+                    mCheckCodeInputLaout.getEditText().setText("");
                 }
-                mCheckCodeInputLaout.getEditText().setText("");
             }
         });
         mForgotPwBtn.toggle();

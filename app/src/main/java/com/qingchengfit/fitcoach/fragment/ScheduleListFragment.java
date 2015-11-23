@@ -157,7 +157,7 @@ public class ScheduleListFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
                 if (refresh != null) {
-                    refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     refresh.setRefreshing(true);
                 }
             }

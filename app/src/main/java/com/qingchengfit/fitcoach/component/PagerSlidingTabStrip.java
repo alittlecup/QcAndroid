@@ -472,7 +472,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void removeLayoutListenerJelly(ViewTreeObserver.OnGlobalLayoutListener l) {
-        getViewTreeObserver().removeOnGlobalLayoutListener(l);
+        getViewTreeObserver().removeGlobalOnLayoutListener(l);
     }
 
     @SuppressWarnings("deprecation")

@@ -409,6 +409,9 @@ public class GymDetailFragment extends Fragment {
     public void removeCookie() {
         if (cookieManager != null) {
             cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+            for (String string : hostArray) {
+                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+            }
 //            if (Build.VERSION.SDK_INT < 21) {
 //                cookieManager.removeAllCookie();
 //            } else {
@@ -478,9 +481,10 @@ public class GymDetailFragment extends Fragment {
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
-
+                LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
-                setCookie(uri.getHost(), "sessionid", sessionid);
+                LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
+//                setCookie(uri.getHost(), "sessionid", sessionid);
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }

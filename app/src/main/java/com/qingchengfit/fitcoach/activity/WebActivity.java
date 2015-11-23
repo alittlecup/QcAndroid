@@ -166,7 +166,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 mRefreshSwipeRefreshLayout.setRefreshing(true);
             }
         });
@@ -346,7 +346,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                     }
 
 
-
                     LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                 }
                 return super.shouldOverrideUrlLoading(view, url);
@@ -511,6 +510,10 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
     public void removeCookies() {
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
+        for (String string : hostArray) {
+            if (cookieManager != null)
+                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+        }
     }
 
     @Override

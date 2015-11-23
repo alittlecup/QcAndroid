@@ -208,7 +208,7 @@ public class MyStudentFragment extends MainBaseFragment {
             @Override
             public void onGlobalLayout() {
                 refresh.setRefreshing(true);
-                refresh.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
 

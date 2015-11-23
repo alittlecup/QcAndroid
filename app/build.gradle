@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 81
-        versionName "0.8.1"
+        versionCode 82
+        versionName "0.8.2"
     }
 //    buildTypes {
 //        release {

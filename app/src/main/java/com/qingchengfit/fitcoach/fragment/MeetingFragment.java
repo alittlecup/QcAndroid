@@ -70,7 +70,7 @@ public class MeetingFragment extends MainBaseFragment {
         mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 mRefreshSwipeRefreshLayout.setRefreshing(true);
             }
         });
