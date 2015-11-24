@@ -24,6 +24,7 @@
             android:background="@color/transparent"
             android:hint="您的邮箱"
             android:paddingLeft="0dp"
+            android:singleLine="true"
             />
 
         <include

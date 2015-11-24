@@ -34,6 +34,7 @@
         android:id="@+id/addgym_city"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
         app:civ_lable="城市"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>

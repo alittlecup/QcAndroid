@@ -53,9 +53,10 @@
                 android:background="@drawable/bg_searchview"
                 android:drawableLeft="@drawable/ic_search_black"
                 android:hint="输入学员名字或者手机号"
+                android:imeOptions="actionDone"
                 android:maxLength="11"
                 android:paddingLeft="16dp"
-
+                android:singleLine="true"
                 />
 
             <ImageView
