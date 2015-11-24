@@ -11,6 +11,7 @@
     <include layout="@layout/common_toolbar"/>
 
     <RelativeLayout
+        android:id="@+id/gym_addcourse_img_layout"
         android:layout_width="match_parent"
         android:layout_height="85dp"
         android:background="@color/white"
@@ -25,6 +26,7 @@
             />
 
         <ImageView
+            android:id="@+id/gym_addcourse_img"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_alignParentRight="true"
@@ -57,6 +59,7 @@
             />
 
         <RadioGroup
+            android:id="@+id/course_type_rg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -66,6 +69,7 @@
             >
 
             <RadioButton
+                android:id="@+id/course_type_private"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@drawable/radio_selector"
@@ -74,6 +78,7 @@
                 />
 
             <RadioButton
+                android:id="@+id/course_type_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -99,6 +104,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/course_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_lable="@string/gym_add_course_name"
@@ -113,6 +119,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/course_time"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_inputnum="true"
