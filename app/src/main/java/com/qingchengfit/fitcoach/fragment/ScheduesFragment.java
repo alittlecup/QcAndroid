@@ -399,10 +399,14 @@ public class ScheduesFragment extends MainBaseFragment {
                 sb.append("mobile/coaches/systems/?action=grouplesson");
                 break;
         }
-        webFloatbtn.collapse();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(mFragmentAdapter.getCurDay());
+        calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
+        sb.append("&").append("date=").append(DateUtils.getServerDateDay(calendar.getTime()));
         Intent toWeb = new Intent(getActivity(), WebActivity.class);
         toWeb.putExtra("url", sb.toString());
         startActivityForResult(toWeb, 404);
+        webFloatbtn.collapse();
     }
 
     @Override
@@ -569,6 +573,10 @@ public class ScheduesFragment extends MainBaseFragment {
 
         public void setCurCenterDay(Date day) {
             curDate = day;
+        }
+
+        public Date getCurDay() {
+            return curDate;
         }
 
         @Override

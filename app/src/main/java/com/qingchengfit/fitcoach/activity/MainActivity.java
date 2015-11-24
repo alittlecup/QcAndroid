@@ -484,7 +484,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         Intent logout = new Intent(this, SplashActivity.class);
         logout.putExtra("isRegiste", 0);
         startActivity(logout);
-
         this.finish();
     }
 
