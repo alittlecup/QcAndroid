@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.BitmapUtils;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;
@@ -159,7 +161,11 @@ public class GymDetailFragment extends Fragment {
 
             );
         }
-
+        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
+        if (!TextUtils.isEmpty(hosts)) {
+            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
+            }.getType());
+        }
     }
 
 
@@ -408,23 +414,14 @@ public class GymDetailFragment extends Fragment {
 
 
     public void removeCookie() {
-        if (cookieManager != null) {
-            cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-            for (String string : hostArray) {
-                LogUtil.e("clean cookie:" + string);
-                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-            }
-//            if (Build.VERSION.SDK_INT < 21) {
-//                cookieManager.removeAllCookie();
-//            } else {
-//                cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
-//                    @Override
-//                    public void onReceiveValue(Boolean value) {
-//
-//                    }
-//                });
+        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
+//        if (cookieManager != null) {
+//            cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+//            for (String string : hostArray) {
+//                LogUtil.e("clean cookie:" + string);
+//                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
 //            }
-        }
+//        }
     }
 
     @Override

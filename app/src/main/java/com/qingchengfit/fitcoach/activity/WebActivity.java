@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.BitmapUtils;
@@ -130,11 +131,11 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
         });
 
-//        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
-//        if (!TextUtils.isEmpty(hosts)) {
-//            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
-//            }.getType());
-//        }
+        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
+        if (!TextUtils.isEmpty(hosts)) {
+            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
+            }.getType());
+        }
 
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");
@@ -512,10 +513,10 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
     public void removeCookies() {
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
-        for (String string : hostArray) {
-            if (cookieManager != null)
-                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-        }
+//        for (String string : hostArray) {
+//            if (cookieManager != null)
+//                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+//        }
     }
 
     @Override
