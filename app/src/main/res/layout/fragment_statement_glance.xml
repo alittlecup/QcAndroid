@@ -27,240 +27,258 @@
 
             />
     </android.support.v7.widget.Toolbar>
-    <RelativeLayout
-        android:id="@+id/statement_glance_today"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/qc_backgroud_selector">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_statament_today"
-            />
-
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="74dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             >
 
-            <TextView
-                android:id="@+id/statment_glance_today_title"
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="今日"
+            <RelativeLayout
+                android:id="@+id/statement_glance_today"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/qc_backgroud_selector">
 
-                />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_statament_today"
+                    />
 
-            <TextView
-                android:id="@+id/statment_glance_today_data"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="74dp"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/statment_glance_today_title"
+                        style="@style/Qc.TextCommonBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="今日"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/statment_glance_today_data"
+                        style="@style/Qc.TextCommonGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_arrow_right"
+                    />
+
+                <include
+                    layout="@layout/divider_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                </include>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/statement_glance_week"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/qc_backgroud_selector">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_statament_week"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="74dp"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/statment_glance_week_title"
+                        style="@style/Qc.TextCommonBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="本周"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/statment_glance_week_data"
+                        style="@style/Qc.TextCommonGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_arrow_right"
+                    />
+
+                <include
+                    layout="@layout/divider_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                </include>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/statement_glance_month"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/qc_backgroud_selector">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_statament_month"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="74dp"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/statment_glance_month_title"
+                        style="@style/Qc.TextCommonBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="本月"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/statment_glance_month_data"
+                        style="@style/Qc.TextCommonGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_arrow_right"
+                    />
+
+                <include
+                    layout="@layout/divider_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                </include>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/statement_glance_custom"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/qc_backgroud_selector">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_statament_custom"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="74dp"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        style="@style/Qc.TextCommonBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="自定义报表"
+
+                        />
+
+                    <TextView
+                        style="@style/Qc.TextCommonGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="根据自定义条件生成报表"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_arrow_right"
+                    />
+
+                <include
+                    layout="@layout/divider_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                </include>
+            </RelativeLayout>
+
+
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_arrow_right"
-            />
-
-        <include
-            layout="@layout/divider_white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            >
-
-        </include>
-    </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/statement_glance_week"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/qc_backgroud_selector">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_statament_week"
-            />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="74dp"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:id="@+id/statment_glance_week_title"
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="本周"
-
-                />
-
-            <TextView
-                android:id="@+id/statment_glance_week_data"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-
-                />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_arrow_right"
-            />
-
-        <include
-            layout="@layout/divider_white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            >
-
-        </include>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/statement_glance_month"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/qc_backgroud_selector">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_statament_month"
-            />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="74dp"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:id="@+id/statment_glance_month_title"
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="本月"
-
-                />
-
-            <TextView
-                android:id="@+id/statment_glance_month_data"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_arrow_right"
-            />
-
-        <include
-            layout="@layout/divider_white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            >
-
-        </include>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/statement_glance_custom"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/qc_backgroud_selector">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_statament_custom"
-            />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="74dp"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="自定义报表"
-
-                />
-
-            <TextView
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="根据自定义条件生成报表"
-                />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_arrow_right"
-            />
-
-        <include
-            layout="@layout/divider_white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            >
-
-        </include>
-    </RelativeLayout>
 </LinearLayout>

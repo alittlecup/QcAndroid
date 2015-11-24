@@ -111,8 +111,8 @@
     <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Email-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.7" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="wup-1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="sdk-1.3.6" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-android-1.3.1" level="project" />

@@ -20,9 +20,11 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -149,6 +151,7 @@ public class ScheduleListFragment extends Fragment {
         scheduleNoSchedule.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                RxBus.getBus().post(new RxRefreshList());
                 refresh();
             }
         });

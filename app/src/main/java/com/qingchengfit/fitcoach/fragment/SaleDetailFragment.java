@@ -423,8 +423,11 @@ public class SaleDetailFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+
+        loadingDialog.dismiss();
         ButterKnife.unbind(this);
+        super.onDestroyView();
+
     }
 
 

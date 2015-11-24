@@ -214,7 +214,7 @@ public class WorkExperienceFragment extends BaseFragment {
                 if (experiencesEntity.getSale() != 0) {
                     sb.append("销售额达");
                     sb.append(experiencesEntity.getSale());
-                    sb.append("元.");
+                    sb.append("元;");
                 }
                 holder.itemStudioComplish.setText(sb.toString());
 

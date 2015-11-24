@@ -35,6 +35,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
+import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.LoopView;
@@ -59,6 +60,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -108,9 +110,15 @@ public class ScheduesFragment extends MainBaseFragment {
     private List<Integer> mSystemsId = new ArrayList<>();
     private FragmentAdapter mFragmentAdapter;
     private Observable<NewPushMsg> mObservable;
-
+    private Observable<RxRefreshList> mObservableReresh;
 
     public ScheduesFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -222,6 +230,23 @@ public class ScheduesFragment extends MainBaseFragment {
                         queryNotify();
                     }
                 });
+        mObservableReresh = RxBus.getBus().register(RxRefreshList.class);
+        mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<RxRefreshList>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxRefreshList rxRefreshList) {
+                setUpNaviSpinner();
+            }
+        });
 //        openDrawerInterface.showLoading();
 //        goDateSchedule(mCurDate);
         return view;
@@ -506,6 +531,7 @@ public class ScheduesFragment extends MainBaseFragment {
     @Override
     public void onDestroyView() {
         RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
+        RxBus.getBus().unregister(RxRefreshList.class.getName(), mObservableReresh);
         ButterKnife.unbind(this);
         super.onDestroyView();
     }

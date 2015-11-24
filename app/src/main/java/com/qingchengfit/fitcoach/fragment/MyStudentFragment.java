@@ -489,47 +489,49 @@ public class MyStudentFragment extends MainBaseFragment {
                 mSystemsId.add(system.id);
             }
         } else {
-            //获取用户拥有的系统
-            QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<QcCoachSystemResponse>() {
-                        @Override
-                        public void onCompleted() {
 
-                        }
+        }
+        //获取用户拥有的系统
+        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                    @Override
+                    public void onCompleted() {
 
-                        @Override
-                        public void onError(Throwable e) {
+                    }
 
-                        }
+                    @Override
+                    public void onError(Throwable e) {
 
-                        @Override
-                        public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                            if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                                if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                                        qcCoachSystemResponse.date.systems.size() == 0) {
-                                } else {
-                                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-                                    mSystemsId.clear();
-                                    for (int i = 0; i < systems.size(); i++) {
-                                        QcCoachSystem system = systems.get(i);
-                                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
-                                        mSystemsId.add(system.id);
-                                        if (spinnerBeanArrayAdapter != null) {
-                                            spinnerBeanArrayAdapter.notifyDataSetChanged();
-                                        }
+                    }
+
+                    @Override
+                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+                                    qcCoachSystemResponse.date.systems.size() == 0) {
+                            } else {
+                                List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+                                mSystemsId.clear();
+                                spinnerBeans.clear();
+                                spinnerBeans.add(new SpinnerBean("", "所有学员", true));
+                                for (int i = 0; i < systems.size(); i++) {
+                                    QcCoachSystem system = systems.get(i);
+                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                                    mSystemsId.add(system.id);
+                                    if (spinnerBeanArrayAdapter != null) {
+                                        spinnerBeanArrayAdapter.notifyDataSetChanged();
                                     }
-
-                                    PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
-
                                 }
-                            } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+
+                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
 
                             }
-                        }
-                    });
-        }
+                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
 
+                        }
+                    }
+                });
 
         spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
             @Override

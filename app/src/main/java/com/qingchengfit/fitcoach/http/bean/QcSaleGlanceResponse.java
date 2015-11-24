@@ -45,5 +45,6 @@ public class QcSaleGlanceResponse extends QcResponse {
         public String to_date;
         @SerializedName("total_cost")
         public int total_cost;
+
     }
 }

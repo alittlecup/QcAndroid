@@ -3,10 +3,12 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -49,6 +51,8 @@ public class StatementGlanceFragment extends Fragment {
     TextView statmentGlanceTodayTitle;
     @Bind(R.id.statment_glance_today_data)
     TextView statmentGlanceTodayData;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout refresh;
     private ArrayAdapter<SpinnerBean> adapter;
     private ArrayList<SpinnerBean> spinnerBeans;
     private QcReportGlanceResponse response;
@@ -110,11 +114,26 @@ public class StatementGlanceFragment extends Fragment {
 
             }
         });
-//        QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid).subscribeOn(Schedulers.newThread())
-//                .subscribe(qcReportGlanceResponse -> {
-//                    response = qcReportGlanceResponse;
-//                    handleReponse(qcReportGlanceResponse);
-//                });
+        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                refresh.setRefreshing(true);
+            }
+        });
+        refresh.setColorSchemeResources(R.color.primary);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                freshData();
+            }
+        });
+        freshData();
+
+        return view;
+    }
+
+    public void freshData() {
         QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcReportGlanceResponse -> {
                     response = qcReportGlanceResponse;
@@ -122,7 +141,6 @@ public class StatementGlanceFragment extends Fragment {
                 }, throwable -> {
                 }, () -> {
                 });
-        return view;
     }
 
     public void handleReponse(QcReportGlanceResponse qcReportGlanceResponse) {
@@ -154,10 +172,13 @@ public class StatementGlanceFragment extends Fragment {
 
             if (curSystem != 0 && curSystem != system.system.id)
                 continue;
+            monthClassNum += system.month.course_count;
             monthOrderNum += system.month.order_count;
             monthServerNum += system.month.user_count;
+            weekClassNum += system.week.course_count;
             weekOrderNum += system.week.order_count;
             weekServerNum += system.week.user_count;
+            dayClassNum += system.today.course_count;
             dayOrderNum = +system.today.order_count;
             dayServerNum += system.today.user_count;
         }
@@ -165,9 +186,9 @@ public class StatementGlanceFragment extends Fragment {
         StringBuffer monthContent = new StringBuffer();
         StringBuffer weekContent = new StringBuffer();
         StringBuffer dayContent = new StringBuffer();
-        monthContent.append(monthOrderNum).append("次预约,服务").append(monthServerNum).append("人次");
-        weekContent.append(weekOrderNum).append("次预约,服务").append(weekServerNum).append("人次");
-        dayContent.append(dayOrderNum).append("次预约,服务").append(dayServerNum).append("人次");
+        monthContent.append(monthClassNum).append("节课程,服务").append(monthServerNum).append("人次");
+        weekContent.append(weekClassNum).append("节课程,服务").append(weekServerNum).append("人次");
+        dayContent.append(dayClassNum).append("节课程,服务").append(dayServerNum).append("人次");
 
         getActivity().runOnUiThread(() -> {
             adapter.notifyDataSetChanged();
@@ -177,6 +198,7 @@ public class StatementGlanceFragment extends Fragment {
             statmentGlanceMonthData.setText(monthContent.toString());
             statmentGlanceWeekData.setText(weekContent.toString());
             statmentGlanceTodayData.setText(dayContent.toString());
+            refresh.setRefreshing(false);
         });
     }
 

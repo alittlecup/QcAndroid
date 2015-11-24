@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
@@ -131,11 +130,11 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
         });
 
-        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
-        if (!TextUtils.isEmpty(hosts)) {
-            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
-            }.getType());
-        }
+//        String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
+//        if (!TextUtils.isEmpty(hosts)) {
+//            hostArray = new Gson().fromJson(hosts, new TypeToken<ArrayList<String>>() {
+//            }.getType());
+//        }
 
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");
@@ -418,9 +417,11 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                     LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                     setCookie(uri.getHost(), "qc_session_id", sessionid);
                     LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                } else {
+                    LogUtil.e("host contains");
                 }
             } catch (URISyntaxException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
             setCookie(Configs.ServerIp, "sessionid", sessionid);
 //            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
@@ -431,6 +432,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 //            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
             //TODO logout
+            LogUtil.e("session == null");
         }
     }
 

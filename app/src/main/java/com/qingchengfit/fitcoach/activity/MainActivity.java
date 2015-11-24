@@ -462,6 +462,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
             if (gson == null) {
                 gson = new Gson();
+
             }
             String contetn = intent.getStringExtra("content");
             if (!TextUtils.isEmpty(contetn)) {

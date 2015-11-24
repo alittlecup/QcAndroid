@@ -49,6 +49,8 @@ public class QcReportGlanceResponse extends QcResponse {
         public int user_count;
         @SerializedName("order_count")
         public int order_count;
+        @SerializedName("course_count")
+        public int course_count;
     }
 
 
