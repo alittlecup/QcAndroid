@@ -182,31 +182,49 @@ public class WorkExperienceFragment extends BaseFragment {
             holder.itemStudioPos.setText(ssPosition);
             ColorDrawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
             drawable.setAlpha(20);
-            holder.itemTime.setBackground(drawable);
+            holder.itemTime.setBackgroundDrawable(drawable);
+
+            holder.itemStudioComplish.setVisibility(View.VISIBLE);
+            StringBuffer sb = new StringBuffer();
+            sb.append("业绩: ");
             if (experiencesEntity.getGroup_course() == 0 &&
                     experiencesEntity.getPrivate_course() == 0 &&
-                    experiencesEntity.getSale() == 0) {
-                holder.itemStudioComplish.setVisibility(View.GONE);
+                    experiencesEntity.getSale() == 0 &&
+                    experiencesEntity.getGroup_user() == 0 &&
+                    experiencesEntity.getPrivate_user() == 0
+                    ) {
+                sb.append("无");
+                holder.itemStudioComplish.setText(sb.toString());
             } else {
-                holder.itemStudioComplish.setVisibility(View.VISIBLE);
-                StringBuffer sb = new StringBuffer();
-                sb.append("业绩: ");
-                sb.append("团课");
-                sb.append(experiencesEntity.getGroup_course());
-                sb.append("节,服务");
-                sb.append(experiencesEntity.getGroup_user());
-                sb.append("人次;私教课");
-                sb.append(experiencesEntity.getPrivate_course());
-                sb.append("节,服务");
-                sb.append(experiencesEntity.getPrivate_user());
-                sb.append("人次;销售额达");
-                sb.append(experiencesEntity.getSale());
-                sb.append("元.");
+                if (experiencesEntity.getGroup_course() != 0 || experiencesEntity.getGroup_user() != 0) {
+                    sb.append("团课");
+                    sb.append(experiencesEntity.getGroup_course());
+                    sb.append("节,服务");
+                    sb.append(experiencesEntity.getGroup_user());
+                    sb.append("人次;");
 
-                SpannableString sy = new SpannableString(sb.toString());
-//            sy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-                holder.itemStudioComplish.setText(sy);
+                }
+                if (experiencesEntity.getPrivate_course() != 0 || experiencesEntity.getPrivate_user() != 0) {
+                    sb.append("私教课");
+                    sb.append(experiencesEntity.getPrivate_course());
+                    sb.append("节,服务");
+                    sb.append(experiencesEntity.getPrivate_user());
+                    sb.append("人次;");
+                }
+                if (experiencesEntity.getSale() != 0) {
+                    sb.append("销售额达");
+                    sb.append(experiencesEntity.getSale());
+                    sb.append("元.");
+                }
+                holder.itemStudioComplish.setText(sb.toString());
+
             }
+
+
+//            SpannableString sy = new SpannableString(sb.toString());
+//            sy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+//            holder.itemStudioComplish.setText(sy);
+
             SpannableString sDes = new SpannableString("描述: " + experiencesEntity.getDescription());
 //            sDes.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             holder.itemStudioDes.setText(sDes);
