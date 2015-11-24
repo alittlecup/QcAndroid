@@ -46,6 +46,7 @@ public class PicChooseDialog extends Dialog {
         this.setContentView(layout);
     }
 
+
     @Override
     public void show() {
         Window window = this.getWindow();

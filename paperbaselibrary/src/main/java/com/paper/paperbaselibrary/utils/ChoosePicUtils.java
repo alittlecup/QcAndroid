@@ -72,7 +72,6 @@ public class ChoosePicUtils {
         } else if (requestcode == CHOOSE_CAMERA || requestcode / 100 == 2) {
             filepath = fp;
         } else filepath = fp;
-
         return new File(filepath);
     }
 
