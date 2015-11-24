@@ -312,7 +312,7 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
     //处理http结果
-    private void handleResponse(QcAllStudentResponse qcAllStudentResponse) {
+    private synchronized void handleResponse(QcAllStudentResponse qcAllStudentResponse) {
         if (qcAllStudentResponse == null)
             return;
         adapterData.clear();
