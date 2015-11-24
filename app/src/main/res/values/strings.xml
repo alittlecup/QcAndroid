@@ -73,5 +73,7 @@
     <string name="common_today">今</string>
     <string name="common_i_konw">知道了</string>
     <string name="add_self_gym">添加“个人健身房”有什么用途？</string>
+    <string name="myhome_default_desc">这个人很懒,什么也没有留下</string>
+    <string name="myhome_data_none">暂未填写</string>
 
 </resources>

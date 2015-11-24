@@ -221,7 +221,7 @@ public class QcCloudClient {
         @GET("/api/csrftoken/")
         QcResponToken qcGetToken();
 
-        @POST("/api/users/{id}")
+        @POST("/api/users/{id}/")
         rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
 
         @GET("/api/android/coaches/{id}/welcome/")
@@ -306,11 +306,11 @@ public class QcCloudClient {
         rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
 
         //获取教练报表强详情
-        @GET("/api/coaches/{id}/systems/report/schedules")
+        @GET("/api/coaches/{id}/systems/report/schedules/")
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
 
         //获取教练销售详情
-        @GET("/api/coaches/{id}/systems/report/sale")
+        @GET("/api/coaches/{id}/systems/report/sale/")
         rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id, @QueryMap Map<String, String> params);
 
 
@@ -320,15 +320,15 @@ public class QcCloudClient {
 
 
         //获取教练某个系统下的学员
-        @GET("/api/coaches/{id}/systems/users")
+        @GET("/api/coaches/{id}/systems/users/")
         rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id, @QueryMap Map<String, String> params);
 
         //获取教练所有学员
-        @GET("/api/coaches/{id}/users")
+        @GET("/api/coaches/{id}/users/")
         rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
 
         //获取所有课程计划
-        @GET("/api/coaches/{id}/plans")
+        @GET("/api/coaches/{id}/plans/")
         rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id);
 
         //获取所有健身房充值卡

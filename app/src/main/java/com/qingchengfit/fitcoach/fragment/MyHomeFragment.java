@@ -218,7 +218,10 @@ public class MyHomeFragment extends Fragment {
 
     public void handleResponse(QcMyhomeResponse qcMyhomeResponse) {
         myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
-        myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
+        if (TextUtils.isEmpty(qcMyhomeResponse.getData().getCoach().getShort_description()))
+            myhomeBrief.setText(getString(R.string.myhome_default_desc));
+        else
+            myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
         fragments.add(new RecordComfirmFragment());

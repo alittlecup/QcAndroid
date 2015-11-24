@@ -187,7 +187,10 @@ public class BaseInfoFragment extends BaseFragment {
             if (position < 3) {
                 holder.itemImg.setImageResource(datas.get(position).icon);
                 holder.itemLabel.setText(datas.get(position).label);
-                holder.itemContent.setText(datas.get(position).content);
+                if (TextUtils.isEmpty(datas.get(position).content))
+                    holder.itemContent.setText(getString(R.string.myhome_data_none));
+                else
+                    holder.itemContent.setText(datas.get(position).content);
             } else {
                 if (position == 3) {
                     holder.itemDivider.setVisibility(View.VISIBLE);

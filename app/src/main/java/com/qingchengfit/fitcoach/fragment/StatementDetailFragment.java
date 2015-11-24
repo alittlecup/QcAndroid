@@ -230,14 +230,14 @@ public class StatementDetailFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryStatement();
+                freshDate();
             }
         });
         refreshNodata.setColorSchemeResources(R.color.primary);
         refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryStatement();
+                freshDate();
             }
         });
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -303,11 +303,17 @@ public class StatementDetailFragment extends Fragment {
             }
         });
 
+        freshDate();
+    }
+
+    public void freshDate() {
         //获取用户拥有系统信息
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
                     List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
                     mSystemsId.clear();
+                    spinnerBeans.clear();
+                    spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
                     for (int i = 0; i < systems.size(); i++) {
                         QcCoachSystem system = systems.get(i);
                         spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
@@ -319,6 +325,7 @@ public class StatementDetailFragment extends Fragment {
                 }, () -> {
                 });
     }
+
 
     private void queryStatement() {
         if (mSystemsId.size() == 0)

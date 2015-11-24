@@ -46,6 +46,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 
 import java.util.ArrayList;
@@ -136,7 +137,7 @@ public class ScheduesFragment extends MainBaseFragment {
         }
         coach = gson.fromJson(id, Coach.class);
         //初始化title下拉
-        setUpNaviSpinner();
+
         setUpViewPager();
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
@@ -249,6 +250,7 @@ public class ScheduesFragment extends MainBaseFragment {
     public void setUpNaviSpinner() {
 
         spinnerBeans = new ArrayList<>();
+        spinnerBeans.clear();
         spinnerBeans.add(new SpinnerBean("", "全部日程", true));
 
         String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
@@ -256,12 +258,58 @@ public class ScheduesFragment extends MainBaseFragment {
             QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
             List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
             mSystemsId.clear();
+            spinnerBeans.clear();
+            spinnerBeans.add(new SpinnerBean("", "全部日程", true));
             for (int i = 0; i < systems.size(); i++) {
                 QcCoachSystem system = systems.get(i);
                 spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
                 mSystemsId.add(system.id);
             }
+        } else {
+
         }
+        //获取用户拥有的系统
+        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+                                    qcCoachSystemResponse.date.systems.size() == 0) {
+                            } else {
+                                List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+                                mSystemsId.clear();
+                                spinnerBeans.clear();
+                                spinnerBeans.add(new SpinnerBean("", "全部日程", true));
+                                for (int i = 0; i < systems.size(); i++) {
+                                    QcCoachSystem system = systems.get(i);
+                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                                    mSystemsId.add(system.id);
+                                    if (spinnerBeanArrayAdapter != null) {
+                                        spinnerBeanArrayAdapter.notifyDataSetChanged();
+                                    }
+                                }
+
+                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
+
+                            }
+                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+
+                        }
+                    }
+                });
+
 
         spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
             @Override
@@ -293,6 +341,7 @@ public class ScheduesFragment extends MainBaseFragment {
         };
         spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinnerNav.setAdapter(spinnerBeanArrayAdapter);
+
         spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

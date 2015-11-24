@@ -49,6 +49,7 @@ import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,6 +61,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -138,7 +141,7 @@ public class MyStudentFragment extends MainBaseFragment {
             }
             return true;
         });
-        setUpNaviSpinner();
+
         setUpSeachView();
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(mLinearLayoutManager);
@@ -200,7 +203,8 @@ public class MyStudentFragment extends MainBaseFragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                    freshData();
+
+                freshData();
             }
         });
         //默认刷新
@@ -215,6 +219,7 @@ public class MyStudentFragment extends MainBaseFragment {
         return view;
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -222,6 +227,7 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
     public void freshData() {
+        setUpNaviSpinner();
         refresh.setRefreshing(true);
         //获取原始数据
         QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
@@ -249,7 +255,7 @@ public class MyStudentFragment extends MainBaseFragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             int x = curPostion;
-            setUpNaviSpinner();
+
             spinnerNav.setSelection(x);
             //获取原始数据
             freshData();
@@ -261,7 +267,7 @@ public class MyStudentFragment extends MainBaseFragment {
     public void onResume() {
         super.onResume();
         int x = curPostion;
-        setUpNaviSpinner();
+
         spinnerNav.setSelection(x);
         freshData();
     }
@@ -475,12 +481,55 @@ public class MyStudentFragment extends MainBaseFragment {
             QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
             systems = qcCoachSystemResponse.date.systems;
             mSystemsId.clear();
+            spinnerBeans.clear();
+            spinnerBeans.add(new SpinnerBean("", "所有学员", true));
             for (int i = 0; i < systems.size(); i++) {
                 QcCoachSystem system = systems.get(i);
                 spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
                 mSystemsId.add(system.id);
             }
+        } else {
+            //获取用户拥有的系统
+            QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                            if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                                if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+                                        qcCoachSystemResponse.date.systems.size() == 0) {
+                                } else {
+                                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+                                    mSystemsId.clear();
+                                    for (int i = 0; i < systems.size(); i++) {
+                                        QcCoachSystem system = systems.get(i);
+                                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                                        mSystemsId.add(system.id);
+                                        if (spinnerBeanArrayAdapter != null) {
+                                            spinnerBeanArrayAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+
+                                    PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
+
+                                }
+                            } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+
+                            }
+                        }
+                    });
         }
+
 
         spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
             @Override
@@ -625,7 +674,7 @@ public class MyStudentFragment extends MainBaseFragment {
             holder.itemStudentGymname.setText(studentBean.gymStr);
             holder.itemStudentName.setText(studentBean.username);
             holder.itemStudentPhonenum.setText(studentBean.phone);
-            holder.itemHeaderLoop.setBackground(new LoopView(studentBean.color));
+            holder.itemHeaderLoop.setBackgroundDrawable(new LoopView(studentBean.color));
             if (studentBean.gender) {//男
                 holder.itemStudentGender.setImageResource(R.drawable.ic_gender_signal_male);
             } else {

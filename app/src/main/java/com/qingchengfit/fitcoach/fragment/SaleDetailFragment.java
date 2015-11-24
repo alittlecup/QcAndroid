@@ -212,14 +212,14 @@ public class SaleDetailFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryStatement();
+                freshData();
             }
         });
         refreshNodata.setColorSchemeResources(R.color.primary);
         refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryStatement();
+                freshData();
             }
         });
         return view;
@@ -278,12 +278,18 @@ public class SaleDetailFragment extends Fragment {
 
             }
         });
+        freshData();
 
+    }
+
+    public void freshData() {
         //获取用户拥有系统信息
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
                     List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
                     mSystemsId.clear();
+                    spinnerBeans.clear();
+                    spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
                     for (int i = 0; i < systems.size(); i++) {
                         QcCoachSystem system = systems.get(i);
                         spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
