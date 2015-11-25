@@ -154,7 +154,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     public void initRv() {
         Map<String, String> params = new HashMap<>();
         params.put("is_hot", "1");
-
+        LogUtil.e("initRv");
         if (type == TYPE_GYM) {
             searchHottable.setText("热门健身房");
             QcCloudClient.getApi().getApi.qcHotGym(params)
@@ -203,7 +203,6 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         }));
                                         adapter.notifyDataSetChanged();
                                     }
-//                                    else searchresultRv.setVisibility(View.GONE);
                                 }
                                 ;
                             }, throwable -> {
@@ -223,9 +222,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @OnClick(R.id.searchresult_btn)
     public void onAdd() {
         if (type == TYPE_GYM)
-            getFragmentManager().beginTransaction().replace(R.id.search_fraglayout, new AddGymFragment()).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().add(R.id.search_fraglayout, new AddGymFragment()).addToBackStack(null).commit();
         else if (type == TYPE_ORGANASITON)
-            getFragmentManager().beginTransaction().replace(R.id.search_fraglayout, new AddOganasitionFragment())
+            getFragmentManager().beginTransaction().add(R.id.search_fraglayout, new AddOganasitionFragment())
                     .addToBackStack(null).commit();
 
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,7 +60,7 @@ public class AddGymFragment extends Fragment {
     private OptionsPopupWindow pwOptions;
 
     private CitiesChooser citiesChooser;
-    private int Districtid;
+    private int Districtid = 0;
     private SearchInterface searchListener;
 
     public AddGymFragment() {
@@ -114,7 +115,16 @@ public class AddGymFragment extends Fragment {
             Toast.makeText(getContext(), "健身房名称不能少于三个字", Toast.LENGTH_SHORT).show();
             return;
         }
-        AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), "descripe");
+        if (Districtid == 0) {
+            Toast.makeText(getContext(), "必须选择所在城市", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(addgymContact.getContent()) || addgymContact.getContent().length() < 7) {
+            Toast.makeText(getContext(), "请填写正确的联系方式", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), workexpeditDescripe.getText().toString());
         QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcAddGymResponse -> {

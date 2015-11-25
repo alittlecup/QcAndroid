@@ -5,7 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -71,7 +73,12 @@ public class AddOganasitionFragment extends Fragment {
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         addgymName.setLabel("机构名");
         addgymCity.setVisibility(View.GONE);
-
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
         return view;
     }
@@ -94,8 +101,12 @@ public class AddOganasitionFragment extends Fragment {
             Toast.makeText(getActivity(), "机构名称至少填写三个字", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(addgymContact.getContent()) || addgymContact.getContent().length() < 7) {
+            Toast.makeText(getActivity(), "请填写正确的联系方式", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        QcCloudClient.getApi().postApi.qcAddOrganization(new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), "description"))
+        QcCloudClient.getApi().postApi.qcAddOrganization(new OrganizationBean(addgymName.getContent(), addgymContact.getContent(), workexpeditDescripe.getText().toString()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcResponse -> {

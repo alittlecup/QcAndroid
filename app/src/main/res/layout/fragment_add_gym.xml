@@ -27,6 +27,7 @@
         android:layout_height="@dimen/qc_item_height"
         app:civ_inputnum="true"
         app:civ_lable="联系方式"
+        app:civ_nonnull="true"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -36,6 +37,7 @@
         android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
         app:civ_lable="城市"
+        app:civ_nonnull="true"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 

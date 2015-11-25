@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 86
-        versionName "0.8.6"
+        versionCode 87
+        versionName "0.8.7"
     }
 //    buildTypes {
 //        release {
@@ -116,7 +116,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             minifyEnabled false
-            debuggable false
+            debuggable true
 //            applicationVariants.all { variant ->
 //                variant.outputs.each { output ->
 //                    output.outputFile = new File(

@@ -87,9 +87,14 @@ public class CommonInputView extends RelativeLayout {
                 edit.requestFocus();
             });
         }
-        if (isNum)
-            edit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        else edit.setInputType(InputType.TYPE_CLASS_TEXT);
+        if (isNum) {
+
+
+            edit.setInputType(InputType.TYPE_CLASS_PHONE);
+        } else {
+
+            edit.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
     }
 
     public void setLabel(String s) {
