@@ -314,6 +314,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
                         if (!hostArray.contains(uri.getHost())) {
                             hostArray.add(uri.getHost());
+
                         }
                         LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                         setCookie(uri.getHost(), "qc_session_id", sessionid);
@@ -415,12 +416,13 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 URI uri = new URI(url);
                 if (!hostArray.contains(uri.getHost())) {
                     hostArray.add(uri.getHost());
-                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
-                    setCookie(uri.getHost(), "qc_session_id", sessionid);
-                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+
                 } else {
-                    LogUtil.e("host contains");
+                    LogUtil.e("host contains" + cookieManager.getCookie(uri.getHost()));
                 }
+                LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                setCookie(uri.getHost(), "qc_session_id", sessionid);
+                LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
