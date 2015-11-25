@@ -156,6 +156,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         params.put("is_hot", "1");
 
         if (type == TYPE_GYM) {
+            searchHottable.setText("热门健身房");
             QcCloudClient.getApi().getApi.qcHotGym(params)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -168,17 +169,21 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
                                             strings.add(addGymBean.name);
                                         }
+                                        strings.add("");
                                         adapter.setListener(((v, pos) -> {
-                                            searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                            if (pos != adapter.getItemCount() - 1)
+                                                searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
                                         }));
                                         adapter.notifyDataSetChanged();
-                                    } else searchresultRv.setVisibility(View.GONE);
+                                    }
+//                                    else searchresultRv.setVisibility(View.GONE);
                                 }
                                 ;
                             }, throwable -> {
                             }, () -> {
                             });
         } else if (type == TYPE_ORGANASITON) {
+            searchHottable.setText("热门机构");
             QcCloudClient.getApi().getApi.qcHotOrganization(params)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -191,11 +196,14 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
                                             strings.add(addGymBean.getName());
                                         }
+                                        strings.add("");
                                         adapter.setListener(((v, pos) -> {
-                                            searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                            if (pos != adapter.getItemCount() - 1)
+                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
                                         }));
                                         adapter.notifyDataSetChanged();
-                                    } else searchresultRv.setVisibility(View.GONE);
+                                    }
+//                                    else searchresultRv.setVisibility(View.GONE);
                                 }
                                 ;
                             }, throwable -> {
@@ -252,8 +260,12 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
                                             strings.add(addGymBean.name);
                                         }
+                                        strings.add("添加健身房");
                                         adapter.setListener(((v, pos) -> {
-                                            searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                            if (pos == adapter.getItemCount() - 1) {
+                                                onAdd();
+                                            } else
+                                                searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
                                         }));
                                         adapter.notifyDataSetChanged();
                                     } else searchresultRv.setVisibility(View.GONE);
@@ -276,8 +288,13 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
                                             strings.add(addGymBean.getName());
                                         }
+                                        strings.add("添加主办机构");
                                         adapter.setListener(((v, pos) -> {
-                                            searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+
+                                            if (pos == adapter.getItemCount() - 1) {
+                                                onAdd();
+                                            } else
+                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
                                         }));
                                         adapter.notifyDataSetChanged();
                                     } else searchresultRv.setVisibility(View.GONE);
@@ -351,8 +368,15 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
         @Override
         public SearchResultVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            SearchResultVH holder = new SearchResultVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
-            holder.itemView.setOnClickListener(this);
+            SearchResultVH holder;
+            if (viewType == 0) {
+                holder = new SearchResultVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
+                holder.itemView.setOnClickListener(this);
+            } else {
+                holder = new SearchResultVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_btn, parent, false));
+                holder.itemView.setOnClickListener(this);
+            }
+
             return holder;
         }
 
@@ -360,6 +384,10 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         public void onBindViewHolder(SearchResultVH holder, int position) {
             holder.itemView.setTag(position);
             String s = datas.get(position);
+            if (TextUtils.isEmpty(s))
+                holder.itemText.setVisibility(View.GONE);
+            else holder.itemText.setVisibility(View.VISIBLE);
+
             if (!TextUtils.isEmpty(keyword) && s.contains(keyword)) {
 
                 SpannableString ss = new SpannableString(s);
@@ -370,6 +398,12 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             } else holder.itemText.setText(s);
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            if (position == getItemCount() - 1)
+                return 1;
+            else return 0;
+        }
 
         @Override
         public int getItemCount() {
@@ -378,6 +412,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
         @Override
         public void onClick(View v) {
+            LogUtil.e("onclick");
             if (listener != null)
                 listener.onItemClick(v, (int) v.getTag());
         }

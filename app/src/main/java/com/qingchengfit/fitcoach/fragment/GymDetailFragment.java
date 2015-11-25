@@ -237,10 +237,12 @@ public class GymDetailFragment extends Fragment {
 
                                                  if (!hostArray.contains(uri.getHost())) {
                                                      hostArray.add(uri.getHost());
+
                                                  }
                                                  LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                                                  setCookie(uri.getHost(), "qc_session_id", sessionid);
                                                  LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+
 
                                              } catch (URISyntaxException e) {
 
@@ -368,9 +370,10 @@ public class GymDetailFragment extends Fragment {
 //                setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
         cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
-        webview.loadUrl(host);
+        webview.loadUrl("");
 
         initCookie(host);
+        webview.loadUrl(host);
         return view;
     }
 
@@ -480,10 +483,13 @@ public class GymDetailFragment extends Fragment {
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
-                LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
+                if (!hostArray.contains(uri.getHost())) {
+                    LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
+                }
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
                 hostArray.add(uri.getHost());
                 LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
+
 //                setCookie(uri.getHost(), "sessionid", sessionid);
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
