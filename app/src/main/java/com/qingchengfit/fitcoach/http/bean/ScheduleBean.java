@@ -18,6 +18,8 @@ public class ScheduleBean {
     public String color;    //颜色
     public String title;  //课程名称
     public String gymname;//健身房名称
+    public String users;
+    public boolean isSingle;
     public int count; //预约人数
     public long timeEnd; //结束时间
     public String pic_url; //图片

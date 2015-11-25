@@ -2,6 +2,8 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * power by
  * <p>
@@ -32,7 +34,15 @@ public class QcScheduleBean {
     public Course course;
     @SerializedName("users")
     public String users;
+    @SerializedName("orders")
+    public List<Order> orders;
 
+    public static class Order {
+        @SerializedName("count")
+        public int count;
+        @SerializedName("username")
+        public String username;
+    }
 
     public static class Shop {
         @SerializedName("name")

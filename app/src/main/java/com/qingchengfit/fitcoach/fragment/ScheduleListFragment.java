@@ -213,6 +213,16 @@ public class ScheduleListFragment extends Fragment {
                 QcScheduleBean schedule = schedules.get(k);
                 ScheduleBean bean = new ScheduleBean();
                 bean.type = 1;
+
+                if (schedule.orders.size() == 1) {
+                    bean.isSingle = true;
+//                    if (schedule.orders.get(0).count > 1){
+//                    bean.users = schedule.orders.get(0).username+"("+schedule.orders.get(0).count+"人)";}
+//                    else
+                    bean.users = schedule.orders.get(0).username;
+                } else {
+                    bean.isSingle = false;
+                }
                 bean.gymname = system.system.name;
                 bean.color = syscolor;
                 bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
@@ -353,8 +363,8 @@ public class ScheduleListFragment extends Fragment {
                 holder.itemScheduleStatus.setImageResource(R.drawable.ic_calendar_done);
                 holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_grey));
                 holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_grey));
-                if (bean.count == 1) {
-                    holder.itemScheduleNum.setText("共" + bean.count + "人上课: " + "xxx");
+                if (bean.isSingle) {
+                    holder.itemScheduleNum.setText(bean.count + "人: " + bean.users);
                 } else {
                     holder.itemScheduleNum.setText("共" + bean.count + "人上课");
                 }
@@ -366,8 +376,8 @@ public class ScheduleListFragment extends Fragment {
                 holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_black));
                 holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_black));
                 holder.itemScheduleStatus.setImageDrawable(new LoopView(bean.color));
-                if (bean.count == 1) {
-                    holder.itemScheduleNum.setText(bean.count + "人已预约: " + "xxx");
+                if (bean.isSingle) {
+                    holder.itemScheduleNum.setText(bean.count + "人: " + bean.users);
                 } else {
                     holder.itemScheduleNum.setText(bean.count + "人已预约");
                 }
