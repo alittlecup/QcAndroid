@@ -96,6 +96,11 @@ public class NotificationFragment extends BaseSettingFragment {
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new NotifiAdapter(list);
+        adapter.setListener((v, pos) -> {
+            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
+            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
+        });
+        recyclerview.setAdapter(adapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             private boolean isScrollDown = false;
@@ -160,6 +165,7 @@ public class NotificationFragment extends BaseSettingFragment {
             @Override
             public void onRefresh() {
                 list.clear();
+                curpage = 1;
                 onRefesh();
             }
         });
@@ -167,6 +173,7 @@ public class NotificationFragment extends BaseSettingFragment {
             @Override
             public void onRefresh() {
                 list.clear();
+                curpage = 1;
                 onRefesh();
             }
         });
@@ -218,13 +225,9 @@ public class NotificationFragment extends BaseSettingFragment {
                             if (list != null && list.size() > 0) {
                                 refresh.setVisibility(View.VISIBLE);
                                 refreshNodata.setVisibility(View.GONE);
-                                adapter = new NotifiAdapter(list);
-                                adapter.setListener((v, pos) -> {
-                                    fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
-                                    fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
-                                });
-//                            adapter.notifyDataSetChanged();
-                                recyclerview.setAdapter(adapter);
+
+                                adapter.notifyDataSetChanged();
+//                                recyclerview.setAdapter(adapter);
                             } else {
                                 refresh.setVisibility(View.GONE);
                                 refreshNodata.setVisibility(View.VISIBLE);
@@ -294,8 +297,6 @@ public class NotificationFragment extends BaseSettingFragment {
         public NotifiVH onCreateViewHolder(ViewGroup parent, int viewType) {
             NotifiVH holder = new NotifiVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notifacation, parent, false));
             holder.itemView.setOnClickListener(this);
-
-
             return holder;
         }
 
