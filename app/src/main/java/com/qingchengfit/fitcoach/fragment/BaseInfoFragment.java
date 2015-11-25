@@ -95,7 +95,7 @@ public class BaseInfoFragment extends BaseFragment {
 
 
         datas.clear();
-        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_phone, "电话", coachEntity.getPhone()));
+        datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机", coachEntity.getPhone()));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_city, "城市", coachEntity.getDistrictStr()));
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_wechat, "微信", coachEntity.getWeixin()));
         List<BriefInfo> briefInfos;

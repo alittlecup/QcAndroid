@@ -152,7 +152,6 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                             refresh.setVisibility(View.VISIBLE);
                             mGymAdapter.notifyDataSetChanged();
                         }
-
                         refresh.setRefreshing(false);
                     }
                 });
@@ -246,6 +245,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
             QcAllCoursePlanResponse.Plan detail = datas.get(position);
+
             holder.itemGymName.setText(detail.name);
             StringBuffer sb = new StringBuffer();
             for (String s : detail.tags) {
@@ -255,7 +255,13 @@ public class MyCoursePlanFragment extends MainBaseFragment {
             if (sb.length() > 2) {
                 holder.itemGymPhonenum.setText(sb.substring(0, sb.length() - 1));
             }
-            holder.itemIsPersonal.setVisibility(View.GONE);
+            if (detail.type == 1) {//个人
+                holder.itemIsPersonal.setText("个人");
+                holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_red);
+            } else { //2  所属  3 会议
+                holder.itemIsPersonal.setText("所属");
+                holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_green);
+            }
             holder.itemGymHeader.setVisibility(View.GONE);
         }
 

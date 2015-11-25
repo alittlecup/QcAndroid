@@ -338,7 +338,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 }
 
                 StringBuffer sb = new StringBuffer();
-                sb.append("联系电话:").append(student.phone);
+                sb.append("手机:").append(student.phone);
                 bean.phone = sb.toString();
                 if (student.gender.equalsIgnoreCase("0"))
                     bean.gender = true;

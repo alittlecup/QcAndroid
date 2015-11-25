@@ -144,6 +144,7 @@ public class ScheduleListFragment extends Fragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                RxBus.getBus().post(new RxRefreshList());
                 refresh();
             }
         });
@@ -352,7 +353,12 @@ public class ScheduleListFragment extends Fragment {
                 holder.itemScheduleStatus.setImageResource(R.drawable.ic_calendar_done);
                 holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_grey));
                 holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_grey));
-                holder.itemScheduleNum.setText("共" + bean.count + "人上课");
+                if (bean.count == 1) {
+                    holder.itemScheduleNum.setText("共" + bean.count + "人上课: " + "xxx");
+                } else {
+                    holder.itemScheduleNum.setText("共" + bean.count + "人上课");
+                }
+
                 holder.getItemScheduleDone.setVisibility(View.VISIBLE);
             } else {
                 holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.most_black));
@@ -360,7 +366,12 @@ public class ScheduleListFragment extends Fragment {
                 holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_black));
                 holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_black));
                 holder.itemScheduleStatus.setImageDrawable(new LoopView(bean.color));
-                holder.itemScheduleNum.setText(bean.count + "人已预约");
+                if (bean.count == 1) {
+                    holder.itemScheduleNum.setText(bean.count + "人已预约: " + "xxx");
+                } else {
+                    holder.itemScheduleNum.setText(bean.count + "人已预约");
+                }
+
                 holder.getItemScheduleDone.setVisibility(View.GONE);
             }
 

@@ -293,7 +293,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
 
             holder.itemStudentName.setText(studentBean.username);
 
-            holder.itemStudentPhonenum.setText("联系电话:" + studentBean.phone);
+            holder.itemStudentPhonenum.setText("手机:" + studentBean.phone);
 
             if (studentBean.isChosen) {
                 holder.itemCheckbox.setChecked(true);
