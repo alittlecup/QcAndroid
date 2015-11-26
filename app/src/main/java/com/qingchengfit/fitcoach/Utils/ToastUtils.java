@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.R;
  */
 public class ToastUtils {
 
-//    public static Toast gToast;
+    public static Toast gToast;
 //    private static TextView tv;
 //    private static ImageView imageView;
 
@@ -36,7 +36,9 @@ public class ToastUtils {
 //        TextView tv;
 //        ImageView imageView;
 //        if (gToast == null){
-        Toast gToast = Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT);
+        if (gToast != null)
+            gToast.cancel();
+        gToast = Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT);
         gToast.setGravity(Gravity.CENTER, 0, -100);
         View view = LayoutInflater.from(App.AppContex)
                 .inflate(R.layout.toastview, null, false);

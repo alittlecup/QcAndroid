@@ -215,7 +215,7 @@ public class ScheduleListFragment extends Fragment {
                 ScheduleBean bean = new ScheduleBean();
                 bean.type = 1;
 
-                if (schedule.orders.size() == 1) {
+                if (schedule.orders != null && schedule.orders.size() == 1) {
                     bean.isSingle = true;
 //                    if (schedule.orders.get(0).count > 1){
 //                    bean.users = schedule.orders.get(0).username+"("+schedule.orders.get(0).count+"人)";}
