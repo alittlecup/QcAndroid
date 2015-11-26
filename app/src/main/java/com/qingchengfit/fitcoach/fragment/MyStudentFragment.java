@@ -227,7 +227,7 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
     public void freshData() {
-        setUpNaviSpinner();
+//        setUpNaviSpinner();
         refresh.setRefreshing(true);
         //获取原始数据
         QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
@@ -258,7 +258,7 @@ public class MyStudentFragment extends MainBaseFragment {
 
             spinnerNav.setSelection(x);
             //获取原始数据
-            freshData();
+            setUpNaviSpinner();
         }
     }
 
@@ -269,7 +269,7 @@ public class MyStudentFragment extends MainBaseFragment {
         int x = curPostion;
 
         spinnerNav.setSelection(x);
-        freshData();
+        setUpNaviSpinner();
     }
 
     /**
@@ -315,56 +315,64 @@ public class MyStudentFragment extends MainBaseFragment {
     private synchronized void handleResponse(QcAllStudentResponse qcAllStudentResponse) {
         if (qcAllStudentResponse == null)
             return;
-        adapterData.clear();
 
-        List<QcAllStudentResponse.Ship> ships = qcAllStudentResponse.data.ships;
-        for (int i = 0; i < ships.size(); i++) {
-            QcAllStudentResponse.Ship ship = ships.get(i);
-            if (curSystemId != 0 && curSystemId != ship.system.id)
-                continue;
-            List<StudentBean> tmp = new ArrayList<>();
-            for (QcStudentBean student : ship.users) {
-                StudentBean bean = new StudentBean();
-                bean.gymStr = ship.system.name;
-                bean.headerPic = student.avatar;
-                bean.username = student.username;
-                bean.systemUrl = ship.system.url;
-                bean.id = student.id;
-                bean.color = ship.system.color;
-                if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
-                    bean.head = "~";
-                } else {
-                    bean.head = student.head.toUpperCase();
-                }
-
-                StringBuffer sb = new StringBuffer();
-                sb.append("手机:").append(student.phone);
-                bean.phone = sb.toString();
-                if (student.gender.equalsIgnoreCase("0"))
-                    bean.gender = true;
-                else bean.gender = false;
-                if (TextUtils.isEmpty(keyWord) || bean.username.contains(keyWord)
-                        || bean.gymStr.contains(keyWord) || bean.phone.contains(keyWord))
-                    tmp.add(bean);
-            }
-            adapterData.addAll(tmp);
-        }
-
-        if (adapterData.size() > 0) {
-            alphabetSort.clear();
-            Collections.sort(adapterData, new StudentCompare());
-            String tag = "";
-            for (int i = 0; i < adapterData.size(); i++) {
-                StudentBean bean = adapterData.get(i);
-                if (!bean.head.equalsIgnoreCase(tag)) {
-                    bean.isTag = true;
-                    tag = bean.head;
-                    alphabetSort.put(tag, i);
-                } else bean.isTag = false;
-            }
-        }
         if (getActivity() != null) {
             getActivity().runOnUiThread(() -> {
+
+
+                adapterData.clear();
+
+                List<QcAllStudentResponse.Ship> ships = qcAllStudentResponse.data.ships;
+                for (int i = 0; i < ships.size(); i++) {
+                    QcAllStudentResponse.Ship ship = ships.get(i);
+                    if (curSystemId != 0 && curSystemId != ship.system.id)
+                        continue;
+                    List<StudentBean> tmp = new ArrayList<>();
+                    for (QcStudentBean student : ship.users) {
+                        StudentBean bean = new StudentBean();
+                        bean.gymStr = ship.system.name;
+                        bean.headerPic = student.avatar;
+                        bean.username = student.username;
+                        bean.systemUrl = ship.system.url;
+                        bean.id = student.id;
+                        bean.color = ship.system.color;
+                        if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
+                            bean.head = "~";
+                        } else {
+                            bean.head = student.head.toUpperCase();
+                        }
+
+                        StringBuffer sb = new StringBuffer();
+                        sb.append("手机:").append(student.phone);
+                        bean.phone = sb.toString();
+                        if (student.gender.equalsIgnoreCase("0"))
+                            bean.gender = true;
+                        else bean.gender = false;
+                        if (TextUtils.isEmpty(keyWord) || bean.username.contains(keyWord)
+                                || bean.gymStr.contains(keyWord) || bean.phone.contains(keyWord))
+                            tmp.add(bean);
+                    }
+                    adapterData.addAll(tmp);
+                }
+
+                if (adapterData.size() > 0) {
+                    alphabetSort.clear();
+                    Collections.sort(adapterData, new StudentCompare());
+                    String tag = "";
+                    for (int i = 0; i < adapterData.size(); i++) {
+                        StudentBean bean = adapterData.get(i);
+                        if (!bean.head.equalsIgnoreCase(tag)) {
+                            bean.isTag = true;
+                            tag = bean.head;
+                            alphabetSort.put(tag, i);
+                        } else bean.isTag = false;
+                    }
+                }
+
+
+
+
+
                 if (adapterData.size() == 0) {
                     studentNoLayout.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(keyWord)) {
