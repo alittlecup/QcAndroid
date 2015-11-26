@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.CourseComparator;
+import com.qingchengfit.fitcoach.Utils.StudentComparator;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
@@ -29,6 +32,7 @@ import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,10 +89,14 @@ public class CustomStatmentFragment extends Fragment {
         public void onNext(QcStudentResponse qcStudentResponse) {
             studentBeans = qcStudentResponse.data.users;
             studentStrings.clear();
-            studentStrings.add("全部学员");
+            Collections.sort(studentBeans, new StudentComparator());
             for (QcStudentBean studentBean : studentBeans) {
-                studentStrings.add(studentBean.username);
+                if (TextUtils.isEmpty(studentBean.username))
+                    studentStrings.add(studentBean.phone);
+                else
+                    studentStrings.add(studentBean.username);
             }
+            studentStrings.add(0, "全部学员");
 
         }
     };
@@ -106,11 +114,12 @@ public class CustomStatmentFragment extends Fragment {
         public void onNext(QcCourseResponse qcCourseResponse) {
             courses = qcCourseResponse.data.courses;
             courseStrings.clear();
-            courseStrings.add("全部课程");
+            Collections.sort(courses, new CourseComparator());
             for (QcCourseResponse.Course studentBean : courses) {
                 courseStrings.add(studentBean.name);
             }
 
+            courseStrings.add(0, "全部课程");
         }
     };
 
@@ -127,12 +136,14 @@ public class CustomStatmentFragment extends Fragment {
                 .subscribe(qcCoachSystemResponse -> {
                     List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
                     spinnerBeans.add(new SpinnerBean("", "全部健身房", 0));
-                    gymStrings.add("全部健身房");
+
                     for (int i = 0; i < systems.size(); i++) {
                         QcCoachSystem system = systems.get(i);
                         spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
                         gymStrings.add(system.name);
                     }
+//                    Collections.sort(gymStrings,new PinyinComparator());
+                    gymStrings.add(0, "全部健身房");
                 }, throwable -> {
                 }, () -> {
                 });
@@ -326,19 +337,25 @@ public class CustomStatmentFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dialogList.dismiss();
                 customStatmentGym.setContent(gymStrings.get(position));
-                chooseGymId = spinnerBeans.get(position).id;
-                if (position == 0) {
-                    customStatmentStudent.setVisibility(View.GONE);
-                    customStatmentCourse.setVisibility(View.GONE);
-                } else {
-                    HashMap<String, String> params = new HashMap<String, String>();
-                    params.put("system_id", Integer.toString(chooseGymId));
+                if (chooseCoursId != spinnerBeans.get(position).id) {
+                    chooseGymId = spinnerBeans.get(position).id;
+                    if (position == 0) {
+                        customStatmentStudent.setVisibility(View.GONE);
+                        customStatmentCourse.setVisibility(View.GONE);
+                    } else {
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put("system_id", Integer.toString(chooseGymId));
 
-                    QcCloudClient.getApi().getApi.qcGetSystemStudent(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(studentResponseObserver);
-                    QcCloudClient.getApi().getApi.qcGetSystemCourses(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
+                        QcCloudClient.getApi().getApi.qcGetSystemStudent(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(studentResponseObserver);
+                        QcCloudClient.getApi().getApi.qcGetSystemCourses(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
 
-                    customStatmentStudent.setVisibility(View.VISIBLE);
-                    customStatmentCourse.setVisibility(View.VISIBLE);
+                        customStatmentStudent.setVisibility(View.VISIBLE);
+                        customStatmentCourse.setVisibility(View.VISIBLE);
+                        customStatmentStudent.setContent("所有学员");
+                        customStatmentCourse.setContent("所有课程");
+                        chooseUserId = 0;
+                        chooseUserId = 0;
+                    }
                 }
             }
         });
@@ -412,7 +429,7 @@ public class CustomStatmentFragment extends Fragment {
         getFragmentManager().beginTransaction()
                 .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(3,
                         customStatmentStart.getContent(), customStatmentEnd.getContent(),
-                        chooseGymId, chooseUserId, chooseCoursId))
+                        chooseGymId, chooseUserId, chooseCoursId, customStatmentStudent.getContent(), customStatmentCourse.getContent()))
                 .addToBackStack(null)
                 .commit();
     }

@@ -73,6 +73,15 @@
                 />
 
             <TextView
+                android:id="@+id/statement_detail_filter"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                tools:text="所有学员 所有课程"
+                />
+
+            <TextView
                 android:id="@+id/item_statement_detail_content"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"

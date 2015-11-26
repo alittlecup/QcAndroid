@@ -108,7 +108,7 @@ public class QcCloudClient {
 
     public QcCloudClient() {
         okHttpClient = new OkHttpClient();
-        okHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         File fileCache = new File(Configs.ExternalCache);
         try {

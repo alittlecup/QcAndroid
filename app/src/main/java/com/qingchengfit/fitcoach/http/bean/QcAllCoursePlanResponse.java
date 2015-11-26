@@ -35,6 +35,8 @@ public class QcAllCoursePlanResponse extends QcResponse {
         public String name;
         @SerializedName("id")
         public int id;
+        @SerializedName("url")
+        public String url;
         @SerializedName("type")
         public int type;//1.个人 2.所属 3.会议
     }

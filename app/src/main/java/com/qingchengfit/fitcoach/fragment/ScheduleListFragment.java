@@ -79,7 +79,8 @@ public class ScheduleListFragment extends Fragment {
 
         @Override
         public void onError(Throwable e) {
-            e.printStackTrace();
+            if (e != null)
+                e.printStackTrace();
             ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
             if (refresh != null) {
                 refresh.setRefreshing(false);

@@ -82,7 +82,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
             @Override
             public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url", Configs.Server + "mobile/plans/" + adapterData.get(pos).id + "/");
+                toWeb.putExtra("url", adapterData.get(pos).url);
                 startActivityForResult(toWeb, pos);
             }
         });
@@ -273,7 +273,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
 
         @Override
         public void onClick(View v) {
-            if (listener != null)
+            if (listener != null && (int) v.getTag() < datas.size())
                 listener.onItemClick(v, (int) v.getTag());
         }
     }

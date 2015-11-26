@@ -112,6 +112,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="right"
         android:orientation="vertical"
         >
 
@@ -119,6 +120,7 @@
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:text="实收"
             />
 
@@ -127,6 +129,7 @@
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:textColor="@color/primary"
             tools:text="5月"
             />

@@ -705,8 +705,10 @@ public class MyStudentFragment extends MainBaseFragment {
 
         @Override
         public void onClick(View v) {
-            if (listener != null)
+            if (listener != null && (int) v.getTag() < datas.size()) {
+
                 listener.onItemClick(v, (int) v.getTag());
+            }
         }
     }
 

@@ -79,6 +79,8 @@ public class SaleDetailFragment extends Fragment {
     SwipeRefreshLayout refreshNodata;
     @Bind(R.id.statement_detail_change)
     Button statementDetailChange;
+    @Bind(R.id.statement_detail_filter)
+    TextView statementDetailFilter;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<SaleBean> statementBeans = new ArrayList<>();
@@ -104,6 +106,7 @@ public class SaleDetailFragment extends Fragment {
     private Calendar curCalendar;
 
     private MaterialDialog loadingDialog;
+    private String card_name;
 
     public SaleDetailFragment() {
 
@@ -118,14 +121,14 @@ public class SaleDetailFragment extends Fragment {
         return fragment;
     }
 
-    public static SaleDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int cardId) {
+    public static SaleDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int cardId, String cardname) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putString("start", starttime);
         args.putString("end", endtime);
         args.putInt("system", sysId);
         args.putInt("card", cardId);
-
+        args.putString("cardname", cardname);
 
         SaleDetailFragment fragment = new SaleDetailFragment();
         fragment.setArguments(args);
@@ -173,7 +176,7 @@ public class SaleDetailFragment extends Fragment {
                 end = getArguments().getString("end");
                 curSystemId = getArguments().getInt("system");
                 card_id = getArguments().getInt("card");
-
+                card_name = getArguments().getString("cardname");
             default:
                 break;
         }
@@ -196,6 +199,8 @@ public class SaleDetailFragment extends Fragment {
         if (mDividerType == 3) {
             statementDetailLess.setVisibility(View.GONE);
             statementDetailMore.setVisibility(View.GONE);
+            statementDetailFilter.setVisibility(View.VISIBLE);
+            statementDetailFilter.setText(card_name);
             statementDetailChange.setVisibility(View.VISIBLE);
             statementDetailChange.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -206,6 +211,7 @@ public class SaleDetailFragment extends Fragment {
         } else {
             statementDetailLess.setVisibility(View.VISIBLE);
             statementDetailMore.setVisibility(View.VISIBLE);
+            statementDetailFilter.setVisibility(View.GONE);
         }
         statementDetailMore.setEnabled(false);
         refresh.setColorSchemeResources(R.color.primary);

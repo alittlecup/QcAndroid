@@ -99,6 +99,8 @@ public class StatementDetailFragment extends Fragment {
     SwipeRefreshLayout refreshNodata;
     @Bind(R.id.statement_detail_change)
     Button statementDetailChange;
+    @Bind(R.id.statement_detail_filter)
+    TextView statementDetailFilter;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<StatementBean> statementBeans = new ArrayList<>();
@@ -125,6 +127,8 @@ public class StatementDetailFragment extends Fragment {
     private int mDividerType = 0;
     private Calendar curCalendar;
     private MaterialDialog loadingDialog;
+    private String user_name;
+    private String course_name;
 
     public StatementDetailFragment() {
 
@@ -139,7 +143,7 @@ public class StatementDetailFragment extends Fragment {
         return fragment;
     }
 
-    public static StatementDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int userId, int courseId) {
+    public static StatementDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int userId, int courseId, String userName, String courseName) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putString("start", starttime);
@@ -147,6 +151,8 @@ public class StatementDetailFragment extends Fragment {
         args.putInt("system", sysId);
         args.putInt("course", courseId);
         args.putInt("user", userId);
+        args.putString("userName", userName);
+        args.putString("courseName", courseName);
 
         StatementDetailFragment fragment = new StatementDetailFragment();
         fragment.setArguments(args);
@@ -195,6 +201,8 @@ public class StatementDetailFragment extends Fragment {
                 curSystemId = getArguments().getInt("system");
                 course_id = getArguments().getInt("course");
                 user_id = getArguments().getInt("user");
+                user_name = getArguments().getString("userName");
+                course_name = getArguments().getString("courseName");
             default:
                 break;
         }
@@ -214,6 +222,8 @@ public class StatementDetailFragment extends Fragment {
         if (mDividerType == 3) {
             statementDetailLess.setVisibility(View.GONE);
             statementDetailMore.setVisibility(View.GONE);
+            statementDetailFilter.setVisibility(View.VISIBLE);
+            statementDetailFilter.setText(course_name + "  " + user_name);
             statementDetailChange.setVisibility(View.VISIBLE);
             statementDetailChange.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -222,6 +232,7 @@ public class StatementDetailFragment extends Fragment {
                 }
             });
         } else {
+            statementDetailFilter.setVisibility(View.GONE);
             statementDetailLess.setVisibility(View.VISIBLE);
             statementDetailMore.setVisibility(View.VISIBLE);
         }
