@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
@@ -134,6 +135,7 @@ public class QcCloudClient {
                                 request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
                                         PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
                                 request.addHeader("Cache-Control", "max-age=0");
+                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER);
                             }
                         }
                 )
@@ -162,6 +164,7 @@ public class QcCloudClient {
                     public void intercept(RequestFacade request) {
                         request.addHeader("Cookie", "sessionid=" +
                                 PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
+                        request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER);
                     }
                 })
                 .setClient(new OkClient(okHttpClient))
