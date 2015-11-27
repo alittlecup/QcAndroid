@@ -62,7 +62,7 @@ public class App extends Application {
     public static User gUser;
     public static int coachid;
     public static DiskLruCache diskLruCache;
-
+    public static boolean gCanReload = false;
     //    private ApplicationComponet componet;
     private RefWatcher refWatcher;
     private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";

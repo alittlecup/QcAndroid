@@ -168,6 +168,7 @@ public class ScheduleListFragment extends Fragment {
             }
         });
 
+        App.gCanReload = true;
         return view;
     }
 

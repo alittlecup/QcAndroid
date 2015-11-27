@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -84,12 +85,14 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
             //退出程序
 //            Looper.prepare();
-            Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
-            PendingIntent restartIntent = PendingIntent.getActivity(
-                    mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            if (App.gCanReload) {
+                Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
+                PendingIntent restartIntent = PendingIntent.getActivity(
+                        mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 //             退出程序
-            AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
+                AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
+            }
             ((App) mContext).finishActivity();
 //            Looper.loop();
         }
@@ -119,7 +122,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 //        collectDeviceInfo(mContext);
         //保存日志文件
 //        RevenUtils.sendException("uncatch", ex.toString(), ex);
-
+        MobclickAgent.reportError(App.AppContex,ex);
         return true;
     }
 
