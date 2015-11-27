@@ -108,7 +108,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mNoNetwork.setVisibility(View.GONE);
+
                 mWebviewWebView.reload();
             }
         });
@@ -272,7 +272,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 mToolbar.setTitle(title);
-
+                if (!TextUtils.isEmpty(title)) {
+                    mNoNetwork.setVisibility(View.GONE);
+                }
             }
 
         });
@@ -291,12 +293,14 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             @Override
             public void onPageFinished(WebView view, String url) {
                 mRefreshSwipeRefreshLayout.setRefreshing(false);
+                mWebviewWebView.setVisibility(View.VISIBLE);
                 super.onPageFinished(view, url);
 
             }
 
             @Override
             public void onLoadResource(WebView view, String url) {
+
                 super.onLoadResource(view, url);
             }
 
@@ -307,6 +311,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
                     mToobarActionTextView.setText("");
+
                     mToobarActionTextView.setVisibility(View.GONE);
                     URI uri = null;
                     try {
@@ -380,6 +385,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
      */
     private void showNoNet() {
         mNoNetwork.setVisibility(View.VISIBLE);
+        mWebviewWebView.setVisibility(View.GONE);
     }
 
     private void initWebSetting() {
