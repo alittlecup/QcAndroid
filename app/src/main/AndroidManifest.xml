@@ -65,7 +65,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55bf26f3e0f55a750f00139e"/>
+            android:value="5657d0e167e58e8e7a006679"/>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Qingcheng"/>

@@ -109,8 +109,8 @@
     <orderEntry type="library" exported="" name="pushservice-4.5.3.48" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
+    <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Email-2.6.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.7" level="project" />
