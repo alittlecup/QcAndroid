@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -92,6 +93,8 @@ public class ScheduesFragment extends MainBaseFragment {
     RelativeLayout scheduleNotificationLayout;
     @Bind(R.id.schedule_calendar)
     RelativeLayout scheduleCalendar;
+    @Bind(R.id.first_guide)
+    RelativeLayout firstGuide;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -172,12 +175,22 @@ public class ScheduesFragment extends MainBaseFragment {
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
-
+        firstGuide.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        if (!PreferenceUtils.getPrefBoolean(App.AppContex,App.coachid+"first_guide",false)){
+            firstGuide.setVisibility(View.VISIBLE);
+        }
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
                 scheduleFloatbg.setVisibility(View.VISIBLE);
+                firstGuide.setVisibility(View.GONE);
+                PreferenceUtils.setPrefBoolean(App.AppContex,App.coachid+"first_guide",true);
 //                if (scheduleActionPopWin == null) {
 //                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
 //                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
