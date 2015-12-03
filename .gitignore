@@ -16,7 +16,8 @@ gen/
 .gradle/
 build/
 .okbuck/keystore
-
+gradle.properties
+app/packer.properties
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -25,3 +26,5 @@ proguard/
 
 # Log Files
 *.log
+app/app.iml
+paperbaselibrary/paperbaselibrary.iml
