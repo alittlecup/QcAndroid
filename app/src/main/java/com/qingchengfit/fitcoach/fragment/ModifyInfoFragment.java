@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -26,22 +25,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.component.GlideCircleTransform;
-import com.paper.paperbaselibrary.utils.BitmapUtils;
-import com.paper.paperbaselibrary.utils.ChoosePicUtils;
-import com.paper.paperbaselibrary.utils.FileUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
@@ -51,13 +45,13 @@ import com.qingchengfit.fitcoach.service.UpyunService;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -146,7 +140,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         fragment.setArguments(args);
         return fragment;
     }
-
+    private Observable<UpyunService.UpYunResult> uppicObserver;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,7 +152,28 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
         isLoading = true;
+        uppicObserver = RxBus.getBus().register(UpyunService.UpYunResult.class.getName());
+        uppicObserver.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<UpyunService.UpYunResult>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(UpyunService.UpYunResult upYunResult) {
+                mModifyCoachInfo.setAvatar(upYunResult.getUrl());
+                user.setAvatar(upYunResult.getUrl());
+//                Glide.with(App.AppContex)
+//                        .load(upYunResult.getUrl())
+//                        .asBitmap()
+//                        .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
+            }
+        });
     }
 
     @Override
@@ -284,7 +299,8 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     @OnClick(R.id.modifyinfo_header_layout)
     public void onChangeHeader() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = new ChoosePictureFragmentDialog();
-        choosePictureFragmentDialog.show(getChildFragmentManager(), "choose pic");
+        choosePictureFragmentDialog.setResult(this);
+        choosePictureFragmentDialog.show(getFragmentManager(), "choose pic");
 //        PicChooseDialog dialog = new PicChooseDialog(getActivity());
 //        dialog.setListener(v -> {
 //                    dialog.dismiss();
@@ -402,67 +418,67 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
 
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String filepath = "";
-        if (mModifyCoachInfo == null)
-            return;
-        if (resultCode == Activity.RESULT_OK) {
-
-//            if (requestCode == ChoosePicUtils.CHOOSE_CAMERA || requestCode == ChoosePicUtils.CHOOSE_GALLERY ) {
-//                Intent intent = new Intent("com.android.camera.action.CROP");
-//                intent.setType("image/*");
 //
-//                intent.setData(data.getData());
-//                intent.putExtra("outputX", 300);
-//                intent.putExtra("outputY", 300);
-//                intent.putExtra("aspectX", 1);
-//                intent.putExtra("aspectY", 1);
-//                intent.putExtra("scale", false);
-//                intent.putExtra("return-data", true);
-//                intent.putExtra("return-data", false);
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        String filepath = "";
+//        if (mModifyCoachInfo == null)
+//            return;
+//        if (resultCode == Activity.RESULT_OK) {
 //
-//                intent.putExtra("output", );
-//            }
-
-
-            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
-                filepath = FileUtils.getPath(getActivity(), data.getData());
-            else filepath = Configs.CameraPic;
-            LogUtil.d(filepath);
-            fragmentCallBack.ShowLoading("正在上传");
-            Observable.just(filepath)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(s -> {
-                        String filename = UUID.randomUUID().toString();
-                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
-                        File upFile = new File(Configs.ExternalCache + filename);
-
-                        boolean reslut = UpYunClient.upLoadImg("/header/" + coach.id + "/", filename, upFile);
-                        getActivity().runOnUiThread(() -> {
-                            fragmentCallBack.hideLoading();
-                            if (reslut) {
-                                LogUtil.d("success");
-                                String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";
-                                Glide.with(App.AppContex).load(pppurl)
-                                        .transform(new GlideCircleTransform(App.AppContex))
-                                        .into(modifyinfoHeaderPic);
-                                mModifyCoachInfo.setAvatar(pppurl);
-                                user.setAvatar(pppurl);
-
-                            } else {
-                                //upload failed TODO
-                                LogUtil.d("update img false");
-                            }
-                        });
-
-                    });
-
-        }
-
-
-    }
+////            if (requestCode == ChoosePicUtils.CHOOSE_CAMERA || requestCode == ChoosePicUtils.CHOOSE_GALLERY ) {
+////                Intent intent = new Intent("com.android.camera.action.CROP");
+////                intent.setType("image/*");
+////
+////                intent.setData(data.getData());
+////                intent.putExtra("outputX", 300);
+////                intent.putExtra("outputY", 300);
+////                intent.putExtra("aspectX", 1);
+////                intent.putExtra("aspectY", 1);
+////                intent.putExtra("scale", false);
+////                intent.putExtra("return-data", true);
+////                intent.putExtra("return-data", false);
+////
+////                intent.putExtra("output", );
+////            }
+//
+//
+//            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
+//                filepath = FileUtils.getPath(getActivity(), data.getData());
+//            else filepath = Configs.CameraPic;
+//            LogUtil.d(filepath);
+//            fragmentCallBack.ShowLoading("正在上传");
+//            Observable.just(filepath)
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribe(s -> {
+//                        String filename = UUID.randomUUID().toString();
+//                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
+//                        File upFile = new File(Configs.ExternalCache + filename);
+//
+//                        boolean reslut = UpYunClient.upLoadImg("/header/" + coach.id + "/", filename, upFile);
+//                        getActivity().runOnUiThread(() -> {
+//                            fragmentCallBack.hideLoading();
+//                            if (reslut) {
+//                                LogUtil.d("success");
+//                                String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";
+//                                Glide.with(App.AppContex).load(pppurl)
+//                                        .transform(new GlideCircleTransform(App.AppContex))
+//                                        .into(modifyinfoHeaderPic);
+//                                mModifyCoachInfo.setAvatar(pppurl);
+//                                user.setAvatar(pppurl);
+//
+//                            } else {
+//                                //upload failed TODO
+//                                LogUtil.d("update img false");
+//                            }
+//                        });
+//
+//                    });
+//
+//        }
+//
+//
+//    }
 
     //    @Override
 //    public void onSaveInstanceState(Bundle outState) {
@@ -507,8 +523,10 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
 //        state.putString("wechat", mofifyinfoWechat.getContent());
 //        state.putString("avatar", user.getAvatar());
 //        getArguments().putBundle(this.getClass().getName(), state);
-        super.onDestroyView();
+        RxBus.getBus().unregister(UpyunService.UpYunResult.class.getName(),uppicObserver);
         ButterKnife.unbind(this);
+        super.onDestroyView();
+
     }
 
     @Override

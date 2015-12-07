@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,8 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 
@@ -38,8 +37,8 @@ import java.io.File;
  */
 public class ChoosePictureFragmentDialog extends DialogFragment {
 
-    public static final int CHOOSE_CAMERA = 101;
-    public static final int CHOOSE_GALLERY = 102;
+    public static final int CHOOSE_CAMERA = 701;
+    public static final int CHOOSE_GALLERY = 702;
 
     public ChoosePicResult getResult() {
         return mResult;
@@ -106,19 +105,19 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         return view;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof ChoosePicResult){
-            setResult((ChoosePicResult) context);
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        setResult(null);
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof ChoosePicResult){
+//            setResult((ChoosePicResult) context);
+//        }
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        setResult(null);
+//    }
 
     public interface ChoosePicResult {
         void onChoosePicResult(boolean isSuccess, String filePath);
@@ -127,19 +126,22 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e("result");
         String filepath = "";
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
+            if (requestCode == CHOOSE_GALLERY)
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             else filepath = Configs.CameraPic;
             if (mResult != null) {
+                LogUtil.e("filepath:"+filepath);
                 mResult.onChoosePicResult(true,filepath);
             }
+            LogUtil.e("?????");
         }else {
             if (mResult!=null){
                 mResult.onChoosePicResult(false,filepath);
             }
         }
-
+        this.dismiss();
     }
 }

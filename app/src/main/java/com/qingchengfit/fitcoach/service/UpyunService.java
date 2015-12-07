@@ -3,7 +3,9 @@ package com.qingchengfit.fitcoach.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -30,30 +32,34 @@ public class UpyunService extends IntentService {
     private static final String FILE_PATH = "upload_filepath";
 
     public static void uploadPic(Context context, String filePaht) {
+        LogUtil.e("uploadpic");
         Intent it = new Intent(context, UpyunService.class);
         it.putExtra(FILE_PATH, filePaht);
         context.startService(it);
     }
 
-    public UpyunService(String name) {
-        super(name);
+    public UpyunService() {
+        super("upyunservice");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        LogUtil.e("handle intent");
         if (intent.getExtras() != null) {
             String filepath = intent.getExtras().getString(FILE_PATH);
-            File file = new File(filepath);
-            String filename = UUID.randomUUID().toString();
-            if (file != null) {
-                boolean issuccees = UpYunClient.upLoadImg("/header/",  filename, file);
+            if (!TextUtils.isEmpty(filepath)) {
+                File file = new File(filepath);
+                String filename = UUID.randomUUID().toString();
+                boolean issuccees = UpYunClient.upLoadImg("/header/", filename, file);
                 if (issuccees) {
                     //图片上传成功
-                    RxBus.getBus().post(new UpYunResult(UPYUNPATH+"/header/"+filename+".png"));
+                    LogUtil.e("chengogn");
+                    RxBus.getBus().post(new UpYunResult(UPYUNPATH + "/header/" + filename + ".png"));
                 } else {
                     //图片上传失败
-                    ToastUtils.show(R.drawable.ic_share_fail,"图片上传失败!");
+                    ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
                 }
+
             }
         }
     }

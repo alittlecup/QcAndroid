@@ -214,7 +214,7 @@
                 <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
             </intent-filter>
         </receiver>
-
+        <service android:name=".service.UpyunService" />
         <activity
             android:name=".activity.TextInputActivity"
             android:label="@string/title_activity_text_input"
