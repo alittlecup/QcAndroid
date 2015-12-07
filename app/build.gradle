@@ -216,6 +216,7 @@ dependencies {
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'com.afollestad:material-dialogs:0.7.9.1'
     compile 'com.android.support:cardview-v7:23.1.1'
+    compile 'com.android.support:percent:23.1.1'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'im.fir:sdk:latest.integration@aar'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
