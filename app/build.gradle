@@ -86,7 +86,7 @@ android {
     defaultConfig {
         applicationId "com.qingchengfit.fitcoach"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         multiDexEnabled true
         versionCode 114
         versionName "1.1.4"

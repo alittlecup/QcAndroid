@@ -40,7 +40,6 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.component.PicChooseDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
@@ -48,6 +47,7 @@ import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import com.qingchengfit.fitcoach.service.UpyunService;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +66,7 @@ import rx.schedulers.Schedulers;
  * Use the {@link ModifyInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ModifyInfoFragment extends BaseSettingFragment {
+public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePictureFragmentDialog.ChoosePicResult{
     public static final String TAG = ModifyInfoFragment.class.getName();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -283,32 +283,33 @@ public class ModifyInfoFragment extends BaseSettingFragment {
 
     @OnClick(R.id.modifyinfo_header_layout)
     public void onChangeHeader() {
-
-        PicChooseDialog dialog = new PicChooseDialog(getActivity());
-        dialog.setListener(v -> {
-                    dialog.dismiss();
-                    Intent intent = new Intent();
-                    // 指定开启系统相机的Action
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.addCategory(Intent.CATEGORY_DEFAULT);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                    startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
-                },
-                v -> {
-                    //图片选择
-                    dialog.dismiss();
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("image/jpeg");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                    } else {
-                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                    }
-                }
-
-        );
-        dialog.show();
+        ChoosePictureFragmentDialog choosePictureFragmentDialog = new ChoosePictureFragmentDialog();
+        choosePictureFragmentDialog.show(getChildFragmentManager(), "choose pic");
+//        PicChooseDialog dialog = new PicChooseDialog(getActivity());
+//        dialog.setListener(v -> {
+//                    dialog.dismiss();
+//                    Intent intent = new Intent();
+//                    // 指定开启系统相机的Action
+//                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+//                    startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+//                },
+//                v -> {
+//                    //图片选择
+//                    dialog.dismiss();
+//                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+//                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                    intent.setType("image/jpeg");
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+//                    } else {
+//                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+//                    }
+//                }
+//
+//        );
+//        dialog.show();
     }
 
     public void goGalley() {
@@ -509,4 +510,16 @@ public class ModifyInfoFragment extends BaseSettingFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    @Override
+    public void onChoosePicResult(boolean isSuccess, String filePath) {
+        if (isSuccess) {
+            UpyunService.uploadPic(getContext(), filePath);
+        }
+    }
+
+
+
+
+
 }

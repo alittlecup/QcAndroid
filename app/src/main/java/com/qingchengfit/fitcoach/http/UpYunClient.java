@@ -76,5 +76,4 @@ public class UpYunClient {
         String date = info.get("date");
     }
 
-
 }
