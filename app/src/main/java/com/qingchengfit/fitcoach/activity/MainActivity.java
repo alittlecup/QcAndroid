@@ -58,10 +58,13 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
+import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
+import com.qingchengfit.fitcoach.reciever.PushReciever;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -208,7 +211,40 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initDialog();
         initDrawer();
         initVersion();
+        initBDPush();
 
+    }
+
+    private void initBDPush() {
+        if (!PreferenceUtils.getPrefBoolean(this,"hasPushId",false)) {
+            String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
+            String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
+            if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)){
+                PushBody pushBody = new PushBody();
+                pushBody.channel_id = channelid;
+                pushBody.push_id = userid;
+                pushBody.device_type = "Android";
+                QcCloudClient.getApi().postApi.qcPostPushId(App.coachid,pushBody)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(new Subscriber<QcResponse>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(QcResponse qcResponse) {
+                                if (qcResponse.status == ResponseResult.SUCCESS)
+                                    PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
+                            }
+                        });
+            }
+        }
     }
 
     @Override
@@ -474,6 +510,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
 
     public void logout() {
+        PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", false);
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
         PushManager.stopWork(App.AppContex);
         CookieSyncManager.createInstance(this);

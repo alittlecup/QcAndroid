@@ -22,6 +22,7 @@ import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
+import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAddOrganizationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
@@ -449,6 +450,10 @@ public class QcCloudClient {
 
         @POST("/api/messages/clear/")
         rx.Observable<QcResponse> qcClearNotification();
+
+        @POST("/api/coaches/{id}/push/update/")
+        rx.Observable<QcResponse> qcPostPushId(@Path("id") int id,@Body PushBody body);
+
     }
 
     public interface DownLoadApi {
