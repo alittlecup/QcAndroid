@@ -434,7 +434,7 @@ public class ScheduesFragment extends MainBaseFragment {
     public void queryNotify() {
         //TODO 获取未读通知数
 
-        QcCloudClient.getApi().getApi.qcGetMessages()
+        QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcNotificationResponse>() {

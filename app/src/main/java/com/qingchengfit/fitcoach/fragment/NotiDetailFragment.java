@@ -17,6 +17,7 @@ import com.tencent.smtt.sdk.WebView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +66,8 @@ public class NotiDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (id != 0)
+            QcCloudClient.getApi().postApi.qcClearOneNotification(id).subscribeOn(Schedulers.io())
+            .subscribe();
             QcCloudClient.getApi().getApi.qcGetMsgDetails(id).subscribe(
                     qcNotiDetailResponse -> {
                         if (getActivity() != null) {

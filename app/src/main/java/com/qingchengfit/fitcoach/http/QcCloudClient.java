@@ -238,12 +238,18 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/detail/")
         rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
 
+//
+//        //获取通知 分页和不分页接口 ,后者只为拿 未读
+//        @GET("/api/messages/")
+//        rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
+//        @GET("/api/messages/")
+//        rx.Observable<QcNotificationResponse> qcGetMessages();
 
         //获取通知 分页和不分页接口 ,后者只为拿 未读
-        @GET("/api/messages/")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
-        @GET("/api/messages/")
-        rx.Observable<QcNotificationResponse> qcGetMessages();
+        @GET("/api/coaches/{id}/notifications/")
+        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id,@QueryMap HashMap<String, Integer> params);
+        @GET("/api/coaches/{id}/notifications/")
+        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id);
 
         //通知详情
         @GET("/api/messages/{id}/")
@@ -445,14 +451,28 @@ public class QcCloudClient {
         @POST("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
+        //删除个人健身房
         @DELETE("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcDelPrivateGym(@Path("id") int id);
 
+        @Deprecated
+        //清除notification
         @POST("/api/messages/clear/")
         rx.Observable<QcResponse> qcClearNotification();
 
+        //百度pushid绑定
         @POST("/api/coaches/{id}/push/update/")
         rx.Observable<QcResponse> qcPostPushId(@Path("id") int id,@Body PushBody body);
+
+        //清除notification
+        @POST("/api/coaches/{id}/notifications/clear/")
+        rx.Observable<QcResponse> qcClearAllNotification(@Path("id") int id);
+
+        //清除某条notification
+        @POST("/api/notifications/{id}/clear/")
+        rx.Observable<QcResponse> qcClearOneNotification(@Path("id") int id);
+
+
 
     }
 

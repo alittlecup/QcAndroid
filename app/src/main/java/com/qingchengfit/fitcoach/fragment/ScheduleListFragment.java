@@ -196,9 +196,12 @@ public class ScheduleListFragment extends Fragment {
 
             List<QcSchedulesResponse.Rest> rests = system.rests;
             List<QcScheduleBean> schedules = system.schedules;
+            if (system.system == null)
+                continue;
             String syscolor = system.system.color;
             if (curentGym != 0 && curentGym != system.system.id)
                 continue;
+
             for (int j = 0; j < rests.size(); j++) {
                 QcSchedulesResponse.Rest rest = rests.get(j);
                 ScheduleBean bean = new ScheduleBean();

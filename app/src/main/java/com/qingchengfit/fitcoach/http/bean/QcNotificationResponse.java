@@ -41,8 +41,18 @@ public class QcNotificationResponse extends QcResponse {
         private String message;
         private int ret_code;
         private List<MsgsEntity> msgs;
+        private List<MsgsEntity> notifications;
         private int total_count;
         private int unread_count;
+        private int pages;
+
+        public int getPages() {
+            return pages;
+        }
+
+        public void setPages(int pages) {
+            this.pages = pages;
+        }
 
         public int getTotal_count() {
             return total_count;
@@ -78,6 +88,14 @@ public class QcNotificationResponse extends QcResponse {
 
         public List<MsgsEntity> getMsgs() {
             return msgs;
+        }
+
+        public List<MsgsEntity> getNotifications() {
+            return notifications;
+        }
+
+        public void setNotifications(List<MsgsEntity> notifications) {
+            this.notifications = notifications;
         }
 
         public void setMsgs(List<MsgsEntity> msgs) {

@@ -69,7 +69,7 @@ public class NotificationFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                QcCloudClient.getApi().postApi.qcClearNotification()
+                QcCloudClient.getApi().postApi.qcClearAllNotification(App.coachid)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Observer<QcResponse>() {
@@ -199,8 +199,8 @@ public class NotificationFragment extends BaseSettingFragment {
 
     public void onRefesh() {
         HashMap<String, Integer> params = new HashMap<String, Integer>();
-        params.put("pn", curpage);
-        QcCloudClient.getApi().getApi.qcGetMessages(params)
+        params.put("page", curpage);
+        QcCloudClient.getApi().getApi.qcGetMessages(App.coachid,params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcNotificationResponse>() {
                     @Override
@@ -220,8 +220,8 @@ public class NotificationFragment extends BaseSettingFragment {
                     @Override
                     public void onNext(QcNotificationResponse qcNotificationResponse) {
                         if (refresh != null) {
-                            totalPage = (qcNotificationResponse.getData().getTotal_count() + 9) / 10;
-                            list.addAll(qcNotificationResponse.getData().getMsgs());
+                            totalPage = qcNotificationResponse.getData().getPages();
+                            list.addAll(qcNotificationResponse.getData().getNotifications());
                             if (list != null && list.size() > 0) {
                                 refresh.setVisibility(View.VISIBLE);
                                 refreshNodata.setVisibility(View.GONE);
