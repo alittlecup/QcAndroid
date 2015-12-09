@@ -2,6 +2,7 @@ package com.paper.paperbaselibrary.utils;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -148,6 +149,7 @@ public class PhoneFuncUtils {
 //                "sampleuser@gmail.com"};
 // Submit the query and get a Cursor object back.
         Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
+
         if (cur == null) {
             LogUtil.e("null");
             return;
@@ -229,6 +231,7 @@ public class PhoneFuncUtils {
 //        }
 //        values.put(CalendarContract.Events.ACCOUNT_TYPE,CalendarContract.ACCOUNT_TYPE_LOCAL);
         Uri uri = context.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
+
         assert uri != null;
         LogUtil.i(Long.parseLong(uri.getLastPathSegment()) + "");
         addEventNoti(context, Integer.parseInt(uri.getLastPathSegment()));
@@ -254,8 +257,7 @@ public class PhoneFuncUtils {
         ContentValues values = new ContentValues();
         values.put(
                 CalendarContract.Calendars.ACCOUNT_NAME,
-
-                "QingChengFit");
+                "青橙科技");
         //Account name becomes equal to "nav_shift_manager" !!TEST!!
 //        values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
 //        values.put(CalendarContract.Events.DTEND, endTime.getTimeInMillis());
@@ -267,7 +269,7 @@ public class PhoneFuncUtils {
                 "青橙科技");
         values.put(
                 CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-                "QC");
+                "引力工作室");
         values.put(
                 CalendarContract.Calendars.CALENDAR_COLOR,
                 0xff3366);
@@ -314,6 +316,15 @@ public class PhoneFuncUtils {
 //                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
 //        context.startActivity(intent);
     }
+
+    public static boolean delCalendar(Context context,int id){
+        Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, id);
+
+        context.getContentResolver().delete(updateUri,null,null);
+
+        return true;
+    }
+
 
     public static boolean isPhoneNum(String phoneNum) {
 
