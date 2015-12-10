@@ -32,7 +32,7 @@ import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.paper.paperbaselibrary.utils.RevenUtils;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;

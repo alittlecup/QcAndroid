@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.paper.paperbaselibrary.utils.RevenUtils;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
@@ -116,7 +116,6 @@ public class QcCloudClient {
         try {
             Cache cache = new Cache(fileCache, cacheSize);
             okHttpClient.setCache(cache);
-
         } catch (IOException e) {
             RevenUtils.sendException("http Cache error!", "http", e);
         }

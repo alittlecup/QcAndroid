@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.RevenUtils;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 
 import java.io.File;
 import java.io.IOException;
