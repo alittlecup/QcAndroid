@@ -21,6 +21,7 @@ import java.util.Locale;
  */
 public class DateUtils {
     public static final Long MONTH_TIME = 31 * 24 * 60 * 60 * 1000l;
+    public static final Long DAY_TIME =  24 * 60 * 60 * 1000l;
     public static Date formatDateFromServer(String s) {
         s = s.replace("T", " ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
@@ -153,6 +154,15 @@ public class DateUtils {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         return c.getTime().getTime();
+    }
+    public static long getDayMidnight(Date d){
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        return c.getTimeInMillis();
     }
 
 }

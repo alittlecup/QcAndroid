@@ -147,11 +147,6 @@ public class SettingFragment extends BaseSettingFragment {
             case R.id.setting_aboutus:
                 fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/", true));
                 fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
-//
-//  mFragmentManager.beginTransaction()
-//                        .replace(R.id.settting_fraglayout,.newInstance("",""))
-//                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
-//                        .commit();
                 break;
             case R.id.setting_comfirm:
                 fragmentCallBack.onFragmentChange(new RecordFragment());
