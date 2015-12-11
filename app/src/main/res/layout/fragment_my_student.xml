@@ -149,10 +149,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:gravity="center_horizontal"
-                android:text="您的所属健身房、个人健身房的学员将会显示在这里"
+                android:text="暂无学员"
                 />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/student_add"
                 android:layout_width="160dp"
                 android:layout_height="@dimen/qc_item_height"

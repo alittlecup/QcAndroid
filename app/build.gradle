@@ -111,6 +111,17 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    productFlavors{
+        dev {
+            minSdkVersion 21
+        }
+
+        prod {
+            minSdkVersion 15
+        }
+    }
+
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -179,19 +190,29 @@ repositories {
     }
 }
 dependencies {
+
     //    compile 'com.google.dagger:dagger:2.0.1'
+
     //    apt 'com.google.dagger:dagger-compiler:2.0.1'
+
     //    compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
     compile project(':paperbaselibrary')
     //    compile project(':commons')
+
     //    compile project(':core')
+
     //    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
+
     //    compile 'me.relex:circleindicator:1.1.5@aar'
+
     //    compile files('libs/pushservice-4.5.1.8.jar')
+
     //    compile files('libs/jg_filter_sdk_1.1.jar')
+
     //    compile files('libs/mid-sdk-2.20.jar')
+
     //    compile files('libs/Xg_sdk_v2.38_20150616_1057.jar')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
     compile files('libs/MobLogCollector.jar')
@@ -212,7 +233,9 @@ dependencies {
     compile files('libs/java-sdk-3.1.jar')
     compile files('libs/ShareSDK-Wechat-2.6.1.jar')
     //    debugCompile 'org.xwalk:xwalk_core_library:14.43.343.23'
+
     //    compile project(':crosswalkwebview144334317arm')
+
     //    compile 'in.srain.cube:ultra-ptr:1.0.10'
     compile files('libs/pushservice-4.5.3.48.jar')
     //    compile 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:0.6.4'
@@ -237,4 +260,5 @@ dependencies {
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile files('libs/pinyin4j-2.5.0.jar')
+    compile files('libs/pushservice-4.5.6.88.jar')
 }

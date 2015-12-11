@@ -125,7 +125,7 @@ public class MyStudentFragment extends MainBaseFragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-        toolbar.inflateMenu(R.menu.menu_students);
+//        toolbar.inflateMenu(R.menu.menu_students);
         toolbar.setOverflowIcon(getContext().getResources().getDrawable(R.drawable.ic_action_add));
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
@@ -370,9 +370,6 @@ public class MyStudentFragment extends MainBaseFragment {
                 }
 
 
-
-
-
                 if (adapterData.size() == 0) {
                     studentNoLayout.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(keyWord)) {
@@ -380,7 +377,7 @@ public class MyStudentFragment extends MainBaseFragment {
                         studentNoText.setText("没有找到相关学员\n您可以添加该学员");
                     } else {
                         studentNoImg.setVisibility(View.VISIBLE);
-                        studentNoText.setText("您的所属健身房、个人健身房的学员将会显示在这里");
+                        studentNoText.setText("暂无学员");
                     }
                     if (curPostion > 0) {
 //                        studentNoText.setText();
@@ -450,8 +447,8 @@ public class MyStudentFragment extends MainBaseFragment {
         } else {
             mAlertPrivate = new MaterialDialog.Builder(getContext())
 //                        .title("没有个人健身房")
-                    .content("您还没有添加个人健身房,是否添加个人健身房?")
-                    .positiveText("添加个人健身房")
+                    .content("还没有设置健身房信息，是否设置?")
+                    .positiveText("设置健身房")
                     .positiveColorRes(R.color.orange)
                     .negativeText("取消")
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -518,19 +515,27 @@ public class MyStudentFragment extends MainBaseFragment {
                         if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
                             if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
                                     qcCoachSystemResponse.date.systems.size() == 0) {
+                                toolbar.getMenu().clear();
                             } else {
                                 List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
                                 mSystemsId.clear();
                                 spinnerBeans.clear();
+                                boolean hasPrivate = false;
                                 spinnerBeans.add(new SpinnerBean("", "所有学员", true));
                                 for (int i = 0; i < systems.size(); i++) {
                                     QcCoachSystem system = systems.get(i);
+                                    if (system.is_personal_system)
+                                        hasPrivate = true;
                                     spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
                                     mSystemsId.add(system.id);
                                     if (spinnerBeanArrayAdapter != null) {
                                         spinnerBeanArrayAdapter.notifyDataSetChanged();
                                     }
                                 }
+                                if (hasPrivate){
+                                    toolbar.getMenu().clear();
+                                    toolbar.inflateMenu(R.menu.menu_students);
+                                }else toolbar.getMenu().clear();
 
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
 

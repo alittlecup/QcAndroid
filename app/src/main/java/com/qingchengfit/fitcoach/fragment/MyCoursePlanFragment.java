@@ -256,10 +256,12 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                 holder.itemGymPhonenum.setText(sb.substring(0, sb.length() - 1));
             }
             if (detail.type == 1) {//个人
+                holder.itemIsPersonal.setVisibility(View.GONE);
                 holder.itemIsPersonal.setText("个人");
                 holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_red);
             } else { //2  所属  3 会议
-                holder.itemIsPersonal.setText("所属");
+                holder.itemIsPersonal.setVisibility(View.VISIBLE);
+                holder.itemIsPersonal.setText("V");
                 holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_green);
             }
             holder.itemGymHeader.setVisibility(View.GONE);

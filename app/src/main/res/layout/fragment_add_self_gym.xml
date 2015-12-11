@@ -36,6 +36,7 @@
         android:text="@string/login_comfirm"
         />
     <TextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -54,6 +55,7 @@
     </include>
 
     <TextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -64,6 +66,7 @@
         />
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -93,6 +96,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"

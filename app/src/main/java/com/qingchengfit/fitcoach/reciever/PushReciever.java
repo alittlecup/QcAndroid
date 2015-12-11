@@ -45,7 +45,7 @@ public class PushReciever extends PushMessageReceiver {
     public static String BD_USERLID = "bd_userid";
     @Override
     public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
-        LogUtil.e(s + "  " + s1 + "    " + s2 + "    " + s3);
+        LogUtil.e("error:"+i+"   "+s + "  " + s1 + "  channelid:" + s2 + "    " + s3);
         PreferenceUtils.setPrefString(context, BD_USERLID, s1);
         PreferenceUtils.setPrefString(context, BD_CHANNELID, s2);
     }

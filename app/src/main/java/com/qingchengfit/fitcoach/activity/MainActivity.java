@@ -33,12 +33,12 @@ import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.NetWorkUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.RecievePush;
@@ -239,11 +239,17 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
                             @Override
                             public void onNext(QcResponse qcResponse) {
-                                if (qcResponse.status == ResponseResult.SUCCESS)
+                                if (qcResponse.status == ResponseResult.SUCCESS) {
+                                    LogUtil.e("pushId:bundle");
                                     PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
+                                }
                             }
                         });
+            }else {
+                LogUtil.e("bdpush:empty");
             }
+        }else {
+            LogUtil.e("hasBunldle");
         }
     }
 

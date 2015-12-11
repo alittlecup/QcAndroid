@@ -63,20 +63,22 @@ public class MyGymsFragment extends MainBaseFragment {
         toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-        toolbar.inflateMenu(R.menu.add_gym);
+//        toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
             Intent intent = new Intent(getActivity(), FragActivity.class);
-            if (item.getItemId() == R.id.action_add_self) {
-                if (mHasPrivate) {
-                    intent.putExtra("type", 2);
-                } else {
-                    intent.putExtra("type", 3);
-                }
-                startActivityForResult(intent, 11);
-            } else if (item.getItemId() == R.id.action_add_public) {
-                intent.putExtra("type", 4);
-                startActivityForResult(intent, 11);
-            }
+            intent.putExtra("type", 3);
+            startActivityForResult(intent, 11);
+//            if (item.getItemId() == R.id.action_add_self) {
+//                if (mHasPrivate) {
+//                    intent.putExtra("type", 2);
+//                } else {
+//                    intent.putExtra("type", 3);
+//                }
+//                startActivityForResult(intent, 11);
+//            } else if (item.getItemId() == R.id.action_add_public) {
+//                intent.putExtra("type", 4);
+//                startActivityForResult(intent, 11);
+//            }
 
             return true;
         });
@@ -160,6 +162,7 @@ public class MyGymsFragment extends MainBaseFragment {
     }
 
     public void freshData() {
+
         QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -182,6 +185,12 @@ public class MyGymsFragment extends MainBaseFragment {
                             break;
                         } else mHasPrivate = false;
 
+                    }
+                    if (mHasPrivate){
+                        toolbar.getMenu().clear();
+                    }else {
+                        toolbar.getMenu().clear();
+                        toolbar.inflateMenu(R.menu.add);
                     }
                     return true;
                 })
@@ -258,11 +267,13 @@ public class MyGymsFragment extends MainBaseFragment {
             holder.itemGymName.setText(detail.name);
             holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
             if (detail.is_personal_system) {
+                holder.itemIsPersonal.setVisibility(View.GONE);
                 holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_red);
                 holder.itemIsPersonal.setText("个人");
             } else {
+                holder.itemIsPersonal.setVisibility(View.VISIBLE);
                 holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_green);
-                holder.itemIsPersonal.setText("所属");
+                holder.itemIsPersonal.setText("V");
             }
             Glide.with(App.AppContex).load(detail.photo).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
         }

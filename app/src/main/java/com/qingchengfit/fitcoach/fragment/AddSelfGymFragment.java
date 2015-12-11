@@ -224,8 +224,11 @@ public class AddSelfGymFragment extends Fragment {
             });
         } else
             toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+
+
+        postPrivateGym = new PostPrivateGym();
         if (id > 0) {
-            toolbar.setTitle("修改个人健身房");
+            toolbar.setTitle("编辑健身房");
             toolbar.inflateMenu(R.menu.menu_delete);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
@@ -234,10 +237,12 @@ public class AddSelfGymFragment extends Fragment {
                     return true;
                 }
             });
+
+
         } else {
-            toolbar.setTitle("添加个人健身房");
+            toolbar.setTitle("设置健身房");
         }
-        postPrivateGym = new PostPrivateGym();
+
 
         QcCloudClient.getApi().getApi.qcGetPrivateGym(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())

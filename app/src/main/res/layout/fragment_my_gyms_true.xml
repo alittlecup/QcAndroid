@@ -69,10 +69,11 @@
                     android:layout_width="200dp"
                     android:layout_height="@dimen/qc_item_height"
                     android:layout_marginTop="20dp"
-                    android:text="添加个人健身房"
+                    android:text="设置健身房"
                     />
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/course_add_belong"
                     android:layout_width="200dp"
                     android:layout_height="@dimen/qc_item_height"
