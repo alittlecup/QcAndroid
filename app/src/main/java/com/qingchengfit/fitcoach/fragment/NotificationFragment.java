@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,6 +21,7 @@ import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
@@ -97,8 +99,14 @@ public class NotificationFragment extends BaseSettingFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new NotifiAdapter(list);
         adapter.setListener((v, pos) -> {
-            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
-            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
+            QcCloudClient.getApi().postApi.qcClearOneNotification(adapter.datas.get(pos).getId()).subscribeOn(Schedulers.io())
+                    .subscribe();
+            Intent toWeb = new Intent(getContext(),WebActivity.class);
+            toWeb.putExtra("url",adapter.datas.get(pos).getUrl());
+
+            startActivity(toWeb);
+//            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
+//            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
         });
         recyclerview.setAdapter(adapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
