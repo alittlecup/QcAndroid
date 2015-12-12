@@ -208,8 +208,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         TextView itemGymName;
         @Bind(R.id.item_gym_phonenum)
         TextView itemGymPhonenum;
-        @Bind(R.id.item_is_personal)
-        TextView itemIsPersonal;
+        @Bind(R.id.qc_identify)
+        ImageView itemIsPersonal;
 
         public GymsVH(View itemView) {
             super(itemView);
@@ -257,12 +257,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
             }
             if (detail.type == 1) {//个人
                 holder.itemIsPersonal.setVisibility(View.GONE);
-                holder.itemIsPersonal.setText("个人");
-                holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_red);
             } else { //2  所属  3 会议
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);
-                holder.itemIsPersonal.setText("V");
-                holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_green);
             }
             holder.itemGymHeader.setVisibility(View.GONE);
         }

@@ -42,7 +42,7 @@
                 />
 
             <TextView
-
+                android:visibility="gone"
                 android:id="@+id/item_is_personal"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
@@ -54,6 +54,16 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 tools:text="V"
+                />
+            <ImageView
+                android:id="@+id/qc_identify"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/item_gym_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_qc_identify"
                 />
         </RelativeLayout>
 

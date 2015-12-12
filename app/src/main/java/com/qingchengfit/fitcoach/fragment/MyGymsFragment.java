@@ -225,8 +225,8 @@ public class MyGymsFragment extends MainBaseFragment {
         TextView itemGymName;
         @Bind(R.id.item_gym_phonenum)
         TextView itemGymPhonenum;
-        @Bind(R.id.item_is_personal)
-        TextView itemIsPersonal;
+        @Bind(R.id.qc_identify)
+        ImageView itemIsPersonal;
 
         public GymsVH(View itemView) {
             super(itemView);
@@ -268,12 +268,8 @@ public class MyGymsFragment extends MainBaseFragment {
             holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
             if (detail.is_personal_system) {
                 holder.itemIsPersonal.setVisibility(View.GONE);
-                holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_red);
-                holder.itemIsPersonal.setText("个人");
             } else {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);
-                holder.itemIsPersonal.setBackgroundResource(R.drawable.bg_tag_green);
-                holder.itemIsPersonal.setText("V");
             }
             Glide.with(App.AppContex).load(detail.photo).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
         }
