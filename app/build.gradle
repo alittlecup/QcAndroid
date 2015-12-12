@@ -105,18 +105,18 @@ android {
             keyPassword "Qingcheng2014"
         }
     }
-    dexOptions {
-        incremental true
-    }
+//    dexOptions {
+//        incremental true
+//    }
     lintOptions {
         abortOnError false
     }
 
-    productFlavors{
+    productFlavors {
         dev {
             minSdkVersion 21
-        }
 
+        }
         prod {
             minSdkVersion 15
         }
@@ -128,6 +128,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             debuggable true
+
 //            applicationVariants.all { variant ->
 //                variant.outputs.each { output ->
 //                    output.outputFile = new File(
@@ -135,51 +136,15 @@ android {
 //                            output.outputFile.username.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
 //                }
 //            }
+
             proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
             zipAlignEnabled true
-        }
-        beta {
-//            signingConfig signingConfigs.release
-            minifyEnabled false
-            debuggable true
-//            applicationVariants.all { variant ->
-//                def username
-//                variant.outputs.each { output ->
-//                    username = "app-debug.apk"
-//
-//                    output.outputFile = new File(
-//                            output.outputFile.parent,
-//                            "app-debug.apk")
-//                }
-//            }
         }
         debug {
             signingConfig signingConfigs.release
         }
     }
 
-//    packagingOptions {
-//        exclude 'lib/armeabi-v7a/libxwalkdummy.so'
-//    }
-
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['src/main/jnilibs']
-//        }
-//    }
-
-//    productFlavors {
-//        armv7 {
-//            ndk {
-//                abiFilters "armeabi-v7a", ""
-//            }
-//        }
-//        x86 {
-//            ndk {
-//                abiFilters "x86", ""
-//            }
-//        }
-//    }
 }
 
 repositories {
@@ -190,29 +155,19 @@ repositories {
     }
 }
 dependencies {
-
     //    compile 'com.google.dagger:dagger:2.0.1'
-
     //    apt 'com.google.dagger:dagger-compiler:2.0.1'
-
     //    compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
     compile project(':paperbaselibrary')
     //    compile project(':commons')
-
     //    compile project(':core')
-
     //    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
-
     //    compile 'me.relex:circleindicator:1.1.5@aar'
-
     //    compile files('libs/pushservice-4.5.1.8.jar')
-
     //    compile files('libs/jg_filter_sdk_1.1.jar')
-
     //    compile files('libs/mid-sdk-2.20.jar')
-
     //    compile files('libs/Xg_sdk_v2.38_20150616_1057.jar')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
     compile files('libs/MobLogCollector.jar')
@@ -233,9 +188,7 @@ dependencies {
     compile files('libs/java-sdk-3.1.jar')
     compile files('libs/ShareSDK-Wechat-2.6.1.jar')
     //    debugCompile 'org.xwalk:xwalk_core_library:14.43.343.23'
-
     //    compile project(':crosswalkwebview144334317arm')
-
     //    compile 'in.srain.cube:ultra-ptr:1.0.10'
     compile files('libs/pushservice-4.5.3.48.jar')
     //    compile 'com.h6ah4i.android.materialshadowninepatch:materialshadowninepatch:0.6.4'
