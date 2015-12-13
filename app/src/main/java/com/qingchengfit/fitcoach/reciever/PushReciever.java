@@ -8,7 +8,9 @@ import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -82,11 +84,24 @@ public class PushReciever extends PushMessageReceiver {
 
         if (!TextUtils.isEmpty(s2)){
             PushBean bean = new Gson().fromJson(s2, PushBean.class);
+            if (bean ==null || TextUtils.isEmpty(bean.url)){
+                return;
+            }
             QcCloudClient.getApi().postApi.qcClearOneNotification(bean.notification_id).subscribeOn(Schedulers.io()).subscribe();
-            Intent toMain = new Intent(context, WebActivity.class);
-            toMain.putExtra("url",bean.url);
-            toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(toMain);
+            if (App.gMainAlive){
+                LogUtil.e("isAlive");
+                Intent toMain = new Intent(context, WebActivity.class);
+                toMain.putExtra("url",bean.url);
+                toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(toMain);
+            }else {
+                Intent toMain = new Intent(context, MainActivity.class);
+                toMain.putExtra("url",bean.url);
+                toMain.putExtra(MainActivity.ACTION,MainActivity.NOTIFICATION);
+                toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(toMain);
+            }
+
         }
 //        toMain.putExtra(MainActivity.ACTION, MainActivity.NOTIFICATION);
 //        if (s2 == null)

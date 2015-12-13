@@ -2,11 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="78.5dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
 
@@ -14,25 +16,24 @@
             android:id="@+id/item_noti_unread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="30dp"
             android:src="@drawable/ic_red_dot"
             />
 
         <ImageView
-
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/item_noti_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/item_noti_unread"
             />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/item_noti_icon"
             android:orientation="vertical">
@@ -43,20 +44,33 @@
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="哈哈哈"
+                tools:text="哈哈哈"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/item_noti_desc"
+                style="@style/Qc.TextCommonGrey"
+                android:layout_width="match_parent"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                tools:text="@string/test_test_short"
                 />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 >
 
                 <TextView
                     android:id="@+id/item_noti_time"
-                    style="@style/Qc.TextCommonBlack"
+                    style="@style/Qc.TextCommonGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12月10日"
@@ -80,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_arrow_right"
             />

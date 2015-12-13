@@ -69,8 +69,8 @@ public class ToastUtils {
         show(R.drawable.ic_share_success, content);
     }
 
-    public static void showDefaultStyle() {
-
+    public static void showDefaultStyle(String content) {
+        Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT).show();
     }
 
 }

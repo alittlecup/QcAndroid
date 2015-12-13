@@ -59,6 +59,7 @@ import rx.plugins.RxJavaPlugins;
 public class App extends Application {
     public static Context AppContex;
     public static boolean canXwalk;
+    public static boolean gMainAlive = false;
     public static User gUser;
     public static int coachid;
     public static DiskLruCache diskLruCache;

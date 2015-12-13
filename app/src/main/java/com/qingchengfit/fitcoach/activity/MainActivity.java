@@ -41,7 +41,6 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
-import com.qingchengfit.fitcoach.bean.RecievePush;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
@@ -212,7 +211,13 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initDrawer();
         initVersion();
         initBDPush();
-
+        App.gMainAlive = true;//main是否存活,为推送
+        if (getIntent()!=null &&getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
+            String contetn = getIntent().getStringExtra("url");
+            Intent toWeb = new Intent(this,WebActivity.class);
+            toWeb.putExtra("url",contetn);
+            startActivity(toWeb);
+        }
     }
 
     private void initBDPush() {
@@ -279,6 +284,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     @Override
     protected void onDestroy() {
+        App.gMainAlive = false;
         super.onDestroy();
         if (mDownloadThread != null)
             mDownloadThread.cancel(true);
@@ -502,15 +508,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             MainActivity.this.finish();
 
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
-            if (gson == null) {
-                gson = new Gson();
-
-            }
-            String contetn = intent.getStringExtra("content");
-            if (!TextUtils.isEmpty(contetn)) {
-                RecievePush recievePush = gson.fromJson(contetn, RecievePush.class);
-                goXwalkfragment(recievePush.url, null);
-            }
+            String contetn = intent.getStringExtra("url");
+            Intent toWeb = new Intent(this,WebActivity.class);
+            toWeb.putExtra("url",contetn);
+            startActivity(toWeb);
         }
     }
 

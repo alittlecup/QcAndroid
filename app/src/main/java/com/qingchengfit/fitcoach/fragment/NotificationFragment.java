@@ -202,6 +202,8 @@ public class NotificationFragment extends BaseSettingFragment {
         if (curpage < totalPage) {
             curpage++;
             onRefesh();
+        }else {
+            ToastUtils.showDefaultStyle("无更多通知");
         }
     }
 
@@ -276,7 +278,8 @@ public class NotificationFragment extends BaseSettingFragment {
         TextView itemNotiTime;
         @Bind(R.id.item_noti_sender)
         TextView itemNotiSender;
-
+        @Bind(R.id.item_noti_desc)
+        TextView itemDesc;
         public NotifiVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -316,6 +319,7 @@ public class NotificationFragment extends BaseSettingFragment {
             holder.itemNotiTime.setText(entity.getCreated_at().replace("T", " "));
             holder.itemNotiSender.setText(entity.getSender());
             Glide.with(App.AppContex).load(entity.getPhoto()).transform(new GlideCircleTransform(getContext())).into(holder.itemNotiIcon);
+            holder.itemDesc.setText(entity.getDescription());
             if (!entity.is_read()) {
                 holder.itemNotiUnread.setVisibility(View.VISIBLE);
             } else {

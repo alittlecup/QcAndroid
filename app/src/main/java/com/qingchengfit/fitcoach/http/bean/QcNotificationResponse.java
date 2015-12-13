@@ -120,6 +120,16 @@ public class QcNotificationResponse extends QcResponse {
             private String photo;
             private String created_at;
             private boolean is_read;
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
+            }
+
+            private String description;
             private int id;
 
             public boolean is_read() {
