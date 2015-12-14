@@ -62,6 +62,7 @@ public class NotificationFragment extends BaseSettingFragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class NotificationFragment extends BaseSettingFragment {
         adapter.setListener((v, pos) -> {
             QcCloudClient.getApi().postApi.qcClearOneNotification(adapter.datas.get(pos).getId()).subscribeOn(Schedulers.io())
                     .subscribe();
+            adapter.datas.get(pos).setIs_read(true);
             Intent toWeb = new Intent(getContext(),WebActivity.class);
             toWeb.putExtra("url",adapter.datas.get(pos).getUrl());
 
@@ -207,6 +209,9 @@ public class NotificationFragment extends BaseSettingFragment {
         }
     }
 
+
+
+
     public void onRefesh() {
         HashMap<String, Integer> params = new HashMap<String, Integer>();
         params.put("page", curpage);
@@ -254,6 +259,7 @@ public class NotificationFragment extends BaseSettingFragment {
     public void onResume() {
         super.onResume();
 
+       adapter.notifyDataSetChanged();
     }
 
     @Override
