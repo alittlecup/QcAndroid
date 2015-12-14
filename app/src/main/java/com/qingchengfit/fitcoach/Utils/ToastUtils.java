@@ -27,15 +27,10 @@ import com.qingchengfit.fitcoach.R;
 public class ToastUtils {
 
     public static Toast gToast;
-//    private static TextView tv;
-//    private static ImageView imageView;
 
     public static void show(@DrawableRes int img, String content) {
         if (App.AppContex == null)
             return;
-//        TextView tv;
-//        ImageView imageView;
-//        if (gToast == null){
         if (gToast != null)
             gToast.cancel();
         gToast = Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT);
@@ -45,23 +40,9 @@ public class ToastUtils {
         TextView tv = (TextView) view.findViewById(R.id.toast_tv);
         ImageView imageView = (ImageView) view.findViewById(R.id.toast_img);
         gToast.setView(view);
-//        }
-
         tv.setText(content);
         imageView.setImageResource(img);
         gToast.show();
-//
-//        View view = LayoutInflater.from(App.AppContex)
-//                .inflate(R.layout.toastview,(ViewGroup)gToast.getView());
-//        TextView tv = (TextView) view.findViewById(R.id.toast_tv);
-//        ImageView imageView = (ImageView)view.findViewById(R.id.toast_img);
-//        tv.setText(content);
-//        imageView.setImageResource(img);
-//        gToast.setView(view);
-//        gToast.show();
-//        Toast toast = Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT);
-//        toast.setGravity(Gravity.CENTER,0,0);
-//        toast.show();
 
     }
 

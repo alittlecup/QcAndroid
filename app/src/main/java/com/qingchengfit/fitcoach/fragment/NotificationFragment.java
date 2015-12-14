@@ -196,7 +196,7 @@ public class NotificationFragment extends BaseSettingFragment {
             }
         });
         list.clear();
-        onRefesh();
+//        onRefesh();
         return view;
     }
 
@@ -212,7 +212,7 @@ public class NotificationFragment extends BaseSettingFragment {
 
 
 
-    public void onRefesh() {
+    public synchronized void onRefesh() {
         HashMap<String, Integer> params = new HashMap<String, Integer>();
         params.put("page", curpage);
         QcCloudClient.getApi().getApi.qcGetMessages(App.coachid,params)
