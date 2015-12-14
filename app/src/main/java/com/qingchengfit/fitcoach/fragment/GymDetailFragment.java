@@ -234,14 +234,12 @@ public class GymDetailFragment extends Fragment {
                                              URI uri = null;
                                              try {
                                                  uri = new URI(url);
-
+                                                 LogUtil.e("host contains" + hostArray.toString());
                                                  if (!hostArray.contains(uri.getHost())) {
                                                      hostArray.add(uri.getHost());
 
                                                  }
-                                                 LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                                                  setCookie(uri.getHost(), "qc_session_id", sessionid);
-                                                 LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
 
 
                                              } catch (URISyntaxException e) {
@@ -418,13 +416,6 @@ public class GymDetailFragment extends Fragment {
 
     public void removeCookie() {
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
-//        if (cookieManager != null) {
-//            cookieManager.setCookie(Configs.Server, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-//            for (String string : hostArray) {
-//                LogUtil.e("clean cookie:" + string);
-//                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-//            }
-//        }
     }
 
     @Override
@@ -478,23 +469,25 @@ public class GymDetailFragment extends Fragment {
 
     private void initCookie(String url) {
         sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
-
+        setCookie(Configs.ServerIp, "sessionid", sessionid);
 
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
                 if (!hostArray.contains(uri.getHost())) {
                     LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
+
+                    hostArray.add(uri.getHost());
                 }
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
-                hostArray.add(uri.getHost());
+
                 LogUtil.e("uri:" + uri.getHost() + " session:" + cookieManager.getCookie(uri.getHost()));
 
 //                setCookie(uri.getHost(), "sessionid", sessionid);
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
-            setCookie(Configs.ServerIp, "sessionid", sessionid);
+
 
 //            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
 //            setCookie(".qingchengfit.cn", "qc_session_id", sessionid);

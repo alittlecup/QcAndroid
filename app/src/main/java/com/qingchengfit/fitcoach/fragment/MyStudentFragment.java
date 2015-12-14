@@ -535,7 +535,10 @@ public class MyStudentFragment extends MainBaseFragment {
                                 if (hasPrivate){
                                     toolbar.getMenu().clear();
                                     toolbar.inflateMenu(R.menu.menu_students);
-                                }else toolbar.getMenu().clear();
+                                }else {
+                                    toolbar.getMenu().clear();
+                                    toolbar.inflateMenu(R.menu.menu_search);
+                                }
 
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
 
