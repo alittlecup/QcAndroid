@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
@@ -31,6 +32,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
+import com.qingchengfit.fitcoach.server.CalendarIntentService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -187,6 +189,7 @@ public class ScheduleListFragment extends Fragment {
         if (qcSchedulesResponse == null || qcSchedulesResponse.data.systems == null)
             return;
         List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+        CalendarIntentService.startActionDay(getContext(), mCurDate.getTime(), new Gson().toJson(qcSchedulesResponse));
 
         scheduleBeans.clear();
 
@@ -241,6 +244,7 @@ public class ScheduleListFragment extends Fragment {
 
         }
         Collections.sort(scheduleBeans, new ScheduleCompare());
+
         if (getActivity() == null)
             return;
         getActivity().runOnUiThread(() -> {

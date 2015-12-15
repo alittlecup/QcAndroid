@@ -29,9 +29,11 @@ import com.bumptech.glide.Glide;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.NetWorkUtils;
+import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
@@ -61,9 +63,11 @@ import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
+import com.qingchengfit.fitcoach.server.CalendarIntentService;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -78,6 +82,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -211,25 +217,66 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initDrawer();
         initVersion();
         initBDPush();
+        initCalendar();
+
         App.gMainAlive = true;//main是否存活,为推送
-        if (getIntent()!=null &&getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
+        if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = getIntent().getStringExtra("url");
-            Intent toWeb = new Intent(this,WebActivity.class);
-            toWeb.putExtra("url",contetn);
+            Intent toWeb = new Intent(this, WebActivity.class);
+            toWeb.putExtra("url", contetn);
             startActivity(toWeb);
         }
     }
 
+    private void initCalendar() {
+        Long calendarid = PreferenceUtils.getPrefLong(this, "calendar_id", -1);
+        long calendar_sync_time = PreferenceUtils.getPrefLong(this, "calendar_sync_time", 0);
+        if (calendarid < 0) {
+            calendarid = PhoneFuncUtils.insertCalendar(this);
+            PreferenceUtils.setSettingLong(this, "calendar_id", calendarid);
+        }
+        LogUtil.e("sync time:"+new Date().getTime() +"   "+ calendar_sync_time );
+        if (calendarid >= 0 && (new Date().getTime() - calendar_sync_time > DateUtils.HOUR_TIME)) {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("from_date", DateUtils.getServerDateDay(new Date()));
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, 6);
+            params.put("to_date", DateUtils.getServerDateDay(calendar.getTime()));
+            LogUtil.e("sync calendar:");
+            QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<QcSchedulesResponse>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(QcSchedulesResponse qcSchedulesResponse) {
+                            CalendarIntentService.startActionWeek(MainActivity.this, new Date().getTime(), gson.toJson(qcSchedulesResponse));
+                            LogUtil.e("save calendar!");
+                            PreferenceUtils.setSettingLong(MainActivity.this, "calendar_sync_time", new Date().getTime());
+                        }
+                    });
+        }
+    }
+
     private void initBDPush() {
-        if (!PreferenceUtils.getPrefBoolean(this,"hasPushId",false)) {
+        if (!PreferenceUtils.getPrefBoolean(this, "hasPushId", false)) {
             String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
             String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
-            if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)){
+            if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)) {
                 PushBody pushBody = new PushBody();
                 pushBody.channel_id = channelid;
                 pushBody.push_id = userid;
                 pushBody.device_type = "Android";
-                QcCloudClient.getApi().postApi.qcPostPushId(App.coachid,pushBody)
+                QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
                             @Override
@@ -250,10 +297,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                                 }
                             }
                         });
-            }else {
+            } else {
                 LogUtil.e("bdpush:empty");
             }
-        }else {
+        } else {
             LogUtil.e("hasBunldle");
         }
     }
@@ -509,8 +556,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = intent.getStringExtra("url");
-            Intent toWeb = new Intent(this,WebActivity.class);
-            toWeb.putExtra("url",contetn);
+            Intent toWeb = new Intent(this, WebActivity.class);
+            toWeb.putExtra("url", contetn);
             startActivity(toWeb);
         }
     }
@@ -856,34 +903,34 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        if (resultCode > 0) {
-            switch (resultCode) {
-                case 1:
+        switch (resultCode) {
+            case 1:
 //                    changeFragment(mScheduesFragment);
-                    button.performClick();
-                    break;
-                case 2:
+                button.performClick();
+                break;
+            case 2:
 //                    changeFragment(mDataStatementFragment);
-                    button2.performClick();
-                    break;
-                case 3:
+                button2.performClick();
+                break;
+            case 3:
 //                    changeFragment(mMeetingFragment);
-                    button3.performClick();
-                    break;
-                case 4:
-                    item.performClick();
+                button3.performClick();
+                break;
+            case 4:
+                item.performClick();
 //                    changeFragment(mMyStudentFragment);
-                    break;
-                case 5:
-                    item1.performClick();
+                break;
+            case 5:
+                item1.performClick();
 //                    changeFragment(mMyCoursePlanFragment);
-                    break;
-                case 6:
-                    item2.performClick();
+                break;
+            case 6:
+                item2.performClick();
 //                    changeFragment(mMyGymsFragment);
-                    break;
-                default:
+                break;
+            default:
 //                    changeFragment(mScheduesFragment);
-                    break;
+                break;
 
 
 //            }

@@ -12,6 +12,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.RequiresPermission;
 import android.text.TextUtils;
 
+import com.paper.paperbaselibrary.R;
 import com.paper.paperbaselibrary.bean.Contact;
 
 import java.util.ArrayList;
@@ -140,8 +141,8 @@ public class PhoneFuncUtils {
      * @param context contex
      */
     @RequiresPermission(Manifest.permission.READ_CALENDAR)
-    public static int queryCalender(Context context) {
-        int ret = -1;
+    public static long queryCalender(Context context) {
+        long ret = -1;
         ContentResolver cr = context.getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
 //        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
@@ -157,9 +158,9 @@ public class PhoneFuncUtils {
             return ret;
         }
         while (cur.moveToNext()) {
-            if (TextUtils.equals(cur.getString(3), "user@qingchengfit.com")){
+            if (TextUtils.equals(cur.getString(3), "青橙科技")) {
                 ret = cur.getInt(0);
-                continue;
+//                continue;
             }
             LogUtil.i(cur.getLong(0) + ":id" + "    other:" + cur.getString(1));
 
@@ -168,7 +169,7 @@ public class PhoneFuncUtils {
         if (!cur.isClosed()) {
             cur.close();
         }
-        return  ret;
+        return ret;
     }
 
     /**
@@ -218,11 +219,11 @@ public class PhoneFuncUtils {
      * @param starttime  开始时间
      */
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
-    public static void insertEvent(Context context, int calendarid, String title, String desc, long starttime, long endtime) {
+    public static void insertEvent(Context context, long calendarid, String title, String desc, long starttime, long endtime) {
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2015, 7, 29, 3, 30);
+        beginTime.setTime(new Date(starttime));
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2015, 7, 29, 8, 30);
+        endTime.setTime(new Date(endtime));
         ContentValues values = new ContentValues();
 
         values.put(CalendarContract.Events.DTSTART, beginTime.getTimeInMillis());
@@ -241,9 +242,11 @@ public class PhoneFuncUtils {
 //        values.put(CalendarContract.Events.ACCOUNT_TYPE,CalendarContract.ACCOUNT_TYPE_LOCAL);
         Uri uri = context.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
 
-        assert uri != null;
-        LogUtil.i(Long.parseLong(uri.getLastPathSegment()) + "");
-        addEventNoti(context, Integer.parseInt(uri.getLastPathSegment()));
+//        assert uri != null;
+        if (uri != null) {
+            LogUtil.i(Long.parseLong(uri.getLastPathSegment()) + "");
+            addEventNoti(context, Integer.parseInt(uri.getLastPathSegment()));
+        }
     }
 
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
@@ -261,8 +264,12 @@ public class PhoneFuncUtils {
      *
      * @param context context
      */
-    public static void insertCalendar(Context context) {
-        LogUtil.i("time:" + System.currentTimeMillis());
+    @RequiresPermission(Manifest.permission.READ_CALENDAR)
+    public static Long insertCalendar(Context context) {
+        long id = queryCalender(context);
+        if (id > 0){
+            return id;
+        }
         ContentValues values = new ContentValues();
         values.put(
                 CalendarContract.Calendars.ACCOUNT_NAME,
@@ -278,7 +285,7 @@ public class PhoneFuncUtils {
                 "青橙科技");
         values.put(
                 CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-                "引力工作室");
+                context.getString(R.string.app_name));
         values.put(
                 CalendarContract.Calendars.CALENDAR_COLOR,
                 0xff3366);
@@ -287,15 +294,15 @@ public class PhoneFuncUtils {
                 CalendarContract.Calendars.CAL_ACCESS_OWNER);
         values.put(
                 CalendarContract.Calendars.OWNER_ACCOUNT,
-                "user@qingchengfit.com");
+                "青橙科技");
         values.put(
                 CalendarContract.Calendars.CALENDAR_TIME_ZONE,
-                "Europe/London");
+                "Asia/Beijing");
         Uri.Builder builder =
                 CalendarContract.Calendars.CONTENT_URI.buildUpon();
         builder.appendQueryParameter(
                 CalendarContract.Calendars.ACCOUNT_NAME,
-                "com.qingcheng");
+                "青橙科技");
         builder.appendQueryParameter(
                 CalendarContract.Calendars.ACCOUNT_TYPE,
                 CalendarContract.ACCOUNT_TYPE_LOCAL);
@@ -306,46 +313,45 @@ public class PhoneFuncUtils {
 //        ContentValues values = new ContentValues();
 
         // Now get the CalendarID :
-        assert uri != null;
-        LogUtil.d("id:" + Long.parseLong(uri.getLastPathSegment()));
+//        assert uri != null;
+        if (uri != null) {
+            LogUtil.d("id:" + Long.parseLong(uri.getLastPathSegment()));
+            return Long.parseLong(uri.getLastPathSegment());
+        } else return -1l;
 
 
-//        Calendar beginTime = Calendar.getInstance();
-//        beginTime.set(2015, 7, 29, 7, 30);
-//        Calendar endTime = Calendar.getInstance();
-//        endTime.set(2015, 7, 29, 8, 30);
-//        Intent intent = new Intent(Intent.ACTION_INSERT)
-//                .setData(CalendarContract.Events.CONTENT_URI)
-//                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-//                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-//                .putExtra(CalendarContract.Events.TITLE, "Yoga")
-//                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
-//                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
-//                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-//                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
-//        context.startActivity(intent);
     }
 
     /**
      * 删除日历账户
+     *
      * @param context
      * @param id
      * @return
      */
-    public static boolean delCalendar(Context context,int id){
+    public static boolean delCalendar(Context context, int id) {
         Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, id);
-        context.getContentResolver().delete(updateUri,null,null);
+        context.getContentResolver().delete(updateUri, null, null);
         return true;
     }
 
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
-    public static boolean delOndDayCal(Context context,int id,long daytime){
+    public static boolean delOndDayCal(Context context, Long id, long daytime) {
         Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, id);
         Long start = DateUtils.getDayMidnight(new Date(daytime));
-        Long end = start+DateUtils.DAY_TIME;
-        LogUtil.e("id:"+id +"   start:"+DateUtils.getServerDateDay(new Date(start))+"  end:"+DateUtils.getServerDateDay(new Date(end)));
-        context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI,"(("+CalendarContract.Events.CALENDAR_ID+"="+id+")AND(("
-                +CalendarContract.Events.DTSTART+">="+start+")AND("+CalendarContract.Events.DTEND+"<="+end+")))",null);
+        Long end = start + DateUtils.DAY_TIME;
+        LogUtil.e("id:" + id + "   start:" + DateUtils.getServerDateDay(new Date(start)) + "  end:" + DateUtils.getServerDateDay(new Date(end)));
+        context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI, "((" + CalendarContract.Events.CALENDAR_ID + "=" + id + ")AND(("
+                + CalendarContract.Events.DTSTART + ">=" + start + ")AND(" + CalendarContract.Events.DTEND + "<=" + end + ")))", null);
+        return true;
+    }
+
+    @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
+    public static boolean delTimeCal(Context context, Long id, long start,long end) {
+        Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, id);
+        LogUtil.e("id:" + id + "   start:" + DateUtils.getServerDateDay(new Date(start)) + "  end:" + DateUtils.getServerDateDay(new Date(end)));
+        context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI, "((" + CalendarContract.Events.CALENDAR_ID + "=" + id + ")AND(("
+                + CalendarContract.Events.DTSTART + ">=" + start + ")AND(" + CalendarContract.Events.DTEND + "<=" + end + ")))", null);
         return true;
     }
 

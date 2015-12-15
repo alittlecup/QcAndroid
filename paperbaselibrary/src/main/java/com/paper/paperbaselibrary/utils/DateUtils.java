@@ -22,6 +22,7 @@ import java.util.Locale;
 public class DateUtils {
     public static final Long MONTH_TIME = 31 * 24 * 60 * 60 * 1000l;
     public static final Long DAY_TIME =  24 * 60 * 60 * 1000l;
+    public static final Long HOUR_TIME =  60 * 60 * 1000l;
     public static Date formatDateFromServer(String s) {
         s = s.replace("T", " ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
