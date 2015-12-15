@@ -35,6 +35,7 @@ import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
@@ -171,7 +172,8 @@ public class MyStudentFragment extends MainBaseFragment {
                         .append(adapterData.get(pos).id)
                         .append("/details/");
 //                openDrawerInterface.goWeb(sb.toString());
-                Intent it = new Intent(getContext(), WebActivity.class);
+//                Intent it = new Intent(getContext(), WebActivity.class);
+                Intent it = new Intent(getContext(), StudentHomeActivity.class);
                 it.putExtra("url", sb.toString());
                 MyStudentFragment.this.startActivityForResult(it, 404);
             }
