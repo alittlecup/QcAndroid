@@ -160,7 +160,7 @@ public class PhoneFuncUtils {
         while (cur.moveToNext()) {
             if (TextUtils.equals(cur.getString(3), "青橙科技")) {
                 ret = cur.getInt(0);
-//                continue;
+                continue;
             }
             LogUtil.i(cur.getLong(0) + ":id" + "    other:" + cur.getString(1));
 
@@ -288,7 +288,7 @@ public class PhoneFuncUtils {
                 context.getString(R.string.app_name));
         values.put(
                 CalendarContract.Calendars.CALENDAR_COLOR,
-                0xff3366);
+                0x0db14b);
         values.put(
                 CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
                 CalendarContract.Calendars.CAL_ACCESS_OWNER);

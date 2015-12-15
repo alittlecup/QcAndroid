@@ -145,7 +145,7 @@ public class CalendarIntentService extends IntentService {
         long start = DateUtils.getDayMidnight(new Date(param1));
         Calendar c = Calendar.getInstance();
         c.setTime(new Date(start));
-        c.add(Calendar.DAY_OF_MONTH, 6);
+        c.add(Calendar.DAY_OF_MONTH, 7);
         PhoneFuncUtils.delTimeCal(this,calid,start,c.getTimeInMillis());
 
         QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2,QcSchedulesResponse.class);
