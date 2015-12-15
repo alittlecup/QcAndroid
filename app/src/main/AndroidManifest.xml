@@ -280,6 +280,8 @@
             android:label="@string/title_activity_body_test"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".activity.CoachHomeActivity">
+        </activity>
     </application>
 
 </manifest>
