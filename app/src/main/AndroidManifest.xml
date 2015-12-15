@@ -283,6 +283,8 @@
         </activity>
         <activity android:name=".activity.CoachHomeActivity">
         </activity>
+        <activity android:name=".activity.CoachHomeActivity">
+        </activity>
     </application>
 
 </manifest>
