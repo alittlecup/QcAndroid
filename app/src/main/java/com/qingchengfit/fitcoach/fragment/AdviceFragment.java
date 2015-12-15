@@ -79,7 +79,7 @@ public class AdviceFragment extends BaseSettingFragment {
         String email = settingAdviceMail.getText().toString();
         String content = settingAdviceContent.getText().toString();
         feedBackBean.setEmail(email);
-        feedBackBean.setContent(email);
+        feedBackBean.setContent(content);
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(content)) {
             fragmentCallBack.ShowLoading("请稍后");
             QcCloudClient.getApi().postApi.qcFeedBack(feedBackBean)
