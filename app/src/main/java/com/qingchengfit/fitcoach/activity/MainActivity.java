@@ -342,18 +342,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     /**
      * loading dialog
      */
-//    private MaterialDialog loadingDialog;
     public void initLoadingDialog() {
-//        View view = LayoutInflater.from(this).inflate(R.layout.loading_view, null);
-//        ImageView img = (ImageView)view.findViewById(R.id.loading_img);
-//        Glide.with(App.AppContex).load(R.drawable.ic_loading_gif).into(img);
-//        loadingDialog = new MaterialDialog.Builder(this)
-//                .customView(view,false)
-//
-//                .backgroundColor(getResources().getColor(R.color.transparent))
-//                .autoDismiss(false)
-//                .cancelable(false)
-//                .build();
         loadingDialog = new MaterialDialog.Builder(this)
                 .content("请稍后")
                 .progress(true, 0)

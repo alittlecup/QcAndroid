@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
@@ -39,6 +41,8 @@ public class SettingFragment extends BaseSettingFragment {
     RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
     DialogSheet logoutSheet;
+    @Bind(R.id.version)
+    TextView version;
 
     public SettingFragment() {
     }
@@ -103,6 +107,7 @@ public class SettingFragment extends BaseSettingFragment {
                 return true;
             }
         });
+        version.setText("v"+ AppUtils.getAppVer(getActivity()));
         return view;
     }
 
@@ -163,7 +168,7 @@ public class SettingFragment extends BaseSettingFragment {
                 fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
             case R.id.setting_calsync:
-                fragmentCallBack.onFragmentChange(CalSyncFragment.newInstance("",""));
+                fragmentCallBack.onFragmentChange(CalSyncFragment.newInstance("", ""));
                 break;
             default:
                 break;
