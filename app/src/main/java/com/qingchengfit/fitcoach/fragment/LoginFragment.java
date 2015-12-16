@@ -15,7 +15,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
@@ -103,10 +102,7 @@ public class LoginFragment extends Fragment {
                                 PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
                                 PreferenceUtils.setPrefBoolean(getActivity(), "first", false);
                                 PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
-                                long calid = PhoneFuncUtils.insertCalendar(getActivity());
-                                if (calid >= 0){
-                                    PreferenceUtils.setSettingLong(getActivity(), "calendar_id",calid);
-                                }
+
                                 return rx.Observable.just(true);
                             } else {
 

@@ -46,17 +46,20 @@ public class CalendarIntentService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionDay(Context context, long time, String param2) {
-        try{
-            if (context == null){
+        try {
+            if (context == null) {
                 return;
             }
-
-        Intent intent = new Intent(context, CalendarIntentService.class);
-        intent.setAction(ACTION_CAL_DAY);
-        intent.putExtra(EXTRA_PARAM1, time);
-        intent.putExtra(EXTRA_PARAM2, param2);
-        context.startService(intent);
-        }catch (Exception e){
+            boolean isSync = PreferenceUtils.getPrefBoolean(context, "cal_sync", true);
+            if (!isSync)
+                return;
+            ;
+            Intent intent = new Intent(context, CalendarIntentService.class);
+            intent.setAction(ACTION_CAL_DAY);
+            intent.putExtra(EXTRA_PARAM1, time);
+            intent.putExtra(EXTRA_PARAM2, param2);
+            context.startService(intent);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -69,13 +72,20 @@ public class CalendarIntentService extends IntentService {
      */
     // TODO: Customize helper method
     public static void startActionWeek(Context context, long param1, String param2) {
-        try{
-        Intent intent = new Intent(context, CalendarIntentService.class);
-        intent.setAction(ACTION_CAL_WEEK);
-        intent.putExtra(EXTRA_PARAM1, param1);
-        intent.putExtra(EXTRA_PARAM2, param2);
-        context.startService(intent);
-        }catch (Exception e){
+        try {
+            if (context == null) {
+                return;
+            }
+            boolean isSync = PreferenceUtils.getPrefBoolean(context, "cal_sync", true);
+            if (!isSync)
+                return;
+            ;
+            Intent intent = new Intent(context, CalendarIntentService.class);
+            intent.setAction(ACTION_CAL_WEEK);
+            intent.putExtra(EXTRA_PARAM1, param1);
+            intent.putExtra(EXTRA_PARAM2, param2);
+            context.startService(intent);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -103,6 +113,7 @@ public class CalendarIntentService extends IntentService {
     private void handleActionDay(long param1, String param2) {
         try {
 
+            int alertTime = PreferenceUtils.getPrefInt(App.AppContex,"cal_sync_time",60);
 
             long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
             PhoneFuncUtils.delOndDayCal(this, calid, param1);
@@ -117,19 +128,31 @@ public class CalendarIntentService extends IntentService {
                 if (system.system == null)
                     continue;
                 for (QcScheduleBean bean : schedules) {
-                    String title;
+                    String title, users;
                     if (bean.orders != null && bean.orders.size() == 1) {
-                        title = bean.course.name + "(" + bean.count + "人:" + bean.users + ") -[健身教练助手]";
+                        users = bean.orders.get(0).username;
+                        title = bean.course.name + "(" + bean.count + "人:" + users + ") -[健身教练助手]";
 
                     } else {
+                        if (bean.orders != null) {
+                            StringBuffer sb = new StringBuffer();
+                            for (QcScheduleBean.Order order : bean.orders) {
+                                sb.append(order.username);
+                                sb.append(";");
+                            }
+                            users = sb.toString();
+                        } else {
+                            users = "无";
+                        }
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
+
                     }
-                    PhoneFuncUtils.insertEvent(this, calid, title, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime());
+                    PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
                 }
 
             }
-        }catch (Exception e){
-            RevenUtils.sendException("add calendar err!","",e);
+        } catch (Exception e) {
+            RevenUtils.sendException("add calendar err!", "", e);
         }
 
 
@@ -140,36 +163,49 @@ public class CalendarIntentService extends IntentService {
      * parameters.
      */
     private void handleActionWeek(long param1, String param2) {
-        try{
-        long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
-        long start = DateUtils.getDayMidnight(new Date(param1));
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date(start));
-        c.add(Calendar.DAY_OF_MONTH, 7);
-        PhoneFuncUtils.delTimeCal(this,calid,start,c.getTimeInMillis());
+        try {
+            long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
+            int alertTime = PreferenceUtils.getPrefInt(App.AppContex,"cal_sync_time",60);
+            long start = DateUtils.getDayMidnight(new Date(param1));
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date(start));
+            c.add(Calendar.DAY_OF_MONTH, 7);
+            PhoneFuncUtils.delTimeCal(this, calid, start, c.getTimeInMillis());
 
-        QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2,QcSchedulesResponse.class);
-        List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
-        for (int i = 0; i < systems.size(); i++) {
-            QcSchedulesResponse.System system = systems.get(i);
+            QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
+            List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+            for (int i = 0; i < systems.size(); i++) {
+                QcSchedulesResponse.System system = systems.get(i);
 
-            String gymname = system.system.name;
-            List<QcScheduleBean> schedules = system.schedules;
-            if (system.system == null)
-                continue;
-            for (QcScheduleBean bean:schedules){
-                String title;
-                if (bean.orders !=null && bean.orders.size() ==1){
-                    title = bean.course.name+"("+bean.count+"人:"+bean.users+") -[健身教练助手]";
+                String gymname = system.system.name;
+                List<QcScheduleBean> schedules = system.schedules;
+                if (system.system == null)
+                    continue;
+                for (QcScheduleBean bean : schedules) {
+                    String title, users;
+                    if (bean.orders != null && bean.orders.size() == 1) {
+                        users = bean.orders.get(0).username;
+                        title = bean.course.name + "(" + bean.count + "人:" + users + ") -[健身教练助手]";
 
-                }else {
-                    title = bean.course.name+"("+bean.count+"人已预约) -[健身教练助手]";
+                    } else {
+                        if (bean.orders != null) {
+                            StringBuffer sb = new StringBuffer();
+                            for (QcScheduleBean.Order order : bean.orders) {
+                                sb.append(order.username);
+                                sb.append(";");
+                            }
+                            users = sb.toString();
+                        } else {
+                            users = "无";
+                        }
+                        title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
+
+                    }
+                    PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
                 }
-                PhoneFuncUtils.insertEvent(this,calid,title,gymname,DateUtils.formatDateFromServer(bean.start).getTime(),DateUtils.formatDateFromServer(bean.end).getTime());
-            }
 
-        }
-        }catch (Exception e){
+            }
+        } catch (Exception e) {
             RevenUtils.sendException("add calendar err!", "", e);
         }
     }

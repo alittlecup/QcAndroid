@@ -43,6 +43,7 @@ public class PhoneFuncUtils {
     public static final String[] EVENT_PROJECTION2 = new String[]{
             CalendarContract.Events._ID,                           // 0
             CalendarContract.Events.TITLE,                  // 1
+            CalendarContract.Events.CALENDAR_ID
     };
 
 
@@ -158,11 +159,11 @@ public class PhoneFuncUtils {
             return ret;
         }
         while (cur.moveToNext()) {
+            LogUtil.i(cur.getLong(0) + ":id" + "    other:" + cur.getString(1));
             if (TextUtils.equals(cur.getString(3), "青橙科技")) {
                 ret = cur.getInt(0);
                 continue;
             }
-            LogUtil.i(cur.getLong(0) + ":id" + "    other:" + cur.getString(1));
 
         }
 
@@ -177,14 +178,13 @@ public class PhoneFuncUtils {
      *
      * @param context context
      */
-
-    public static void queryEvent(Context context, long starttime, long endtime) {
+    @RequiresPermission(Manifest.permission.READ_CALENDAR)
+    public static String queryEvent(Context context, long starttime, long endtime ,long calint) {
 
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2015, 6, 29, 0, 30);
+        beginTime.setTime(new Date(starttime));
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2015, 6, 29, 12, 30);
-//        ContentValues values = new ContentValues();
+        endTime.setTime(new Date(endtime));
 
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.parse("content://com.android.calendar/events");
@@ -198,14 +198,18 @@ public class PhoneFuncUtils {
         };
         Cursor cur = cr.query(uri, EVENT_PROJECTION2, selection, selectionArgs, null);
         if (cur == null)
-            return;
+            return null;
+        String ret = null;
+
         while (cur.moveToNext()) {
+            if (cur.getLong(2) != calint)
+                ret = cur.getString(1);
             LogUtil.i(cur.getString(1) + ":name");
         }
         if (!cur.isClosed()) {
             cur.close();
         }
-
+        return ret;
     }
 
     /**
@@ -219,7 +223,7 @@ public class PhoneFuncUtils {
      * @param starttime  开始时间
      */
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
-    public static void insertEvent(Context context, long calendarid, String title, String desc, long starttime, long endtime) {
+    public static void insertEvent(Context context, long calendarid, String title, String desc,String location, long starttime, long endtime,int timeMin) {
         Calendar beginTime = Calendar.getInstance();
         beginTime.setTime(new Date(starttime));
         Calendar endTime = Calendar.getInstance();
@@ -233,6 +237,7 @@ public class PhoneFuncUtils {
         values.put(CalendarContract.Events.CALENDAR_ID, calendarid);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
         values.put(CalendarContract.Events.HAS_ALARM, 1);
+        values.put(CalendarContract.Events.EVENT_LOCATION,location);
 //        values.put(CalendarContract.Events.ACCOUNT_NAME,"青橙科技");
 //        values.put(CalendarContract.Events.SYNC_EVENTS,0);
         String[] des = TimeZone.getAvailableIDs();
@@ -243,17 +248,17 @@ public class PhoneFuncUtils {
         Uri uri = context.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
 
 //        assert uri != null;
-        if (uri != null) {
+        if (uri != null && timeMin >0) {
             LogUtil.i(Long.parseLong(uri.getLastPathSegment()) + "");
-            addEventNoti(context, Integer.parseInt(uri.getLastPathSegment()));
+            addEventNoti(context, Integer.parseInt(uri.getLastPathSegment()),timeMin);
         }
     }
 
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
-    public static void addEventNoti(Context context, int eventID) {
+    public static void addEventNoti(Context context, int eventID,int timeMin) {
         ContentResolver cr = context.getContentResolver();
         ContentValues values = new ContentValues();
-        values.put(CalendarContract.Reminders.MINUTES, 15);
+        values.put(CalendarContract.Reminders.MINUTES, timeMin);
         values.put(CalendarContract.Reminders.EVENT_ID, eventID);
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
         Uri uri = cr.insert(CalendarContract.Reminders.CONTENT_URI, values);
@@ -292,6 +297,7 @@ public class PhoneFuncUtils {
         values.put(
                 CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
                 CalendarContract.Calendars.CAL_ACCESS_OWNER);
+
         values.put(
                 CalendarContract.Calendars.OWNER_ACCOUNT,
                 "青橙科技");

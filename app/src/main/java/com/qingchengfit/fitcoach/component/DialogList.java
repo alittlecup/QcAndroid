@@ -85,6 +85,22 @@ public class DialogList extends Dialog {
         view.addView(listView, params);
         return this;
     }
+    public DialogList list(String[] list, AdapterView.OnItemClickListener listener) {
+        ListView listView = new ListView(context);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.item_only_text, list);
+        listView.setAdapter(adapter);
+        listView.setDivider(new ColorDrawable(context.getResources().getColor(R.color.transparent)));
+        listView.setOnItemClickListener(listener);
+        int height = 0;
+        if (list.length < 6) {
+            height = MeasureUtils.dpToPx(48f, context.getResources()) * list.length;
+        } else {
+            height = MeasureUtils.dpToPx(48f, context.getResources()) * 6;
+        }
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+        view.addView(listView, params);
+        return this;
+    }
 
     @Override
     public void show() {

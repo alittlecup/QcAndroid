@@ -229,7 +229,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     }
 
     private void initCalendar() {
-        Long calendarid = PreferenceUtils.getPrefLong(this, "calendar_id", -1);
+        Long calendarid = -1l;
         long calendar_sync_time = PreferenceUtils.getPrefLong(this, "calendar_sync_time", 0);
         if (calendarid < 0) {
             calendarid = PhoneFuncUtils.insertCalendar(this);

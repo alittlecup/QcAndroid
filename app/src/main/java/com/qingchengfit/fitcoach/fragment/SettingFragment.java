@@ -120,7 +120,7 @@ public class SettingFragment extends BaseSettingFragment {
             R.id.setting_workexpe,
             R.id.setting_logout,
             R.id.setting_modifyphone,
-
+            R.id.setting_calsync
     })
 
     public void onClickUs(View view) {
@@ -162,7 +162,9 @@ public class SettingFragment extends BaseSettingFragment {
             case R.id.setting_modifyphone:
                 fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
-
+            case R.id.setting_calsync:
+                fragmentCallBack.onFragmentChange(CalSyncFragment.newInstance("",""));
+                break;
             default:
                 break;
 
