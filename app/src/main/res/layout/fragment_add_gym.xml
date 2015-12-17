@@ -11,12 +11,19 @@
     tools:context="com.qingchengfit.fitcoach.fragment.AddGymFragment">
 
     <include layout="@layout/common_toolbar"></include>
-
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/addgym_brand"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_lable="健身房品牌"
+        app:civ_nonnull="true"
+        >
+    </com.qingchengfit.fitcoach.component.CommonInputView>
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/addgym_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        app:civ_lable="健身房名称"
+        app:civ_lable="场馆名"
         app:civ_nonnull="true"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
