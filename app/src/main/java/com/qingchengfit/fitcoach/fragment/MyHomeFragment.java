@@ -141,7 +141,7 @@ public class MyHomeFragment extends Fragment {
                     ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
                             qcMyhomeResponse.getData().getCoach().getShort_description()
                             , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
-                    //
+
                 }
             }
             return true;
