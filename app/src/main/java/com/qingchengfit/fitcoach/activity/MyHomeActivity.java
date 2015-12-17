@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
-import com.qingchengfit.fitcoach.fragment.MyHomeFragment;
+import com.qingchengfit.fitcoach.fragment.CoachHomeFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 
@@ -66,7 +66,8 @@ public class MyHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_home);
         ButterKnife.bind(this);
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.myhome_fraglayout, new MyHomeFragment()).commit();
+//        fragmentManager.beginTransaction().replace(R.id.myhome_fraglayout, new MyHomeFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.myhome_fraglayout, new CoachHomeFragment()).commit();
         initDrawer();
     }
 

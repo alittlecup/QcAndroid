@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
  * Use the {@link BaseInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BaseInfoFragment extends BaseFragment {
+public class BaseInfoFragment extends VpFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_COACH = "coach";
@@ -79,12 +79,12 @@ public class BaseInfoFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_info, container, false);
         ButterKnife.bind(this, view);
-        isPrepared = true;
+//        isPrepared = true;
         lazyLoad();
         return view;
     }
 
-    @Override
+
     protected void lazyLoad() {
 //        if (!isPrepared || !isVisible) {
 //            return;
@@ -146,6 +146,11 @@ public class BaseInfoFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public String getTitle() {
+        return "基本信息";
     }
 
 

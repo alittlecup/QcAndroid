@@ -1,160 +1,159 @@
-<!--<android.support.v4.widget.SwipeRefreshLayout-->
-<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--android:id="@+id/sfl"-->
-<!-->-->
-
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    tools:context="com.qingchengfit.fitcoach.fragment.MyHomeFragment"
     >
+    <!--<com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout-->
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/myhome_appBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroud_grey"
-        android:fitsSystemWindows="true"
-
-        >
-        <!--<android.support.design.widget.CollapsingToolbarLayout-->
-        <!--android:id="@+id/myhome_coolaosingtoorbar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:minHeight="100dp"-->
-        <!--app:collapsedTitleTextAppearance="@style/ToolbarStyle"-->
-        <!--app:expandedTitleTextAppearance="@style/TextTranparents"-->
-        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+        <!--android:id="@+id/sfl"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
         <!-->-->
-        <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scroll_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/myhome_appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways"
+            android:background="@color/backgroud_grey"
+            android:fitsSystemWindows="true"
+
             >
 
-
-            <ImageView
-                android:id="@+id/myhome_bg"
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="172dp"
-                android:background="@drawable/img_selfinfo_bg"
-                />
-
-            <ImageView
-
-                android:id="@+id/myhome_header"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="130dp"
-                />
-
-            <ImageView
-                android:id="@+id/myhome_gender"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_alignBottom="@id/myhome_header"
-                android:layout_alignRight="@id/myhome_header"
-                android:layout_margin="5dp"
-                />
-
-            <TextView
-                android:id="@+id/myhome_name"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/myhome_header"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:text="Mark Steve"
-                />
-
-            <TextView
-
-                android:id="@+id/myhome_brief"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/myhome_name"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:text="@string/test_test_short"
-                />
-
-            <TextView
-                android:id="@+id/myhome_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/myhome_brief"
-                android:layout_centerHorizontal="true"
-                android:text="北京"
-                />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_grey"
-            app:layout_scrollFlags="scroll|enterAlways"
-            ></View>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/divider_grey"
-            app:layout_scrollFlags="scroll|enterAlways"
-            ></View>
-
-        <FrameLayout
-            android:id="@+id/myhome_student_judge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways"
-            ></FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_grey"
-            ></View>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/divider_grey"
-            ></View>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            >
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/warm_grey"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 >
-            </View>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:minHeight="?attr/actionBarSize"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    >
+
+
+                    <View
+                        android:id="@+id/myhome_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="172dp"
+                        android:background="@color/primary"
+                        />
+
+                    <ImageView
+
+                        android:id="@+id/header"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="130dp"
+                        tools:src="@drawable/img_default_male"
+                        />
+
+                    <ImageView
+                        android:id="@+id/gender"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignBottom="@id/header"
+                        android:layout_alignRight="@id/header"
+                        android:layout_margin="5dp"
+                        tools:src="@drawable/ic_gender_signal_female"
+                        />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/header"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="Mark Steve"
+                        android:textColor="@color/white"
+                        />
+                    <TextView
+
+                        android:id="@+id/myhome_brief"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:maxWidth="250dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/myhome_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/myhome_brief"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/ic_location"
+                        android:drawablePadding="10dp"
+                        tools:text="北京"
+                        />
+
+                    <ImageView
+                        android:id="@+id/myhome_sawtooth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/myhome_location"
+                        android:layout_marginTop="10dp"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_grey"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    >
+                </View>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_grey"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    />
+
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:visibility="invisible"
+                    app:layout_collapseMode="pin"/>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
             <android.support.design.widget.TabLayout
-                android:id="@+id/myhome_tab"
+                android:id="@+id/tab"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
+                android:layout_height="50dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 app:tabGravity="center"
@@ -162,48 +161,29 @@
                 app:tabIndicatorHeight="1.5dp"
                 app:tabSelectedTextColor="@color/primary_dark"
                 app:tabTextAppearance="@style/Qc.TextCommonGrey"
-                app:tabTextColor="@color/primary"
+                app:tabTextColor="@color/text_grey"
                 >
             </android.support.design.widget.TabLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignBottom="@id/tab"
+                android:background="@color/warm_grey"
+                >
+            </View>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/student"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                />
         </RelativeLayout>
 
 
-        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-    </android.support.design.widget.AppBarLayout>
-
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--android:background="@color/primary"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:minHeight="?attr/actionBarSize"-->
-    <!--app:layout_scrollFlags="scroll|enterAlways"-->
-    <!--app:titleTextAppearance="@style/ToolbarStyle"-->
-    <!-->-->
-    <!--</android.support.v7.widget.Toolbar>-->
-    <include
-        layout="@layout/common_toolbar"
-        app:layout_scrollFlags="scroll|enterAlways"
-        >
-
-    </include>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/myhome_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/qc_item_height"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_gravity="bottom"
-        android:text="生成我的名片"
-        android:visibility="gone"
-        />
-
-</android.support.design.widget.CoordinatorLayout>
-    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+    </android.support.design.widget.CoordinatorLayout>
+    <!--</com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>-->
+    <include layout="@layout/common_toolbar"/>
+</FrameLayout>
