@@ -8,7 +8,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,11 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -30,7 +25,6 @@ import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
-import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
@@ -59,9 +53,9 @@ import rx.android.schedulers.AndroidSchedulers;
 public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
 
     @Bind(R.id.header)
-    ImageView myhomeHeader;
+    ImageView header;
     @Bind(R.id.gender)
-    ImageView myhomeGender;
+    ImageView gender;
     @Bind(R.id.name)
     TextView myhomeName;
     @Bind(R.id.myhome_brief)
@@ -78,12 +72,12 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
     ViewPager myhomeViewpager;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.sfl)
-    CustomSwipeRefreshLayout sfl;
+//    @Bind(R.id.sfl)
+//    CustomSwipeRefreshLayout sfl;
     @Bind(R.id.scroll_root)
     CoordinatorLayout scrollRoot;
     private Gson gson = new Gson();
-    private int mAppBarOffset = 0;
+
     private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
     private QcMyhomeResponse qcMyhomeResponse;
     private FragmentAdapter adatper;
@@ -137,14 +131,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
             return true;
         });
         initUser();
-        myhomeAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                LogUtil.e("verticalOffset:"+verticalOffset+"   "+scrollRoot.canScrollVertically(-1));
-                mAppBarOffset = verticalOffset;
-            }
-        });
-        initSRL();
+//        initSRL();
         return view;
 
     }
@@ -160,18 +147,18 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
                 .observeOn(AndroidSchedulers.mainThread());
         qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
     }
-
-    public void initSRL() {
-        sfl.setColorSchemeResources(R.color.primary);
-        sfl.setProgressViewOffset(true, MeasureUtils.dpToPx(50f, getResources()), MeasureUtils.dpToPx(70f, getResources()));
-        sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initUser();
-            }
-        });
-        sfl.setCanChildScrollUpCallback(this);
-    }
+//
+//    public void initSRL() {
+//        sfl.setColorSchemeResources(R.color.primary);
+//        sfl.setProgressViewOffset(true, MeasureUtils.dpToPx(50f, getResources()), MeasureUtils.dpToPx(70f, getResources()));
+//        sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                initUser();
+//            }
+//        });
+//        sfl.setCanChildScrollUpCallback(this);
+//    }
 
 
     @Override
@@ -197,10 +184,10 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         fragments.add(new WorkExperienceFragment());
         fragments.add(new StudentEvaluateFragment());
         adatper = new FragmentAdapter(getChildFragmentManager(), fragments);
-        StudentJudgeFragment fragment = StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
-                , qcMyhomeResponse.getData().getCoach().getEvaluate());
-        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge, fragment).
-                commit();
+//        StudentJudgeFragment fragment = StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
+//                , qcMyhomeResponse.getData().getCoach().getEvaluate());
+//        getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge, fragment).
+//                commit();
 
         myhomeViewpager.setAdapter(adatper);
 
@@ -209,39 +196,9 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         myhomeTab.setupWithViewPager(myhomeViewpager);
         myhomeName.setText(qcMyhomeResponse.getData().getCoach().getUsername());
         myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getDistrictStr());
-        initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), qcMyhomeResponse.getData().getCoach().getGender());//TODO
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "_cache_myhome", gson.toJson(qcMyhomeResponse));
-        sfl.setRefreshing(false);
+//        sfl.setRefreshing(false);
     }
-
-    public void initHead(String userAvatar, int userGender) {
-        int gender = R.drawable.img_default_female;
-        Glide.with(App.AppContex)
-                .load(R.drawable.ic_gender_signal_female)
-                .into(myhomeGender);
-        if (userGender == 0) {
-            gender = R.drawable.img_default_male;
-            Glide.with(App.AppContex)
-                    .load(R.drawable.ic_gender_signal_male)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(myhomeGender);
-        }
-        if (TextUtils.isEmpty(userAvatar)) {
-            Glide.with(App.AppContex)
-                    .load(gender)
-                    .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
-        } else {
-            Glide.with(App.AppContex)
-                    .load(userAvatar)
-                    .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
-        }
-    }
-
-
 
 
     @Override
@@ -252,7 +209,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
 
     @Override
     public boolean canSwipeRefreshChildScrollUp() {
-        return mAppBarOffset != 0;
+        return scrollRoot.canScrollVertically(-1);
 
     }
 
