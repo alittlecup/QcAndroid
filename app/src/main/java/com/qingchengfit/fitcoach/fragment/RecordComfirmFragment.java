@@ -33,7 +33,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecordComfirmFragment extends BaseFragment {
+public class RecordComfirmFragment extends VpFragment {
 
 
     @Bind(R.id.recyclerview)
@@ -56,15 +56,15 @@ public class RecordComfirmFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
-        isPrepared = true;
+//        isPrepared = true;
         lazyLoad();
         return view;
     }
 
-    @Override
+//    @Override
     protected void lazyLoad() {
-        if (!isPrepared || isVisible)
-            return;
+//        if (!isPrepared || isVisible)
+//            return;
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
@@ -107,6 +107,11 @@ public class RecordComfirmFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public String getTitle() {
+        return "资质认证";
     }
 
 

@@ -35,7 +35,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WorkExperienceFragment extends BaseFragment {
+public class WorkExperienceFragment extends VpFragment {
 
 
     @Bind(R.id.recyclerview)
@@ -59,16 +59,16 @@ public class WorkExperienceFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         ButterKnife.bind(this, view);
-        isPrepared = true;
+//        isPrepared = true;
         lazyLoad();
         return view;
     }
 
-    @Override
+//    @Override
     protected void lazyLoad() {
-        if (!isPrepared || isVisible) {
-            return;
-        }
+//        if (!isPrepared || isVisible) {
+//            return;
+//        }
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
@@ -107,6 +107,11 @@ public class WorkExperienceFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public String getTitle() {
+        return "工作经历";
     }
 
 
