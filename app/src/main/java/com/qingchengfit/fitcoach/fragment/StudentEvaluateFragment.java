@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StudentEvaluateFragment extends Fragment {
+public class StudentEvaluateFragment extends VpFragment {
 
 
     @Bind(R.id.evaluate_tags)
@@ -90,5 +90,10 @@ public class StudentEvaluateFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public String getTitle() {
+        return "学员评价";
     }
 }
