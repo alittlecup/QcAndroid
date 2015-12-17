@@ -147,7 +147,8 @@ public class CalendarIntentService extends IntentService {
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
 
                     }
-                    PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
+                    if (bean.count > 0)
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
                 }
 
             }
