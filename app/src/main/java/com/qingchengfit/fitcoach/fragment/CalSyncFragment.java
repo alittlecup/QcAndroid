@@ -39,7 +39,7 @@ public class CalSyncFragment extends BaseSettingFragment {
     TextView calSyncTime;
     @Bind(R.id.cal_sync_time_layout)
     RelativeLayout calSyncTimeLayout;
-    private String[] mTimeArray = {"不提醒","15分钟前","30分钟前","1小时前","24小时前"};
+    private String[] mTimeArray = {"不提醒","15分钟前提醒","30分钟前提醒","1小时前提醒","2小时前提醒","24小时前提醒"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -124,6 +124,8 @@ public class CalSyncFragment extends BaseSettingFragment {
                 }else if (position == 3){
                     PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",60);
                 }else if (position == 4){
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",120);
+                }else if (position == 5){
                     PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",1440);
                 }
                 calSyncTime.setText(mTimeArray[position]);

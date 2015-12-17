@@ -35,7 +35,7 @@
             style="@style/Qc.TextCommonGrey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="提醒时间"
+            android:text="上课前"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             />
         <TextView
@@ -45,7 +45,7 @@
             style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="1小时前"
+            android:text="1小时前提醒"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             />
     </RelativeLayout>
