@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <!--<com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout-->
+    <com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout
 
-        <!--android:id="@+id/sfl"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!-->-->
+        android:id="@+id/sfl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -35,101 +35,132 @@
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                >
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
-                <RelativeLayout
+                >
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:minHeight="?attr/actionBarSize"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layout_scrollFlags="scroll|enterAlways"
+                    android:orientation="vertical"
                     >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:minHeight="?attr/actionBarSize"
+                        app:layout_scrollFlags="scroll|enterAlways"
+                        >
+                        <View
+                            android:id="@+id/myhome_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="172dp"
+                            android:background="@color/primary"
+                            />
 
+                        <ImageView
+
+                            android:id="@+id/header"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="130dp"
+                            tools:src="@drawable/img_default_male"
+                            />
+
+                        <ImageView
+                            android:id="@+id/gender"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignBottom="@id/header"
+                            android:layout_alignRight="@id/header"
+                            android:layout_margin="5dp"
+                            tools:src="@drawable/ic_gender_signal_female"
+                            />
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/header"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
+                            android:text="Mark Steve"
+                            android:textColor="@color/white"
+                            />
+                        <TextView
+
+                            android:id="@+id/myhome_brief"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/name"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:maxWidth="250dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/myhome_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/myhome_brief"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:drawableLeft="@drawable/ic_location"
+                            android:drawablePadding="10dp"
+                            tools:text="北京"
+                            />
+
+                        <ImageView
+                            android:id="@+id/myhome_sawtooth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/myhome_location"
+                            android:layout_marginTop="10dp"
+                            />
+
+
+                    </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:background="@drawable/line_sawtooth"
+                        ></View>
 
                     <View
-                        android:id="@+id/myhome_bg"
                         android:layout_width="match_parent"
-                        android:layout_height="172dp"
-                        android:background="@color/primary"
-                        />
-
-                    <ImageView
-
-                        android:id="@+id/header"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="130dp"
-                        tools:src="@drawable/img_default_male"
-                        />
-
-                    <ImageView
-                        android:id="@+id/gender"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_alignBottom="@id/header"
-                        android:layout_alignRight="@id/header"
-                        android:layout_margin="5dp"
-                        tools:src="@drawable/ic_gender_signal_female"
-                        />
-
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/header"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:text="Mark Steve"
-                        android:textColor="@color/white"
-                        />
-                    <TextView
-
-                        android:id="@+id/myhome_brief"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/name"
-                        android:layout_centerHorizontal="true"
+                        android:layout_height="1dp"
                         android:layout_marginTop="10dp"
-                        android:maxWidth="250dp"
-                        />
+                        android:background="@color/divider_grey"
+                        ></View>
 
-                    <TextView
-                        android:id="@+id/myhome_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/myhome_brief"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:drawableLeft="@drawable/ic_location"
-                        android:drawablePadding="10dp"
-                        tools:text="北京"
-                        />
-
-                    <ImageView
-                        android:id="@+id/myhome_sawtooth"
+                    <FrameLayout
+                        android:id="@+id/myhome_student_judge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/myhome_location"
-                        android:layout_marginTop="10dp"/>
+                        android:background="@color/white"
+                        ></FrameLayout>
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider_grey"
+                        ></View>
+                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider_grey"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    >
-                </View>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@color/divider_grey"-->
+                    <!--app:layout_scrollFlags="scroll|enterAlways"-->
+                    <!-->-->
+                <!--</View>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider_grey"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    />
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@color/divider_grey"-->
+                    <!--app:layout_scrollFlags="scroll|enterAlways"-->
+                    <!--/>-->
 
                 <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
@@ -153,12 +184,12 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="44dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 app:tabGravity="center"
                 app:tabIndicatorColor="@color/primary"
-                app:tabIndicatorHeight="1.5dp"
+                app:tabIndicatorHeight="3dp"
                 app:tabSelectedTextColor="@color/primary_dark"
                 app:tabTextAppearance="@style/Qc.TextCommonGrey"
                 app:tabTextColor="@color/text_grey"
@@ -169,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignBottom="@id/tab"
-                android:background="@color/warm_grey"
+                android:background="#e0e0e0"
                 >
             </View>
 
@@ -184,6 +215,6 @@
 
 
     </android.support.design.widget.CoordinatorLayout>
-    <!--</com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>-->
+    </com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>
     <include layout="@layout/common_toolbar"/>
 </FrameLayout>
