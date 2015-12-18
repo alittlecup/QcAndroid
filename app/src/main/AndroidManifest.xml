@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.qingchengfit.fitcoach"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.qingchengfit.fitcoach"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     //位置
@@ -27,11 +26,11 @@
     //读取短信
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     //读取联系人
-    <!-- <uses-permission android:username="android.permission.WRITE_CALENDAR"/> -->
-    //写日历
-    <!-- <uses-permission android:username="android.permission.READ_CALENDAR"/> -->
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <!-- //写日历 -->
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
     //读日历
-     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     //启动权限
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     //更改配置
@@ -88,7 +87,6 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/app_name"
-
             android:screenOrientation="portrait">
             <intent-filter>
                 <data
@@ -112,8 +110,7 @@
             android:label="@string/app_name"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:theme="@style/Qc.SplashTheme"
-            >
+            android:theme="@style/Qc.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -155,8 +152,7 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <receiver
-            android:name="com.qingchengfit.fitcoach.reciever.NetWorkReciever">
+        <receiver android:name=".reciever.NetWorkReciever">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
@@ -244,8 +240,7 @@
             android:name=".activity.WebActivity"
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".activity.FragActivity"
@@ -268,6 +263,11 @@
             android:label="@string/title_activity_choose_student"
             android:theme="@style/AppTheme">
         </activity>
+
+        <service
+            android:name=".server.CalendarIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

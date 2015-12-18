@@ -52,6 +52,8 @@ public class AddGymFragment extends Fragment {
     Button addgymAddbtn;
     @Bind(R.id.rootview)
     LinearLayout rootview;
+    @Bind(R.id.addgym_brand)
+    CommonInputView addgymBrand;
 
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
@@ -119,12 +121,19 @@ public class AddGymFragment extends Fragment {
             Toast.makeText(getContext(), "必须选择所在城市", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(addgymBrand.getContent())){
+            Toast.makeText(getContext(), "请填写场馆名称", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
+
         if (TextUtils.isEmpty(addgymContact.getContent()) || addgymContact.getContent().length() < 7) {
             Toast.makeText(getContext(), "请填写正确的联系方式", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), workexpeditDescripe.getText().toString());
+
+        AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), workexpeditDescripe.getText().toString(),addgymBrand.getContent());
         QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcAddGymResponse -> {

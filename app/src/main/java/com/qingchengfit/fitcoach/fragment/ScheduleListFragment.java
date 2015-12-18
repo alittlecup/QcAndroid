@@ -16,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -31,6 +34,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
+import com.qingchengfit.fitcoach.server.CalendarIntentService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +70,7 @@ public class ScheduleListFragment extends Fragment {
     private ArrayList<ScheduleBean> scheduleBeans = new ArrayList<>();      //列表数据
     private ScheduesAdapter scheduesAdapter;
     private int curentGym = 0;
+    private long mCurCalId;
     private QcSchedulesResponse mQcSchedulesResponse;
     Observer<QcSchedulesResponse> mHttpCallBack = new Observer<QcSchedulesResponse>() {
 
@@ -140,7 +145,7 @@ public class ScheduleListFragment extends Fragment {
             }
         });
         goDateSchedule(mCurDate);
-
+        mCurCalId = PreferenceUtils.getPrefLong(getContext(), "calendar_id", -1);
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -187,6 +192,7 @@ public class ScheduleListFragment extends Fragment {
         if (qcSchedulesResponse == null || qcSchedulesResponse.data.systems == null)
             return;
         List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+        CalendarIntentService.startActionDay(getContext(), mCurDate.getTime(), new Gson().toJson(qcSchedulesResponse));
 
         scheduleBeans.clear();
 
@@ -236,11 +242,42 @@ public class ScheduleListFragment extends Fragment {
                 bean.pic_url = schedule.course.photo;
                 bean.title = schedule.course.name;
                 bean.intent_url = schedule.url;
+                if (getContext() != null) {
+                    String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
+                    bean.conflict = thing;
+                }
                 scheduleBeans.add(bean);
+//                Observable.create(new Observable.OnSubscribe<Pair<Integer, String>>() {
+//                    @Override
+//                    public void call(Subscriber<? super Pair<Integer, String>> subscriber) {
+//                        String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
+//                        subscriber.onNext(new Pair<Integer, String>(position, thing));
+//                    }
+//                }).subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new Subscriber<Pair<Integer, String>>() {
+//                            @Override
+//                            public void onCompleted() {
+//
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onNext(Pair<Integer, String> integerStringPair) {
+//                                datas.get(integerStringPair.first).conflict = integerStringPair.second;
+//                                scheduesAdapter.notifyItemChanged(integerStringPair.first);
+//                            }
+//                        });
+
             }
 
         }
         Collections.sort(scheduleBeans, new ScheduleCompare());
+
         if (getActivity() == null)
             return;
         getActivity().runOnUiThread(() -> {
@@ -300,6 +337,8 @@ public class ScheduleListFragment extends Fragment {
         ImageView itemScheduleStatus;
         @Bind(R.id.item_schedule_done)
         TextView getItemScheduleDone;
+        @Bind(R.id.item_schedule_conflict)
+        TextView itemScheduleConflict;
 
         public SchedulesVH(View itemView) {
             super(itemView);
@@ -360,8 +399,15 @@ public class ScheduleListFragment extends Fragment {
 
                 holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
 
-            }
 
+            }
+            if (bean.conflict == null) {
+                //TODO conflict 事件不冲突
+                holder.itemScheduleConflict.setVisibility(View.GONE);
+            } else {
+                holder.itemScheduleConflict.setVisibility(View.VISIBLE);
+                holder.itemScheduleConflict.setText("时间冲突: " + bean.conflict);
+            }
             if (bean.time < new Date().getTime()) {
                 holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_grey));
                 holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_grey));

@@ -102,6 +102,7 @@ public class LoginFragment extends Fragment {
                                 PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
                                 PreferenceUtils.setPrefBoolean(getActivity(), "first", false);
                                 PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
+
                                 return rx.Observable.just(true);
                             } else {
 

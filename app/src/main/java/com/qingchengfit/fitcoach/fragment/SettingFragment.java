@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
@@ -39,6 +41,8 @@ public class SettingFragment extends BaseSettingFragment {
     RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
     DialogSheet logoutSheet;
+    @Bind(R.id.version)
+    TextView version;
 
     public SettingFragment() {
     }
@@ -103,6 +107,7 @@ public class SettingFragment extends BaseSettingFragment {
                 return true;
             }
         });
+        version.setText("v"+ AppUtils.getAppVer(getActivity()));
         return view;
     }
 
@@ -120,7 +125,7 @@ public class SettingFragment extends BaseSettingFragment {
             R.id.setting_workexpe,
             R.id.setting_logout,
             R.id.setting_modifyphone,
-
+            R.id.setting_calsync
     })
 
     public void onClickUs(View view) {
@@ -147,11 +152,6 @@ public class SettingFragment extends BaseSettingFragment {
             case R.id.setting_aboutus:
                 fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/", true));
                 fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
-//
-//  mFragmentManager.beginTransaction()
-//                        .replace(R.id.settting_fraglayout,.newInstance("",""))
-//                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
-//                        .commit();
                 break;
             case R.id.setting_comfirm:
                 fragmentCallBack.onFragmentChange(new RecordFragment());
@@ -167,7 +167,9 @@ public class SettingFragment extends BaseSettingFragment {
             case R.id.setting_modifyphone:
                 fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
-
+            case R.id.setting_calsync:
+                fragmentCallBack.onFragmentChange(CalSyncFragment.newInstance("", ""));
+                break;
             default:
                 break;
 

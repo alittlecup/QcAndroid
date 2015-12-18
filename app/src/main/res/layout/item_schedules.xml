@@ -104,6 +104,22 @@
                     android:textColor="@color/text_black"
                     tools:text="共报名5人"
                     />
+                <TextView
+                    android:id="@+id/item_schedule_conflict"
+                    style="@style/Qc.TextCommonGrey"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:drawablePadding="5dp"
+                    android:maxLength="20"
+                    android:textSize="10sp"
+                    android:textColor="@color/red"
+                    tools:text="事件冲突:xxxxxx"
+                    />
+
+
+
             </LinearLayout>
 
             <ImageView

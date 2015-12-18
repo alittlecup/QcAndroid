@@ -24,5 +24,6 @@ public class ScheduleBean {
     public long timeEnd; //结束时间
     public String pic_url; //图片
     public String intent_url;
+    public String conflict;
     public int type;//0  休息  1:schedule
 }
