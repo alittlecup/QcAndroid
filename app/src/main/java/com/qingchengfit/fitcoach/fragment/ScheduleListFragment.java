@@ -406,7 +406,7 @@ public class ScheduleListFragment extends Fragment {
                 holder.itemScheduleConflict.setVisibility(View.GONE);
             } else {
                 holder.itemScheduleConflict.setVisibility(View.VISIBLE);
-                holder.itemScheduleConflict.setText("时间冲突:" + bean.conflict);
+                holder.itemScheduleConflict.setText("时间冲突: " + bean.conflict);
             }
             if (bean.time < new Date().getTime()) {
                 holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_grey));

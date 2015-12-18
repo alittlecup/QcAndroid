@@ -45,7 +45,7 @@
             style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="1小时前提醒"
+            android:text="1小时提醒"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             />
     </RelativeLayout>

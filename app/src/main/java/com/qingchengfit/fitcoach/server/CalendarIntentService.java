@@ -113,7 +113,7 @@ public class CalendarIntentService extends IntentService {
     private void handleActionDay(long param1, String param2) {
         try {
 
-            int alertTime = PreferenceUtils.getPrefInt(App.AppContex,"cal_sync_time",60);
+            int alertTime = PreferenceUtils.getPrefInt(App.AppContex,App.coachid +"cal_sync_time",60);
 
             long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
             PhoneFuncUtils.delOndDayCal(this, calid, param1);
@@ -147,7 +147,7 @@ public class CalendarIntentService extends IntentService {
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
 
                     }
-                    if (bean.count > 0)
+//                    if (bean.count > 0)
                         PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
                 }
 

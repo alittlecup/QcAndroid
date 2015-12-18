@@ -39,7 +39,7 @@ public class CalSyncFragment extends BaseSettingFragment {
     TextView calSyncTime;
     @Bind(R.id.cal_sync_time_layout)
     RelativeLayout calSyncTimeLayout;
-    private String[] mTimeArray = {"不提醒","15分钟前提醒","30分钟前提醒","1小时前提醒","2小时前提醒","24小时前提醒"};
+    private String[] mTimeArray = {"不提醒", "15分钟提醒", "30分钟提醒", "1小时提醒", "2小时提醒", "24小时提醒"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -98,16 +98,32 @@ public class CalSyncFragment extends BaseSettingFragment {
                 }
             }
         });
+        boolean isSync = PreferenceUtils.getPrefBoolean(getContext(), App.coachid + "cal_sync", true);
+        calSyncSwitch.setChecked(isSync);
+        int time = PreferenceUtils.getPrefInt(getContext(), App.coachid + "cal_sync_time", 60);
+        if (time < 0) {
+            calSyncTime.setText(mTimeArray[0]);
+        } else if (time == 15) {
+            calSyncTime.setText(mTimeArray[1]);
+        } else if (time == 30) {
+            calSyncTime.setText(mTimeArray[2]);
+        } else if (time == 60) {
+            calSyncTime.setText(mTimeArray[3]);
+        } else if (time == 120) {
+            calSyncTime.setText(mTimeArray[4]);
+        } else if (time == 1440) {
+            calSyncTime.setText(mTimeArray[5]);
+        }
         return view;
     }
 
     @OnClick(R.id.cal_sync_switch_layout)
-    public void onSwitch(){
+    public void onSwitch() {
         calSyncSwitch.toggle();
     }
 
     @OnClick(R.id.cal_sync_time_layout)
-    public void chooseTime(){
+    public void chooseTime() {
 
         DialogList dialogList = new DialogList(getContext());
         dialogList.title("请选择提醒时间");
@@ -115,18 +131,18 @@ public class CalSyncFragment extends BaseSettingFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dialogList.dismiss();
-                if (position == 0){
-                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",-1);
-                }else if (position == 1){
-                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",15);
-                }else if (position == 2){
-                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",30);
-                }else if (position == 3){
-                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",60);
-                }else if (position == 4){
-                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",120);
-                }else if (position == 5){
-                    PreferenceUtils.setPrefInt(getContext(), App.coachid+"cal_sync_time",1440);
+                if (position == 0) {
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid + "cal_sync_time", -1);
+                } else if (position == 1) {
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid + "cal_sync_time", 15);
+                } else if (position == 2) {
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid + "cal_sync_time", 30);
+                } else if (position == 3) {
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid + "cal_sync_time", 60);
+                } else if (position == 4) {
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid + "cal_sync_time", 120);
+                } else if (position == 5) {
+                    PreferenceUtils.setPrefInt(getContext(), App.coachid + "cal_sync_time", 1440);
                 }
                 calSyncTime.setText(mTimeArray[position]);
 
