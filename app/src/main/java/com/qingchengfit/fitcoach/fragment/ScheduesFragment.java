@@ -28,6 +28,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -262,6 +263,7 @@ public class ScheduesFragment extends MainBaseFragment {
         });
 //        openDrawerInterface.showLoading();
 //        goDateSchedule(mCurDate);
+        setUpNaviSpinner();
         return view;
     }
 
@@ -422,13 +424,23 @@ public class ScheduesFragment extends MainBaseFragment {
         webFloatbtn.collapse();
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        LogUtil.e("onResume");
+//        queryNotify();
+//        int x = curPostion;
+//        setUpNaviSpinner();
+//        spinnerNav.setSelection(x);
+//    }
+
     @Override
-    public void onResume() {
-        super.onResume();
-        queryNotify();
-        int x = curPostion;
-        setUpNaviSpinner();
-        spinnerNav.setSelection(x);
+    public void onStart() {
+        super.onStart();
+//        queryNotify();
+//        int x = curPostion;
+//        setUpNaviSpinner();
+//        spinnerNav.setSelection(x);
     }
 
     public void queryNotify() {
@@ -471,6 +483,7 @@ public class ScheduesFragment extends MainBaseFragment {
 //            ScheduleListFragment f = (ScheduleListFragment) mFragmentAdapter.getItem(scheduleVp.getCurrentItem());
 //            if (f != null)
 //                f.refresh();
+            LogUtil.e("onActivityResult");
             mFragmentAdapter.notifyDataSetChanged();
         }
     }
