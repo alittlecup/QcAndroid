@@ -55,8 +55,6 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     ImageView searchviewClear;
     @Bind(R.id.searchview_cancle)
     Button searchviewCancle;
-    //    @Bind(R.id.search_resultlist)
-//    SearchListView searchResultlist;
     @Bind(R.id.searchresult_btn)
     Button searchresultBtn;
     @Bind(R.id.searchresult_none)

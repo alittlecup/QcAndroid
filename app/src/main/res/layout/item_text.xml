@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <TextView
@@ -11,5 +12,24 @@
         android:layout_height="35dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:text="健身房品牌"
+        />
+    <TextView
+        android:id="@+id/item_statium"
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:text="健身房场馆"
+        />
+    <TextView
+
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:text="联系电话"
         />
 </LinearLayout>
