@@ -216,6 +216,7 @@ public class ScheduleListFragment extends Fragment {
                 bean.time = DateUtils.formatDateFromServer(rest.start).getTime();
                 bean.timeEnd = DateUtils.formatDateFromServer(rest.end).getTime();
                 bean.gymname = system.system.name;
+
                 bean.intent_url = rest.url;
                 scheduleBeans.add(bean);
 
@@ -234,7 +235,8 @@ public class ScheduleListFragment extends Fragment {
                 } else {
                     bean.isSingle = false;
                 }
-                bean.gymname = system.system.name;
+//                bean.gymname = system.system.name;
+                bean.gymname = schedule.shop.name;
                 bean.color = syscolor;
                 bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
                 bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();

@@ -189,10 +189,13 @@ public class PhoneFuncUtils {
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.parse("content://com.android.calendar/events");
         String selection = "(((" + CalendarContract.Events.DTSTART + " >= ?) AND ("
-                + CalendarContract.Events.DTSTART + " <= ?)) OR (("
-                + CalendarContract.Events.DTEND + " >= ?) AND ("
-                + CalendarContract.Events.DTEND + " <= ?)))";
+                + CalendarContract.Events.DTSTART + " < ?)) OR (("
+                + CalendarContract.Events.DTEND + " > ?) AND ("
+                + CalendarContract.Events.DTEND + " <= ?)) OR (("
+                + CalendarContract.Events.DTSTART + "<= ?) AND ("
+                + CalendarContract.Events.DTEND +">= ?)))";
         String[] selectionArgs = new String[]{
+                Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis()),
                 Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis()),
                 Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis())
         };

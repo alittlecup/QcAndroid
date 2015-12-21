@@ -2,13 +2,15 @@ package com.paper.paperbaselibrary.utils;
 
 import android.util.Log;
 
+import com.paper.paperbaselibrary.BuildConfig;
+
 /**
  * Log统一管理类
  */
 public class LogUtil
 {
 	private static final String TAG = "hstag";
-	public static boolean isDebug = false;
+	public static boolean isDebug = BuildConfig.DEBUG;
 
 	// 下面四个是默认tag的函数
 	public static void i(String msg) {
