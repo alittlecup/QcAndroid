@@ -274,6 +274,7 @@ public class ScheduesFragment extends MainBaseFragment {
             int x = curPostion;
             setUpNaviSpinner();
             spinnerNav.setSelection(x);
+            queryNotify();
         }
     }
 
@@ -437,7 +438,7 @@ public class ScheduesFragment extends MainBaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-//        queryNotify();
+        queryNotify();
 //        int x = curPostion;
 //        setUpNaviSpinner();
 //        spinnerNav.setSelection(x);
@@ -486,6 +487,7 @@ public class ScheduesFragment extends MainBaseFragment {
             LogUtil.e("onActivityResult");
             mFragmentAdapter.notifyDataSetChanged();
         }
+
     }
 
     /**
