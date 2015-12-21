@@ -21,18 +21,24 @@ import java.util.Locale;
  */
 public class DateUtils {
     public static final Long MONTH_TIME = 31 * 24 * 60 * 60 * 1000l;
-    public static final Long DAY_TIME =  24 * 60 * 60 * 1000l;
-    public static final Long HOUR_TIME =  60 * 60 * 1000l;
+    public static final Long DAY_TIME = 24 * 60 * 60 * 1000l;
+    public static final Long HOUR_TIME = 60 * 60 * 1000l;
+
     public static Date formatDateFromServer(String s) {
-        s = s.replace("T", " ");
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-        Date date = null;
         try {
+            s = s.replace("T", " ");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+            Date date = null;
             date = formatter.parse(s);
+            return date;
         } catch (ParseException e) {
             e.printStackTrace();
+            return new Date();
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Date();
         }
-        return date;
+
     }
 
     public static Date formatDateFromString(String s) {
@@ -100,6 +106,7 @@ public class DateUtils {
         }
         return date;
     }
+
     public static String formatDateToServer(String s) {
 
         return s.replace(".", "-");
@@ -161,7 +168,8 @@ public class DateUtils {
         c.set(Calendar.MILLISECOND, 0);
         return c.getTime().getTime();
     }
-    public static long getDayMidnight(Date d){
+
+    public static long getDayMidnight(Date d) {
         Calendar c = Calendar.getInstance();
         c.setTime(d);
         c.set(Calendar.HOUR_OF_DAY, 0);

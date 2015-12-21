@@ -161,7 +161,7 @@ dependencies {
     //    compile 'org.glassfish:javax.annotation:10.0-b28'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //    compile '10.39.239.1.arm:crosswalk-webview:10.39.239.1'
-    compile project(':paperbaselibrary')
+//    compile project(':paperbaselibrary')
     //    compile project(':commons')
     //    compile project(':core')
     //    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
@@ -215,4 +215,9 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/pushservice-4.5.6.88.jar')
+
+    debugCompile project(path: ':paperbaselibrary', configuration: 'debug')
+    // strict build type, DOES NOT WORK
+//    strictCompile project(path: ':paperbaselibrary', configuration: 'debug')
+    releaseCompile project(path: ':paperbaselibrary', configuration: 'release')
 }

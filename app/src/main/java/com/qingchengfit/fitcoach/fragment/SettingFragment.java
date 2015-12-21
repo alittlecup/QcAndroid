@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
@@ -112,6 +113,12 @@ public class SettingFragment extends BaseSettingFragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e(this.getTag()+"  requestCode:"+requestCode+" resultCode:"+resultCode);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 //        fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_title));
@@ -127,7 +134,6 @@ public class SettingFragment extends BaseSettingFragment {
             R.id.setting_modifyphone,
             R.id.setting_calsync
     })
-
     public void onClickUs(View view) {
         switch (view.getId()) {
             case R.id.settting_modifyinfo:

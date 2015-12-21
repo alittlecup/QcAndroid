@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,8 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
@@ -70,7 +73,10 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", null));
+//                fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", null));
+                Intent toSearch = new Intent(getActivity(), SearchActivity.class);
+                toSearch.putExtra("type", SearchFragment.TYPE_GYM);
+                startActivityForResult(toSearch, 10010);
                 return false;
             }
         });
@@ -82,7 +88,6 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 freshData();
             }
         });
@@ -95,6 +100,21 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e("onActivityReslut:"+requestCode +"  "+requestCode);
+        if (requestCode == 10010 && resultCode > 0) {
+            QcExperienceResponse.DataEntity.ExperiencesEntity entity = new QcExperienceResponse.DataEntity.ExperiencesEntity();
+            QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
+            gymEntity.setId(data.getIntExtra("id",0));
+            gymEntity.setName(data.getStringExtra("username"));
+            entity.setGym(gymEntity);
+            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity));
+
+        }
     }
 
     public void freshData() {

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+    publishNonDefault true
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
@@ -21,12 +22,19 @@ android {
         release {
             minifyEnabled false
             debuggable false
+            buildConfigField "boolean", "DEBUG_MODE", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
+
         debug {
             debuggable true
+            buildConfigField "boolean", "DEBUG_MODE", "true"
+
         }
     }
+
+
 }
 
 dependencies {

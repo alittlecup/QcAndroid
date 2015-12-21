@@ -166,8 +166,9 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);
 
-        if (addWorkExperience == null)
+        if (addWorkExperience == null){
             addWorkExperience = new AddWorkExperience(App.coachid);
+        }
         if (experiencesEntity != null) {
             fragmentCallBack.onToolbarMenu(R.menu.menu_delete, 0, mTitle);
             fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
