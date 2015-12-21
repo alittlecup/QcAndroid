@@ -33,6 +33,12 @@ public class GymDetailNativeFragment extends Fragment {
     public GymDetailNativeFragment() {
     }
 
+    /**
+     *
+     * @param id 健身房id
+     * @param isTag 是否为私人健身房
+     * @return
+     */
     public static GymDetailNativeFragment newInstance(int id, boolean isTag) {
 
         Bundle args = new Bundle();

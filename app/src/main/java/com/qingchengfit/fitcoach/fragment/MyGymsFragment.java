@@ -22,7 +22,9 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,15 +92,19 @@ public class MyGymsFragment extends MainBaseFragment {
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Intent toWeb = new Intent(getActivity(), FragActivity.class);
+//                Intent toWeb = new Intent(getActivity(), FragActivity.class);
 //                toWeb.putExtra("host", adapterData.get(pos).url);
 //                toWeb.putExtra("id", adapterData.get(pos).id);
 //                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
-                toWeb.putExtra("type", 5);
-                startActivityForResult(toWeb, 404);
-//                Intent toWeb = new Intent(getActivity() , WebActivity.class);
-//                toWeb.putExtra("url",adapterData.get(pos).url+"/mobile/coach/shop/welcome/");
-//                startActivity(toWeb);
+//                toWeb.putExtra("type", 5);
+//                startActivityForResult(toWeb, 404);
+                Intent intent = new Intent(getActivity(), FragActivity.class);
+                intent.putExtra("id", adapterData.get(pos).id);
+                intent.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
+
+                intent.putExtra("type", 6);
+                startActivityForResult(intent, 11);
+
             }
         });
 //        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
@@ -186,9 +192,9 @@ public class MyGymsFragment extends MainBaseFragment {
                         } else mHasPrivate = false;
 
                     }
-                    if (mHasPrivate){
+                    if (mHasPrivate) {
                         toolbar.getMenu().clear();
-                    }else {
+                    } else {
                         toolbar.getMenu().clear();
                         toolbar.inflateMenu(R.menu.add);
                     }
