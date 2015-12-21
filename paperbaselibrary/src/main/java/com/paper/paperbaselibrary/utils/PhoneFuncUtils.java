@@ -43,7 +43,9 @@ public class PhoneFuncUtils {
     public static final String[] EVENT_PROJECTION2 = new String[]{
             CalendarContract.Events._ID,                           // 0
             CalendarContract.Events.TITLE,                  // 1
-            CalendarContract.Events.CALENDAR_ID
+            CalendarContract.Events.CALENDAR_ID,
+            CalendarContract.Events.DTSTART
+
     };
 
 
@@ -185,7 +187,8 @@ public class PhoneFuncUtils {
         beginTime.setTime(new Date(starttime));
         Calendar endTime = Calendar.getInstance();
         endTime.setTime(new Date(endtime));
-
+        LogUtil.e("startTime:" + DateUtils.getServerDay(beginTime.getTime()));
+        LogUtil.e("endTime:"+DateUtils.getServerDay(endTime.getTime()));
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.parse("content://com.android.calendar/events");
         String selection = "(((" + CalendarContract.Events.DTSTART + " >= ?) AND ("
@@ -193,11 +196,52 @@ public class PhoneFuncUtils {
                 + CalendarContract.Events.DTEND + " > ?) AND ("
                 + CalendarContract.Events.DTEND + " <= ?)) OR (("
                 + CalendarContract.Events.DTSTART + "<= ?) AND ("
-                + CalendarContract.Events.DTEND +">= ?)))";
+//                + CalendarContract.Events.DTEND +">= ?)))"
+                + CalendarContract.Events.DTEND +">= ?) AND ("
+                + CalendarContract.Events.ALL_DAY+"= 0)))"
+                ;
         String[] selectionArgs = new String[]{
                 Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis()),
                 Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis()),
                 Long.toString(beginTime.getTimeInMillis()), Long.toString(endTime.getTimeInMillis())
+        };
+        Cursor cur = cr.query(uri, EVENT_PROJECTION2, selection, selectionArgs, null);
+        if (cur == null)
+            return null;
+        String ret = null;
+
+        while (cur.moveToNext()) {
+            if (cur.getLong(2) != calint)
+                ret = cur.getString(1);
+            LogUtil.i(cur.getString(1) + ":name");
+            LogUtil.i(cur.getString(3) + ":starttime");
+
+        }
+        if (ret == null){
+            return queryAllDayEvent(context,starttime,endtime,calint);
+        }
+        if (!cur.isClosed()) {
+            cur.close();
+        }
+        return ret;
+    }
+
+    @RequiresPermission(Manifest.permission.READ_CALENDAR)
+    public static String queryAllDayEvent(Context context, long starttime, long endtime ,long calint) {
+
+
+        long midtime = DateUtils.getDayMid(new Date(starttime));
+//        LogUtil.e("startTime:" + DateUtils.getServerDay(beginTime.getTime()));
+//        LogUtil.e("endTime:"+DateUtils.getServerDay(endTime.getTime()));
+        ContentResolver cr = context.getContentResolver();
+        Uri uri = Uri.parse("content://com.android.calendar/events");
+        String selection = "((" + CalendarContract.Events.DTSTART + " <= ?) AND ("
+                + CalendarContract.Events.DTEND + " >= ?) AND ("
+                + CalendarContract.Events.ALL_DAY+" = 1 ))"
+                ;
+        String[] selectionArgs = new String[]{
+                Long.toString(midtime),
+                Long.toString(midtime),
         };
         Cursor cur = cr.query(uri, EVENT_PROJECTION2, selection, selectionArgs, null);
         if (cur == null)
@@ -214,6 +258,8 @@ public class PhoneFuncUtils {
         }
         return ret;
     }
+
+
 
     /**
      * 插入日历事件
