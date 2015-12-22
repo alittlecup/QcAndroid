@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -147,8 +148,14 @@ public class CalendarIntentService extends IntentService {
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
 
                     }
+                    LogUtil.e("beforeTime:"+(long)(DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime()));
+
 //                    if (bean.count > 0)
+//                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
+                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime*60000)
                         PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
+                    else  PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),-1);
+
                 }
 
             }
@@ -202,7 +209,9 @@ public class CalendarIntentService extends IntentService {
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
 
                     }
-                    PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
+                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime*60000l)
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
+                    else  PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),-1);
                 }
 
             }
