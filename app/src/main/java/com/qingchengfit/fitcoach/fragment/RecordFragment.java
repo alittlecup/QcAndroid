@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.SearchActivity;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
@@ -58,7 +61,10 @@ public class RecordFragment extends BaseSettingFragment {
         ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
-            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
+//            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
+            Intent toSearch = new Intent(getActivity(), SearchActivity.class);
+            toSearch.putExtra("type", SearchFragment.TYPE_ORGANASITON);
+            startActivityForResult(toSearch, 10010);
             return false;
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -106,6 +112,30 @@ public class RecordFragment extends BaseSettingFragment {
         }, () -> {
         });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e("onActivityReslut:" + requestCode + "  " + requestCode);
+        if (requestCode == 10010 && resultCode > 0) {
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
+
+            entity.setId(data.getIntExtra("id", 0));
+            entity.setName(data.getStringExtra("username"));
+            certificatesEntity.setOrganization(entity);
+//            QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
+//            gymEntity.setId(data.getIntExtra("id",0));
+//            gymEntity.setName(data.getStringExtra("username"));
+//            entity.setGym(gymEntity);
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity));
+
+            fragmentCallBack.onFragmentChange(fragment);
+
+        }
+    }
+
+
 
 
     @Override

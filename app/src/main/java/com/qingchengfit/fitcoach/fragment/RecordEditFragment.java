@@ -120,7 +120,6 @@ public class RecordEditFragment extends BaseSettingFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment RecordEditFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RecordEditFragment newInstance(boolean param1, String param2) {
         RecordEditFragment fragment = new RecordEditFragment();
         Bundle args = new Bundle();
@@ -188,6 +187,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (mContent != null) {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
             recordeditHost.setContent(certificatesEntity.getOrganization().getName());
+            addCertificate.setOrganization_id(certificatesEntity.getOrganization().getId()+"");
             recordeditDatestart.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             recordeditDate.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 

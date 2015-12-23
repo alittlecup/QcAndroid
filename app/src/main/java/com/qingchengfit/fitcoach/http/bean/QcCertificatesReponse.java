@@ -219,6 +219,15 @@ public class QcCertificatesReponse extends QcResponse {
 
             public static class OrganizationEntity {
                 String name;
+                int id;
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
 
                 public String getName() {
                     return name;
