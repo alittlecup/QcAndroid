@@ -140,7 +140,7 @@ public class ScheduleListFragment extends Fragment {
                 if (!TextUtils.isEmpty(url)) {
                     Intent it = new Intent(getActivity(), WebActivity.class);
                     it.putExtra("url", url);
-                    startActivityForResult(it, 113);
+                    getParentFragment().startActivityForResult(it, 113);
                 }
             }
         });
