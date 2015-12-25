@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -23,8 +24,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.SearchItemBean;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddGymBean;
@@ -53,8 +58,6 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     EditText searchviewEt;
     @Bind(R.id.searchview_clear)
     ImageView searchviewClear;
-    @Bind(R.id.searchview_cancle)
-    Button searchviewCancle;
     @Bind(R.id.searchresult_btn)
     Button searchresultBtn;
     @Bind(R.id.searchresult_none)
@@ -64,8 +67,14 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     SearchResultAdapter adapter;
     @Bind(R.id.search_hottable)
     TextView searchHottable;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.search_hint)
+    TextView searchHint;
+    @Bind(R.id.searchresult_hint)
+    TextView searchresultHint;
     private int type;
-    private List<String> strings;
+    private List<SearchItemBean> strings;
     private InternalSearchHandler handler;
     private SearchInterface searchListener;
 
@@ -95,12 +104,25 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         if (type == TYPE_ORGANASITON) {
+            toolbar.setTitle("");
             searchviewEt.setHint("搜索机构(至少输入三个字符)");
+            searchHint.setText("请先选择主办机构");
             searchresultBtn.setText("添加主办机构");
+            searchresultHint.setText("没有匹配的机构\n您可以添加该机构");
         } else if (type == TYPE_GYM) {
+            toolbar.setTitle("添加工作经验");
+            searchHint.setText("请先选择健身房");
             searchviewEt.setHint("搜索健身房(至少输入三个字符)");
             searchresultBtn.setText("添加健身房");
+            searchresultHint.setText("没有匹配的健身房\n您可以添加该健身房");
         }
 
         searchviewEt.addTextChangedListener(new TextWatcher() {
@@ -165,12 +187,17 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("热门健身房");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
-                                            strings.add(addGymBean.name);
+                                            String city = "";
+                                            if (addGymBean.district != null && addGymBean.district.city != null && TextUtils.isEmpty(addGymBean.district.city.name))
+                                                city = addGymBean.district.city.name + "  ";
+                                            city += addGymBean.brand_name;
+                                            strings.add(new SearchItemBean(addGymBean.name, addGymBean.photo, city, addGymBean.is_authenticated));
                                         }
-                                        strings.add("");
+                                        strings.add(new SearchItemBean());
                                         adapter.setListener(((v, pos) -> {
                                             if (pos != adapter.getItemCount() - 1)
-                                                searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                                searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name
+                                                        , qcSerachGymRepsonse.getData().getGym().get(pos).brand_name, qcSerachGymRepsonse.getData().getGym().get(pos).photo, qcSerachGymRepsonse.getData().getGym().get(pos).is_authenticated);
                                         }));
                                         adapter.notifyDataSetChanged();
                                     }
@@ -192,12 +219,16 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("热门机构");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
-                                            strings.add(addGymBean.getName());
+                                            strings.add(new SearchItemBean(addGymBean.getName(), addGymBean.getPhoto(), null, addGymBean.is_authenticated()));
                                         }
-                                        strings.add("");
+                                        strings.add(new SearchItemBean());
                                         adapter.setListener(((v, pos) -> {
-                                            if (pos != adapter.getItemCount() - 1)
-                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                            if (pos != adapter.getItemCount() - 1) {
+
+                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName()
+                                                        , "", qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(), qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated()
+                                                );
+                                            }
                                         }));
                                         adapter.notifyDataSetChanged();
                                     }
@@ -228,10 +259,10 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     }
 
 
-    @OnClick(R.id.searchview_cancle)
-    public void onCancle() {
-        searchListener.onSearchResult(-100, 0, "");
-    }
+//    @OnClick(R.id.searchview_cancle)
+//    public void onCancle() {
+//        searchListener.onSearchResult(-100, 0, "");
+//    }
 
     /**
      * 搜索健身房
@@ -255,14 +286,22 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("搜索结果");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
-                                            strings.add(addGymBean.name);
+                                            StringBuffer city = new StringBuffer();
+                                            if (addGymBean.district != null && addGymBean.district.city != null && TextUtils.isEmpty(addGymBean.district.city.name)) {
+                                                city.append(addGymBean.district.city.name).append("    ");
+                                            }
+                                            city.append(addGymBean.brand_name);
+                                            LogUtil.e("city:" + addGymBean.district.toString() + "   brand:" + addGymBean.brand_name + "  au:" + addGymBean.is_authenticated);
+//                                            city += addGymBean.brand_name;
+                                            strings.add(new SearchItemBean(addGymBean.name, addGymBean.photo, city.toString(), addGymBean.is_authenticated));
                                         }
-                                        strings.add("添加健身房");
+                                        strings.add(new SearchItemBean("添加健身房"));
                                         adapter.setListener(((v, pos) -> {
                                             if (pos == adapter.getItemCount() - 1) {
                                                 onAdd();
                                             } else
-                                                searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name);
+                                                searchListener.onSearchResult(100, Integer.parseInt(qcSerachGymRepsonse.getData().getGym().get(pos).id), qcSerachGymRepsonse.getData().getGym().get(pos).name
+                                                        , qcSerachGymRepsonse.getData().getGym().get(pos).brand_name, qcSerachGymRepsonse.getData().getGym().get(pos).photo, qcSerachGymRepsonse.getData().getGym().get(pos).is_authenticated);
                                         }));
                                         adapter.notifyDataSetChanged();
                                     } else searchresultRv.setVisibility(View.GONE);
@@ -283,15 +322,19 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("搜索结果");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
-                                            strings.add(addGymBean.getName());
+                                            strings.add(new SearchItemBean(addGymBean.getName(), addGymBean.getPhoto(), null, addGymBean.is_authenticated()));
                                         }
-                                        strings.add("添加主办机构");
+                                        strings.add(new SearchItemBean("添加主办机构"));
                                         adapter.setListener(((v, pos) -> {
 
                                             if (pos == adapter.getItemCount() - 1) {
                                                 onAdd();
-                                            } else
-                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
+                                            } else {
+                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName()
+                                                        , "", qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(), qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated()
+                                                );
+                                            }
+//                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
                                         }));
                                         adapter.notifyDataSetChanged();
                                     } else searchresultRv.setVisibility(View.GONE);
@@ -338,6 +381,12 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     public static class SearchResultVH extends RecyclerView.ViewHolder {
         @Bind(R.id.item_text)
         TextView itemText;
+        @Bind(R.id.item_img)
+        ImageView imageView;
+        @Bind(R.id.item_qc_identify)
+        ImageView qcIdentify;
+        @Bind(R.id.item_address)
+        TextView itemAddress;
 
         public SearchResultVH(View itemView) {
             super(itemView);
@@ -348,7 +397,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     class SearchResultAdapter extends RecyclerView.Adapter<SearchResultVH> implements View.OnClickListener {
 
 
-        private List<String> datas;
+        private List<SearchItemBean> datas;
         private OnRecycleItemClickListener listener;
 
         public SearchResultAdapter(List datas) {
@@ -380,19 +429,32 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         @Override
         public void onBindViewHolder(SearchResultVH holder, int position) {
             holder.itemView.setTag(position);
-            String s = datas.get(position);
-            if (TextUtils.isEmpty(s))
+            SearchItemBean s = datas.get(position);
+            if (TextUtils.isEmpty(s.getName())) {
                 holder.itemText.setVisibility(View.GONE);
-            else holder.itemText.setVisibility(View.VISIBLE);
+                return;
+            } else holder.itemText.setVisibility(View.VISIBLE);
 
-            if (!TextUtils.isEmpty(keyword) && s.contains(keyword)) {
-
-                SpannableString ss = new SpannableString(s);
-                int pos = s.indexOf(keyword);
-
+            if (!TextUtils.isEmpty(keyword) && s.getName().contains(keyword)) {
+                SpannableString ss = new SpannableString(s.getName());
+                int pos = s.getName().indexOf(keyword);
                 ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.primary)), pos, pos + keyword.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.itemText.setText(ss);
-            } else holder.itemText.setText(s);
+            } else holder.itemText.setText(s.getName());
+
+            if (!TextUtils.isEmpty(s.getImg()))
+                Glide.with(App.AppContex).load(s.getImg()).asBitmap().into(new CircleImgWrapper(holder.imageView, App.AppContex));
+            if (s.isAuthor())
+                holder.qcIdentify.setVisibility(View.VISIBLE);
+            else holder.qcIdentify.setVisibility(View.GONE);
+
+            LogUtil.e("city:" + s.getCity() + "  " + s.isAuthor());
+            if (!TextUtils.isEmpty(s.getCity())) {
+
+                holder.itemAddress.setVisibility(View.VISIBLE);
+                holder.itemAddress.setText(s.getCity());
+            } else holder.itemAddress.setVisibility(View.GONE);
+
         }
 
         @Override

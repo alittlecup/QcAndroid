@@ -59,12 +59,26 @@ public class RecordFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.record_title));
+        fragmentCallBack.onToolbarMenu(R.menu.add_certification, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
 //            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
+            int requestCode = 10011;
+            switch (item.getItemId()){
+                case R.id.action_add_meeting:
+                    requestCode = 10011;
+                    break;
+                case R.id.action_add_comfirm:
+                    requestCode = 10012;
+                    break;
+                case R.id.action_add_competition:
+                    requestCode = 10013;
+                    break;
+                default:
+                    return false;
+            }
             Intent toSearch = new Intent(getActivity(), SearchActivity.class);
             toSearch.putExtra("type", SearchFragment.TYPE_ORGANASITON);
-            startActivityForResult(toSearch, 10010);
+            startActivityForResult(toSearch, requestCode);
             return false;
         });
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -96,7 +110,8 @@ public class RecordFragment extends BaseSettingFragment {
                     recordConfirmNone.setVisibility(View.GONE);
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
-                        RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)));
+                        int type = qcCertificatesReponse.getData().getCertificates().get(pos).getType();
+                        RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)), type);
                         fragmentCallBack.onFragmentChange(fragment);
                     });
                     recyclerview.setAdapter(adapter);
@@ -117,21 +132,30 @@ public class RecordFragment extends BaseSettingFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogUtil.e("onActivityReslut:" + requestCode + "  " + requestCode);
-        if (requestCode == 10010 && resultCode > 0) {
+        if (requestCode == 10011 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
-
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             certificatesEntity.setOrganization(entity);
-//            QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
-//            gymEntity.setId(data.getIntExtra("id",0));
-//            gymEntity.setName(data.getStringExtra("username"));
-//            entity.setGym(gymEntity);
-            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity));
-
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),1);
             fragmentCallBack.onFragmentChange(fragment);
-
+        }else if (requestCode == 10012 && resultCode > 0){
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
+            entity.setId(data.getIntExtra("id", 0));
+            entity.setName(data.getStringExtra("username"));
+            certificatesEntity.setOrganization(entity);
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),2);
+            fragmentCallBack.onFragmentChange(fragment);
+        }else if (requestCode == 10013 && resultCode > 0){
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
+            entity.setId(data.getIntExtra("id", 0));
+            entity.setName(data.getStringExtra("username"));
+            certificatesEntity.setOrganization(entity);
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),3);
+            fragmentCallBack.onFragmentChange(fragment);
         }
     }
 

@@ -138,7 +138,7 @@ public class AddGymFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcAddGymResponse -> {
                             if (qcAddGymResponse.status == ResponseResult.SUCCESS) {
-                                searchListener.onSearchResult(100, Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name);
+                                searchListener.onSearchResult(100, Integer.parseInt(qcAddGymResponse.data.gym.id), qcAddGymResponse.data.gym.name,qcAddGymResponse.data.gym.brand_name,qcAddGymResponse.data.gym.photo,false);
                             } else {
                                 Toast.makeText(getContext(), qcAddGymResponse.msg, Toast.LENGTH_SHORT).show();
                             }

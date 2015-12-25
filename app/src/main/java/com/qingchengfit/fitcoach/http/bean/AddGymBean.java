@@ -28,6 +28,12 @@ public class AddGymBean {
     public String id;
     @SerializedName("brand_name")
     public String brand_name;
+    @SerializedName("photo")
+    public String photo;
+    @SerializedName("is_authenticated")
+    public boolean is_authenticated;
+    @SerializedName("district")
+    public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
 
     public AddGymBean(String name, int city, String contact, String description, String brand_name) {
         this.name = name;
@@ -36,4 +42,5 @@ public class AddGymBean {
         this.contact = contact;
         this.description = description;
     }
+
 }

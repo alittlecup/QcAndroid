@@ -12,18 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -66,7 +70,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @Bind(R.id.workexpedit_city)
     CommonInputView workexpeditCity;
     @Bind(R.id.workexpedit_gym_name)
-    CommonInputView workexpeditGymName;
+    TextView workexpeditGymName;
     @Bind(R.id.workexpedit_position)
     CommonInputView workexpeditPosition;
     @Bind(R.id.workexpedit_descripe)
@@ -88,6 +92,12 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     TimeDialogWindow pwTime;
     @Bind(R.id.workexpedit_expe_layout)
     LinearLayout workexpeditExpeLayout;
+    @Bind(R.id.host_img)
+    ImageView hostImg;
+    @Bind(R.id.host_qc_identify)
+    ImageView hostQcIdentify;
+    @Bind(R.id.host_address)
+    TextView hostAddress;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
     private AddWorkExperience addWorkExperience;
@@ -166,7 +176,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);
 
-        if (addWorkExperience == null){
+        if (addWorkExperience == null) {
             addWorkExperience = new AddWorkExperience(App.coachid);
         }
         if (experiencesEntity != null) {
@@ -192,8 +202,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             workexpeditDescripe.setText(experiencesEntity.getDescription());
             workexpeditPosition.setContent(experiencesEntity.getPosition());
             if (experiencesEntity.getGym() != null) {
-                workexpeditGymName.setContent(experiencesEntity.getGym().getName());
+                workexpeditGymName.setText(experiencesEntity.getGym().getName());
                 addWorkExperience.setGym_id(experiencesEntity.getGym().getId());
+                Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
+                if (experiencesEntity.getGym().is_authenticated()){
+                    hostQcIdentify.setVisibility(View.VISIBLE);
+                }else hostQcIdentify.setVisibility(View.GONE);
+                hostAddress.setText(experiencesEntity.getGym().getAddress());
+
             }
             workexpeditGroupClass.setContent(Integer.toString(experiencesEntity.getGroup_course()));
             workexpeditGroupNum.setContent(Integer.toString(experiencesEntity.getGroup_user()));
@@ -223,7 +239,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         String privateClass = workexpeditPrivateClass.getContent();
         String privateNum = workexpeditPrivateNum.getContent();
         String sale = workexpeditSale.getContent();
-        String gym = workexpeditGymName.getContent();
+        String gym = workexpeditGymName.getText().toString();
 
 
         if (TextpaperUtils.isEmpty(postion)) {
@@ -287,12 +303,13 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     }
 
 
+
     @OnClick(R.id.workexpedit_expe_layout)
     public void onDescripte() {
         workexpeditDescripe.requestFocus();
     }
 
-    @OnClick(R.id.workexpedit_gym_name)
+    @OnClick(R.id.host_layout)
     public void onClickGym() {
         Intent toSearch = new Intent(getActivity(), SearchActivity.class);
         toSearch.putExtra("type", SearchFragment.TYPE_GYM);
@@ -373,8 +390,21 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10010 && resultCode > 0) {
-            workexpeditGymName.setContent(data.getStringExtra("username"));
+            workexpeditGymName.setText(data.getStringExtra("username"));
             addWorkExperience.setGym_id(data.getIntExtra("id", 0));
+            boolean isAuth = data.getBooleanExtra("isauth",false);
+            if (isAuth)
+                hostQcIdentify.setVisibility(View.VISIBLE);
+            else hostQcIdentify.setVisibility(View.GONE);
+            String address = data.getStringExtra("address");
+            if (TextUtils.isEmpty(address)){
+                hostAddress.setVisibility(View.GONE);
+            }else {
+                hostAddress.setVisibility(View.VISIBLE);
+                hostAddress.setText(address);
+            }
+            Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
+
         }
     }
 }

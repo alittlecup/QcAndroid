@@ -46,6 +46,8 @@ public class AddOganasitionFragment extends Fragment {
     EditText workexpeditDescripe;
     @Bind(R.id.addgym_addbtn)
     Button addgymAddbtn;
+    @Bind(R.id.addgym_brand)
+    CommonInputView addgymBrand;
 
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
@@ -73,6 +75,7 @@ public class AddOganasitionFragment extends Fragment {
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         addgymName.setLabel("机构名");
         addgymCity.setVisibility(View.GONE);
+        addgymBrand.setVisibility(View.GONE);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -111,7 +114,7 @@ public class AddOganasitionFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcResponse -> {
                     if (qcResponse.status == ResponseResult.SUCCESS) {
-                        searchListener.onSearchResult(100, Integer.parseInt(qcResponse.data.gym.id), qcResponse.data.gym.name);
+                        searchListener.onSearchResult(100, Integer.parseInt(qcResponse.data.gym.id), qcResponse.data.gym.name, "", "", false);
                         Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
 //                           searchListener.onSearchResult();
                     } else Toast.makeText(getActivity(), qcResponse.msg, Toast.LENGTH_SHORT).show();

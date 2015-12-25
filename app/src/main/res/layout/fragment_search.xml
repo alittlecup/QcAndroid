@@ -4,58 +4,63 @@
              android:layout_height="match_parent"
              tools:context="com.qingchengfit.fitcoach.fragment.SearchFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="@color/primary"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        >
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-
-            >
-
-            <EditText
-                android:id="@+id/searchview_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:drawableLeft="@drawable/ic_search_black"
-                android:imeOptions="actionDone"
-                android:maxLength="40"
-                android:paddingLeft="10dp"
-                android:singleLine="true"
-                />
-
-            <ImageView
-                android:id="@+id/searchview_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_cross_blace"
-                />
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/searchview_cancle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/cancel"
-            />
-    </LinearLayout>
-
+    <include layout="@layout/common_toolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?android:actionBarSize"
         android:orientation="vertical"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroud_grey"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/search_hint"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:text="请选择主办机构"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="4"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                >
+
+                <EditText
+                    android:id="@+id/searchview_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableLeft="@drawable/ic_search_black"
+                    android:imeOptions="actionDone"
+                    android:maxLength="40"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/searchview_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_cross_blace"
+                    />
+            </FrameLayout>
+            <include layout="@layout/divider_grey"
+                     android:layout_width="match_parent"
+                     android:layout_height="1dp"
+                     android:layout_marginTop="10dp"
+                />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/search_hottable"
@@ -82,6 +87,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/searchresult_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"

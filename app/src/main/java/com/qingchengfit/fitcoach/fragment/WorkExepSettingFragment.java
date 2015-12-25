@@ -83,7 +83,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-        freshData();
+
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -96,6 +96,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             public void onGlobalLayout() {
                 refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 refresh.setRefreshing(true);
+                freshData();
             }
         });
 
@@ -111,6 +112,9 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
             gymEntity.setId(data.getIntExtra("id",0));
             gymEntity.setName(data.getStringExtra("username"));
+            gymEntity.setAddress(data.getStringExtra("address"));
+            gymEntity.setPhoto(data.getStringExtra("pic"));
+            gymEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
             entity.setGym(gymEntity);
             fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity));
 

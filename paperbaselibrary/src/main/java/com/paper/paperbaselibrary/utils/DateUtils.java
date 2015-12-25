@@ -32,10 +32,10 @@ public class DateUtils {
             date = formatter.parse(s);
             return date;
         } catch (ParseException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return new Date();
         }catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
             return new Date();
         }
 

@@ -9,6 +9,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +39,8 @@ public class CommonInputView extends RelativeLayout {
     private boolean isNum;
     private boolean canClick;
     private boolean canBeNull;
+    private View divider;
+    private boolean showDivier;
 
     public CommonInputView(Context context) {
         super(context);
@@ -60,6 +63,8 @@ public class CommonInputView extends RelativeLayout {
         isNum = ta.getBoolean(R.styleable.CommonInputView_civ_inputnum, false);
         canClick = ta.getBoolean(R.styleable.CommonInputView_civ_clickable, false);
         canBeNull = ta.getBoolean(R.styleable.CommonInputView_civ_nonnull, false);
+        showDivier = ta.getBoolean(R.styleable.CommonInputView_civ_showdivier,true);
+
         ta.recycle();
     }
 
@@ -68,6 +73,8 @@ public class CommonInputView extends RelativeLayout {
         super.onFinishInflate();
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
+        divider = findViewById(R.id.commoninput_divider);
+
         if (!canBeNull)
             label.setText(str_label);
         else {
@@ -87,6 +94,12 @@ public class CommonInputView extends RelativeLayout {
                 edit.requestFocus();
             });
         }
+        if (showDivier){
+            divider.setVisibility(VISIBLE);
+        }else {
+            divider.setVisibility(GONE);
+        }
+
         if (isNum) {
 
 

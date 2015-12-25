@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,17 +71,19 @@ public class RecordEditFragment extends BaseSettingFragment {
     public static final int TYPE_COMPETITION = 3;
     private static final String TITLE = "param1";
     private static final String CONTENT = "param2";
+    private static final String TYPE = "param_type";
+
     private static String FILE_PATH = Configs.CameraPic;
-    @Bind(R.id.recordedit_host)
-    CommonInputView recordeditHost;
-    @Bind(R.id.recordedit_type_meeting)
-    RadioButton recordeditTypeMeeting;
-    @Bind(R.id.recordedit_type_comfirm)
-    RadioButton recordeditTypeComfirm;
-    @Bind(R.id.recordedit_type_competition)
-    RadioButton recordeditTypeCompetition;
-    @Bind(R.id.recordedit_type)
-    RadioGroup recordeditType;
+    //    @Bind(R.id.recordedit_host)
+//    CommonInputView recordeditHost;
+//    @Bind(R.id.recordedit_type_meeting)
+//    RadioButton recordeditTypeMeeting;
+//    @Bind(R.id.recordedit_type_comfirm)
+//    RadioButton recordeditTypeComfirm;
+//    @Bind(R.id.recordedit_type_competition)
+//    RadioButton recordeditTypeCompetition;
+//    @Bind(R.id.recordedit_type)
+//    RadioGroup recordeditType;
     @Bind(R.id.recordedit_date)
     CommonInputView recordeditDate;
     @Bind(R.id.recordedit_score)
@@ -101,8 +103,27 @@ public class RecordEditFragment extends BaseSettingFragment {
     CommonInputView recordEditName;
     @Bind(R.id.recordedit_datestart)
     CommonInputView recordeditDatestart;
+    @Bind(R.id.host_img)
+    ImageView hostImg;
+    @Bind(R.id.host_qc_identify)
+    ImageView hostQcIdentify;
+    @Bind(R.id.host_name)
+    TextView hostName;
+    @Bind(R.id.host_address)
+    TextView hostAddress;
+    @Bind(R.id.comfirm_scroe_layout)
+    RelativeLayout comfirmScroeLayout;
+    @Bind(R.id.comfirm_has_certification)
+    TextView comfirmHasCertification;
+    @Bind(R.id.comfirm_certification_layout)
+    RelativeLayout comfirmCertificationLayout;
+    @Bind(R.id.recordedit_certificat_name)
+    CommonInputView recordeditCertificatName;
+    @Bind(R.id.host_layout)
+    LinearLayout hostLayout;
     private boolean mTitle;
     private String mContent;
+    private int mType;
     private Gson gson = new Gson();
     private QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity;
     private AddCertificate addCertificate;
@@ -120,11 +141,12 @@ public class RecordEditFragment extends BaseSettingFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment RecordEditFragment.
      */
-    public static RecordEditFragment newInstance(boolean param1, String param2) {
+    public static RecordEditFragment newInstance(boolean param1, String param2,int type) {
         RecordEditFragment fragment = new RecordEditFragment();
         Bundle args = new Bundle();
         args.putBoolean(TITLE, param1);
         args.putString(CONTENT, param2);
+        args.putInt(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -165,6 +187,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (getArguments() != null) {
             mTitle = getArguments().getBoolean(TITLE);
             mContent = getArguments().getString(CONTENT);
+            mType = getArguments().getInt(TYPE);
         }
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -175,19 +198,51 @@ public class RecordEditFragment extends BaseSettingFragment {
 
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
-        fragmentCallBack.onToolbarClickListener(item1 -> {
-            if (certificatesEntity != null) {
-                showDialog();
-            }
-            return true;
-        });
+        switch (mType) {
+            case TYPE_MEETING:
+                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加大会认证");
+                recordEditName.setLabel("大会名称");
+                recordeditDate.setLabel("大会日期");
+                recordeditUpimg.setText("上传参会凭证");
+                break;
+
+            case TYPE_COMFIRM:
+                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加培训认证");
+                recordEditName.setLabel("培训名称");
+                recordeditDate.setLabel("培训日期");
+                comfirmHasCertification.setText("有无证书");
+                recordeditCertificatName.setLabel("证书名称");
+                recordeditDatestart.setLabel("证书生效日期");
+                recordeditDateoff.setLabel("证书失效日期");
+                recordeditUpimg.setText("上传证书/图片");
+                break;
+            case TYPE_COMPETITION:
+                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加赛事认证");
+                recordEditName.setLabel("赛事名称");
+                recordeditDate.setLabel("赛事日期");
+                comfirmHasCertification.setText("有无奖项");
+                recordeditCertificatName.setLabel("奖项名称");
+                recordeditDatestart.setLabel("奖项生效日期");
+                recordeditDateoff.setLabel("奖项失效日期");
+                recordeditUpimg.setText("上传奖项/图片");
+                break;
+
+        }
+
+//        fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
+//        fragmentCallBack.onToolbarClickListener(item1 -> {
+//            if (certificatesEntity != null) {
+//                showDialog();
+//            }
+//            return true;
+//        });
         if (addCertificate == null)
             addCertificate = new AddCertificate(App.coachid);
         if (mContent != null) {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
-            recordeditHost.setContent(certificatesEntity.getOrganization().getName());
-            addCertificate.setOrganization_id(certificatesEntity.getOrganization().getId()+"");
+//            recordeditHost.setContent(certificatesEntity.getOrganization().getName());
+            hostName.setText(certificatesEntity.getOrganization().getName());
+            addCertificate.setOrganization_id(certificatesEntity.getOrganization().getId() + "");
             recordeditDatestart.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             recordeditDate.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
@@ -201,17 +256,17 @@ public class RecordEditFragment extends BaseSettingFragment {
             } else {
                 recordeditDateoff.setContent(DateUtils.getServerDateDay(d));
             }
-            switch (certificatesEntity.getType()) {
-                case TYPE_MEETING:
-                    recordeditType.check(R.id.recordedit_type_meeting);
-                    break;
-                case TYPE_COMFIRM:
-                    recordeditType.check(R.id.recordedit_type_comfirm);
-                    break;
-                case TYPE_COMPETITION:
-                    recordeditType.check(R.id.recordedit_type_competition);
-                    break;
-            }
+//            switch (certificatesEntity.getType()) {
+//                case TYPE_MEETING:
+//                    recordeditType.check(R.id.recordedit_type_meeting);
+//                    break;
+//                case TYPE_COMFIRM:
+//                    recordeditType.check(R.id.recordedit_type_comfirm);
+//                    break;
+//                case TYPE_COMPETITION:
+//                    recordeditType.check(R.id.recordedit_type_competition);
+//                    break;
+//            }
             if (!TextUtils.isEmpty(certificatesEntity.getPhoto())) {
                 recordeditImg.setVisibility(View.VISIBLE);
                 Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).asBitmap().into(new ScaleWidthWrapper(recordeditImg));
@@ -220,27 +275,27 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditDatestart.setContent(DateUtils.getServerDateDay(new Date()));
             recordeditDateoff.setContent(DateUtils.getServerDateDay(new Date()));
         }
-        recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.recordedit_type_meeting:
-                        addCertificate.setType(TYPE_MEETING);
-                        break;
-                    case R.id.recordedit_type_comfirm:
-                        addCertificate.setType(TYPE_COMFIRM);
-                        break;
-                    case R.id.recordedit_type_competition:
-                        addCertificate.setType(TYPE_COMPETITION);
-                        break;
-                }
-            }
-        });
+//        recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                switch (checkedId) {
+//                    case R.id.recordedit_type_meeting:
+//                        addCertificate.setType(TYPE_MEETING);
+//                        break;
+//                    case R.id.recordedit_type_comfirm:
+//                        addCertificate.setType(TYPE_COMFIRM);
+//                        break;
+//                    case R.id.recordedit_type_competition:
+//                        addCertificate.setType(TYPE_COMPETITION);
+//                        break;
+//                }
+//            }
+//        });
 
         return view;
     }
 
-    @OnClick(R.id.recordedit_host)
+    @OnClick(R.id.host_layout)
     public void onHost() {
 //        fragmentCallBack.onFragmentChange(SearchFragment.newInstance(SearchFragment.TYPE_ORGANASITON));
         Intent toSearch = new Intent(getActivity(), SearchActivity.class);
@@ -255,10 +310,10 @@ public class RecordEditFragment extends BaseSettingFragment {
             Toast.makeText(App.AppContex, "请填写认证名称", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(recordeditHost.getContent())) {
-            Toast.makeText(App.AppContex, "请填写主办机构", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (TextUtils.isEmpty(recordeditHost.getContent())) {
+//            Toast.makeText(App.AppContex, "请填写主办机构", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         if (TextUtils.isEmpty(recordeditDate.getContent())) {
             Toast.makeText(App.AppContex, "请选择发证日期", Toast.LENGTH_SHORT).show();
             return;
@@ -431,7 +486,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
-        if (recordeditHost == null)
+        if (hostName == null)
             return;
 
         if (resultCode == -1) {
@@ -467,7 +522,7 @@ public class RecordEditFragment extends BaseSettingFragment {
 
         } else if (requestCode == 10010 && resultCode > 0) {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
-            recordeditHost.setContent(data.getStringExtra("username"));
+            hostName.setText(data.getStringExtra("username"));
         }
 
 

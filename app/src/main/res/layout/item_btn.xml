@@ -15,4 +15,30 @@
         android:layout_marginTop="20dp"
         android:clickable="false"
         />
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/item_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        />
+    <ImageView
+        android:visibility="gone"
+
+        android:id="@+id/item_qc_identify"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignRight="@id/item_img"
+        android:layout_alignBottom="@id/item_img"
+        />
+    <TextView
+        android:id="@+id/item_address"
+        style="@style/Qc.TextCommonGrey"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+
+        />
 </LinearLayout>

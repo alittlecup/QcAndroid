@@ -50,6 +50,7 @@
         <attr name="civ_clickable" format="boolean"></attr>
         <attr name="civ_inputnum" format="boolean"></attr>
         <attr name="civ_nonnull" format="boolean"></attr>
+        <attr name="civ_showdivier" format="boolean"></attr>
 
     </declare-styleable>
 

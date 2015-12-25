@@ -86,6 +86,25 @@ public class QcSearchOrganResponse extends QcResponse {
             private String contact;
             private int id;
             private String name;
+            private String photo;
+            private boolean is_authenticated;
+
+
+            public String getPhoto() {
+                return photo;
+            }
+
+            public void setPhoto(String photo) {
+                this.photo = photo;
+            }
+
+            public boolean is_authenticated() {
+                return is_authenticated;
+            }
+
+            public void setIs_authenticated(boolean is_authenticated) {
+                this.is_authenticated = is_authenticated;
+            }
 
             public String getContact() {
                 return contact;

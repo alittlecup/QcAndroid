@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,13 +13,76 @@
         android:background="@color/backgroud_grey"
         android:orientation="vertical"
         >
+        <RelativeLayout
+            android:id="@+id/host_layout"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:background="@color/white"
+            >
+            <ImageView
+                android:id="@+id/host_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                tools:src="@drawable/test_pic"
+                />
+            <ImageView
+                android:id="@+id/host_qc_identify"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_alignBottom="@id/host_img"
+                android:layout_alignRight="@id/host_img"
+                android:background="@drawable/circle_white"
+                android:padding="1dp"
+                android:src="@drawable/ic_qc_identify"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                >
+                <TextView
+                    android:id="@+id/workexpedit_gym_name"
+                    style="@style/Qc.TextCommonBlack"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    tools:text="很长很长才名字"
+                    />
+                <TextView
+                    android:id="@+id/host_address"
+                    style="@style/Qc.TextCommonGrey"
+                    android:textSize="12sp"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    tools:text="很长  很长才名字"
+                    />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                />
 
+        </RelativeLayout>
+        <include layout="@layout/divider_grey"/>
+        <include
+            layout="@layout/divider_grey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            />
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/workexpedit_start_time"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_clickable="true"
-            app:civ_lable="起始时间"
+            app:civ_lable="入职时间"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -27,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_clickable="true"
-            app:civ_lable="结束时间"
+            app:civ_lable="离职时间"
             >
 
         </com.qingchengfit.fitcoach.component.CommonInputView>
@@ -42,15 +106,6 @@
 
         </com.qingchengfit.fitcoach.component.CommonInputView>
 
-        <com.qingchengfit.fitcoach.component.CommonInputView
-            android:id="@+id/workexpedit_gym_name"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            app:civ_clickable="true"
-            app:civ_lable="健身房名称"
-            >
-
-        </com.qingchengfit.fitcoach.component.CommonInputView>
 
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/workexpedit_position"

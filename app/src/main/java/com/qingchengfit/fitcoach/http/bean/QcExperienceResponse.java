@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -277,25 +278,71 @@ public class QcExperienceResponse extends QcResponse {
             }
 
             public static class GymEntity implements Parcelable {
-                public static final Creator<GymEntity> CREATOR = new Creator<GymEntity>() {
-                    public GymEntity createFromParcel(Parcel source) {
-                        return new GymEntity(source);
-                    }
-
-                    public GymEntity[] newArray(int size) {
-                        return new GymEntity[size];
-                    }
-                };
                 private int id;
                 private String name;
+                private String photo;
+                private QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
+                private boolean is_authenticated;
+                private String address;
+                private String brand_name;
 
                 public GymEntity() {
                 }
 
-                protected GymEntity(Parcel in) {
-                    this.id = in.readInt();
-                    this.name = in.readString();
+
+                public String getAddress() {
+                    if (!TextUtils.isEmpty(address))
+                        return address;
+                    StringBuffer sb = new StringBuffer();
+                    if (district!=null && district.city!=null){
+
+                        if (!TextUtils.isEmpty(district.city.name)){
+                            sb.append(district.city.name).append("    ");
+                        }
+
+                    }
+                    sb.append(brand_name);
+                    return sb.toString();
+
                 }
+
+                public String getBrand_name() {
+                    return brand_name;
+                }
+
+                public void setBrand_name(String brand_name) {
+                    this.brand_name = brand_name;
+                }
+
+                public void setAddress(String address) {
+                    this.address = address;
+                }
+
+                public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity getDistrict() {
+                    return district;
+                }
+
+                public void setDistrict(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district) {
+                    this.district = district;
+                }
+
+                public String getPhoto() {
+                    return photo;
+                }
+
+                public void setPhoto(String photo) {
+                    this.photo = photo;
+                }
+
+                public boolean is_authenticated() {
+                    return is_authenticated;
+                }
+
+                public void setIs_authenticated(boolean is_authenticated) {
+                    this.is_authenticated = is_authenticated;
+                }
+
+
 
                 public int getId() {
                     return id;
@@ -322,7 +369,28 @@ public class QcExperienceResponse extends QcResponse {
                 public void writeToParcel(Parcel dest, int flags) {
                     dest.writeInt(this.id);
                     dest.writeString(this.name);
+                    dest.writeString(this.photo);
+                    dest.writeParcelable(this.district, flags);
+                    dest.writeByte(is_authenticated ? (byte) 1 : (byte) 0);
                 }
+
+                protected GymEntity(Parcel in) {
+                    this.id = in.readInt();
+                    this.name = in.readString();
+                    this.photo = in.readString();
+                    this.district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
+                    this.is_authenticated = in.readByte() != 0;
+                }
+
+                public static final Creator<GymEntity> CREATOR = new Creator<GymEntity>() {
+                    public GymEntity createFromParcel(Parcel source) {
+                        return new GymEntity(source);
+                    }
+
+                    public GymEntity[] newArray(int size) {
+                        return new GymEntity[size];
+                    }
+                };
             }
 
             public static class CoachEntity implements Parcelable {
