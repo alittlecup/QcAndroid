@@ -68,6 +68,7 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         tools:text="很长  很长才名字"
+                        android:visibility="gone"
                         />
                 </LinearLayout>
                 <ImageView
@@ -211,6 +212,7 @@
                     />
 
                 <Switch
+                    android:id="@+id/comfirm_scroe_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -264,6 +266,8 @@
                     />
 
                 <Switch
+                    android:id="@+id/comfirm_certification_switch"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

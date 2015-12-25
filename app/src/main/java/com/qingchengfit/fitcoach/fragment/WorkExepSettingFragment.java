@@ -84,6 +84,8 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
+
+
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,6 +93,8 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
                 freshData();
             }
         });
+
+
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

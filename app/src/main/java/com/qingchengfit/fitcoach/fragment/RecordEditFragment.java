@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
@@ -84,8 +87,8 @@ public class RecordEditFragment extends BaseSettingFragment {
 //    RadioButton recordeditTypeCompetition;
 //    @Bind(R.id.recordedit_type)
 //    RadioGroup recordeditType;
-    @Bind(R.id.recordedit_date)
-    CommonInputView recordeditDate;
+//    @Bind(R.id.recordedit_date)
+//    CommonInputView recordeditDate;
     @Bind(R.id.recordedit_score)
     CommonInputView recordeditScore;
     @Bind(R.id.recordedit_dateoff)
@@ -121,6 +124,12 @@ public class RecordEditFragment extends BaseSettingFragment {
     CommonInputView recordeditCertificatName;
     @Bind(R.id.host_layout)
     LinearLayout hostLayout;
+    @Bind(R.id.recordedit_date)
+    CommonInputView recordeditDate;
+    @Bind(R.id.comfirm_scroe_switch)
+    Switch comfirmScroeSwitch;
+    @Bind(R.id.comfirm_certification_switch)
+    Switch comfirmCertificationSwitch;
     private boolean mTitle;
     private String mContent;
     private int mType;
@@ -141,7 +150,7 @@ public class RecordEditFragment extends BaseSettingFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment RecordEditFragment.
      */
-    public static RecordEditFragment newInstance(boolean param1, String param2,int type) {
+    public static RecordEditFragment newInstance(boolean param1, String param2, int type) {
         RecordEditFragment fragment = new RecordEditFragment();
         Bundle args = new Bundle();
         args.putBoolean(TITLE, param1);
@@ -242,12 +251,24 @@ public class RecordEditFragment extends BaseSettingFragment {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
 //            recordeditHost.setContent(certificatesEntity.getOrganization().getName());
             hostName.setText(certificatesEntity.getOrganization().getName());
+            if (certificatesEntity.getIs_authenticated())
+                hostQcIdentify.setVisibility(View.VISIBLE);
+            else hostQcIdentify.setVisibility(View.GONE);
+            Glide.with(App.AppContex).load(certificatesEntity.getOrganization().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
             addCertificate.setOrganization_id(certificatesEntity.getOrganization().getId() + "");
             recordeditDatestart.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             recordeditDate.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
+            if (certificatesEntity.getGrade() == null ||TextUtils.isEmpty(certificatesEntity.getGrade()) || certificatesEntity.getGrade().equals("0")){
+                comfirmScroeSwitch.setChecked(false);
+            }else comfirmScroeSwitch.setChecked(true);
+            if (TextUtils.isEmpty(certificatesEntity.getName())){
+                comfirmCertificationSwitch.setChecked(false);
+            }else {
+                comfirmCertificationSwitch.setChecked(true);
+            }
             Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
@@ -292,8 +313,45 @@ public class RecordEditFragment extends BaseSettingFragment {
 //            }
 //        });
 
+
+        comfirmCertificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    recordeditDatestart.setVisibility(View.VISIBLE);
+                    recordeditDateoff.setVisibility(View.VISIBLE);
+                    recordeditCertificatName.setVisibility(View.VISIBLE);
+                }else {
+                    recordeditDatestart.setVisibility(View.GONE);
+                    recordeditDateoff.setVisibility(View.GONE);
+                    recordeditCertificatName.setVisibility(View.GONE);
+                }
+            }
+        });
+        comfirmScroeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    recordeditScore.setVisibility(View.VISIBLE);
+                }else {
+                    recordeditScore.setVisibility(View.GONE);
+                }
+            }
+        });
+
         return view;
     }
+
+    @OnClick(R.id.comfirm_certification_layout)
+    public void onCertification(){
+        comfirmCertificationSwitch.toggle();
+    }
+
+    @OnClick(R.id.comfirm_scroe_layout)
+    public void onScroelayout(){
+        comfirmScroeSwitch.toggle();
+    }
+
 
     @OnClick(R.id.host_layout)
     public void onHost() {
@@ -523,6 +581,11 @@ public class RecordEditFragment extends BaseSettingFragment {
         } else if (requestCode == 10010 && resultCode > 0) {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
             hostName.setText(data.getStringExtra("username"));
+            Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
+            if (data.getBooleanExtra("isauth", false))
+                hostQcIdentify.setVisibility(View.VISIBLE);
+            else hostQcIdentify.setVisibility(View.GONE);
+
         }
 
 

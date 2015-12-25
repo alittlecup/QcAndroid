@@ -219,7 +219,25 @@ public class QcCertificatesReponse extends QcResponse {
 
             public static class OrganizationEntity {
                 String name;
+                String photo;
                 int id;
+                boolean isAuth;
+
+                public boolean isAuth() {
+                    return isAuth;
+                }
+
+                public void setIsAuth(boolean isAuth) {
+                    this.isAuth = isAuth;
+                }
+
+                public String getPhoto() {
+                    return photo;
+                }
+
+                public void setPhoto(String photo) {
+                    this.photo = photo;
+                }
 
                 public int getId() {
                     return id;

@@ -137,6 +137,8 @@ public class RecordFragment extends BaseSettingFragment {
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
+            entity.setPhoto(data.getStringExtra("pic"));
+            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
             certificatesEntity.setOrganization(entity);
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),1);
             fragmentCallBack.onFragmentChange(fragment);
@@ -145,7 +147,9 @@ public class RecordFragment extends BaseSettingFragment {
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
+            entity.setPhoto(data.getStringExtra("pic"));
             certificatesEntity.setOrganization(entity);
+            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),2);
             fragmentCallBack.onFragmentChange(fragment);
         }else if (requestCode == 10013 && resultCode > 0){
@@ -153,6 +157,8 @@ public class RecordFragment extends BaseSettingFragment {
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
+            entity.setPhoto(data.getStringExtra("pic"));
+            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
             certificatesEntity.setOrganization(entity);
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),3);
             fragmentCallBack.onFragmentChange(fragment);
