@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
@@ -123,14 +122,23 @@ public class RecordEditFragment extends BaseSettingFragment {
     @Bind(R.id.recordedit_certificat_name)
     CommonInputView recordeditCertificatName;
     @Bind(R.id.host_layout)
-    LinearLayout hostLayout;
+    RelativeLayout hostLayout;
     @Bind(R.id.recordedit_date)
     CommonInputView recordeditDate;
     @Bind(R.id.comfirm_scroe_switch)
     Switch comfirmScroeSwitch;
     @Bind(R.id.comfirm_certification_switch)
     Switch comfirmCertificationSwitch;
+    @Bind(R.id.recordedit_upimg_layout)
+    RelativeLayout recordeditUpimgLayout;
+//    @Bind(R.id.divider_margin)
+//    View divder;
+//    @Bind(R.id.divider)
+//    View divder2;
+
+
     private boolean mTitle;
+    private boolean mIsHidenImg = false;
     private String mContent;
     private int mType;
     private Gson gson = new Gson();
@@ -207,16 +215,23 @@ public class RecordEditFragment extends BaseSettingFragment {
 
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
+        if (mType == 0)
+            mType =1;
         switch (mType) {
             case TYPE_MEETING:
-                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加大会认证");
+                fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加大会认证");
                 recordEditName.setLabel("大会名称");
                 recordeditDate.setLabel("大会日期");
                 recordeditUpimg.setText("上传参会凭证");
+                comfirmCertificationLayout.setVisibility(View.GONE);
+                recordeditDatestart.setVisibility(View.GONE);
+                recordeditDateoff.setVisibility(View.GONE);
+                recordeditCertificatName.setVisibility(View.GONE);
+                recordeditUpimgLayout.setVisibility(View.VISIBLE);
                 break;
 
             case TYPE_COMFIRM:
-                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加培训认证");
+                fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加培训认证");
                 recordEditName.setLabel("培训名称");
                 recordeditDate.setLabel("培训日期");
                 comfirmHasCertification.setText("有无证书");
@@ -224,9 +239,11 @@ public class RecordEditFragment extends BaseSettingFragment {
                 recordeditDatestart.setLabel("证书生效日期");
                 recordeditDateoff.setLabel("证书失效日期");
                 recordeditUpimg.setText("上传证书/图片");
+
+                mIsHidenImg = true;
                 break;
             case TYPE_COMPETITION:
-                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加赛事认证");
+                fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加赛事认证");
                 recordEditName.setLabel("赛事名称");
                 recordeditDate.setLabel("赛事日期");
                 comfirmHasCertification.setText("有无奖项");
@@ -234,17 +251,19 @@ public class RecordEditFragment extends BaseSettingFragment {
                 recordeditDatestart.setLabel("奖项生效日期");
                 recordeditDateoff.setLabel("奖项失效日期");
                 recordeditUpimg.setText("上传奖项/图片");
+
+                mIsHidenImg = true;
                 break;
 
         }
 
 //        fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加认证");
-//        fragmentCallBack.onToolbarClickListener(item1 -> {
-//            if (certificatesEntity != null) {
-//                showDialog();
-//            }
-//            return true;
-//        });
+        fragmentCallBack.onToolbarClickListener(item1 -> {
+            if (certificatesEntity != null) {
+                showDialog();
+            }
+            return true;
+        });
         if (addCertificate == null)
             addCertificate = new AddCertificate(App.coachid);
         if (mContent != null) {
@@ -261,13 +280,25 @@ public class RecordEditFragment extends BaseSettingFragment {
 
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
-            if (certificatesEntity.getGrade() == null ||TextUtils.isEmpty(certificatesEntity.getGrade()) || certificatesEntity.getGrade().equals("0")){
+            if (certificatesEntity.getGrade() == null || TextUtils.isEmpty(certificatesEntity.getGrade()) || certificatesEntity.getGrade().equals("0")) {
                 comfirmScroeSwitch.setChecked(false);
-            }else comfirmScroeSwitch.setChecked(true);
-            if (TextUtils.isEmpty(certificatesEntity.getName())){
+
+
+            }
+            else {
+                comfirmScroeSwitch.setChecked(true);
+                recordeditScore.setVisibility(View.VISIBLE);
+            }
+            if (TextUtils.isEmpty(certificatesEntity.getCertificate_name())) {
                 comfirmCertificationSwitch.setChecked(false);
-            }else {
+            } else {
                 comfirmCertificationSwitch.setChecked(true);
+                recordeditCertificatName.setContent(certificatesEntity.getCertificate_name());
+                recordeditDatestart.setVisibility(View.VISIBLE);
+                recordeditDateoff.setVisibility(View.VISIBLE);
+                recordeditCertificatName.setVisibility(View.VISIBLE);
+                if (mIsHidenImg)
+                    recordeditUpimgLayout.setVisibility(View.VISIBLE);
             }
             Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -279,7 +310,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             }
 //            switch (certificatesEntity.getType()) {
 //                case TYPE_MEETING:
-//                    recordeditType.check(R.id.recordedit_type_meeting);
+//
 //                    break;
 //                case TYPE_COMFIRM:
 //                    recordeditType.check(R.id.recordedit_type_comfirm);
@@ -290,7 +321,7 @@ public class RecordEditFragment extends BaseSettingFragment {
 //            }
             if (!TextUtils.isEmpty(certificatesEntity.getPhoto())) {
                 recordeditImg.setVisibility(View.VISIBLE);
-                Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).asBitmap().into(new ScaleWidthWrapper(recordeditImg));
+                Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).into(recordeditImg);
             } else recordeditImg.setVisibility(View.GONE);
         } else {
             recordeditDatestart.setContent(DateUtils.getServerDateDay(new Date()));
@@ -317,23 +348,27 @@ public class RecordEditFragment extends BaseSettingFragment {
         comfirmCertificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     recordeditDatestart.setVisibility(View.VISIBLE);
                     recordeditDateoff.setVisibility(View.VISIBLE);
                     recordeditCertificatName.setVisibility(View.VISIBLE);
-                }else {
+                    if (mIsHidenImg)
+                        recordeditUpimgLayout.setVisibility(View.VISIBLE);
+                } else {
                     recordeditDatestart.setVisibility(View.GONE);
                     recordeditDateoff.setVisibility(View.GONE);
                     recordeditCertificatName.setVisibility(View.GONE);
+                    if (mIsHidenImg)
+                        recordeditUpimgLayout.setVisibility(View.GONE);
                 }
             }
         });
         comfirmScroeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     recordeditScore.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     recordeditScore.setVisibility(View.GONE);
                 }
             }
@@ -343,12 +378,12 @@ public class RecordEditFragment extends BaseSettingFragment {
     }
 
     @OnClick(R.id.comfirm_certification_layout)
-    public void onCertification(){
+    public void onCertification() {
         comfirmCertificationSwitch.toggle();
     }
 
     @OnClick(R.id.comfirm_scroe_layout)
-    public void onScroelayout(){
+    public void onScroelayout() {
         comfirmScroeSwitch.toggle();
     }
 
@@ -380,13 +415,26 @@ public class RecordEditFragment extends BaseSettingFragment {
             Toast.makeText(App.AppContex, "请填写生效日期和失效日期", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (comfirmScroeSwitch.isChecked() && TextUtils.isEmpty(recordeditScore.getContent())){
+            Toast.makeText(App.AppContex, "请填写学分", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (comfirmCertificationSwitch.isChecked() && TextUtils.isEmpty(recordeditCertificatName.getContent())){
+            if (mType == 2)
+                Toast.makeText(App.AppContex, "请填写证书名称", Toast.LENGTH_SHORT).show();
+            else if (mType == 3)
+                Toast.makeText(App.AppContex, "请填写奖项名称", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
         addCertificate.setGrade(recordeditScore.getContent());
         addCertificate.setName(recordEditName.getContent());
         addCertificate.setDate_of_issue(DateUtils.formatDateToServer(recordeditDate.getContent()));
         addCertificate.setStart(DateUtils.formatDateToServer(recordeditDatestart.getContent()));
-
+        addCertificate.setCertificate_name(recordeditCertificatName.getContent());
+        if (addCertificate.getType() == 0)
+            addCertificate.setType(mType);
         String endtime = recordeditDateoff.getContent().trim();
         if (endtime.equalsIgnoreCase("长期有效")) {
             endtime = "3000-1-1";
@@ -506,7 +554,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     }
 
 
-    @OnClick({R.id.recordedit_upimg, R.id.recordedit_img})
+    @OnClick({R.id.recordedit_upimg_layout})
     public void onUpdatePic() {
         PicChooseDialog dialog = new PicChooseDialog(getActivity());
         dialog.setListener(new View.OnClickListener() {

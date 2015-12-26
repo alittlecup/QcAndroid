@@ -243,7 +243,6 @@ public class RecordFragment extends BaseSettingFragment {
             else
                 Glide.with(App.AppContex).load(R.drawable.img_record_uncomfirmed).into(holder.recordcomfirmImg);
 
-
         }
 
 

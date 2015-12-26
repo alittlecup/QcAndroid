@@ -37,6 +37,8 @@ public class ScaleWidthWrapper extends BitmapImageViewTarget {
 //        if (scale > 1)
 //            scale = 1;
         matrix.postScale(scale, scale);
+        if (resource.getWidth() <=0 || resource.getHeight() <= 0 || scale<=0)
+            return;
         resource = Bitmap.createBitmap(resource, 0, 0, resource.getWidth(), resource.getHeight(), matrix, true);
         imageView.setImageBitmap(resource);
     }

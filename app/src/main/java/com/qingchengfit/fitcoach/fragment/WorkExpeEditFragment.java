@@ -3,11 +3,9 @@ package com.qingchengfit.fitcoach.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -105,6 +103,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     private DialogSheet mDialogSheet;
 
 
+
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
 
         Bundle args = new Bundle();
@@ -180,14 +179,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             addWorkExperience = new AddWorkExperience(App.coachid);
         }
         if (experiencesEntity != null) {
-            fragmentCallBack.onToolbarMenu(R.menu.menu_delete, 0, mTitle);
-            fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    showDialog();
-                    return true;
-                }
-            });
+            fragmentCallBack.onToolbarMenu(0, 0, mTitle);
+//            fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    showDialog();
+//                    return true;
+//                }
+//            });
             workexpeditStartTime.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());

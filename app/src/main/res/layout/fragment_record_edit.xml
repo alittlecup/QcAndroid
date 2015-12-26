@@ -18,13 +18,13 @@
 
 
         <LinearLayout
-            android:id="@+id/host_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
 
             >
             <RelativeLayout
+                android:id="@+id/host_layout"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
                 android:background="@color/white"
@@ -213,6 +213,7 @@
 
                 <Switch
                     android:id="@+id/comfirm_scroe_switch"
+                    android:checked="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -237,6 +238,7 @@
                 app:civ_inputnum="true"
                 app:civ_lable="@string/recordedit_score"
                 app:civ_showdivier="false"
+                android:visibility="gone"
                 >
             </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -267,7 +269,7 @@
 
                 <Switch
                     android:id="@+id/comfirm_certification_switch"
-
+                    android:checked="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -289,8 +291,8 @@
                 android:id="@+id/recordedit_certificat_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
-                app:civ_clickable="true"
                 app:civ_lable="证书名称"
+                android:visibility="gone"
                 >
             </com.qingchengfit.fitcoach.component.CommonInputView>
             <com.qingchengfit.fitcoach.component.CommonInputView
@@ -299,6 +301,8 @@
                 android:layout_height="@dimen/qc_item_height"
                 app:civ_clickable="true"
                 app:civ_lable="@string/recordedit_certificat_timestart"
+                android:visibility="gone"
+
                 >
             </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -308,48 +312,79 @@
                 android:layout_height="@dimen/qc_item_height"
                 app:civ_clickable="true"
                 app:civ_lable="@string/recordedit_certificat_timeend"
+                android:visibility="gone"
+
                 >
             </com.qingchengfit.fitcoach.component.CommonInputView>
 
 
-            <include layout="@layout/divider_grey">
-            </include>
+            <!--<View-->
+                <!--android:id="@+id/divider"-->
+                <!--android:background="@color/divider_grey"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!-->-->
+            <!--</View>-->
 
-            <include
-                layout="@layout/divider_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="20dp"
-                >
-            </include>
+            <!--<View-->
+                <!--android:id="@+id/divider_margin"-->
+                <!--android:background="@color/divider_grey"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!-->-->
+            <!--</View>-->
 
             <RelativeLayout
+                android:id="@+id/recordedit_upimg_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:visibility="gone"
+
                 >
 
                 <TextView
                     android:id="@+id/recordedit_upimg"
                     style="@style/Qc.TextCommonGrey"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_height="@dimen/qc_item_height"
-                    android:gravity="center"
+                    android:layout_centerVertical="true"
                     android:text="上传照片"
                     />
 
+                <ImageView
+                    android:id="@+id/advice_right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:src="@drawable/ic_arrow_right"
+                    />
 
                 <ImageView
                     android:id="@+id/recordedit_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:background="@color/white"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50dp"
+                    android:padding="5dp"
                     android:visibility="gone"
+
                     />
+                <!--<ImageView-->
+                    <!--android:id="@+id/recordedit_img"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+                    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+                    <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:visibility="gone"-->
+                    <!--/>-->
 
             </RelativeLayout>
 

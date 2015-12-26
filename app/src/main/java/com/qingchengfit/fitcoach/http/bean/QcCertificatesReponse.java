@@ -103,7 +103,19 @@ public class QcCertificatesReponse extends QcResponse {
             private boolean is_authenticated;
             private String start;
             private String end;
+            private String certificate_name;
 
+            public boolean is_authenticated() {
+                return is_authenticated;
+            }
+
+            public String getCertificate_name() {
+                return certificate_name;
+            }
+
+            public void setCertificate_name(String certificate_name) {
+                this.certificate_name = certificate_name;
+            }
 
             public String getStart() {
                 return start;

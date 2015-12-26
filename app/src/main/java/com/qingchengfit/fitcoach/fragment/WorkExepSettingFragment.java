@@ -18,11 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
@@ -138,7 +140,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
                                     adapter.setListener(new OnRecycleItemClickListener() {
                                         @Override
                                         public void onItemClick(View v, int pos) {
-                                            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历", qcExperienceResponse.getData().getExperiences().get(pos)));
+                                            fragmentCallBack.onFragmentChange(WorkExpDetailFragment.newInstance(qcExperienceResponse.getData().getExperiences().get(pos).getId()));
                                         }
                                     });
                                     recyclerview.setAdapter(adapter);
@@ -175,7 +177,12 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         TextView itemWorkexpeTime;
         @Bind(R.id.item_workexpe)
         LinearLayout itemWorkexpe;
-
+        @Bind(R.id.qc_identify)
+        ImageView qcIdentify;
+        @Bind(R.id.item_workexpe_hidden)
+        View isHidden;
+        @Bind(R.id.item_workexpe_img)
+        ImageView img;
         public WorkExepVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -224,6 +231,14 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             else
                 stringBuffer.append(DateUtils.getServerDateDay(d));
             holder.itemWorkexpeTime.setText(stringBuffer.toString());
+            if (experiencesEntity.is_authenticated())
+                holder.qcIdentify.setVisibility(View.VISIBLE);
+            else holder.qcIdentify.setVisibility(View.GONE);
+
+            if (experiencesEntity.is_hidden())
+                holder.isHidden.setVisibility(View.VISIBLE);
+            else holder.isHidden.setVisibility(View.GONE);
+            Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(holder.img,App.AppContex));
         }
 
 

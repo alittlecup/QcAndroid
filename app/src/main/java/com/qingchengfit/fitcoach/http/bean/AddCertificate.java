@@ -24,12 +24,13 @@ public class AddCertificate {
     String created_at;
     String start;
     String end;
+    String certificate_name;
 
     public AddCertificate(int coach_id) {
         this.coach_id = coach_id;
     }
 
-    public AddCertificate(int coach_id, int type, String name, String organization_id, String date_of_issue, String grade, String photo, String created_at) {
+    public AddCertificate(int coach_id, int type, String name, String organization_id, String date_of_issue, String grade, String photo, String created_at,String certificate_name) {
         this.coach_id = coach_id;
         this.type = type;
         this.name = name;
@@ -37,7 +38,16 @@ public class AddCertificate {
         this.date_of_issue = date_of_issue;
         this.grade = grade;
         this.photo = photo;
+        this.certificate_name = certificate_name;
         this.created_at = created_at;
+    }
+
+    public String getCertificate_name() {
+        return certificate_name;
+    }
+
+    public void setCertificate_name(String certificate_name) {
+        this.certificate_name = certificate_name;
     }
 
     public String getStart() {

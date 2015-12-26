@@ -14,11 +14,13 @@ import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
+import com.qingchengfit.fitcoach.http.bean.HidenBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.ModifyPwBean;
+import com.qingchengfit.fitcoach.http.bean.OneExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.OrganizationBean;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
@@ -269,7 +271,9 @@ public class QcCloudClient {
         //获取工作经验列表
         @GET("/api/coaches/{id}/experiences/")
         rx.Observable<QcExperienceResponse> qcGetExperiences(@Path("id") int id);
-
+        //获取单条工作经验
+        @GET("/api/experiences/{id}/")
+        rx.Observable<OneExperienceResponse> qcGetExperience(@Path("id") int id);
         //获取认证列表
         @GET("/api/certificates/{id}/")
         rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
@@ -417,6 +421,8 @@ public class QcCloudClient {
         //修改工作经验
         @PUT("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
+        @POST("/api/experiences/{id}/hidden/")
+        rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id,@Body HidenBean hidenBean);
 
         //删除工作经验
         @DELETE("/api/experiences/{id}/")
