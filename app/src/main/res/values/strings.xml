@@ -76,5 +76,7 @@
     <string name="myhome_default_desc">这个人很懒,什么也没有留下</string>
     <string name="myhome_data_none">暂未填写</string>
     <string name="setting_cal_sync_title">课程提醒设置</string>
+    <string name="workexp_detail_hiden">该条工作经历已经隐藏,不会显示在您的主页</string>
+    <string name="workexp_detail_unhiden">工作经历来自于该健身房系统</string>
 
 </resources>

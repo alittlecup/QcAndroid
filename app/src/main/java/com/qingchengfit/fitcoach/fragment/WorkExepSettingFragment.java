@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -177,6 +178,8 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         TextView itemWorkexpeTime;
         @Bind(R.id.item_workexpe)
         LinearLayout itemWorkexpe;
+        @Bind(R.id.item_workexpe_address)
+        TextView itemAddress;
         @Bind(R.id.qc_identify)
         ImageView qcIdentify;
         @Bind(R.id.item_workexpe_hidden)
@@ -234,6 +237,9 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             if (experiencesEntity.is_authenticated())
                 holder.qcIdentify.setVisibility(View.VISIBLE);
             else holder.qcIdentify.setVisibility(View.GONE);
+            if (experiencesEntity.getGym().getDistrict()!=null && experiencesEntity.getGym().getDistrict().city != null &&
+                    !TextUtils.isEmpty(experiencesEntity.getGym().getDistrict().city.name))
+                holder.itemAddress.setText("|"+experiencesEntity.getGym().getDistrict().city.name);
 
             if (experiencesEntity.is_hidden())
                 holder.isHidden.setVisibility(View.VISIBLE);

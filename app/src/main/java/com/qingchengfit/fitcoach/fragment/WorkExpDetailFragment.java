@@ -144,18 +144,20 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                         if (c.get(Calendar.YEAR) == 3000) {
                             start = start + "至今";
                         } else {
-                            start = start + DateUtils.getServerDateDay(d);
+                            start = start+"至" + DateUtils.getServerDateDay(d);
                         }
                         gymTime.setText(start);
-                        if (gym.is_authenticated())
+                        if (experiencesEntity.is_authenticated())
                             gymIdentify.setVisibility(View.VISIBLE);
                         else gymIdentify.setVisibility(View.GONE);
                         Glide.with(App.AppContex).load(gym.getPhoto()).asBitmap().into(new CircleImgWrapper(gymImg, App.AppContex));
 
                         //是否隐藏
                         if (experiencesEntity.is_authenticated()) { //认证条目
+                            workexpDetailHiden.setVisibility(View.VISIBLE);
                             if (experiencesEntity.is_hidden()) {
-                                workexpDetailHiden.setVisibility(View.VISIBLE);
+                                workexpDetailHiden.setBackgroundResource(R.color.orange);
+                                workexpDetailHiden.setText(getString(R.string.workexp_detail_hiden));
                                 fragmentCallBack.onToolbarMenu(R.menu.menu_unhide, R.drawable.ic_arrow_left, "工作经历详情");
                                 fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                                     @Override
@@ -185,7 +187,9 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                     }
                                 });
                             } else {
-                                workexpDetailHiden.setVisibility(View.GONE);
+                                workexpDetailHiden.setBackgroundResource(R.color.green);
+                                workexpDetailHiden.setText(getString(R.string.workexp_detail_unhiden));
+
                                 fragmentCallBack.onToolbarMenu(R.menu.menu_hide, R.drawable.ic_arrow_left, "工作经历详情");
                                 fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                                     @Override
@@ -216,6 +220,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                 });
                             }
                         } else { //自己添加的条目
+                            workexpDetailHiden.setVisibility(View.GONE);
                             fragmentCallBack.onToolbarMenu(R.menu.menu_logout, R.drawable.ic_arrow_left, "工作经历详情");
                             fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                                 @Override
@@ -223,14 +228,14 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                     //编辑和删除
                                     if (dialogSheet == null){
                                         dialogSheet = new DialogSheet(getContext());
-                                        dialogSheet.addButton("编辑工作经历", new View.OnClickListener() {
+                                        dialogSheet.addButton("编辑", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 dialogSheet.dismiss();
                                                 fragmentCallBack.onFragmentChange(new WorkExpeEditFragment().newInstance("编辑工作经历",experiencesEntity));
                                             }
                                         })
-                                        .addButton("删除工作经历", new View.OnClickListener() {
+                                        .addButton("删除", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 dialogSheet.dismiss();

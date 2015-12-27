@@ -1,28 +1,28 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.component.GridViewInScroll;
+import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.TagGroup;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -79,7 +79,14 @@ public class WorkExperienceFragment extends BaseFragment {
                                 if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
                                     recyclerview.setVisibility(View.VISIBLE);
                                     recordConfirmNone.setVisibility(View.GONE);
-                                    adapter = new WorkExperiencAdapter(qcExperienceResponse.getData().getExperiences());
+                                    int i = 0;
+                                    List<QcExperienceResponse.DataEntity.ExperiencesEntity> datas = new ArrayList<QcExperienceResponse.DataEntity.ExperiencesEntity>();
+                                    for (QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity : qcExperienceResponse.getData().getExperiences()){
+                                        if (!experiencesEntity.is_hidden())
+                                            datas.add(experiencesEntity);
+
+                                    }
+                                    adapter = new WorkExperiencAdapter(datas);
                                     recyclerview.setAdapter(adapter);
                                 } else {
                                     recyclerview.setVisibility(View.GONE);
@@ -104,22 +111,36 @@ public class WorkExperienceFragment extends BaseFragment {
 
 
     public static class WorkExperienceVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_time)
-        TextView itemTime;
-        @Bind(R.id.item_studio_name)
-        TextView itemStudioName;
-        @Bind(R.id.item_studio_comfirm)
-        TextView itemStudioComfirm;
-        @Bind(R.id.item_studio_pos)
-        TextView itemStudioPos;
-        @Bind(R.id.item_studio_des)
-        TextView itemStudioDes;
-        @Bind(R.id.item_studio_complish)
-        TextView itemStudioComplish;
-        @Bind(R.id.item_studio_classes)
-        GridViewInScroll itemStudioClasses;
-        @Bind(R.id.item_tag_group)
-        TagGroup itemTagGroup;
+        @Bind(R.id.gym_img)
+        ImageView gymImg;
+        @Bind(R.id.gym_identify)
+        ImageView gymIdentify;
+        @Bind(R.id.gym_name)
+        TextView gymName;
+        @Bind(R.id.gym_address)
+        TextView gymAddress;
+        @Bind(R.id.gym_time)
+        TextView gymTime;
+        @Bind(R.id.workexp_detail_position)
+        TextView workexpDetailPosition;
+        @Bind(R.id.workexp_detail_desc)
+        TextView workexpDetailDesc;
+        @Bind(R.id.workexp_detail_group_count)
+        TextView workexpDetailGroupCount;
+        @Bind(R.id.workexp_detail_group_server)
+        TextView workexpDetailGroupServer;
+        @Bind(R.id.workexp_detail_group_layout)
+        LinearLayout workexpDetailGroupLayout;
+        @Bind(R.id.workexp_detail_private_count)
+        TextView workexpDetailPrivateCount;
+        @Bind(R.id.workexp_detail_private_server)
+        TextView workexpDetailPrivateServer;
+        @Bind(R.id.workexp_detail_private_layout)
+        LinearLayout workexpDetailPrivateLayout;
+        @Bind(R.id.workexp_detail_sale)
+        TextView workexpDetailSale;
+        @Bind(R.id.workexp_detail_sale_layout)
+        LinearLayout workexpDetailSaleLayout;
 //        @Bind(R.id.item_studio_expaned)
 //        ToggleButton itemStudioExpaned;
 
@@ -136,23 +157,6 @@ public class WorkExperienceFragment extends BaseFragment {
 //                }
 //            });
 
-        }
-    }
-
-    /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'item_work_classes.xml'
-     * for easy to all layout elements.
-     *
-     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
-     */
-    static class ViewHolder {
-        @Bind(R.id.item_workclass_name)
-        TextView itemWorkclassName;
-        @Bind(R.id.item_workclass_num)
-        TextView itemWorkclassNum;
-
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
         }
     }
 
@@ -175,86 +179,113 @@ public class WorkExperienceFragment extends BaseFragment {
             if (position >= datas.size())
                 return;
             QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
-//
-            holder.itemStudioName.setText(experiencesEntity.getGym().getName());
-            SpannableString ssPosition = new SpannableString("职位: " + experiencesEntity.getPosition());
-//            ssPosition.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3 , Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            holder.itemStudioPos.setText(ssPosition);
-            ColorDrawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
-            drawable.setAlpha(20);
-            holder.itemTime.setBackgroundDrawable(drawable);
+            if (experiencesEntity.is_hidden()){
+                holder.itemView.setVisibility(View.GONE);
+                return;
+            }else holder.itemView.setVisibility(View.VISIBLE);
 
-            holder.itemStudioComplish.setVisibility(View.VISIBLE);
-            StringBuffer sb = new StringBuffer();
-            sb.append("业绩: ");
-            if (experiencesEntity.getGroup_course() == 0 &&
-                    experiencesEntity.getPrivate_course() == 0 &&
-                    experiencesEntity.getSale() == 0 &&
-                    experiencesEntity.getGroup_user() == 0 &&
-                    experiencesEntity.getPrivate_user() == 0
-                    ) {
-                sb.append("无");
-                holder.itemStudioComplish.setText(sb.toString());
-            } else {
-                if (experiencesEntity.getGroup_course() != 0 || experiencesEntity.getGroup_user() != 0) {
-                    sb.append("团课");
-                    sb.append(experiencesEntity.getGroup_course());
-                    sb.append("节,服务");
-                    sb.append(experiencesEntity.getGroup_user());
-                    sb.append("人次;");
-
-                }
-                if (experiencesEntity.getPrivate_course() != 0 || experiencesEntity.getPrivate_user() != 0) {
-                    sb.append("私教课");
-                    sb.append(experiencesEntity.getPrivate_course());
-                    sb.append("节,服务");
-                    sb.append(experiencesEntity.getPrivate_user());
-                    sb.append("人次;");
-                }
-                if (experiencesEntity.getSale() != 0) {
-                    sb.append("销售额达");
-                    sb.append(experiencesEntity.getSale());
-                    sb.append("元;");
-                }
-                holder.itemStudioComplish.setText(sb.toString());
-
-            }
-
-
-//            SpannableString sy = new SpannableString(sb.toString());
-//            sy.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-//            holder.itemStudioComplish.setText(sy);
-
-            SpannableString sDes = new SpannableString("描述: " + experiencesEntity.getDescription());
-//            sDes.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_grey)), 0, 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            holder.itemStudioDes.setText(sDes);
-
-            StringBuffer ss = new StringBuffer();
-            ss.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
-            ss.append(getContext().getString(R.string.comom_time_to));
+            QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gym = experiencesEntity.getGym();
+            holder.gymName.setText(gym.getName());
+            if (gym.getDistrict() != null && gym.getDistrict().city != null && !TextUtils.isEmpty(gym.getDistrict().city.name))
+                holder.gymAddress.setText("|" + gym.getDistrict().city.name);
+            //设置工作时间
+            String start = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart()));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
-            if (c.get(Calendar.YEAR) == 3000)
-                ss.append(getContext().getString(R.string.common_today));
-            else
-                ss.append(DateUtils.getServerDateDay(d));
-            holder.itemTime.setText(ss.toString());
-//            holder.itemTagGroup.setTags("非常好", "长得帅", "一般般嘛");
-//            List<String> aaaas = new ArrayList<>();
-//            aaaas.add("12");
-//            aaaas.add("12");
-//            aaaas.add("12");
-//            aaaas.add("12");
-//            GridInScrollAdapter adapter1 = new GridInScrollAdapter(aaaas);
-//            holder.itemStudioClasses.setAdapter(adapter1);
-            if (experiencesEntity.getIs_authenticated()) {
-                holder.itemStudioComfirm.setText("已确认");
-                holder.itemStudioComfirm.setBackgroundResource(R.drawable.bg_tag_green);
+            if (c.get(Calendar.YEAR) == 3000) {
+                start = start + "至今";
             } else {
-                holder.itemStudioComfirm.setText("待确认");
-                holder.itemStudioComfirm.setBackgroundResource(R.drawable.bg_tag_red);
+                start = start +"至"+ DateUtils.getServerDateDay(d);
             }
+            holder.gymTime.setText(start);
+            if (experiencesEntity.is_authenticated())
+                holder.gymIdentify.setVisibility(View.VISIBLE);
+            else holder.gymIdentify.setVisibility(View.GONE);
+            Glide.with(App.AppContex).load(gym.getPhoto()).asBitmap().into(new CircleImgWrapper(holder.gymImg, App.AppContex));
+            holder.workexpDetailPosition.setText(experiencesEntity.getPosition());
+            holder.workexpDetailDesc.setText(experiencesEntity.getDescription());
+            if (experiencesEntity.getGroup_course() != 0) {
+                holder.workexpDetailGroupLayout.setVisibility(View.VISIBLE);
+                holder.workexpDetailGroupCount.setText(experiencesEntity.getGroup_course() + "");
+                holder.workexpDetailGroupServer.setText(experiencesEntity.getGroup_user() + "");
+            } else holder.workexpDetailGroupLayout.setVisibility(View.GONE);
+            if (experiencesEntity.getPrivate_course() != 0) {
+                holder.workexpDetailPrivateLayout.setVisibility(View.VISIBLE);
+                holder.workexpDetailPrivateCount.setText(experiencesEntity.getPrivate_course() + "");
+                holder.workexpDetailPrivateServer.setText(experiencesEntity.getPrivate_user() + "");
+            } else holder.workexpDetailPrivateLayout.setVisibility(View.GONE);
+            if (experiencesEntity.getSale() != 0) {
+                holder.workexpDetailSaleLayout.setVisibility(View.VISIBLE);
+                holder.workexpDetailSale.setText(experiencesEntity.getSale() + "");
+            } else holder.workexpDetailSaleLayout.setVisibility(View.GONE);
+
+//            holder.itemStudioName.setText(experiencesEntity.getGym().getName());
+//            SpannableString ssPosition = new SpannableString("职位: " + experiencesEntity.getPosition());
+//            holder.itemStudioPos.setText(ssPosition);
+//            ColorDrawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
+//            drawable.setAlpha(20);
+//            holder.itemTime.setBackgroundDrawable(drawable);
+//
+//            holder.itemStudioComplish.setVisibility(View.VISIBLE);
+//            StringBuffer sb = new StringBuffer();
+//            sb.append("业绩: ");
+//            if (experiencesEntity.getGroup_course() == 0 &&
+//                    experiencesEntity.getPrivate_course() == 0 &&
+//                    experiencesEntity.getSale() == 0 &&
+//                    experiencesEntity.getGroup_user() == 0 &&
+//                    experiencesEntity.getPrivate_user() == 0
+//                    ) {
+//                sb.append("无");
+//                holder.itemStudioComplish.setText(sb.toString());
+//            } else {
+//                if (experiencesEntity.getGroup_course() != 0 || experiencesEntity.getGroup_user() != 0) {
+//                    sb.append("团课");
+//                    sb.append(experiencesEntity.getGroup_course());
+//                    sb.append("节,服务");
+//                    sb.append(experiencesEntity.getGroup_user());
+//                    sb.append("人次;");
+//
+//                }
+//                if (experiencesEntity.getPrivate_course() != 0 || experiencesEntity.getPrivate_user() != 0) {
+//                    sb.append("私教课");
+//                    sb.append(experiencesEntity.getPrivate_course());
+//                    sb.append("节,服务");
+//                    sb.append(experiencesEntity.getPrivate_user());
+//                    sb.append("人次;");
+//                }
+//                if (experiencesEntity.getSale() != 0) {
+//                    sb.append("销售额达");
+//                    sb.append(experiencesEntity.getSale());
+//                    sb.append("元;");
+//                }
+//                holder.itemStudioComplish.setText(sb.toString());
+//
+//            }
+//
+//
+//
+//            SpannableString sDes = new SpannableString("描述: " + experiencesEntity.getDescription());
+//            holder.itemStudioDes.setText(sDes);
+//
+//            StringBuffer ss = new StringBuffer();
+//            ss.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+//            ss.append(getContext().getString(R.string.comom_time_to));
+//            Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
+//            Calendar c = Calendar.getInstance(Locale.getDefault());
+//            c.setTime(d);
+//            if (c.get(Calendar.YEAR) == 3000)
+//                ss.append(getContext().getString(R.string.common_today));
+//            else
+//                ss.append(DateUtils.getServerDateDay(d));
+//            holder.itemTime.setText(ss.toString());
+//            if (experiencesEntity.getIs_authenticated()) {
+//                holder.itemStudioComfirm.setText("已确认");
+//                holder.itemStudioComfirm.setBackgroundResource(R.drawable.bg_tag_green);
+//            } else {
+//                holder.itemStudioComfirm.setText("待确认");
+//                holder.itemStudioComfirm.setBackgroundResource(R.drawable.bg_tag_red);
+//            }
         }
 
         @Override
@@ -299,42 +330,42 @@ public class WorkExperienceFragment extends BaseFragment {
         }
     }
 
-    class GridInScrollAdapter extends BaseAdapter {
-        List data;
-
-        public GridInScrollAdapter(List data) {
-            this.data = data;
-        }
-
-        @Override
-        public int getCount() {
-            return data.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return data.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ViewHolder holder = null;
-            if (view == null) {
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_work_classes, null);
-                holder = new ViewHolder(view);
-                view.setTag(holder);
-            } else {
-                holder = (ViewHolder) view.getTag();
-            }
-
-            return view;
-        }
-
-
-    }
+//    class GridInScrollAdapter extends BaseAdapter {
+//        List data;
+//
+//        public GridInScrollAdapter(List data) {
+//            this.data = data;
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return data.size();
+//        }
+//
+//        @Override
+//        public Object getItem(int i) {
+//            return data.get(i);
+//        }
+//
+//        @Override
+//        public long getItemId(int i) {
+//            return i;
+//        }
+//
+//        @Override
+//        public View getView(int i, View view, ViewGroup viewGroup) {
+//            ViewHolder holder = null;
+//            if (view == null) {
+//                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_work_classes, null);
+//                holder = new ViewHolder(view);
+//                view.setTag(holder);
+//            } else {
+//                holder = (ViewHolder) view.getTag();
+//            }
+//
+//            return view;
+//        }
+//
+//
+//    }
 }

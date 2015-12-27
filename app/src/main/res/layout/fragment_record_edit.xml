@@ -68,7 +68,6 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         tools:text="很长  很长才名字"
-                        android:visibility="gone"
                         />
                 </LinearLayout>
                 <ImageView

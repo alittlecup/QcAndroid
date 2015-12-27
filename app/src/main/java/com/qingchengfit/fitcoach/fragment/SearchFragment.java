@@ -112,13 +112,13 @@ public class SearchFragment extends android.support.v4.app.Fragment {
             }
         });
         if (type == TYPE_ORGANASITON) {
-            toolbar.setTitle("");
+            toolbar.setTitle("添加资质认证");
             searchviewEt.setHint("搜索机构(至少输入三个字符)");
             searchHint.setText("请先选择主办机构");
             searchresultBtn.setText("添加主办机构");
             searchresultHint.setText("没有匹配的机构\n您可以添加该机构");
         } else if (type == TYPE_GYM) {
-            toolbar.setTitle("添加工作经验");
+            toolbar.setTitle("添加工作经历");
             searchHint.setText("请先选择健身房");
             searchviewEt.setHint("搜索健身房(至少输入三个字符)");
             searchresultBtn.setText("添加健身房");
@@ -187,11 +187,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("热门健身房");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
-                                            String city = "";
-                                            if (addGymBean.district != null && addGymBean.district.city != null && TextUtils.isEmpty(addGymBean.district.city.name))
-                                                city = addGymBean.district.city.name + "  ";
-                                            city += addGymBean.brand_name;
-                                            strings.add(new SearchItemBean(addGymBean.name, addGymBean.photo, city, addGymBean.is_authenticated));
+                                            StringBuffer ss = new StringBuffer();
+                                            if (addGymBean.district != null && addGymBean.district.city != null && !TextUtils.isEmpty(addGymBean.district.city.name))
+                                                ss.append(addGymBean.district.city.name).append("  ");
+                                            ss.append(addGymBean.brand_name);
+                                            strings.add(new SearchItemBean(addGymBean.name, addGymBean.photo, ss.toString(), addGymBean.is_authenticated));
                                         }
                                         strings.add(new SearchItemBean());
                                         adapter.setListener(((v, pos) -> {
@@ -219,14 +219,14 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("热门机构");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
-                                            strings.add(new SearchItemBean(addGymBean.getName(), addGymBean.getPhoto(), null, addGymBean.is_authenticated()));
+                                            strings.add(new SearchItemBean(addGymBean.getName(), addGymBean.getPhoto(), "联系方式:"+addGymBean.getContact(), addGymBean.is_authenticated()));
                                         }
                                         strings.add(new SearchItemBean());
                                         adapter.setListener(((v, pos) -> {
                                             if (pos != adapter.getItemCount() - 1) {
 
                                                 searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName()
-                                                        , "", qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(), qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated()
+                                                        , qcSearchOrganResponse.getData().getOrganizations().get(pos).getContact(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(), qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated()
                                                 );
                                             }
                                         }));
@@ -287,7 +287,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (AddGymBean addGymBean : qcSerachGymRepsonse.getData().getGym()) {
                                             StringBuffer city = new StringBuffer();
-                                            if (addGymBean.district != null && addGymBean.district.city != null && TextUtils.isEmpty(addGymBean.district.city.name)) {
+                                            if (addGymBean.district != null && addGymBean.district.city != null && !TextUtils.isEmpty(addGymBean.district.city.name)) {
                                                 city.append(addGymBean.district.city.name).append("    ");
                                             }
                                             city.append(addGymBean.brand_name);
@@ -322,7 +322,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         searchHottable.setText("搜索结果");
                                         searchresultRv.setVisibility(View.VISIBLE);
                                         for (QcSearchOrganResponse.DataEntity.OrganizationsEntity addGymBean : qcSearchOrganResponse.getData().getOrganizations()) {
-                                            strings.add(new SearchItemBean(addGymBean.getName(), addGymBean.getPhoto(), null, addGymBean.is_authenticated()));
+                                            strings.add(new SearchItemBean(addGymBean.getName(), addGymBean.getPhoto(), "联系方式:"+addGymBean.getContact(), addGymBean.is_authenticated()));
                                         }
                                         strings.add(new SearchItemBean("添加主办机构"));
                                         adapter.setListener(((v, pos) -> {
@@ -331,7 +331,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                                 onAdd();
                                             } else {
                                                 searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName()
-                                                        , "", qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(), qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated()
+                                                        , qcSearchOrganResponse.getData().getOrganizations().get(pos).getContact(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getPhoto(), qcSearchOrganResponse.getData().getOrganizations().get(pos).is_authenticated()
                                                 );
                                             }
 //                                                searchListener.onSearchResult(100, qcSearchOrganResponse.getData().getOrganizations().get(pos).getId(), qcSearchOrganResponse.getData().getOrganizations().get(pos).getName());
@@ -444,9 +444,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
             if (!TextUtils.isEmpty(s.getImg()))
                 Glide.with(App.AppContex).load(s.getImg()).asBitmap().into(new CircleImgWrapper(holder.imageView, App.AppContex));
-            if (s.isAuthor())
-                holder.qcIdentify.setVisibility(View.VISIBLE);
-            else holder.qcIdentify.setVisibility(View.GONE);
+//            if (s.isAuthor())
+//                holder.qcIdentify.setVisibility(View.VISIBLE);
+//            else holder.qcIdentify.setVisibility(View.GONE);
 
             LogUtil.e("city:" + s.getCity() + "  " + s.isAuthor());
             if (!TextUtils.isEmpty(s.getCity())) {

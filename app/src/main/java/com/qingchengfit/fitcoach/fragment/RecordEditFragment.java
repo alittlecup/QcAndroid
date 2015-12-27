@@ -270,6 +270,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
 //            recordeditHost.setContent(certificatesEntity.getOrganization().getName());
             hostName.setText(certificatesEntity.getOrganization().getName());
+            hostAddress.setText("联系方式:"+certificatesEntity.getOrganization().getContact());
             if (certificatesEntity.getIs_authenticated())
                 hostQcIdentify.setVisibility(View.VISIBLE);
             else hostQcIdentify.setVisibility(View.GONE);
@@ -630,6 +631,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
             hostName.setText(data.getStringExtra("username"));
             Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
+            hostAddress.setText("联系方式:"+data.getStringExtra("address"));
             if (data.getBooleanExtra("isauth", false))
                 hostQcIdentify.setVisibility(View.VISIBLE);
             else hostQcIdentify.setVisibility(View.GONE);

@@ -11,30 +11,39 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         />
-    <ImageView
-        android:id="@+id/item_qc_identify"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_alignRight="@id/item_img"
-        android:layout_alignBottom="@id/item_img"
-        android:src="@drawable/ic_qc_identify"
-        android:padding="1dp"
-        android:background="@drawable/circle_white"
-        />
+
     <LinearLayout
+        android:id="@+id/item_text_layout"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerVertical="true"
         android:layout_marginLeft="70dp"
         >
-        <TextView
-            android:id="@+id/item_text"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="健身房品牌fasdfasfdasfd"
-            />
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/item_text"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="健身房品牌fasdfasfdasfd"
+                />
+            <ImageView
+                android:id="@+id/item_qc_identify"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_qc_identify"
+                android:padding="1dp"
+                android:visibility="gone"
+                android:background="@drawable/circle_white"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/item_address"
             style="@style/Qc.TextCommonGrey"

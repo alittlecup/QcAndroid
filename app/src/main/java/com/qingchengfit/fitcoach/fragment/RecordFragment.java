@@ -138,6 +138,7 @@ public class RecordFragment extends BaseSettingFragment {
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
+            entity.setContact(data.getStringExtra("address"));
             certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
             certificatesEntity.setOrganization(entity);
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),1);
@@ -148,6 +149,7 @@ public class RecordFragment extends BaseSettingFragment {
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
+            entity.setContact(data.getStringExtra("address"));
             certificatesEntity.setOrganization(entity);
             certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),2);
@@ -158,6 +160,7 @@ public class RecordFragment extends BaseSettingFragment {
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
+            entity.setContact(data.getStringExtra("address"));
             certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
             certificatesEntity.setOrganization(entity);
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),3);

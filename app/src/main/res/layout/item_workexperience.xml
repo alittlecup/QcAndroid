@@ -5,117 +5,127 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:id="@+id/item_time"
-        style="@style/Qc.TextCommonBlack"
+    >
+    <View
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:textColor="@color/primary"
-        tools:text="2014-至今"
+        android:layout_height="10dp"
+        android:background="@color/backgroud_grey"
         />
+    <include layout="@layout/divider_grey"/>
+    <include layout="@layout/layout_gym"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        >
+    <include layout="@layout/layout_wokeexp" />
 
-        <TextView
+    <!--<TextView-->
+        <!--android:id="@+id/item_time"-->
+        <!--style="@style/Qc.TextCommonBlack"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="36dp"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:textColor="@color/primary"-->
+        <!--tools:text="2014-至今"-->
+        <!--/>-->
 
-            android:id="@+id/item_studio_name"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            tools:text="中美引力工作室"
-            />
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+        <!-->-->
 
-        <TextView
-            android:id="@+id/item_studio_comfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right|center_vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:text="已确认"
-            android:textColor="@color/white"
-            android:visibility="gone"
-            />
-    </RelativeLayout>
+        <!--<TextView-->
 
-    <TextView
-        android:id="@+id/item_studio_pos"
-        style="@style/Qc.TextCommonGrey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="5dp"
-        tools:text="职位:教练"
-        />
+            <!--android:id="@+id/item_studio_name"-->
+            <!--style="@style/Qc.TextCommonBlack"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="17sp"-->
+            <!--tools:text="中美引力工作室"-->
+            <!--/>-->
 
-    <TextView
-        android:id="@+id/item_studio_des"
-        style="@style/Qc.TextCommonGrey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="5dp"
-        tools:text="职位:教练"
-        />
+        <!--<TextView-->
+            <!--android:id="@+id/item_studio_comfirm"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_gravity="right|center_vertical"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:paddingRight="8dp"-->
+            <!--android:text="已确认"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
+    <!--</RelativeLayout>-->
 
-    <TextView
-        android:id="@+id/item_studio_complish"
-        style="@style/Qc.TextCommonGrey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="1.3"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="5dp"
-        tools:text="职位:教练"
-        />
-    <!---->
-    <!---->
-    <com.paper.paperbaselibrary.component.GridViewInScroll
-        android:id="@+id/item_studio_classes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:horizontalSpacing="5dp"
-        android:minHeight="50dp"
-        android:numColumns="2"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:verticalSpacing="5dp"
-        android:visibility="gone"
+    <!--<TextView-->
+        <!--android:id="@+id/item_studio_pos"-->
+        <!--style="@style/Qc.TextCommonGrey"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingTop="5dp"-->
+        <!--tools:text="职位:教练"-->
+        <!--/>-->
 
-        >
-    </com.paper.paperbaselibrary.component.GridViewInScroll>
+    <!--<TextView-->
+        <!--android:id="@+id/item_studio_des"-->
+        <!--style="@style/Qc.TextCommonGrey"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingTop="5dp"-->
+        <!--tools:text="职位:教练"-->
+        <!--/>-->
 
-    <com.qingchengfit.fitcoach.component.TagGroup
-        android:id="@+id/item_tag_group"
-        style="@style/TagGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
-        app:atg_backgroundColor="@color/white"
-        app:atg_borderColor="@color/text_black"
-        app:atg_borderStrokeWidth="1dp"
-        app:atg_checkedBackgroundColor="@color/white"
-        app:atg_textColor="@color/text_black"
+    <!--<TextView-->
+        <!--android:id="@+id/item_studio_complish"-->
+        <!--style="@style/Qc.TextCommonGrey"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:lineSpacingMultiplier="1.3"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingTop="5dp"-->
+        <!--tools:text="职位:教练"-->
+        <!--/>-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--<com.paper.paperbaselibrary.component.GridViewInScroll-->
+        <!--android:id="@+id/item_studio_classes"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:horizontalSpacing="5dp"-->
+        <!--android:minHeight="50dp"-->
+        <!--android:numColumns="2"-->
+        <!--android:paddingBottom="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingTop="@dimen/activity_horizontal_margin"-->
+        <!--android:verticalSpacing="5dp"-->
+        <!--android:visibility="gone"-->
 
-        >
-    </com.qingchengfit.fitcoach.component.TagGroup>
+        <!-->-->
+    <!--</com.paper.paperbaselibrary.component.GridViewInScroll>-->
+
+    <!--<com.qingchengfit.fitcoach.component.TagGroup-->
+        <!--android:id="@+id/item_tag_group"-->
+        <!--style="@style/TagGroup"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+        <!--android:visibility="gone"-->
+        <!--app:atg_backgroundColor="@color/white"-->
+        <!--app:atg_borderColor="@color/text_black"-->
+        <!--app:atg_borderStrokeWidth="1dp"-->
+        <!--app:atg_checkedBackgroundColor="@color/white"-->
+        <!--app:atg_textColor="@color/text_black"-->
+
+        <!-->-->
+    <!--</com.qingchengfit.fitcoach.component.TagGroup>-->
 
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->

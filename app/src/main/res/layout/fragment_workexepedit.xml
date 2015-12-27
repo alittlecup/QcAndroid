@@ -157,7 +157,7 @@
             android:layout_height="@dimen/qc_item_height"
             android:background="@color/transparent"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:text="工作业绩"
+            android:text="团课业绩(选填)"
             />
 
         <com.qingchengfit.fitcoach.component.CommonInputView
@@ -177,7 +177,14 @@
             app:civ_lable="团课服务(人次)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
-
+        <TextView
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@color/transparent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="私教业绩(选填)"
+            />
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/workexpedit_private_class"
             android:layout_width="match_parent"
@@ -195,7 +202,14 @@
             app:civ_lable="私教服务(人次)"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
-
+        <TextView
+            style="@style/Qc.TextCommonBlack"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:background="@color/transparent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="销售业绩(选填)"
+            />
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/workexpedit_sale"
             android:layout_width="match_parent"
