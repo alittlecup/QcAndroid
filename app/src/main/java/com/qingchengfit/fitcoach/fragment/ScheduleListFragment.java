@@ -181,7 +181,7 @@ public class ScheduleListFragment extends Fragment {
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.getServerDateDay(date));
-        QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params)
+        QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mHttpCallBack);
@@ -189,8 +189,9 @@ public class ScheduleListFragment extends Fragment {
     }
 
     private void handleResponse(QcSchedulesResponse qcSchedulesResponse) {
-        if (qcSchedulesResponse == null || qcSchedulesResponse.data.systems == null)
+        if (qcSchedulesResponse == null)
             return;
+
         List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
         CalendarIntentService.startActionDay(getContext(), mCurDate.getTime(), new Gson().toJson(qcSchedulesResponse));
 
@@ -228,14 +229,10 @@ public class ScheduleListFragment extends Fragment {
 
                 if (schedule.orders != null && schedule.orders.size() == 1) {
                     bean.isSingle = true;
-//                    if (schedule.orders.get(0).count > 1){
-//                    bean.users = schedule.orders.get(0).username+"("+schedule.orders.get(0).count+"人)";}
-//                    else
                     bean.users = schedule.orders.get(0).username;
                 } else {
                     bean.isSingle = false;
                 }
-//                bean.gymname = system.system.name;
                 bean.gymname = schedule.shop.name;
                 bean.color = syscolor;
                 bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
@@ -249,32 +246,6 @@ public class ScheduleListFragment extends Fragment {
                     bean.conflict = thing;
                 }
                 scheduleBeans.add(bean);
-//                Observable.create(new Observable.OnSubscribe<Pair<Integer, String>>() {
-//                    @Override
-//                    public void call(Subscriber<? super Pair<Integer, String>> subscriber) {
-//                        String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
-//                        subscriber.onNext(new Pair<Integer, String>(position, thing));
-//                    }
-//                }).subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Subscriber<Pair<Integer, String>>() {
-//                            @Override
-//                            public void onCompleted() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onNext(Pair<Integer, String> integerStringPair) {
-//                                datas.get(integerStringPair.first).conflict = integerStringPair.second;
-//                                scheduesAdapter.notifyItemChanged(integerStringPair.first);
-//                            }
-//                        });
-
             }
 
         }

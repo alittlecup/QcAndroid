@@ -28,12 +28,12 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
@@ -96,6 +96,8 @@ public class ScheduesFragment extends MainBaseFragment {
     RelativeLayout scheduleCalendar;
     @Bind(R.id.first_guide)
     RelativeLayout firstGuide;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -106,6 +108,9 @@ public class ScheduesFragment extends MainBaseFragment {
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private int curSystemId = 0;
     private int curPostion = 0;
+
+
+
     private QcSchedulesResponse mQcSchedulesResponse;
     private Date mCurDate = new Date();
     private DatePicker mDatePicker;
@@ -133,6 +138,13 @@ public class ScheduesFragment extends MainBaseFragment {
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_alert);
+        toolbarTitle.setText("全部日程");
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(getContext(), ChooseGymActivity.class),501);
+            }
+        });
 
         scheduleNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +162,7 @@ public class ScheduesFragment extends MainBaseFragment {
         coach = gson.fromJson(id, Coach.class);
         //初始化title下拉
 
-        setUpViewPager();
+//        setUpViewPager();
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
         btn1.setColorNormal(getResources().getColor(R.color.green));
@@ -182,7 +194,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 return true;
             }
         });
-        if (!PreferenceUtils.getPrefBoolean(App.AppContex,App.coachid+"first_guide",false)){
+        if (!PreferenceUtils.getPrefBoolean(App.AppContex, App.coachid + "first_guide", false)) {
             firstGuide.setVisibility(View.VISIBLE);
         }
 
@@ -191,7 +203,7 @@ public class ScheduesFragment extends MainBaseFragment {
             public void onMenuExpanded() {
                 scheduleFloatbg.setVisibility(View.VISIBLE);
                 firstGuide.setVisibility(View.GONE);
-                PreferenceUtils.setPrefBoolean(App.AppContex,App.coachid+"first_guide",true);
+                PreferenceUtils.setPrefBoolean(App.AppContex, App.coachid + "first_guide", true);
 //                if (scheduleActionPopWin == null) {
 //                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
 //                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
@@ -261,21 +273,19 @@ public class ScheduesFragment extends MainBaseFragment {
                 setUpNaviSpinner();
             }
         });
-//        openDrawerInterface.showLoading();
-//        goDateSchedule(mCurDate);
-        setUpNaviSpinner();
+//        setUpNaviSpinner();
         return view;
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) {
-            int x = curPostion;
-            setUpNaviSpinner();
-            spinnerNav.setSelection(x);
-            queryNotify();
-        }
+//        if (!hidden) {
+//            int x = curPostion;
+//            setUpNaviSpinner();
+//            spinnerNav.setSelection(x);
+//            queryNotify();
+//        }
     }
 
 
@@ -480,12 +490,12 @@ public class ScheduesFragment extends MainBaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
-//            ScheduleListFragment f = (ScheduleListFragment) mFragmentAdapter.getItem(scheduleVp.getCurrentItem());
-//            if (f != null)
-//                f.refresh();
-            LogUtil.e("onActivityResult");
+        if (resultCode > 0 && requestCode == 404) {
             mFragmentAdapter.notifyDataSetChanged();
+        } else if (resultCode > 0 && requestCode == 501) {
+            toolbarTitle.setText(data.getStringExtra("name"));
+            curPostion = data.getIntExtra("id",0);
+
         }
 
     }

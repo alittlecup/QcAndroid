@@ -33,6 +33,7 @@ import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
+import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
@@ -249,7 +250,8 @@ public class QcCloudClient {
 
         //获取通知 分页和不分页接口 ,后者只为拿 未读
         @GET("/api/coaches/{id}/notifications/")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id,@QueryMap HashMap<String, Integer> params);
+        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id, @QueryMap HashMap<String, Integer> params);
+
         @GET("/api/coaches/{id}/notifications/")
         rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id);
 
@@ -272,9 +274,11 @@ public class QcCloudClient {
         //获取工作经验列表
         @GET("/api/coaches/{id}/experiences/")
         rx.Observable<QcExperienceResponse> qcGetExperiences(@Path("id") int id);
+
         //获取单条工作经验
         @GET("/api/experiences/{id}/")
         rx.Observable<OneExperienceResponse> qcGetExperience(@Path("id") int id);
+
         //获取认证列表
         @GET("/api/certificates/{id}/")
         rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
@@ -300,11 +304,16 @@ public class QcCloudClient {
         rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
 
         //获取教练日程
+        @Deprecated
         @GET("/api/coaches/{id}/schedules/")
         rx.Observable<QcSchedulesResponse> qcGetCoachSchedule(@Path("id") int id, @QueryMap Map<String, String> params);
 
+        @GET("/api/v1/coaches/{id}/schedules/")
+        rx.Observable<QcSchedulesResponse> qcGetCoachScheduleV1(@Path("id") int id, @QueryMap Map<String, String> params);
+
+
         //获取教练预约概览
-        @GET("/api/coaches/{id}/schedules/reports/glance/")
+        @GET("/api/v1/coaches/{id}/schedules/reports/glance/")
         rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
 
         //获取教练预约概览
@@ -312,12 +321,19 @@ public class QcCloudClient {
         rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
 
         //获取教练系统
+        @Deprecated
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcCoachSystemResponse> qcGetCoachSystem(@Path("id") int id);
 
         //获取教练系统
+        @GET("/api/v1/coaches/{id}/services/")
+        rx.Observable<QcCoachServiceResponse> qcGetCoachService(@Path("id") int id);
+
+
+        //获取教练系统
         @GET("/api/coaches/{id}/systems/detail/")
         rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
+
 
         //获取教练报表强详情
         @GET("/api/coaches/{id}/systems/report/schedules/")
@@ -422,8 +438,9 @@ public class QcCloudClient {
         //修改工作经验
         @PUT("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
+
         @POST("/api/experiences/{id}/hidden/")
-        rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id,@Body HidenBean hidenBean);
+        rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id, @Body HidenBean hidenBean);
 
         //删除工作经验
         @DELETE("/api/experiences/{id}/")
@@ -468,7 +485,7 @@ public class QcCloudClient {
 
         //百度pushid绑定
         @POST("/api/coaches/{id}/push/update/")
-        rx.Observable<QcResponse> qcPostPushId(@Path("id") int id,@Body PushBody body);
+        rx.Observable<QcResponse> qcPostPushId(@Path("id") int id, @Body PushBody body);
 
         //清除notification
         @POST("/api/coaches/{id}/notifications/clear/")
@@ -477,7 +494,6 @@ public class QcCloudClient {
         //清除某条notification
         @POST("/api/notifications/{id}/clear/")
         rx.Observable<QcResponse> qcClearOneNotification(@Path("id") int id);
-
 
 
     }
