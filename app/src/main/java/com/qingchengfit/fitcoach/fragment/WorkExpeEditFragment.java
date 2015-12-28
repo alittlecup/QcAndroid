@@ -204,9 +204,9 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                 workexpeditGymName.setText(experiencesEntity.getGym().getName());
                 addWorkExperience.setGym_id(experiencesEntity.getGym().getId());
                 Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
-                if (experiencesEntity.getGym().is_authenticated()){
-                    hostQcIdentify.setVisibility(View.VISIBLE);
-                }else hostQcIdentify.setVisibility(View.GONE);
+//                if (experiencesEntity.getGym().is_authenticated()){
+//                    hostQcIdentify.setVisibility(View.VISIBLE);
+//                }else hostQcIdentify.setVisibility(View.GONE);
                 hostAddress.setText(experiencesEntity.getGym().getAddress());
 
             }

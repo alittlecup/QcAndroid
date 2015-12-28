@@ -36,6 +36,7 @@
                 android:background="@drawable/circle_white"
                 android:padding="1dp"
                 android:src="@drawable/ic_qc_identify"
+                android:visibility="gone"
                 />
             <LinearLayout
                 android:layout_width="wrap_content"
