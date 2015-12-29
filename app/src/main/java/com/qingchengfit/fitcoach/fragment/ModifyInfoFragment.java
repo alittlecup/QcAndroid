@@ -254,7 +254,7 @@ public class ModifyInfoFragment extends BaseSettingFragment {
                     .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
         } else {
             Glide.with(App.AppContex)
-                    .load(headurl + "!120x120")
+                    .load(headurl)
                     .asBitmap()
                     .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
         }

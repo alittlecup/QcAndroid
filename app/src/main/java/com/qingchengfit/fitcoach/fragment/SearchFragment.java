@@ -113,14 +113,14 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         });
         if (type == TYPE_ORGANASITON) {
             toolbar.setTitle("添加资质认证");
-            searchviewEt.setHint("搜索机构(至少输入三个字符)");
+            searchviewEt.setHint("搜索机构(至少输入三个字)");
             searchHint.setText("请先选择主办机构");
             searchresultBtn.setText("添加主办机构");
             searchresultHint.setText("没有匹配的机构\n您可以添加该机构");
         } else if (type == TYPE_GYM) {
             toolbar.setTitle("添加工作经历");
             searchHint.setText("请先选择健身房");
-            searchviewEt.setHint("搜索健身房(至少输入三个字符)");
+            searchviewEt.setHint("搜索健身房(至少输入三个字)");
             searchresultBtn.setText("添加健身房");
             searchresultHint.setText("没有匹配的健身房\n您可以添加该健身房");
         }
