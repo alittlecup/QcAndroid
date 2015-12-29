@@ -22,6 +22,8 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class MyGymsFragment extends MainBaseFragment {
     @Bind(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
     private GymsAdapter mGymAdapter;
-    private List<QcCoachSystemDetailResponse.CoachSystemDetail> adapterData = new ArrayList<>();
+    private List<CoachService> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
 
     public MyGymsFragment() {
@@ -163,13 +165,13 @@ public class MyGymsFragment extends MainBaseFragment {
 
     public void freshData() {
 
-        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .map(qcCoachSystemDetailResponse -> {
                     adapterData.clear();
 
-                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
+                    adapterData.addAll(qcCoachSystemDetailResponse.data.services);
                     if (adapterData.size() > 0) {
 
                         refresh.setVisibility(View.VISIBLE);
@@ -179,8 +181,8 @@ public class MyGymsFragment extends MainBaseFragment {
                         refresh.setVisibility(View.GONE);
                         refreshNodata.setVisibility(View.VISIBLE);
                     }
-                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
-                        if (systemDetail.is_personal_system) {
+                    for (CoachService service : qcCoachSystemDetailResponse.data.services) {
+                        if (service.model.equals("service") && service.type ==1) {
                             mHasPrivate = true;
                             break;
                         } else mHasPrivate = false;
@@ -237,7 +239,7 @@ public class MyGymsFragment extends MainBaseFragment {
     class GymsAdapter extends RecyclerView.Adapter<GymsVH> implements View.OnClickListener {
 
 
-        private List<QcCoachSystemDetailResponse.CoachSystemDetail> datas;
+        private List<CoachService> datas;
         private OnRecycleItemClickListener listener;
 
 
@@ -263,10 +265,10 @@ public class MyGymsFragment extends MainBaseFragment {
         @Override
         public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
-            QcCoachSystemDetailResponse.CoachSystemDetail detail = datas.get(position);
+            CoachService detail = datas.get(position);
             holder.itemGymName.setText(detail.name);
             holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
-            if (detail.is_personal_system) {
+            if (detail.model.equals("service")&&detail.type==1) {
                 holder.itemIsPersonal.setVisibility(View.GONE);
             } else {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);

@@ -28,4 +28,8 @@ public class CoachService {
     public String color;
     @SerializedName("photo")
     public String photo;
+    @SerializedName("courses_count")
+    public int courses_count;
+    @SerializedName("users_count")
+    public int users_count;
 }
