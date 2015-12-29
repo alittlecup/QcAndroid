@@ -28,6 +28,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -120,6 +121,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private FragmentAdapter mFragmentAdapter;
     private Observable<NewPushMsg> mObservable;
     private Observable<RxRefreshList> mObservableReresh;
+    private String curModel;
 
     public ScheduesFragment() {
     }
@@ -162,7 +164,7 @@ public class ScheduesFragment extends MainBaseFragment {
         coach = gson.fromJson(id, Coach.class);
         //初始化title下拉
 
-//        setUpViewPager();
+        setUpViewPager();
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
         btn1.setColorNormal(getResources().getColor(R.color.green));
@@ -494,9 +496,10 @@ public class ScheduesFragment extends MainBaseFragment {
             mFragmentAdapter.notifyDataSetChanged();
         } else if (resultCode > 0 && requestCode == 501) {
             toolbarTitle.setText(data.getStringExtra("name"));
-            String model = data.getStringExtra("model");
-
-            curPostion = data.getIntExtra("id",0);
+            curModel = data.getStringExtra("model");
+            curSystemId = Integer.parseInt(data.getStringExtra("id"));
+            LogUtil.e("curModel:"+curModel+"   id:"+curSystemId);
+            mFragmentAdapter.notifyDataSetChanged();
 
         }
 
@@ -624,7 +627,7 @@ public class ScheduesFragment extends MainBaseFragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             calendar.add(Calendar.DAY_OF_MONTH, position - 30);
-            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId);
+            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId,curModel);
         }
 
         @Override

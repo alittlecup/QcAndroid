@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.adapter;
 
+import android.support.annotation.DrawableRes;
+
 import java.util.HashMap;
 
 /**
@@ -21,13 +23,15 @@ public class ImageTwoTextBean {
     public String text2;
     public boolean showIcon;
     public boolean showRight;
+    @DrawableRes
+    public int rightIcon;
     public HashMap<String,String> tags = new HashMap<>();
     public ImageTwoTextBean(String imgUrl, String text1, String text2) {
         this.imgUrl = imgUrl;
         this.text1 = text1;
         this.text2 = text2;
         this.showIcon = false;
-        this.showRight = true;
+        this.showRight = false;
     }
 
     public ImageTwoTextBean(String imgUrl, String text1, String text2, boolean showIcon, boolean showRight) {
@@ -36,5 +40,14 @@ public class ImageTwoTextBean {
         this.text2 = text2;
         this.showIcon = showIcon;
         this.showRight = showRight;
+    }
+
+    public ImageTwoTextBean(String imgUrl, String text1, String text2, boolean showIcon, boolean showRight, int rightIcon) {
+        this.imgUrl = imgUrl;
+        this.text1 = text1;
+        this.text2 = text2;
+        this.showIcon = showIcon;
+        this.showRight = showRight;
+        this.rightIcon = rightIcon;
     }
 }

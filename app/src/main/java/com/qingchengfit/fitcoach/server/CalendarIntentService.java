@@ -120,9 +120,9 @@ public class CalendarIntentService extends IntentService {
             PhoneFuncUtils.delOndDayCal(this, calid, param1);
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
-            List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+            List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
             for (int i = 0; i < systems.size(); i++) {
-                QcSchedulesResponse.System system = systems.get(i);
+                QcSchedulesResponse.Service system = systems.get(i);
 
                 String gymname = system.system.name;
                 List<QcScheduleBean> schedules = system.schedules;
@@ -181,9 +181,9 @@ public class CalendarIntentService extends IntentService {
             PhoneFuncUtils.delTimeCal(this, calid, start, c.getTimeInMillis());
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
-            List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+            List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
             for (int i = 0; i < systems.size(); i++) {
-                QcSchedulesResponse.System system = systems.get(i);
+                QcSchedulesResponse.Service system = systems.get(i);
 
                 String gymname = system.system.name;
                 List<QcScheduleBean> schedules = system.schedules;

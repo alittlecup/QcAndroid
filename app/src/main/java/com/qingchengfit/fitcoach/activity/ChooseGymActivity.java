@@ -42,11 +42,17 @@ public class ChooseGymActivity extends AppCompatActivity {
     private Subscription mHttpsub;
     private ImageTwoTextAdapter mGymsAdapter;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
+    private String mCurModel;
+    private int mCurId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_gym);
         ButterKnife.bind(this);
+        mCurModel = getIntent().getStringExtra("model");
+        mCurId = getIntent().getIntExtra("id", 0);
+
         toolbar.setTitle("请选择您的场馆");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -71,10 +77,10 @@ public class ChooseGymActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int pos) {
                 Intent it = new Intent();
-                it.putExtra("name",mDatas.get(pos).text1);
-                it.putExtra("type",mDatas.get(pos).tags.get("type"));
-                it.putExtra("id",mDatas.get(pos).tags.get("id"));
-                it.putExtra("model",mDatas.get(pos).tags.get("model"));
+                it.putExtra("name", mDatas.get(pos).text1);
+                it.putExtra("type", mDatas.get(pos).tags.get("type"));
+                it.putExtra("id", mDatas.get(pos).tags.get("id"));
+                it.putExtra("model", mDatas.get(pos).tags.get("model"));
                 setResult(100, it);
                 finish();
             }
@@ -82,7 +88,7 @@ public class ChooseGymActivity extends AppCompatActivity {
         initSfl();
     }
 
-    public void initSfl(){
+    public void initSfl() {
         sfl.setColorSchemeResources(R.color.primary);
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -93,7 +99,7 @@ public class ChooseGymActivity extends AppCompatActivity {
     }
 
 
-    public void refresh(){
+    public void refresh() {
         mHttpsub = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -110,12 +116,23 @@ public class ChooseGymActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
+                        mDatas.clear();
+                        ImageTwoTextBean imageTwoTextBean = new ImageTwoTextBean("", "所有健身房", "");
+                        if (mCurId == 0){
+                            imageTwoTextBean.showRight =true;
+                            imageTwoTextBean.rightIcon = R.drawable.ic_green_right;
+                        }
+
+                        mDatas.add(imageTwoTextBean);
+
                         List<CoachService> services = qcCoachServiceResponse.data.services;
-                        for (CoachService service:services){
-                            ImageTwoTextBean bean = new ImageTwoTextBean("",service.name,"");
-                            bean.tags.put("type",Integer.toString(1));
-                            bean.tags.put("id",Long.toString(service.id));
-                            bean.tags.put("model",service.model);
+                        for (CoachService service : services) {
+                            ImageTwoTextBean bean = new ImageTwoTextBean(service.photo, service.name, "");
+                            if (service.id == mCurId && mCurModel.equals(service.model))
+                                bean.rightIcon = R.drawable.ic_green_right;
+                            bean.tags.put("type", Integer.toString(1));
+                            bean.tags.put("id", Long.toString(service.id));
+                            bean.tags.put("model", service.model);
                             mDatas.add(bean);
                         }
                         mGymsAdapter.notifyDataSetChanged();
@@ -130,7 +147,6 @@ public class ChooseGymActivity extends AppCompatActivity {
             mHttpsub.unsubscribe();
         super.onDestroy();
     }
-
 
 
 }

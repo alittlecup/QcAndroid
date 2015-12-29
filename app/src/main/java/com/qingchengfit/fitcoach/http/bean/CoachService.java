@@ -24,4 +24,8 @@ public class CoachService {
     public long id;
     @SerializedName("name")
     public String name;
+    @SerializedName("color")
+    public String color;
+    @SerializedName("photo")
+    public String photo;
 }

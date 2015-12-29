@@ -70,6 +70,7 @@ public class ScheduleListFragment extends Fragment {
     private ArrayList<ScheduleBean> scheduleBeans = new ArrayList<>();      //列表数据
     private ScheduesAdapter scheduesAdapter;
     private int curentGym = 0;
+    private String currentModel;
     private long mCurCalId;
     private QcSchedulesResponse mQcSchedulesResponse;
     Observer<QcSchedulesResponse> mHttpCallBack = new Observer<QcSchedulesResponse>() {
@@ -103,11 +104,12 @@ public class ScheduleListFragment extends Fragment {
     public ScheduleListFragment() {
     }
 
-    public static ScheduleListFragment newInstance(Long date, int curentGym) {
+    public static ScheduleListFragment newInstance(Long date, int curentGym,String model) {
 
         Bundle args = new Bundle();
         args.putLong("date", date);
         args.putInt("gym", curentGym);
+        args.putString("model",model);
         ScheduleListFragment fragment = new ScheduleListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -119,6 +121,7 @@ public class ScheduleListFragment extends Fragment {
         if (getArguments() != null) {
             mCurDate = new Date(getArguments().getLong("date"));
             curentGym = getArguments().getInt("gym");
+            currentModel = getArguments().getString("model");
         } else mCurDate = new Date();
     }
 
@@ -206,7 +209,7 @@ public class ScheduleListFragment extends Fragment {
             if (system.system == null)
                 continue;
             String syscolor = system.system.name;
-            if (curentGym != 0 && curentGym != system.system.id)
+            if (curentGym != 0 && (curentGym != system.system.id || !system.system.model.equals(currentModel)))
                 continue;
 
             for (int j = 0; j < rests.size(); j++) {

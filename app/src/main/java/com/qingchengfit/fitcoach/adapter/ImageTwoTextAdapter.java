@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,13 +72,23 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
         holder.itemView.setTag(position);
         ImageTwoTextBean bean = datas.get(position);
         holder.itemGymName.setText(bean.text1);
-        holder.itemGymPhonenum.setText(bean.text2);
+        if (TextUtils.isEmpty(bean.text2))
+            holder.itemGymPhonenum.setVisibility(View.GONE);
+        else{
+            holder.itemGymPhonenum.setVisibility(View.VISIBLE);
+            holder.itemGymPhonenum.setText(bean.text2);
+        }
         Glide.with(App.AppContex).load(bean.imgUrl).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader,App.AppContex));
         if (bean.showIcon)
             holder.qcIdentify.setVisibility(View.VISIBLE);
         else holder.qcIdentify.setVisibility(View.GONE);
-        if (bean.showRight)
+        if (bean.showRight){
             holder.itemRight.setVisibility(View.VISIBLE);
+            if (bean.rightIcon != 0){
+                holder.itemRight.setImageResource(bean.rightIcon);
+                holder.itemGymName.setTextColor(App.AppContex.getResources().getColor(R.color.primary));
+            }
+        }
         else holder.itemRight.setVisibility(View.GONE);
 
 

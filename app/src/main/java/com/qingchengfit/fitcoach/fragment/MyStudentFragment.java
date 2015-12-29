@@ -113,6 +113,7 @@ public class MyStudentFragment extends MainBaseFragment {
     private int curPostion = 0;
     private MaterialDialog mAlertPrivate;
     private List<QcCoachSystem> systems;
+    private String curModel;
 
     public MyStudentFragment() {
     }
@@ -325,17 +326,17 @@ public class MyStudentFragment extends MainBaseFragment {
                 List<QcAllStudentResponse.Ship> ships = qcAllStudentResponse.data.ships;
                 for (int i = 0; i < ships.size(); i++) {
                     QcAllStudentResponse.Ship ship = ships.get(i);
-                    if (curSystemId != 0 && curSystemId != ship.system.id)
+                    if (curSystemId != 0 && (curSystemId != ship.service.id || !curModel.equals(ship.service)))
                         continue;
                     List<StudentBean> tmp = new ArrayList<>();
                     for (QcStudentBean student : ship.users) {
                         StudentBean bean = new StudentBean();
-                        bean.gymStr = ship.system.name;
+                        bean.gymStr = ship.service.name;
                         bean.headerPic = student.avatar;
                         bean.username = student.username;
-                        bean.systemUrl = ship.system.url;
+                        bean.systemUrl = ship.service.photo;
                         bean.id = student.id;
-                        bean.color = ship.system.color;
+                        bean.color = ship.service.color;
                         if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
                             bean.head = "~";
                         } else {

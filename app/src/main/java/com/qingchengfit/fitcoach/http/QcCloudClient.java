@@ -354,7 +354,7 @@ public class QcCloudClient {
         rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id, @QueryMap Map<String, String> params);
 
         //获取教练所有学员
-        @GET("/api/coaches/{id}/users/")
+        @GET("/api/v1/coaches/{id}/students/")
         rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
 
         //获取所有课程计划
