@@ -17,4 +17,5 @@ public class PushBody {
     public String channel_id;
     public String push_id;
     public String device_type;
+    public String distribute;
 }

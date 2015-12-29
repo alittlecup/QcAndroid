@@ -276,6 +276,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 pushBody.channel_id = channelid;
                 pushBody.push_id = userid;
                 pushBody.device_type = "Android";
+                pushBody.distribute = getString(R.string.oem_tag);
                 QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {

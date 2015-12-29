@@ -111,17 +111,23 @@ android {
     lintOptions {
         abortOnError false
     }
+    flavorDimensions 'oem', 'dev'
 
     productFlavors {
         dev {
             minSdkVersion 21
-
+            flavorDimension 'dev'
         }
         prod {
             minSdkVersion 15
+            flavorDimension 'dev'
+
+        }
+        joinfit{
+            minSdkVersion 15
+            flavorDimension 'oem'
         }
     }
-
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
