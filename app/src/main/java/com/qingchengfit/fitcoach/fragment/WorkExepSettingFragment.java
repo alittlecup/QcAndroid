@@ -88,7 +88,6 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
 
-
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -113,15 +112,15 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.e("onActivityReslut:"+requestCode +"  "+requestCode);
+        LogUtil.e("onActivityReslut:" + requestCode + "  " + requestCode);
         if (requestCode == 10010 && resultCode > 0) {
             QcExperienceResponse.DataEntity.ExperiencesEntity entity = new QcExperienceResponse.DataEntity.ExperiencesEntity();
             QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
-            gymEntity.setId(data.getIntExtra("id",0));
+            gymEntity.setId(data.getIntExtra("id", 0));
             gymEntity.setName(data.getStringExtra("username"));
             gymEntity.setAddress(data.getStringExtra("address"));
             gymEntity.setPhoto(data.getStringExtra("pic"));
-            gymEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
+            gymEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             entity.setGym(gymEntity);
             fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity));
 
@@ -186,6 +185,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         View isHidden;
         @Bind(R.id.item_workexpe_img)
         ImageView img;
+
         public WorkExepVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -237,14 +237,17 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             if (experiencesEntity.is_authenticated())
                 holder.qcIdentify.setVisibility(View.VISIBLE);
             else holder.qcIdentify.setVisibility(View.GONE);
-            if (experiencesEntity.getGym().getDistrict()!=null && experiencesEntity.getGym().getDistrict().city != null &&
+            if (experiencesEntity.getGym().getDistrict() != null && experiencesEntity.getGym().getDistrict().city != null &&
                     !TextUtils.isEmpty(experiencesEntity.getGym().getDistrict().city.name))
-                holder.itemAddress.setText("|"+experiencesEntity.getGym().getDistrict().city.name);
+                holder.itemAddress.setText("|" + experiencesEntity.getGym().getDistrict().city.name);
 
-            if (experiencesEntity.is_hidden())
+            if (experiencesEntity.is_hidden()) {
                 holder.isHidden.setVisibility(View.VISIBLE);
-            else holder.isHidden.setVisibility(View.GONE);
-            Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(holder.img,App.AppContex));
+                holder.itemWorkexpeTime.setText("已隐藏");
+            } else {
+                holder.isHidden.setVisibility(View.GONE);
+            }
+            Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(holder.img, App.AppContex));
         }
 
 

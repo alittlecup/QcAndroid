@@ -436,6 +436,13 @@ public class RecordEditFragment extends BaseSettingFragment {
         addCertificate.setCertificate_name(recordeditCertificatName.getContent());
         if (addCertificate.getType() == 0)
             addCertificate.setType(mType);
+        if (!comfirmCertificationSwitch.isChecked()) {
+            addCertificate.setCertificate_name("");
+            addCertificate.setPhoto("");
+        }
+        if (!comfirmScroeSwitch.isChecked())
+            addCertificate.setGrade("");
+
         String endtime = recordeditDateoff.getContent().trim();
         if (endtime.equalsIgnoreCase("长期有效")) {
             endtime = "3000-1-1";
