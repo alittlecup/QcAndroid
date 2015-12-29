@@ -494,6 +494,8 @@ public class ScheduesFragment extends MainBaseFragment {
             mFragmentAdapter.notifyDataSetChanged();
         } else if (resultCode > 0 && requestCode == 501) {
             toolbarTitle.setText(data.getStringExtra("name"));
+            String model = data.getStringExtra("model");
+
             curPostion = data.getIntExtra("id",0);
 
         }

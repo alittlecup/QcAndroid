@@ -16,6 +16,8 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/12/28 2015.
  */
 public class CoachService {
+    @SerializedName("model")
+    public String model;
     @SerializedName("type")
     public int type;
     @SerializedName("id")

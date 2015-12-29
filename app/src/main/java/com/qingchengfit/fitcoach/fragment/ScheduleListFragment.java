@@ -192,20 +192,20 @@ public class ScheduleListFragment extends Fragment {
         if (qcSchedulesResponse == null)
             return;
 
-        List<QcSchedulesResponse.System> systems = qcSchedulesResponse.data.systems;
+        List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
         CalendarIntentService.startActionDay(getContext(), mCurDate.getTime(), new Gson().toJson(qcSchedulesResponse));
 
         scheduleBeans.clear();
 
 
         for (int i = 0; i < systems.size(); i++) {
-            QcSchedulesResponse.System system = systems.get(i);
+            QcSchedulesResponse.Service system = systems.get(i);
 
             List<QcSchedulesResponse.Rest> rests = system.rests;
             List<QcScheduleBean> schedules = system.schedules;
             if (system.system == null)
                 continue;
-            String syscolor = system.system.color;
+            String syscolor = system.system.name;
             if (curentGym != 0 && curentGym != system.system.id)
                 continue;
 

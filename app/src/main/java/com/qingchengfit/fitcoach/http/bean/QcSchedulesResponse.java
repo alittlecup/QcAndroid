@@ -41,15 +41,15 @@ public class QcSchedulesResponse extends QcResponse {
     public static class Data {
         @SerializedName("services")
         public List<Service> services;
-        @SerializedName("services")
-        public List<Schedule> schedules;
+//        @SerializedName("services")
+//        public List<Schedule> schedules;
     }
 
     public static class Service {
         @SerializedName("rests")
         public List<Rest> rests;
-        @SerializedName("system")
-        public QcCoachSystem system;
+        @SerializedName("service")
+        public CoachService system;
         @SerializedName("schedules")
         public List<QcScheduleBean> schedules;
 

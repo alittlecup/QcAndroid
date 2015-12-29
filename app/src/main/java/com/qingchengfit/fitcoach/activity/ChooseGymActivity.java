@@ -19,7 +19,6 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
-import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +74,7 @@ public class ChooseGymActivity extends AppCompatActivity {
                 it.putExtra("name",mDatas.get(pos).text1);
                 it.putExtra("type",mDatas.get(pos).tags.get("type"));
                 it.putExtra("id",mDatas.get(pos).tags.get("id"));
+                it.putExtra("model",mDatas.get(pos).tags.get("model"));
                 setResult(100, it);
                 finish();
             }
@@ -115,13 +115,7 @@ public class ChooseGymActivity extends AppCompatActivity {
                             ImageTwoTextBean bean = new ImageTwoTextBean("",service.name,"");
                             bean.tags.put("type",Integer.toString(1));
                             bean.tags.put("id",Long.toString(service.id));
-                            mDatas.add(bean);
-                        }
-                        List<QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity> gyms = qcCoachServiceResponse.data.gyms;
-                        for (QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gym :gyms){
-                            ImageTwoTextBean bean = new ImageTwoTextBean("",gym.getName(),"");
-                            bean.tags.put("type",Integer.toString(2));
-                            bean.tags.put("id",Long.toString(gym.getId()));
+                            bean.tags.put("model",service.model);
                             mDatas.add(bean);
                         }
                         mGymsAdapter.notifyDataSetChanged();
