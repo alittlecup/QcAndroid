@@ -1,8 +1,11 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -104,12 +107,12 @@ public class ScheduleListFragment extends Fragment {
     public ScheduleListFragment() {
     }
 
-    public static ScheduleListFragment newInstance(Long date, int curentGym,String model) {
+    public static ScheduleListFragment newInstance(Long date, int curentGym, String model) {
 
         Bundle args = new Bundle();
         args.putLong("date", date);
         args.putInt("gym", curentGym);
-        args.putString("model",model);
+        args.putString("model", model);
         ScheduleListFragment fragment = new ScheduleListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -245,8 +248,12 @@ public class ScheduleListFragment extends Fragment {
                 bean.title = schedule.course.name;
                 bean.intent_url = schedule.url;
                 if (getContext() != null) {
-                    String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
-                    bean.conflict = thing;
+                    if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                        String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
+                        bean.conflict = thing;
+                        return;
+                    }
+
                 }
                 scheduleBeans.add(bean);
             }

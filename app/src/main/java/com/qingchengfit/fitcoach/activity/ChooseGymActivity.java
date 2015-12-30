@@ -9,7 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImageTwoTextAdapter;
@@ -25,6 +28,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,6 +42,16 @@ public class ChooseGymActivity extends AppCompatActivity {
     RecyclerView recyclerview;
     @Bind(R.id.sfl)
     SwipeRefreshLayout sfl;
+    @Bind(R.id.item_gym_name)
+    TextView itemGymName;
+    @Bind(R.id.item_is_personal)
+    TextView itemIsPersonal;
+    @Bind(R.id.qc_identify)
+    ImageView qcIdentify;
+    @Bind(R.id.item_gym_phonenum)
+    TextView itemGymPhonenum;
+    @Bind(R.id.item_right)
+    ImageView itemRight;
 
     private Subscription mHttpsub;
     private ImageTwoTextAdapter mGymsAdapter;
@@ -52,7 +66,7 @@ public class ChooseGymActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mCurModel = getIntent().getStringExtra("model");
         mCurId = getIntent().getIntExtra("id", 0);
-
+        LogUtil.e("curmodel:"+mCurModel +"   xxid:"+mCurId);
         toolbar.setTitle("请选择您的场馆");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -69,6 +83,17 @@ public class ChooseGymActivity extends AppCompatActivity {
                 refresh();
             }
         });
+
+        if (mCurId == 0){
+            itemRight.setVisibility(View.VISIBLE);
+            itemRight.setImageResource(R.drawable.ic_green_right);
+            itemGymName.setTextColor(getResources().getColor(R.color.primary));
+        }else {
+            itemRight.setVisibility(View.GONE);
+            itemGymName.setTextColor(getResources().getColor(R.color.text_black));
+
+        }
+
         mGymsAdapter = new ImageTwoTextAdapter(mDatas);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -80,6 +105,7 @@ public class ChooseGymActivity extends AppCompatActivity {
                 it.putExtra("name", mDatas.get(pos).text1);
                 it.putExtra("type", mDatas.get(pos).tags.get("type"));
                 it.putExtra("id", mDatas.get(pos).tags.get("id"));
+                LogUtil.e("xxxxx id:" + mDatas.get(pos).tags.get("id"));
                 it.putExtra("model", mDatas.get(pos).tags.get("model"));
                 setResult(100, it);
                 finish();
@@ -96,6 +122,17 @@ public class ChooseGymActivity extends AppCompatActivity {
                 refresh();
             }
         });
+    }
+
+    @OnClick(R.id.chooseall)
+    public void chooseAll(){
+        Intent it = new Intent();
+        it.putExtra("name", "全部健身房");
+        it.putExtra("type", 0);
+        it.putExtra("id", "0");
+        it.putExtra("model","");
+        setResult(100, it);
+        this.finish();
     }
 
 
@@ -117,19 +154,13 @@ public class ChooseGymActivity extends AppCompatActivity {
                     @Override
                     public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
                         mDatas.clear();
-                        ImageTwoTextBean imageTwoTextBean = new ImageTwoTextBean("", "所有健身房", "");
-                        if (mCurId == 0){
-                            imageTwoTextBean.showRight =true;
-                            imageTwoTextBean.rightIcon = R.drawable.ic_green_right;
-                        }
-
-                        mDatas.add(imageTwoTextBean);
-
                         List<CoachService> services = qcCoachServiceResponse.data.services;
                         for (CoachService service : services) {
                             ImageTwoTextBean bean = new ImageTwoTextBean(service.photo, service.name, "");
-                            if (service.id == mCurId && mCurModel.equals(service.model))
+                            if (service.id == mCurId && mCurModel.equals(service.model)) {
                                 bean.rightIcon = R.drawable.ic_green_right;
+                                bean.showRight = true;
+                            }
                             bean.tags.put("type", Integer.toString(1));
                             bean.tags.put("id", Long.toString(service.id));
                             bean.tags.put("model", service.model);

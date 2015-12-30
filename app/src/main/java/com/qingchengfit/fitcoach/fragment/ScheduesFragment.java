@@ -144,7 +144,10 @@ public class ScheduesFragment extends MainBaseFragment {
         toolbarTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), ChooseGymActivity.class),501);
+                Intent choosegym =new Intent(getContext(), ChooseGymActivity.class);
+                choosegym.putExtra("model",curModel);
+                choosegym.putExtra("id",curSystemId);
+                startActivityForResult(choosegym,501);
             }
         });
 

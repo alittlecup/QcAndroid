@@ -22,9 +22,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,9 +91,9 @@ public class MyGymsFragment extends MainBaseFragment {
             @Override
             public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getActivity(), FragActivity.class);
-                toWeb.putExtra("host", adapterData.get(pos).url);
-                toWeb.putExtra("id", adapterData.get(pos).id);
-                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
+//                toWeb.putExtra("host", adapterData.get(pos).url);
+//                toWeb.putExtra("id", adapterData.get(pos).id);
+//                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
                 toWeb.putExtra("type", 5);
                 startActivityForResult(toWeb, 404);
 //                Intent toWeb = new Intent(getActivity() , WebActivity.class);
