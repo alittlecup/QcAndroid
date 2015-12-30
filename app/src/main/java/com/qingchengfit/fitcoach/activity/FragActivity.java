@@ -63,8 +63,8 @@ public class FragActivity extends BaseAcitivity {
                 fragment = GymDetailFragment.newInstance(id, host, isPrivate);
                 break;
             case 6:
-                int gymid = getIntent().getIntExtra("id", 1);
-                boolean isPrivategym = getIntent().getBooleanExtra("isPrivate", false);
+                long gymid = getIntent().getLongExtra("id", 1l);
+                String isPrivategym = getIntent().getStringExtra("model");
                 fragment = GymDetailNativeFragment.newInstance(gymid,isPrivategym);
                 break;
             default:

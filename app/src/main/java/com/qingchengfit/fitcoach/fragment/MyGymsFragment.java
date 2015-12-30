@@ -22,9 +22,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +98,8 @@ public class MyGymsFragment extends MainBaseFragment {
 //                startActivityForResult(toWeb, 404);
                 Intent intent = new Intent(getActivity(), FragActivity.class);
                 intent.putExtra("id", adapterData.get(pos).id);
-                intent.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
-
+//                intent.putExtra("isPrivate", adapterData.get(pos).);
+                intent.putExtra("model",adapterData.get(pos).model);
                 intent.putExtra("type", 6);
                 startActivityForResult(intent, 11);
 
