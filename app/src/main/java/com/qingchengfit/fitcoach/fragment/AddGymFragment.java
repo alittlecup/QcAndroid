@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.AddGymBean;
+import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.ArrayList;
@@ -133,7 +133,7 @@ public class AddGymFragment extends Fragment {
         }
 
 
-        AddGymBean bean = new AddGymBean(addgymName.getContent(), Districtid, addgymContact.getContent(), workexpeditDescripe.getText().toString(),addgymBrand.getContent());
+        AddGymPostBean bean = new AddGymPostBean(addgymName.getContent(), Districtid, addgymContact.getContent(), workexpeditDescripe.getText().toString(),addgymBrand.getContent());
         QcCloudClient.getApi().postApi.qcAddGym(bean).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcAddGymResponse -> {

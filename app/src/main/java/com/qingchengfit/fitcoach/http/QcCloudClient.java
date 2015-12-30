@@ -8,6 +8,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 import com.qingchengfit.fitcoach.http.bean.AddGymBean;
+import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
@@ -430,7 +431,7 @@ public class QcCloudClient {
 
         //新增健身房
         @POST("/api/gym/")
-        rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymBean addGymBean);
+        rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymPostBean addGymBean);
 
         //新增组织
         @POST("/api/organizations/")

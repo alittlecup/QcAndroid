@@ -122,7 +122,8 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             gymEntity.setPhoto(data.getStringExtra("pic"));
             gymEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             entity.setGym(gymEntity);
-            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity));
+
+            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity,true));
 
         }
     }

@@ -101,7 +101,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     private AddWorkExperience addWorkExperience;
     private MaterialDialog delDialog;
     private DialogSheet mDialogSheet;
-
+    private boolean mIsAdd;
 
 
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
@@ -110,6 +110,17 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         args.putString("title", mTitle);
         if (experiencesEntity != null)
             args.putParcelable("experience", experiencesEntity);
+        WorkExpeEditFragment fragment = new WorkExpeEditFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity,boolean add) {
+
+        Bundle args = new Bundle();
+        args.putString("title", mTitle);
+        if (experiencesEntity != null)
+            args.putParcelable("experience", experiencesEntity);
+        args.putBoolean("add",add);
         WorkExpeEditFragment fragment = new WorkExpeEditFragment();
         fragment.setArguments(args);
         return fragment;
@@ -163,6 +174,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         if (getArguments() != null) {
             mTitle = getArguments().getString("title");
             experiencesEntity = getArguments().getParcelable("experience");
+            mIsAdd = getArguments().getBoolean("add");
         }
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
@@ -294,7 +306,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             }
         };
         fragmentCallBack.ShowLoading("请稍后");
-        if (experiencesEntity == null)
+        if (mIsAdd)
             QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponseAction);
         else
             QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponseAction);
