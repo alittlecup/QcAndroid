@@ -56,7 +56,7 @@ public class ChooseGymActivity extends AppCompatActivity {
     private Subscription mHttpsub;
     private ImageTwoTextAdapter mGymsAdapter;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
-    private String mCurModel;
+    private String mCurModel = "";
     private int mCurId;
     private String mTitle;
     @Override
@@ -107,7 +107,6 @@ public class ChooseGymActivity extends AppCompatActivity {
                 it.putExtra("name", mDatas.get(pos).text1);
                 it.putExtra("type", mDatas.get(pos).tags.get("type"));
                 it.putExtra("id", mDatas.get(pos).tags.get("id"));
-                LogUtil.e("xxxxx id:" + mDatas.get(pos).tags.get("id"));
                 it.putExtra("model", mDatas.get(pos).tags.get("model"));
                 setResult(100, it);
                 finish();
@@ -129,7 +128,7 @@ public class ChooseGymActivity extends AppCompatActivity {
     @OnClick(R.id.chooseall)
     public void chooseAll(){
         Intent it = new Intent();
-        it.putExtra("name", "全部健身房");
+        it.putExtra("name", mTitle);
         it.putExtra("type", 0);
         it.putExtra("id", "0");
         it.putExtra("model","");

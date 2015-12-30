@@ -56,7 +56,7 @@ public class StatementGlanceFragment extends Fragment {
 //    private ArrayList<SpinnerBean> spinnerBeans;
     private QcReportGlanceResponse response;
     private String curModel;
-    private long curSystemId = 0;
+    private int curSystemId = 0;
     private String mTitle;
 
     public StatementGlanceFragment() {
@@ -79,6 +79,7 @@ public class StatementGlanceFragment extends Fragment {
                 Intent choosegym =new Intent(getContext(), ChooseGymActivity.class);
                 
                 choosegym.putExtra("model",curModel);
+                LogUtil.e("curSystemid:"+curSystemId);
                 choosegym.putExtra("id",curSystemId);
                 choosegym.putExtra("title",mTitle);
                 startActivityForResult(choosegym,501);
@@ -133,6 +134,7 @@ public class StatementGlanceFragment extends Fragment {
             public void onGlobalLayout() {
                 refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 refresh.setRefreshing(true);
+                freshData();
             }
         });
         refresh.setColorSchemeResources(R.color.primary);
@@ -142,7 +144,6 @@ public class StatementGlanceFragment extends Fragment {
                 freshData();
             }
         });
-        freshData();
 
         return view;
     }
@@ -160,9 +161,7 @@ public class StatementGlanceFragment extends Fragment {
     public void handleReponse(QcReportGlanceResponse qcReportGlanceResponse) {
         if (qcReportGlanceResponse == null)
             return;
-        List<QcReportGlanceResponse.System> systems = qcReportGlanceResponse.data.systems;
-//        spinnerBeans.clear();
-//        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
+        List<QcReportGlanceResponse.glanceservice> systems = qcReportGlanceResponse.data.services;
         StringBuffer monthTitle = new StringBuffer();
         StringBuffer weekTitle = new StringBuffer();
         StringBuffer dayTitle = new StringBuffer();
@@ -174,26 +173,26 @@ public class StatementGlanceFragment extends Fragment {
                 monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
 
         for (int i = 0; i < systems.size(); i++) {
-            QcReportGlanceResponse.System system = systems.get(i);
-            if (system.system == null)
+            QcReportGlanceResponse.glanceservice system = systems.get(i);
+            if (system.service == null)
                 continue;
             if (i == 0) {
-                monthTitle.append("(").append(system.month.from_date).append("至").append(system.month.to_date).append(")");
-                weekTitle.append("(").append(system.week.from_date).append("至").append(system.week.to_date).append(")");
-                dayTitle.append("(").append(system.today.from_date).append("至").append(system.today.to_date).append(")");
+                monthTitle.append("(").append(system.stat.month.from_date).append("至").append(system.stat.month.to_date).append(")");
+                weekTitle.append("(").append(system.stat.week.from_date).append("至").append(system.stat.week.to_date).append(")");
+                dayTitle.append("(").append(system.stat.today.from_date).append("至").append(system.stat.today.to_date).append(")");
             }
 
-            if (curSystemId != 0 && curSystemId != system.system.id)
+            if (curSystemId != 0 && (curSystemId != system.service.id || !system.service.model.equals(curModel)))
                 continue;
-            monthClassNum += system.month.course_count;
-            monthOrderNum += system.month.order_count;
-            monthServerNum += system.month.user_count;
-            weekClassNum += system.week.course_count;
-            weekOrderNum += system.week.order_count;
-            weekServerNum += system.week.user_count;
-            dayClassNum += system.today.course_count;
-            dayOrderNum = +system.today.order_count;
-            dayServerNum += system.today.user_count;
+            monthClassNum += system.stat.month.course_count;
+            monthOrderNum += system.stat.month.order_count;
+            monthServerNum += system.stat.month.user_count;
+            weekClassNum += system.stat.week.course_count;
+            weekOrderNum += system.stat.week.order_count;
+            weekServerNum += system.stat.week.user_count;
+            dayClassNum += system.stat.today.course_count;
+            dayOrderNum = +system.stat.today.order_count;
+            dayServerNum += system.stat.today.user_count;
         }
 
         StringBuffer monthContent = new StringBuffer();
@@ -255,6 +254,7 @@ public class StatementGlanceFragment extends Fragment {
             curModel = data.getStringExtra("model");
             curSystemId = Integer.parseInt(data.getStringExtra("id"));
             LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
+
             handleReponse(response);
 
         }

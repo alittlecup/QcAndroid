@@ -23,16 +23,27 @@ public class QcStatementDetailRespone extends QcResponse {
     public DetailData data;
 
     public static class DetailData {
+        @SerializedName("service")
+        public CoachService service;
+        @SerializedName("schedules")
+        public StatamentSchedule schedules;
+
+
+
+    }
+
+    public static class StatamentSchedule{
         @SerializedName("start")
         public String start;
         @SerializedName("end")
         public String end;
+        @SerializedName("stat")
+        public StatementGlance stat;
         @SerializedName("user_id")
         public String user_id;
         @SerializedName("schedules")
         public List<QcScheduleBean> schedules;
-        @SerializedName("stat")
-        public StatementGlance stat;
+
     }
 
     public static class StatementGlance {

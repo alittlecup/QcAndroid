@@ -25,7 +25,7 @@ import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
@@ -71,6 +71,7 @@ public class CustomStatmentFragment extends Fragment {
     private List<String> courseStrings = new ArrayList<>();
     private List<String> studentStrings = new ArrayList<>();
     private int chooseGymId = 0;
+    private String chooseGymModel = "";
     private int chooseUserId = 0;
     private int chooseCoursId = 0;
     private List<QcStudentBean> studentBeans;
@@ -122,6 +123,7 @@ public class CustomStatmentFragment extends Fragment {
             courseStrings.add(0, "全部课程");
         }
     };
+    private String model;
 
     public CustomStatmentFragment() {
 
@@ -132,14 +134,14 @@ public class CustomStatmentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         date = Calendar.getInstance();
         //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
-                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0));
+                    List<CoachService> systems = qcCoachSystemResponse.data.services;
+                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0,""));
 
                     for (int i = 0; i < systems.size(); i++) {
-                        QcCoachSystem system = systems.get(i);
-                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                        CoachService system = systems.get(i);
+                        spinnerBeans.add(new SpinnerBean(system.color, system.name, (int)system.id,model));
                         gymStrings.add(system.name);
                     }
 //                    Collections.sort(gymStrings,new PinyinComparator());
@@ -170,7 +172,7 @@ public class CustomStatmentFragment extends Fragment {
         customStatmentCourse.setContent("所有课程");
         customStatmentStart.setContent(DateUtils.getServerDateDay(new Date()));
         customStatmentEnd.setContent(DateUtils.getServerDateDay(new Date()));
-        customStatmentGym.setContent("选择健身房");
+        customStatmentGym.setContent("选择健身房场馆");
         customStatmentStudent.setContent("所有学员");
     }
 
@@ -339,6 +341,7 @@ public class CustomStatmentFragment extends Fragment {
                 customStatmentGym.setContent(gymStrings.get(position));
                 if (chooseCoursId != spinnerBeans.get(position).id) {
                     chooseGymId = spinnerBeans.get(position).id;
+                    chooseGymModel = spinnerBeans.get(position).model;
                     if (position == 0) {
                         customStatmentStudent.setVisibility(View.GONE);
                         customStatmentCourse.setVisibility(View.GONE);
@@ -428,7 +431,7 @@ public class CustomStatmentFragment extends Fragment {
     public void onClickGenerate() {
         getFragmentManager().beginTransaction()
                 .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(3,
-                        customStatmentStart.getContent(), customStatmentEnd.getContent(),
+                        customStatmentStart.getContent(), customStatmentEnd.getContent(),model,
                         chooseGymId, chooseUserId, chooseCoursId, customStatmentStudent.getContent(), customStatmentCourse.getContent()))
                 .addToBackStack(null)
                 .commit();

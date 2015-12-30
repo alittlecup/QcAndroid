@@ -314,7 +314,7 @@ public class QcCloudClient {
 
 
         //获取教练预约概览
-        @GET("/api/coaches/{id}/schedules/reports/glance/")
+        @GET("/api/v1/coaches/{id}/reports/schedules/glance/")
         rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
 
         //获取教练预约概览
@@ -336,9 +336,12 @@ public class QcCloudClient {
         rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
 
 
-        //获取教练报表强详情
-        @GET("/api/coaches/{id}/systems/report/schedules/")
+        //获取教练报表详情
+        @GET("/api/v1/coaches/{id}/reports/schedules/")
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+
+        @GET("/api/v1/services/detail/")
+        rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String,String> params);
 
         //获取教练销售详情
         @GET("/api/coaches/{id}/systems/report/sale/")
