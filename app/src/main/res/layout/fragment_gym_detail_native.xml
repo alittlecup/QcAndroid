@@ -3,7 +3,9 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@color/white"
+    >
 
     <include layout="@layout/common_toolbar"/>
 
@@ -132,6 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
+                        android:lineSpacingExtra="4dp"
                         tools:text="周一8:00-9:00, 周二9:00-10:00\n周一8:00-9:00, 周二9:00-10:00\n周一8:00-9:00, 周二9:00-10:00\n周一8:00-9:00, 周二9:00-10:00\n"
                         />
                 </LinearLayout>
@@ -140,6 +143,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginTop="10dp"
                 android:id="@+id/course_total_layout"
                 android:layout_width="match_parent"
                 android:layout_height="37dp"

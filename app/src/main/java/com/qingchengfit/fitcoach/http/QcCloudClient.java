@@ -314,7 +314,7 @@ public class QcCloudClient {
 
 
         //获取教练预约概览
-        @GET("/api/v1/coaches/{id}/schedules/reports/glance/")
+        @GET("/api/coaches/{id}/schedules/reports/glance/")
         rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
 
         //获取教练预约概览

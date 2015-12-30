@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -15,17 +16,15 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.adapter.ImageThreeAdapter;
-import com.qingchengfit.fitcoach.bean.ImageThreeBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
 import com.qingchengfit.fitcoach.http.bean.ShopCourse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -69,8 +68,6 @@ public class GymDetailNativeFragment extends Fragment {
     ImageView gymTitleTag;
     private long mId;
     private boolean mIsPrivate;
-    private ImageThreeAdapter mAdapter;
-    private List<ImageThreeBean> mDatas = new ArrayList<>();
     private Subscription mHttpSc;
     private String mModel;
     private MaterialDialog alertDialog;
@@ -132,6 +129,10 @@ public class GymDetailNativeFragment extends Fragment {
             }
             return true;
         });
+        ColorDrawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
+        drawable.setAlpha(50);
+
+        courseTotalLayout.setBackground(drawable);
         init();
         return view;
     }
@@ -208,7 +209,7 @@ public class GymDetailNativeFragment extends Fragment {
                             }else {
                                 LogUtil.e("course == null");
                             }
-                            linearlayout.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                            linearlayout.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(90f,getResources())));
                         }
 
                     }

@@ -58,7 +58,7 @@ public class ChooseGymActivity extends AppCompatActivity {
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
     private String mCurModel;
     private int mCurId;
-
+    private String mTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +66,7 @@ public class ChooseGymActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mCurModel = getIntent().getStringExtra("model");
         mCurId = getIntent().getIntExtra("id", 0);
+        mTitle = getIntent().getStringExtra("title");
         LogUtil.e("curmodel:"+mCurModel +"   xxid:"+mCurId);
         toolbar.setTitle("请选择您的场馆");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -83,11 +84,12 @@ public class ChooseGymActivity extends AppCompatActivity {
                 refresh();
             }
         });
-
+        itemGymName.setText(mTitle);
         if (mCurId == 0){
             itemRight.setVisibility(View.VISIBLE);
             itemRight.setImageResource(R.drawable.ic_green_right);
             itemGymName.setTextColor(getResources().getColor(R.color.primary));
+
         }else {
             itemRight.setVisibility(View.GONE);
             itemGymName.setTextColor(getResources().getColor(R.color.text_black));

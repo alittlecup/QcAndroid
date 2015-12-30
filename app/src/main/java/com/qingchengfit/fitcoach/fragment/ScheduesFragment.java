@@ -75,8 +75,8 @@ public class ScheduesFragment extends MainBaseFragment {
     public static final String TAG = ScheduesFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    //    @Bind(R.id.drawer_radiogroup)
-//    DateSegmentLayout drawerRadiogroup;
+    //      @Bind(R.id.drawer_radiogroup)
+    //    DateSegmentLayout drawerRadiogroup;
     @Bind(R.id.web_floatbtn)
     FloatingActionsMenu webFloatbtn;
     @Bind(R.id.spinner_nav)
@@ -111,7 +111,6 @@ public class ScheduesFragment extends MainBaseFragment {
     private int curPostion = 0;
 
 
-
     private QcSchedulesResponse mQcSchedulesResponse;
     private Date mCurDate = new Date();
     private DatePicker mDatePicker;
@@ -122,6 +121,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private Observable<NewPushMsg> mObservable;
     private Observable<RxRefreshList> mObservableReresh;
     private String curModel;
+    private String mTitle;
 
     public ScheduesFragment() {
     }
@@ -140,14 +140,16 @@ public class ScheduesFragment extends MainBaseFragment {
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_alert);
-        toolbarTitle.setText("全部日程");
+        mTitle = getString(R.string.schedule_title);
+        toolbarTitle.setText(mTitle);
         toolbarTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent choosegym =new Intent(getContext(), ChooseGymActivity.class);
-                choosegym.putExtra("model",curModel);
-                choosegym.putExtra("id",curSystemId);
-                startActivityForResult(choosegym,501);
+                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
+                choosegym.putExtra("model", curModel);
+                choosegym.putExtra("id", curSystemId);
+                choosegym.putExtra("title", mTitle);
+                startActivityForResult(choosegym, 501);
             }
         });
 
@@ -501,7 +503,7 @@ public class ScheduesFragment extends MainBaseFragment {
             toolbarTitle.setText(data.getStringExtra("name"));
             curModel = data.getStringExtra("model");
             curSystemId = Integer.parseInt(data.getStringExtra("id"));
-            LogUtil.e("curModel:"+curModel+"   id:"+curSystemId);
+            LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
             mFragmentAdapter.notifyDataSetChanged();
 
         }
@@ -630,7 +632,7 @@ public class ScheduesFragment extends MainBaseFragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             calendar.add(Calendar.DAY_OF_MONTH, position - 30);
-            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId,curModel);
+            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId, curModel);
         }
 
         @Override
