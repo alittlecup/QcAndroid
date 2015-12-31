@@ -30,6 +30,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -137,6 +138,15 @@ public class GymDetailNativeFragment extends Fragment {
         return view;
     }
 
+    @OnClick(R.id.add_course)
+    public void adCourse(){
+        getFragmentManager().beginTransaction()
+                .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(1,mModel,(int)mId))
+                .addToBackStack(null)
+                .commit();
+    }
+
+
     public void init() {
         HashMap<String, String> params = new HashMap<>();
         params.put("model", mModel);
@@ -196,9 +206,16 @@ public class GymDetailNativeFragment extends Fragment {
                             TextView text3 = (TextView)view.findViewById(R.id.text3);
                             ImageView img = (ImageView)view.findViewById(R.id.img);
                             ImageView righticon = (ImageView)view.findViewById(R.id.righticon);
-                            LogUtil.e("course .......");
+                            view.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    getFragmentManager().beginTransaction()
+                                            .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(2,mModel,(int)mId,(int)course.id,course.name,course.image_url,course.length,course.is_private))
+                                            .addToBackStack(null)
+                                            .commit();
+                                }
+                            });
                             if (course != null){
-                                LogUtil.e("course != null");
                                 Glide.with(App.AppContex).load(course.image_url).into(img);
                                 text1.setText(course.name);
                                 text2.setText("时长"+course.length+"min");

@@ -7,6 +7,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
+import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
@@ -342,12 +343,13 @@ public class QcCloudClient {
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
 
         @GET("/api/v1/services/detail/")
-        rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String,String> params);
+        rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String, String> params);
 
         //获取教练销售详情
         @GET("/api/coaches/{id}/systems/report/sale/")
         rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id, @QueryMap Map<String, String> params);
-       //获取教练销售 充值卡信息
+
+        //获取教练销售 充值卡信息
         @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/")
         rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
 
@@ -385,10 +387,11 @@ public class QcCloudClient {
         rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
 
         @GET("/api/v1/coaches/{id}/shop/")
-        rx.Observable<QcGymDetailResponse> qcGetGymDetail(@Path("id") int id,@QueryMap Map<String,String> params);
+        rx.Observable<QcGymDetailResponse> qcGetGymDetail(@Path("id") int id, @QueryMap Map<String, String> params);
 
         @GET("/api/meetings/")
         rx.Observable<QcMeetingResponse> qcGetMeetingList();
+
 
     }
 
@@ -505,6 +508,15 @@ public class QcCloudClient {
         //清除某条notification
         @POST("/api/notifications/{id}/clear/")
         rx.Observable<QcResponse> qcClearOneNotification(@Path("id") int id);
+
+        @POST("/api/v1/coaches/{id}/courses/")
+        rx.Observable<QcResponse> qcAddCourse(@Path("id") int id,@Body AddCourse addCourse);
+
+        @PUT("/api/v1/coaches/{id}/courses/")
+        rx.Observable<QcResponse> qcEditCourse(@Path("id") int id, @Body AddCourse addCourse);
+
+        @DELETE("/api/v1/coaches/{id}/courses/")
+        rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
 
 
     }
