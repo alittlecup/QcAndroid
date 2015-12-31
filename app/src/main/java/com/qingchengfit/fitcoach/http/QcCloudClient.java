@@ -2,12 +2,11 @@ package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
-import com.qingchengfit.fitcoach.http.bean.AddGymBean;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
@@ -30,6 +29,7 @@ import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAddOrganizationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
@@ -62,6 +62,7 @@ import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
+import com.qingchengfit.fitcoach.http.bean.QcServiceDetialResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
@@ -318,7 +319,7 @@ public class QcCloudClient {
         rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
 
         //获取教练预约概览
-        @GET("/api/coaches/{id}/sale/reports/glance/")
+        @GET("/api/v1/coaches/{id}/reports/sale/glance/")
         rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
 
         //获取教练系统
@@ -346,6 +347,9 @@ public class QcCloudClient {
         //获取教练销售详情
         @GET("/api/coaches/{id}/systems/report/sale/")
         rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+       //获取教练销售 充值卡信息
+        @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/")
+        rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
 
 
         //获取教练课程

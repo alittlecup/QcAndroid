@@ -15,6 +15,7 @@
 
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/custom_statment_gym"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_clickable="true"
@@ -44,7 +45,6 @@
         android:id="@+id/custom_statment_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:civ_clickable="true"
         app:civ_lable="选择会员卡"
         >

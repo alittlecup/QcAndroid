@@ -218,7 +218,7 @@ public class GymDetailNativeFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        if (mHttpSc != null && mHttpSc.isUnsubscribed())
+        if (mHttpSc != null && !mHttpSc.isUnsubscribed())
             mHttpSc.unsubscribe();
         super.onDestroy();
     }

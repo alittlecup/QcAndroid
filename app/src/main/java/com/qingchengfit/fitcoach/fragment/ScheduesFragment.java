@@ -320,7 +320,7 @@ public class ScheduesFragment extends MainBaseFragment {
             spinnerBeans.add(new SpinnerBean("", "全部日程", true));
             for (int i = 0; i < systems.size(); i++) {
                 QcCoachSystem system = systems.get(i);
-                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id,""));
                 mSystemsId.add(system.id);
             }
         } else {
@@ -352,7 +352,7 @@ public class ScheduesFragment extends MainBaseFragment {
                                 spinnerBeans.add(new SpinnerBean("", "全部日程", true));
                                 for (int i = 0; i < systems.size(); i++) {
                                     QcCoachSystem system = systems.get(i);
-                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id,""));
                                     mSystemsId.add(system.id);
                                     if (spinnerBeanArrayAdapter != null) {
                                         spinnerBeanArrayAdapter.notifyDataSetChanged();

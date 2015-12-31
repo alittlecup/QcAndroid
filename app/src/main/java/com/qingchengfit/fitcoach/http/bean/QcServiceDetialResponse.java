@@ -18,10 +18,13 @@ import java.util.List;
  * Created by Paper on 15/12/30 2015.
  */
 public class QcServiceDetialResponse extends QcResponse {
-    @SerializedName("")
-    public
+    @SerializedName("data")
+    public ServiceDetailData data;
 
-
+    public static class ServiceDetailData{
+        @SerializedName("service")
+        public ServiceDetail service;
+    }
     public static class ServiceDetail{
         @SerializedName("model")
         public String model;
@@ -41,10 +44,10 @@ public class QcServiceDetialResponse extends QcResponse {
         public int users_count;
 
         @SerializedName("courses")
-        public List<>
+        public List<QcCourseResponse.Course> courses;
 
         @SerializedName("users")
-        public List<User> users;
+        public List<QcStudentBean> users;
 
     }
 }

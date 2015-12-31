@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.Utils;
 
 import android.text.TextUtils;
 
-import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
+import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
@@ -21,14 +21,26 @@ import java.util.Comparator;
  * <p>
  * Created by Paper on 15/11/25 2015.
  */
-public class CardComparator implements Comparator<QcSystemCardsResponse.Card> {
+public class CardComparator implements Comparator<QcCardsResponse.Card> {
 
     public static boolean isChinese(char a) {
         int v = (int) a;
         return (v >= 19968 && v <= 171941);
     }
 
-    public int compare(QcSystemCardsResponse.Card course1, QcSystemCardsResponse.Card course2) {
+
+    private String concatPinyinStringArray(String[] pinyinArray) {
+        StringBuffer pinyinSbf = new StringBuffer();
+        if ((pinyinArray != null) && (pinyinArray.length > 0)) {
+            for (int i = 0; i < pinyinArray.length; i++) {
+                pinyinSbf.append(pinyinArray[i]);
+            }
+        }
+        return pinyinSbf.toString();
+    }
+
+    @Override
+    public int compare(QcCardsResponse.Card course1, QcCardsResponse.Card course2) {
         String o1 = course1.name;
         String o2 = course2.name;
         if (TextUtils.isEmpty(o1)) {
@@ -46,18 +58,6 @@ public class CardComparator implements Comparator<QcSystemCardsResponse.Card> {
                             .toHanyuPinyinStringArray(c2)));
         else
             return o1.compareTo(o2);
-
     }
-
-    private String concatPinyinStringArray(String[] pinyinArray) {
-        StringBuffer pinyinSbf = new StringBuffer();
-        if ((pinyinArray != null) && (pinyinArray.length > 0)) {
-            for (int i = 0; i < pinyinArray.length; i++) {
-                pinyinSbf.append(pinyinArray[i]);
-            }
-        }
-        return pinyinSbf.toString();
-    }
-
 }
 

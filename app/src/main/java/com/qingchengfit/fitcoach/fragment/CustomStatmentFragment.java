@@ -27,6 +27,7 @@ import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
+import com.qingchengfit.fitcoach.http.bean.QcServiceDetialResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
 
@@ -41,6 +42,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -124,6 +128,7 @@ public class CustomStatmentFragment extends Fragment {
         }
     };
     private String model;
+    private Subscription sp;
 
     public CustomStatmentFragment() {
 
@@ -137,11 +142,11 @@ public class CustomStatmentFragment extends Fragment {
         QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
                     List<CoachService> systems = qcCoachSystemResponse.data.services;
-                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0,""));
+                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0, ""));
 
                     for (int i = 0; i < systems.size(); i++) {
                         CoachService system = systems.get(i);
-                        spinnerBeans.add(new SpinnerBean(system.color, system.name, (int)system.id,model));
+                        spinnerBeans.add(new SpinnerBean(system.color, system.name, (int) system.id, system.model));
                         gymStrings.add(system.name);
                     }
 //                    Collections.sort(gymStrings,new PinyinComparator());
@@ -178,20 +183,8 @@ public class CustomStatmentFragment extends Fragment {
 
     @OnClick(R.id.custom_statment_course)
     public void onClickCourse() {
-//        new MaterialDialog.Builder(getContext())
-//                .title("请选择课程")
-//                .items(courseStrings.toArray(new String[courseStrings.size()]))
-//                .itemsCallback(new MaterialDialog.ListCallback() {
-//                    @Override
-//                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-//                        customStatmentCourse.setContent(charSequence.toString());
-//                        if (i == 0) {
-//                            chooseCoursId = 0;
-//                        } else {
-//                            chooseCoursId = courses.get(i - 1).id;
-//                        }
-//                    }
-//                }).show();
+        if (courseStrings.size() < 1)
+            return;
         DialogList dialogList = new DialogList(getContext());
         dialogList.title("请选择课程");
         dialogList.list(courseStrings, new AdapterView.OnItemClickListener() {
@@ -347,11 +340,51 @@ public class CustomStatmentFragment extends Fragment {
                         customStatmentCourse.setVisibility(View.GONE);
                     } else {
                         HashMap<String, String> params = new HashMap<String, String>();
-                        params.put("system_id", Integer.toString(chooseGymId));
+                        params.put("id", Integer.toString(chooseGymId));
+                        params.put("model", chooseGymModel);
 
-                        QcCloudClient.getApi().getApi.qcGetSystemStudent(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(studentResponseObserver);
-                        QcCloudClient.getApi().getApi.qcGetSystemCourses(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
+//                        QcCloudClient.getApi().getApi.qcGetSystemStudent(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(studentResponseObserver);
+//                        QcCloudClient.getApi().getApi.qcGetSystemCourses(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
+                        sp = QcCloudClient.getApi().getApi.qcGetServiceDetail(params)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe(new Subscriber<QcServiceDetialResponse>() {
+                                    @Override
+                                    public void onCompleted() {
 
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(QcServiceDetialResponse qcServiceDetialResponse) {
+                                        courses = qcServiceDetialResponse.data.service.courses;
+                                        courseStrings.clear();
+                                        Collections.sort(courses, new CourseComparator());
+                                        for (QcCourseResponse.Course studentBean : courses) {
+                                            if (TextUtils.isEmpty(studentBean.name))
+                                                studentBean.name = "";
+                                            courseStrings.add(studentBean.name);
+                                        }
+
+                                        courseStrings.add(0, "全部课程");
+                                        studentBeans = qcServiceDetialResponse.data.service.users;
+                                        studentStrings.clear();
+                                        Collections.sort(studentBeans, new StudentComparator());
+                                        for (QcStudentBean studentBean : studentBeans) {
+                                            if (TextUtils.isEmpty(studentBean.username))
+                                                studentStrings.add(studentBean.phone);
+                                            else
+                                                studentStrings.add(studentBean.username);
+
+                                        }
+
+                                        studentStrings.add(0, "全部学员");
+                                    }
+                                });
                         customStatmentStudent.setVisibility(View.VISIBLE);
                         customStatmentCourse.setVisibility(View.VISIBLE);
                         customStatmentStudent.setContent("所有学员");
@@ -409,6 +442,9 @@ public class CustomStatmentFragment extends Fragment {
 //                        }
 //                    }
 //                }).show();
+
+        if (studentStrings.size() < 1)
+            return;
         DialogList dialogList = new DialogList(getContext());
         dialogList.title("请选择学员");
         dialogList.list(studentStrings, new AdapterView.OnItemClickListener() {
@@ -431,7 +467,7 @@ public class CustomStatmentFragment extends Fragment {
     public void onClickGenerate() {
         getFragmentManager().beginTransaction()
                 .add(R.id.web_frag_layout, StatementDetailFragment.newInstance(3,
-                        customStatmentStart.getContent(), customStatmentEnd.getContent(),model,
+                        customStatmentStart.getContent(), customStatmentEnd.getContent(), chooseGymModel,
                         chooseGymId, chooseUserId, chooseCoursId, customStatmentStudent.getContent(), customStatmentCourse.getContent()))
                 .addToBackStack(null)
                 .commit();
@@ -440,6 +476,8 @@ public class CustomStatmentFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        if (sp != null && !sp.isUnsubscribed())
+            sp.unsubscribe();
         super.onDestroyView();
         ButterKnife.unbind(this);
     }

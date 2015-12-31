@@ -364,7 +364,9 @@ public class StatementDetailFragment extends Fragment {
 
     public void freshDate() {
         //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
                     List<CoachService> systems = qcCoachSystemResponse.data.services;
                     mSystemsId.clear();

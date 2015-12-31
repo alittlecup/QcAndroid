@@ -16,7 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,9 +27,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -47,9 +44,7 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
-import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +56,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -259,7 +252,7 @@ public class MyStudentFragment extends MainBaseFragment {
 
             spinnerNav.setSelection(x);
             //获取原始数据
-            setUpNaviSpinner();
+//            setUpNaviSpinner();
         }
     }
 
@@ -270,7 +263,7 @@ public class MyStudentFragment extends MainBaseFragment {
         int x = curPostion;
 
         spinnerNav.setSelection(x);
-        setUpNaviSpinner();
+//        setUpNaviSpinner();
     }
 
     /**
@@ -477,125 +470,125 @@ public class MyStudentFragment extends MainBaseFragment {
     }
 
     //初始化筛选器
-    public void setUpNaviSpinner() {
-
-        spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "所有学员", true));
-
-        String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
-        if (!TextUtils.isEmpty(systemStr)) {
-            QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
-            systems = qcCoachSystemResponse.date.systems;
-            mSystemsId.clear();
-            spinnerBeans.clear();
-            spinnerBeans.add(new SpinnerBean("", "所有学员", true));
-            for (int i = 0; i < systems.size(); i++) {
-                QcCoachSystem system = systems.get(i);
-                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
-                mSystemsId.add(system.id);
-            }
-        } else {
-
-        }
-        //获取用户拥有的系统
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<QcCoachSystemResponse>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                                    qcCoachSystemResponse.date.systems.size() == 0) {
-                                toolbar.getMenu().clear();
-                            } else {
-                                List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-                                mSystemsId.clear();
-                                spinnerBeans.clear();
-                                boolean hasPrivate = false;
-                                spinnerBeans.add(new SpinnerBean("", "所有学员", true));
-                                for (int i = 0; i < systems.size(); i++) {
-                                    QcCoachSystem system = systems.get(i);
-                                    if (system.is_personal_system)
-                                        hasPrivate = true;
-                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
-                                    mSystemsId.add(system.id);
-                                    if (spinnerBeanArrayAdapter != null) {
-                                        spinnerBeanArrayAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                                if (hasPrivate){
-                                    toolbar.getMenu().clear();
-                                    toolbar.inflateMenu(R.menu.menu_students);
-                                }else {
-                                    toolbar.getMenu().clear();
-                                    toolbar.inflateMenu(R.menu.menu_search);
-                                }
-
-                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
-
-                            }
-                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-
-                        }
-                    }
-                });
-
-        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-                }
-                ((TextView) convertView).setText(spinnerBeans.get(position).text);
-                return convertView;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-                }
-                SpinnerBean bean = getItem(position);
-                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-                if (bean.isTitle) {
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-                } else {
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-                }
-                return convertView;
-            }
-        };
-        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
-        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                curPostion = position;
-                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
-                handleResponse(mQcAllStudentResponse);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-    }
+//    public void setUpNaviSpinner() {
+//
+//        spinnerBeans = new ArrayList<>();
+//        spinnerBeans.add(new SpinnerBean("", "所有学员", true));
+//
+//        String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
+//        if (!TextUtils.isEmpty(systemStr)) {
+//            QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
+//            systems = qcCoachSystemResponse.date.systems;
+//            mSystemsId.clear();
+//            spinnerBeans.clear();
+//            spinnerBeans.add(new SpinnerBean("", "所有学员", true));
+//            for (int i = 0; i < systems.size(); i++) {
+//                QcCoachSystem system = systems.get(i);
+//                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+//                mSystemsId.add(system.id);
+//            }
+//        } else {
+//
+//        }
+//        //获取用户拥有的系统
+//        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<QcCoachSystemResponse>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+//                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+//                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+//                                    qcCoachSystemResponse.date.systems.size() == 0) {
+//                                toolbar.getMenu().clear();
+//                            } else {
+//                                List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+//                                mSystemsId.clear();
+//                                spinnerBeans.clear();
+//                                boolean hasPrivate = false;
+//                                spinnerBeans.add(new SpinnerBean("", "所有学员", true));
+//                                for (int i = 0; i < systems.size(); i++) {
+//                                    QcCoachSystem system = systems.get(i);
+//                                    if (system.is_personal_system)
+//                                        hasPrivate = true;
+//                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+//                                    mSystemsId.add(system.id);
+//                                    if (spinnerBeanArrayAdapter != null) {
+//                                        spinnerBeanArrayAdapter.notifyDataSetChanged();
+//                                    }
+//                                }
+//                                if (hasPrivate){
+//                                    toolbar.getMenu().clear();
+//                                    toolbar.inflateMenu(R.menu.menu_students);
+//                                }else {
+//                                    toolbar.getMenu().clear();
+//                                    toolbar.inflateMenu(R.menu.menu_search);
+//                                }
+//
+//                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
+//
+//                            }
+//                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+//
+//                        }
+//                    }
+//                });
+//
+//        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+//                }
+//                ((TextView) convertView).setText(spinnerBeans.get(position).text);
+//                return convertView;
+//            }
+//
+//            @Override
+//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+//                }
+//                SpinnerBean bean = getItem(position);
+//                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+//                if (bean.isTitle) {
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
+//                } else {
+//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+//                }
+//                return convertView;
+//            }
+//        };
+//        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+//        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
+//        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                curPostion = position;
+//                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
+//                handleResponse(mQcAllStudentResponse);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//
+//
+//    }
 
     //新增学员
     @OnClick(R.id.student_add)

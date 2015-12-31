@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
+import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
 
 import java.util.ArrayList;
@@ -37,6 +37,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observer;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -65,6 +68,7 @@ public class CustomSaleFragment extends Fragment {
     private List<String> gymStrings = new ArrayList<>();
     private List<String> courseStrings = new ArrayList<>();
     private List<String> studentStrings = new ArrayList<>();
+    private List<Integer> cardIntegers = new ArrayList<>();
     private int chooseGymId = 0;
     private int chooseUserId = 0;
     private int chooseCoursId = 0;
@@ -80,40 +84,19 @@ public class CustomSaleFragment extends Fragment {
 
         @Override
         public void onNext(QcSystemCardsResponse qcSystemCardsResponse) {
-            studentBeans = qcSystemCardsResponse.data.card_tpls;
-            studentStrings.clear();
-            Collections.sort(studentBeans, new CardComparator());
-            for (QcSystemCardsResponse.Card studentBean : studentBeans) {
-                studentStrings.add(studentBean.name);
-            }
-            studentStrings.add(0, "全部会员卡");
+//            studentBeans = qcSystemCardsResponse.data.card_tpls;
+//            studentStrings.clear();
+//            Collections.sort(studentBeans, new CardComparator());
+//            for (QcSystemCardsResponse.Card studentBean : studentBeans) {
+//                studentStrings.add(studentBean.name);
+//            }
+//            studentStrings.add(0, "全部会员卡");
 
         }
     };
-    private List<QcSystemCardsResponse.Card> courses;
-    private Observer<QcSystemCardsResponse> courseResponseObserver = new Observer<QcSystemCardsResponse>() {
-        @Override
-        public void onCompleted() {
-        }
-
-        @Override
-        public void onError(Throwable e) {
-        }
-
-        @Override
-        public void onNext(QcSystemCardsResponse qcSystemCardsResponse) {
-            courses = qcSystemCardsResponse.data.card_tpls;
-            courseStrings.clear();
-            Collections.sort(courses, new CardComparator());
-            for (QcSystemCardsResponse.Card studentBean : courses) {
-                courseStrings.add(studentBean.name);
-            }
-
-            courseStrings.add(0, "全部会员卡");
-        }
-    };
+    private List<QcCardsResponse.Card> cards = new ArrayList<>();
     private TimeDialogWindow pwTime;
-
+    private Subscription cardSp;
     public CustomSaleFragment() {
 
     }
@@ -123,21 +106,55 @@ public class CustomSaleFragment extends Fragment {
         super.onCreate(savedInstanceState);
         date = Calendar.getInstance();
         //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
-                .subscribe(qcCoachSystemResponse -> {
-                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0));
+//        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
+//                .subscribe(qcCoachSystemResponse -> {
+//                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+//                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0,""));
+//
+//                    for (int i = 0; i < systems.size(); i++) {
+//                        QcCoachSystem system = systems.get(i);
+//                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id,""));
+//                        gymStrings.add(system.name);
+//                    }
+//                    gymStrings.add(0, "全部健身房");
+//                }, throwable -> {
+//                }, () -> {
+//                });
 
-                    for (int i = 0; i < systems.size(); i++) {
-                        QcCoachSystem system = systems.get(i);
-                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
-                        gymStrings.add(system.name);
+        cardSp =QcCloudClient.getApi().getApi.qcGetSaleCard(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<QcCardsResponse>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
-//                    Collections.sort(gymStrings,new PinyinComparator());
-                    gymStrings.add(0, "全部健身房");
-                }, throwable -> {
-                }, () -> {
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcCardsResponse qcCardsResponse) {
+                        cards.clear();
+                        for (QcCardsResponse.CardSystem sys:qcCardsResponse.data.systems){
+                            for (QcCardsResponse.Card card : sys.card_tpls){
+                                card.system_id = sys.system_id;
+                            }
+                            cards.addAll(sys.card_tpls);
+
+                        }
+                        Collections.sort(cards, new CardComparator());
+                        courseStrings.add("全部会员卡");
+                        for (QcCardsResponse.Card c:cards){
+                            courseStrings.add(c.name);
+                            cardIntegers.add(c.system_id);
+                        }
+
+                    }
                 });
+
     }
 
     @Override
@@ -159,25 +176,12 @@ public class CustomSaleFragment extends Fragment {
         customStatmentStart.setContent(DateUtils.getServerDateDay(new Date()));
         customStatmentEnd.setContent(DateUtils.getServerDateDay(new Date()));
         customStatmentGym.setContent("所有健身房");
+
 //        customStatmentStudent.setContent("所有学员");
     }
 
     @OnClick(R.id.custom_statment_course)
     public void onClickCourse() {
-//        new MaterialDialog.Builder(getContext())
-//                .title("请选择会员卡")
-//                .items(courseStrings.toArray(new String[courseStrings.size()]))
-//                .itemsCallback(new MaterialDialog.ListCallback() {
-//                    @Override
-//                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-//                        customStatmentCourse.setContent(charSequence.toString());
-//                        if (i == 0) {
-//                            chooseCoursId = 0;
-//                        } else {
-//                            chooseCoursId = courses.get(i - 1).id;
-//                        }
-//                    }
-//                }).show();
         DialogList dialogList = new DialogList(getContext());
         dialogList.title("请选择会员卡");
         dialogList.list(courseStrings, new AdapterView.OnItemClickListener() {
@@ -188,7 +192,8 @@ public class CustomSaleFragment extends Fragment {
                 if (position == 0) {
                     chooseCoursId = 0;
                 } else {
-                    chooseCoursId = courses.get(position - 1).id;
+                    chooseCoursId = cards.get(position - 1).id;
+                    chooseGymId = cards.get(position-1).system_id;
                 }
             }
         });
@@ -294,7 +299,6 @@ public class CustomSaleFragment extends Fragment {
                         HashMap<String, String> params = new HashMap<String, String>();
                         params.put("system_id", Integer.toString(chooseGymId));
 
-                        QcCloudClient.getApi().getApi.qcGetSystemCard(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
 
 
                         customStatmentCourse.setVisibility(View.VISIBLE);
@@ -364,6 +368,8 @@ public class CustomSaleFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        if (cardSp != null && !cardSp.isUnsubscribed())
+            cardSp.unsubscribe();
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
