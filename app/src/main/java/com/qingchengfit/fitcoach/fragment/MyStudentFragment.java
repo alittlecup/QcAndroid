@@ -28,10 +28,12 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.AppUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
+import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
@@ -89,6 +91,8 @@ public class MyStudentFragment extends MainBaseFragment {
     TextView studentNoText;
     @Bind(R.id.student_no_img)
     ImageView studentNoImg;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     private LinearLayoutManager mLinearLayoutManager;
     private QcAllStudentResponse mQcAllStudentResponse;
     private List<StudentBean> adapterData = new ArrayList<>();
@@ -107,6 +111,7 @@ public class MyStudentFragment extends MainBaseFragment {
     private MaterialDialog mAlertPrivate;
     private List<QcCoachSystem> systems;
     private String curModel;
+    private String mTitle;
 
     public MyStudentFragment() {
     }
@@ -120,6 +125,18 @@ public class MyStudentFragment extends MainBaseFragment {
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_students);
+        mTitle = getString(R.string.mystudents_title);
+        toolbarTitle.setText(mTitle);
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
+                choosegym.putExtra("model", curModel);
+                choosegym.putExtra("id", curSystemId);
+                choosegym.putExtra("title", mTitle);
+                startActivityForResult(choosegym, 501);
+            }
+        });
         toolbar.setOverflowIcon(getContext().getResources().getDrawable(R.drawable.ic_action_add));
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
@@ -319,7 +336,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 List<QcAllStudentResponse.Ship> ships = qcAllStudentResponse.data.ships;
                 for (int i = 0; i < ships.size(); i++) {
                     QcAllStudentResponse.Ship ship = ships.get(i);
-                    if (curSystemId != 0 && (curSystemId != ship.service.id || !curModel.equals(ship.service)))
+                    if (curSystemId != 0 && (curSystemId != ship.service.id || !curModel.equals(ship.service.model)))
                         continue;
                     List<StudentBean> tmp = new ArrayList<>();
                     for (QcStudentBean student : ship.users) {
@@ -606,6 +623,13 @@ public class MyStudentFragment extends MainBaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode > 1000) {
             freshData();
+        }else if (resultCode > 0 && requestCode == 501) {
+            toolbarTitle.setText(data.getStringExtra("name"));
+            curModel = data.getStringExtra("model");
+            curSystemId = Integer.parseInt(data.getStringExtra("id"));
+            LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
+            handleResponse(mQcAllStudentResponse);
+
         }
     }
 
