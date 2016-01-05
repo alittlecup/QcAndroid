@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/backgroud_grey"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.CourseListFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_grey"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        >
+        <TextView
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:text="团课5节"
+            />
+    </RelativeLayout>
+
+</LinearLayout>
