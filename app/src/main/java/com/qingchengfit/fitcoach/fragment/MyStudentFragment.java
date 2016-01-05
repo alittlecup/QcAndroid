@@ -380,7 +380,7 @@ public class MyStudentFragment extends MainBaseFragment {
                         bean.gymStr = ship.service.name;
                         bean.headerPic = student.avatar;
                         bean.username = student.username;
-                        bean.systemUrl = ship.service.photo;
+                        bean.systemUrl = ship.service.host;
                         bean.id = student.id;
                         bean.color = ship.service.color;
                         if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {

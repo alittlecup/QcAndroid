@@ -23,6 +23,7 @@ import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
@@ -134,8 +135,11 @@ public class AddStudentManulkFragment extends Fragment {
             ToastUtils.showDefaultStyle("请填写学员手机");
             return;
         }
-        QcCloudClient.getApi().postApi.qcAddStudent(App.coachid
-                ,new AddStudentBean(chooseName.getContent(),choosePhone.getContent(),compleGenderMale.isChecked()?1:0))
+        List<AddStudentBean> sss = new ArrayList<>();
+        sss.add(new AddStudentBean(chooseName.getContent(),choosePhone.getContent(),compleGenderMale.isChecked()?1:0));
+        PostStudents students = new PostStudents(sss);
+        QcCloudClient.getApi().postApi.qcAddStudents(App.coachid
+                ,students)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
