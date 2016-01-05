@@ -27,6 +27,7 @@ import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -200,10 +201,11 @@ public class ChooseStudentActivity extends BaseAcitivity {
      */
     @OnClick(R.id.choosestudent_comfirm)
     public void onComfirm() {
-        List<StudentBean> choosenstudentBeans = new ArrayList<>();
+        List<AddStudentBean> choosenstudentBeans = new ArrayList<>();
         for (StudentBean s : studentBeans) {
-            if (s.isChosen)
-                choosenstudentBeans.add(s);
+            if (s.isChosen){
+                choosenstudentBeans.add(new AddStudentBean(s.username,s.phone,s.gender?1:0));
+            }
         }
         if (choosenstudentBeans.size() == 0) {
             Toast.makeText(App.AppContex, "没有选择学员", Toast.LENGTH_SHORT).show();
@@ -214,7 +216,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
 //        LogUtil.e("student:"+s);
         ShowLoading("正在导入,请稍后...");
         QcCloudClient.getApi().postApi
-                .qcPostCreatStudents(App.coachid, new PostStudents(choosenstudentBeans))
+                .qcAddStudents(App.coachid, new PostStudents(choosenstudentBeans))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcResponse>() {

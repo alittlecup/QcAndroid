@@ -1,7 +1,5 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import java.util.List;
-
 /**
  * power by
  * <p>
@@ -13,13 +11,16 @@ import java.util.List;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
  * <p>
- * Created by Paper on 15/10/16 2015.
+ * Created by Paper on 16/1/5 2016.
  */
-public class PostStudents {
-    public List<AddStudentBean> users;
+public class AddStudentBean {
+    public String username;
+    public String phone;
+    public int gender;
 
-
-    public PostStudents(List<AddStudentBean> users) {
-        this.users = users;
+    public AddStudentBean(String username, String phone, int gender) {
+        this.username = username;
+        this.phone = phone;
+        this.gender = gender;
     }
 }

@@ -25,4 +25,6 @@ public class StudentBean {
     public boolean isTag;
     public boolean isChosen;
     public String color;
+
+
 }

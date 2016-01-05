@@ -332,7 +332,7 @@ public class CustomStatmentFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dialogList.dismiss();
                 customStatmentGym.setContent(gymStrings.get(position));
-                if (chooseCoursId != spinnerBeans.get(position).id) {
+                if (chooseGymId != spinnerBeans.get(position).id) {
                     chooseGymId = spinnerBeans.get(position).id;
                     chooseGymModel = spinnerBeans.get(position).model;
                     if (position == 0) {

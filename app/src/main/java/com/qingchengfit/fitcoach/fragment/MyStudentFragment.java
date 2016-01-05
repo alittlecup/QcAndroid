@@ -30,7 +30,6 @@ import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
@@ -44,7 +43,9 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 
@@ -58,6 +59,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -112,6 +115,7 @@ public class MyStudentFragment extends MainBaseFragment {
     private List<QcCoachSystem> systems;
     private String curModel;
     private String mTitle;
+    private boolean hasPrivate = false;
 
     public MyStudentFragment() {
     }
@@ -124,7 +128,7 @@ public class MyStudentFragment extends MainBaseFragment {
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-//        toolbar.inflateMenu(R.menu.menu_students);
+        toolbar.inflateMenu(R.menu.menu_students);
         mTitle = getString(R.string.mystudents_title);
         toolbarTitle.setText(mTitle);
         toolbarTitle.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +261,38 @@ public class MyStudentFragment extends MainBaseFragment {
                     public void onNext(QcAllStudentResponse qcAllStudentResponse) {
                         mQcAllStudentResponse = qcAllStudentResponse;
                         handleResponse(qcAllStudentResponse);
+                    }
+                });
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<QcCoachServiceResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
+                        hasPrivate = false;
+                        for (CoachService service : qcCoachServiceResponse.data.services) {
+                            if (service.model.equals("service") && service.type == 1) {
+                                hasPrivate = true;
+                                break;
+                            }
+                        }
+
+                        if (hasPrivate) {
+                            toolbar.getMenu().clear();
+                            toolbar.inflateMenu(R.menu.menu_students);
+                        } else {
+                            toolbar.getMenu().clear();
+                            toolbar.inflateMenu(R.menu.menu_search);
+                        }
                     }
                 });
     }
@@ -405,17 +441,6 @@ public class MyStudentFragment extends MainBaseFragment {
 
     public void showAlert(int type) {
         String privateName = "";
-        boolean hasPrivate = false;
-        if (systems != null && systems.size() > 0) {
-
-            for (QcCoachSystem system : systems) {
-                if (system.is_personal_system) {
-                    hasPrivate = true;
-                    privateName = system.name;
-                    break;
-                }
-            }
-        }
         if (hasPrivate) {
             mAlertPrivate = new MaterialDialog.Builder(getContext())
 //                        .title("添加学员")
@@ -610,10 +635,9 @@ public class MyStudentFragment extends MainBaseFragment {
     //新增学员
     @OnClick(R.id.student_add)
     public void onAddstudent() {
-//        openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/add/students/");
-        Intent it = new Intent(getContext(), WebActivity.class);
-        it.putExtra("url", Configs.Server + "mobile/coaches/add/students/");
-        MyStudentFragment.this.startActivityForResult(it, 404);
+        Intent intent = new Intent(getActivity(), FragActivity.class);
+        intent.putExtra("type", 7);
+        MyStudentFragment.this.startActivityForResult(intent, 405);
     }
 
 
@@ -623,7 +647,7 @@ public class MyStudentFragment extends MainBaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode > 1000) {
             freshData();
-        }else if (resultCode > 0 && requestCode == 501) {
+        } else if (resultCode > 0 && requestCode == 501) {
             toolbarTitle.setText(data.getStringExtra("name"));
             curModel = data.getStringExtra("model");
             curSystemId = Integer.parseInt(data.getStringExtra("id"));

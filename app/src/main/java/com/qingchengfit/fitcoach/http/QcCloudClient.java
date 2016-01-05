@@ -9,6 +9,7 @@ import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
+import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
@@ -518,7 +519,11 @@ public class QcCloudClient {
         @DELETE("/api/v1/coaches/{id}/courses/")
         rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
 
+        @POST("/api/v1/coaches/{id}/students/add/")
+        rx.Observable<QcResponse> qcAddStudent(@Path("id") int id,@Body AddStudentBean StudentBean);
 
+        @POST("/api/v1/coaches/{id}/students/add/")
+        rx.Observable<QcResponse> qcAddStudents(@Path("id") int id,@Body PostStudents addStudentBeans);
     }
 
     public interface DownLoadApi {

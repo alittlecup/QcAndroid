@@ -68,18 +68,6 @@ public class MyGymsFragment extends MainBaseFragment {
             Intent intent = new Intent(getActivity(), FragActivity.class);
             intent.putExtra("type", 3);
             startActivityForResult(intent, 11);
-//            if (item.getItemId() == R.id.action_add_self) {
-//                if (mHasPrivate) {
-//                    intent.putExtra("type", 2);
-//                } else {
-//                    intent.putExtra("type", 3);
-//                }
-//                startActivityForResult(intent, 11);
-//            } else if (item.getItemId() == R.id.action_add_public) {
-//                intent.putExtra("type", 4);
-//                startActivityForResult(intent, 11);
-//            }
-
             return true;
         });
 
