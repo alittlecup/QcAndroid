@@ -375,7 +375,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             NonetworkSnack = Snackbar.make(mainFraglayout, "您的网络异常,请检查网络连接", Snackbar.LENGTH_INDEFINITE);
             NonetworkSnack.show();
         }
-        FIR.checkForUpdateInFIR("f60e7b4d8b237b271ef3a7741372f220", new VersionCheckCallback() {
+        //暂时屏蔽fir的升级功能
+        FIR.checkForUpdateInFIR(getString(R.string.fir_token), new VersionCheckCallback() {
             @Override
             public void onSuccess(AppVersion appVersion, boolean b) {
                 LogUtil.e(" fir:success" + appVersion);
@@ -448,6 +449,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 LogUtil.e(" fir:onFinish");
             }
         });
+
+
 //        QcCloudClient.getApi().getApi.qcGetVersion()
 //                .subscribe(new Observer<QcVersionResponse>() {
 //                    @Override
@@ -481,7 +484,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //                    }
 //                });
 
-    }
+        }
 
     private void initUser() {
 
