@@ -18,6 +18,7 @@ import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 
 import butterknife.Bind;
@@ -156,8 +157,11 @@ public class SettingFragment extends BaseSettingFragment {
                 fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
                 break;
             case R.id.setting_aboutus:
-                fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/", true));
-                fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
+//                fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/", true));
+//                fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
+                Intent toWeb = new Intent(getContext(), WebActivity.class);
+                toWeb.putExtra("url", Configs.Server + "/aboutus/");
+                startActivity(toWeb);
                 break;
             case R.id.setting_comfirm:
                 fragmentCallBack.onFragmentChange(new RecordFragment());
