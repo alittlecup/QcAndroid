@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 114
-        versionName "1.1.4"
+        versionCode 190
+        versionName "1.9.0"
     }
 //    buildTypes {
 //        release {
