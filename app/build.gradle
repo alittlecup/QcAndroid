@@ -127,6 +127,10 @@ android {
             minSdkVersion 15
             flavorDimension 'oem'
         }
+        suisheng{
+            minSdkVersion 15
+            flavorDimension 'oem'
+        }
     }
     buildTypes {
         release {
