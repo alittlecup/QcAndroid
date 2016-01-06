@@ -23,6 +23,7 @@ public class ImageTwoTextBean {
     public String text2;
     public boolean showIcon;
     public boolean showRight;
+    public int type = 0;//默认为0
     @DrawableRes
     public int rightIcon;
     public HashMap<String,String> tags = new HashMap<>();

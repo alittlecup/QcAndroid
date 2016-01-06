@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  */
 
 public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapter.ImageTwoTextVH>
-    implements View.OnClickListener{
+        implements View.OnClickListener {
 
 
     private List<ImageTwoTextBean> datas;
@@ -62,7 +62,13 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
 
     @Override
     public ImageTwoTextVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        ImageTwoTextVH vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
+        ImageTwoTextVH vh = null;
+        if (viewType == 0)
+            vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
+        else if (viewType == 1)
+            vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add, parent, false));
+        else
+            vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
         vh.itemView.setOnClickListener(this);
         return vh;
     }
@@ -72,26 +78,36 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
         holder.itemView.setTag(position);
         ImageTwoTextBean bean = datas.get(position);
         holder.itemGymName.setText(bean.text1);
-        if (TextUtils.isEmpty(bean.text2))
+        if (bean.type != 0) {
             holder.itemGymPhonenum.setVisibility(View.GONE);
-        else{
-            holder.itemGymPhonenum.setVisibility(View.VISIBLE);
-            holder.itemGymPhonenum.setText(bean.text2);
-        }
-        Glide.with(App.AppContex).load(bean.imgUrl).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader,App.AppContex));
-        if (bean.showIcon)
-            holder.qcIdentify.setVisibility(View.VISIBLE);
-        else holder.qcIdentify.setVisibility(View.GONE);
-        if (bean.showRight){
-            holder.itemRight.setVisibility(View.VISIBLE);
-            if (bean.rightIcon != 0){
-                holder.itemRight.setImageResource(bean.rightIcon);
-                holder.itemGymName.setTextColor(App.AppContex.getResources().getColor(R.color.primary));
+            holder.qcIdentify.setVisibility(View.GONE);
+            holder.itemGymHeader.setVisibility(View.GONE);
+
+        } else {
+            if (TextUtils.isEmpty(bean.text2))
+                holder.itemGymPhonenum.setVisibility(View.GONE);
+            else {
+                holder.itemGymPhonenum.setVisibility(View.VISIBLE);
+                holder.itemGymPhonenum.setText(bean.text2);
             }
+            Glide.with(App.AppContex).load(bean.imgUrl).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
+            if (bean.showIcon)
+                holder.qcIdentify.setVisibility(View.VISIBLE);
+            else holder.qcIdentify.setVisibility(View.GONE);
+            if (bean.showRight) {
+                holder.itemRight.setVisibility(View.VISIBLE);
+                if (bean.rightIcon != 0) {
+                    holder.itemRight.setImageResource(bean.rightIcon);
+                    holder.itemGymName.setTextColor(App.AppContex.getResources().getColor(R.color.primary));
+                }
+            } else holder.itemRight.setVisibility(View.GONE);
+
         }
-        else holder.itemRight.setVisibility(View.GONE);
+    }
 
-
+    @Override
+    public int getItemViewType(int position) {
+        return datas.get(position).type;
     }
 
     @Override
@@ -103,8 +119,8 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
 
     @Override
     public void onClick(View v) {
-        if (listener!=null)
-            listener.onItemClick(v,(int)v.getTag());
+        if (listener != null)
+            listener.onItemClick(v, (int) v.getTag());
     }
 
     public static class ImageTwoTextVH extends RecyclerView.ViewHolder {
@@ -120,6 +136,7 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
         TextView itemGymPhonenum;
         @Bind(R.id.item_right)
         ImageView itemRight;
+
         public ImageTwoTextVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
