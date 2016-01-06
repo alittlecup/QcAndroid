@@ -14,18 +14,22 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImageTwoTextAdapter;
 import com.qingchengfit.fitcoach.adapter.ImageTwoTextBean;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CourseListFragment extends Fragment {
+public class CourseListFragment extends VpFragment {
 
+    private static final int TYPE_PRIVATE = 1;  //私教
+    private static final int TYPE_GROUP = 2;    //团课
 
     @Bind(R.id.course_count)
     TextView courseCount;
@@ -36,7 +40,10 @@ public class CourseListFragment extends Fragment {
 
     private ImageTwoTextAdapter mImageTwoTextAdapter;
     private List<ImageTwoTextBean> datas = new ArrayList<>();
+    private int mType =1;//当前页的类型
+
     public CourseListFragment() {
+
     }
 
 
@@ -47,16 +54,47 @@ public class CourseListFragment extends Fragment {
         ButterKnife.bind(this, view);
         mImageTwoTextAdapter = new ImageTwoTextAdapter(datas);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mImageTwoTextAdapter);
+        mImageTwoTextAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                ImageTwoTextBean b = datas.get(pos);
+                if (b.type == 1){
+                    //添加课程
+                }else {
+                    //课程详情
+                    
+                }
+            }
+        });
         return view;
     }
 
+    /**
+     * 预约课程 跳转到web页面
+     */
+    @OnClick(R.id.preview)
+    public void onPreview(){
+
+    }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public String getTitle() {
+        if (mType == 1){
+            return getString(R.string.course_private);
+        }else if (mType ==2){
+            return getString(R.string.course_group);
+        }else {
+            return getString(R.string.course_group);
+        }
+
     }
 }

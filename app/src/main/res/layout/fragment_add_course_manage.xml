@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/backgroud_grey"
+              tools:context="com.qingchengfit.fitcoach.fragment.AddCourseManageFragment">
+    <include layout="@layout/common_toolbar"/>
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/starttime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="@string/start_time"
+        app:civ_clickable="true"
+    />
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/endtime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="@string/end_time"
+        app:civ_clickable="true"
+        app:civ_showdivier="false"
+    />
+    <include layout="@layout/divider_grey"/>
+    <include layout="@layout/divider_grey_margin"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/add"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:text="+继续添加"
+        android:textColor="@color/primary"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        />
+    <include layout="@layout/divider_grey" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="30dp"
+        android:text="@string/login_comfirm"
+        />
+</LinearLayout>

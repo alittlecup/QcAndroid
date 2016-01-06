@@ -52,7 +52,6 @@ public class ChooseStudentActivity extends BaseAcitivity {
     Toolbar toolbar;
     @Bind(R.id.choosestudent_rv)
     RecyclerView choosestudentRv;
-
     @Bind(R.id.choosestudent_all)
     CheckBox choosestudentAll;
     @Bind(R.id.choosestudent_choose_num)
@@ -64,6 +63,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
     @Bind(R.id.alphabetview)
     AlphabetView alphabetview;
     List<StudentBean> studentBeans = new ArrayList<>(); //通讯录中所有联系人
+
     private LinearLayoutManager mLinearLayoutManager;
     private StudentAdapter studentAdapter;
     private int chosenCount = 0;
