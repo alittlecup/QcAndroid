@@ -28,8 +28,7 @@ import butterknife.OnClick;
  */
 public class CourseListFragment extends VpFragment {
 
-    private static final int TYPE_PRIVATE = 1;  //私教
-    private static final int TYPE_GROUP = 2;    //团课
+
 
     @Bind(R.id.course_count)
     TextView courseCount;

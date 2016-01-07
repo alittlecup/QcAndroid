@@ -38,4 +38,7 @@ public class Configs {
     //Camera图片位置
     public static String CameraPic = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/camera_tmp.jpg";
     public static String CameraCrop = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/crop_tmp.jpg";
+
+    public static final int TYPE_PRIVATE = 1;  //私教
+    public static final int TYPE_GROUP = 2;    //团课
 }

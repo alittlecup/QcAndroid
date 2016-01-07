@@ -61,6 +61,7 @@ public class CourseView extends RelativeLayout {
     }
 
     public void init(Context context) {
+
         LayoutInflater.from(context).inflate(R.layout.layout_course, this, true);
         LogUtil.e("xxxx");
     }

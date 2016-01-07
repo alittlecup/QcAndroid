@@ -141,7 +141,8 @@ public class GymDetailNativeFragment extends Fragment {
     @OnClick(R.id.add_course)
     public void adCourse(){
         getFragmentManager().beginTransaction()
-                .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(1,mModel,(int)mId))
+//                .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(1,mModel,(int)mId))
+                .replace(R.id.web_frag_layout, AddCourseManageFragment.newInstance())
                 .addToBackStack(null)
                 .commit();
     }

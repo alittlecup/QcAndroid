@@ -16,7 +16,6 @@ public class CourseDetailFragment extends Fragment {
 
 
     public CourseDetailFragment() {
-        // Required empty public constructor
     }
 
 
