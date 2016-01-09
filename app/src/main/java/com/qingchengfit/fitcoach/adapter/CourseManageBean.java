@@ -21,4 +21,5 @@ public class CourseManageBean {
     public String time;
     public boolean outdue;
     public String id;
+    public long length;
 }

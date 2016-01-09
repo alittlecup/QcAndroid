@@ -546,6 +546,19 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,@Body DelCourseManage delCourseManage);
         @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/")
         rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@QueryMap HashMap<String,String> params);
+        //修改单挑排期
+
+        /**
+         *
+         * @param coach_id
+         * @param schedule_id
+         * @param schedules  私教 timetables
+         * @param params
+         * @return
+         */
+        @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/")
+        rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,@Path("schedule_id") String schedule_id,@Path("schedules") String schedules,@QueryMap HashMap<String,String> params);
+
     }
 
     public interface DownLoadApi {

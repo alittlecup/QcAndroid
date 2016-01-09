@@ -132,7 +132,7 @@ public class AddCourseManageFragment extends Fragment {
         recyclerview.setAdapter(adapter);
 
         starttime.setContent(DateUtils.getServerDateDay(new Date()));
-        endtime.setContent(DateUtils.getServerDateDayAddMonth(new Date(), 3));
+        endtime.setContent(DateUtils.getEndDayOfMonthNew(new Date()));
         return view;
     }
 
@@ -158,20 +158,9 @@ public class AddCourseManageFragment extends Fragment {
             pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR), Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(date -> {
-//            if (date.getTime() > new Date().getTime()) {
-//                Toast.makeText(App.AppContex, "起始时间不能晚于今天", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//
-//            if (!TextUtils.equals("至今", workexpeditStartEnd.getContent()) &&
-//                    DateUtils.formatDateFromString(workexpeditStartEnd.getContent()).getTime()
-//                            < DateUtils.formatDateFromString(workexpeditStartTime.getContent()).getTime()) {
-//                Toast.makeText(App.AppContex, "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-
 
             starttime.setContent(DateUtils.getServerDateDay(date));
+            endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
             pwTime.dismiss();
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
@@ -210,7 +199,8 @@ public class AddCourseManageFragment extends Fragment {
             List<AddBatchCourse.WeekTime> weekTimes = new ArrayList<>();
             AddBatchCourse.WeekTime wt = new AddBatchCourse.WeekTime();
             for (CmBean cm : datas) {
-
+                if (cm.dateStart == null || cm.week <0)
+                    continue;
                 wt.weekday = cm.week+1;
                 wt.start = DateUtils.getTimeHHMM(cm.dateStart);
                 if (cm.dateEnd != null)

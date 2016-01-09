@@ -259,7 +259,6 @@ public class WheelTime {
         wv_hours.setCurrentItem(h);
 
         wv_mins = (WheelView) view.findViewById(R.id.min);
-        LogUtil.e("interval:"+interval);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59,interval, "%02d"));
 //        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m/interval);

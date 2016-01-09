@@ -1,8 +1,6 @@
 package com.bigkoo.pickerview.lib;
 
 
-import com.paper.paperbaselibrary.utils.LogUtil;
-
 /**
  * Numeric Wheel adapter.
  */
@@ -69,7 +67,6 @@ public class NumericWheelAdapter implements WheelAdapter {
     public String getItem(int index) {
         if (index >= 0 && index < getItemsCount()) {
             int value = minValue + index*interval;
-            LogUtil.e("value:"+value+"  ; "+interval);
             return format != null ? String.format(format, value) : Integer.toString(value);
         }
         return null;

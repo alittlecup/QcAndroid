@@ -101,6 +101,11 @@ public class DateUtils {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
         return formatter.format(d);
     }
+    public static String formatToServer(Date d) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        return formatter.format(d)+"T"+formatter2.format(d);
+    }
 
     public static Date formatDateHHMM(String s) {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
@@ -157,7 +162,14 @@ public class DateUtils {
         c.setTime(date);
         c.add(Calendar.MONTH, 1);
         c.set(Calendar.DAY_OF_MONTH, 0);
-
+        return getServerDateDay(c.getTime());
+    }
+    public static String getEndDayOfMonthNew(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MONTH, 1);
+        c.set(Calendar.DAY_OF_MONTH, 0);
+        c.add(Calendar.DAY_OF_MONTH,-1);
         return getServerDateDay(c.getTime());
     }
 

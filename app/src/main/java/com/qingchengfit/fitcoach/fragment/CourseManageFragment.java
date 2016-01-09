@@ -173,9 +173,15 @@ public class CourseManageFragment extends Fragment {
                             b.month = DateUtils.getDateMonth(DateUtils.formatDateFromServer(schedule.start));
                             b.day = DateUtils.getDateDay(DateUtils.formatDateFromServer(schedule.start));
                             b.WeekDay = DateUtils.getDayOfWeek(DateUtils.formatDateFromServer(schedule.start));
-                            b.time = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start));
+                            if (mCourseType == Configs.TYPE_GROUP)
+                                b.time = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start));
+                            else
+                                b.time = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start)) + "-"
+                                        + DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.end));
+
                             b.outdue = DateUtils.formatDateFromServer(schedule.start).getTime() < new Date().getTime();
                             b.id = schedule.id + "";
+                            b.length = DateUtils.formatDateFromServer(schedule.end).getTime() - DateUtils.formatDateFromServer(schedule.start).getTime();
                             datas.add(b);
                         }
 //                        courseManagerAdapter = new CourseManagerAdapter(datas);
@@ -189,21 +195,47 @@ public class CourseManageFragment extends Fragment {
     public void chooseTime(int pos) {
         if (mCourseType == Configs.TYPE_GROUP) {
             if (timeWindow == null) {
-                timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS,15);
-
+                timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 15);
             }
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
-                    datas.get(pos).time = DateUtils.getTimeHHMM(date);
-                    courseManagerAdapter.notifyItemChanged(pos);
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("model", mModel);
+                    params.put("id", mId);
+                    params.put("start", DateUtils.formatToServer(date));
+                    params.put("end", DateUtils.formatToServer(new Date(date.getTime() + datas.get(pos).length)));
+                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, mCourseType == 1 ? "schedules" : "timetables",
+                            params).observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(new Subscriber<QcResponse>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(QcResponse qcResponse) {
+                                    if (qcResponse.status == ResponseResult.SUCCESS) {
+                                        datas.get(pos).time = DateUtils.getTimeHHMM(date);
+                                        courseManagerAdapter.notifyItemChanged(pos);
+                                    }
+                                }
+                            });
+
+
                 }
             });
             timeWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
 
         } else {
             if (timeDialogWindow == null) {
-                timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS);
+                timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 15);
 
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
@@ -214,9 +246,36 @@ public class CourseManageFragment extends Fragment {
                         return;
                     }
 
-                    datas.get(pos).time = DateUtils.getTimeHHMM(start)+"-"+DateUtils.getTimeHHMM(end);
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("model", mModel);
+                    params.put("id", mId);
+                    params.put("start", DateUtils.formatToServer(start));
+                    params.put("end", DateUtils.formatToServer(end));
+                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, mCourseType == 1 ? "schedules" : "timetables",
+                            params).observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(new Subscriber<QcResponse>() {
+                                @Override
+                                public void onCompleted() {
 
-                    courseManagerAdapter.notifyItemChanged(pos);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(QcResponse qcResponse) {
+                                    if (qcResponse.status == ResponseResult.SUCCESS) {
+                                        datas.get(pos).time = DateUtils.getTimeHHMM(start) + "-" + DateUtils.getTimeHHMM(end);
+
+                                        courseManagerAdapter.notifyItemChanged(pos);
+                                    }
+                                }
+                            });
+
+
                 }
             });
             timeDialogWindow.setTime(new Date(), new Date(System.currentTimeMillis() + DateUtils.HOUR_TIME));
