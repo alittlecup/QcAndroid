@@ -1,5 +1,8 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -15,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Created by Paper on 15/12/29 2015.
  */
-public class ShopCourse {
+public class ShopCourse implements Parcelable {
     @SerializedName("name")
     public String name;
 
@@ -40,4 +43,44 @@ public class ShopCourse {
     public long id;
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.tags);
+        dest.writeString(this.image_url);
+        dest.writeInt(this.course_count);
+        dest.writeInt(this.length);
+        dest.writeInt(this.service_count);
+        dest.writeByte(is_private ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.id);
+    }
+
+    public ShopCourse() {
+    }
+
+    protected ShopCourse(Parcel in) {
+        this.name = in.readString();
+        this.tags = in.readString();
+        this.image_url = in.readString();
+        this.course_count = in.readInt();
+        this.length = in.readInt();
+        this.service_count = in.readInt();
+        this.is_private = in.readByte() != 0;
+        this.id = in.readLong();
+    }
+
+    public static final Parcelable.Creator<ShopCourse> CREATOR = new Parcelable.Creator<ShopCourse>() {
+        public ShopCourse createFromParcel(Parcel source) {
+            return new ShopCourse(source);
+        }
+
+        public ShopCourse[] newArray(int size) {
+            return new ShopCourse[size];
+        }
+    };
 }

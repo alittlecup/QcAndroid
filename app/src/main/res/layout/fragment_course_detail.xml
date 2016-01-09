@@ -6,7 +6,7 @@
               android:background="@color/backgroud_grey"
              tools:context="com.qingchengfit.fitcoach.fragment.CourseDetailFragment">
         <include layout="@layout/common_toolbar"/>
-        <include layout="@layout/item_gym"/>
+        <include layout="@layout/layout_course"/>
         <include layout="@layout/divider_grey"/>
         <include layout="@layout/divider_grey_margin"/>
         <include layout="@layout/fragment_course_list"/>

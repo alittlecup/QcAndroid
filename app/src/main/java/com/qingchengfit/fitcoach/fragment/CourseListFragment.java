@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.adapter.ImageTwoTextAdapter;
-import com.qingchengfit.fitcoach.adapter.ImageTwoTextBean;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextAdapter;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
+import com.qingchengfit.fitcoach.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
@@ -29,7 +32,6 @@ import butterknife.OnClick;
 public class CourseListFragment extends VpFragment {
 
 
-
     @Bind(R.id.course_count)
     TextView courseCount;
     @Bind(R.id.preview)
@@ -37,9 +39,49 @@ public class CourseListFragment extends VpFragment {
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
 
-    private ImageTwoTextAdapter mImageTwoTextAdapter;
-    private List<ImageTwoTextBean> datas = new ArrayList<>();
-    private int mType =1;//当前页的类型
+    private ImageThreeTextAdapter mImageTwoTextAdapter;
+    private List<ImageThreeTextBean> datas = new ArrayList<>();
+    private int mCourseType = 1;//当前页的类型
+    private int mGymType = 1;//个人健身房 0是同步健身房
+    private int course_count;
+    /**
+     * @param GymType    0是同步健身房 1是个人
+     * @param CourseType 1是私教 2是团课
+     * @param d
+     * @return
+     */
+    public static CourseListFragment newInstance(int GymType, int CourseType, ArrayList<ImageThreeTextBean> d) {
+
+        Bundle args = new Bundle();
+        args.putInt("gymtype", GymType);
+        args.putInt("coursetype", CourseType);
+        args.putParcelableArrayList("data", d);
+        CourseListFragment fragment = new CourseListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mCourseType = getArguments().getInt("coursetype");
+            mGymType = getArguments().getInt("gymtype");
+            datas = getArguments().getParcelableArrayList("data");
+            course_count = datas.size();
+            if (mGymType == 1) {
+                if (mCourseType == 1) {
+                    ImageThreeTextBean bean = new ImageThreeTextBean("", "+ 添加私教", "", "");
+                    bean.type = 1;
+                    datas.add(bean);
+                } else {
+                    ImageThreeTextBean bean = new ImageThreeTextBean("", "+ 添加团课", "", "");
+                    bean.type = 1;
+                    datas.add(bean);
+                }
+            }
+        }
+    }
 
     public CourseListFragment() {
 
@@ -51,19 +93,27 @@ public class CourseListFragment extends VpFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         ButterKnife.bind(this, view);
-        mImageTwoTextAdapter = new ImageTwoTextAdapter(datas);
+        if (mCourseType == Configs.TYPE_PRIVATE)
+            courseCount.setText(course_count + "节私教课");
+         else   courseCount.setText(course_count + "节团课");
+
+        mImageTwoTextAdapter = new ImageThreeTextAdapter(datas);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mImageTwoTextAdapter);
         mImageTwoTextAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                ImageTwoTextBean b = datas.get(pos);
-                if (b.type == 1){
+                ImageThreeTextBean b = datas.get(pos);
+                if (b.type == 1) {
                     //添加课程
-                }else {
+                    if (mCourseType == 1)
+                        RxBus.getBus().post(new RxAddCourse(Configs.TYPE_PRIVATE));
+                    else
+                        RxBus.getBus().post(new RxAddCourse(Configs.TYPE_GROUP));
+                } else {
                     //课程详情
-                    
+                    RxBus.getBus().post(b);
                 }
             }
         });
@@ -74,7 +124,7 @@ public class CourseListFragment extends VpFragment {
      * 预约课程 跳转到web页面
      */
     @OnClick(R.id.preview)
-    public void onPreview(){
+    public void onPreview() {
 
     }
 
@@ -87,13 +137,15 @@ public class CourseListFragment extends VpFragment {
 
     @Override
     public String getTitle() {
-        if (mType == 1){
-            return getString(R.string.course_private);
-        }else if (mType ==2){
-            return getString(R.string.course_group);
-        }else {
-            return getString(R.string.course_group);
-        }
+        if (isAdded()) {
+            if (mCourseType == 1) {
+                return getString(R.string.course_private);
+            } else if (mCourseType == 2) {
+                return getString(R.string.course_group);
+            } else {
+                return getString(R.string.course_group);
+            }
+        }else return "";
 
     }
 }

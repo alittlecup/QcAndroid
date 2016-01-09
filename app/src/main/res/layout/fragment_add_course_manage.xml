@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <LinearLayout
+        android:id="@+id/rootview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -37,6 +39,72 @@
             >
 
         </android.support.v7.widget.RecyclerView>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/add_default"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@color/white"-->
+            <!--android:paddingRight="@dimen/qc_item_height"-->
+            <!-->-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/layout1"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                <!-->-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/text1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:text="选择星期"-->
+                    <!--/>-->
+
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/divider_grey"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/layout2"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                <!-->-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/text2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--tools:text="选择时间"-->
+                    <!--/>-->
+
+
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/divider_grey"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+
+
+        <!--</LinearLayout>-->
 
         <TextView
             android:id="@+id/add"
@@ -49,6 +117,7 @@
             />
         <include layout="@layout/divider_grey" />
         <Button
+            android:id="@+id/comfirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"

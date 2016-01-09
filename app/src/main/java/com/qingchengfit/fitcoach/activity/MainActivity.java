@@ -1,12 +1,15 @@
 package com.qingchengfit.fitcoach.activity;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -232,6 +235,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         Long calendarid = -1l;
         long calendar_sync_time = PreferenceUtils.getPrefLong(this, "calendar_sync_time", 0);
         if (calendarid < 0) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             calendarid = PhoneFuncUtils.insertCalendar(this);
             PreferenceUtils.setSettingLong(this, "calendar_id", calendarid);
         }

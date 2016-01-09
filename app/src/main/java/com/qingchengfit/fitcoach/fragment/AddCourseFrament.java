@@ -21,11 +21,13 @@ import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
+import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
@@ -71,6 +73,8 @@ public class AddCourseFrament extends Fragment {
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
     public static final int TYPE_DEL = 3;
+    @Bind(R.id.course_type_layout)
+    RelativeLayout courseTypeLayout;
     private int mType;
     private String mModel;
     private int mId;
@@ -87,29 +91,31 @@ public class AddCourseFrament extends Fragment {
     public AddCourseFrament() {
     }
 
-    public static AddCourseFrament newInstance(int type,String model,int id) {
+    /**
+     * @param type  1是新增 2是编辑
+     * @param model
+     * @param id
+     * @return
+     */
+    public static AddCourseFrament newInstance(int type, String model, int id, boolean isPrivate) {
 
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putInt("id", id);
         args.putString("model", model);
-
+        args.putBoolean("isP", isPrivate);
         AddCourseFrament fragment = new AddCourseFrament();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static AddCourseFrament newInstance(int type,String model,int id,int course_id,String name,String pic,int time,boolean IsPrivate) {
+    public static AddCourseFrament newInstance(int type, String model, int id, int course_id) {
 
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putInt("id", id);
-        args.putInt("time", time);
         args.putString("model", model);
-        args.putString("name", name);
-        args.putString("pic", pic);
-        args.putBoolean("isP", IsPrivate);
-        args.putInt("course_id",course_id);
+        args.putInt("course_id", course_id);
         AddCourseFrament fragment = new AddCourseFrament();
         fragment.setArguments(args);
         return fragment;
@@ -118,14 +124,10 @@ public class AddCourseFrament extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             mType = getArguments().getInt("type");
             mId = getArguments().getInt("id");
             mModel = getArguments().getString("model");
-            upImg = getArguments().getString("pic");
-            upIsPrivate = getArguments().getBoolean("isP");
-            upName = getArguments().getString("name");
-            upTime = getArguments().getInt("time", -1);
             mCourseId = getArguments().getInt("course_id");
         }
     }
@@ -142,9 +144,10 @@ public class AddCourseFrament extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        if (mType == TYPE_ADD){
+        if (mType == TYPE_ADD) {
             toolbar.setTitle("新增课程");
-        }else if(mType == TYPE_EDIT){
+            courseTypeLayout.setVisibility(View.GONE);
+        } else if (mType == TYPE_EDIT) {
             toolbar.setTitle("编辑课程");
             toolbar.inflateMenu(R.menu.menu_delete);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -155,12 +158,43 @@ public class AddCourseFrament extends Fragment {
                     return true;
                 }
             });
-            Glide.with(App.AppContex).load(upImg).into(gymAddcourseImg);
-            courseName.setContent(upName);
-            courseTime.setContent(upTime+"");
-            if (upIsPrivate){
-                courseTypeRg.check(R.id.course_type_private);
-            }else courseTypeRg.check(R.id.course_type_group);
+            HashMap<String, String> params = new HashMap<>();
+            params.put("model", mModel);
+            params.put("id", mId + "");
+            QcCloudClient.getApi().getApi.qcGetOneCourse(App.coachid, mCourseId, params)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<QcOneCourseResponse>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(QcOneCourseResponse qcOneCourseResponse) {
+                            if (qcOneCourseResponse.status == ResponseResult.SUCCESS) {
+                                Glide.with(App.AppContex).load(qcOneCourseResponse.data.course.photo).into(gymAddcourseImg);
+                                courseName.setContent(qcOneCourseResponse.data.course.name);
+                                courseTime.setContent(qcOneCourseResponse.data.course.length / 60 + "");
+                                upIsPrivate = qcOneCourseResponse.data.course.is_private;
+                                if (upIsPrivate) {
+                                    courseTypeRg.check(R.id.course_type_private);
+                                } else courseTypeRg.check(R.id.course_type_group);
+                            }
+                        }
+                    });
+//            Glide.with(App.AppContex).load(upImg).into(gymAddcourseImg);
+//            courseName.setContent(upName);
+//            courseTime.setContent(upTime + "");
+            courseTypeLayout.setVisibility(View.VISIBLE);
+//            if (upIsPrivate) {
+//                courseTypeRg.check(R.id.course_type_private);
+//            } else courseTypeRg.check(R.id.course_type_group);
         }
 
         courseTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -175,15 +209,17 @@ public class AddCourseFrament extends Fragment {
     }
 
     @OnClick(R.id.add_gym_course_btn)
-    public void onAddCourse(){
-        if (TextUtils.isEmpty(courseName.getContent())){
+    public void onAddCourse() {
+        if (TextUtils.isEmpty(courseName.getContent())) {
             ToastUtils.showDefaultStyle("请填写课程名称");
             return;
         }
-        if (TextUtils.isEmpty(courseTime.getContent())){
+        if (TextUtils.isEmpty(courseTime.getContent())) {
             ToastUtils.showDefaultStyle("请填写课程时长");
             return;
         }
+        upTime = Integer.parseInt(courseTime.getContent());
+        upName = courseName.getContent().trim();
         addGymCourseBtn.setEnabled(false);
         if (mType == TYPE_ADD) {
             addSp = QcCloudClient.getApi().postApi.qcAddCourse(App.coachid, new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate))
@@ -210,7 +246,7 @@ public class AddCourseFrament extends Fragment {
                             }
                         }
                     });
-        }else if (mType == TYPE_EDIT){
+        } else if (mType == TYPE_EDIT) {
             addSp = QcCloudClient.getApi().postApi.qcEditCourse(App.coachid, new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -229,6 +265,7 @@ public class AddCourseFrament extends Fragment {
                         public void onNext(QcResponse qcResponse) {
                             addGymCourseBtn.setEnabled(true);
                             if (qcResponse.status == ResponseResult.SUCCESS) {
+                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 //新增成功
                                 getActivity().onBackPressed();
                                 ToastUtils.show("修改成功");
@@ -239,12 +276,11 @@ public class AddCourseFrament extends Fragment {
     }
 
 
-
     /**
      * 新增图片
      */
     @OnClick(R.id.gym_addcourse_img_layout)
-    public void addPhoto(){
+    public void addPhoto() {
         ChoosePictureFragmentDialog dialog = new ChoosePictureFragmentDialog();
         dialog.show(getFragmentManager(), "");
         dialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
@@ -255,7 +291,7 @@ public class AddCourseFrament extends Fragment {
                     upPic = Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(Subscriber<? super String> subscriber) {
-                            upImg = UpYunClient.upLoadImg("/course/", new File(filePath));
+                            upImg = UpYunClient.upLoadImg("course/", new File(filePath));
                             subscriber.onNext(upImg);
                         }
                     }).observeOn(AndroidSchedulers.mainThread())
@@ -289,12 +325,12 @@ public class AddCourseFrament extends Fragment {
         });
     }
 
-    public HashMap<String,String> getParams(){
-        HashMap<String,String> params =new HashMap<>();
-        params.put("model",mModel);
-        params.put("id",mId+"");
-        params.put("name",upName);
-        params.put("photo",upImg);
+    public HashMap<String, String> getParams() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("model", mModel);
+        params.put("id", mId + "");
+        params.put("name", upName);
+        params.put("photo", upImg);
         params.put("length", upTime + "");
         params.put("is_private", upIsPrivate + "");
 
@@ -303,7 +339,7 @@ public class AddCourseFrament extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (addSp != null )
+        if (addSp != null)
             addSp.unsubscribe();
         if (upPic != null)
             upPic.unsubscribe();
@@ -326,10 +362,10 @@ public class AddCourseFrament extends Fragment {
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
                             dialog.dismiss();
-                            HashMap<String,String> params = new HashMap<String, String>();
-                            params.put("id",mId+"");
-                            params.put("course_id",mCourseId+"");
-                            params.put("model",mModel);
+                            HashMap<String, String> params = new HashMap<String, String>();
+                            params.put("id", mId + "");
+                            params.put("course_id", mCourseId + "");
+                            params.put("model", mModel);
 
                             QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -370,7 +406,6 @@ public class AddCourseFrament extends Fragment {
         }
         delDialog.show();
     }
-
 
 
 }

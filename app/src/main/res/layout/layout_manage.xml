@@ -28,6 +28,7 @@
             />
 
         <ImageView
+            android:id="@+id/down1"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_centerVertical="true"
@@ -63,6 +64,8 @@
             />
 
         <ImageView
+            android:id="@+id/down2"
+
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_centerVertical="true"
@@ -85,7 +88,7 @@
         android:layout_height="@dimen/qc_item_height"
         android:layout_gravity="center_vertical"
         android:scaleType="center"
-        android:src="@drawable/ic_arrow_right"
+        android:src="@drawable/ic_item_delete"
         />
 </LinearLayout>
 

@@ -73,6 +73,11 @@ public class DateUtils {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         return formatter.format(d);
     }
+    public static String getServerDateDayAddMonth(Date d,int i) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        return formatter.format(addDateMonth(d,i));
+    }
     public static String getServerDay(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
@@ -111,7 +116,12 @@ public class DateUtils {
 
         return s.replace(".", "-");
     }
-
+    public static Date addDateMonth(Date d,int i){
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.add(Calendar.MONTH,i);
+        return c.getTime();
+    }
     /**
      * 得到本周周一
      *
@@ -156,6 +166,12 @@ public class DateUtils {
         c.setTime(date);
         c.set(Calendar.DAY_OF_MONTH, 1);
         return getServerDateDay(c.getTime());
+    }
+    public static int getDayOfWeek(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+
+        return c.get(Calendar.DAY_OF_WEEK);
     }
 
 

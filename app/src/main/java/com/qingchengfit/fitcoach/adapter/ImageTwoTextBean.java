@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.adapter;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 
 import java.util.HashMap;
@@ -17,7 +19,7 @@ import java.util.HashMap;
  * <p>
  * Created by Paper on 15/12/28 2015.
  */
-public class ImageTwoTextBean {
+public class ImageTwoTextBean implements Parcelable {
     public String imgUrl;
     public String text1;
     public String text2;
@@ -51,4 +53,42 @@ public class ImageTwoTextBean {
         this.showRight = showRight;
         this.rightIcon = rightIcon;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imgUrl);
+        dest.writeString(this.text1);
+        dest.writeString(this.text2);
+        dest.writeByte(showIcon ? (byte) 1 : (byte) 0);
+        dest.writeByte(showRight ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.type);
+        dest.writeInt(this.rightIcon);
+        dest.writeSerializable(this.tags);
+    }
+
+    protected ImageTwoTextBean(Parcel in) {
+        this.imgUrl = in.readString();
+        this.text1 = in.readString();
+        this.text2 = in.readString();
+        this.showIcon = in.readByte() != 0;
+        this.showRight = in.readByte() != 0;
+        this.type = in.readInt();
+        this.rightIcon = in.readInt();
+        this.tags = (HashMap<String, String>) in.readSerializable();
+    }
+
+    public static final Parcelable.Creator<ImageTwoTextBean> CREATOR = new Parcelable.Creator<ImageTwoTextBean>() {
+        public ImageTwoTextBean createFromParcel(Parcel source) {
+            return new ImageTwoTextBean(source);
+        }
+
+        public ImageTwoTextBean[] newArray(int size) {
+            return new ImageTwoTextBean[size];
+        }
+    };
 }

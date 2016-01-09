@@ -16,6 +16,7 @@
         android:layout_height="@dimen/qc_item_height"
         android:background="@color/backgroud_grey"
         tools:text="2016年1月排期"
+        tools:visibility="visible"
         />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -68,6 +69,7 @@
 
         </LinearLayout>
         <View
+            android:id="@+id/outofdatelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/halftransparent_white"

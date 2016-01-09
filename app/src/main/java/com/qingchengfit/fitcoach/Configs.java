@@ -22,8 +22,8 @@ public class Configs {
      */
 //    public static boolean isDebug = true;
     public static boolean isDebug = false;
-    public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
-    //    public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
+//    public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
+        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = ServerIp + ServerPort;
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
@@ -41,4 +41,6 @@ public class Configs {
 
     public static final int TYPE_PRIVATE = 1;  //私教
     public static final int TYPE_GROUP = 2;    //团课
+    public static final String[] STRINGS_WEEKDAY = {"周一","周二","周三","周四","周五","周六","周日"};
+
 }

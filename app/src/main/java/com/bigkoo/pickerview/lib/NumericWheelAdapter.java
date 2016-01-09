@@ -1,6 +1,8 @@
 package com.bigkoo.pickerview.lib;
 
 
+import com.paper.paperbaselibrary.utils.LogUtil;
+
 /**
  * Numeric Wheel adapter.
  */
@@ -15,6 +17,7 @@ public class NumericWheelAdapter implements WheelAdapter {
      * The default max value
      */
     private static final int DEFAULT_MIN_VALUE = 0;
+    private int interval = 1;
 
     // Values
     private int minValue;
@@ -39,6 +42,9 @@ public class NumericWheelAdapter implements WheelAdapter {
     public NumericWheelAdapter(int minValue, int maxValue) {
         this(minValue, maxValue, null);
     }
+    public NumericWheelAdapter(int minValue, int maxValue,int interval) {
+        this(minValue, maxValue,interval, null);
+    }
 
     /**
      * Constructor
@@ -47,6 +53,12 @@ public class NumericWheelAdapter implements WheelAdapter {
      * @param maxValue the wheel max value
      * @param format   the format string
      */
+    public NumericWheelAdapter(int minValue, int maxValue,int interval, String format) {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.format = format;
+        this.interval = interval;
+    }
     public NumericWheelAdapter(int minValue, int maxValue, String format) {
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -56,7 +68,8 @@ public class NumericWheelAdapter implements WheelAdapter {
     @Override
     public String getItem(int index) {
         if (index >= 0 && index < getItemsCount()) {
-            int value = minValue + index;
+            int value = minValue + index*interval;
+            LogUtil.e("value:"+value+"  ; "+interval);
             return format != null ? String.format(format, value) : Integer.toString(value);
         }
         return null;
@@ -64,7 +77,7 @@ public class NumericWheelAdapter implements WheelAdapter {
 
     @Override
     public int getItemsCount() {
-        return maxValue - minValue + 1;
+        return (maxValue - minValue + 1)/interval;
     }
 
     @Override

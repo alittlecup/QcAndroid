@@ -19,6 +19,7 @@ import rx.subjects.Subject;
 public class RxBus {
     public static String TAG1 = "RxBus";
     public static String OPEN_DRAWER = "RxBus_opendrawer";
+    public static String BUS_REFRESH = "RxBus_refresh";
     private static String TAG = "RxBus";
     private static RxBus _RxBus;
     // If multiple threads are going to emit events to this

@@ -1,36 +1,39 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.adapter.FragmentAdater;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
+import com.qingchengfit.fitcoach.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;
-import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
 import com.qingchengfit.fitcoach.http.bean.ShopCourse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,33 +48,26 @@ public class GymDetailNativeFragment extends Fragment {
     Toolbar toolbar;
     @Bind(R.id.gym_name)
     TextView gymName;
-    @Bind(R.id.gym_brand)
-    TextView gymBrand;
-    @Bind(R.id.gym_address)
-    LinearLayout gymAddress;
     @Bind(R.id.gym_count)
     TextView gymCount;
-    @Bind(R.id.gym_student_count)
-    LinearLayout gymStudentCount;
-    @Bind(R.id.opentime)
-    TextView opentime;
-    @Bind(R.id.course_sum)
-    TextView courseSum;
-    @Bind(R.id.add_course)
-    TextView addCourse;
-    @Bind(R.id.course_total_layout)
-    RelativeLayout courseTotalLayout;
     @Bind(R.id.gym_img)
     ImageView gymImg;
     @Bind(R.id.linearlayout)
     LinearLayout linearlayout;
     @Bind(R.id.gym_title_tag)
     ImageView gymTitleTag;
+    @Bind(R.id.myhome_tab)
+    TabLayout myhomeTab;
+    @Bind(R.id.viewpager)
+    ViewPager viewpager;
     private long mId;
     private boolean mIsPrivate;
     private Subscription mHttpSc;
     private String mModel;
     private MaterialDialog alertDialog;
+    private FragmentAdater fragmentAdater;
+    private Observable mAddObserable;
+    private Observable<ImageThreeTextBean> mCourseObserable;
 
     public GymDetailNativeFragment() {
     }
@@ -130,19 +126,75 @@ public class GymDetailNativeFragment extends Fragment {
             }
             return true;
         });
-        ColorDrawable drawable = new ColorDrawable(getResources().getColor(R.color.primary));
-        drawable.setAlpha(50);
 
-        courseTotalLayout.setBackground(drawable);
+
         init();
+        mAddObserable = RxBus.getBus().register(RxAddCourse.class);
+        mAddObserable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof RxAddCourse){
+                            if (((RxAddCourse) o).type ==1){
+                                //跳转到新增团课
+                                adCourse(AddCourseFrament.newInstance(1,mModel,(int)mId,true));
+                            }else if (((RxAddCourse) o).type == 2){
+                                adCourse(AddCourseFrament.newInstance(1,mModel,(int)mId,false));
+                            }else {
+
+                            }
+
+                        }
+                    }
+                });
+        mCourseObserable = RxBus.getBus().register(ImageThreeTextBean.class);
+        mCourseObserable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ImageThreeTextBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ImageThreeTextBean imageThreeTextBean) {
+                        adCourse(CourseDetailFragment.newInstance(imageThreeTextBean));
+                    }
+                });
         return view;
     }
 
-    @OnClick(R.id.add_course)
-    public void adCourse(){
+    public void initViewPager(boolean sync, ArrayList<ImageThreeTextBean> pri, ArrayList<ImageThreeTextBean> group) {
+
+        List<VpFragment> fragments = new ArrayList<>();
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri));
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 2, group));
+        fragmentAdater = new FragmentAdater(getChildFragmentManager(), fragments);
+        viewpager.setAdapter(fragmentAdater);
+        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
+        myhomeTab.setupWithViewPager(viewpager);
+    }
+
+
+
+    public void adCourse(Fragment fragment) {
         getFragmentManager().beginTransaction()
 //                .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(1,mModel,(int)mId))
-                .replace(R.id.web_frag_layout, AddCourseManageFragment.newInstance())
+                .add(R.id.web_frag_layout, fragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -170,65 +222,72 @@ public class GymDetailNativeFragment extends Fragment {
                     @Override
                     public void onNext(QcGymDetailResponse qcGymDetailResponse) {
                         Glide.with(App.AppContex).load(qcGymDetailResponse.data.service.photo).asBitmap().into(new CircleImgWrapper(gymImg, App.AppContex));
-                        if (qcGymDetailResponse.data.shop != null && qcGymDetailResponse.data.shop.shop!=null) {
-                            List<QcPrivateGymReponse.OpenTime> openTime = qcGymDetailResponse.data.shop.shop.open_time;
-
-                            StringBuffer ot = new StringBuffer();
-                            try {
-                                ot
-                                        .append("周一").append(openTime.get(0).start).append("-").append(openTime.get(0).end)
-                                        .append(",周二").append(openTime.get(1).start).append("-").append(openTime.get(1).end)
-                                        .append("\n周三").append(openTime.get(2).start).append("-").append(openTime.get(2).end)
-                                        .append(",周四").append(openTime.get(3).start).append("-").append(openTime.get(3).end)
-                                        .append("\n周五").append(openTime.get(4).start).append("-").append(openTime.get(4).end)
-                                        .append(",周六").append(openTime.get(5).start).append("-").append(openTime.get(5).end)
-                                        .append("\n周日").append(openTime.get(6).start).append("-").append(openTime.get(6).end);
-                                opentime.setText(ot.toString());
-                            } catch (Exception e) {
-
-                            }
-                        }
                         toolbar.setTitle(qcGymDetailResponse.data.service.name);
+                        boolean isSyncCourse = false;
                         if (qcGymDetailResponse.data.service.model.equals("service") && qcGymDetailResponse.data.service.type == 1) {
                             gymTitleTag.setVisibility(View.GONE);
+                            isSyncCourse = false;
                         } else if (qcGymDetailResponse.data.service.model.equals("gym")) {
                             gymTitleTag.setVisibility(View.VISIBLE);
+                            isSyncCourse = true;
                         }
                         gymName.setText(qcGymDetailResponse.data.service.name);
 //                        gymBrand.setText(qcGymDetailResponse.data.service.);
 
                         //团课私教数量
-                        courseSum.setText("0节团课,2门团课");
                         gymCount.setText(qcGymDetailResponse.data.shop.courses_count + "门课程, " + qcGymDetailResponse.data.shop.user_count + "名学员");
+                        ArrayList<ImageThreeTextBean> privateCourse = new ArrayList<>();
+                        ArrayList<ImageThreeTextBean> groupCourse = new ArrayList<>();
+
                         for (ShopCourse course : qcGymDetailResponse.data.shop.courses) {
-                            View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_course,null);
-                            TextView text1 = (TextView)view.findViewById(R.id.text1);
-                            TextView text2 = (TextView)view.findViewById(R.id.text2);
-                            TextView text3 = (TextView)view.findViewById(R.id.text3);
-                            ImageView img = (ImageView)view.findViewById(R.id.img);
-                            ImageView righticon = (ImageView)view.findViewById(R.id.righticon);
-                            view.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    getFragmentManager().beginTransaction()
-                                            .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(2,mModel,(int)mId,(int)course.id,course.name,course.image_url,course.length,course.is_private))
-                                            .addToBackStack(null)
-                                            .commit();
-                                }
-                            });
-                            if (course != null){
-                                Glide.with(App.AppContex).load(course.image_url).into(img);
-                                text1.setText(course.name);
-                                text2.setText("时长"+course.length+"min");
-                                text3.setText("累计"+course.course_count+"节,服务"+course.service_count+"人次");
-                                if (course.is_private)
-                                    righticon.setVisibility(View.VISIBLE);
-                                else righticon.setVisibility(View.GONE);
-                            }else {
-                                LogUtil.e("course == null");
+                            ImageThreeTextBean bean = new ImageThreeTextBean(course.image_url, course.name, "时长: " + course.length/60 + "min", "累计" + course.course_count + "节,服务" + course.service_count + "人次");
+                            bean.tags.put(ImageThreeTextBean.TAG_MODEL,qcGymDetailResponse.data.service.model);
+                            bean.tags.put(ImageThreeTextBean.TAG_ID,qcGymDetailResponse.data.service.id+"");
+                            bean.tags.put(ImageThreeTextBean.TAG_COURSE,course.id+"");
+                            bean.tags.put(ImageThreeTextBean.TAG_LENGTH,course.length+"");
+                            bean.tags.put(ImageThreeTextBean.TAG_COURSETYPE,course.is_private? Configs.TYPE_PRIVATE+"":Configs.TYPE_GROUP+"");
+                            if (isSyncCourse) {
+                                bean.showRight = false;
+                                bean.showIcon = true;
+                            } else {
+                                bean.showRight = true;
+                                bean.showIcon = false;
                             }
-                            linearlayout.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(90f,getResources())));
+                            if (course.is_private) {
+                                privateCourse.add(bean);
+                            } else {
+                                groupCourse.add(bean);
+                            }
+
+//                            View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_course,null);
+//                            TextView text1 = (TextView)view.findViewById(R.id.text1);
+//                            TextView text2 = (TextView)view.findViewById(R.id.text2);
+//                            TextView text3 = (TextView)view.findViewById(R.id.text3);
+//                            ImageView img = (ImageView)view.findViewById(R.id.img);
+//                            ImageView righticon = (ImageView)view.findViewById(R.id.righticon);
+//                            view.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    getFragmentManager().beginTransaction()
+//                                            .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(2,mModel,(int)mId,(int)course.id,course.name,course.image_url,course.length,course.is_private))
+//                                            .addToBackStack(null)
+//                                            .commit();
+//                                }
+//                            });
+//                            if (course != null){
+//                                Glide.with(App.AppContex).load(course.image_url).into(img);
+//                                text1.setText(course.name);
+//                                text2.setText("时长"+course.length+"min");
+//                                text3.setText("累计"+course.course_count+"节,服务"+course.service_count+"人次");
+//                                if (course.is_private)
+//                                    righticon.setVisibility(View.VISIBLE);
+//                                else righticon.setVisibility(View.GONE);
+//                            }else {
+//                                LogUtil.e("course == null");
+//                            }
+//                            linearlayout.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(90f,getResources())));
                         }
+                        initViewPager(isSyncCourse, privateCourse, groupCourse);
 
                     }
                 });
@@ -238,6 +297,7 @@ public class GymDetailNativeFragment extends Fragment {
     public void onDestroy() {
         if (mHttpSc != null && !mHttpSc.isUnsubscribed())
             mHttpSc.unsubscribe();
+        RxBus.getBus().unregister(RxAddCourse.class.getName(),mAddObserable);
         super.onDestroy();
     }
 
