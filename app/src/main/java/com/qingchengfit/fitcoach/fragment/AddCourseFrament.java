@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -78,7 +77,7 @@ public class AddCourseFrament extends Fragment {
     private int mType;
     private String mModel;
     private int mId;
-    private int mCourseId;
+    private String mCourseId;
 
     private Subscription addSp;//新增课程
     private Subscription upPic;//新增课程
@@ -109,13 +108,13 @@ public class AddCourseFrament extends Fragment {
         return fragment;
     }
 
-    public static AddCourseFrament newInstance(int type, String model, int id, int course_id) {
+    public static AddCourseFrament newInstance(int type, String model, int id, String course_id) {
 
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putInt("id", id);
         args.putString("model", model);
-        args.putInt("course_id", course_id);
+        args.putString("course_id", course_id);
         AddCourseFrament fragment = new AddCourseFrament();
         fragment.setArguments(args);
         return fragment;
@@ -128,7 +127,8 @@ public class AddCourseFrament extends Fragment {
             mType = getArguments().getInt("type");
             mId = getArguments().getInt("id");
             mModel = getArguments().getString("model");
-            mCourseId = getArguments().getInt("course_id");
+            mCourseId = getArguments().getString("course_id");
+            upIsPrivate = getArguments().getBoolean("isP");
         }
     }
 
@@ -149,15 +149,15 @@ public class AddCourseFrament extends Fragment {
             courseTypeLayout.setVisibility(View.GONE);
         } else if (mType == TYPE_EDIT) {
             toolbar.setTitle("编辑课程");
-            toolbar.inflateMenu(R.menu.menu_delete);
-            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    //删除
-                    delCourse();
-                    return true;
-                }
-            });
+//            toolbar.inflateMenu(R.menu.menu_delete);
+//            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    删除
+//                    delCourse();
+//                    return true;
+//                }
+//            });
             HashMap<String, String> params = new HashMap<>();
             params.put("model", mModel);
             params.put("id", mId + "");
@@ -218,7 +218,7 @@ public class AddCourseFrament extends Fragment {
             ToastUtils.showDefaultStyle("请填写课程时长");
             return;
         }
-        upTime = Integer.parseInt(courseTime.getContent());
+        upTime = Integer.parseInt(courseTime.getContent())*60;
         upName = courseName.getContent().trim();
         addGymCourseBtn.setEnabled(false);
         if (mType == TYPE_ADD) {
@@ -241,7 +241,9 @@ public class AddCourseFrament extends Fragment {
                             addGymCourseBtn.setEnabled(true);
                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                 //新增成功
+
                                 getActivity().onBackPressed();
+                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 ToastUtils.show("新增成功");
                             }
                         }
@@ -265,9 +267,10 @@ public class AddCourseFrament extends Fragment {
                         public void onNext(QcResponse qcResponse) {
                             addGymCourseBtn.setEnabled(true);
                             if (qcResponse.status == ResponseResult.SUCCESS) {
-                                RxBus.getBus().post(RxBus.BUS_REFRESH);
+
                                 //新增成功
                                 getActivity().onBackPressed();
+                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 ToastUtils.show("修改成功");
                             }
                         }
@@ -386,6 +389,8 @@ public class AddCourseFrament extends Fragment {
                                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                                 ToastUtils.show("删除成功");
                                                 getActivity().onBackPressed();
+                                                getActivity().onBackPressed();
+                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                             } else {
 
                                             }

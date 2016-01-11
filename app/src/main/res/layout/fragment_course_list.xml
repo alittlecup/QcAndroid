@@ -43,11 +43,43 @@
             />
     </RelativeLayout>
     <include layout="@layout/divider_grey"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         >
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroud_grey"
+            >
+        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            android:visibility="gone"
+            >
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/img_no_statment_detail"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center_horizontal"
+                android:text="暂无课程安排\n点击按钮添加排期"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

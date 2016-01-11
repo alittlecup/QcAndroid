@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextAdapter;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.bean.RxAddCourse;
@@ -44,17 +46,19 @@ public class CourseListFragment extends VpFragment {
     private int mCourseType = 1;//当前页的类型
     private int mGymType = 1;//个人健身房 0是同步健身房
     private int course_count;
+    private String toUrl;
     /**
      * @param GymType    0是同步健身房 1是个人
      * @param CourseType 1是私教 2是团课
      * @param d
      * @return
      */
-    public static CourseListFragment newInstance(int GymType, int CourseType, ArrayList<ImageThreeTextBean> d) {
+    public static CourseListFragment newInstance(int GymType, int CourseType, ArrayList<ImageThreeTextBean> d,String url) {
 
         Bundle args = new Bundle();
         args.putInt("gymtype", GymType);
         args.putInt("coursetype", CourseType);
+        args.putString("url", url);
         args.putParcelableArrayList("data", d);
         CourseListFragment fragment = new CourseListFragment();
         fragment.setArguments(args);
@@ -68,6 +72,7 @@ public class CourseListFragment extends VpFragment {
             mCourseType = getArguments().getInt("coursetype");
             mGymType = getArguments().getInt("gymtype");
             datas = getArguments().getParcelableArrayList("data");
+            toUrl = getArguments().getString("url");
             course_count = datas.size();
             if (mGymType == 1) {
                 if (mCourseType == 1) {
@@ -81,6 +86,8 @@ public class CourseListFragment extends VpFragment {
                 }
             }
         }
+
+
     }
 
     public CourseListFragment() {
@@ -101,6 +108,14 @@ public class CourseListFragment extends VpFragment {
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mImageTwoTextAdapter);
+        preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toWeb = new Intent(getContext(), WebActivity.class);
+                toWeb.putExtra("url",toUrl);
+                startActivity(toWeb);
+            }
+        });
         mImageTwoTextAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
@@ -117,8 +132,12 @@ public class CourseListFragment extends VpFragment {
                 }
             }
         });
+
         return view;
     }
+
+
+
 
     /**
      * 预约课程 跳转到web页面

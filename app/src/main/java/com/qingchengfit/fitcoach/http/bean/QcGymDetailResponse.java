@@ -21,24 +21,30 @@ public class QcGymDetailResponse extends QcResponse {
     @SerializedName("data")
     public GymDetailData data;
 
-    public static class GymDetailData{
+    public static class GymDetailData {
         @SerializedName("shop")
         public Shop shop;
         @SerializedName("service")
         public CoachService service;
 
     }
-    public static class Shop{
+
+    public static class Shop {
         @SerializedName("shop")
         public ShopBean shop;
         @SerializedName("courses")
-        public List<ShopCourse > courses;
+        public List<ShopCourse> courses;
         @SerializedName("user_count")
         public int user_count;
         @SerializedName("courses_count")
         public int courses_count;
         @SerializedName("system_logo")
         public String system_logo;
+        @SerializedName("private_url")
+        public String private_url;
+        @SerializedName("team_url")
+        public String team_url;
+
     }
 
 }

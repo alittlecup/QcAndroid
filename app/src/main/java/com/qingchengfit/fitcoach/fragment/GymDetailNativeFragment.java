@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -68,6 +69,7 @@ public class GymDetailNativeFragment extends Fragment {
     private FragmentAdater fragmentAdater;
     private Observable mAddObserable;
     private Observable<ImageThreeTextBean> mCourseObserable;
+    private Observable<String> mObservableFresh;
 
     public GymDetailNativeFragment() {
     }
@@ -144,13 +146,13 @@ public class GymDetailNativeFragment extends Fragment {
 
                     @Override
                     public void onNext(Object o) {
-                        if (o instanceof RxAddCourse){
-                            if (((RxAddCourse) o).type ==1){
+                        if (o instanceof RxAddCourse) {
+                            if (((RxAddCourse) o).type == 1) {
                                 //跳转到新增团课
-                                adCourse(AddCourseFrament.newInstance(1,mModel,(int)mId,true));
-                            }else if (((RxAddCourse) o).type == 2){
-                                adCourse(AddCourseFrament.newInstance(1,mModel,(int)mId,false));
-                            }else {
+                                adCourse(AddCourseFrament.newInstance(1, mModel, (int) mId, true));
+                            } else if (((RxAddCourse) o).type == 2) {
+                                adCourse(AddCourseFrament.newInstance(1, mModel, (int) mId, false));
+                            } else {
 
                             }
 
@@ -175,14 +177,35 @@ public class GymDetailNativeFragment extends Fragment {
                         adCourse(CourseDetailFragment.newInstance(imageThreeTextBean));
                     }
                 });
+        mObservableFresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
+        mObservableFresh.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String o) {
+                        LogUtil.e("tag:" + o);
+//                        if (o.equalsIgnoreCase(RxBus.BUS_REFRESH))
+                        init();
+                    }
+                });
         return view;
     }
 
-    public void initViewPager(boolean sync, ArrayList<ImageThreeTextBean> pri, ArrayList<ImageThreeTextBean> group) {
+    public void initViewPager(boolean sync, ArrayList<ImageThreeTextBean> pri, ArrayList<ImageThreeTextBean> group,String purl,String gurl) {
 
         List<VpFragment> fragments = new ArrayList<>();
-        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri));
-        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 2, group));
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri,purl));
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 2, group,gurl));
         fragmentAdater = new FragmentAdater(getChildFragmentManager(), fragments);
         viewpager.setAdapter(fragmentAdater);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
@@ -193,7 +216,6 @@ public class GymDetailNativeFragment extends Fragment {
 
     public void adCourse(Fragment fragment) {
         getFragmentManager().beginTransaction()
-//                .replace(R.id.web_frag_layout, AddCourseFrament.newInstance(1,mModel,(int)mId))
                 .add(R.id.web_frag_layout, fragment)
                 .addToBackStack(null)
                 .commit();
@@ -235,7 +257,7 @@ public class GymDetailNativeFragment extends Fragment {
 //                        gymBrand.setText(qcGymDetailResponse.data.service.);
 
                         //团课私教数量
-                        gymCount.setText(qcGymDetailResponse.data.shop.courses_count + "门课程, " + qcGymDetailResponse.data.shop.user_count + "名学员");
+                        gymCount.setText(qcGymDetailResponse.data.service.courses_count + "门课程, " + qcGymDetailResponse.data.service.users_count + "名学员");
                         ArrayList<ImageThreeTextBean> privateCourse = new ArrayList<>();
                         ArrayList<ImageThreeTextBean> groupCourse = new ArrayList<>();
 
@@ -287,7 +309,7 @@ public class GymDetailNativeFragment extends Fragment {
 //                            }
 //                            linearlayout.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(90f,getResources())));
                         }
-                        initViewPager(isSyncCourse, privateCourse, groupCourse);
+                        initViewPager(isSyncCourse, privateCourse, groupCourse, qcGymDetailResponse.data.shop.private_url,qcGymDetailResponse.data.shop.team_url);
 
                     }
                 });
@@ -297,12 +319,15 @@ public class GymDetailNativeFragment extends Fragment {
     public void onDestroy() {
         if (mHttpSc != null && !mHttpSc.isUnsubscribed())
             mHttpSc.unsubscribe();
-        RxBus.getBus().unregister(RxAddCourse.class.getName(),mAddObserable);
+
         super.onDestroy();
     }
 
     @Override
     public void onDestroyView() {
+        RxBus.getBus().unregister(RxAddCourse.class.getName(),mAddObserable);
+        RxBus.getBus().unregister(RxBus.BUS_REFRESH,mObservableFresh);
+        RxBus.getBus().unregister(ImageThreeTextBean.class.getName(),mCourseObserable);
         super.onDestroyView();
         ButterKnife.unbind(this);
     }

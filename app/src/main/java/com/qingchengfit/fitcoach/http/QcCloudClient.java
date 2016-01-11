@@ -16,6 +16,7 @@ import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.DelCourseManage;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
+import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
 import com.qingchengfit.fitcoach.http.bean.GetBatchesResponse;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
@@ -399,15 +400,15 @@ public class QcCloudClient {
         rx.Observable<QcMeetingResponse> qcGetMeetingList();
 
         //所有的团课排期
-        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/schedules/")
-        rx.Observable<QcBatchResponse> qcGetGroupManageDetail(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@QueryMap Map<String, String> params);
+        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/")
+        rx.Observable<QcBatchResponse> qcGetGroupManageDetail(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@Path("schedules") String schedules,@QueryMap Map<String, String> params);
 
         //排期列表
         @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/batches/")
-        rx.Observable<GetBatchesResponse> qcGetGroupManage(@Path("coach_id") int coach_id,@Path("course_id") int course_id,@QueryMap Map<String, String> params);
+        rx.Observable<GetBatchesResponse> qcGetGroupManage(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
 
         @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/")
-        rx.Observable<QcOneCourseResponse> qcGetOneCourse(@Path("coach_id") int coach_id,@Path("course_id") int course_id,@QueryMap Map<String, String> params);
+        rx.Observable<QcOneCourseResponse> qcGetOneCourse(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
     }
 
 
@@ -553,11 +554,10 @@ public class QcCloudClient {
          * @param coach_id
          * @param schedule_id
          * @param schedules  私教 timetables
-         * @param params
          * @return
          */
         @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/")
-        rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,@Path("schedule_id") String schedule_id,@Path("schedules") String schedules,@QueryMap HashMap<String,String> params);
+        rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,@Path("schedule_id") String schedule_id,@Path("schedules") String schedules,@Body FixBatchBean batchBean);
 
     }
 

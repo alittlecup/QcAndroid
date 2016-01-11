@@ -126,7 +126,7 @@ public class AddCourseManageFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        datas.add(new CmBean(-1, null, null));
+//        datas.add(new CmBean(-1, null, null));
         adapter = new CmAdapter();
         recyclerview.setLayoutManager(new FullyLinearLayoutManager(getContext()));
         recyclerview.setAdapter(adapter);
@@ -157,11 +157,13 @@ public class AddCourseManageFragment extends Fragment {
         if (pwTime == null)
             pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR), Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
-        pwTime.setOnTimeSelectListener(date -> {
-
-            starttime.setContent(DateUtils.getServerDateDay(date));
-            endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
-            pwTime.dismiss();
+        pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                starttime.setContent(DateUtils.getServerDateDay(date));
+                endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
+                pwTime.dismiss();
+            }
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
@@ -171,17 +173,20 @@ public class AddCourseManageFragment extends Fragment {
         if (pwTime == null)
             pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR), Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
-        pwTime.setOnTimeSelectListener(date -> {
-            if (date.getTime() < DateUtils.formatDateFromString(starttime.getContent()).getTime()) {
-                Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
-                return;
+        pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                if (date.getTime() < DateUtils.formatDateFromString(starttime.getContent()).getTime()) {
+                    Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (date.getTime() - DateUtils.formatDateFromString(starttime.getContent()).getTime() > 92 * DateUtils.DAY_TIME) {
+                    Toast.makeText(App.AppContex, "一次最多只能排三个月的课程", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                endtime.setContent(DateUtils.getServerDateDay(date));
+                pwTime.dismiss();
             }
-            if (date.getTime() - DateUtils.formatDateFromString(starttime.getContent()).getTime() > 92 * DateUtils.DAY_TIME) {
-                Toast.makeText(App.AppContex, "一次最多只能排三个月的课程", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            endtime.setContent(DateUtils.getServerDateDay(date));
-            pwTime.dismiss();
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
 
@@ -268,7 +273,7 @@ public class AddCourseManageFragment extends Fragment {
     public void chooseTime(int pos) {
         if (mType == Configs.TYPE_GROUP) {
             if (timeWindow == null) {
-                timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 15);
+                timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
@@ -281,7 +286,7 @@ public class AddCourseManageFragment extends Fragment {
 
         } else {
             if (timeDialogWindow == null) {
-                timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 15);
+                timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
 
             }
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {

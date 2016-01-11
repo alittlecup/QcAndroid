@@ -30,6 +30,8 @@ public class QcBatchResponse extends QcResponse {
         public int pages;
         @SerializedName("schedules")
         public List<Schedule> schedules;
+        @SerializedName("timetables")
+        public List<Schedule> timetables;
     }
 
     public static class Schedule{

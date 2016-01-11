@@ -11,8 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -66,12 +68,15 @@ public class CourseDetailFragment extends Fragment {
     TextView preview;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.no_data)
+    LinearLayout noData;
     private ImageThreeTextBean mBean;
     private SimpleTextIconAdapter simpleTextIconAdapter;
     private List<ImageIconBean> datas = new ArrayList<>();
     private DialogSheet delCourseDialog;
     private DialogSheet delBatchDialog;
     private Observable<String> mObservableRefresh;
+    private MaterialDialog delDialog;
 
     public static CourseDetailFragment newInstance(ImageThreeTextBean bean) {
 
@@ -176,10 +181,10 @@ public class CourseDetailFragment extends Fragment {
                 public void onClick(View v) {
                     //编辑课程
                     delCourseDialog.dismiss();
-//                    getFragmentManager().beginTransaction()
-//                            .add(R.id.web_frag_layout, )
-//                            .addToBackStack(null)
-//                            .commit();
+                    getFragmentManager().beginTransaction()
+                            .add(R.id.web_frag_layout, AddCourseFrament.newInstance(2, mBean.tags.get(ImageThreeTextBean.TAG_MODEL), Integer.parseInt(mBean.tags.get(ImageThreeTextBean.TAG_ID)), mBean.tags.get(ImageThreeTextBean.TAG_COURSE)))
+                            .addToBackStack(null)
+                            .commit();
                 }
             });
             delCourseDialog.addButton("删除", new View.OnClickListener() {
@@ -187,37 +192,100 @@ public class CourseDetailFragment extends Fragment {
                 public void onClick(View v) {
                     //删除课程
                     delCourseDialog.dismiss();
-                    HashMap<String, String> params = new HashMap<String, String>();
-                    params.put("course_id", mBean.tags.get(ImageThreeTextBean.TAG_COURSE));
-                    params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
-                    params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
-                    QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(new Subscriber<QcResponse>() {
-                                @Override
-                                public void onCompleted() {
-
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onNext(QcResponse qcResponse) {
-                                    if (qcResponse.status == ResponseResult.SUCCESS) {
-                                        ToastUtils.showDefaultStyle("删除成功");
-                                        getActivity().onBackPressed();
-                                    }
-                                }
-                            });
+                    delCourse();
+//                    HashMap<String, String> params = new HashMap<String, String>();
+//                    params.put("course_id", mBean.tags.get(ImageThreeTextBean.TAG_COURSE));
+//                    params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
+//                    params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
+//                    QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribeOn(Schedulers.io())
+//                            .subscribe(new Subscriber<QcResponse>() {
+//                                @Override
+//                                public void onCompleted() {
+//
+//                                }
+//
+//                                @Override
+//                                public void onError(Throwable e) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onNext(QcResponse qcResponse) {
+//                                    if (qcResponse.status == ResponseResult.SUCCESS) {
+//                                        ToastUtils.showDefaultStyle("删除成功");
+//                                        getActivity().onBackPressed();
+//                                    }
+//                                }
+//                            });
                 }
             });
         }
         delCourseDialog.show();
     }
+
+    /**
+     * 删除课程
+     */
+    private void delCourse() {
+        if (delDialog == null) {
+            delDialog = new MaterialDialog.Builder(getContext())
+                    .autoDismiss(true)
+                    .content("是否删除课程?")
+                    .positiveText("确定")
+                    .negativeText("取消")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            dialog.dismiss();
+                            HashMap<String, String> params = new HashMap<String, String>();
+                            params.put("course_id", mBean.tags.get(ImageThreeTextBean.TAG_COURSE));
+                            params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
+                            params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
+
+                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(new Subscriber<QcResponse>() {
+                                        @Override
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(QcResponse qcResponse) {
+                                            if (qcResponse.status == ResponseResult.SUCCESS) {
+                                                ToastUtils.show("删除成功");
+                                                getActivity().onBackPressed();
+                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
+                                            } else {
+
+                                            }
+                                        }
+                                    });
+
+
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            dialog.dismiss();
+                        }
+                    })
+                    .cancelable(false)
+                    .build();
+        }
+        delDialog.show();
+    }
+
 
     private void showDelBatch(int pos) {
 //        if (delBatchDialog == null) {
@@ -235,10 +303,10 @@ public class CourseDetailFragment extends Fragment {
             public void onClick(View v) {
                 //删除排期
                 delBatchDialog.dismiss();
-                HashMap<String,String> params =new HashMap<String, String>();
-                params.put("model",mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
-                params.put("id",mBean.tags.get(ImageThreeTextBean.TAG_ID));
-                QcCloudClient.getApi().postApi.qcDelBatch(App.coachid,datas.get(pos).id,params)
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
+                params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
+                QcCloudClient.getApi().postApi.qcDelBatch(App.coachid, datas.get(pos).id, params)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
@@ -254,7 +322,7 @@ public class CourseDetailFragment extends Fragment {
 
                             @Override
                             public void onNext(QcResponse qcResponse) {
-                                if (qcResponse.status == ResponseResult.SUCCESS){
+                                if (qcResponse.status == ResponseResult.SUCCESS) {
                                     ToastUtils.showDefaultStyle("删除成功");
                                     datas.remove(pos);
                                     simpleTextIconAdapter.notifyDataSetChanged();
@@ -282,7 +350,7 @@ public class CourseDetailFragment extends Fragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("model", mBean.tags.get("model"));
         params.put("id", mBean.tags.get("gymid"));
-        QcCloudClient.getApi().getApi.qcGetGroupManage(App.coachid, Integer.parseInt(mBean.tags.get("courseid")), params)
+        QcCloudClient.getApi().getApi.qcGetGroupManage(App.coachid, mBean.tags.get("courseid"), params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GetBatchesResponse>() {
@@ -298,13 +366,21 @@ public class CourseDetailFragment extends Fragment {
 
                     @Override
                     public void onNext(GetBatchesResponse qcBatchResponse) {
+                        if (qcBatchResponse.status != ResponseResult.SUCCESS){
+                            ToastUtils.showDefaultStyle("服务器错误");
+                            return;
+                        }
                         datas.clear();
                         for (GetBatchesResponse.Batch schedule : qcBatchResponse.data.batches) {
                             ImageIconBean bean = new ImageIconBean(schedule.from_date + "至" + schedule.to_date, R.drawable.ic_options);
                             bean.id = schedule.id;
                             datas.add(bean);
                         }
-                        simpleTextIconAdapter.notifyDataSetChanged();
+                        if (datas.size() > 0){
+                            simpleTextIconAdapter.notifyDataSetChanged();
+                            noData.setVisibility(View.GONE);
+                        }
+                        else noData.setVisibility(View.VISIBLE);
                     }
                 });
     }
@@ -323,7 +399,7 @@ public class CourseDetailFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        RxBus.getBus().unregister(RxBus.BUS_REFRESH,mObservableRefresh);
+        RxBus.getBus().unregister(RxBus.BUS_REFRESH, mObservableRefresh);
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
