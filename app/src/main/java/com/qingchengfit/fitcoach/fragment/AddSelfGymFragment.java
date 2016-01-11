@@ -272,6 +272,15 @@ public class AddSelfGymFragment extends Fragment {
     }
 
 
+//    @OnClick(R.id.addselfgym_name)
+//    public void onClickGym(){
+//        Intent toSearch = new Intent(getActivity(), SearchActivity.class);
+//        toSearch.putExtra("type", SearchFragment.TYPE_GYM);
+//        startActivityForResult(toSearch, 10010);
+//    }
+
+
+
     @OnClick(R.id.addselfgym_comfirm)
     public void onComfirm() {
         if (TextUtils.isEmpty(addselfgymName.getContent())) {
@@ -411,7 +420,7 @@ public class AddSelfGymFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
+        if (requestCode == 222 && resultCode > 0) {
             postPrivateGym.open_time = data.getStringExtra("time");
             Type listType = new TypeToken<ArrayList<QcPrivateGymReponse.OpenTime>>() {
             }.getType();
@@ -427,7 +436,24 @@ public class AddSelfGymFragment extends Fragment {
             }
             addselfgymTime.setContent(sb.toString());
 
+        }else if (requestCode == 10010 && resultCode > 0) {
+            addselfgymName.setContent(data.getStringExtra("username"));
+//            addWorkExperience.setGym_id(data.getIntExtra("id", 0));
+//            boolean isAuth = data.getBooleanExtra("isauth",false);
+//            if (isAuth)
+//                hostQcIdentify.setVisibility(View.VISIBLE);
+//            else hostQcIdentify.setVisibility(View.GONE);
+//            String address = data.getStringExtra("address");
+//            if (TextUtils.isEmpty(address)){
+//                hostAddress.setVisibility(View.GONE);
+//            }else {
+//                hostAddress.setVisibility(View.VISIBLE);
+//                hostAddress.setText(address);
+//            }
+//            Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
+
         }
+
     }
 
     @Override

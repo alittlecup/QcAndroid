@@ -74,10 +74,13 @@ public class AddCourseFrament extends Fragment {
     public static final int TYPE_DEL = 3;
     @Bind(R.id.course_type_layout)
     RelativeLayout courseTypeLayout;
+    @Bind(R.id.course_capacity)
+    CommonInputView courseCapacity;
     private int mType;
     private String mModel;
     private int mId;
     private String mCourseId;
+    private String mUpCapacity;
 
     private Subscription addSp;//新增课程
     private Subscription upPic;//新增课程
@@ -182,29 +185,36 @@ public class AddCourseFrament extends Fragment {
                                 courseName.setContent(qcOneCourseResponse.data.course.name);
                                 courseTime.setContent(qcOneCourseResponse.data.course.length / 60 + "");
                                 upIsPrivate = qcOneCourseResponse.data.course.is_private;
-                                if (upIsPrivate) {
-                                    courseTypeRg.check(R.id.course_type_private);
-                                } else courseTypeRg.check(R.id.course_type_group);
+                                courseCapacity.setContent(qcOneCourseResponse.data.course.capacity);
+
+                                if (upIsPrivate){
+                                    courseCapacity.setVisibility(View.GONE);
+                                }else
+                                    courseCapacity.setVisibility(View.VISIBLE);
+//                                if (upIsPrivate) {
+//                                    courseTypeRg.check(R.id.course_type_private);
+//                                } else courseTypeRg.check(R.id.course_type_group);
                             }
                         }
                     });
 //            Glide.with(App.AppContex).load(upImg).into(gymAddcourseImg);
 //            courseName.setContent(upName);
 //            courseTime.setContent(upTime + "");
-            courseTypeLayout.setVisibility(View.VISIBLE);
+//            courseTypeLayout.setVisibility(View.VISIBLE);
 //            if (upIsPrivate) {
 //                courseTypeRg.check(R.id.course_type_private);
 //            } else courseTypeRg.check(R.id.course_type_group);
         }
 
-        courseTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.course_type_private) {
-                    upIsPrivate = true;
-                } else upIsPrivate = false;
-            }
-        });
+
+//        courseTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                if (checkedId == R.id.course_type_private) {
+//                    upIsPrivate = true;
+//                } else upIsPrivate = false;
+//            }
+//        });
         return view;
     }
 
@@ -218,11 +228,16 @@ public class AddCourseFrament extends Fragment {
             ToastUtils.showDefaultStyle("请填写课程时长");
             return;
         }
-        upTime = Integer.parseInt(courseTime.getContent())*60;
+        if (!upIsPrivate && TextUtils.isEmpty(courseCapacity.getContent())){
+            ToastUtils.showDefaultStyle("请填写可容纳人数");
+            return;
+        }
+        mUpCapacity = courseCapacity.getContent();
+        upTime = Integer.parseInt(courseTime.getContent()) * 60;
         upName = courseName.getContent().trim();
         addGymCourseBtn.setEnabled(false);
         if (mType == TYPE_ADD) {
-            addSp = QcCloudClient.getApi().postApi.qcAddCourse(App.coachid, new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate))
+            addSp = QcCloudClient.getApi().postApi.qcAddCourse(App.coachid, new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate, upIsPrivate ? null :mUpCapacity))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Subscriber<QcResponse>() {
@@ -249,7 +264,9 @@ public class AddCourseFrament extends Fragment {
                         }
                     });
         } else if (mType == TYPE_EDIT) {
-            addSp = QcCloudClient.getApi().postApi.qcEditCourse(App.coachid, new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate))
+            AddCourse addCourse = new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate,upIsPrivate ? null :mUpCapacity);
+            addCourse.course_id = mCourseId;
+            addSp = QcCloudClient.getApi().postApi.qcEditCourse(App.coachid, addCourse)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Subscriber<QcResponse>() {

@@ -51,6 +51,7 @@
         android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
         >
 
         <TextView
@@ -97,12 +98,6 @@
         android:orientation="vertical"
         >
 
-        <include
-            layout="@layout/divider_grey"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/course_name"
@@ -112,12 +107,6 @@
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
 
-        <include
-            layout="@layout/divider_grey"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/course_time"
@@ -125,6 +114,14 @@
             android:layout_height="@dimen/qc_item_height"
             app:civ_inputnum="true"
             app:civ_lable="@string/gym_add_course_time"
+            >
+        </com.qingchengfit.fitcoach.component.CommonInputView>
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/course_capacity"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_inputnum="true"
+            app:civ_lable="可容纳人数"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
     </LinearLayout>

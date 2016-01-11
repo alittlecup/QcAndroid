@@ -21,13 +21,16 @@ public class AddCourse {
     public int length;
     public boolean is_private;
     public String course_id;
-    public AddCourse(int id,String model, String name, String photo, int length, boolean is_private) {
+    public String capacity;
+
+    public AddCourse(int id,String model, String name, String photo, int length, boolean is_private,String capacity) {
         this.model = model;
         this.id = id;
         this.name = name;
         this.photo = photo;
         this.length = length;
         this.is_private = is_private;
+        this.capacity = capacity;
     }
 
     public AddCourse(int id, String model, int course_id) {

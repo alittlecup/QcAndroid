@@ -203,12 +203,16 @@ public class CourseManageFragment extends Fragment {
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
+                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getDateDay(new Date())) && date.getTime() <= new Date().getTime()) {
+                        ToastUtils.showDefaultStyle("开始时间不能小于当前时间");
+                        return;
+                    }
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
                     batchBean.end = DateUtils.formatToServer(date);
                     batchBean.start = DateUtils.formatToServer(new Date(date.getTime() + datas.get(pos).length));
-                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, mCourseType == 1 ? "timetables" : "schedules",
+                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "schedules",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Subscriber<QcResponse>() {
@@ -248,13 +252,18 @@ public class CourseManageFragment extends Fragment {
                         ToastUtils.showDefaultStyle("开始时间不能小于结束时间");
                         return;
                     }
+                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getDateDay(new Date())) && start.getTime() <= new Date().getTime()) {
+                        ToastUtils.showDefaultStyle("开始时间不能小于当前时间");
+                        return;
+                    }
+
 
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
                     batchBean.end = DateUtils.formatToServer(start);
                     batchBean.start = DateUtils.formatToServer(end);
-                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, mCourseType == 1 ? "schedules" : "timetables",
+                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Subscriber<QcResponse>() {
