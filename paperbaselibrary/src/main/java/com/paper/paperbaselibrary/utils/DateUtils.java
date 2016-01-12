@@ -216,5 +216,9 @@ public class DateUtils {
         c.set(Calendar.MILLISECOND, 0);
         return c.getTimeInMillis();
     }
-
+    public static int getYear(Date d){
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        return c.get(Calendar.YEAR);
+    }
 }

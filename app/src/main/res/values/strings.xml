@@ -105,11 +105,11 @@
 
 
     <!-- 课程计划模板-->
-    <string name="add_plan_name">课程计划模板名称</string>
-    <string name="add_plan_type">课程类型</string>
-    <string name="add_plan_action">课程动作</string>
-    <!-- 我的健身房-->
-    <string name="gym_add_course">添加课程</string>
-    <string name="gym_add_course_pic">课程图片</string>
+    <!--<string name="add_plan_name">课程计划模板名称</string>-->
+    <!--<string name="add_plan_type">课程类型</string>-->
+    <!--<string name="add_plan_action">课程动作</string>-->
+     <!--我的健身房-->
+    <!--<string name="gym_add_course">添加课程</string>-->
+    <!--<string name="gym_add_course_pic">课程图片</string>-->
 
 </resources>
