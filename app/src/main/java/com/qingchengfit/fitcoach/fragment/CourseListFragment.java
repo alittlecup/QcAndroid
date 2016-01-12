@@ -128,7 +128,8 @@ public class CourseListFragment extends VpFragment {
                         RxBus.getBus().post(new RxAddCourse(Configs.TYPE_GROUP));
                 } else {
                     //课程详情
-                    RxBus.getBus().post(b);
+                    if (mGymType != 0)
+                        RxBus.getBus().post(b);
                 }
             }
         });

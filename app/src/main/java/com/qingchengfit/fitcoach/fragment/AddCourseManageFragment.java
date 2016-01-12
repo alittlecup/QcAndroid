@@ -202,11 +202,12 @@ public class AddCourseManageFragment extends Fragment {
             if (datas.size() == 1 && (datas.get(0).week < 0 || datas.get(0).dateStart == null))
                 return;
             List<AddBatchCourse.WeekTime> weekTimes = new ArrayList<>();
-            AddBatchCourse.WeekTime wt = new AddBatchCourse.WeekTime();
+
             for (CmBean cm : datas) {
-                if (cm.dateStart == null || cm.week <0)
+                AddBatchCourse.WeekTime wt = new AddBatchCourse.WeekTime();
+                if (cm.dateStart == null || cm.week < 0)
                     continue;
-                wt.weekday = cm.week+1;
+                wt.weekday = cm.week + 1;
                 wt.start = DateUtils.getTimeHHMM(cm.dateStart);
                 if (cm.dateEnd != null)
                     wt.end = DateUtils.getTimeHHMM(cm.dateEnd);
@@ -214,9 +215,9 @@ public class AddCourseManageFragment extends Fragment {
                     wt.end = DateUtils.getTimeHHMM(new Date(cm.dateStart.getTime() + mCourseLength));
                     LogUtil.e("endtime:" + wt.end + "   " + mCourseLength + "   :" + cm.dateStart.getTime());
                 }
-
+                weekTimes.add(wt);
             }
-            weekTimes.add(wt);
+
             addBatchCourse.from_date = starttime.getContent();
             addBatchCourse.to_date = endtime.getContent();
             addBatchCourse.course_id = mCourseid;
@@ -275,6 +276,9 @@ public class AddCourseManageFragment extends Fragment {
             if (timeWindow == null) {
                 timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
+            if (datas.get(pos).dateStart != null) {
+                timeWindow.setTime(datas.get(pos).dateStart);
+            } else timeWindow.setTime(new Date(DateUtils.getDayMidnight(new Date())));
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
@@ -302,7 +306,13 @@ public class AddCourseManageFragment extends Fragment {
                     adapter.notifyItemChanged(pos);
                 }
             });
-            timeDialogWindow.setTime(new Date(), new Date(System.currentTimeMillis() + DateUtils.HOUR_TIME));
+            Date dstart = datas.get(pos).dateStart;
+            Date dend = datas.get(pos).dateEnd;
+
+            if (dstart != null && dend != null) {
+                timeDialogWindow.setTime(dstart, dend);
+            } else
+                timeDialogWindow.setTime(new Date(DateUtils.getDayMidnight(new Date())), new Date(DateUtils.getDayMidnight(new Date())));
             timeDialogWindow.showAtLocation();
         }
     }

@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -162,7 +163,6 @@ public class CourseManageFragment extends Fragment {
                     public void onCompleted() {
 
                     }
-
                     @Override
                     public void onError(Throwable e) {
 
@@ -171,6 +171,7 @@ public class CourseManageFragment extends Fragment {
                     @Override
                     public void onNext(QcBatchResponse qcBatchResponse) {
                         datas.clear();
+                        int pos  = 0;
                         for (QcBatchResponse.Schedule schedule : (mCourseType == Configs.TYPE_PRIVATE?qcBatchResponse.data.timetables:qcBatchResponse.data.schedules)) {
                             CourseManageBean b = new CourseManageBean();
                             b.month = DateUtils.getDateMonth(DateUtils.formatDateFromServer(schedule.start));
@@ -181,15 +182,21 @@ public class CourseManageFragment extends Fragment {
                             else
                                 b.time = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start)) + "-"
                                         + DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.end));
-
+                            b.start = DateUtils.formatDateFromServer(schedule.start);
+                            b.end = DateUtils.formatDateFromServer(schedule.end);
                             b.outdue = DateUtils.formatDateFromServer(schedule.start).getTime() < new Date().getTime();
                             b.id = schedule.id + "";
                             b.length = DateUtils.formatDateFromServer(schedule.end).getTime() - DateUtils.formatDateFromServer(schedule.start).getTime();
+                            if (b.outdue)
+                                pos ++;
                             datas.add(b);
+                            LogUtil.e("pos:"+pos);
                         }
 //                        courseManagerAdapter = new CourseManagerAdapter(datas);
 //                        recyclerview.setAdapter(courseManagerAdapter);
                         courseManagerAdapter.notifyDataSetChanged();
+                        if (pos > 0)
+                            recyclerview.scrollToPosition(pos);
                     }
                 })
         ;
@@ -200,6 +207,7 @@ public class CourseManageFragment extends Fragment {
             if (timeWindow == null) {
                 timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
+            timeWindow.setTime(datas.get(pos).start);
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
@@ -210,8 +218,8 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.end = DateUtils.formatToServer(date);
-                    batchBean.start = DateUtils.formatToServer(new Date(date.getTime() + datas.get(pos).length));
+                    batchBean.start = DateUtils.formatToServer(date);
+                    batchBean.end = DateUtils.formatToServer(new Date(date.getTime() + datas.get(pos).length));
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "schedules",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
@@ -245,6 +253,7 @@ public class CourseManageFragment extends Fragment {
                 timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
 
             }
+            timeDialogWindow.setTime(datas.get(pos).start,datas.get(pos).end);
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date start, Date end) {
@@ -261,8 +270,8 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.end = DateUtils.formatToServer(start);
-                    batchBean.start = DateUtils.formatToServer(end);
+                    batchBean.start = DateUtils.formatToServer(start);
+                    batchBean.end = DateUtils.formatToServer(end);
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())

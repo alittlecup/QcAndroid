@@ -182,8 +182,10 @@ public class DateUtils {
     public static int getDayOfWeek(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-
-        return c.get(Calendar.DAY_OF_WEEK);
+        int i = c.get(Calendar.DAY_OF_WEEK);
+        if (i == 1){
+            return 7;
+        }else return i-2;
     }
 
 

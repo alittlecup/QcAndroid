@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.adapter;
 
+import java.util.Date;
+
 /**
  * power by
  * <p>
@@ -22,4 +24,6 @@ public class CourseManageBean {
     public boolean outdue;
     public String id;
     public long length;
+    public Date start;
+    public Date end;
 }
