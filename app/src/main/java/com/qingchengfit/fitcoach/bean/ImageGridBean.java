@@ -15,4 +15,9 @@ package com.qingchengfit.fitcoach.bean;
  */
 public class ImageGridBean {
     public String imgUrl;
+    public boolean isUpLoading;
+
+    public ImageGridBean(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 }
