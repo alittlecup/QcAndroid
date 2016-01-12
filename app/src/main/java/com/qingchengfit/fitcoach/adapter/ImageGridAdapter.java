@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.ImageGridBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
@@ -31,13 +32,18 @@ import butterknife.ButterKnife;
  * Created by Paper on 16/1/12 2016.
  */
 public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.ImageGridVh>
-    implements View.OnClickListener{
+        implements View.OnClickListener {
 
-    private List<String> datas;
+    private List<ImageGridBean> datas;
     private OnRecycleItemClickListener listener;
+    private boolean isEditable = false;
 
+    public void setIsEditable(boolean isEditable) {
+        this.isEditable = isEditable;
+        this.notifyDataSetChanged();
+    }
 
-    public ImageGridAdapter(List<String> datas) {
+    public ImageGridAdapter(List<ImageGridBean> datas) {
         this.datas = datas;
     }
 
@@ -56,19 +62,32 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
     @Override
     public void onBindViewHolder(ImageGridVh holder, int position) {
         holder.itemView.setTag(position);
+        holder.delete.setTag(position);
+        if (isEditable && position == datas.size()){
+            holder.delete.setVisibility(View.GONE);
+            Glide.with(App.AppContex).load("").into(holder.img);
+            holder.img.setBackgroundResource(R.drawable.bg_rect);
+        }else {
+            Glide.with(App.AppContex).load(datas.get(position).imgUrl).into(holder.img);
+            if (isEditable)
+                holder.delete.setVisibility(View.VISIBLE);
+            else holder.delete.setVisibility(View.GONE);
+        }
 
-        Glide.with(App.AppContex).load(datas.get(position)).into(holder.img);
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return datas.size()+(isEditable?1:0);
     }
 
     @Override
     public void onClick(View v) {
-        if (listener!=null)
-            listener.onItemClick(v,(int)v.getTag());
+        if (listener != null)
+            listener.onItemClick(v, (int) v.getTag());
     }
 
 
