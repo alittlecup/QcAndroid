@@ -277,7 +277,6 @@
         <activity android:name=".activity.ChooseGymActivity"/>
         <activity
             android:name=".activity.BodyTestActivity"
-            android:label="@string/title_activity_body_test"
             android:theme="@style/AppTheme">
         </activity>
         <activity android:name=".activity.CoachHomeActivity">
