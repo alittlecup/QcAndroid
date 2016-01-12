@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                xmlns:tools="http://schemas.android.com/tools"
+
+    >
+    <ImageView
+        android:id="@+id/img"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/test_pic"
+        />
+    <ImageView
+        android:id="@+id/delete"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_item_delete"
+        android:layout_alignParentRight="true"
+        />
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_margin="5dp"
+        android:layout_centerVertical="true"
+        android:progress="70"
+        android:max="100"
+        />
+</RelativeLayout>
