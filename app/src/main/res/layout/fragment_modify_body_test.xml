@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroud_grey"
+              android:orientation="vertical"
+              tools:context="com.qingchengfit.fitcoach.fragment.ModifyBodyTestFragment">
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="体测日期"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="身高(cm)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="体重(kg)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="BMI"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="体脂"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="上臂围(cm)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="胸围(cm)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="腰围(cm)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="臀围(cm)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="大腿围(cm)"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="小腿围(cm)"
+        />
+    <!--<LinearLayout-->
+        <!--android:id="@+id/more_data"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!-->-->
+    <!--</LinearLayout>-->
+</LinearLayout>
