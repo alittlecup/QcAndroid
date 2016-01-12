@@ -60,6 +60,7 @@ public class StudentHomeActivity extends BaseAcitivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("学员详情");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initHeader();
         initViewPager();
 
