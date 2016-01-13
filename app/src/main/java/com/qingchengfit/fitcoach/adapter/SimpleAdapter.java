@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 
 import java.util.List;
 
@@ -25,10 +26,10 @@ import java.util.List;
  * Created by Paper on 15/11/20 2015.
  */
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> implements View.OnClickListener {
-    private List<String> datas;
+    private List<BodyTestBean> datas;
     private OnRecycleItemClickListener listener;
 
-    public SimpleAdapter(List<String> datas) {
+    public SimpleAdapter(List<BodyTestBean> datas) {
         this.datas = datas;
     }
 
@@ -51,7 +52,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
         holder.itemView.setTag(position);
         if (datas != null && datas.size() > position) {
-            holder.tv.setText(datas.get(position));
+            holder.tv.setText(datas.get(position).data);
         }
     }
 

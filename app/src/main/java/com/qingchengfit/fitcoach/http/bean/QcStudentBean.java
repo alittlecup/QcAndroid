@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class QcStudentBean {
     @SerializedName("id")
-    public int id;
+    public String id;
     @SerializedName("username")
     public String username;
     @SerializedName("phone")

@@ -29,6 +29,15 @@ public class User {
     public String desc;
     @SerializedName("avatar")
     public String avatar;
+
+    @SerializedName("address")
+    public String address;
+    @SerializedName("joined_at")
+    public String joined_at;
+    @SerializedName("hidden_phone")
+    public String hidden_phone;
+    @SerializedName("date_of_birth")
+    public String date_of_birth;
     @SerializedName("gender")
     public int gender;
 

@@ -6,8 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,9 +26,39 @@ public class BodyTestFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    @Bind(R.id.img_model)
+    ImageView imgModel;
+    @Bind(R.id.upper)
+    TextView upper;
+    @Bind(R.id.hipline)
+    TextView hipline;
+    @Bind(R.id.chest)
+    TextView chest;
+    @Bind(R.id.thigh)
+    TextView thigh;
+    @Bind(R.id.waistline)
+    TextView waistline;
+    @Bind(R.id.calf)
+    TextView calf;
+    @Bind(R.id.height)
+    TextView height;
+    @Bind(R.id.height_layout)
+    LinearLayout heightLayout;
+    @Bind(R.id.weight)
+    TextView weight;
+    @Bind(R.id.weight_layout)
+    LinearLayout weightLayout;
+    @Bind(R.id.bmi)
+    TextView bmi;
+    @Bind(R.id.bmi_layout)
+    LinearLayout bmiLayout;
+    @Bind(R.id.body_fat_rate)
+    TextView bodyFatRate;
+    @Bind(R.id.body_fat_rate_layout)
+    LinearLayout bodyFatRateLayout;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private QcBodyTestTemplateRespone.Base mBase;
     private String mParam2;
 
 
@@ -33,15 +70,14 @@ public class BodyTestFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment BodyTestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BodyTestFragment newInstance(String param1, String param2) {
+    public static BodyTestFragment newInstance(QcBodyTestTemplateRespone.Base base, String param2) {
         BodyTestFragment fragment = new BodyTestFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putParcelable(ARG_PARAM1, base);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -51,7 +87,7 @@ public class BodyTestFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mBase = getArguments().getParcelable(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -60,15 +96,16 @@ public class BodyTestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_body_test, container, false);
-        view.findViewById(R.id.body_test_more_pic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getFragmentManager().beginTransaction().replace(R.id.fragment,)
-            }
-        });
+        ButterKnife.bind(this, view);
+
+
         return view;
     }
 
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }
