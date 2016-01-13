@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/qc_item_height"
-    android:background="@color/white"
-    android:descendantFocusability="afterDescendants"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     >
-
-    <TextView
-        android:id="@+id/commoninput_lable"
-        style="@style/Qc.TextCommonGrey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="@string/recordedit_name"
-        ></TextView>
-
-    <EditText
-        android:id="@+id/commoninput_edit"
-        style="@style/Qc.EditTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@color/transparent"
-        android:focusable="true"
-        android:gravity="right|center_vertical"
-        android:inputType="number"
-        android:maxLength="25"
-        android:minWidth="30dp"
-        />
-
-    <View
-        android:id="@+id/commoninput_divider"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/divider_white"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:descendantFocusability="afterDescendants"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         >
-    </View>
-</RelativeLayout>
+
+        <TextView
+            android:id="@+id/commoninput_lable"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/recordedit_name"
+            ></TextView>
+
+        <EditText
+            android:id="@+id/commoninput_edit"
+            style="@style/Qc.EditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:focusable="true"
+            android:gravity="right|center_vertical"
+            android:inputType="number"
+            android:maxLength="25"
+            android:minWidth="30dp"
+            />
+
+        <View
+            android:id="@+id/commoninput_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_white"
+            >
+        </View>
+    </RelativeLayout>
+
+</merge>

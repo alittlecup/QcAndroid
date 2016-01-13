@@ -8,10 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImageGridAdapter;
 import com.qingchengfit.fitcoach.bean.ImageGridBean;
+import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.FullyGridLayoutManager;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -31,6 +33,8 @@ public class BodyTestActivity extends AppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.other_data)
+    LinearLayout otherData;
     private ImageGridAdapter imageGridAdapter;
     private FullyGridLayoutManager gridLayoutManager;
     private List<ImageGridBean> datas = new ArrayList<>();
@@ -76,8 +80,10 @@ public class BodyTestActivity extends AppCompatActivity {
             }
         });
 
+        CommonInputView civ = new CommonInputView(this,"哈哈哈哈");
+        otherData.addView(civ);
+        otherData.addView(new CommonInputView(this,"2222"));
     }
-
 
 
     @Override
@@ -96,13 +102,13 @@ public class BodyTestActivity extends AppCompatActivity {
                     .commit();
             isModify = true;
             invalidateOptionsMenu();
-        }else if (item.getItemId() == R.id.action_cancel){
+        } else if (item.getItemId() == R.id.action_cancel) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment, BodyTestFragment.newInstance("", ""))
                     .commit();
             isModify = false;
             invalidateOptionsMenu();
-        }else if (item.getItemId() == android.R.id.home){
+        } else if (item.getItemId() == android.R.id.home) {
             this.finish();
         }
 
