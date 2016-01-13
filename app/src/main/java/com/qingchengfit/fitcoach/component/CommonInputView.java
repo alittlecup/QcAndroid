@@ -44,6 +44,14 @@ public class CommonInputView extends RelativeLayout {
 
     public CommonInputView(Context context) {
         super(context);
+        inflate(context, R.layout.layout_commoninput, this);
+        onFinishInflate();
+    }
+    public CommonInputView(Context context,String str_label) {
+        super(context);
+        inflate(context, R.layout.layout_commoninput, this);
+        this.str_label = str_label;
+        onFinishInflate();
     }
 
     public CommonInputView(Context context, AttributeSet attrs) {
@@ -108,6 +116,21 @@ public class CommonInputView extends RelativeLayout {
         } else {
 
             edit.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+    }
+
+    public void setCanClick(boolean canClick) {
+        this.canClick = canClick;
+        if (canClick) {
+            edit.setClickable(false);
+        } else {
+            edit.setClickable(true);
+            setOnClickListener(v -> {
+                edit.setClickable(true);
+                edit.performClick();
+                AppUtils.showKeyboard(getContext(), edit);
+                edit.requestFocus();
+            });
         }
     }
 
