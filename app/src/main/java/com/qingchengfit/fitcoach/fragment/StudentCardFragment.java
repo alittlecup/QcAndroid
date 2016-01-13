@@ -38,13 +38,19 @@ public class StudentCardFragment extends VpFragment {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
-        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
-        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
-        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
         mAdapter = new StudentCardAdapter(mData);
         recyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    public void setmData(List<StudentCardBean> mData) {
+        this.mData.clear();
+        this.mData.addAll(mData);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

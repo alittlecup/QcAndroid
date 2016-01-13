@@ -455,7 +455,7 @@ public class CustomStatmentFragment extends Fragment {
                 if (position == 0) {
                     chooseUserId = 0;
                 } else {
-                    chooseUserId = studentBeans.get(position - 1).id;
+                    chooseUserId = Integer.parseInt(studentBeans.get(position - 1).id);
                 }
             }
         });

@@ -28,6 +28,7 @@
         android:text="2015-08-15体测数据"
         />
     <TextView
+        android:id="@+id/upper"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginTopPercent="24%"
         app:layout_marginLeftPercent="24%"
@@ -37,6 +38,7 @@
         />
 
     <TextView
+        android:id="@+id/hipline"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginTopPercent="50%"
         app:layout_marginLeftPercent="28%"
@@ -45,6 +47,7 @@
         android:text="臀围:20cm"
         />
     <TextView
+        android:id="@+id/chest"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginTopPercent="30%"
         app:layout_marginLeftPercent="65%"
@@ -61,6 +64,7 @@
         android:text="大腿围:20cm"
         />
     <TextView
+        android:id="@+id/thigh"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginTopPercent="56%"
         app:layout_marginLeftPercent="52.6%"
@@ -69,6 +73,7 @@
         android:text="大腿围:20cm"
         />
     <TextView
+        android:id="@+id/waistline"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginTopPercent="40.4%"
         android:layout_width="wrap_content"
@@ -77,6 +82,7 @@
         android:layout_centerHorizontal="true"
         />
     <TextView
+        android:id="@+id/calf"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginBottomPercent="19.1%"
         android:text="小腿围: 26cm"
@@ -95,6 +101,7 @@
         android:layout_alignParentRight="true"
         >
         <LinearLayout
+            android:id="@+id/height_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -105,6 +112,7 @@
                 android:layout_height="wrap_content"
                 />
             <TextView
+                android:id="@+id/height"
                 style="@style/Qc.TextCommonBlack"
                 android:text="161"
                 android:gravity="right|center_vertical"
@@ -113,6 +121,8 @@
                 />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/weight_layout"
+
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,6 +134,7 @@
                 android:layout_height="wrap_content"
                 />
             <TextView
+                android:id="@+id/weight"
                 style="@style/Qc.TextCommonBlack"
                 android:text="161"
                 android:gravity="right|center_vertical"
@@ -132,12 +143,15 @@
                 />
         </LinearLayout>
      <LinearLayout
-            android:layout_marginTop="4dp"
+         android:id="@+id/bmi_layout"
+
+         android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
             <TextView
+                android:id="@+id/bmi"
                 android:text="BMI"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
@@ -152,6 +166,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/body_fat_rate_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -165,6 +180,7 @@
                 />
 
             <TextView
+                android:id="@+id/body_fat_rate"
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
@@ -182,23 +198,23 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         >
-        <TextView
-            android:id="@+id/body_test_more_data"
-            android:layout_width="125dp"
-            android:layout_height="36dp"
-            android:gravity="center"
-            android:background="@drawable/bg_tagview"
-            android:text="更多体测数据"
-            />
-        <TextView
-            android:id="@+id/body_test_more_pic"
-            android:layout_marginTop="4dp"
-            android:layout_width="125dp"
-            android:layout_height="36dp"
-            android:gravity="center"
-            android:background="@drawable/bg_tagview"
-            android:text="体测照片"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/body_test_more_data"-->
+            <!--android:layout_width="125dp"-->
+            <!--android:layout_height="36dp"-->
+            <!--android:gravity="center"-->
+            <!--android:background="@drawable/bg_tagview"-->
+            <!--android:text="更多体测数据"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/body_test_more_pic"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_width="125dp"-->
+            <!--android:layout_height="36dp"-->
+            <!--android:gravity="center"-->
+            <!--android:background="@drawable/bg_tagview"-->
+            <!--android:text="体测照片"-->
+            <!--/>-->
 
     </LinearLayout>
 

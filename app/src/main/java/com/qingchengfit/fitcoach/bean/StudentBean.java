@@ -21,10 +21,11 @@ public class StudentBean {
     public boolean gender;
     public String systemUrl;
     public String head;
-    public int id;
+    public String id;
     public boolean isTag;
     public boolean isChosen;
     public String color;
-
+    public String modelid;
+    public String model;
 
 }

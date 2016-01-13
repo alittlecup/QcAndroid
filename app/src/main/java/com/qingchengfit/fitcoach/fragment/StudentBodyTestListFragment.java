@@ -8,14 +8,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.adapter.SimpleAdapter;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * power by
@@ -32,33 +38,62 @@ import java.util.List;
  */
 public class StudentBodyTestListFragment extends VpFragment {
 
-    private List<String> mDataList = new ArrayList<>();
+    @Bind(R.id.add1)
+    Button add1;
+    @Bind(R.id.add2)
+    Button add2;
+    private List<BodyTestBean> mDataList = new ArrayList<>();
     private SimpleAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        ButterKnife.bind(this, view);
+        add1.setVisibility(View.VISIBLE);
+        add2.setVisibility(View.GONE);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mDataList.add("1111体测数据");
-        mDataList.add("1211体测数据");
-        mDataList.add("1311体测数据");
-        mDataList.add("1411体测数据");
         mAdapter = new SimpleAdapter(mDataList);
         mAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                startActivity(new Intent(getActivity(), BodyTestActivity.class));
+                Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
+                toAdd.putExtra("id",mDataList.get(pos).id);
+                toAdd.putExtra("type",0);
+                startActivity(toAdd);
             }
         });
         recyclerView.setAdapter(mAdapter);
+
         return view;
 
     }
 
+    @OnClick(R.id.add1)
+    public void addTest(){
+        Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
+        toAdd.putExtra("type",1);
+        startActivity(toAdd);
+    }
+
+
+    public void setData(List<BodyTestBean> strings) {
+        mDataList.clear();
+        mDataList.addAll(strings);
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+
     @Override
     public String getTitle() {
         return "体测信息";
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
