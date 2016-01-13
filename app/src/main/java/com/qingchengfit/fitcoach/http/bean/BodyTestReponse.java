@@ -15,24 +15,29 @@ import java.util.List;
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
  * <p>
- * Created by Paper on 15/10/14 2015.
+ * Created by Paper on 16/1/13 2016.
  */
-public class QcCourseResponse extends QcResponse {
+public class BodyTestReponse extends QcResponse {
 
     @SerializedName("data")
-    public Courses data;
+    public Data data;
 
-    public class Courses {
-        @SerializedName("courses")
-        public List<Course> courses;
+    public class Data{
+        @SerializedName("measures")
+        public List<BodyTestMeasure> measures;
+        @SerializedName("current_page")
+        public String current_page;
+        @SerializedName("pages")
+        public String pages;
     }
 
-    public class Course {
+
+
+    public class BodyTestMeasure{
+        @SerializedName("created_at")
+        public String created_at;
         @SerializedName("id")
-        public int id;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("photo")
-        public String photo;
+
+        public String id;
     }
 }

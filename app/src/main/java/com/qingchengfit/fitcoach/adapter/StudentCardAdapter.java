@@ -60,7 +60,7 @@ public class StudentCardAdapter extends RecyclerView.Adapter<StudentCardAdapter.
             holder.mItemBalanceTextView.setText(bean.balance);
             holder.mItemGymNameTextView.setText(bean.gymName);
             holder.mItemStudentNamesTextView.setText(bean.students);
-            holder.mItemCardnameTextView.setText(bean.timelimit);
+            holder.mItemTimeLimitTextView.setText(bean.timelimit);
         }
     }
 

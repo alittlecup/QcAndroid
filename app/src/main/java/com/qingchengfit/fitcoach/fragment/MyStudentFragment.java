@@ -36,7 +36,6 @@ import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
-import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.AlphabetView;
@@ -166,15 +165,16 @@ public class MyStudentFragment extends MainBaseFragment {
             @Override
             public void onItemClick(View v, int pos) {
 
-                StringBuffer sb = new StringBuffer();
-                sb.append(adapterData.get(pos).systemUrl)
-                        .append("/mobile/students/")
-                        .append(adapterData.get(pos).id)
-                        .append("/details/");
-//                openDrawerInterface.goWeb(sb.toString());
+//                StringBuffer sb = new StringBuffer();
+//                sb.append(adapterData.get(pos).systemUrl)
+//                        .append("/mobile/students/")
+//                        .append(adapterData.get(pos).id)
+//                        .append("/details/");
 //                Intent it = new Intent(getContext(), WebActivity.class);
                 Intent it = new Intent(getContext(), StudentHomeActivity.class);
-                it.putExtra("url", sb.toString());
+                it.putExtra("id", adapterData.get(pos).modelid);
+                it.putExtra("model", adapterData.get(pos).model);
+                it.putExtra("student_id",adapterData.get(pos).id);
                 MyStudentFragment.this.startActivityForResult(it, 404);
             }
         });
@@ -385,6 +385,8 @@ public class MyStudentFragment extends MainBaseFragment {
                         bean.systemUrl = ship.service.host;
                         bean.id = student.id;
                         bean.color = ship.service.color;
+                        bean.modelid = ship.service.id+"";
+                        bean.model = ship.service.model;
                         if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
                             bean.head = "~";
                         } else {
