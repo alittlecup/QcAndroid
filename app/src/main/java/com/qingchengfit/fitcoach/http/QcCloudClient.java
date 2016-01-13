@@ -12,6 +12,7 @@ import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
+import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
 import com.qingchengfit.fitcoach.http.bean.DelCourseManage;
@@ -35,6 +36,8 @@ import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAddOrganizationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcBatchResponse;
+import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
 import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
@@ -46,7 +49,6 @@ import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
-import com.qingchengfit.fitcoach.http.bean.QcBatchResponse;
 import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
@@ -76,6 +78,9 @@ import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcVersionResponse;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
+import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
+import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
+import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -409,6 +414,25 @@ public class QcCloudClient {
 
         @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/")
         rx.Observable<QcOneCourseResponse> qcGetOneCourse(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
+        //学员基础信息
+        @GET("/api/students/{id}/")
+        rx.Observable<StudentInfoResponse> qcGetStudentInfo(@Path("id") String student_id,@QueryMap Map<String, String> params);
+        //学员课程列表
+        @GET("/api/students/{id}/schedules/")
+        rx.Observable<StudentCourseResponse> qcGetStuedntCourse(@Path("id") String student_id,@QueryMap Map<String, String> params);
+
+        //学员卡列表
+        @GET("/api/students/{id}/cards/")
+        rx.Observable<StudentCarsResponse> qcGetStuedntCard(@Path("id") String student_id,@QueryMap Map<String, String> params);
+
+        //学员卡
+        @GET("/api/students/{id}/measures/")
+        rx.Observable<BodyTestReponse> qcGetStuedntBodyTest(@Path("id") String student_id,@QueryMap Map<String, String> params);
+
+        //体测模板接口
+        @GET("/api/measures/tpl/")
+        rx.Observable<QcBodyTestTemplateRespone> qcGetBodyTestModel(@QueryMap Map<String, String> params);
+
     }
 
 
