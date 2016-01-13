@@ -131,6 +131,10 @@ android {
             minSdkVersion 15
             flavorDimension 'oem'
         }
+        s567go{
+            minSdkVersion 15
+            flavorDimension 'oem'
+        }
     }
     buildTypes {
         release {
