@@ -1,11 +1,14 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,7 +75,10 @@ public class StudentHomeActivity extends BaseAcitivity {
     private StudentClassRecordFragment studentClassRecordFragment;
     private StudentCardFragment studentCardFragment;
     private StudentBodyTestListFragment studentBodyTestListFragment;
-    private int mModelType;
+    private int mModelType = 1;
+    private String gourpUrl;
+    private String privateUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,25 +94,27 @@ public class StudentHomeActivity extends BaseAcitivity {
         mModel = getIntent().getStringExtra("model");
         mModelId= getIntent().getStringExtra("id");
         mStudentId = getIntent().getStringExtra("student_id");
+        mModelType = getIntent().getIntExtra("modeltype",1);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("学员详情");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         initHeader();
         initViewPager();
-//        mToolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                mToolbar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                initBaseInfo();
-//            }
-//        });
         initBaseInfo();
         getCourseRecords();
         if (mModel.equalsIgnoreCase("service") && mModelType == 1){
-
         }else
             getStudentCards();
         getStudentBodyTest();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void initBaseInfo(){
@@ -143,6 +151,8 @@ public class StudentHomeActivity extends BaseAcitivity {
                         beans.add(birth);
                         beans.add(address);
                         beans.add(registe);
+                        gourpUrl = user.group_url;
+                        privateUrl = user.private_url;
                         if (studentBaseInfoFragment != null)
                             studentBaseInfoFragment.setDatas(beans);
                     }
@@ -176,7 +186,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                                 showHeader = true;
                             }
                             StatementBean bean = new StatementBean(DateUtils.formatDateFromServer(schedule.start),
-                                    schedule.course.photo,schedule.course.name,"教练:"+schedule.teacher.username,false,false,showHeader);
+                                    schedule.course.photo,schedule.course.name,"教练:"+schedule.teacher.username,false,false,showHeader,schedule.url);
                             datas.add(bean);
                         }
                         if (studentClassRecordFragment!=null)
@@ -205,19 +215,29 @@ public class StudentHomeActivity extends BaseAcitivity {
                         List<StudentCardBean> mData = new ArrayList<>();
                         for (StudentCarsResponse.Card card:studentCarsResponse.data.cards){
                             String balance = "";
+                            String time     = "";
+                            if (!card.check_valid){
+                                time = "无限制";
+                            }else {
+                                time = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.valid_from))+"至"
+                                        +DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.valid_to));
+
+                            }
+
                             if (card.type == 1){
                                 balance = "余额"+card.account+"元";
                             }else if (card.type == 2){
                                 balance = "剩余"+card.times+"次";
                             }else if (card.type == 3){
-                                balance = "到期时间"+DateUtils.getDateDay(DateUtils.formatDateFromServer(card.end));
+//                                balance = "到期时间"+DateUtils.getDateDay(DateUtils.formatDateFromServer(card.end));
+                                balance ="";
+                                time =DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.start))+"至"
+                                        +DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.end));
                             }else {
                                 balance = "余额"+card.account+"元";
                             }
 
-                            StudentCardBean bean = new StudentCardBean(card.name,balance,"代数据",card.users,
-                                    DateUtils.getDateDay(DateUtils.formatDateFromServer(card.valid_from))+"-"
-                                    +DateUtils.getDateDay(DateUtils.formatDateFromServer(card.valid_to)));
+                            StudentCardBean bean = new StudentCardBean(card.name,balance,card.id,card.users,time,card.url);
                             mData.add(bean);
                         }
                         if (studentCardFragment != null)
@@ -262,14 +282,17 @@ public class StudentHomeActivity extends BaseAcitivity {
         ArrayList<Fragment> fragments = new ArrayList<>();
         studentBaseInfoFragment = new StudentBaseInfoFragment();
         studentClassRecordFragment = new StudentClassRecordFragment();
-        if (mModel.equalsIgnoreCase("service") && mModelType == 1){
-
-        }else
-            studentCardFragment = new StudentCardFragment();
-        studentBodyTestListFragment = new StudentBodyTestListFragment();
         fragments.add(studentBaseInfoFragment);
         fragments.add(studentClassRecordFragment);
-        fragments.add(studentCardFragment);
+        if (mModel.equalsIgnoreCase("service") && mModelType == 1){
+
+        }else {
+            studentCardFragment = new StudentCardFragment();
+            fragments.add(studentCardFragment);
+        }
+        studentBodyTestListFragment = StudentBodyTestListFragment.newInstance(mModel,mModelId);
+
+
         fragments.add(studentBodyTestListFragment);
         mAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments);
         mStudentViewPager.setAdapter(mAdapter);
@@ -278,6 +301,24 @@ public class StudentHomeActivity extends BaseAcitivity {
     }
 
     private void initHeader() {
+
+    }
+
+    public void goPrivate(){
+        if (!TextUtils.isEmpty(privateUrl)){
+            goWeb(privateUrl);
+        }
+    }
+    public void goGroup(){
+        if (!TextUtils.isEmpty(gourpUrl)){
+            goWeb(gourpUrl);
+        }
+    }
+
+    public void goWeb(String url){
+        Intent toWeb = new Intent(this,WebActivity.class);
+        toWeb.putExtra("url",url);
+        startActivity(toWeb);
 
     }
 

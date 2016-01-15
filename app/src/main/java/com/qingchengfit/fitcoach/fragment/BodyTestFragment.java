@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.http.bean.Measure;
 import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
 
 import butterknife.Bind;
@@ -56,10 +59,12 @@ public class BodyTestFragment extends Fragment {
     TextView bodyFatRate;
     @Bind(R.id.body_fat_rate_layout)
     LinearLayout bodyFatRateLayout;
+    @Bind(R.id.title)
+    TextView title;
 
     // TODO: Rename and change types of parameters
     private QcBodyTestTemplateRespone.Base mBase;
-    private String mParam2;
+    private Measure mMeasure;
 
 
     public BodyTestFragment() {
@@ -74,11 +79,11 @@ public class BodyTestFragment extends Fragment {
      * @return A new instance of fragment BodyTestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BodyTestFragment newInstance(QcBodyTestTemplateRespone.Base base, String param2) {
+    public static BodyTestFragment newInstance(QcBodyTestTemplateRespone.Base base, Measure param2) {
         BodyTestFragment fragment = new BodyTestFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_PARAM1, base);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,7 +93,7 @@ public class BodyTestFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mBase = getArguments().getParcelable(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mMeasure = getArguments().getParcelable(ARG_PARAM2);
         }
     }
 
@@ -97,7 +102,47 @@ public class BodyTestFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_body_test, container, false);
         ButterKnife.bind(this, view);
-
+        title.setText(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(mMeasure.created_at))+"体测数据");
+        if (!TextUtils.isEmpty(mMeasure.bmi)) {
+            bmiLayout.setVisibility(View.VISIBLE);
+            bmi.setText(String.format("%s", mMeasure.bmi));
+        }
+        if (!TextUtils.isEmpty(mMeasure.weight)) {
+            weightLayout.setVisibility(View.VISIBLE);
+            weight.setText(String.format("%s", mMeasure.weight));
+        }
+        if (!TextUtils.isEmpty(mMeasure.height)) {
+            heightLayout.setVisibility(View.VISIBLE);
+            height.setText(String.format("%s", mMeasure.height));
+        }
+        if (!TextUtils.isEmpty(mMeasure.body_fat_rate)) {
+            bodyFatRateLayout.setVisibility(View.VISIBLE);
+            bodyFatRate.setText(String.format("%s", mMeasure.body_fat_rate));
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_calf)) {
+            calf.setVisibility(View.VISIBLE);
+            calf.setText(String.format("小腿围: %s cm", mMeasure.circumference_of_calf));
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
+            chest.setVisibility(View.VISIBLE);
+            chest.setText(String.format("胸围: %s cm", mMeasure.circumference_of_chest));
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_thigh)) {
+            thigh.setVisibility(View.VISIBLE);
+            thigh.setText(String.format("大腿围: %s cm", mMeasure.circumference_of_thigh));
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_upper)) {
+            upper.setVisibility(View.VISIBLE);
+            upper.setText(String.format("上臂围: %s cm", mMeasure.circumference_of_upper));
+        }
+        if (!TextUtils.isEmpty(mMeasure.hipline)) {
+            hipline.setVisibility(View.VISIBLE);
+            hipline.setText(String.format("臀围: %s cm", mMeasure.hipline));
+        }
+        if (!TextUtils.isEmpty(mMeasure.waistline)) {
+            waistline.setVisibility(View.VISIBLE);
+            waistline.setText(String.format("腰围: %s cm", mMeasure.waistline));
+        }
 
         return view;
     }

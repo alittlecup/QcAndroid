@@ -20,6 +20,7 @@
         android:contentDescription="@string/app_name"
         />
     <TextView
+        android:id="@+id/title"
         style="@style/Qc.TextCommonBlack"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignTop="@id/img_model"
@@ -35,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="上臂围:20cm"
+        android:visibility="gone"
         />
 
     <TextView
@@ -45,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="臀围:20cm"
+        android:visibility="gone"
         />
     <TextView
         android:id="@+id/chest"
@@ -54,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="胸围:20cm"
+        android:visibility="gone"
         />
     <TextView
         style="@style/Qc.TextCommonBlack"
@@ -62,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="大腿围:20cm"
+        android:visibility="gone"
         />
     <TextView
         android:id="@+id/thigh"
@@ -71,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="大腿围:20cm"
+        android:visibility="gone"
         />
     <TextView
         android:id="@+id/waistline"
@@ -80,9 +86,11 @@
         android:layout_height="wrap_content"
         android:text="腰围: 60cm"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         />
     <TextView
         android:id="@+id/calf"
+        android:visibility="gone"
         style="@style/Qc.TextCommonBlack"
         app:layout_marginBottomPercent="19.1%"
         android:text="小腿围: 26cm"
@@ -105,6 +113,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible"
             >
             <TextView
                 android:text="身高"
@@ -114,14 +124,15 @@
             <TextView
                 android:id="@+id/height"
                 style="@style/Qc.TextCommonBlack"
-                android:text="161"
                 android:gravity="right|center_vertical"
-                android:layout_width="35dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/weight_layout"
+            tools:visibility="visible"
 
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
@@ -136,14 +147,15 @@
             <TextView
                 android:id="@+id/weight"
                 style="@style/Qc.TextCommonBlack"
-                android:text="161"
                 android:gravity="right|center_vertical"
-                android:layout_width="35dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
      <LinearLayout
          android:id="@+id/bmi_layout"
+         android:visibility="gone"
+         tools:visibility="visible"
 
          android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
@@ -151,21 +163,24 @@
             android:orientation="horizontal"
             >
             <TextView
-                android:id="@+id/bmi"
                 android:text="BMI"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 />
             <TextView
+                android:id="@+id/bmi"
+
                 style="@style/Qc.TextCommonBlack"
-                android:text="161"
                 android:gravity="right|center_vertical"
-                android:layout_width="35dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 />
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
+            tools:visibility="visible"
+
             android:id="@+id/body_fat_rate_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,10 +197,9 @@
             <TextView
                 android:id="@+id/body_fat_rate"
                 style="@style/Qc.TextCommonBlack"
-                android:layout_width="35dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
-                android:text="161"
                 />
         </LinearLayout>
     </LinearLayout>

@@ -84,7 +84,7 @@
                 style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="健  身  房 :"
+                android:text="卡        号 :"
                 android:textSize="@dimen/min_font"
                 />
 

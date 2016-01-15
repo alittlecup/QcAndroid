@@ -42,9 +42,13 @@ public class StudentCarsResponse extends QcResponse {
         public String valid_to;
         @SerializedName("start")
         public String start;
+        @SerializedName("url")
+        public String url;
         @SerializedName("end")
         public String end;
         @SerializedName("times")
-        public String times;
+        public int  times;
+        @SerializedName("check_valid")
+        public boolean check_valid;
     }
 }

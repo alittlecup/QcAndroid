@@ -42,5 +42,6 @@ public class Configs {
     public static final int TYPE_PRIVATE = 1;  //私教
     public static final int TYPE_GROUP = 2;    //团课
     public static final String[] STRINGS_WEEKDAY = {"周一","周二","周三","周四","周五","周六","周日"};
-
+    public static final String ORDER_PRIVATE_URL = Server+"mobile/coach/privatelesson/list/";
+    public static final String ORDER_GROUP_URL = Server+"mobile/coach/grouplesson/list/";
 }

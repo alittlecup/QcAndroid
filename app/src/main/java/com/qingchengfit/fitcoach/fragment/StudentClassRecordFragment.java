@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.adapter.StudentClassRecordAdapter;
 import com.qingchengfit.fitcoach.bean.StatementBean;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +55,22 @@ public class StudentClassRecordFragment extends VpFragment {
         add2.setVisibility(View.VISIBLE);
         add1.setText("代约私教");
         add2.setText("代约团教");
+        add1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() !=null){
+                    ((StudentHomeActivity)getActivity()).goPrivate();
+                }
+            }
+        });
+      add2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() !=null){
+                    ((StudentHomeActivity)getActivity()).goGroup();
+                }
+            }
+        });
 
 //        datas.clear();
 //        datas.add(new StatementBean(new Date(), "http://mmbiz.qpic.cn/mmbiz/8AuWu0VumXI39Nc61ibOCh2NFDNelSBSZTsTAUXNMLxWrJFqkkks3r0MRhN3ibTb0FFpqEGsod5BblF7iaQeJelzw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"
@@ -65,7 +85,14 @@ public class StudentClassRecordFragment extends VpFragment {
         mAdapter = new StudentClassRecordAdapter(datas);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-
+        mAdapter.setListener(new OnRecycleItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Intent toWenb = new Intent(getContext(), WebActivity.class);
+                toWenb.putExtra("url", datas.get(pos).url);
+                startActivity(toWenb);
+            }
+        });
         return view;
     }
 

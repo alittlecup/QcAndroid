@@ -11,6 +11,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.StatementBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
 
@@ -27,9 +28,15 @@ import java.util.List;
  * <p>
  * Created by Paper on 15/11/20 2015.
  */
-public class StudentClassRecordAdapter extends RecyclerView.Adapter<ClassRecordViewHolder> {
+public class StudentClassRecordAdapter extends RecyclerView.Adapter<ClassRecordViewHolder>
+    implements View.OnClickListener{
 
     private List<StatementBean> datas;
+    private OnRecycleItemClickListener listener;
+
+    public void setListener(OnRecycleItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public StudentClassRecordAdapter(List<StatementBean> datas) {
         this.datas = datas;
@@ -38,11 +45,13 @@ public class StudentClassRecordAdapter extends RecyclerView.Adapter<ClassRecordV
     @Override
     public ClassRecordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ClassRecordViewHolder holder = new ClassRecordViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_class_record, parent, false));
+        holder.itemView.setOnClickListener(this);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ClassRecordViewHolder holder, int position) {
+        holder.itemView.setTag(position);
         if (datas != null && datas.size() > 0) {
             StatementBean bean = datas.get(position);
             String now = DateUtils.getOnlyDay(bean.date);
@@ -81,5 +90,11 @@ public class StudentClassRecordAdapter extends RecyclerView.Adapter<ClassRecordV
     @Override
     public int getItemCount() {
         return datas.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener != null)
+            listener.onItemClick(v,(int)v.getTag());
     }
 }
