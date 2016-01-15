@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * power by
  * <p>
@@ -30,7 +32,7 @@ public class QcBodyTestTemplateRespone extends QcResponse {
         @SerializedName("base")
         public Base base;
         @SerializedName("extra")
-        public Base extra;
+        public List<Extra> extra;
     }
     public static class Base implements Parcelable {
         @SerializedName("show_circumference_of_thigh")//大腿
@@ -42,7 +44,7 @@ public class QcBodyTestTemplateRespone extends QcResponse {
         @SerializedName("show_circumference_of_upper")
         public boolean show_circumference_of_upper;//上臂围
         @SerializedName("id")
-        public boolean id;
+        public String id;
         @SerializedName("show_hipline") //臀围
         public boolean show_hipline;
         @SerializedName("show_waistline") //腰围
@@ -56,6 +58,9 @@ public class QcBodyTestTemplateRespone extends QcResponse {
         @SerializedName("show_body_fat_rate")   //体质比
         public boolean show_body_fat_rate;
 
+        public Base() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -63,37 +68,34 @@ public class QcBodyTestTemplateRespone extends QcResponse {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.show_circumference_of_thigh);
-            dest.writeString(this.show_weight);
-            dest.writeString(this.show_bmi);
-            dest.writeString(this.show_circumference_of_upper);
+            dest.writeByte(show_circumference_of_thigh ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_weight ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_bmi ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_circumference_of_upper ? (byte) 1 : (byte) 0);
             dest.writeString(this.id);
-            dest.writeString(this.show_hipline);
-            dest.writeString(this.show_waistline);
-            dest.writeString(this.show_height);
-            dest.writeString(this.show_circumference_of_calf);
-            dest.writeString(this.show_circumference_of_chest);
-            dest.writeString(this.show_body_fat_rate);
-        }
-
-        public Base() {
+            dest.writeByte(show_hipline ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_waistline ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_height ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_circumference_of_calf ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_circumference_of_chest ? (byte) 1 : (byte) 0);
+            dest.writeByte(show_body_fat_rate ? (byte) 1 : (byte) 0);
         }
 
         protected Base(Parcel in) {
-            this.show_circumference_of_thigh = in.readString();
-            this.show_weight = in.readString();
-            this.show_bmi = in.readString();
-            this.show_circumference_of_upper = in.readString();
+            this.show_circumference_of_thigh = in.readByte() != 0;
+            this.show_weight = in.readByte() != 0;
+            this.show_bmi = in.readByte() != 0;
+            this.show_circumference_of_upper = in.readByte() != 0;
             this.id = in.readString();
-            this.show_hipline = in.readString();
-            this.show_waistline = in.readString();
-            this.show_height = in.readString();
-            this.show_circumference_of_calf = in.readString();
-            this.show_circumference_of_chest = in.readString();
-            this.show_body_fat_rate = in.readString();
+            this.show_hipline = in.readByte() != 0;
+            this.show_waistline = in.readByte() != 0;
+            this.show_height = in.readByte() != 0;
+            this.show_circumference_of_calf = in.readByte() != 0;
+            this.show_circumference_of_chest = in.readByte() != 0;
+            this.show_body_fat_rate = in.readByte() != 0;
         }
 
-        public static final Parcelable.Creator<Base> CREATOR = new Parcelable.Creator<Base>() {
+        public static final Creator<Base> CREATOR = new Creator<Base>() {
             public Base createFromParcel(Parcel source) {
                 return new Base(source);
             }
@@ -103,13 +105,48 @@ public class QcBodyTestTemplateRespone extends QcResponse {
             }
         };
     }
-    public class Extra{
+    public static class Extra implements Parcelable {
         @SerializedName("id")
         public String id;
         @SerializedName("unit")
         public String unit;
         @SerializedName("name")
         public String name;
+        @SerializedName("value")
+        public String value;
+
+        public Extra() {
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.unit);
+            dest.writeString(this.name);
+            dest.writeString(this.value);
+        }
+
+        protected Extra(Parcel in) {
+            this.id = in.readString();
+            this.unit = in.readString();
+            this.name = in.readString();
+            this.value = in.readString();
+        }
+
+        public static final Creator<Extra> CREATOR = new Creator<Extra>() {
+            public Extra createFromParcel(Parcel source) {
+                return new Extra(source);
+            }
+
+            public Extra[] newArray(int size) {
+                return new Extra[size];
+            }
+        };
     }
 
 }

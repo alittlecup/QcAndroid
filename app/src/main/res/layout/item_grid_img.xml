@@ -28,6 +28,7 @@
         android:layout_margin="5dp"
         android:layout_centerVertical="true"
         android:progress="70"
+        android:visibility="gone"
         android:max="100"
         />
 </RelativeLayout>
