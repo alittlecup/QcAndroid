@@ -44,16 +44,17 @@ public class CommonInputView extends RelativeLayout {
 
     public CommonInputView(Context context) {
         super(context);
+        showDivier = true;
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
     }
-    public CommonInputView(Context context,String str_label) {
-        super(context);
-        inflate(context, R.layout.layout_commoninput, this);
-        this.str_label = str_label;
-        onFinishInflate();
-    }
-
+//    public CommonInputView(Context context,String str_label) {
+//        super(context);
+//        inflate(context, R.layout.layout_commoninput, this);
+//        this.str_label = str_label;
+//        onFinishInflate();
+//    }
+//
     public CommonInputView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);

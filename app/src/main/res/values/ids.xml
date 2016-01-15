@@ -24,4 +24,8 @@
     <item name="segmentbtn_91" type="id"></item>
     <item name="fab_expand_menu_button" type="id"/>
     <item name="fab_label" type="id"/>
+    <item name="tag_0" type="id"/>
+    <item name="tag_1" type="id"/>
+    <item name="tag_2" type="id"/>
+
 </resources>

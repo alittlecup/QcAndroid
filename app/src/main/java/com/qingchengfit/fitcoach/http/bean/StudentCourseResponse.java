@@ -31,6 +31,8 @@ public class StudentCourseResponse extends QcResponse {
         public String start;
         @SerializedName("end")
         public String end;
+        @SerializedName("url")
+        public String url;
         @SerializedName("id")
         public long id;
         @SerializedName("course")

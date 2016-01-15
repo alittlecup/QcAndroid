@@ -7,6 +7,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
+import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
@@ -49,6 +50,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcGetBodyTestResponse;
 import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
@@ -433,6 +435,11 @@ public class QcCloudClient {
         @GET("/api/measures/tpl/")
         rx.Observable<QcBodyTestTemplateRespone> qcGetBodyTestModel(@QueryMap Map<String, String> params);
 
+        //获取体测数据
+        @GET("/api/measures/{measure_id}/")
+        rx.Observable<QcGetBodyTestResponse> qcGetBodyTest(@Path("measure_id") String measure_id, @QueryMap Map<String, String> params);
+
+
     }
 
 
@@ -582,6 +589,16 @@ public class QcCloudClient {
          */
         @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/")
         rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,@Path("schedule_id") String schedule_id,@Path("schedules") String schedules,@Body FixBatchBean batchBean);
+
+        @POST("/api/measures/")
+        rx.Observable<QcResponse> qcAddBodyTest(@Body AddBodyTestBean addBodyTestBean);
+
+        @PUT("/api/measures/{measure_id}/")
+        rx.Observable<QcResponse> qcUpdateBodyTest(@Path("measure_id") String id,@Body AddBodyTestBean addBodyTestBean);
+
+        @DELETE("/api/measures/{measure_id}/")
+        rx.Observable<QcResponse> qcDelBodyTest(@Path("measure_id") String id,@QueryMap Map<String, String> params);
+
 
     }
 

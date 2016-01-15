@@ -19,12 +19,13 @@ public class StudentCardBean {
     public String gymName;
     public String students;
     public String timelimit;
-
-    public StudentCardBean(String cardname, String balance, String gymName, String students, String timelimit) {
+    public String url;
+    public StudentCardBean(String cardname, String balance, String gymName, String students, String timelimit,String url) {
         this.cardname = cardname;
         this.balance = balance;
         this.gymName = gymName;
         this.students = students;
+        this.url = url;
         this.timelimit = timelimit;
     }
 }

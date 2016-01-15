@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.ImageGridBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.ImageGridVh>
         implements View.OnClickListener {
 
-    private List<ImageGridBean> datas;
+    private List<AddBodyTestBean.Photo> datas;
     private OnRecycleItemClickListener listener;
     private boolean isEditable = false;
 
@@ -43,7 +43,7 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         this.notifyDataSetChanged();
     }
 
-    public ImageGridAdapter(List<ImageGridBean> datas) {
+    public ImageGridAdapter(List<AddBodyTestBean.Photo> datas) {
         this.datas = datas;
     }
 
@@ -58,7 +58,10 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         vh.delete.setOnClickListener(this);
         return vh;
     }
-
+    public void refresh(List<AddBodyTestBean.Photo> photos){
+        this.datas = photos;
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(ImageGridVh holder, int position) {
         holder.itemView.setTag(position);
@@ -68,7 +71,7 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
             Glide.with(App.AppContex).load("").into(holder.img);
             holder.img.setBackgroundResource(R.drawable.bg_rect);
         }else {
-            Glide.with(App.AppContex).load(datas.get(position).imgUrl).into(holder.img);
+            Glide.with(App.AppContex).load(datas.get(position).photo).into(holder.img);
             if (isEditable)
                 holder.delete.setVisibility(View.VISIBLE);
             else holder.delete.setVisibility(View.GONE);
