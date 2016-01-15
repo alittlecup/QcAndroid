@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -133,13 +134,19 @@ public class AddCourseManageFragment extends Fragment {
 
         starttime.setContent(DateUtils.getServerDateDay(new Date()));
         endtime.setContent(DateUtils.getEndDayOfMonthNew(new Date()));
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
     @OnClick(R.id.add)
     public void onAdd() {
-        if (datas.size() > 0 && (datas.get(datas.size() - 1).week < 0 || datas.get(datas.size() - 1).dateStart == null))
-            return;
+//        if (datas.size() > 0 && (datas.get(datas.size() - 1).week < 0 || datas.get(datas.size() - 1).dateStart == null))
+//            return;
 
         if (mType == Configs.TYPE_PRIVATE) {
             CmBean bean = new CmBean(-1, null, null);
@@ -196,7 +203,7 @@ public class AddCourseManageFragment extends Fragment {
     public void onComfirm() {
         AddBatchCourse addBatchCourse = new AddBatchCourse();
         if (datas.size() == 0) {
-
+            ToastUtils.showDefaultStyle("请选择排课周期");
             return;
         } else {
             if (datas.size() == 1 && (datas.get(0).week < 0 || datas.get(0).dateStart == null))
@@ -213,9 +220,13 @@ public class AddCourseManageFragment extends Fragment {
                     wt.end = DateUtils.getTimeHHMM(cm.dateEnd);
                 else {
                     wt.end = DateUtils.getTimeHHMM(new Date(cm.dateStart.getTime() + mCourseLength));
-                    LogUtil.e("endtime:" + wt.end + "   " + mCourseLength + "   :" + cm.dateStart.getTime());
+//                    LogUtil.e("endtime:" + wt.end + "   " + mCourseLength + "   :" + cm.dateStart.getTime());
                 }
                 weekTimes.add(wt);
+            }
+            if (weekTimes.size() <1){
+                ToastUtils.showDefaultStyle("请选择排课周期");
+                return;
             }
 
             addBatchCourse.from_date = starttime.getContent();
@@ -379,11 +390,10 @@ public class AddCourseManageFragment extends Fragment {
                     chooseTime(position);
                 }
             });
-            holder.delete.setVisibility(View.VISIBLE);
+//            holder.delete.setVisibility(View.VISIBLE);
             if (bean.week < 0) {
                 holder.text1.setText("选择星期");
                 holder.down1.setVisibility(View.INVISIBLE);
-                holder.delete.setVisibility(View.INVISIBLE);
             } else {
                 holder.text1.setText(weeks[bean.week]);
                 holder.down1.setVisibility(View.VISIBLE);
@@ -391,7 +401,6 @@ public class AddCourseManageFragment extends Fragment {
             if (bean.dateStart == null) {
                 holder.text2.setText("选择时间");
                 holder.down2.setVisibility(View.INVISIBLE);
-                holder.delete.setVisibility(View.INVISIBLE);
             } else {
                 holder.down2.setVisibility(View.VISIBLE);
                 if (mType == Configs.TYPE_PRIVATE) {

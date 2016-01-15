@@ -111,9 +111,9 @@ public class GymDetailNativeFragment extends Fragment {
         });
         toolbar.inflateMenu(R.menu.menu_edit);
         toolbar.setOnMenuItemClickListener(item -> {
-            if (mModel.equals("service") && mId == 1) {
+            if (mModel.equals("service") ) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.web_frag_layout, AddSelfGymFragment.newInstance(App.coachid))
+                        .add(R.id.web_frag_layout, AddSelfGymFragment.newInstance(App.coachid))
                         .addToBackStack(null)
                         .commit();
             } else {
@@ -204,8 +204,9 @@ public class GymDetailNativeFragment extends Fragment {
     public void initViewPager(boolean sync, ArrayList<ImageThreeTextBean> pri, ArrayList<ImageThreeTextBean> group,String purl,String gurl) {
 
         List<VpFragment> fragments = new ArrayList<>();
-        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri,purl));
         fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 2, group,gurl));
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri,purl));
+
         fragmentAdater = new FragmentAdater(getChildFragmentManager(), fragments);
         viewpager.setAdapter(fragmentAdater);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));

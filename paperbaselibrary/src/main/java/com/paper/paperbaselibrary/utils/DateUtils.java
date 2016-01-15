@@ -169,7 +169,6 @@ public class DateUtils {
         c.setTime(date);
         c.add(Calendar.MONTH, 1);
         c.set(Calendar.DAY_OF_MONTH, 0);
-        c.add(Calendar.DAY_OF_MONTH,-1);
         return getServerDateDay(c.getTime());
     }
 
@@ -184,7 +183,7 @@ public class DateUtils {
         c.setTime(date);
         int i = c.get(Calendar.DAY_OF_WEEK);
         if (i == 1){
-            return 7;
+            return 6;
         }else return i-2;
     }
 

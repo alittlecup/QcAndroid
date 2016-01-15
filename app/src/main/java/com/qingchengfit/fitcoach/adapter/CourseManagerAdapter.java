@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -49,6 +50,12 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
         CourseManagerVH vh = new CourseManagerVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_course_manage, parent, false));
         vh.itemView.setOnClickListener(this);
         vh.time.setOnClickListener(this);
+        vh.view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return vh;
     }
 
