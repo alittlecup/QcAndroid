@@ -44,6 +44,26 @@ public class StudentBodyTestListFragment extends VpFragment {
     Button add2;
     private List<BodyTestBean> mDataList = new ArrayList<>();
     private SimpleAdapter mAdapter;
+    private String model;
+    private String modelid;
+
+
+    public static StudentBodyTestListFragment newInstance(String model,String modelid) {
+
+        Bundle args = new Bundle();
+        args.putString("model",model);
+        args.putString("modelid",modelid);
+        StudentBodyTestListFragment fragment = new StudentBodyTestListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        model = getArguments().getString("model");
+        modelid = getArguments().getString("modelid");
+    }
 
     @Nullable
     @Override
@@ -61,6 +81,8 @@ public class StudentBodyTestListFragment extends VpFragment {
                 Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
                 toAdd.putExtra("id",mDataList.get(pos).id);
                 toAdd.putExtra("type",0);
+                toAdd.putExtra("model",model);
+                toAdd.putExtra("modelid",modelid);
                 startActivity(toAdd);
             }
         });
@@ -74,6 +96,8 @@ public class StudentBodyTestListFragment extends VpFragment {
     public void addTest(){
         Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
         toAdd.putExtra("type",1);
+        toAdd.putExtra("model",model);
+        toAdd.putExtra("modelid",modelid);
         startActivity(toAdd);
     }
 

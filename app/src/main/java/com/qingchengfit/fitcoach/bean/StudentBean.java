@@ -27,5 +27,6 @@ public class StudentBean {
     public String color;
     public String modelid;
     public String model;
+    public int modeltype;
 
 }

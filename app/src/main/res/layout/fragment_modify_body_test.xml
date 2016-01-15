@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="体测日期"
+        app:civ_clickable="true"
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -19,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="身高(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -26,6 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="体重(kg)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
+
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -33,6 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="BMI"
+        app:civ_inputnum="true"
+        android:visibility="gone"
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -40,6 +48,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="体脂"
+        app:civ_inputnum="true"
+        android:visibility="gone"
+
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -47,6 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="上臂围(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -54,6 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="胸围(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -61,6 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="腰围(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
+
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -68,6 +86,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="臀围(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
+
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -75,6 +96,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="大腿围(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
         />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
@@ -82,6 +105,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="小腿围(cm)"
+        app:civ_inputnum="true"
+        android:visibility="gone"
         />
     <!--<LinearLayout-->
         <!--android:id="@+id/more_data"-->

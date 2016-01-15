@@ -175,6 +175,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 it.putExtra("id", adapterData.get(pos).modelid);
                 it.putExtra("model", adapterData.get(pos).model);
                 it.putExtra("student_id",adapterData.get(pos).id);
+                it.putExtra("modeltype",adapterData.get(pos).modeltype);
                 MyStudentFragment.this.startActivityForResult(it, 404);
             }
         });
@@ -387,6 +388,7 @@ public class MyStudentFragment extends MainBaseFragment {
                         bean.color = ship.service.color;
                         bean.modelid = ship.service.id+"";
                         bean.model = ship.service.model;
+                        bean.modeltype = ship.service.type;
                         if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {
                             bean.head = "~";
                         } else {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
+    android:id="@+id/rootview"
     tools:context="com.qingchengfit.fitcoach.activity.BodyTestActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -41,14 +41,16 @@
                 android:layout_height="wrap_content"
                 />
 
-            <LinearLayout
+            <com.qingchengfit.fitcoach.component.InterupteLinearLayout
                 android:id="@+id/other_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/white"
+                android:descendantFocusability="beforeDescendants"
+
                 >
-            </LinearLayout>
+            </com.qingchengfit.fitcoach.component.InterupteLinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
@@ -62,6 +64,8 @@
                 />
             <include layout="@layout/divider_grey"/>
             <TextView
+                android:id="@+id/delete"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:text="删除体测数据"

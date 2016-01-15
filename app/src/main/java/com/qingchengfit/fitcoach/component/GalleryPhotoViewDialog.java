@@ -67,6 +67,34 @@ public class GalleryPhotoViewDialog extends Dialog  implements ViewPager.OnPageC
     	tagPanel.getChildAt(0).setSelected(true);
   	}
 
+    public void setImage(List<String> url)
+    {
+    	selectedIndex = 0;
+    	pagerListView.clear();
+    	tagPanel.removeAllViews();
+    	viewPager.removeAllViews();
+    	for(String u:url)
+    	{
+    		PhotoView image = new PhotoView(this.getContext());
+			image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+			image.setScaleType(ImageView.ScaleType.CENTER);
+
+    		pagerListView.add(image);
+			Glide.with(App.AppContex).load(u).into(image);
+//    		ImageLoader.getInstance().displayImage(u, image,mDisplayImageOption);
+    		ImageView tag =  new ImageView(this.getContext());
+//    		tag.setImageResource(R.drawable.icon_pager_tag);
+    		tag.setPadding(12, 0, 0, 0);
+    		tagPanel.addView(tag);
+    		image.setOnClickListener(this);
+			image.setOnPhotoTapListener(this);
+    	}
+    	viewPaperAdapter   = new ViewPaperAdapter(pagerListView);
+    	viewPager.setAdapter(viewPaperAdapter);
+    	viewPager.setOnPageChangeListener(this);
+    	tagPanel.getChildAt(0).setSelected(true);
+  	}
+
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {}

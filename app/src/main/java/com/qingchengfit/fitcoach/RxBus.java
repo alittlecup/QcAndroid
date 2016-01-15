@@ -21,6 +21,7 @@ public class RxBus {
     public static String OPEN_DRAWER = "RxBus_opendrawer";
     public static String BUS_REFRESH = "RxBus_refresh";
     public static String BUS_DEFAUT = "RxBus_default";
+    public static String BUS_CHOOSEPIC = "RxBus_choosepic";
     private static String TAG = "RxBus";
     private static RxBus _RxBus;
     // If multiple threads are going to emit events to this
