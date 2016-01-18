@@ -543,8 +543,10 @@ public class QcCloudClient {
         //批量排课
         @POST("/api/v1/coaches/{id}/schedules/batches/")
         rx.Observable<QcResponse> qcAddCourseManage(@Path("id") int id,@Body AddBatchCourse addBatchCourse);
-        @POST("/api/v1/coaches/{id}/schedules/bulk/delete/")
-        rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,@Body DelCourseManage delCourseManage);
+
+        @POST("/api/v1/coaches/{id}/{schedules}/bulk/delete/")
+        rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,@Path("schedules") String schedules,@Body DelCourseManage delCourseManage);
+
         @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/")
         rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@QueryMap HashMap<String,String> params);
         //修改单挑排期

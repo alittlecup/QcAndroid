@@ -309,7 +309,7 @@ public class CourseManageFragment extends Fragment {
         if (delDialog == null) {
             delDialog = new MaterialDialog.Builder(getContext())
                     .autoDismiss(true)
-                    .content("是否删除课程?")
+                    .content("是否删除排期?")
                     .positiveText("确定")
                     .negativeText("取消")
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -324,7 +324,7 @@ public class CourseManageFragment extends Fragment {
                                 if (bean.checked)
                                     delCourseManage.ids.add(bean.id);
                             }
-                            QcCloudClient.getApi().postApi.qcDelCourseManage(App.coachid, delCourseManage)
+                            QcCloudClient.getApi().postApi.qcDelCourseManage(App.coachid,mCourseType==Configs.TYPE_PRIVATE?"timetables":"schedules", delCourseManage)
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(new Subscriber<QcResponse>() {
