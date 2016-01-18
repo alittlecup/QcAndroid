@@ -15,11 +15,13 @@
         />
     <ImageView
         android:id="@+id/delete"
-        android:padding="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:src="@drawable/ic_item_delete"
         android:layout_alignParentRight="true"
+
+        android:background="@drawable/circle_white"
         />
     <ProgressBar
         android:id="@+id/progress"

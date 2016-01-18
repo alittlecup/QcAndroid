@@ -37,6 +37,10 @@ public class AddBodyTestBean {
 
     public static class Photo implements Parcelable {
         public String photo;
+        public boolean isLoading;
+
+        public Photo() {
+        }
 
         @Override
         public int describeContents() {
@@ -46,16 +50,15 @@ public class AddBodyTestBean {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.photo);
-        }
-
-        public Photo() {
+            dest.writeByte(isLoading ? (byte) 1 : (byte) 0);
         }
 
         protected Photo(Parcel in) {
             this.photo = in.readString();
+            this.isLoading = in.readByte() != 0;
         }
 
-        public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>() {
+        public static final Creator<Photo> CREATOR = new Creator<Photo>() {
             public Photo createFromParcel(Parcel source) {
                 return new Photo(source);
             }

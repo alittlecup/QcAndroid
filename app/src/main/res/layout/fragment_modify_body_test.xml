@@ -6,108 +6,150 @@
               android:background="@color/backgroud_grey"
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.ModifyBodyTestFragment">
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/test_date"
+    <include layout="@layout/common_toolbar"/>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="体测日期"
-        app:civ_clickable="true"
-        />
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/height"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="身高(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/test_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="体测日期"
+                    app:civ_clickable="true"
+                    />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="体重(kg)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="身高(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
+                    />
 
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="体重(kg)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/bmi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="BMI"
-        app:civ_inputnum="true"
-        android:visibility="gone"
-        />
+                    />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/body_fat_rate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="体脂"
-        app:civ_inputnum="true"
-        android:visibility="gone"
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/bmi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="BMI"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
+                    />
 
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/body_fat_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="体脂"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/upper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="上臂围(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
-        />
+                    />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/chest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="胸围(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/upper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="上臂围(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
+                    />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/waistline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="腰围(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/chest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="胸围(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
+                    />
 
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/waistline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="腰围(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/hipline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="臀围(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
+                    />
 
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/hipline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="臀围(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/thigh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="大腿围(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
-        />
+                    />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/calf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="小腿围(cm)"
-        app:civ_inputnum="true"
-        android:visibility="gone"
-        />
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/thigh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="大腿围(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
+                    />
+
+                <com.qingchengfit.fitcoach.component.CommonInputView
+                    android:id="@+id/calf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:civ_lable="小腿围(cm)"
+                    app:civ_inputnum="true"
+                    android:visibility="gone"
+                    />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/other_data"
+                >
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:text="体测照片"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerview"
+                />
+            <TextView
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:id="@+id/delete"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_item_height"
+                android:text="删除体测数据"
+                android:gravity="center"
+                android:background="@color/white"
+                android:textColor="@color/text_red"
+                />
+        </LinearLayout>
+    </ScrollView>
+
     <!--<LinearLayout-->
         <!--android:id="@+id/more_data"-->
         <!--android:layout_width="match_parent"-->
