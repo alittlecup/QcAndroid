@@ -47,6 +47,10 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         this.datas = datas;
     }
 
+    public List<AddBodyTestBean.Photo> getDatas() {
+        return datas;
+    }
+
     public void setListener(OnRecycleItemClickListener listener) {
         this.listener = listener;
     }
@@ -68,9 +72,12 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         holder.delete.setTag(position);
         if (isEditable && position == datas.size()){
             holder.delete.setVisibility(View.GONE);
-            Glide.with(App.AppContex).load("").into(holder.img);
+            holder.img.setScaleType(ImageView.ScaleType.CENTER);
+            Glide.with(App.AppContex).load(R.drawable.ic_add_image).into(holder.img);
             holder.img.setBackgroundResource(R.drawable.bg_rect);
+
         }else {
+            holder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Glide.with(App.AppContex).load(datas.get(position).photo).into(holder.img);
             if (isEditable)
                 holder.delete.setVisibility(View.VISIBLE);
