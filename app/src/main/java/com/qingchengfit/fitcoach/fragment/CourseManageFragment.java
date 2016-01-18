@@ -175,7 +175,7 @@ public class CourseManageFragment extends Fragment {
                         for (QcBatchResponse.Schedule schedule : (mCourseType == Configs.TYPE_PRIVATE?qcBatchResponse.data.timetables:qcBatchResponse.data.schedules)) {
                             CourseManageBean b = new CourseManageBean();
                             b.month = DateUtils.getDateMonth(DateUtils.formatDateFromServer(schedule.start));
-                            b.day = DateUtils.getDateDay(DateUtils.formatDateFromServer(schedule.start));
+                            b.day = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(schedule.start));
                             b.WeekDay = DateUtils.getDayOfWeek(DateUtils.formatDateFromServer(schedule.start));
                             if (mCourseType == Configs.TYPE_GROUP)
                                 b.time = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start));
@@ -211,15 +211,16 @@ public class CourseManageFragment extends Fragment {
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
-                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getDateDay(new Date())) && date.getTime() <= new Date().getTime()) {
+                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getServerDateDay(new Date())) && date.getTime() <= new Date().getTime()) {
                         ToastUtils.showDefaultStyle("开始时间不能小于当前时间");
                         return;
                     }
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.start = DateUtils.formatToServer(date);
-                    batchBean.end = DateUtils.formatToServer(new Date(date.getTime() + datas.get(pos).length));
+                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(date);
+                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(new Date(date.getTime() + datas.get(pos).length));
+//                    batchBean.end = DateUtils.formatToServer();
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "schedules",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
@@ -261,7 +262,7 @@ public class CourseManageFragment extends Fragment {
                         ToastUtils.showDefaultStyle("开始时间不能小于结束时间");
                         return;
                     }
-                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getDateDay(new Date())) && start.getTime() <= new Date().getTime()) {
+                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getServerDateDay(new Date())) && start.getTime() <= new Date().getTime()) {
                         ToastUtils.showDefaultStyle("开始时间不能小于当前时间");
                         return;
                     }
@@ -270,9 +271,9 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.start = DateUtils.formatToServer(start);
-                    batchBean.end = DateUtils.formatToServer(end);
-                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
+                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(start);
+                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(end);
+                   QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Subscriber<QcResponse>() {
