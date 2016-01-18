@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -89,7 +88,6 @@ public class CommonInputView extends RelativeLayout {
         } else {
             edit.setClickable(true);
             setOnClickListener(v -> {
-                LogUtil.e("on civ click!!");
                 edit.setClickable(true);
                 edit.requestFocus();
 //                edit.performClick();
