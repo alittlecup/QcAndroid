@@ -368,8 +368,4 @@ public class CourseManageFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
-
-//    public class
-
 }
