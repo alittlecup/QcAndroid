@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.http;
 
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
-import com.qingchengfit.fitcoach.http.bean.AddGymBean;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
@@ -138,7 +138,7 @@ public class QcCloudClient {
                                 request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
                                         PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
                                 request.addHeader("Cache-Control", "max-age=0");
-                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER);
+                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER + "  OEM:"+App.AppContex.getString(R.string.oem_tag));
                             }
                         }
                 )

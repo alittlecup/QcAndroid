@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode 114
-        versionName "1.1.4"
+        versionCode 190
+        versionName "1.9.0"
     }
 //    buildTypes {
 //        release {
@@ -111,17 +111,31 @@ android {
     lintOptions {
         abortOnError false
     }
+    flavorDimensions 'oem', 'dev'
 
     productFlavors {
         dev {
             minSdkVersion 21
-
+            flavorDimension 'dev'
         }
         prod {
             minSdkVersion 15
+            flavorDimension 'dev'
+
+        }
+        joinfit{
+            minSdkVersion 15
+            flavorDimension 'oem'
+        }
+        suisheng{
+            minSdkVersion 15
+            flavorDimension 'oem'
+        }
+        s567go{
+            minSdkVersion 15
+            flavorDimension 'oem'
         }
     }
-
     buildTypes {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

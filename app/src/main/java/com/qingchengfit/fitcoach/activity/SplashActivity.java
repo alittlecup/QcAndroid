@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
@@ -121,7 +122,8 @@ public class SplashActivity extends BaseAcitivity {
     }
 
     public void goSplashViewpager() {
-        if (PreferenceUtils.getPrefBoolean(this, "first", true)) {
+        LogUtil.e("oem:"+getString(R.string.oem_tag));
+        if (getString(R.string.oem_tag).equalsIgnoreCase("qingcheng")) {
 
             for (int i = 0; i < mSplashImg.length; i++) {
                 ImageView imageView = new ImageView(this);
