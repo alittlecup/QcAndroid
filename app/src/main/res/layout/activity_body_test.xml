@@ -63,16 +63,7 @@
                 android:id="@+id/recyclerview"
                 />
             <include layout="@layout/divider_grey"/>
-            <TextView
-                android:id="@+id/delete"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:text="删除体测数据"
-                android:gravity="center"
-                android:background="@color/white"
-                android:textColor="@color/text_red"
-                />
+
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
