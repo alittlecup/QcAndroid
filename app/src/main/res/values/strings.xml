@@ -85,6 +85,7 @@
     <string name="add_plan_name">课程计划模板名称</string>
     <string name="add_plan_type">课程类型</string>
     <string name="add_plan_action">课程动作</string>
+
     <!-- 我的健身房-->
     <string name="gym_add_course">添加课程</string>
     <string name="gym_add_course_pic">课程图片</string>
@@ -101,6 +102,13 @@
     <string name="course_del_manage">删除所选排期</string>
     <string name="start_time">开始时间</string>
     <string name="end_time">结束时间</string>
+    <string name="please_add_one_batch">请至少添加一条排期</string>
+    <string name="title_add_group_course_batch">添加团课排期</string>
+    <string name="title_add_private_batch">添加私教排期</string>
+    <string name="alert_endtime_greater_starttime">结束时间不能早于结束时间</string>
+    <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
+    <string name="choose_time">选择时间</string>
+    <string name="choose_week">选择星期</string>
 
 
     <!-- 课程计划模板-->
