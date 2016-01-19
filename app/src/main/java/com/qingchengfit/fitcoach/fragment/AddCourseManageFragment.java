@@ -118,8 +118,8 @@ public class AddCourseManageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_course_manage, container, false);
         ButterKnife.bind(this, view);
         if (mType == Configs.TYPE_GROUP)
-            toolbar.setTitle("添加团课排期");
-        else toolbar.setTitle("添加私教排期");
+            toolbar.setTitle(R.string.title_add_group_course_batch);
+        else toolbar.setTitle(R.string.title_add_private_batch);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +143,9 @@ public class AddCourseManageFragment extends Fragment {
         return view;
     }
 
+    /**
+     *  添加
+     */
     @OnClick(R.id.add)
     public void onAdd() {
 //        if (datas.size() > 0 && (datas.get(datas.size() - 1).week < 0 || datas.get(datas.size() - 1).dateStart == null))
@@ -159,6 +162,9 @@ public class AddCourseManageFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * 选择开始时间
+     */
     @OnClick(R.id.starttime)
     public void onStartTime() {
         if (pwTime == null)
@@ -175,6 +181,9 @@ public class AddCourseManageFragment extends Fragment {
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
+    /**
+     * 选择结束时间
+     */
     @OnClick(R.id.endtime)
     public void onEndTime() {
         if (pwTime == null)
@@ -184,11 +193,11 @@ public class AddCourseManageFragment extends Fragment {
             @Override
             public void onTimeSelect(Date date) {
                 if (date.getTime() < DateUtils.formatDateFromString(starttime.getContent()).getTime()) {
-                    Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(App.AppContex, R.string.alert_endtime_greater_starttime, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (date.getTime() - DateUtils.formatDateFromString(starttime.getContent()).getTime() > 92 * DateUtils.DAY_TIME) {
-                    Toast.makeText(App.AppContex, "一次最多只能排三个月的课程", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(App.AppContex, R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 endtime.setContent(DateUtils.getServerDateDay(date));
@@ -199,11 +208,15 @@ public class AddCourseManageFragment extends Fragment {
 
     }
 
+
+    /**
+     * 点击确认按钮
+     */
     @OnClick(R.id.comfirm)
     public void onComfirm() {
         AddBatchCourse addBatchCourse = new AddBatchCourse();
         if (datas.size() == 0) {
-            ToastUtils.showDefaultStyle("请选择排课周期");
+            ToastUtils.showDefaultStyle(getContext().getString(R.string.please_add_one_batch));
             return;
         } else {
             if (datas.size() == 1 && (datas.get(0).week < 0 || datas.get(0).dateStart == null))
@@ -225,7 +238,7 @@ public class AddCourseManageFragment extends Fragment {
                 weekTimes.add(wt);
             }
             if (weekTimes.size() <1){
-                ToastUtils.showDefaultStyle("请选择排课周期");
+                ToastUtils.showDefaultStyle(getContext().getString(R.string.please_add_one_batch));
                 return;
             }
 
@@ -282,6 +295,10 @@ public class AddCourseManageFragment extends Fragment {
         dialogList.show();
     }
 
+    /**
+     * 时间选择器
+     * @param pos
+     */
     public void chooseTime(int pos) {
         if (mType == Configs.TYPE_GROUP) {
             if (timeWindow == null) {
@@ -392,14 +409,14 @@ public class AddCourseManageFragment extends Fragment {
             });
 //            holder.delete.setVisibility(View.VISIBLE);
             if (bean.week < 0) {
-                holder.text1.setText("选择星期");
+                holder.text1.setText(R.string.choose_week);
                 holder.down1.setVisibility(View.INVISIBLE);
             } else {
                 holder.text1.setText(weeks[bean.week]);
                 holder.down1.setVisibility(View.VISIBLE);
             }
             if (bean.dateStart == null) {
-                holder.text2.setText("选择时间");
+                holder.text2.setText(R.string.choose_time);
                 holder.down2.setVisibility(View.INVISIBLE);
             } else {
                 holder.down2.setVisibility(View.VISIBLE);

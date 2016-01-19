@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImageTwoTextAdapter;
@@ -67,7 +66,7 @@ public class ChooseGymActivity extends AppCompatActivity {
         mCurModel = getIntent().getStringExtra("model");
         mCurId = getIntent().getIntExtra("id", 0);
         mTitle = getIntent().getStringExtra("title");
-        LogUtil.e("curmodel:"+mCurModel +"   xxid:"+mCurId);
+//        LogUtil.e("curmodel:"+mCurModel +"   xxid:"+mCurId);
         toolbar.setTitle("请选择您的场馆");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
