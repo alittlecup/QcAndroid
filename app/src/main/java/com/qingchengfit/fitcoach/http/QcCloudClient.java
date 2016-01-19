@@ -550,7 +550,6 @@ public class QcCloudClient {
         @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/")
         rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@QueryMap HashMap<String,String> params);
         //修改单挑排期
-
         /**
          *
          * @param coach_id

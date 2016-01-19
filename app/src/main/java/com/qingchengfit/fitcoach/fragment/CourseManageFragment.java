@@ -218,8 +218,8 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(date);
-                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(new Date(date.getTime() + datas.get(pos).length));
+                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(date)+":00";
+                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(new Date(date.getTime() + datas.get(pos).length))+":00";
 //                    batchBean.end = DateUtils.formatToServer();
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "schedules",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
@@ -271,8 +271,8 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(start);
-                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(end);
+                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(start)+":00";
+                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(end)+":00";
                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())

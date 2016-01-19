@@ -111,7 +111,7 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            android:text="+继续添加"
+            android:text="+添加课程排期"
             android:textColor="@color/primary"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             />
