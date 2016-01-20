@@ -12,11 +12,13 @@ import android.view.ViewTreeObserver;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -128,6 +130,9 @@ public class SaleGlanceFragment extends Fragment {
                 freshData();
             }
         });
+        statmentGlanceTodayTitle.setText("今日(" + DateUtils.getServerDateDay(new Date()) + ")");
+        statmentGlanceWeekTitle.setText("本周("+DateUtils.getMondayOfThisWeek(new Date())+"至"+DateUtils.getSundayOfThisWeek(new Date())+")");
+        statmentGlanceMonthTitle.setText("本月("+DateUtils.getStartDayOfMonth(new Date())+"至"+DateUtils.getEndDayOfMonth(new Date())+")");
         freshData();
         return view;
     }
@@ -147,23 +152,23 @@ public class SaleGlanceFragment extends Fragment {
         if (qcReportGlanceResponse == null)
             return;
         List<QcSaleGlanceResponse.System> systems = qcReportGlanceResponse.data.systems;
-        StringBuffer monthTitle = new StringBuffer();
-        StringBuffer weekTitle = new StringBuffer();
-        StringBuffer dayTitle = new StringBuffer();
-        monthTitle.append("本月");
-        weekTitle.append("本周");
-        dayTitle.append("今日");
+//        StringBuffer monthTitle = new StringBuffer();
+//        StringBuffer weekTitle = new StringBuffer();
+//        StringBuffer dayTitle = new StringBuffer();
+//        monthTitle.append("本月");
+//        weekTitle.append("本周");
+//        dayTitle.append("今日");
         int monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
 
         for (int i = 0; i < systems.size(); i++) {
             QcSaleGlanceResponse.System system = systems.get(i);
             if (system.system == null)
                 continue;
-            if (i == 0) {
-                monthTitle.append("(").append(system.month.from_date).append("至").append(system.month.to_date).append(")");
-                weekTitle.append("(").append(system.week.from_date).append("至").append(system.week.to_date).append(")");
-                dayTitle.append("(").append(system.today.from_date).append("至").append(system.today.to_date).append(")");
-            }
+//            if (i == 0) {
+//                monthTitle.append("(").append(system.month.from_date).append("至").append(system.month.to_date).append(")");
+//                weekTitle.append("(").append(system.week.from_date).append("至").append(system.week.to_date).append(")");
+//                dayTitle.append("(").append(system.today.from_date).append("至").append(system.today.to_date).append(")");
+//            }
 
             if (curSystem != 0 && curSystem != system.system.id)
                 continue;
@@ -180,9 +185,9 @@ public class SaleGlanceFragment extends Fragment {
         dayContent.append("实收金额¥").append(dayServerNum);
 
         getActivity().runOnUiThread(() -> {
-            statmentGlanceMonthTitle.setText(monthTitle.toString());
-            statmentGlanceWeekTitle.setText(weekTitle.toString());
-            statmentGlanceTodayTitle.setText(dayTitle.toString());
+//            statmentGlanceMonthTitle.setText(monthTitle);
+//            statmentGlanceWeekTitle.setText(weekTitle);
+//            statmentGlanceTodayTitle.setText(dayTitle);
             statmentGlanceMonthData.setText(monthContent.toString());
             statmentGlanceWeekData.setText(weekContent.toString());
             statmentGlanceTodayData.setText(dayContent.toString());

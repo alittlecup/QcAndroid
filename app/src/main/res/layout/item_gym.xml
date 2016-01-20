@@ -67,6 +67,14 @@
                 android:src="@drawable/ic_qc_identify"
                 />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/item_gym_brand"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            tools:text="品牌"
+            />
 
 
         <TextView

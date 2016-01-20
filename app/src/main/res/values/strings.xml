@@ -91,7 +91,7 @@
     <string name="gym_add_course_type_private">私教课</string>
     <string name="gym_add_course_type_group">团课</string>
     <string name="gym_add_course_name">名称</string>
-    <string name="gym_add_course_time">时长(min)</string>
+    <string name="gym_add_course_time">时长(分钟)</string>
     <string name="schedule_title">全部日程</string>
     <string name="statement_course">全部课程报表</string>
     <string name="mystudents_title">我的学员</string>

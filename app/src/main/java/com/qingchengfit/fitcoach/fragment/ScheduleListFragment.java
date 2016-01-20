@@ -239,7 +239,7 @@ public class ScheduleListFragment extends Fragment {
                 } else {
                     bean.isSingle = false;
                 }
-                bean.gymname = schedule.shop.name;
+                bean.gymname = system.system.name;
                 bean.color = syscolor;
                 bean.time = DateUtils.formatDateFromServer(schedule.start).getTime();
                 bean.timeEnd = DateUtils.formatDateFromServer(schedule.end).getTime();

@@ -30,6 +30,8 @@ public class CoachService {
     public String photo;
     @SerializedName("host")
     public String host;
+     @SerializedName("brand_name")
+    public String brand_name;
     @SerializedName("courses_count")
     public int courses_count;
     @SerializedName("users_count")

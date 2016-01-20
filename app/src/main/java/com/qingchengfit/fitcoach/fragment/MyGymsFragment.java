@@ -219,7 +219,8 @@ public class MyGymsFragment extends MainBaseFragment {
         TextView itemGymPhonenum;
         @Bind(R.id.qc_identify)
         ImageView itemIsPersonal;
-
+        @Bind(R.id.item_gym_brand)
+        TextView brand;
         public GymsVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -258,6 +259,7 @@ public class MyGymsFragment extends MainBaseFragment {
             CoachService detail = datas.get(position);
             holder.itemGymName.setText(detail.name);
             holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
+            holder.brand.setText(detail.brand_name);
             if (detail.model.equals("service")&&detail.type==1) {
                 holder.itemIsPersonal.setVisibility(View.GONE);
             } else {
