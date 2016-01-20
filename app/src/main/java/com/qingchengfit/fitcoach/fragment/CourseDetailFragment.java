@@ -361,6 +361,9 @@ public class CourseDetailFragment extends Fragment {
                                                 if (qcResponse.status == ResponseResult.SUCCESS) {
                                                     ToastUtils.showDefaultStyle("删除成功");
                                                     datas.remove(pos);
+                                                    if (datas.size() == 0){
+                                                        noData.setVisibility(View.VISIBLE);
+                                                    }
                                                     simpleTextIconAdapter.notifyDataSetChanged();
                                                 }
                                             }

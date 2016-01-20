@@ -18,7 +18,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -190,7 +189,6 @@ public class CourseManageFragment extends Fragment {
                             if (b.outdue)
                                 pos ++;
                             datas.add(b);
-                            LogUtil.e("pos:"+pos);
                         }
 //                        courseManagerAdapter = new CourseManagerAdapter(datas);
 //                        recyclerview.setAdapter(courseManagerAdapter);
