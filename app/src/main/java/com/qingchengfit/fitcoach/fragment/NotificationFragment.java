@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,10 +104,12 @@ public class NotificationFragment extends BaseSettingFragment {
             QcCloudClient.getApi().postApi.qcClearOneNotification(adapter.datas.get(pos).getId()).subscribeOn(Schedulers.io())
                     .subscribe();
             adapter.datas.get(pos).setIs_read(true);
-            Intent toWeb = new Intent(getContext(),WebActivity.class);
-            toWeb.putExtra("url",adapter.datas.get(pos).getUrl());
+            if (TextUtils.isEmpty(adapter.datas.get(pos).getUrl())) {
+                Intent toWeb = new Intent(getContext(), WebActivity.class);
+                toWeb.putExtra("url", adapter.datas.get(pos).getUrl());
 
-            startActivity(toWeb);
+                startActivity(toWeb);
+            }
 //            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
 //            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
         });

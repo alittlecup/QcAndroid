@@ -25,17 +25,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.ModifyCoachInfo;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
@@ -532,12 +534,44 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     @Override
     public void onChoosePicResult(boolean isSuccess, String filePath) {
         if (isSuccess) {
-            UpyunService.uploadPic(getContext(), filePath);
+            fragmentCallBack.ShowLoading("正在上传");
+            Observable.create(new Observable.OnSubscribe<String>() {
+                @Override
+                public void call(Subscriber<? super String> subscriber) {
+                    String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
+                    subscriber.onNext(upImg);
+                }
+            }).observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<String>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            fragmentCallBack.hideLoading();
+                        }
+
+                        @Override
+                        public void onNext(String upImg) {
+                            if (TextUtils.isEmpty(upImg)) {
+                                ToastUtils.showDefaultStyle("图片上传失败");
+                            } else {
+                                Glide.with(App.AppContex).load(upImg).asBitmap().into(new CircleImgWrapper(modifyinfoHeaderPic,App.AppContex));
+                            }
+                            fragmentCallBack.hideLoading();
+                        }
+                    });
+
+
+        } else {
+            LogUtil.e("选择图片失败");
         }
+
+
     }
-
-
-
 
 
 }

@@ -90,6 +90,7 @@ public class AddCourseFrament extends Fragment {
     private int upTime;
     private Boolean upIsPrivate = true;
     private MaterialDialog delDialog;
+    private MaterialDialog loadingDialog;
 
     public AddCourseFrament() {
     }
@@ -151,6 +152,10 @@ public class AddCourseFrament extends Fragment {
         if (mType == TYPE_ADD) {
             toolbar.setTitle("新增课程");
             courseTypeLayout.setVisibility(View.GONE);
+            if (upIsPrivate){
+                courseCapacity.setVisibility(View.GONE);
+            }else
+                courseCapacity.setVisibility(View.VISIBLE);
         } else if (mType == TYPE_EDIT) {
             toolbar.setTitle("编辑课程");
 //            toolbar.inflateMenu(R.menu.menu_delete);
@@ -315,6 +320,7 @@ public class AddCourseFrament extends Fragment {
             public void onChoosePicResult(boolean isSuccess, String filePath) {
                 dialog.dismiss();
                 if (isSuccess) {
+                    ShowLoading(null);
                     upPic = Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(Subscriber<? super String> subscriber) {
@@ -331,7 +337,7 @@ public class AddCourseFrament extends Fragment {
 
                                 @Override
                                 public void onError(Throwable e) {
-
+                                    hideLoading();
                                 }
 
                                 @Override
@@ -339,8 +345,9 @@ public class AddCourseFrament extends Fragment {
                                     if (TextUtils.isEmpty(upImg)) {
                                         ToastUtils.showDefaultStyle("图片上传失败");
                                     } else {
-                                        Glide.with(App.AppContex).load(new File(filePath)).into(gymAddcourseImg);
+                                        Glide.with(App.AppContex).load(upImg).into(gymAddcourseImg);
                                     }
+                                    hideLoading();
                                 }
                             });
 
@@ -434,6 +441,25 @@ public class AddCourseFrament extends Fragment {
                     .build();
         }
         delDialog.show();
+    }
+
+
+
+    public void ShowLoading(String content) {
+        if (loadingDialog == null)
+            loadingDialog = new MaterialDialog.Builder(getActivity())
+                    .content("正在上传,请稍后...")
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .build();
+        if (content != null)
+            loadingDialog.setContent(content);
+        loadingDialog.show();
+    }
+
+    public void hideLoading(){
+        if (loadingDialog!=null)
+            loadingDialog.dismiss();
     }
 
 

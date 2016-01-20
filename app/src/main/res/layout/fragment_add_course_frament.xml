@@ -121,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_inputnum="true"
-            app:civ_lable="可容纳人数"
+            app:civ_lable="单节课可约人数"
             >
         </com.qingchengfit.fitcoach.component.CommonInputView>
     </LinearLayout>

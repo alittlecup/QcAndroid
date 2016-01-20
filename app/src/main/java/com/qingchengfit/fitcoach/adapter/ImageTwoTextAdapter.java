@@ -78,6 +78,7 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
         holder.itemView.setTag(position);
         ImageTwoTextBean bean = datas.get(position);
         holder.itemGymName.setText(bean.text1);
+        holder.itemBrand.setVisibility(View.GONE);
         if (bean.type != 0) {
             holder.itemGymPhonenum.setVisibility(View.GONE);
             holder.qcIdentify.setVisibility(View.GONE);
@@ -90,6 +91,7 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
                 holder.itemGymPhonenum.setVisibility(View.VISIBLE);
                 holder.itemGymPhonenum.setText(bean.text2);
             }
+
             Glide.with(App.AppContex).load(bean.imgUrl).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
             if (bean.showIcon)
                 holder.qcIdentify.setVisibility(View.VISIBLE);
@@ -136,7 +138,8 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
         TextView itemGymPhonenum;
         @Bind(R.id.item_right)
         ImageView itemRight;
-
+        @Bind(R.id.item_gym_brand)
+        TextView itemBrand;
         public ImageTwoTextVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

@@ -157,7 +157,7 @@ public class ChooseGymActivity extends AppCompatActivity {
                         mDatas.clear();
                         List<CoachService> services = qcCoachServiceResponse.data.services;
                         for (CoachService service : services) {
-                            ImageTwoTextBean bean = new ImageTwoTextBean(service.photo, service.name, "");
+                            ImageTwoTextBean bean = new ImageTwoTextBean(service.photo, service.name, service.brand_name);
                             if (service.id == mCurId && mCurModel.equals(service.model)) {
                                 bean.rightIcon = R.drawable.ic_green_right;
                                 bean.showRight = true;

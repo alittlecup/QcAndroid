@@ -392,14 +392,14 @@ public class AddCourseManageFragment extends Fragment {
             });
 //            holder.delete.setVisibility(View.VISIBLE);
             if (bean.week < 0) {
-                holder.text1.setText("选择星期");
+                holder.text1.setText("星期");
                 holder.down1.setVisibility(View.INVISIBLE);
             } else {
-                holder.text1.setText(weeks[bean.week]);
+                holder.text1.setText("每"+weeks[bean.week]);
                 holder.down1.setVisibility(View.VISIBLE);
             }
             if (bean.dateStart == null) {
-                holder.text2.setText("选择时间");
+                holder.text2.setText("时间");
                 holder.down2.setVisibility(View.INVISIBLE);
             } else {
                 holder.down2.setVisibility(View.VISIBLE);

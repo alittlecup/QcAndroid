@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -59,6 +60,8 @@ public class CourseManageFragment extends Fragment {
     FrameLayout delLayout;
     @Bind(R.id.rootview)
     RelativeLayout rootview;
+    @Bind(R.id.no_data)
+    LinearLayout noData;
 
     private String mBatchId; //排期id
     private String mModel;
@@ -162,6 +165,7 @@ public class CourseManageFragment extends Fragment {
                     public void onCompleted() {
 
                     }
+
                     @Override
                     public void onError(Throwable e) {
 
@@ -170,8 +174,8 @@ public class CourseManageFragment extends Fragment {
                     @Override
                     public void onNext(QcBatchResponse qcBatchResponse) {
                         datas.clear();
-                        int pos  = 0;
-                        for (QcBatchResponse.Schedule schedule : (mCourseType == Configs.TYPE_PRIVATE?qcBatchResponse.data.timetables:qcBatchResponse.data.schedules)) {
+                        int pos = 0;
+                        for (QcBatchResponse.Schedule schedule : (mCourseType == Configs.TYPE_PRIVATE ? qcBatchResponse.data.timetables : qcBatchResponse.data.schedules)) {
                             CourseManageBean b = new CourseManageBean();
                             b.month = DateUtils.getDateMonth(DateUtils.formatDateFromServer(schedule.start));
                             b.day = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(schedule.start));
@@ -187,9 +191,13 @@ public class CourseManageFragment extends Fragment {
                             b.id = schedule.id + "";
                             b.length = DateUtils.formatDateFromServer(schedule.end).getTime() - DateUtils.formatDateFromServer(schedule.start).getTime();
                             if (b.outdue)
-                                pos ++;
+                                pos++;
                             datas.add(b);
                         }
+                        if (datas.size() == 0){
+                            noData.setVisibility(View.VISIBLE);
+                        }else
+                            noData.setVisibility(View.GONE);
 //                        courseManagerAdapter = new CourseManagerAdapter(datas);
 //                        recyclerview.setAdapter(courseManagerAdapter);
                         courseManagerAdapter.notifyDataSetChanged();
@@ -216,8 +224,8 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(date)+":00";
-                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(new Date(date.getTime() + datas.get(pos).length))+":00";
+                    batchBean.start = datas.get(pos).day + "T" + DateUtils.getTimeHHMM(date) + ":00";
+                    batchBean.end = datas.get(pos).day + "T" + DateUtils.getTimeHHMM(new Date(date.getTime() + datas.get(pos).length)) + ":00";
 //                    batchBean.end = DateUtils.formatToServer();
                     QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "schedules",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
@@ -252,7 +260,7 @@ public class CourseManageFragment extends Fragment {
                 timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
 
             }
-            timeDialogWindow.setTime(datas.get(pos).start,datas.get(pos).end);
+            timeDialogWindow.setTime(datas.get(pos).start, datas.get(pos).end);
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date start, Date end) {
@@ -269,9 +277,9 @@ public class CourseManageFragment extends Fragment {
                     FixBatchBean batchBean = new FixBatchBean();
                     batchBean.model = mModel;
                     batchBean.id = mId;
-                    batchBean.start =datas.get(pos).day+"T"+DateUtils.getTimeHHMM(start)+":00";
-                    batchBean.end = datas.get(pos).day+"T"+DateUtils.getTimeHHMM(end)+":00";
-                   QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
+                    batchBean.start = datas.get(pos).day + "T" + DateUtils.getTimeHHMM(start) + ":00";
+                    batchBean.end = datas.get(pos).day + "T" + DateUtils.getTimeHHMM(end) + ":00";
+                    QcCloudClient.getApi().postApi.qcFixBatch(App.coachid, datas.get(pos).id, "timetables",
                             batchBean).observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Subscriber<QcResponse>() {
@@ -323,7 +331,7 @@ public class CourseManageFragment extends Fragment {
                                 if (bean.checked)
                                     delCourseManage.ids.add(bean.id);
                             }
-                            QcCloudClient.getApi().postApi.qcDelCourseManage(App.coachid,mCourseType==Configs.TYPE_PRIVATE?"timetables":"schedules", delCourseManage)
+                            QcCloudClient.getApi().postApi.qcDelCourseManage(App.coachid, mCourseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", delCourseManage)
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(new Subscriber<QcResponse>() {

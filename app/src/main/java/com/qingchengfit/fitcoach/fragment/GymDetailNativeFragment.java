@@ -263,7 +263,7 @@ public class GymDetailNativeFragment extends Fragment {
                         ArrayList<ImageThreeTextBean> groupCourse = new ArrayList<>();
 
                         for (ShopCourse course : qcGymDetailResponse.data.shop.courses) {
-                            ImageThreeTextBean bean = new ImageThreeTextBean(course.image_url, course.name, "时长: " + course.length/60 + "min", "累计" + course.course_count + "节,服务" + course.service_count + "人次");
+                            ImageThreeTextBean bean = new ImageThreeTextBean(course.image_url, course.name, "时长: " + course.length/60 + "分钟", "累计" + course.course_count + "节,服务" + course.service_count + "人次");
                             bean.tags.put(ImageThreeTextBean.TAG_MODEL,qcGymDetailResponse.data.service.model);
                             bean.tags.put(ImageThreeTextBean.TAG_ID,qcGymDetailResponse.data.service.id+"");
                             bean.tags.put(ImageThreeTextBean.TAG_COURSE,course.id+"");

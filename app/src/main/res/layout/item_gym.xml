@@ -86,7 +86,6 @@
             tools:text="联系电话:"
             />
 
-
     </LinearLayout>
 
     <ImageView

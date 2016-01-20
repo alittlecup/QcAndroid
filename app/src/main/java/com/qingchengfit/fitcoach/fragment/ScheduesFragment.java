@@ -320,7 +320,7 @@ public class ScheduesFragment extends MainBaseFragment {
             spinnerBeans.add(new SpinnerBean("", "全部日程", true));
             for (int i = 0; i < systems.size(); i++) {
                 QcCoachSystem system = systems.get(i);
-                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id,""));
+                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
                 mSystemsId.add(system.id);
             }
         } else {
@@ -352,7 +352,7 @@ public class ScheduesFragment extends MainBaseFragment {
                                 spinnerBeans.add(new SpinnerBean("", "全部日程", true));
                                 for (int i = 0; i < systems.size(); i++) {
                                     QcCoachSystem system = systems.get(i);
-                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id,""));
+                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
                                     mSystemsId.add(system.id);
                                     if (spinnerBeanArrayAdapter != null) {
                                         spinnerBeanArrayAdapter.notifyDataSetChanged();
@@ -422,14 +422,13 @@ public class ScheduesFragment extends MainBaseFragment {
         StringBuffer sb = new StringBuffer(Configs.Server);
         switch (v) {
             case 1:
-
-                sb.append("mobile/coaches/systems/?action=rest");
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
                 break;
             case 2:
-                sb.append("mobile/coaches/systems/?action=privatelesson");
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
                 break;
             case 3:
-                sb.append("mobile/coaches/systems/?action=grouplesson");
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
                 break;
         }
         Calendar calendar = Calendar.getInstance();
