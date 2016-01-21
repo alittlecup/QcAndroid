@@ -184,7 +184,7 @@ public class DateUtils {
         c.setTime(date);
         int i = c.get(Calendar.DAY_OF_WEEK);
         if (i == 1){
-            return 7;
+            return 6;
         }else return i-2;
     }
 

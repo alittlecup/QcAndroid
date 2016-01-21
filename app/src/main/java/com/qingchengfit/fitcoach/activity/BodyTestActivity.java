@@ -52,7 +52,7 @@ public class BodyTestActivity extends AppCompatActivity {
         } else {
             //添加
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId,mModel,measureId))
+                    .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId,mModel,mModelId))
                     .commit();
         }
 

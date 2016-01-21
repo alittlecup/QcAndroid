@@ -38,10 +38,7 @@ public class User {
     public String hidden_phone;
     @SerializedName("date_of_birth")
     public String date_of_birth;
-   @SerializedName("private_url")
-    public String private_url;
-   @SerializedName("group_url")
-    public String group_url;
+
     @SerializedName("gender")
     public int gender;
 

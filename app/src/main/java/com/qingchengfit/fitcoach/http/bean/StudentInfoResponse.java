@@ -22,5 +22,9 @@ public class StudentInfoResponse extends QcResponse {
     public class Data {
         @SerializedName("user")
         public User user;
+        @SerializedName("private_url")
+        public String private_url;
+        @SerializedName("group_url")
+        public String group_url;
     }
 }
