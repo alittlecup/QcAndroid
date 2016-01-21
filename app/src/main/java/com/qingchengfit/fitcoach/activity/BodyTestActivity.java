@@ -36,7 +36,7 @@ public class BodyTestActivity extends AppCompatActivity {
     private Measure mBodyMeasure;
     private TimeDialogWindow pwTime;
     private Observable<String> mChosepicOb;
-
+    private String mUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class BodyTestActivity extends AppCompatActivity {
         mModel = getIntent().getStringExtra("model");
         mModelId = getIntent().getStringExtra("modelid");
         measureId = getIntent().getStringExtra("id");
+        mUserId = getIntent().getStringExtra("studentid");
         if (getIntent().getIntExtra("type", 0) == 0) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.web_frag_layout,BodyTestFragment.newInstance(measureId))
@@ -52,7 +53,7 @@ public class BodyTestActivity extends AppCompatActivity {
         } else {
             //添加
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId,mModel,mModelId))
+                    .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId,mModel,mModelId,mUserId))
                     .commit();
         }
 
@@ -77,7 +78,7 @@ public class BodyTestActivity extends AppCompatActivity {
     }
     public void goModify(){
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId,mModel,measureId))
+                .replace(R.id.web_frag_layout, ModifyBodyTestFragment.newInstance(measureId,mModel,mModelId,mUserId))
                 .addToBackStack(null)
                 .commit();
     }

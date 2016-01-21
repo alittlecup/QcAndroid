@@ -242,16 +242,22 @@ public class BodyTestFragment extends Fragment {
                     @Override
                     public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
                         initView(qcGetBodyTestResponse.data.measure);
-                        datas = qcGetBodyTestResponse.data.measure.photos;
+                        datas.clear();
+                        if (qcGetBodyTestResponse.data.measure.photos!=null)
+                            datas.addAll( qcGetBodyTestResponse.data.measure.photos);
+
                         imageGridAdapter.refresh(datas);
-                        for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
-                            CommonInputView commonInputView = new CommonInputView(getContext());
-                            commonInputView.setTag(R.id.tag_0, extra.name);
-                            commonInputView.setTag(R.id.tag_1, extra.id);
-                            commonInputView.setTag(R.id.tag_2, extra.unit);
-                            otherData.addView(commonInputView);
-                            commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
-                            commonInputView.setContent(extra.value);
+                        if (qcGetBodyTestResponse.data.measure.extra !=null) {
+
+                            for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
+                                CommonInputView commonInputView = new CommonInputView(getContext());
+                                commonInputView.setTag(R.id.tag_0, extra.name);
+                                commonInputView.setTag(R.id.tag_1, extra.id);
+                                commonInputView.setTag(R.id.tag_2, extra.unit);
+                                otherData.addView(commonInputView);
+                                commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                                commonInputView.setContent(extra.value);
+                            }
                         }
 //                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
 //                            datas.add(new ImageGridBean(photo.photo));
