@@ -13,7 +13,7 @@
                 android:id="@+id/action_add_meeting"
 
                 android:orderInCategory="100"
-                android:title="添加大会认证"
+                android:title="大会"
                 app:showAsAction="always"
                 >
 
@@ -21,7 +21,7 @@
             <item
                 android:id="@+id/action_add_comfirm"
                 android:orderInCategory="100"
-                android:title="添加培训认证"
+                android:title="培训"
                 app:showAsAction="always"
                 >
 
@@ -29,7 +29,7 @@
             <item
                 android:id="@+id/action_add_competition"
                 android:orderInCategory="100"
-                android:title="添加赛事认证"
+                android:title="赛事"
                 app:showAsAction="always"
                 >
 

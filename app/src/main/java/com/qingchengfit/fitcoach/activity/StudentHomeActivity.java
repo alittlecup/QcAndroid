@@ -352,6 +352,7 @@ public class StudentHomeActivity extends BaseAcitivity {
             toAdd.putExtra("type",1);
             toAdd.putExtra("model",mModel);
             toAdd.putExtra("modelid",mModelId);
+            toAdd.putExtra("studentid",mStudentId);
             startActivity(toAdd);
         }
     }

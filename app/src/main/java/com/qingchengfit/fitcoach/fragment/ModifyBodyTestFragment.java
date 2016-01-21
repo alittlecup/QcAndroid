@@ -98,19 +98,20 @@ public class ModifyBodyTestFragment extends Fragment {
     private String mModel;
     private String mModelId;
     private String measureId;
+    private String mStudentId;
     private MaterialDialog delBatchComfirmDialog;
     private MaterialDialog loadingDialog;
 
     /**
-     *
      * @return
      */
-    public static ModifyBodyTestFragment newInstance(String measureid,String model,String modelid) {
+    public static ModifyBodyTestFragment newInstance(String measureid, String model, String modelid,String studentid) {
 
         Bundle args = new Bundle();
-        args.putString("measureid",measureid);
-        args.putString("model",model);
-        args.putString("modelid",modelid);
+        args.putString("measureid", measureid);
+        args.putString("model", model);
+        args.putString("modelid", modelid);
+        args.putString("studentid",studentid);
         ModifyBodyTestFragment fragment = new ModifyBodyTestFragment();
         fragment.setArguments(args);
         return fragment;
@@ -131,6 +132,7 @@ public class ModifyBodyTestFragment extends Fragment {
         measureId = getArguments().getString("measureid");
         mModel = getArguments().getString("model");
         mModelId = getArguments().getString("modelid");
+        mStudentId = getArguments().getString("studentid");
     }
 
     public ModifyBodyTestFragment() {
@@ -157,10 +159,11 @@ public class ModifyBodyTestFragment extends Fragment {
                 return true;
             }
         });
-        if (TextUtils.isEmpty(measureId)){//添加
+        if (TextUtils.isEmpty(measureId)) {//添加
             toolbar.setTitle("添加体测");
+            delete.setVisibility(View.GONE);
             addTest();
-        }else {
+        } else {
             toolbar.setTitle("编辑体测");
             getInfo();
         }
@@ -311,20 +314,24 @@ public class ModifyBodyTestFragment extends Fragment {
                             waistline.setVisibility(View.VISIBLE);
                             waistline.setContent(String.format("%s", mMeasure.waistline));
                         }
-                        for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
-                            CommonInputView commonInputView = new CommonInputView(getContext());
+                        if (qcGetBodyTestResponse.data.measure.extra !=null) {
+                            for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
+                                CommonInputView commonInputView = new CommonInputView(getContext());
 
-                            commonInputView.setTag(R.id.tag_0, extra.name);
-                            commonInputView.setTag(R.id.tag_1, extra.id);
-                            commonInputView.setTag(R.id.tag_2, extra.unit);
-                            otherData.addView(commonInputView);
-                            commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
-                            commonInputView.setContent(extra.value);
+                                commonInputView.setTag(R.id.tag_0, extra.name);
+                                commonInputView.setTag(R.id.tag_1, extra.id);
+                                commonInputView.setTag(R.id.tag_2, extra.unit);
+                                otherData.addView(commonInputView);
+                                commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                                commonInputView.setContent(extra.value);
+                            }
                         }
 //                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
 //                            datas.add(new ImageGridBean(photo.photo));
 //                        }
-                        datas.addAll(qcGetBodyTestResponse.data.measure.photos);
+                        datas.clear();
+                        if (qcGetBodyTestResponse.data.measure.photos != null)
+                            datas.addAll(qcGetBodyTestResponse.data.measure.photos);
                         imageGridAdapter.refresh(datas);
 
                     }
@@ -381,8 +388,6 @@ public class ModifyBodyTestFragment extends Fragment {
     }
 
 
-
-
     @OnClick(R.id.test_date)
     public void onClickDate() {
         chooseDate();
@@ -418,7 +423,7 @@ public class ModifyBodyTestFragment extends Fragment {
     public void chooseDate() {
         if (pwTime == null)
             pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
-        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR), Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR)-10, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
@@ -435,6 +440,7 @@ public class ModifyBodyTestFragment extends Fragment {
         AddBodyTestBean addBodyTestBean = new AddBodyTestBean();
         addBodyTestBean.model = mModel;
         addBodyTestBean.id = mModelId;
+        addBodyTestBean.created_at = testDate.getContent();
         if (!TextUtils.isEmpty(mMeasure.bmi)) {
             addBodyTestBean.bmi = mMeasure.bmi;
         }
@@ -478,6 +484,7 @@ public class ModifyBodyTestFragment extends Fragment {
         addBodyTestBean.extra = new Gson().toJson(extras);
         addBodyTestBean.photos = datas;
         if (!TextUtils.isEmpty(measureId)) {//修改
+            addBodyTestBean.user_id = mStudentId;
             QcCloudClient.getApi().postApi.qcUpdateBodyTest(measureId, addBodyTestBean)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -567,6 +574,7 @@ public class ModifyBodyTestFragment extends Fragment {
 
 
     }
+
     public HashMap<String, String> getParams() {
         HashMap<String, String> params = new HashMap<>();
         params.put("model", mModel);
@@ -585,8 +593,9 @@ public class ModifyBodyTestFragment extends Fragment {
             loadingDialog.setContent(content);
         loadingDialog.show();
     }
-    public void hideLoading(){
-        if (loadingDialog !=null){
+
+    public void hideLoading() {
+        if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
     }

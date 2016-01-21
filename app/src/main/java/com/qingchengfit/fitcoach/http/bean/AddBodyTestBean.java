@@ -34,6 +34,7 @@ public class AddBodyTestBean {
     public String circumference_of_calf;
     public List<Photo> photos;
     public String extra;
+    public String created_at;
 
     public static class Photo implements Parcelable {
         public String photo;
