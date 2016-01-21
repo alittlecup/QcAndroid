@@ -63,7 +63,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -119,7 +118,7 @@ public class ScheduesFragment extends MainBaseFragment {
     private List<Integer> mSystemsId = new ArrayList<>();
     private FragmentAdapter mFragmentAdapter;
     private Observable<NewPushMsg> mObservable;
-    private Observable<RxRefreshList> mObservableReresh;
+    private Observable<String> mObservableReresh;
     private String curModel;
     private String mTitle;
 
@@ -263,23 +262,41 @@ public class ScheduesFragment extends MainBaseFragment {
                         queryNotify();
                     }
                 });
-        mObservableReresh = RxBus.getBus().register(RxRefreshList.class);
-        mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<RxRefreshList>() {
-            @Override
-            public void onCompleted() {
+//        mObservableReresh = RxBus.getBus().register(RxRefreshList.class);
+//        mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<RxRefreshList>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(RxRefreshList rxRefreshList) {
+//                setUpNaviSpinner();
+//            }
+//        });
+        mObservableReresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
+        mObservableReresh.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(RxRefreshList rxRefreshList) {
-                setUpNaviSpinner();
-            }
-        });
+                    @Override
+                    public void onNext(String s) {
+                        mFragmentAdapter.notifyDataSetChanged();
+                    }
+                });
 //        setUpNaviSpinner();
         return view;
     }
