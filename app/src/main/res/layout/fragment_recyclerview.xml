@@ -12,34 +12,6 @@
         android:paddingBottom="50dp"
         >
     </android.support.v7.widget.RecyclerView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-          >
-        <Button
-            android:visibility="gone"
-            android:id="@+id/add1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/qc_item_height"
-            android:text="添加体测信息"
-            android:layout_alignParentBottom="true"
-            android:background="@color/primary"
-            />
 
-        <Button
-            android:visibility="gone"
-            android:id="@+id/add2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/qc_item_height"
-            android:text="添加体测信息"
-            android:layout_alignParentBottom="true"
-            android:background="@color/primary"
-
-            />
-    </LinearLayout>
 
 </RelativeLayout>

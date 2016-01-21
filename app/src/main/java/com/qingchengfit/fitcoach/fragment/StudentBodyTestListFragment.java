@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
@@ -19,9 +18,7 @@ import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * power by
@@ -38,10 +35,10 @@ import butterknife.OnClick;
  */
 public class StudentBodyTestListFragment extends VpFragment {
 
-    @Bind(R.id.add1)
-    Button add1;
-    @Bind(R.id.add2)
-    Button add2;
+//    @Bind(R.id.add1)
+//    Button add1;
+//    @Bind(R.id.add2)
+//    Button add2;
     private List<BodyTestBean> mDataList = new ArrayList<>();
     private SimpleAdapter mAdapter;
     private String model;
@@ -70,8 +67,8 @@ public class StudentBodyTestListFragment extends VpFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         ButterKnife.bind(this, view);
-        add1.setVisibility(View.VISIBLE);
-        add2.setVisibility(View.GONE);
+//        add1.setVisibility(View.VISIBLE);
+//        add2.setVisibility(View.GONE);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SimpleAdapter(mDataList);
@@ -92,14 +89,14 @@ public class StudentBodyTestListFragment extends VpFragment {
 
     }
 
-    @OnClick(R.id.add1)
-    public void addTest(){
-        Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
-        toAdd.putExtra("type",1);
-        toAdd.putExtra("model",model);
-        toAdd.putExtra("modelid",modelid);
-        startActivity(toAdd);
-    }
+//    @OnClick(R.id.add1)
+//    public void addTest(){
+//        Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
+//        toAdd.putExtra("type",1);
+//        toAdd.putExtra("model",model);
+//        toAdd.putExtra("modelid",modelid);
+//        startActivity(toAdd);
+//    }
 
 
     public void setData(List<BodyTestBean> strings) {

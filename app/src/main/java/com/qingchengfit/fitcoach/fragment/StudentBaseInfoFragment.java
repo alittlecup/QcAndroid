@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BaseInfoAdapter;
@@ -16,7 +15,6 @@ import com.qingchengfit.fitcoach.bean.BaseInfoBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -33,10 +31,10 @@ import butterknife.ButterKnife;
  * Created by Paper on 15/11/20 2015.
  */
 public class StudentBaseInfoFragment extends VpFragment {
-    @Bind(R.id.add1)
-    Button add1;
-    @Bind(R.id.add2)
-    Button add2;
+//    @Bind(R.id.add1)
+//    Button add1;
+//    @Bind(R.id.add2)
+//    Button add2;
     private RecyclerView mRecyclerView;
     private BaseInfoAdapter mAdapter;
     private List<BaseInfoBean> datas = new ArrayList<>();

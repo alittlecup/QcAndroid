@@ -600,7 +600,9 @@ public class QcCloudClient {
 
         @DELETE("/api/measures/{measure_id}/")
         rx.Observable<QcResponse> qcDelBodyTest(@Path("measure_id") String id,@QueryMap Map<String, String> params);
-
+        //删除学员
+        @DELETE("/api/students/{id}/")
+        rx.Observable<QcResponse> qcDelStudent(@Path("id") String studentid,@QueryMap Map<String, String> params);
 
     }
 

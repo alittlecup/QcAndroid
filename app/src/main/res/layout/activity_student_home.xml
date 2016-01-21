@@ -146,9 +146,43 @@
                 android:layout_marginTop="50dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 />
+
         </RelativeLayout>
 
 
     </android.support.design.widget.CoordinatorLayout>
     <include layout="@layout/common_toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        >
+        <Button
+
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/add1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/qc_item_height"
+            android:text="添加体测信息"
+            android:layout_alignParentBottom="true"
+            android:background="@color/primary"
+            />
+
+        <Button
+            android:visibility="gone"
+            tools:visibility="visible"
+
+            android:id="@+id/add2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/qc_item_height"
+            android:text="添加体测信息"
+            android:layout_alignParentBottom="true"
+            android:background="@color/primary"
+
+            />
+    </LinearLayout>
 </FrameLayout>
