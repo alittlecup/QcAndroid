@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.Configs;
@@ -39,6 +40,8 @@ public class CourseListFragment extends VpFragment {
     TextView preview;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.no_data)
+    LinearLayout noData;
 
     private ImageThreeTextAdapter mImageTwoTextAdapter;
     private List<ImageThreeTextBean> datas = new ArrayList<>();
@@ -107,7 +110,9 @@ public class CourseListFragment extends VpFragment {
             courseCount.setText(course_count + "节团课");
             preview.setText("会员团课页预览");
         }
-
+        if (datas.size() == 0)
+            noData.setVisibility(View.VISIBLE);
+        else noData.setVisibility(View.GONE);
         mImageTwoTextAdapter = new ImageThreeTextAdapter(datas);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

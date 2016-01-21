@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center_horizontal"
-                android:text="暂无课程安排\n点击按钮添加排期"
+                android:text="暂无课程"
                 />
         </LinearLayout>
     </FrameLayout>
