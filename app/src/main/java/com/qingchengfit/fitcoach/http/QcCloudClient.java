@@ -8,6 +8,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
+import com.qingchengfit.fitcoach.http.bean.AddCoourseResponse;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
@@ -526,7 +527,7 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcClearOneNotification(@Path("id") int id);
 
         @POST("/api/v1/coaches/{id}/courses/")
-        rx.Observable<QcResponse> qcAddCourse(@Path("id") int id,@Body AddCourse addCourse);
+        rx.Observable<AddCoourseResponse> qcAddCourse(@Path("id") int id,@Body AddCourse addCourse);
 
         @PUT("/api/v1/coaches/{id}/courses/")
         rx.Observable<QcResponse> qcEditCourse(@Path("id") int id, @Body AddCourse addCourse);

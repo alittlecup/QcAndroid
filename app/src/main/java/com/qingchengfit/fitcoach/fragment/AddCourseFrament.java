@@ -20,12 +20,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.http.bean.AddCoourseResponse;
 import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -252,7 +255,7 @@ public class AddCourseFrament extends Fragment {
             addSp = QcCloudClient.getApi().postApi.qcAddCourse(App.coachid, new AddCourse(mId, mModel, upName, upImg, upTime, upIsPrivate, upIsPrivate ? null :mUpCapacity))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .subscribe(new Subscriber<QcResponse>() {
+                    .subscribe(new Subscriber<AddCoourseResponse>() {
                         @Override
                         public void onCompleted() {
 
@@ -264,12 +267,17 @@ public class AddCourseFrament extends Fragment {
                         }
 
                         @Override
-                        public void onNext(QcResponse qcResponse) {
+                        public void onNext(AddCoourseResponse qcResponse) {
                             addGymCourseBtn.setEnabled(true);
                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                 //新增成功
-
                                 getActivity().onBackPressed();
+                                ImageThreeTextBean bean = new ImageThreeTextBean(qcResponse.data.course.photo,qcResponse.data.course.name,"时长:"+qcResponse.data.course.length/60+"分钟"
+                                        ,"累计0节,服务0人次");
+                                bean.tags.put(ImageThreeTextBean.TAG_COURSE,qcResponse.data.course.id);
+                                bean.tags.put(ImageThreeTextBean.TAG_COURSETYPE,upIsPrivate? Configs.TYPE_PRIVATE+"":Configs.TYPE_GROUP+"");
+                                bean.tags.put(ImageThreeTextBean.TAG_LENGTH,qcResponse.data.course.length+"");
+                                RxBus.getBus().post(bean);
                                 RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 ToastUtils.show("新增成功");
                             }

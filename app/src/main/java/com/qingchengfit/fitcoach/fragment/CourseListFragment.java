@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,13 +46,14 @@ public class CourseListFragment extends VpFragment {
     private int mGymType = 1;//个人健身房 0是同步健身房
     private int course_count;
     private String toUrl;
+
     /**
      * @param GymType    0是同步健身房 1是个人
      * @param CourseType 1是私教 2是团课
      * @param d
      * @return
      */
-    public static CourseListFragment newInstance(int GymType, int CourseType, ArrayList<ImageThreeTextBean> d,String url) {
+    public static CourseListFragment newInstance(int GymType, int CourseType, ArrayList<ImageThreeTextBean> d, String url) {
 
         Bundle args = new Bundle();
         args.putInt("gymtype", GymType);
@@ -100,9 +100,13 @@ public class CourseListFragment extends VpFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
         ButterKnife.bind(this, view);
-        if (mCourseType == Configs.TYPE_PRIVATE)
+        if (mCourseType == Configs.TYPE_PRIVATE) {
             courseCount.setText(course_count + "节私教课");
-         else   courseCount.setText(course_count + "节团课");
+            preview.setText("会员私教页预览");
+        } else {
+            courseCount.setText(course_count + "节团课");
+            preview.setText("会员团课页预览");
+        }
 
         mImageTwoTextAdapter = new ImageThreeTextAdapter(datas);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -112,7 +116,7 @@ public class CourseListFragment extends VpFragment {
             @Override
             public void onClick(View v) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url",toUrl);
+                toWeb.putExtra("url", toUrl);
                 startActivity(toWeb);
             }
         });
@@ -138,17 +142,13 @@ public class CourseListFragment extends VpFragment {
     }
 
 
-
-
     /**
      * 预约课程 跳转到web页面
      */
-    @OnClick(R.id.preview)
-    public void onPreview() {
-
-    }
-
-
+//    @OnClick(R.id.preview)
+//    public void onPreview() {
+//
+//    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -165,7 +165,7 @@ public class CourseListFragment extends VpFragment {
             } else {
                 return getString(R.string.course_group);
             }
-        }else return "";
+        } else return "";
 
     }
 }

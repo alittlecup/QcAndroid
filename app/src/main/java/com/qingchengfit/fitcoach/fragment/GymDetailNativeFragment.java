@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,7 @@ public class GymDetailNativeFragment extends Fragment {
         });
         toolbar.inflateMenu(R.menu.menu_edit);
         toolbar.setOnMenuItemClickListener(item -> {
-            if (mModel.equals("service") ) {
+            if (mModel.equals("service")) {
                 getFragmentManager().beginTransaction()
                         .add(R.id.web_frag_layout, AddSelfGymFragment.newInstance(App.coachid))
                         .addToBackStack(null)
@@ -174,6 +175,10 @@ public class GymDetailNativeFragment extends Fragment {
 
                     @Override
                     public void onNext(ImageThreeTextBean imageThreeTextBean) {
+                        if (TextUtils.isEmpty(imageThreeTextBean.tags.get(ImageThreeTextBean.TAG_MODEL))) {
+                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_MODEL,mModel);
+                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_ID,mId+"");
+                        }
                         adCourse(CourseDetailFragment.newInstance(imageThreeTextBean));
                     }
                 });
@@ -198,6 +203,26 @@ public class GymDetailNativeFragment extends Fragment {
                         init();
                     }
                 });
+//        mObservableDefault = RxBus.getBus().register(RxBus.BUS_DEFAUT);
+//        mObservableDefault.observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new Subscriber<String>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(String o) {
+//                        toolbar.setTitle(o);
+//
+//                    }
+//                });
         return view;
     }
 

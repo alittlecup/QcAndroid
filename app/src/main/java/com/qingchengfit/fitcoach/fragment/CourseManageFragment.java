@@ -213,7 +213,7 @@ public class CourseManageFragment extends Fragment {
             if (timeWindow == null) {
                 timeWindow = new TimeDialogWindow(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
             }
-            timeWindow.setTime(datas.get(pos).start);
+
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
@@ -253,14 +253,15 @@ public class CourseManageFragment extends Fragment {
 
                 }
             });
-            timeWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
+//            timeWindow.setTime(datas.get(pos).start);
+            timeWindow.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, datas.get(pos).start);
 
         } else {
             if (timeDialogWindow == null) {
                 timeDialogWindow = new TimePeriodChooser(getContext(), TimePopupWindow.Type.HOURS_MINS, 5);
 
             }
-            timeDialogWindow.setTime(datas.get(pos).start, datas.get(pos).end);
+//            timeDialogWindow.setTime(datas.get(pos).start, datas.get(pos).end);
             timeDialogWindow.setOnTimeSelectListener(new TimePeriodChooser.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date start, Date end) {
@@ -306,7 +307,7 @@ public class CourseManageFragment extends Fragment {
 
                 }
             });
-            timeDialogWindow.setTime(new Date(), new Date(System.currentTimeMillis() + DateUtils.HOUR_TIME));
+            timeDialogWindow.setTime(datas.get(pos).start, datas.get(pos).end);
             timeDialogWindow.showAtLocation();
         }
     }

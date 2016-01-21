@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.GymCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChangeTimeActivity;
@@ -287,7 +288,6 @@ public class AddSelfGymFragment extends Fragment {
 //    }
 
 
-
     @OnClick(R.id.addselfgym_comfirm)
     public void onComfirm() {
         if (TextUtils.isEmpty(addselfgymName.getContent())) {
@@ -349,6 +349,7 @@ public class AddSelfGymFragment extends Fragment {
                             if (getActivity() != null) {
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
                                 ToastUtils.show(getString(R.string.common_modify_success));
+                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 getActivity().onBackPressed();
                             }
                         }

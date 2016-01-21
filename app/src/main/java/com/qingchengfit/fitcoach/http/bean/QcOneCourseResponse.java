@@ -34,5 +34,7 @@ public class QcOneCourseResponse extends QcResponse {
         public boolean is_private;
         @SerializedName("capacity")
         public String capacity;
+        @SerializedName("id")
+        public String id;
     }
 }
