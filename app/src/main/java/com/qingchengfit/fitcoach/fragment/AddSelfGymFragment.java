@@ -265,7 +265,8 @@ public class AddSelfGymFragment extends Fragment {
                     return sb.toString();
                 })
                 .subscribe(s -> {
-                    addselfgymName.setContent(reponse.data.system.name);
+                    if (id>0)
+                        addselfgymName.setContent(reponse.data.system.name);
                     addselfgymTime.setContent(s);
                 }, throwable -> {
                 }, () -> {

@@ -88,8 +88,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 114
-        versionName "1.1.4"
+        versionCode 120
+        versionName "1.2.0"
     }
 //    buildTypes {
 //        release {
@@ -220,4 +220,4 @@ dependencies {
     compile 'im.fir:sdk:latest.integration@aar'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     compile 'com.android.support:support-v4:23.1.1'
-}
+} 
