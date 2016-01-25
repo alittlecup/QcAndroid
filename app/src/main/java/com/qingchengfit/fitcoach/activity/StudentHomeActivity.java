@@ -22,6 +22,7 @@ import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
@@ -49,6 +50,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -92,6 +94,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     private int mModelType = 1;
     private String gourpUrl;
     private String privateUrl;
+    private Observable<Object> mObserveRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,25 @@ public class StudentHomeActivity extends BaseAcitivity {
         } else
             getStudentCards();
         getStudentBodyTest();
+
+        mObserveRefresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
+        mObserveRefresh.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Object>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        getStudentBodyTest();
+                    }
+                });
     }
 
     @Override

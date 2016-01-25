@@ -22,6 +22,7 @@ import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.ImageGridAdapter;
 import com.qingchengfit.fitcoach.component.CommonInputView;
@@ -89,6 +90,8 @@ public class ModifyBodyTestFragment extends Fragment {
     TextView delete;
     @Bind(R.id.other_data)
     LinearLayout otherData;
+    @Bind(R.id.photos_title)
+    TextView photosTitle;
     private TimeDialogWindow pwTime;
     private View view;
     private ImageGridAdapter imageGridAdapter;
@@ -105,13 +108,13 @@ public class ModifyBodyTestFragment extends Fragment {
     /**
      * @return
      */
-    public static ModifyBodyTestFragment newInstance(String measureid, String model, String modelid,String studentid) {
+    public static ModifyBodyTestFragment newInstance(String measureid, String model, String modelid, String studentid) {
 
         Bundle args = new Bundle();
         args.putString("measureid", measureid);
         args.putString("model", model);
         args.putString("modelid", modelid);
-        args.putString("studentid",studentid);
+        args.putString("studentid", studentid);
         ModifyBodyTestFragment fragment = new ModifyBodyTestFragment();
         fragment.setArguments(args);
         return fragment;
@@ -162,6 +165,7 @@ public class ModifyBodyTestFragment extends Fragment {
         if (TextUtils.isEmpty(measureId)) {//添加
             toolbar.setTitle("添加体测");
             delete.setVisibility(View.GONE);
+            testDate.setContent(DateUtils.getServerDateDay(new Date()));
             addTest();
         } else {
             toolbar.setTitle("编辑体测");
@@ -314,25 +318,32 @@ public class ModifyBodyTestFragment extends Fragment {
                             waistline.setVisibility(View.VISIBLE);
                             waistline.setContent(String.format("%s", mMeasure.waistline));
                         }
-                        if (qcGetBodyTestResponse.data.measure.extra !=null) {
-                            for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
-                                CommonInputView commonInputView = new CommonInputView(getContext());
+                        if (!mModel.equalsIgnoreCase("service")) {
+                            photosTitle.setVisibility(View.VISIBLE);
+                            if (qcGetBodyTestResponse.data.measure.extra != null) {
+                                for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
+                                    CommonInputView commonInputView = new CommonInputView(getContext());
 
-                                commonInputView.setTag(R.id.tag_0, extra.name);
-                                commonInputView.setTag(R.id.tag_1, extra.id);
-                                commonInputView.setTag(R.id.tag_2, extra.unit);
-                                otherData.addView(commonInputView);
-                                commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
-                                commonInputView.setContent(extra.value);
+                                    commonInputView.setTag(R.id.tag_0, extra.name);
+                                    commonInputView.setTag(R.id.tag_1, extra.id);
+                                    commonInputView.setTag(R.id.tag_2, extra.unit);
+                                    otherData.addView(commonInputView);
+                                    commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                                    commonInputView.setContent(extra.value);
+                                }
                             }
-                        }
 //                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
 //                            datas.add(new ImageGridBean(photo.photo));
 //                        }
-                        datas.clear();
-                        if (qcGetBodyTestResponse.data.measure.photos != null)
-                            datas.addAll(qcGetBodyTestResponse.data.measure.photos);
-                        imageGridAdapter.refresh(datas);
+
+                            if (qcGetBodyTestResponse.data.measure.photos != null)
+                                datas.addAll(qcGetBodyTestResponse.data.measure.photos);
+                            imageGridAdapter.refresh(datas);
+                        }else {
+                            datas.clear();
+                            imageGridAdapter.refresh(datas);
+                            photosTitle.setVisibility(View.GONE);
+                        }
 
                     }
                 });
@@ -373,14 +384,21 @@ public class ModifyBodyTestFragment extends Fragment {
                         hipline.setVisibility(mBase.show_hipline ? View.VISIBLE : View.GONE);
                         waistline.setVisibility(mBase.show_waistline ? View.VISIBLE : View.GONE);
                         weight.setVisibility(mBase.show_weight ? View.VISIBLE : View.GONE);
-                        for (QcBodyTestTemplateRespone.Extra extra : qcBodyTestTemplateRespone.data.template.extra) {
-                            CommonInputView commonInputView = new CommonInputView(getContext());
-                            commonInputView.setTag(R.id.tag_0, extra.name);
-                            commonInputView.setTag(R.id.tag_1, extra.id);
-                            commonInputView.setTag(R.id.tag_2, extra.unit);
-                            otherData.addView(commonInputView);
-                            commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
-                            commonInputView.setContent(extra.value);
+                        if (!mModel.equalsIgnoreCase("service")) {
+                            photosTitle.setVisibility(View.VISIBLE);
+                            for (QcBodyTestTemplateRespone.Extra extra : qcBodyTestTemplateRespone.data.template.extra) {
+                                CommonInputView commonInputView = new CommonInputView(getContext());
+                                commonInputView.setTag(R.id.tag_0, extra.name);
+                                commonInputView.setTag(R.id.tag_1, extra.id);
+                                commonInputView.setTag(R.id.tag_2, extra.unit);
+                                otherData.addView(commonInputView);
+                                commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                                commonInputView.setContent(extra.value);
+                            }
+                        } else {
+                            datas.clear();
+                            imageGridAdapter.refresh(datas);
+                            photosTitle.setVisibility(View.GONE);
                         }
 
                     }
@@ -423,7 +441,7 @@ public class ModifyBodyTestFragment extends Fragment {
     public void chooseDate() {
         if (pwTime == null)
             pwTime = new TimeDialogWindow(getContext(), TimePopupWindow.Type.YEAR_MONTH_DAY);
-        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR)-10, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
@@ -440,7 +458,7 @@ public class ModifyBodyTestFragment extends Fragment {
         AddBodyTestBean addBodyTestBean = new AddBodyTestBean();
         addBodyTestBean.model = mModel;
         addBodyTestBean.id = mModelId;
-        addBodyTestBean.created_at = testDate.getContent();
+        addBodyTestBean.created_at = testDate.getContent()+"T00:00:00";
         if (!TextUtils.isEmpty(mMeasure.bmi)) {
             addBodyTestBean.bmi = mMeasure.bmi;
         }
@@ -471,20 +489,23 @@ public class ModifyBodyTestFragment extends Fragment {
         if (!TextUtils.isEmpty(mMeasure.waistline)) {
             addBodyTestBean.waistline = mMeasure.waistline;
         }
-        List<QcBodyTestTemplateRespone.Extra> extras = new ArrayList<>();
-        for (int i = 0; i < otherData.getChildCount(); i++) {
-            CommonInputView v = (CommonInputView) otherData.getChildAt(i);
-            QcBodyTestTemplateRespone.Extra extra = new QcBodyTestTemplateRespone.Extra();
-            extra.id = (String) v.getTag(R.id.tag_1);
-            extra.unit = (String) v.getTag(R.id.tag_2);
-            extra.name = (String) v.getTag(R.id.tag_0);
-            extra.value = v.getContent();
-            extras.add(extra);
+        if (!mModel.equalsIgnoreCase("service")) {
+            List<QcBodyTestTemplateRespone.Extra> extras = new ArrayList<>();
+            for (int i = 0; i < otherData.getChildCount(); i++) {
+                CommonInputView v = (CommonInputView) otherData.getChildAt(i);
+                QcBodyTestTemplateRespone.Extra extra = new QcBodyTestTemplateRespone.Extra();
+                extra.id = (String) v.getTag(R.id.tag_1);
+                extra.unit = (String) v.getTag(R.id.tag_2);
+                extra.name = (String) v.getTag(R.id.tag_0);
+                extra.value = v.getContent();
+                extras.add(extra);
+            }
+            addBodyTestBean.extra = new Gson().toJson(extras);
+            addBodyTestBean.photos = datas;
         }
-        addBodyTestBean.extra = new Gson().toJson(extras);
-        addBodyTestBean.photos = datas;
+
+        addBodyTestBean.user_id = mStudentId;
         if (!TextUtils.isEmpty(measureId)) {//修改
-            addBodyTestBean.user_id = mStudentId;
             QcCloudClient.getApi().postApi.qcUpdateBodyTest(measureId, addBodyTestBean)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -528,6 +549,7 @@ public class ModifyBodyTestFragment extends Fragment {
                         public void onNext(QcResponse qcResponse) {
                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                 ToastUtils.showDefaultStyle("保存成功");
+                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 getActivity().finish();
                             }
                         }
@@ -564,6 +586,7 @@ public class ModifyBodyTestFragment extends Fragment {
                                     @Override
                                     public void onNext(QcResponse qcResponse) {
                                         ToastUtils.showDefaultStyle("删除成功");
+                                        RxBus.getBus().post(RxBus.BUS_REFRESH);
                                         getActivity().finish();
                                     }
                                 });
