@@ -48,7 +48,7 @@
                     android:id="@+id/bmi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:civ_lable="BMI"
+                    app:civ_lable="BMI(kg/m^2)"
                     app:civ_inputnum="true"
                     android:visibility="gone"
                     />
@@ -127,6 +127,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/photos_title"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:text="体测照片"

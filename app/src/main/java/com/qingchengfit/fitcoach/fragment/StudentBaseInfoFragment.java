@@ -31,10 +31,6 @@ import butterknife.ButterKnife;
  * Created by Paper on 15/11/20 2015.
  */
 public class StudentBaseInfoFragment extends VpFragment {
-//    @Bind(R.id.add1)
-//    Button add1;
-//    @Bind(R.id.add2)
-//    Button add2;
     private RecyclerView mRecyclerView;
     private BaseInfoAdapter mAdapter;
     private List<BaseInfoBean> datas = new ArrayList<>();
