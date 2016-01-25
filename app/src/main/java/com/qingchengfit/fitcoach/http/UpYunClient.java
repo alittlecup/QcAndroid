@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import main.java.com.UpYun;
 
@@ -56,6 +57,37 @@ public class UpYunClient {
             e.printStackTrace();
         }
         return ret;
+    }    /**
+     * @param path   记得带分隔符 eg /header/
+     * @param file
+     * @return
+     */
+    public static String upLoadImg(String path, File file) {
+        UpYun upYun = init();
+        String name = UUID.randomUUID().toString()+".png";
+        boolean ret = false;
+        try {
+
+            upYun.setContentMD5(UpYun.md5(file));
+            LogUtil.e("uploading pic..;");
+            ret = upYun.writeFile(path + name , file, true);
+            LogUtil.e("uploading pic.. done;");
+        } catch (IOException e) {
+            LogUtil.d("upload headerimg err:" + e.getMessage());
+            RevenUtils.sendException("upLoadImg", "UpYunClient", e);
+        } catch (Exception e) {
+            LogUtil.e("upload headerimg eer:" + e.getMessage());
+            e.printStackTrace();
+        }
+        if (ret){
+            LogUtil.e("upyun:"+UPYUNPATH+path+name);
+            return UPYUNPATH+path+name;
+        }
+        else {
+            LogUtil.e("upyun:error");
+
+            return "";
+        }
     }
 
 
@@ -75,6 +107,5 @@ public class UpYunClient {
         String size = info.get("size");
         String date = info.get("date");
     }
-
 
 }

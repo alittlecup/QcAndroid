@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.GymCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChangeTimeActivity;
@@ -263,13 +265,28 @@ public class AddSelfGymFragment extends Fragment {
                     return sb.toString();
                 })
                 .subscribe(s -> {
-                    addselfgymName.setContent(reponse.data.system.name);
+                    if (id>0)
+                        addselfgymName.setContent(reponse.data.system.name);
                     addselfgymTime.setContent(s);
                 }, throwable -> {
                 }, () -> {
                 });
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
+
+
+//    @OnClick(R.id.addselfgym_name)
+//    public void onClickGym(){
+//        Intent toSearch = new Intent(getActivity(), SearchActivity.class);
+//        toSearch.putExtra("type", SearchFragment.TYPE_GYM);
+//        startActivityForResult(toSearch, 10010);
+//    }
 
 
     @OnClick(R.id.addselfgym_comfirm)
@@ -333,6 +350,7 @@ public class AddSelfGymFragment extends Fragment {
                             if (getActivity() != null) {
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
                                 ToastUtils.show(getString(R.string.common_modify_success));
+                                RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 getActivity().onBackPressed();
                             }
                         }
@@ -411,7 +429,7 @@ public class AddSelfGymFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
+        if (requestCode == 222 && resultCode > 0) {
             postPrivateGym.open_time = data.getStringExtra("time");
             Type listType = new TypeToken<ArrayList<QcPrivateGymReponse.OpenTime>>() {
             }.getType();
@@ -427,7 +445,24 @@ public class AddSelfGymFragment extends Fragment {
             }
             addselfgymTime.setContent(sb.toString());
 
+        }else if (requestCode == 10010 && resultCode > 0) {
+            addselfgymName.setContent(data.getStringExtra("username"));
+//            addWorkExperience.setGym_id(data.getIntExtra("id", 0));
+//            boolean isAuth = data.getBooleanExtra("isauth",false);
+//            if (isAuth)
+//                hostQcIdentify.setVisibility(View.VISIBLE);
+//            else hostQcIdentify.setVisibility(View.GONE);
+//            String address = data.getStringExtra("address");
+//            if (TextUtils.isEmpty(address)){
+//                hostAddress.setVisibility(View.GONE);
+//            }else {
+//                hostAddress.setVisibility(View.VISIBLE);
+//                hostAddress.setText(address);
+//            }
+//            Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
+
         }
+
     }
 
     @Override

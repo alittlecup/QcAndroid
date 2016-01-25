@@ -5,14 +5,20 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
+import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
+import com.qingchengfit.fitcoach.http.bean.AddCoourseResponse;
+import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.AddGymPostBean;
+import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
+import com.qingchengfit.fitcoach.http.bean.DelCourseManage;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
+import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
+import com.qingchengfit.fitcoach.http.bean.GetBatchesResponse;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.GetSysSessionBean;
 import com.qingchengfit.fitcoach.http.bean.HidenBean;
@@ -30,19 +36,24 @@ import com.qingchengfit.fitcoach.http.bean.QcAddGymResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAddOrganizationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificateDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
+import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcBatchResponse;
+import com.qingchengfit.fitcoach.http.bean.QcGymDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
+import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
@@ -60,6 +71,7 @@ import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSerachGymRepsonse;
+import com.qingchengfit.fitcoach.http.bean.QcServiceDetialResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
@@ -138,7 +150,7 @@ public class QcCloudClient {
                                 request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
                                         PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
                                 request.addHeader("Cache-Control", "max-age=0");
-                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER + "  OEM:"+App.AppContex.getString(R.string.oem_tag));
+                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER);
                             }
                         }
                 )
@@ -249,7 +261,8 @@ public class QcCloudClient {
 
         //获取通知 分页和不分页接口 ,后者只为拿 未读
         @GET("/api/coaches/{id}/notifications/")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id,@QueryMap HashMap<String, Integer> params);
+        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id, @QueryMap HashMap<String, Integer> params);
+
         @GET("/api/coaches/{id}/notifications/")
         rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id);
 
@@ -272,9 +285,11 @@ public class QcCloudClient {
         //获取工作经验列表
         @GET("/api/coaches/{id}/experiences/")
         rx.Observable<QcExperienceResponse> qcGetExperiences(@Path("id") int id);
+
         //获取单条工作经验
         @GET("/api/experiences/{id}/")
         rx.Observable<OneExperienceResponse> qcGetExperience(@Path("id") int id);
+
         //获取认证列表
         @GET("/api/certificates/{id}/")
         rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
@@ -300,32 +315,51 @@ public class QcCloudClient {
         rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
 
         //获取教练日程
+        @Deprecated
         @GET("/api/coaches/{id}/schedules/")
         rx.Observable<QcSchedulesResponse> qcGetCoachSchedule(@Path("id") int id, @QueryMap Map<String, String> params);
 
+        @GET("/api/v1/coaches/{id}/schedules/")
+        rx.Observable<QcSchedulesResponse> qcGetCoachScheduleV1(@Path("id") int id, @QueryMap Map<String, String> params);
+
+
         //获取教练预约概览
-        @GET("/api/coaches/{id}/schedules/reports/glance/")
+        @GET("/api/v1/coaches/{id}/reports/schedules/glance/")
         rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
 
         //获取教练预约概览
-        @GET("/api/coaches/{id}/sale/reports/glance/")
+        @GET("/api/v1/coaches/{id}/reports/sale/glance/")
         rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
 
         //获取教练系统
+        @Deprecated
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcCoachSystemResponse> qcGetCoachSystem(@Path("id") int id);
+
+        //获取教练系统
+        @GET("/api/v1/coaches/{id}/services/")
+        rx.Observable<QcCoachServiceResponse> qcGetCoachService(@Path("id") int id);
+
 
         //获取教练系统
         @GET("/api/coaches/{id}/systems/detail/")
         rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
 
-        //获取教练报表强详情
-        @GET("/api/coaches/{id}/systems/report/schedules/")
+
+        //获取教练报表详情
+        @GET("/api/v1/coaches/{id}/reports/schedules/")
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+
+        @GET("/api/v1/services/detail/")
+        rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String, String> params);
 
         //获取教练销售详情
         @GET("/api/coaches/{id}/systems/report/sale/")
         rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+
+        //获取教练销售 充值卡信息
+        @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/")
+        rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
 
 
         //获取教练课程
@@ -338,7 +372,7 @@ public class QcCloudClient {
         rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id, @QueryMap Map<String, String> params);
 
         //获取教练所有学员
-        @GET("/api/coaches/{id}/users/")
+        @GET("/api/v1/coaches/{id}/students/")
         rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
 
         //获取所有课程计划
@@ -360,9 +394,22 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/personal/system/")
         rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
 
+        @GET("/api/v1/coaches/{id}/shop/")
+        rx.Observable<QcGymDetailResponse> qcGetGymDetail(@Path("id") int id, @QueryMap Map<String, String> params);
+
         @GET("/api/meetings/")
         rx.Observable<QcMeetingResponse> qcGetMeetingList();
 
+        //所有的团课排期
+        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/")
+        rx.Observable<QcBatchResponse> qcGetGroupManageDetail(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@Path("schedules") String schedules,@QueryMap Map<String, String> params);
+
+        //排期列表
+        @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/batches/")
+        rx.Observable<GetBatchesResponse> qcGetGroupManage(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
+
+        @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/")
+        rx.Observable<QcOneCourseResponse> qcGetOneCourse(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
     }
 
 
@@ -422,8 +469,9 @@ public class QcCloudClient {
         //修改工作经验
         @PUT("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
+
         @POST("/api/experiences/{id}/hidden/")
-        rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id,@Body HidenBean hidenBean);
+        rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id, @Body HidenBean hidenBean);
 
         //删除工作经验
         @DELETE("/api/experiences/{id}/")
@@ -468,7 +516,7 @@ public class QcCloudClient {
 
         //百度pushid绑定
         @POST("/api/coaches/{id}/push/update/")
-        rx.Observable<QcResponse> qcPostPushId(@Path("id") int id,@Body PushBody body);
+        rx.Observable<QcResponse> qcPostPushId(@Path("id") int id, @Body PushBody body);
 
         //清除notification
         @POST("/api/coaches/{id}/notifications/clear/")
@@ -478,7 +526,40 @@ public class QcCloudClient {
         @POST("/api/notifications/{id}/clear/")
         rx.Observable<QcResponse> qcClearOneNotification(@Path("id") int id);
 
+        @POST("/api/v1/coaches/{id}/courses/")
+        rx.Observable<AddCoourseResponse> qcAddCourse(@Path("id") int id,@Body AddCourse addCourse);
 
+        @PUT("/api/v1/coaches/{id}/courses/")
+        rx.Observable<QcResponse> qcEditCourse(@Path("id") int id, @Body AddCourse addCourse);
+
+        @DELETE("/api/v1/coaches/{id}/courses/")
+        rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
+
+        @POST("/api/v1/coaches/{id}/students/add/")
+        rx.Observable<QcResponse> qcAddStudent(@Path("id") int id,@Body AddStudentBean StudentBean);
+
+        @POST("/api/v1/coaches/{id}/students/add/")
+        rx.Observable<QcResponse> qcAddStudents(@Path("id") int id,@Body PostStudents addStudentBeans);
+
+        //批量排课
+        @POST("/api/v1/coaches/{id}/schedules/batches/")
+        rx.Observable<QcResponse> qcAddCourseManage(@Path("id") int id,@Body AddBatchCourse addBatchCourse);
+
+        @POST("/api/v1/coaches/{id}/{schedules}/bulk/delete/")
+        rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,@Path("schedules") String schedules,@Body DelCourseManage delCourseManage);
+
+        @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/")
+        rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@QueryMap HashMap<String,String> params);
+        //修改单挑排期
+        /**
+         *
+         * @param coach_id
+         * @param schedule_id
+         * @param schedules  私教 timetables
+         * @return
+         */
+        @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/")
+        rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,@Path("schedule_id") String schedule_id,@Path("schedules") String schedules,@Body FixBatchBean batchBean);
 
     }
 

@@ -210,7 +210,8 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         TextView itemGymPhonenum;
         @Bind(R.id.qc_identify)
         ImageView itemIsPersonal;
-
+        @Bind(R.id.item_gym_brand)
+        TextView itemItemBrand;
         public GymsVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -245,7 +246,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
             QcAllCoursePlanResponse.Plan detail = datas.get(position);
-
+            holder.itemItemBrand.setVisibility(View.GONE);
             holder.itemGymName.setText(detail.name);
             StringBuffer sb = new StringBuffer();
             for (String s : detail.tags) {

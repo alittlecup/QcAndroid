@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+              android:background="@color/backgroud_grey"
               tools:context="com.qingchengfit.fitcoach.fragment.AddSelfGymFragment">
 
     <include layout="@layout/common_toolbar">
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         app:civ_clickable="true"
         app:civ_lable="营业时间"
+        android:visibility="gone"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 

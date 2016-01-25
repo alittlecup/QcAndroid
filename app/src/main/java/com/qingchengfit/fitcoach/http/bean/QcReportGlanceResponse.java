@@ -24,8 +24,15 @@ public class QcReportGlanceResponse extends QcResponse {
     public ReportData data;
 
     public static class ReportData {
-        @SerializedName("systems")
-        public List<System> systems;
+        @SerializedName("services")
+        public List<glanceservice> services;
+    }
+
+    public static class glanceservice{
+        @SerializedName("service")
+        public CoachService service;
+        @SerializedName("stat")
+        public System stat;
     }
 
     public static class System {
@@ -35,8 +42,6 @@ public class QcReportGlanceResponse extends QcResponse {
         public UseData today;
         @SerializedName("month")
         public UseData month;
-        @SerializedName("system")
-        public QcCoachSystem system;
     }
 
 

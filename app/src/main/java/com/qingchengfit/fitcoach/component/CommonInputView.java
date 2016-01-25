@@ -89,9 +89,10 @@ public class CommonInputView extends RelativeLayout {
             edit.setClickable(true);
             setOnClickListener(v -> {
                 edit.setClickable(true);
-                edit.performClick();
-                AppUtils.showKeyboard(getContext(), edit);
                 edit.requestFocus();
+//                edit.performClick();
+                AppUtils.showKeyboard(getContext(), edit);
+//
             });
         }
         if (showDivier){

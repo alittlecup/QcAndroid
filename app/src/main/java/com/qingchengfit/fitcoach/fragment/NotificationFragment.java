@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,10 +104,12 @@ public class NotificationFragment extends BaseSettingFragment {
             QcCloudClient.getApi().postApi.qcClearOneNotification(adapter.datas.get(pos).getId()).subscribeOn(Schedulers.io())
                     .subscribe();
             adapter.datas.get(pos).setIs_read(true);
-            Intent toWeb = new Intent(getContext(),WebActivity.class);
-            toWeb.putExtra("url",adapter.datas.get(pos).getUrl());
+            if (!TextUtils.isEmpty(adapter.datas.get(pos).getUrl())) {
+                Intent toWeb = new Intent(getContext(), WebActivity.class);
+                toWeb.putExtra("url", adapter.datas.get(pos).getUrl());
 
-            startActivity(toWeb);
+                startActivity(toWeb);
+            }
 //            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
 //            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
         });
@@ -286,6 +289,8 @@ public class NotificationFragment extends BaseSettingFragment {
         TextView itemNotiSender;
         @Bind(R.id.item_noti_desc)
         TextView itemDesc;
+        @Bind(R.id.icon_right)
+        ImageView iconRight;
         public NotifiVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -321,6 +326,9 @@ public class NotificationFragment extends BaseSettingFragment {
         public void onBindViewHolder(NotifiVH holder, int position) {
             holder.itemView.setTag(position);
             QcNotificationResponse.DataEntity.MsgsEntity entity = datas.get(position);
+            if (TextUtils.isEmpty(entity.getUrl()))
+                holder.iconRight.setVisibility(View.GONE);
+            else holder.iconRight.setVisibility(View.VISIBLE);
             holder.itemNotiTitle.setText(entity.getTitle());
             holder.itemNotiTime.setText(entity.getCreated_at().replace("T", " "));
             holder.itemNotiSender.setText(entity.getSender());

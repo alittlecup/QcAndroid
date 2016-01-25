@@ -10,11 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,8 +24,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.SaleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.SaleBean;
-import com.qingchengfit.fitcoach.bean.SpinnerBean;
-import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
@@ -81,6 +77,8 @@ public class SaleDetailFragment extends Fragment {
     Button statementDetailChange;
     @Bind(R.id.statement_detail_filter)
     TextView statementDetailFilter;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<SaleBean> statementBeans = new ArrayList<>();
@@ -92,8 +90,8 @@ public class SaleDetailFragment extends Fragment {
     /**
      * 初始化 spinner
      */
-    private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
-    private ArrayList<SpinnerBean> spinnerBeans;
+//    private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
+//    private ArrayList<SpinnerBean> spinnerBeans;
     private int curSystemId = 0;
     /**
      * 报表参数
@@ -158,6 +156,7 @@ public class SaleDetailFragment extends Fragment {
         }
         curCalendar = Calendar.getInstance();
         start = DateUtils.getServerDateDay(new Date());
+
         switch (mDividerType) {
             case 0:
                 end = start;
@@ -192,7 +191,6 @@ public class SaleDetailFragment extends Fragment {
         });
         ButterKnife.bind(this, view);
         setupToolbar();
-        setUpNaviSpinner();
         mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(mStatementDetailAdapter);
@@ -213,6 +211,7 @@ public class SaleDetailFragment extends Fragment {
             statementDetailMore.setVisibility(View.VISIBLE);
             statementDetailFilter.setVisibility(View.GONE);
         }
+
         statementDetailMore.setEnabled(false);
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -228,6 +227,13 @@ public class SaleDetailFragment extends Fragment {
                 freshData();
             }
         });
+        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                freshData();
+            }
+        });
         return view;
     }
 
@@ -237,56 +243,58 @@ public class SaleDetailFragment extends Fragment {
     public void setupToolbar() {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        toolbar.setTitle("销售报表");
+        toolbarTitle.setVisibility(View.GONE);
     }
 
-    public void setUpNaviSpinner() {
-        spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "全部销售报表", true));
-        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-                }
-                ((TextView) convertView).setText(spinnerBeans.get(position).text);
-                return convertView;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-                }
-                SpinnerBean bean = getItem(position);
-                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-                if (bean.isTitle) {
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-                } else {
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-                }
-                return convertView;
-            }
-        };
-        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
-        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
-                showData();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        freshData();
-
-    }
+//    public void setUpNaviSpinner() {
+//        spinnerBeans = new ArrayList<>();
+//        spinnerBeans.add(new SpinnerBean("", "全部销售报表", true));
+//        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+//                }
+//                ((TextView) convertView).setText(spinnerBeans.get(position).text);
+//                return convertView;
+//            }
+//
+//            @Override
+//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+//                }
+//                SpinnerBean bean = getItem(position);
+//                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+//                if (bean.isTitle) {
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
+//                } else {
+//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+//                }
+//                return convertView;
+//            }
+//        };
+//        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+//        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
+//        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
+//                showData();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        freshData();
+//
+//    }
 
     public void freshData() {
         //获取用户拥有系统信息
@@ -294,18 +302,15 @@ public class SaleDetailFragment extends Fragment {
                 .subscribe(qcCoachSystemResponse -> {
                     List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
                     mSystemsId.clear();
-                    spinnerBeans.clear();
-                    spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
                     for (int i = 0; i < systems.size(); i++) {
                         QcCoachSystem system = systems.get(i);
-                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
                         mSystemsId.add(system.id);
                     }
-                    getActivity().runOnUiThread(spinnerBeanArrayAdapter::notifyDataSetChanged);
                     queryStatement();
                 }, throwable -> {
                 }, () -> {
                 });
+//        queryStatement();
     }
 
     private void queryStatement() {
@@ -429,8 +434,8 @@ public class SaleDetailFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-
-        loadingDialog.dismiss();
+        if (loadingDialog!=null)
+            loadingDialog.dismiss();
         ButterKnife.unbind(this);
         super.onDestroyView();
 

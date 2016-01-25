@@ -9,7 +9,9 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
 import com.qingchengfit.fitcoach.fragment.AddSelfGymFragment;
 import com.qingchengfit.fitcoach.fragment.AddSelfNotiFragment;
+import com.qingchengfit.fitcoach.fragment.AddStudentManulkFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailFragment;
+import com.qingchengfit.fitcoach.fragment.GymDetailNativeFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 
@@ -60,6 +62,15 @@ public class FragActivity extends BaseAcitivity {
                 String host = getIntent().getStringExtra("host");
                 boolean isPrivate = getIntent().getBooleanExtra("isPrivate", false);
                 fragment = GymDetailFragment.newInstance(id, host, isPrivate);
+                break;
+            case 6:
+                long gymid = getIntent().getLongExtra("id", 1l);
+                String isPrivategym = getIntent().getStringExtra("model");
+                fragment = GymDetailNativeFragment.newInstance(gymid,isPrivategym);
+                break;
+            case 7:
+                fragment = AddStudentManulkFragment.newInstance();
+                break;
             default:
                 break;
         }

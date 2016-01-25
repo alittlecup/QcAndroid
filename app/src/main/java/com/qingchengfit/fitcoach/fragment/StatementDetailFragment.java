@@ -1,18 +1,20 @@
 package com.qingchengfit.fitcoach.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,17 +25,17 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.SpinnerBean;
+import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.bean.StatementBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
 
@@ -101,21 +103,22 @@ public class StatementDetailFragment extends Fragment {
     Button statementDetailChange;
     @Bind(R.id.statement_detail_filter)
     TextView statementDetailFilter;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<StatementBean> statementBeans = new ArrayList<>();
-    private List<Integer> mSystemsId = new ArrayList<>();
-    private HashMap<Integer, Integer> mCourseNum = new HashMap<>();
-    private HashMap<Integer, Integer> mOrderNum = new HashMap<>();
-    private HashMap<Integer, Integer> mServerNum = new HashMap<>();
-    private HashMap<Integer, List<StatementBean>> mAllStatemet = new HashMap<>();
+    private List<Pair<Integer, String>> mSystemsId = new ArrayList<>();
+    private HashMap<Pair<Integer,String>, Integer> mCourseNum = new HashMap<>();
+    private HashMap<Pair<Integer,String>, Integer> mOrderNum = new HashMap<>();
+    private HashMap<Pair<Integer,String>, Integer> mServerNum = new HashMap<>();
+    private HashMap<Pair<Integer,String>, List<StatementBean>> mAllStatemet = new HashMap<>();
 
     /**
      * 初始化 spinner
      */
-    private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
-    private ArrayList<SpinnerBean> spinnerBeans;
-    private int curSystemId = 0;
+    private int curSystemId = 0;    //当前健身房id
+
     /**
      * 报表参数
      */
@@ -129,6 +132,8 @@ public class StatementDetailFragment extends Fragment {
     private MaterialDialog loadingDialog;
     private String user_name;
     private String course_name;
+    private String mTitle;
+    private String curModel;
 
     public StatementDetailFragment() {
 
@@ -143,7 +148,7 @@ public class StatementDetailFragment extends Fragment {
         return fragment;
     }
 
-    public static StatementDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int userId, int courseId, String userName, String courseName) {
+    public static StatementDetailFragment newInstance(int type, String starttime, String endtime,String model, int sysId, int userId, int courseId, String userName, String courseName) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putString("start", starttime);
@@ -153,6 +158,7 @@ public class StatementDetailFragment extends Fragment {
         args.putInt("user", userId);
         args.putString("userName", userName);
         args.putString("courseName", courseName);
+        args.putString("model", model);
 
         StatementDetailFragment fragment = new StatementDetailFragment();
         fragment.setArguments(args);
@@ -203,6 +209,7 @@ public class StatementDetailFragment extends Fragment {
                 user_id = getArguments().getInt("user");
                 user_name = getArguments().getString("userName");
                 course_name = getArguments().getString("courseName");
+                curModel = getArguments().getString("model");
             default:
                 break;
         }
@@ -215,7 +222,22 @@ public class StatementDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_statement_detail, container, false);
         ButterKnife.bind(this, view);
         setupToolbar();
-        setUpNaviSpinner();
+//        setUpNaviSpinner();
+        mTitle = getString(R.string.statement_course);
+        toolbarTitle.setText(mTitle);
+
+
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
+                choosegym.putExtra("model", curModel);
+                choosegym.putExtra("id", curSystemId);
+                choosegym.putExtra("title", mTitle);
+                startActivityForResult(choosegym, 501);
+            }
+        });
+
         mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(mStatementDetailAdapter);
@@ -257,6 +279,14 @@ public class StatementDetailFragment extends Fragment {
                 return true;
             }
         });
+        recyclerview.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                recyclerview.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                refresh.setRefreshing(true);
+                freshDate();
+            }
+        });
         return view;
     }
 
@@ -268,69 +298,87 @@ public class StatementDetailFragment extends Fragment {
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
     }
 
-    public void setUpNaviSpinner() {
-        spinnerBeans = new ArrayList<>();
-        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
-        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-                }
-                ((TextView) convertView).setText(spinnerBeans.get(position).text);
-                return convertView;
-            }
+//    public void setUpNaviSpinner() {
+//        spinnerBeans = new ArrayList<>();
+//        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
+//        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+//                }
+//                ((TextView) convertView).setText(spinnerBeans.get(position).text);
+//                return convertView;
+//            }
+//
+//            @Override
+//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+//                }
+//                SpinnerBean bean = getItem(position);
+//                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+//                if (bean.isTitle) {
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
+//                } else {
+//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+//                }
+//                return convertView;
+//            }
+//        };
+//        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+//        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
+//        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
+//                showData();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//
+//        freshDate();
+//    }
 
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-                }
-                SpinnerBean bean = getItem(position);
-                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-                if (bean.isTitle) {
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-                } else {
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-                }
-                return convertView;
-            }
-        };
-        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
-        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
-                showData();
-            }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode > 0 && requestCode == 501) {
+            toolbarTitle.setText(data.getStringExtra("name"));
+            curModel = data.getStringExtra("model");
+            curSystemId = Integer.parseInt(data.getStringExtra("id"));
+            LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
+//            handleReponse(response);  TODO
+            showData();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        freshDate();
+        }
     }
+
 
     public void freshDate() {
         //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
                 .subscribe(qcCoachSystemResponse -> {
-                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+                    List<CoachService> systems = qcCoachSystemResponse.data.services;
                     mSystemsId.clear();
-                    spinnerBeans.clear();
-                    spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
                     for (int i = 0; i < systems.size(); i++) {
-                        QcCoachSystem system = systems.get(i);
-                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
-                        mSystemsId.add(system.id);
+                        CoachService system = systems.get(i);
+                        if (curSystemId == system.id && curModel.equals(system.model)){
+                            if (!TextUtils.isEmpty(curModel) && curSystemId != 0){
+                                toolbar.setTitle(system.name);
+                            }
+                        }
+                        mSystemsId.add(new Pair<Integer, String>((int) system.id, system.model));
                     }
-                    getActivity().runOnUiThread(spinnerBeanArrayAdapter::notifyDataSetChanged);
                     queryStatement();
                 }, throwable -> {
                 }, () -> {
@@ -352,18 +400,22 @@ public class StatementDetailFragment extends Fragment {
         Observable.from(mSystemsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Func1<Integer, Observable<Boolean>>() {
+                .flatMap(new Func1<Pair<Integer, String>, Observable<Boolean>>() {
                     @Override
-                    public Observable<Boolean> call(Integer integer) {
-                        return QcCloudClient.getApi().getApi.qcGetStatementDatail(App.coachid, getParams(integer))
+                    public Observable<Boolean> call(Pair<Integer, String> integerStringPair) {
+                        return QcCloudClient.getApi().getApi.qcGetStatementDatail(App.coachid, getParams(integerStringPair))
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(qcStatementDetailRespone -> {
-                                    if (qcStatementDetailRespone.data.stat != null) {
-                                        mCourseNum.put(integer, qcStatementDetailRespone.data.stat.course_count);
-                                        mOrderNum.put(integer, qcStatementDetailRespone.data.stat.order_count);
-                                        mServerNum.put(integer, qcStatementDetailRespone.data.stat.user_count);
+                                    if (qcStatementDetailRespone.data.schedules != null &&
+                                            qcStatementDetailRespone.data.schedules.stat != null) {
+                                        mCourseNum.put(integerStringPair, qcStatementDetailRespone.data.schedules.stat.course_count);
+                                        mOrderNum.put(integerStringPair, qcStatementDetailRespone.data.schedules.stat.order_count);
+                                        mServerNum.put(integerStringPair, qcStatementDetailRespone.data.schedules.stat.user_count);
                                     }
-                                    List<QcScheduleBean> beans = qcStatementDetailRespone.data.schedules;
+                                    List<QcScheduleBean> beans = null;
+                                    if (qcStatementDetailRespone.data.schedules != null) {
+                                        beans = qcStatementDetailRespone.data.schedules.schedules;
+                                    }
                                     List<StatementBean> statementBeans = new ArrayList<StatementBean>();
                                     if (beans != null) {
                                         for (int i = 0; i < beans.size(); i++) {
@@ -379,10 +431,9 @@ public class StatementDetailFragment extends Fragment {
                                             statementBeans.add(bean);
                                         }
                                     }
-                                    mAllStatemet.put(integer, statementBeans);
+                                    mAllStatemet.put(integerStringPair, statementBeans);
                                     return Observable.just(true);
                                 });
-
 
                     }
                 })
@@ -419,8 +470,8 @@ public class StatementDetailFragment extends Fragment {
         int serverC = 0;
         int courseC = 0;
         statementBeans.clear();
-        for (Integer key : mAllStatemet.keySet()) {
-            if (curSystemId != 0 && curSystemId != key)
+        for (Pair<Integer,String> key : mAllStatemet.keySet()) {
+            if (curSystemId != 0 && (curSystemId != key.first || !curModel.equals(key.second)))
                 continue;
             if (mOrderNum.get(key) != null)
                 orderC += mOrderNum.get(key);
@@ -455,11 +506,13 @@ public class StatementDetailFragment extends Fragment {
             });
     }
 
-    private HashMap<String, String> getParams(int system_id) {
+    private HashMap<String, String> getParams(Pair<Integer, String> system_id) {
         HashMap<String, String> params = new HashMap<>();
         params.put("start", start);
         params.put("end", end);
-        params.put("system_id", Integer.toString(system_id));
+        params.put("id", Integer.toString(system_id.first));
+        params.put("model", system_id.second);
+
         if (course_id != 0)
             params.put("course_id", Integer.toString(course_id));
         if (user_id != 0)
@@ -469,7 +522,8 @@ public class StatementDetailFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        loadingDialog.dismiss();
+        if (loadingDialog != null)
+            loadingDialog.dismiss();
         ButterKnife.unbind(this);
         super.onDestroyView();
 

@@ -40,7 +40,7 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
     private View rootView; // 总的布局
     private View btnSubmit, btnCancel;
     private OnTimeSelectListener timeSelectListener;
-
+    private  int interval = 1;
     public TimePeriodChooser(Context context, TimePopupWindow.Type type) {
         super(context, R.style.ChoosePicDialogStyle);
 //        this.setWidth(LayoutParams.FILL_PARENT);
@@ -82,6 +82,47 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
 
         setContentView(rootView);
     }
+    public TimePeriodChooser(Context context, TimePopupWindow.Type type,int interval) {
+        super(context, R.style.ChoosePicDialogStyle);
+//        this.setWidth(LayoutParams.FILL_PARENT);
+//        this.setHeight(LayoutParams.WRAP_CONTENT);
+//        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
+//        this.setOutsideTouchable(true);
+//        this.setAnimationStyle(R.style.timepopwindow_anim_style);
+
+        LayoutInflater mLayoutInflater = LayoutInflater.from(context);
+        rootView = mLayoutInflater.inflate(R.layout.pw_time_period, null);
+        // -----确定和取消按钮
+        btnSubmit = rootView.findViewById(R.id.btnSubmit);
+        btnSubmit.setTag(TAG_SUBMIT);
+        btnCancel = rootView.findViewById(R.id.btnCancel);
+        btnCancel.setTag(TAG_CANCEL);
+        btnSubmit.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+        // ----时间转轮
+        final View timepickerviewstart = rootView.findViewById(R.id.timepicker_start);
+        ScreenInfo screenInfo1 = new ScreenInfo((Activity) context);
+        wheelTime_start = new WheelTime(timepickerviewstart, TimePopupWindow.Type.HOURS_MINS);
+        wheelTime_start.screenheight = screenInfo1.getHeight();
+        // ----时间转轮
+        final View timepickerviewend = rootView.findViewById(R.id.timepicker_end);
+        ScreenInfo screenInfo2 = new ScreenInfo((Activity) context);
+        wheelTime_end = new WheelTime(timepickerviewend, TimePopupWindow.Type.HOURS_MINS);
+        wheelTime_end.screenheight = screenInfo1.getHeight();
+        this.interval = interval;
+        //默认选中当前时间
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        wheelTime_start.setPicker(year, month, day, hours, minute,interval);
+        wheelTime_end.setPicker(year, month, day, hours, minute,interval);
+
+        setContentView(rootView);
+    }
 
     /**
      * 设置可以选择的时间范围
@@ -110,7 +151,7 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        wheelTime_start.setPicker(year, month, day, hours, minute);
+        wheelTime_start.setPicker(year, month, day, hours, minute,interval);
         Calendar calendar1 = Calendar.getInstance();
         if (end == null)
             calendar.setTimeInMillis(System.currentTimeMillis());
@@ -121,7 +162,7 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         int day1 = calendar.get(Calendar.DAY_OF_MONTH);
         int hours1 = calendar.get(Calendar.HOUR_OF_DAY);
         int minute1 = calendar.get(Calendar.MINUTE);
-        wheelTime_end.setPicker(year1, month1, day1, hours1, minute1);
+        wheelTime_end.setPicker(year1, month1, day1, hours1, minute1,interval);
     }
 
     /**

@@ -1,0 +1,133 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <LinearLayout
+        android:id="@+id/rootview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/backgroud_grey"
+        tools:context="com.qingchengfit.fitcoach.fragment.AddCourseManageFragment">
+        <include layout="@layout/common_toolbar"/>
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/starttime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:civ_lable="@string/start_time"
+            app:civ_clickable="true"
+            />
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/endtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:civ_lable="@string/end_time"
+            app:civ_clickable="true"
+            app:civ_showdivier="false"
+            />
+        <include layout="@layout/divider_grey"/>
+        <include layout="@layout/divider_grey_margin"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/qc_item_height"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/add_default"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@color/white"-->
+            <!--android:paddingRight="@dimen/qc_item_height"-->
+            <!-->-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/layout1"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                <!-->-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/text1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:text="选择星期"-->
+                    <!--/>-->
+
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/divider_grey"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/layout2"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                <!-->-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/text2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--tools:text="选择时间"-->
+                    <!--/>-->
+
+
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/divider_grey"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+
+
+        <!--</LinearLayout>-->
+
+        <TextView
+            android:id="@+id/add"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:text="+课程周期"
+            android:textColor="@color/primary"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            />
+        <include layout="@layout/divider_grey" />
+        <Button
+            android:id="@+id/comfirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:text="@string/login_comfirm"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            />
+    </LinearLayout>
+
+
+
+</ScrollView>

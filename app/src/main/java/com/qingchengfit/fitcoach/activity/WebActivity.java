@@ -19,8 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.paper.paperbaselibrary.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.BitmapUtils;
@@ -108,7 +108,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mNoNetwork.setVisibility(View.GONE);
                 mWebviewWebView.reload();
             }
         });
@@ -272,9 +272,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 mToolbar.setTitle(title);
-                if (!TextUtils.isEmpty(title)) {
-                    mNoNetwork.setVisibility(View.GONE);
-                }
+
             }
 
         });
@@ -293,14 +291,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             @Override
             public void onPageFinished(WebView view, String url) {
                 mRefreshSwipeRefreshLayout.setRefreshing(false);
-                mWebviewWebView.setVisibility(View.VISIBLE);
                 super.onPageFinished(view, url);
 
             }
 
             @Override
             public void onLoadResource(WebView view, String url) {
-
                 super.onLoadResource(view, url);
             }
 
@@ -311,7 +307,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
                     mToobarActionTextView.setText("");
-
                     mToobarActionTextView.setVisibility(View.GONE);
                     URI uri = null;
                     try {
@@ -384,7 +379,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
      */
     private void showNoNet() {
         mNoNetwork.setVisibility(View.VISIBLE);
-        mWebviewWebView.setVisibility(View.GONE);
     }
 
     private void initWebSetting() {
@@ -421,15 +415,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 URI uri = new URI(url);
                 if (!hostArray.contains(uri.getHost())) {
                     hostArray.add(uri.getHost());
-
-                } else {
-                    LogUtil.e("host contains" + cookieManager.getCookie(uri.getHost()));
+                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                    setCookie(uri.getHost(), "qc_session_id", sessionid);
+                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                 }
-                LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
-                setCookie(uri.getHost(), "qc_session_id", sessionid);
-                LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
             } catch (URISyntaxException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             setCookie(Configs.ServerIp, "sessionid", sessionid);
 //            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
@@ -440,7 +431,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 //            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
             //TODO logout
-            LogUtil.e("session == null");
         }
     }
 
@@ -519,11 +509,13 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     }
 
     public void removeCookies() {
+
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
-//        for (String string : hostArray) {
-//            if (cookieManager != null)
-//                cookieManager.setCookie(string, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
-//        }
+
+        for (String host : hostArray) {
+            cookieManager.setCookie(host, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
+        }
+
     }
 
     @Override

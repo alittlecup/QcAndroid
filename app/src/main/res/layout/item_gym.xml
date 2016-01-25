@@ -4,6 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:orientation="vertical"
+                android:background="@color/white"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
     <ImageView
@@ -66,6 +67,14 @@
                 android:src="@drawable/ic_qc_identify"
                 />
         </RelativeLayout>
+        <TextView
+            android:id="@+id/item_gym_brand"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            tools:text="品牌"
+            />
 
 
         <TextView
@@ -77,10 +86,10 @@
             tools:text="联系电话:"
             />
 
-
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/item_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

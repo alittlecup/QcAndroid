@@ -22,7 +22,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class MyGymsFragment extends MainBaseFragment {
     @Bind(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
     private GymsAdapter mGymAdapter;
-    private List<QcCoachSystemDetailResponse.CoachSystemDetail> adapterData = new ArrayList<>();
+    private List<CoachService> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
 
     public MyGymsFragment() {
@@ -68,18 +68,6 @@ public class MyGymsFragment extends MainBaseFragment {
             Intent intent = new Intent(getActivity(), FragActivity.class);
             intent.putExtra("type", 3);
             startActivityForResult(intent, 11);
-//            if (item.getItemId() == R.id.action_add_self) {
-//                if (mHasPrivate) {
-//                    intent.putExtra("type", 2);
-//                } else {
-//                    intent.putExtra("type", 3);
-//                }
-//                startActivityForResult(intent, 11);
-//            } else if (item.getItemId() == R.id.action_add_public) {
-//                intent.putExtra("type", 4);
-//                startActivityForResult(intent, 11);
-//            }
-
             return true;
         });
 
@@ -90,15 +78,19 @@ public class MyGymsFragment extends MainBaseFragment {
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Intent toWeb = new Intent(getActivity(), FragActivity.class);
-                toWeb.putExtra("host", adapterData.get(pos).url);
-                toWeb.putExtra("id", adapterData.get(pos).id);
-                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
-                toWeb.putExtra("type", 5);
-                startActivityForResult(toWeb, 404);
-//                Intent toWeb = new Intent(getActivity() , WebActivity.class);
-//                toWeb.putExtra("url",adapterData.get(pos).url+"/mobile/coach/shop/welcome/");
-//                startActivity(toWeb);
+//                Intent toWeb = new Intent(getActivity(), FragActivity.class);
+//                toWeb.putExtra("host", adapterData.get(pos).url);
+//                toWeb.putExtra("id", adapterData.get(pos).id);
+//                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
+//                toWeb.putExtra("type", 5);
+//                startActivityForResult(toWeb, 404);
+                Intent intent = new Intent(getActivity(), FragActivity.class);
+                intent.putExtra("id", adapterData.get(pos).id);
+//                intent.putExtra("isPrivate", adapterData.get(pos).);
+                intent.putExtra("model",adapterData.get(pos).model);
+                intent.putExtra("type", 6);
+                startActivityForResult(intent, 11);
+
             }
         });
 //        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
@@ -163,13 +155,13 @@ public class MyGymsFragment extends MainBaseFragment {
 
     public void freshData() {
 
-        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .map(qcCoachSystemDetailResponse -> {
                     adapterData.clear();
 
-                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
+                    adapterData.addAll(qcCoachSystemDetailResponse.data.services);
                     if (adapterData.size() > 0) {
 
                         refresh.setVisibility(View.VISIBLE);
@@ -179,16 +171,16 @@ public class MyGymsFragment extends MainBaseFragment {
                         refresh.setVisibility(View.GONE);
                         refreshNodata.setVisibility(View.VISIBLE);
                     }
-                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
-                        if (systemDetail.is_personal_system) {
+                    for (CoachService service : qcCoachSystemDetailResponse.data.services) {
+                        if (service.model.equals("service") && service.type ==1) {
                             mHasPrivate = true;
                             break;
                         } else mHasPrivate = false;
 
                     }
-                    if (mHasPrivate){
+                    if (mHasPrivate) {
                         toolbar.getMenu().clear();
-                    }else {
+                    } else {
                         toolbar.getMenu().clear();
                         toolbar.inflateMenu(R.menu.add);
                     }
@@ -227,7 +219,8 @@ public class MyGymsFragment extends MainBaseFragment {
         TextView itemGymPhonenum;
         @Bind(R.id.qc_identify)
         ImageView itemIsPersonal;
-
+        @Bind(R.id.item_gym_brand)
+        TextView brand;
         public GymsVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -237,7 +230,7 @@ public class MyGymsFragment extends MainBaseFragment {
     class GymsAdapter extends RecyclerView.Adapter<GymsVH> implements View.OnClickListener {
 
 
-        private List<QcCoachSystemDetailResponse.CoachSystemDetail> datas;
+        private List<CoachService> datas;
         private OnRecycleItemClickListener listener;
 
 
@@ -263,10 +256,11 @@ public class MyGymsFragment extends MainBaseFragment {
         @Override
         public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
-            QcCoachSystemDetailResponse.CoachSystemDetail detail = datas.get(position);
+            CoachService detail = datas.get(position);
             holder.itemGymName.setText(detail.name);
             holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
-            if (detail.is_personal_system) {
+            holder.brand.setText(detail.brand_name);
+            if (detail.model.equals("service")&&detail.type==1) {
                 holder.itemIsPersonal.setVisibility(View.GONE);
             } else {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);

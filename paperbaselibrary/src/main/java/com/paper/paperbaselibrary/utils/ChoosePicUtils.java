@@ -33,16 +33,6 @@ public class ChoosePicUtils {
         // 指定开启系统相机的Action
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-//         根据文件地址创建文件
-//        File file = new File(FILE_PATH);
-//        if (!file.exists())
-//            try {
-//                file.createNewFile();
-//            } catch (IOException e) {
-//                RevenUtils.sendException("goCamera", TAG, e);
-//            }
-//        Uri uri = Uri.fromFile(file);
-//         设置系统相机拍摄照片完成后图片文件的存放地址
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 
         ((Activity) context).startActivityForResult(intent, CHOOSE_CAMERA);
@@ -72,7 +62,6 @@ public class ChoosePicUtils {
         } else if (requestcode == CHOOSE_CAMERA || requestcode / 100 == 2) {
             filepath = fp;
         } else filepath = fp;
-
         return new File(filepath);
     }
 

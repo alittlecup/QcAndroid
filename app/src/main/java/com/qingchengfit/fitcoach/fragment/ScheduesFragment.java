@@ -34,6 +34,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
@@ -62,7 +63,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -74,8 +74,8 @@ public class ScheduesFragment extends MainBaseFragment {
     public static final String TAG = ScheduesFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    //    @Bind(R.id.drawer_radiogroup)
-//    DateSegmentLayout drawerRadiogroup;
+    //      @Bind(R.id.drawer_radiogroup)
+    //    DateSegmentLayout drawerRadiogroup;
     @Bind(R.id.web_floatbtn)
     FloatingActionsMenu webFloatbtn;
     @Bind(R.id.spinner_nav)
@@ -96,6 +96,8 @@ public class ScheduesFragment extends MainBaseFragment {
     RelativeLayout scheduleCalendar;
     @Bind(R.id.first_guide)
     RelativeLayout firstGuide;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     //    @Bind(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -106,6 +108,8 @@ public class ScheduesFragment extends MainBaseFragment {
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private int curSystemId = 0;
     private int curPostion = 0;
+
+
     private QcSchedulesResponse mQcSchedulesResponse;
     private Date mCurDate = new Date();
     private DatePicker mDatePicker;
@@ -114,7 +118,9 @@ public class ScheduesFragment extends MainBaseFragment {
     private List<Integer> mSystemsId = new ArrayList<>();
     private FragmentAdapter mFragmentAdapter;
     private Observable<NewPushMsg> mObservable;
-    private Observable<RxRefreshList> mObservableReresh;
+    private Observable<String> mObservableReresh;
+    private String curModel;
+    private String mTitle;
 
     public ScheduesFragment() {
     }
@@ -133,6 +139,18 @@ public class ScheduesFragment extends MainBaseFragment {
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_alert);
+        mTitle = getString(R.string.schedule_title);
+        toolbarTitle.setText(mTitle);
+        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
+                choosegym.putExtra("model", curModel);
+                choosegym.putExtra("id", curSystemId);
+                choosegym.putExtra("title", mTitle);
+                startActivityForResult(choosegym, 501);
+            }
+        });
 
         scheduleNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +200,7 @@ public class ScheduesFragment extends MainBaseFragment {
                 return true;
             }
         });
-        if (!PreferenceUtils.getPrefBoolean(App.AppContex,App.coachid+"first_guide",false)){
+        if (!PreferenceUtils.getPrefBoolean(App.AppContex, App.coachid + "first_guide", false)) {
             firstGuide.setVisibility(View.VISIBLE);
         }
 
@@ -191,7 +209,7 @@ public class ScheduesFragment extends MainBaseFragment {
             public void onMenuExpanded() {
                 scheduleFloatbg.setVisibility(View.VISIBLE);
                 firstGuide.setVisibility(View.GONE);
-                PreferenceUtils.setPrefBoolean(App.AppContex,App.coachid+"first_guide",true);
+                PreferenceUtils.setPrefBoolean(App.AppContex, App.coachid + "first_guide", true);
 //                if (scheduleActionPopWin == null) {
 //                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
 //                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
@@ -244,38 +262,54 @@ public class ScheduesFragment extends MainBaseFragment {
                         queryNotify();
                     }
                 });
-        mObservableReresh = RxBus.getBus().register(RxRefreshList.class);
-        mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<RxRefreshList>() {
-            @Override
-            public void onCompleted() {
+//        mObservableReresh = RxBus.getBus().register(RxRefreshList.class);
+//        mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<RxRefreshList>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(RxRefreshList rxRefreshList) {
+//                setUpNaviSpinner();
+//            }
+//        });
+        mObservableReresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
+        mObservableReresh.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(RxRefreshList rxRefreshList) {
-                setUpNaviSpinner();
-            }
-        });
-//        openDrawerInterface.showLoading();
-//        goDateSchedule(mCurDate);
-        setUpNaviSpinner();
+                    @Override
+                    public void onNext(String s) {
+                        mFragmentAdapter.notifyDataSetChanged();
+                    }
+                });
+//        setUpNaviSpinner();
         return view;
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) {
-            int x = curPostion;
-            setUpNaviSpinner();
-            spinnerNav.setSelection(x);
-            queryNotify();
-        }
+//        if (!hidden) {
+//            int x = curPostion;
+//            setUpNaviSpinner();
+//            spinnerNav.setSelection(x);
+//            queryNotify();
+//        }
     }
 
 
@@ -303,7 +337,7 @@ public class ScheduesFragment extends MainBaseFragment {
             spinnerBeans.add(new SpinnerBean("", "全部日程", true));
             for (int i = 0; i < systems.size(); i++) {
                 QcCoachSystem system = systems.get(i);
-                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
                 mSystemsId.add(system.id);
             }
         } else {
@@ -335,7 +369,7 @@ public class ScheduesFragment extends MainBaseFragment {
                                 spinnerBeans.add(new SpinnerBean("", "全部日程", true));
                                 for (int i = 0; i < systems.size(); i++) {
                                     QcCoachSystem system = systems.get(i);
-                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id));
+                                    spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
                                     mSystemsId.add(system.id);
                                     if (spinnerBeanArrayAdapter != null) {
                                         spinnerBeanArrayAdapter.notifyDataSetChanged();
@@ -405,14 +439,13 @@ public class ScheduesFragment extends MainBaseFragment {
         StringBuffer sb = new StringBuffer(Configs.Server);
         switch (v) {
             case 1:
-
-                sb.append("mobile/coaches/systems/?action=rest");
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
                 break;
             case 2:
-                sb.append("mobile/coaches/systems/?action=privatelesson");
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
                 break;
             case 3:
-                sb.append("mobile/coaches/systems/?action=grouplesson");
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
                 break;
         }
         Calendar calendar = Calendar.getInstance();
@@ -480,12 +513,15 @@ public class ScheduesFragment extends MainBaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
-//            ScheduleListFragment f = (ScheduleListFragment) mFragmentAdapter.getItem(scheduleVp.getCurrentItem());
-//            if (f != null)
-//                f.refresh();
-            LogUtil.e("onActivityResult");
+        if (resultCode > 0 && requestCode == 404) {
             mFragmentAdapter.notifyDataSetChanged();
+        } else if (resultCode > 0 && requestCode == 501) {
+            toolbarTitle.setText(data.getStringExtra("name"));
+            curModel = data.getStringExtra("model");
+            curSystemId = Integer.parseInt(data.getStringExtra("id"));
+            LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
+            mFragmentAdapter.notifyDataSetChanged();
+
         }
 
     }
@@ -612,7 +648,7 @@ public class ScheduesFragment extends MainBaseFragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             calendar.add(Calendar.DAY_OF_MONTH, position - 30);
-            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId);
+            return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId, curModel);
         }
 
         @Override

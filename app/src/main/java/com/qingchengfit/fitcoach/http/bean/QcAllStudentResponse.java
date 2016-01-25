@@ -23,7 +23,7 @@ public class QcAllStudentResponse extends QcResponse {
     public ShipData data;
 
     public static class ShipData {
-        @SerializedName("ships")
+        @SerializedName("services")
         public List<Ship> ships;
     }
 
@@ -31,7 +31,7 @@ public class QcAllStudentResponse extends QcResponse {
 
         @SerializedName("users")
         public List<QcStudentBean> users;
-        @SerializedName("system")
-        public QcCoachSystem system;
+        @SerializedName("service")
+        public CoachService service;
     }
 }
