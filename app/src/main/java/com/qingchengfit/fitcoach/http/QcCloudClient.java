@@ -5,6 +5,7 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
@@ -157,7 +158,7 @@ public class QcCloudClient {
                                 request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
                                         PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
                                 request.addHeader("Cache-Control", "max-age=0");
-                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER);
+                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER+"  OEM:"+App.AppContex.getString(R.string.oem_tag));
                             }
                         }
                 )
@@ -186,7 +187,7 @@ public class QcCloudClient {
                     public void intercept(RequestFacade request) {
                         request.addHeader("Cookie", "sessionid=" +
                                 PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
-                        request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER);
+                        request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER+"  OEM:"+App.AppContex.getString(R.string.oem_tag));
                     }
                 })
                 .setClient(new OkClient(okHttpClient))
@@ -391,7 +392,7 @@ public class QcCloudClient {
         rx.Observable<QcSystemCardsResponse> qcGetSystemCard(@Path("id") int id, @QueryMap Map<String, String> params);
 
         @GET("/api/android/coaches/{id}/")
-        rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id);
+        rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id,@QueryMap Map<String, String> params);
 
         //获取预约预览
         @GET("/api/coaches/{id}/schedules/glance/")

@@ -29,6 +29,8 @@ import com.qingchengfit.fitcoach.fragment.CoachHomeFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -135,7 +137,9 @@ public class MyHomeActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid).subscribeOn(Schedulers.io())
+                HashMap<String,String> params = new HashMap<String, String>();
+                params.put("oem",getString(R.string.oem_tag));
+                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid,params).subscribeOn(Schedulers.io())
                         .subscribe(qcDrawerResponse -> {
                             runOnUiThread(() -> {
                                 Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));

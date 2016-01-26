@@ -107,13 +107,29 @@ android {
         abortOnError false
     }
 
+    flavorDimensions 'oem', 'dev'
+
     productFlavors {
         dev {
             minSdkVersion 21
-
+            flavorDimension 'dev'
         }
         prod {
             minSdkVersion 15
+            flavorDimension 'dev'
+
+        }
+        joinfit{
+            minSdkVersion 15
+            flavorDimension 'oem'
+        }
+        suisheng{
+            minSdkVersion 15
+            flavorDimension 'oem'
+        }
+        s567go{
+            minSdkVersion 15
+            flavorDimension 'oem'
         }
     }
 

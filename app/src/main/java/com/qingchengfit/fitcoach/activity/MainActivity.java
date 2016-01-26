@@ -751,7 +751,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid)
+                HashMap<String,String> params = new HashMap<String, String>();
+                params.put("oem",getString(R.string.oem_tag));
+                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid,params)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<QcDrawerResponse>() {
