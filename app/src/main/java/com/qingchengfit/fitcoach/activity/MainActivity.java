@@ -29,8 +29,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.FileUtils;
@@ -46,6 +46,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
+import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
@@ -94,8 +95,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.fir.sdk.FIR;
-import im.fir.sdk.callback.VersionCheckCallback;
-import im.fir.sdk.version.AppVersion;
+import im.fir.sdk.VersionCheckCallback;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -381,20 +381,19 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             NonetworkSnack = Snackbar.make(mainFraglayout, "您的网络异常,请检查网络连接", Snackbar.LENGTH_INDEFINITE);
             NonetworkSnack.show();
         }
-        //暂时屏蔽fir的升级功能
         FIR.checkForUpdateInFIR(getString(R.string.fir_token), new VersionCheckCallback() {
             @Override
-            public void onSuccess(AppVersion appVersion, boolean b) {
-                LogUtil.e(" fir:success" + appVersion);
-
-                if (appVersion.getVersionCode() <= AppUtils.getAppVerCode(App.AppContex))
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                UpdateVersion updateVersion = new Gson().fromJson(s,UpdateVersion.class);
+                if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex))
                     return;
 
-                url = appVersion.getUpdateUrl();
-                newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + appVersion.getVersionName() + ".apk");
+                url = updateVersion.direct_install_url;
+                newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
                 updateDialog = new MaterialDialog.Builder(MainActivity.this)
                         .title("前方发现新版本!!")
-                        .content(appVersion.getChangeLog())
+                        .content(updateVersion.changelog)
                         .positiveText("更新")
                         .negativeText("下次再说")
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -440,21 +439,82 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             }
 
 
+
             @Override
-            public void onFail(Request request, Exception e) {
-                super.onFail(request, e);
+            public void onFail(Exception e) {
+                super.onFail(e);
             }
 
             @Override
             public void onStart() {
-                LogUtil.e(" fir:start");
+                super.onStart();
             }
 
             @Override
             public void onFinish() {
-                LogUtil.e(" fir:onFinish");
+                super.onFinish();
             }
         });
+//        FIR.checkForUpdateInFIR(getString(R.string.fir_token), new VersionCheckCallback() {
+//            @Override
+//            public void onSuccess(AppVersion appVersion, boolean b) {
+//                LogUtil.e(" fir:success" + appVersion);
+//
+//                if (appVersion.getVersionCode() <= AppUtils.getAppVerCode(App.AppContex))
+//                    return;
+//
+//                url = appVersion.getUpdateUrl();
+//                newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + appVersion.getVersionName() + ".apk");
+//                updateDialog = new MaterialDialog.Builder(MainActivity.this)
+//                        .title("前方发现新版本!!")
+//                        .content(appVersion.getChangeLog())
+//                        .positiveText("更新")
+//                        .negativeText("下次再说")
+//                        .callback(new MaterialDialog.ButtonCallback() {
+//                            @Override
+//                            public void onPositive(MaterialDialog dialog) {
+//                                super.onPositive(dialog);
+//                                updateDialog.dismiss();
+//                                if (url != null) {
+//                                    //TODO download app
+//                                    downloadDialog.show();
+//                                    mDownloadThread = new AsyncDownloader();
+//                                    mDownloadThread.execute(url);
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onNegative(MaterialDialog dialog) {
+//                                super.onNegative(dialog);
+//                                updateDialog.dismiss();
+//                            }
+//                        })
+//                        .build();
+//                downloadDialog = new MaterialDialog.Builder(MainActivity.this)
+//                        .content("正在飞速为您下载")
+//                        .progress(false, 100)
+//                        .cancelable(false)
+//                        .positiveText("后台更新")
+//                        .negativeText("取消更新")
+//                        .callback(new MaterialDialog.ButtonCallback() {
+//                            @Override
+//                            public void onPositive(MaterialDialog dialog) {
+//                                super.onPositive(dialog);
+//                            }
+//
+//                            @Override
+//                            public void onNegative(MaterialDialog dialog) {
+//                                super.onNegative(dialog);
+//                                mDownloadThread.cancel(true);
+//                            }
+//                        })
+//                        .build();
+//                updateDialog.show();
+//            }
+//
+//
+//
+//        });
 
 
 //        QcCloudClient.getApi().getApi.qcGetVersion()

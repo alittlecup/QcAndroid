@@ -92,6 +92,8 @@ public class BodyTestFragment extends Fragment {
     RecyclerView recyclerview;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.test_pic_title)
+    TextView testPicTitle;
 
     private ImageGridAdapter imageGridAdapter;
     private FullyGridLayoutManager gridLayoutManager;
@@ -147,7 +149,7 @@ public class BodyTestFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 //跳到编辑页面
-                ((BodyTestActivity)getActivity()).goModify();
+                ((BodyTestActivity) getActivity()).goModify();
                 return true;
             }
         });
@@ -243,12 +245,13 @@ public class BodyTestFragment extends Fragment {
                     public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
                         initView(qcGetBodyTestResponse.data.measure);
                         datas.clear();
-                        if (qcGetBodyTestResponse.data.measure.photos!=null)
-                            datas.addAll( qcGetBodyTestResponse.data.measure.photos);
+                        if (qcGetBodyTestResponse.data.measure.photos != null)
+                            datas.addAll(qcGetBodyTestResponse.data.measure.photos);
+                        else
+                            testPicTitle.setVisibility(View.GONE);
 
                         imageGridAdapter.refresh(datas);
-                        if (qcGetBodyTestResponse.data.measure.extra !=null) {
-
+                        if (qcGetBodyTestResponse.data.measure.extra != null) {
                             for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
                                 CommonInputView commonInputView = new CommonInputView(getContext());
                                 commonInputView.setTag(R.id.tag_0, extra.name);

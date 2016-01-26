@@ -21,6 +21,7 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
+import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -318,7 +319,10 @@ public class ModifyBodyTestFragment extends Fragment {
                             waistline.setVisibility(View.VISIBLE);
                             waistline.setContent(String.format("%s", mMeasure.waistline));
                         }
+                        LogUtil.e("model:"+mModel);
                         if (!mModel.equalsIgnoreCase("service")) {
+                            LogUtil.e("not service");
+                            imageGridAdapter.setIsEditable(true);
                             photosTitle.setVisibility(View.VISIBLE);
                             if (qcGetBodyTestResponse.data.measure.extra != null) {
                                 for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
@@ -339,7 +343,8 @@ public class ModifyBodyTestFragment extends Fragment {
                             if (qcGetBodyTestResponse.data.measure.photos != null)
                                 datas.addAll(qcGetBodyTestResponse.data.measure.photos);
                             imageGridAdapter.refresh(datas);
-                        }else {
+                        } else {
+                            imageGridAdapter.setIsEditable(false);
                             datas.clear();
                             imageGridAdapter.refresh(datas);
                             photosTitle.setVisibility(View.GONE);
@@ -377,6 +382,7 @@ public class ModifyBodyTestFragment extends Fragment {
                         if (mBase.show_circumference_of_calf)
                             calf.setVisibility(View.VISIBLE);
                         else calf.setVisibility(View.GONE);
+
                         chest.setVisibility(mBase.show_circumference_of_chest ? View.VISIBLE : View.GONE);
                         thigh.setVisibility(mBase.show_circumference_of_thigh ? View.VISIBLE : View.GONE);
                         upper.setVisibility(mBase.show_circumference_of_upper ? View.VISIBLE : View.GONE);
@@ -386,6 +392,7 @@ public class ModifyBodyTestFragment extends Fragment {
                         weight.setVisibility(mBase.show_weight ? View.VISIBLE : View.GONE);
                         if (!mModel.equalsIgnoreCase("service")) {
                             photosTitle.setVisibility(View.VISIBLE);
+                            imageGridAdapter.setIsEditable(true);
                             for (QcBodyTestTemplateRespone.Extra extra : qcBodyTestTemplateRespone.data.template.extra) {
                                 CommonInputView commonInputView = new CommonInputView(getContext());
                                 commonInputView.setTag(R.id.tag_0, extra.name);
@@ -397,6 +404,7 @@ public class ModifyBodyTestFragment extends Fragment {
                             }
                         } else {
                             datas.clear();
+                            imageGridAdapter.setIsEditable(false);
                             imageGridAdapter.refresh(datas);
                             photosTitle.setVisibility(View.GONE);
                         }
@@ -458,7 +466,7 @@ public class ModifyBodyTestFragment extends Fragment {
         AddBodyTestBean addBodyTestBean = new AddBodyTestBean();
         addBodyTestBean.model = mModel;
         addBodyTestBean.id = mModelId;
-        addBodyTestBean.created_at = testDate.getContent()+"T00:00:00";
+        addBodyTestBean.created_at = testDate.getContent() + "T00:00:00";
         if (!TextUtils.isEmpty(mMeasure.bmi)) {
             addBodyTestBean.bmi = mMeasure.bmi;
         }

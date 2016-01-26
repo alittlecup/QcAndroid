@@ -258,6 +258,7 @@
                 >
             </com.qingchengfit.fitcoach.component.InterupteLinearLayout>
             <TextView
+                android:id="@+id/test_pic_title"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qc_item_height"
                 android:text="体测照片"
