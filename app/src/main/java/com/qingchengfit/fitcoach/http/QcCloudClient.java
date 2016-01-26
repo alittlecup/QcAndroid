@@ -405,7 +405,7 @@ public class QcCloudClient {
         rx.Observable<QcGymDetailResponse> qcGetGymDetail(@Path("id") int id, @QueryMap Map<String, String> params);
 
         @GET("/api/meetings/")
-        rx.Observable<QcMeetingResponse> qcGetMeetingList();
+        rx.Observable<QcMeetingResponse> qcGetMeetingList(@QueryMap Map<String, String> params);
 
         //所有的团课排期
         @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/")

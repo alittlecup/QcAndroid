@@ -160,7 +160,7 @@ public class SettingFragment extends BaseSettingFragment {
 //                fragmentCallBack.onFragmentChange(WebFragment.newInstance(Configs.Server + "/aboutus/", true));
 //                fragmentCallBack.onToolbarMenu(0, 0, "关于我们");
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url", Configs.Server + "/aboutus/");
+                toWeb.putExtra("url", Configs.Server + "/aboutus/?oem="+getString(R.string.oem_tag));
                 startActivity(toWeb);
                 break;
             case R.id.setting_comfirm:

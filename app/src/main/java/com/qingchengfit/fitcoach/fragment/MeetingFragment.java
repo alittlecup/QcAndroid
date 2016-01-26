@@ -25,6 +25,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import rx.Observer;
@@ -92,7 +93,9 @@ public class MeetingFragment extends MainBaseFragment {
     }
 
     private void freshData() {
-        QcCloudClient.getApi().getApi.qcGetMeetingList().subscribeOn(Schedulers.io())
+        HashMap<String,String> params = new HashMap<>();
+        params.put("oem",getString(R.string.oem_tag));
+        QcCloudClient.getApi().getApi.qcGetMeetingList(params).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<QcMeetingResponse>() {
                     @Override
