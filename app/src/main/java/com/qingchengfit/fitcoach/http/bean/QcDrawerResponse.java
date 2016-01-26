@@ -2,6 +2,8 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * power by
  * <p>
@@ -28,6 +30,8 @@ public class QcDrawerResponse extends QcResponse {
         public String system_count;
         @SerializedName("coach")
         public DrawerCoach coach;
+        @SerializedName("activities")
+        public List<Activity> activities;
     }
 
     public static class DrawerCoach {
@@ -37,6 +41,17 @@ public class QcDrawerResponse extends QcResponse {
         public String avatar;
         @SerializedName("id")
         public int id;
+    }
+
+    public static class Activity{
+        @SerializedName("image")
+        public String image;
+        @SerializedName("link")
+        public String link;
+        @SerializedName("name")
+        public String name;
+        @SerializedName("id")
+        public String id;
     }
 
 

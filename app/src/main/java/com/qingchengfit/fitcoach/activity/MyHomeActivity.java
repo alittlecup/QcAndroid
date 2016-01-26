@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
+import com.qingchengfit.fitcoach.component.DrawerImgItem;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.CoachHomeFragment;
@@ -58,6 +60,8 @@ public class MyHomeActivity extends AppCompatActivity {
     LinearLayout drawerModules;
     @Bind(R.id.main_drawerlayout)
     DrawerLayout mainDrawerlayout;
+    @Bind(R.id.oem_acts)
+    LinearLayout oemActs;
     private FragmentManager fragmentManager;
 
     @Override
@@ -139,6 +143,22 @@ public class MyHomeActivity extends AppCompatActivity {
                                 item.setCount(qcDrawerResponse.data.user_count);
                                 item1.setCount(qcDrawerResponse.data.plan_count);
                                 item2.setCount(qcDrawerResponse.data.system_count);
+                                if (qcDrawerResponse.data.activities != null) {
+                                    oemActs.setVisibility(View.VISIBLE);
+                                    oemActs.removeAllViews();
+                                    for (QcDrawerResponse.Activity a : qcDrawerResponse.data.activities) {
+                                        oemActs.addView(new DrawerImgItem(MyHomeActivity.this, a.image, a.name, new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(View v) {
+                                                goWeb(a.link);
+
+                                            }
+                                        }));
+                                    }
+                                } else {
+                                    oemActs.setVisibility(View.GONE);
+                                }
                             });
                         }, throwable -> {
                         }, () -> {
@@ -172,9 +192,15 @@ public class MyHomeActivity extends AppCompatActivity {
 
     }
 
+    private void goWeb(String url) {
+        Intent it = new Intent();
+        it.putExtra("url", url);
+        setResult(-1, it);
+        this.finish();
+        overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);
+    }
 
     private void goPage(int page) {
-//        mainDrawerlayout.closeDrawers();
         setResult(page);
         this.finish();
         overridePendingTransition(R.anim.slide_hold, R.anim.slide_right_out);

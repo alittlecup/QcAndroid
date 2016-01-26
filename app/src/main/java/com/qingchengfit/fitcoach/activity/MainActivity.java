@@ -49,6 +49,7 @@ import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
+import com.qingchengfit.fitcoach.component.DrawerImgItem;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.fragment.DataStatementFragment;
@@ -141,6 +142,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     TextView drawerName;
     AsyncDownloader mDownloadThread;
     HashMap<String, Fragment> fragments = new HashMap<>();
+    @Bind(R.id.oem_acts)
+    LinearLayout oemActs;
     private boolean mGoMyhome = false;
     private User user;
     private Fragment topFragment;
@@ -241,7 +244,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             calendarid = PhoneFuncUtils.insertCalendar(this);
             PreferenceUtils.setSettingLong(this, "calendar_id", calendarid);
         }
-        LogUtil.e("sync time:"+new Date().getTime() +"   "+ calendar_sync_time );
+        LogUtil.e("sync time:" + new Date().getTime() + "   " + calendar_sync_time);
         if (calendarid >= 0 && (new Date().getTime() - calendar_sync_time > DateUtils.HOUR_TIME)) {
             HashMap<String, String> params = new HashMap<>();
             params.put("from_date", DateUtils.getServerDateDay(new Date()));
@@ -385,7 +388,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                UpdateVersion updateVersion = new Gson().fromJson(s,UpdateVersion.class);
+                UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
                 if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex))
                     return;
 
@@ -437,7 +440,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         .build();
                 updateDialog.show();
             }
-
 
 
             @Override
@@ -550,7 +552,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //                    }
 //                });
 
-        }
+    }
 
     private void initUser() {
 
@@ -770,6 +772,21 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                                 item.setCount(qcDrawerResponse.data.user_count);
                                 item1.setCount(qcDrawerResponse.data.plan_count);
                                 item2.setCount(qcDrawerResponse.data.system_count);
+                                if (qcDrawerResponse.data.activities != null) {
+                                    oemActs.setVisibility(View.VISIBLE);
+                                    oemActs.removeAllViews();
+                                    for (QcDrawerResponse.Activity a : qcDrawerResponse.data.activities) {
+                                        oemActs.addView(new DrawerImgItem(MainActivity.this,a.image,a.name,new View.OnClickListener(){
+
+                                            @Override
+                                            public void onClick(View v) {
+                                                goWeb(a.link);
+                                            }
+                                        }));
+                                    }
+                                } else {
+                                    oemActs.setVisibility(View.GONE);
+                                }
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
 
                             }
@@ -986,6 +1003,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             case 6:
                 item2.performClick();
 //                    changeFragment(mMyGymsFragment);
+                break;
+            case -1:
+                if (!TextUtils.isEmpty(data.getStringExtra("url"))){
+                    goWeb(data.getStringExtra("url"));
+                }
                 break;
             default:
 //                    changeFragment(mScheduesFragment);
