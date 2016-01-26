@@ -4,6 +4,9 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+//        maven {
+//            url 'http://maven.oschina.net/content/groups/public/'
+//        }
     }
 
     dependencies {
@@ -30,14 +33,10 @@ buildscript {
 //}
 
 
-
 allprojects {
     repositories {
         jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
-//        maven {
-//            url "http://maven.bughd.com/public"
-//        }
     }
 }

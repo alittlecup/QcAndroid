@@ -169,6 +169,7 @@ public class DateUtils {
         c.setTime(date);
         c.add(Calendar.MONTH, 1);
         c.set(Calendar.DAY_OF_MONTH, 0);
+        c.add(Calendar.DAY_OF_MONTH, -1);
         return getServerDateDay(c.getTime());
     }
 

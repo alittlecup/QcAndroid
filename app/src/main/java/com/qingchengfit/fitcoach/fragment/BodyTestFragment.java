@@ -39,6 +39,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.http.HEAD;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -149,7 +150,7 @@ public class BodyTestFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 //跳到编辑页面
-                ((BodyTestActivity) getActivity()).goModify();
+                ((BodyTestActivity)getActivity()).goModify();
                 return true;
             }
         });
