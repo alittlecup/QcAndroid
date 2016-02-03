@@ -232,9 +232,13 @@ public class StudentHomeActivity extends BaseAcitivity {
                         }
                         List<BaseInfoBean> beans = new ArrayList<BaseInfoBean>();
                         BaseInfoBean phone = new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机", (mModel.equalsIgnoreCase("service") && mModelType == 1) ? user.phone : user.hidden_phone);
-                        BaseInfoBean birth = new BaseInfoBean(R.drawable.ic_baseinfo_wechat, "生日", DateUtils.getDateDay(DateUtils.formatDateFromServer(user.date_of_birth)));
+                        String birthDay;
+                        if (TextUtils.isEmpty(user.date_of_birth)){
+                            birthDay = "暂无";
+                        }else birthDay= user.date_of_birth;
+                        BaseInfoBean birth = new BaseInfoBean(R.drawable.ic_baseinfo_wechat, "生日", birthDay);
                         BaseInfoBean address = new BaseInfoBean(R.drawable.ic_baseinfo_city, "地址", user.address);
-                        BaseInfoBean registe = new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "注册日期", DateUtils.getDateDay(DateUtils.formatDateFromServer(user.joined_at)));
+                        BaseInfoBean registe = new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "注册日期", DateUtils.getServerDateDay(DateUtils.formatDateFromServer(user.joined_at)));
                         beans.add(phone);
                         beans.add(birth);
                         beans.add(address);
@@ -274,8 +278,10 @@ public class StudentHomeActivity extends BaseAcitivity {
                                 lastyear = year;
                                 showHeader = true;
                             }
+                            String start = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start));
+                            String end = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.end));
                             StatementBean bean = new StatementBean(DateUtils.formatDateFromServer(schedule.start),
-                                    schedule.course.photo, schedule.course.name, "教练:" + schedule.teacher.username, false, false, showHeader, schedule.url);
+                                    schedule.course.photo, schedule.course.name,start+"-"+end+ "   教练:" + schedule.teacher.username, false, false, showHeader, schedule.url);
                             datas.add(bean);
                         }
                         if (studentClassRecordFragment != null)
@@ -368,7 +374,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     @OnClick(R.id.add1)
     public void onBtn1(){
         if (mStudentViewPager.getCurrentItem() == 1){
-            goPrivate();
+            goGroup();
         }else {
             Intent toAdd = new Intent(this, BodyTestActivity.class);
             toAdd.putExtra("type",1);
@@ -380,7 +386,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     }
    @OnClick(R.id.add2)
     public void onBtn2(){
-        goGroup();
+        goPrivate();
     }
 
     private void initViewPager() {
@@ -409,8 +415,8 @@ public class StudentHomeActivity extends BaseAcitivity {
                 if (position == 1){
                     add1.setVisibility(View.VISIBLE);
                     add2.setVisibility(View.VISIBLE);
-                    add1.setText("代约私教");
-                    add2.setText("代约团课");
+                    add2.setText("代约私教");
+                    add1.setText("代约团课");
                 }else if (position == fragments.size()-1){
                     add1.setVisibility(View.VISIBLE);
                     add2.setVisibility(View.GONE);

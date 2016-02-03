@@ -759,7 +759,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         .subscribe(new Observer<QcDrawerResponse>() {
                             @Override
                             public void onCompleted() {
-
                             }
 
                             @Override
@@ -1007,7 +1006,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //                    changeFragment(mMyGymsFragment);
                 break;
             case -1:
-                if (!TextUtils.isEmpty(data.getStringExtra("url"))){
+                if (data != null && data.getStringExtra("url")!=null && !TextUtils.isEmpty(data.getStringExtra("url"))){
                     goWeb(data.getStringExtra("url"));
                 }
                 break;

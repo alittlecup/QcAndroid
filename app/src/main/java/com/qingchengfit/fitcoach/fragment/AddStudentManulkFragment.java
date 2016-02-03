@@ -85,18 +85,7 @@ public class AddStudentManulkFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
-                .subscribe(qcCoachSystemResponse -> {
-                    systems = qcCoachSystemResponse.data.services;
 
-                    for (int i = 0; i < systems.size(); i++) {
-                        CoachService system = systems.get(i);
-                        gymStrings.add(system.name);
-                    }
-                }, throwable -> {
-                }, () -> {
-                });
     }
 
     @Override
@@ -112,16 +101,37 @@ public class AddStudentManulkFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        if (systems != null && systems.size() >0){
-            if (systems.get(0).model.equalsIgnoreCase("service") && systems.get(0).type == 1){
-                btn.setVisibility(View.VISIBLE);
-                hint.setVisibility(View.GONE);
-            }else {
-                btn.setVisibility(View.GONE);
-                hint.setVisibility(View.VISIBLE);
-            }
-            chooseGym.setContent(systems.get(0).name);
-        }
+
+        //获取用户拥有系统信息
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcCoachSystemResponse -> {
+                    systems = qcCoachSystemResponse.data.services;
+                    boolean hasPrivate = false;
+                    int pos = 0;
+                    for (int i = 0; i < systems.size(); i++) {
+                        CoachService system = systems.get(i);
+                        if (system.model.equalsIgnoreCase("service") && system.type ==1){
+                            hasPrivate = true;
+                            pos = i;
+                        }
+                        gymStrings.add(system.name);
+                    }
+                    if (hasPrivate){
+                        btn.setVisibility(View.VISIBLE);
+                        hint.setVisibility(View.GONE);
+                        chooseGym.setContent(systems.get(pos).name);
+                    }else {
+                        btn.setVisibility(View.GONE);
+                        hint.setVisibility(View.VISIBLE);
+                    }
+
+
+
+                }, throwable -> {
+                }, () -> {
+                });
+
         return view;
     }
 
@@ -136,7 +146,7 @@ public class AddStudentManulkFragment extends Fragment {
             return;
         }
         List<AddStudentBean> sss = new ArrayList<>();
-        sss.add(new AddStudentBean(chooseName.getContent(),choosePhone.getContent(),compleGenderMale.isChecked()?1:0));
+        sss.add(new AddStudentBean(chooseName.getContent(),choosePhone.getContent(),compleGenderMale.isChecked()?0:1));
         PostStudents students = new PostStudents(sss);
         QcCloudClient.getApi().postApi.qcAddStudents(App.coachid
                 ,students)
@@ -156,7 +166,8 @@ public class AddStudentManulkFragment extends Fragment {
                     @Override
                     public void onNext(QcResponse qcResponse) {
                         if (qcResponse.status == ResponseResult.SUCCESS){
-                            getActivity().onBackPressed();
+                            getActivity().setResult(1001);
+                            getActivity().finish();
                         }
                     }
                 });

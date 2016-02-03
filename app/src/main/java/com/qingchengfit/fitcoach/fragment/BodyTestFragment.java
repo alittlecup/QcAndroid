@@ -39,7 +39,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.http.HEAD;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -170,6 +169,7 @@ public class BodyTestFragment extends Fragment {
                     if (pos < datas.size()) {
                         GalleryPhotoViewDialog galleryPhotoViewDialog = new GalleryPhotoViewDialog(getContext());
                         galleryPhotoViewDialog.setImage(getImages());
+                        galleryPhotoViewDialog.setSelected(pos);
                         galleryPhotoViewDialog.show();
                     } else {
                         ChoosePictureFragmentDialog choosePictureFragmentDialog = new ChoosePictureFragmentDialog();
@@ -246,7 +246,7 @@ public class BodyTestFragment extends Fragment {
                     public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
                         initView(qcGetBodyTestResponse.data.measure);
                         datas.clear();
-                        if (qcGetBodyTestResponse.data.measure.photos != null)
+                        if (qcGetBodyTestResponse.data.measure.photos != null && qcGetBodyTestResponse.data.measure.photos.size()>0)
                             datas.addAll(qcGetBodyTestResponse.data.measure.photos);
                         else
                             testPicTitle.setVisibility(View.GONE);

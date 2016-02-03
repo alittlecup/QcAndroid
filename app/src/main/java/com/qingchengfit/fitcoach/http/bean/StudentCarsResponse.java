@@ -47,7 +47,7 @@ public class StudentCarsResponse extends QcResponse {
         @SerializedName("end")
         public String end;
         @SerializedName("times")
-        public int  times;
+        public String  times;
         @SerializedName("check_valid")
         public boolean check_valid;
     }

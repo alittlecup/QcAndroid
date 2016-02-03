@@ -83,7 +83,7 @@ public class GalleryPhotoViewDialog extends Dialog  implements ViewPager.OnPageC
 			Glide.with(App.AppContex).load(u).into(image);
 //    		ImageLoader.getInstance().displayImage(u, image,mDisplayImageOption);
     		ImageView tag =  new ImageView(this.getContext());
-//    		tag.setImageResource(R.drawable.icon_pager_tag);
+    		tag.setImageResource(R.drawable.gallery_tag_dot);
     		tag.setPadding(12, 0, 0, 0);
     		tagPanel.addView(tag);
     		image.setOnClickListener(this);
@@ -94,6 +94,13 @@ public class GalleryPhotoViewDialog extends Dialog  implements ViewPager.OnPageC
     	viewPager.setOnPageChangeListener(this);
     	tagPanel.getChildAt(0).setSelected(true);
   	}
+
+	public void setSelected(int index){
+		if (index < viewPaperAdapter.getCount()){
+			viewPager.setCurrentItem(index);
+//			tagPanel.getChildAt(index).setSelected(true);
+		}
+	}
 
 
 	@Override

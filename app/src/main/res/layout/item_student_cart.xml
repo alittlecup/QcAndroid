@@ -71,34 +71,52 @@
             android:background="@color/divider_white"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
             >
 
-            <TextView
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="卡        号 :"
-                android:textSize="@dimen/min_font"
-                />
-
-            <TextView
-                android:id="@+id/item_gym_name"
-                style="@style/Qc.TextCommonBlack"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:textSize="@dimen/min_font"
-                tools:text="@string/test_test_short"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                >
 
+                <TextView
+                    style="@style/Qc.TextCommonGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="卡        号 :"
+                    android:textSize="@dimen/min_font"
+                    />
+
+                <TextView
+                    android:id="@+id/item_gym_name"
+                    style="@style/Qc.TextCommonBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:textSize="@dimen/min_font"
+                    tools:text="@string/test_test_short"
+
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_arrow_right_black"
                 />
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

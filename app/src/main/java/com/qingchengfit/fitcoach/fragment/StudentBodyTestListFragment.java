@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.adapter.SimpleAdapter;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 
@@ -71,6 +72,7 @@ public class StudentBodyTestListFragment extends VpFragment {
 //        add2.setVisibility(View.GONE);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
         mAdapter = new SimpleAdapter(mDataList);
         mAdapter.setListener(new OnRecycleItemClickListener() {
             @Override

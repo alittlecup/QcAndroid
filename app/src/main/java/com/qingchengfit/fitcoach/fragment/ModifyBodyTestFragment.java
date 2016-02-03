@@ -196,6 +196,7 @@ public class ModifyBodyTestFragment extends Fragment {
                     if (pos < datas.size()) {
                         GalleryPhotoViewDialog galleryPhotoViewDialog = new GalleryPhotoViewDialog(getContext());
                         galleryPhotoViewDialog.setImage(getImages());
+                        galleryPhotoViewDialog.setSelected(pos);
                         galleryPhotoViewDialog.show();
                     } else {
                         ChoosePictureFragmentDialog choosePictureFragmentDialog = new ChoosePictureFragmentDialog();
