@@ -78,10 +78,10 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
     /**
      * Create and configure Indicator in Java code.
      */
-    public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
-        configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
-                R.anim.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
-    }
+//    public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
+//        configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
+//                R.anim.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
+//    }
 
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin,
                                    @AnimatorRes int animatorId, @AnimatorRes int animatorReverseId,

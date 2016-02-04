@@ -1,8 +1,4 @@
 apply plugin: 'com.android.application'
-// This does not break the build when Android Studio is missing the JRebel for Android plugin.
-//apply plugin: 'com.zeroturnaround.jrebel.android'
-//apply plugin: 'com.android.databinding'
-//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 //apt {
@@ -89,8 +85,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 120
-        versionName "1.2.0"
+        versionCode 121
+        versionName "1.2.1"
     }
     signingConfigs {
         release {
@@ -107,29 +103,33 @@ android {
         abortOnError false
     }
 
-    flavorDimensions 'oem', 'dev'
+    flavorDimensions 'oem','dev'
 
     productFlavors {
         dev {
             minSdkVersion 21
-            flavorDimension 'dev'
+            dimension 'dev'
         }
         prod {
             minSdkVersion 15
-            flavorDimension 'dev'
+            dimension 'dev'
+
+        }
+        common{
+            dimension 'oem'
 
         }
         joinfit{
             minSdkVersion 15
-            flavorDimension 'oem'
+            dimension 'oem'
         }
         suisheng{
             minSdkVersion 15
-            flavorDimension 'oem'
+            dimension 'oem'
         }
         s567go{
             minSdkVersion 15
-            flavorDimension 'oem'
+            dimension 'oem'
         }
     }
 
@@ -139,15 +139,6 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             debuggable false
-
-//            applicationVariants.all { variant ->
-//                variant.outputs.each { output ->
-//                    output.outputFile = new File(
-//                            output.outputFile.parent,
-//                            output.outputFile.username.replace(".apk", "-${variant.versionName}_" + getDate() + ".apk"))
-//                }
-//            }
-
             proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
             zipAlignEnabled true
         }
