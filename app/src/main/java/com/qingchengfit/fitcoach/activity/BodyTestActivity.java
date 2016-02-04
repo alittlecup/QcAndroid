@@ -37,6 +37,7 @@ public class BodyTestActivity extends AppCompatActivity {
     private TimeDialogWindow pwTime;
     private Observable<String> mChosepicOb;
     private String mUserId;
+    private int mGender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +46,11 @@ public class BodyTestActivity extends AppCompatActivity {
         mModelId = getIntent().getStringExtra("modelid");
         measureId = getIntent().getStringExtra("id");
         mUserId = getIntent().getStringExtra("studentid");
+        mGender = getIntent().getIntExtra("gender",0);
+
         if (getIntent().getIntExtra("type", 0) == 0) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.web_frag_layout,BodyTestFragment.newInstance(measureId))
+                    .replace(R.id.web_frag_layout,BodyTestFragment.newInstance(measureId,mGender))
                     .commit();
 
         } else {

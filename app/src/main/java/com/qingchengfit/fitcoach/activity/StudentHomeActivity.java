@@ -95,6 +95,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     private String gourpUrl;
     private String privateUrl;
     private Observable<Object> mObserveRefresh;
+    private int mGender = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,6 +244,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                         beans.add(birth);
                         beans.add(address);
                         beans.add(registe);
+                        mGender = user.gender;
                         gourpUrl = studentInfoResponse.data.group_url;
                         privateUrl = studentInfoResponse.data.private_url;
                         if (studentBaseInfoFragment != null)
@@ -361,7 +363,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                         List<BodyTestBean> strings = new ArrayList<BodyTestBean>();
                         for (BodyTestReponse.BodyTestMeasure measure : bodyTestReponse.data.measures) {
                             BodyTestBean bodyTestBean = new BodyTestBean();
-                            bodyTestBean.data = DateUtils.getDateDay(DateUtils.formatDateFromServer(measure.created_at)) + "体测数据";
+                            bodyTestBean.data = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(measure.created_at)) + "体测数据";
                             bodyTestBean.id = measure.id;
                             strings.add(bodyTestBean);
                         }
@@ -470,6 +472,10 @@ public class StudentHomeActivity extends BaseAcitivity {
         params.put("model", mModel);
         params.put("id", mModelId);
         return params;
+    }
+
+    public int getGender(){
+        return mGender;
     }
 
 }

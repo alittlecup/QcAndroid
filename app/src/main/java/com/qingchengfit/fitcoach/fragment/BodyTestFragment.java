@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
@@ -94,6 +96,7 @@ public class BodyTestFragment extends Fragment {
     Toolbar toolbar;
     @Bind(R.id.test_pic_title)
     TextView testPicTitle;
+    private int mGender;
 
     private ImageGridAdapter imageGridAdapter;
     private FullyGridLayoutManager gridLayoutManager;
@@ -114,10 +117,11 @@ public class BodyTestFragment extends Fragment {
      * @return A new instance of fragment BodyTestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BodyTestFragment newInstance(String measreid) {
+    public static BodyTestFragment newInstance(String measreid,int gender) {
         BodyTestFragment fragment = new BodyTestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, measreid);
+        args.putInt(ARG_PARAM2, gender);
         fragment.setArguments(args);
         return fragment;
     }
@@ -128,6 +132,7 @@ public class BodyTestFragment extends Fragment {
         if (getArguments() != null) {
             mMeasureId = getArguments().getString(ARG_PARAM1);
 //            mMeasure = getArguments().getParcelable(ARG_PARAM2);
+            mGender = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -153,6 +158,11 @@ public class BodyTestFragment extends Fragment {
                 return true;
             }
         });
+        if (mGender == 0){
+            Glide.with(App.AppContex).load(R.drawable.img_model_male).into(imgModel);
+        }else {
+            Glide.with(App.AppContex).load(R.drawable.img_model_female).into(imgModel);
+        }
         initInfo();
         imageGridAdapter = new ImageGridAdapter(datas);
         gridLayoutManager = new FullyGridLayoutManager(getContext(), 3);

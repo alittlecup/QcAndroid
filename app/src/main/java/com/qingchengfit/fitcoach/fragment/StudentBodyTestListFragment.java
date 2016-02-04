@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
+import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
 import com.qingchengfit.fitcoach.adapter.SimpleAdapter;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -82,6 +83,7 @@ public class StudentBodyTestListFragment extends VpFragment {
                 toAdd.putExtra("type",0);
                 toAdd.putExtra("model",model);
                 toAdd.putExtra("modelid",modelid);
+                toAdd.putExtra("gender",((StudentHomeActivity)getActivity()).getGender());
                 startActivity(toAdd);
             }
         });
