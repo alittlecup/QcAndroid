@@ -199,7 +199,6 @@ public class LoginView extends RelativeLayout {
         mGetCodeBtn.setOnClickListener(view -> {
                     String account = mPhoneNumInputLayout.getEditText().getText().toString().trim();
                     if (TextUtils.isEmpty(account) || account.length() < 11) {
-
                         mPhoneNumInputLayout.setError(getResources().getString(R.string.err_login_phonenum));
                         return;
                     } else {
