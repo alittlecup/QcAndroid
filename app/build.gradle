@@ -85,8 +85,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 121
-        versionName "1.2.1"
+        versionCode 191
+        versionName "1.9.1"
     }
     signingConfigs {
         release {

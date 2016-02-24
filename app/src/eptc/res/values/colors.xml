@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="accent">#efefef</color>
-    <color name="primary">#efefef</color>// 32 191 189
-    <color name="primary_dark">#efefef</color>
-    <color name="primary_light">#efefef</color>
+    <color name="accent">#0db14b</color>
+    <color name="primary">#0db14b</color>// 32 191 189
+    <color name="primary_dark">#0db14b</color>
+    <color name="primary_light">#0db14b</color>
 
 
 <color name="text_grey">@color/warm_grey</color>
