@@ -120,11 +120,9 @@ public class App extends Application {
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override
             public void handleError(Throwable e) {
-
                 if (e != null) {
                     LogUtil.e("rxError:" + e.getMessage() + e.getCause());
                     e.printStackTrace();
-
                 }
             }
         });

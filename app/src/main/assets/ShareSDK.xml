@@ -95,8 +95,8 @@
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
     <Wechat
-        AppId="wxfd52b612935d84ea"
-        AppSecret="1ef97c532db3c9aaa0649a705ca2123d"
+        AppId="wx81e378c8fd03319d"
+        AppSecret="d4624c36b6795d1d99dcf0547af5443d"
         BypassApproval="false"
         Enable="true"
         Id="4"
@@ -111,8 +111,8 @@
         SortId="2"/>
         
 	<WechatFavorite
-        AppId="wxfd52b612935d84ea"
-        AppSecret="1ef97c532db3c9aaa0649a705ca2123d"
+        AppId="wx81e378c8fd03319d"
+        AppSecret="d4624c36b6795d1d99dcf0547af5443d"
         Enable="false"
         Id="6"
         SortId="6" />

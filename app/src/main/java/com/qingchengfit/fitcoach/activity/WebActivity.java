@@ -33,6 +33,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.MD5;
 import com.qingchengfit.fitcoach.Utils.ShareUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
@@ -40,6 +41,9 @@ import com.qingchengfit.fitcoach.bean.ShareBean;
 import com.qingchengfit.fitcoach.bean.ToolbarAction;
 import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
@@ -50,6 +54,9 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebStorage;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URI;
@@ -93,7 +100,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     private List<String> urls = new ArrayList<>();
     private CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
     private String sessionid;
-
+    private IWXAPI msgApi;
+    private String test = "{\'appId\': \'wx81e378c8fd03319d\',\'nonceStr\': \'IvGxLujqa73veSM\',\'package\': \'Sign=WXPay\',\'partnerId \': \'1316532101\',\'paySign\': \'205F1707DD8379C0DA1782F7F9BEA2F8\',\'prepayId\': \'wx20160226124520229c7c8edf0039065235\',\'timeStamp\': \'1456462707\'}";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +123,10 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         mRefreshSwipeRefreshLayout.setCanChildScrollUpCallback(this);
         initWebSetting();
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        mToolbar.setNavigationOnClickListener(v -> this.onBackPressed());
+        mToolbar.setNavigationOnClickListener(v -> {
+            mWebviewWebView.loadUrl("javascript:NativeMethod.wechatPay(\"" + test + "\");");
+//                msgApi.openWXApp();
+        });
         mToolbar.setTitle("");
         initWebClient();
         initChromClient();
@@ -170,6 +181,10 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 mRefreshSwipeRefreshLayout.setRefreshing(true);
             }
         });
+
+        msgApi = WXAPIFactory.createWXAPI(getApplicationContext(), Configs.APP_ID);
+        msgApi.registerApp(Configs.APP_ID);
+
 
         if (dialog == null) {
             dialog = new PicChooseDialog(WebActivity.this);
@@ -603,6 +618,35 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
         }
 
+        @JavascriptInterface
+        public void wechatPay(String info) {
+            LogUtil.d(info);
+
+            // 将该app注册到微信
+            try {
+                JSONObject object = new JSONObject(info);
+
+                PayReq request = new PayReq();
+                request.appId = Configs.APP_ID;
+                request.partnerId = "1316532101";
+                request.prepayId = "wx20160226124520229c7c8edf0039065235";
+                request.packageValue = "Sign=WXPay";
+                request.nonceStr = MD5.genNonceStr();
+                request.timeStamp = MD5.genTimeStamp() + "";
+                request.sign = MD5.getSign(request.timeStamp, request.nonceStr);
+//                request.partnerId = object.getString("partnerId");
+//                request.prepayId= object.getString("prepayId");
+//                request.packageValue = "Sign=WXPay";
+//                request.nonceStr= object.getString("nonceStr");
+//                request.timeStamp= object.getString("timeStamp");
+//                request.sign= object.getString("paySign");
+                msgApi.sendReq(request);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                LogUtil.e("wechat pay error");
+            }
+
+        }
 
         @JavascriptInterface
         public void openDrawer() {
