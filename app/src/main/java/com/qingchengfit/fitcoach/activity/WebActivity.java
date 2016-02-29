@@ -123,7 +123,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         initWebSetting();
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         mToolbar.setNavigationOnClickListener(v -> {
-            mWebviewWebView.loadUrl("javascript:NativeMethod.wechatPay(\"" + test + "\");");
+            onBackPressed();
+//            mWebviewWebView.loadUrl("javascript:NativeMethod.wechatPay(\"" + test + "\");");
 //                msgApi.openWXApp();
         });
         mToolbar.setTitle("");
@@ -415,6 +416,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
         webSetting.setUserAgentString(webSetting.getUserAgentString() + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:"+getString(R.string.oem_tag));
         // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
+        LogUtil.e("uA:"+webSetting.getUserAgentString());
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -627,19 +629,21 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
                 PayReq request = new PayReq();
                 request.appId = Configs.APP_ID;
-                request.partnerId = "1316532101";
-                request.prepayId = "wx201602261807466f5480e7010494724957";
-                request.packageValue = "Sign=WXPay";
-                request.nonceStr = "4VNwF2PFwgXCbmr";
-                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
-                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
-//                request.partnerId = object.getString("partnerId");
-                LogUtil.e("xxx:"+request.checkArgs() );
-//                request.prepayId= object.getString("prepayId");
+                request.partnerId = object.getString("partnerid");
+//                request.partnerId = "1316532101";
+//                request.prepayId = "wx201602261807466f5480e7010494724957";
 //                request.packageValue = "Sign=WXPay";
-//                request.nonceStr= object.getString("nonceStr");
-//                request.timeStamp= object.getString("timeStamp");
-//                request.sign= object.getString("paySign");
+//                request.nonceStr = "4VNwF2PFwgXCbmr";
+//                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
+//                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
+//                request.partnerId = object.getString("partnerId");
+
+                request.prepayId= object.getString("prepayid");
+                request.packageValue = "Sign=WXPay";
+                request.nonceStr= object.getString("noncestr");
+                request.timeStamp= object.getString("timestamp");
+                request.sign= object.getString("sign");
+                LogUtil.e("xxx:"+request.checkArgs() );
                 msgApi.sendReq(request);
             } catch (JSONException e) {
                 e.printStackTrace();

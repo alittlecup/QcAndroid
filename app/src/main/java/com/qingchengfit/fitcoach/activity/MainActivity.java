@@ -710,6 +710,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         button.setListener(v -> {
             changeFragment(mScheduesFragment);
+
+//            Intent it = new Intent(this,WebActivity.class);
+//            it.putExtra("url","http://cloudtest.qingchengfit.cn/payments/settlement/?pay_trade_no=feature23826602033");
+//            startActivity(it);
+
         });
 
         button2.setListener(v -> {
