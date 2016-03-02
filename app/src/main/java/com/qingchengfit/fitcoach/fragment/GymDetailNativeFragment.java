@@ -176,8 +176,8 @@ public class GymDetailNativeFragment extends Fragment {
                     @Override
                     public void onNext(ImageThreeTextBean imageThreeTextBean) {
                         if (TextUtils.isEmpty(imageThreeTextBean.tags.get(ImageThreeTextBean.TAG_MODEL))) {
-                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_MODEL,mModel);
-                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_ID,mId+"");
+                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_MODEL, mModel);
+                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_ID, mId + "");
                         }
                         adCourse(CourseDetailFragment.newInstance(imageThreeTextBean));
                     }
@@ -226,18 +226,20 @@ public class GymDetailNativeFragment extends Fragment {
         return view;
     }
 
-    public void initViewPager(boolean sync, ArrayList<ImageThreeTextBean> pri, ArrayList<ImageThreeTextBean> group,String purl,String gurl) {
+    public void initViewPager(boolean sync, ArrayList<ImageThreeTextBean> pri, ArrayList<ImageThreeTextBean> group, String purl, String gurl) {
 
         List<VpFragment> fragments = new ArrayList<>();
-        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 2, group,gurl));
-        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri,purl));
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 2, group, gurl));
+        fragments.add(CourseListFragment.newInstance(sync ? 0 : 1, 1, pri, purl));
+        boolean isChange = group.size() == 0;
 
         fragmentAdater = new FragmentAdater(getChildFragmentManager(), fragments);
         viewpager.setAdapter(fragmentAdater);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(viewpager);
+        if (isChange)
+            viewpager.setCurrentItem(1);
     }
-
 
 
     public void adCourse(Fragment fragment) {
@@ -288,12 +290,12 @@ public class GymDetailNativeFragment extends Fragment {
                         ArrayList<ImageThreeTextBean> groupCourse = new ArrayList<>();
 
                         for (ShopCourse course : qcGymDetailResponse.data.shop.courses) {
-                            ImageThreeTextBean bean = new ImageThreeTextBean(course.image_url, course.name, "时长: " + course.length/60 + "分钟", "累计" + course.course_count + "节,服务" + course.service_count + "人次");
-                            bean.tags.put(ImageThreeTextBean.TAG_MODEL,qcGymDetailResponse.data.service.model);
-                            bean.tags.put(ImageThreeTextBean.TAG_ID,qcGymDetailResponse.data.service.id+"");
-                            bean.tags.put(ImageThreeTextBean.TAG_COURSE,course.id+"");
-                            bean.tags.put(ImageThreeTextBean.TAG_LENGTH,course.length+"");
-                            bean.tags.put(ImageThreeTextBean.TAG_COURSETYPE,course.is_private? Configs.TYPE_PRIVATE+"":Configs.TYPE_GROUP+"");
+                            ImageThreeTextBean bean = new ImageThreeTextBean(course.image_url, course.name, "时长: " + course.length / 60 + "分钟", "累计" + course.course_count + "节,服务" + course.service_count + "人次");
+                            bean.tags.put(ImageThreeTextBean.TAG_MODEL, qcGymDetailResponse.data.service.model);
+                            bean.tags.put(ImageThreeTextBean.TAG_ID, qcGymDetailResponse.data.service.id + "");
+                            bean.tags.put(ImageThreeTextBean.TAG_COURSE, course.id + "");
+                            bean.tags.put(ImageThreeTextBean.TAG_LENGTH, course.length + "");
+                            bean.tags.put(ImageThreeTextBean.TAG_COURSETYPE, course.is_private ? Configs.TYPE_PRIVATE + "" : Configs.TYPE_GROUP + "");
                             if (isSyncCourse) {
                                 bean.showRight = false;
                                 bean.showIcon = true;
@@ -335,7 +337,7 @@ public class GymDetailNativeFragment extends Fragment {
 //                            }
 //                            linearlayout.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, MeasureUtils.dpToPx(90f,getResources())));
                         }
-                        initViewPager(isSyncCourse, privateCourse, groupCourse, qcGymDetailResponse.data.shop.private_url,qcGymDetailResponse.data.shop.team_url);
+                        initViewPager(isSyncCourse, privateCourse, groupCourse, qcGymDetailResponse.data.shop.private_url, qcGymDetailResponse.data.shop.team_url);
 
                     }
                 });
@@ -351,9 +353,9 @@ public class GymDetailNativeFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        RxBus.getBus().unregister(RxAddCourse.class.getName(),mAddObserable);
-        RxBus.getBus().unregister(RxBus.BUS_REFRESH,mObservableFresh);
-        RxBus.getBus().unregister(ImageThreeTextBean.class.getName(),mCourseObserable);
+        RxBus.getBus().unregister(RxAddCourse.class.getName(), mAddObserable);
+        RxBus.getBus().unregister(RxBus.BUS_REFRESH, mObservableFresh);
+        RxBus.getBus().unregister(ImageThreeTextBean.class.getName(), mCourseObserable);
         super.onDestroyView();
         ButterKnife.unbind(this);
     }

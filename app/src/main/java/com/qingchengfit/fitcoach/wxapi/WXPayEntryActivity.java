@@ -2,13 +2,14 @@ package com.qingchengfit.fitcoach.wxapi;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.bean.PayEvent;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -47,10 +48,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         LogUtil.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(resp.openId);
-            builder.setMessage(resp.errStr);
-            builder.show();
+            RxBus.getBus().post(new PayEvent(resp.errCode));
+//            if (resp.errCode == 0){
+//                //成功
+//            }else if (resp.errCode == -1){
+//
+//            }else if (resp.errCode == -2){
+//
+//            }
         }
+        this.finish();
     }
 }
