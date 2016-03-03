@@ -67,6 +67,7 @@ import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
+import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -710,13 +711,38 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         button.setListener(v -> {
             changeFragment(mScheduesFragment);
+
+//            Intent it = new Intent(this,WebActivity.class);
+//            it.putExtra("url","http://mm.qingchengfit.cn/meetings/");
+//            startActivity(it);
+
         });
 
         button2.setListener(v -> {
             changeFragment(mDataStatementFragment);
         });
 
-        button3.setListener(v1 -> changeFragment(mMeetingFragment));
+        button3.setListener(v1 -> {
+
+            HashMap<String,String> params = new HashMap<>();
+            params.put("oem", getString(R.string.oem_tag));
+            QcCloudClient.getApi().getApi
+                    .qcGetMeetingList(params)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Action1<QcMeetingResponse>() {
+                        @Override
+                        public void call(QcMeetingResponse qcMeetingResponse) {
+                            if (qcMeetingResponse.data.meetings.size() == 1){
+                                Intent toWeb = new Intent(MainActivity.this, WebActivity.class);
+                                toWeb.putExtra("url", qcMeetingResponse.data.meetings.get(0).link);
+                                startActivity(toWeb);
+                            }else {
+                                changeFragment(mMeetingFragment);
+                            }
+                        }
+                    });
+        });
 
         button.performClick();
         item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);

@@ -111,7 +111,6 @@ public class MeetingFragment extends MainBaseFragment {
                     @Override
                     public void onNext(QcMeetingResponse qcMeetingResponse) {
                         mMeetingDatas.clear();
-
                         for (QcMeetingResponse.Meeting meeting : qcMeetingResponse.data.meetings) {
                             MeetingBean bean = new MeetingBean();
                             bean.title = meeting.name;

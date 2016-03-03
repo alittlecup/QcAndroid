@@ -166,6 +166,9 @@
 	public <fields>;
 	public <methods>;
 }
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
 
 -keep class com.tencent.smtt.sdk.SystemWebChromeClient{
 	public *;

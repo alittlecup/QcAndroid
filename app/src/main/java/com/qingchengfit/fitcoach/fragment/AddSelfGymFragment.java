@@ -24,9 +24,12 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.GymCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChangeTimeActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PostPrivateGym;
+import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -301,40 +304,40 @@ public class AddSelfGymFragment extends Fragment {
             QcCloudClient.getApi().postApi.qcPostPrivateGym(App.coachid, postPrivateGym)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .flatMap(new Func1<QcResponse, Observable<QcCoachSystemResponse>>() {
+                    .flatMap(new Func1<QcResponse, Observable<QcCoachServiceResponse>>() {
                         @Override
-                        public Observable<QcCoachSystemResponse> call(QcResponse qcResponse) {
+                        public Observable<QcCoachServiceResponse> call(QcResponse qcResponse) {
                             if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                                return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                                return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread());
                             } else {
                                 ToastUtils.show(R.drawable.ic_share_fail, "修改失败");
                             }
                             return Observable.just(null);
                         }
-                    }, new Func1<Throwable, Observable<QcCoachSystemResponse>>() {
+                    }, new Func1<Throwable, Observable<QcCoachServiceResponse>>() {
                         @Override
-                        public Observable<QcCoachSystemResponse> call(Throwable throwable) {
+                        public Observable<QcCoachServiceResponse> call(Throwable throwable) {
                             ToastUtils.show(R.drawable.ic_share_fail, "修改失败");
                             return Observable.just(null);
                         }
-                    }, new Func0<Observable<QcCoachSystemResponse>>() {
+                    }, new Func0<Observable<QcCoachServiceResponse>>() {
                         @Override
-                        public Observable<QcCoachSystemResponse> call() {
+                        public Observable<QcCoachServiceResponse> call() {
                             return Observable.just(null);
                         }
                     })
-                    .filter(new Func1<QcCoachSystemResponse, Boolean>() {
+                    .filter(new Func1<QcCoachServiceResponse, Boolean>() {
                         @Override
-                        public Boolean call(QcCoachSystemResponse qcCoachSystemResponse) {
+                        public Boolean call(QcCoachServiceResponse qcCoachSystemResponse) {
                             if (qcCoachSystemResponse == null)
                                 return false;
                             else return true;
 
                         }
                     })
-                    .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                    .subscribe(new Subscriber<QcCoachServiceResponse>() {
                         @Override
                         public void onCompleted() {
 
@@ -346,7 +349,7 @@ public class AddSelfGymFragment extends Fragment {
                         }
 
                         @Override
-                        public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                        public void onNext(QcCoachServiceResponse qcCoachSystemResponse) {
                             if (getActivity() != null) {
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
                                 ToastUtils.show(getString(R.string.common_modify_success));
@@ -359,40 +362,40 @@ public class AddSelfGymFragment extends Fragment {
             QcCloudClient.getApi().postApi.qcCreatePrivateGym(App.coachid, postPrivateGym)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .flatMap(new Func1<QcResponse, Observable<QcCoachSystemResponse>>() {
+                    .flatMap(new Func1<QcResponse, Observable<QcCoachServiceResponse>>() {
                         @Override
-                        public Observable<QcCoachSystemResponse> call(QcResponse qcResponse) {
+                        public Observable<QcCoachServiceResponse> call(QcResponse qcResponse) {
                             if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                                return QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
+                                return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread());
                             } else {
                                 ToastUtils.show(R.drawable.ic_share_fail, "添加个人健身房失败");
                             }
                             return Observable.just(null);
                         }
-                    }, new Func1<Throwable, Observable<QcCoachSystemResponse>>() {
+                    }, new Func1<Throwable, Observable<QcCoachServiceResponse>>() {
                         @Override
-                        public Observable<QcCoachSystemResponse> call(Throwable throwable) {
+                        public Observable<QcCoachServiceResponse> call(Throwable throwable) {
                             ToastUtils.show(R.drawable.ic_share_fail, "添加个人健身房失败");
                             return Observable.just(null);
                         }
-                    }, new Func0<Observable<QcCoachSystemResponse>>() {
+                    }, new Func0<Observable<QcCoachServiceResponse>>() {
                         @Override
-                        public Observable<QcCoachSystemResponse> call() {
+                        public Observable<QcCoachServiceResponse> call() {
                             return Observable.just(null);
                         }
                     })
-                    .filter(new Func1<QcCoachSystemResponse, Boolean>() {
+                    .filter(new Func1<QcCoachServiceResponse, Boolean>() {
                         @Override
-                        public Boolean call(QcCoachSystemResponse qcCoachSystemResponse) {
+                        public Boolean call(QcCoachServiceResponse qcCoachSystemResponse) {
                             if (qcCoachSystemResponse == null)
                                 return false;
                             else return true;
 
                         }
                     })
-                    .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                    .subscribe(new Subscriber<QcCoachServiceResponse>() {
                         @Override
                         public void onCompleted() {
 
@@ -404,10 +407,22 @@ public class AddSelfGymFragment extends Fragment {
                         }
 
                         @Override
-                        public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                        public void onNext(QcCoachServiceResponse qcCoachSystemResponse) {
                             if (getActivity() != null) {
                                 PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
                                 ToastUtils.show("添加成功");
+//                                if (mIsNew){
+                                    for (CoachService system:qcCoachSystemResponse.data.services){
+                                        if (system.model.equalsIgnoreCase("service")){
+                                            Intent intent = new Intent(getActivity(), FragActivity.class);
+                                            intent.putExtra("id", system.id);
+                                            intent.putExtra("model",system.model);
+                                            intent.putExtra("type", 6);
+                                            startActivityForResult(intent, 11);
+                                        }
+                                    }
+
+//                                }
                                 getActivity().onBackPressed();
                             }
                         }

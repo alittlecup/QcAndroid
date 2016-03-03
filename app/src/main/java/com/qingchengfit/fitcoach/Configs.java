@@ -17,6 +17,10 @@ import android.os.Environment;
  */
 public class Configs {
 
+    public static final int TYPE_PRIVATE = 1;  //私教
+    public static final int TYPE_GROUP = 2;    //团课
+    public static final String[] STRINGS_WEEKDAY = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    public static final String APP_ID = "wx81e378c8fd03319d";
     /**
      * http config
      */
@@ -26,22 +30,16 @@ public class Configs {
 //        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = ServerIp + ServerPort;
+    public static final String ORDER_PRIVATE_URL = Server + "mobile/coach/privatelesson/list/";
+    public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
-
     //app名称
     public static String APPNAME = "QingChengCoach";
-
     //私有外部路径
     public static String ExternalPath = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/";
     public static String ExternalCache = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/";
     //Camera图片位置
     public static String CameraPic = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/camera_tmp.jpg";
     public static String CameraCrop = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/crop_tmp.jpg";
-
-    public static final int TYPE_PRIVATE = 1;  //私教
-    public static final int TYPE_GROUP = 2;    //团课
-    public static final String[] STRINGS_WEEKDAY = {"周一","周二","周三","周四","周五","周六","周日"};
-    public static final String ORDER_PRIVATE_URL = Server+"mobile/coach/privatelesson/list/";
-    public static final String ORDER_GROUP_URL = Server+"mobile/coach/grouplesson/list/";
 }
