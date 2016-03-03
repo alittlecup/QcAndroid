@@ -76,6 +76,14 @@
             android:value="TeeyzJqRvbGpXbgInHh5BxHx">
         </meta-data>
 
+        <meta-data
+            android:name="YZ_APP_ID"
+            android:value="59474567e17a4d2a54"/>
+        <!-- AppSecret -->
+        <meta-data
+            android:name="YZ_APP_SECRET"
+            android:value="a42397223c2b842511ae3c1c9afcc31d"/>
+
         <activity
             android:name=".activity.MainActivity"
             android:hardwareAccelerated="true"
