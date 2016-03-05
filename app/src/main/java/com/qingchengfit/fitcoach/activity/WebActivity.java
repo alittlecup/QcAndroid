@@ -99,6 +99,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     private List<String> mTitleStack = new ArrayList<>(); //记录标题
     private MaterialDialog loadingDialog;
     private ValueCallback<Uri> mValueCallback;
+    private ValueCallback<Uri[]> mValueCallbackNew;
     private PicChooseDialog dialog;
     private List<String> hostArray = new ArrayList<>();
     private List<String> urls = new ArrayList<>();
@@ -233,7 +234,10 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    mValueCallback.onReceiveValue(null);
+                    if (mValueCallback!= null)
+                        mValueCallback.onReceiveValue(null);
+                    if (mValueCallbackNew != null)
+                        mValueCallbackNew.onReceiveValue(null);
                 }
             });
             dialog.setListener(v -> {
@@ -274,6 +278,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 dialog.show();
             }
 
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
+                mValueCallbackNew = valueCallback;
+                dialog.show();
+                return true;
+            }
 
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -508,7 +518,13 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY) {
                 filepath = FileUtils.getPath(this, data.getData());
-                mValueCallback.onReceiveValue(data.getData());
+                if (mValueCallback!=null)
+                    mValueCallback.onReceiveValue(data.getData());
+                if (mValueCallbackNew != null){
+                    Uri[] uris = new Uri[1];
+                    uris[0] = data.getData();
+                    mValueCallbackNew.onReceiveValue(uris);
+                }
                 return;
             } else filepath = Configs.CameraPic;
             LogUtil.d(filepath);
@@ -525,10 +541,23 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                             loadingDialog.dismiss();
                             if (upFile.exists()) {
                                 ToastUtils.show("上传图片成功");
-                                mValueCallback.onReceiveValue(Uri.fromFile(upFile));
+
+//                                mValueCallback.onReceiveValue(Uri.fromFile(upFile));
+                                if (mValueCallback!=null)
+                                    mValueCallback.onReceiveValue(Uri.fromFile(upFile));
+                                if (mValueCallbackNew != null){
+                                    Uri[] uris = new Uri[1];
+                                    uris[0] = Uri.fromFile(upFile);
+                                    mValueCallbackNew.onReceiveValue(uris);
+                                }
                                 mValueCallback = null;
+                                mValueCallbackNew = null;
                             } else {
-                                mValueCallback.onReceiveValue(null);
+                                if (mValueCallback!=null)
+                                    mValueCallback.onReceiveValue(null);
+                                if (mValueCallbackNew != null){
+                                    mValueCallbackNew.onReceiveValue(null);
+                                }
                                 ToastUtils.show(R.drawable.ic_share_fail, "上传图片失败");
                             }
 //                            if (reslut) {
@@ -545,6 +574,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         } else {
             if (mValueCallback != null)
                 mValueCallback.onReceiveValue(null);
+            if (mValueCallbackNew != null)
+                mValueCallbackNew.onReceiveValue(null);
         }
     }
 
@@ -574,6 +605,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     protected void onDestroy() {
         dialog = null;
         mValueCallback = null;
+        mValueCallbackNew = null;
         if (mWebviewWebView != null) {
             removeCookies();
             mRefreshSwipeRefreshLayout.removeView(mWebviewWebView);

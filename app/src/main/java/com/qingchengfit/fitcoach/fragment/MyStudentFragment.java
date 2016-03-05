@@ -319,7 +319,6 @@ public class MyStudentFragment extends MainBaseFragment {
         int x = curPostion;
 
         spinnerNav.setSelection(x);
-//        setUpNaviSpinner();
     }
 
     /**
