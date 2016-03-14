@@ -556,9 +556,11 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
 
                         @Override
                         public void onNext(String upImg) {
+                            upImg = upImg+"!120x120";
                             if (TextUtils.isEmpty(upImg)) {
                                 ToastUtils.showDefaultStyle("图片上传失败");
                             } else {
+                                mModifyCoachInfo.setAvatar(upImg);
                                 Glide.with(App.AppContex).load(upImg).asBitmap().into(new CircleImgWrapper(modifyinfoHeaderPic,App.AppContex));
                             }
                             fragmentCallBack.hideLoading();
