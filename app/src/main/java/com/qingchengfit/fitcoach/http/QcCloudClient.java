@@ -354,7 +354,6 @@ public class QcCloudClient {
         rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
 
 
-        //获取教练报表详情
         @GET("/api/v1/coaches/{id}/reports/schedules/")
         rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
 
