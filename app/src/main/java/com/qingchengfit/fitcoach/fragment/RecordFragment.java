@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
@@ -63,7 +63,7 @@ public class RecordFragment extends BaseSettingFragment {
         fragmentCallBack.onToolbarClickListener(item -> {
 //            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
             int requestCode = 10011;
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.action_add_meeting:
                     requestCode = 10011;
                     break;
@@ -111,8 +111,8 @@ public class RecordFragment extends BaseSettingFragment {
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
                         int type = qcCertificatesReponse.getData().getCertificates().get(pos).getType();
-                        RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)), type);
-                        fragmentCallBack.onFragmentChange(fragment);
+//                        RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)), type);
+                        fragmentCallBack.onFragmentChange(ComfirmDetailFragment.newInstance(adapter.datas.get(pos)));
                     });
                     recyclerview.setAdapter(adapter);
                 } else {
@@ -139,11 +139,11 @@ public class RecordFragment extends BaseSettingFragment {
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
             entity.setContact(data.getStringExtra("address"));
-            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
+            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             certificatesEntity.setOrganization(entity);
-            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),1);
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity), 1);
             fragmentCallBack.onFragmentChange(fragment);
-        }else if (requestCode == 10012 && resultCode > 0){
+        } else if (requestCode == 10012 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId(data.getIntExtra("id", 0));
@@ -152,23 +152,21 @@ public class RecordFragment extends BaseSettingFragment {
             entity.setContact(data.getStringExtra("address"));
             certificatesEntity.setOrganization(entity);
             certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
-            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),2);
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity), 2);
             fragmentCallBack.onFragmentChange(fragment);
-        }else if (requestCode == 10013 && resultCode > 0){
+        } else if (requestCode == 10013 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId(data.getIntExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
             entity.setContact(data.getStringExtra("address"));
-            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth",false));
+            certificatesEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             certificatesEntity.setOrganization(entity);
-            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity),3);
+            RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity), 3);
             fragmentCallBack.onFragmentChange(fragment);
         }
     }
-
-
 
 
     @Override
@@ -191,6 +189,8 @@ public class RecordFragment extends BaseSettingFragment {
         TextView recordcomfirmTime;
         @Bind(R.id.recordcomfirm_comfirm)
         ImageView recordcomfirmImg;
+        @Bind(R.id.item__hidden)
+        View hideView;
 
         public RecordComfirmVH(View itemView) {
             super(itemView);
@@ -217,7 +217,7 @@ public class RecordFragment extends BaseSettingFragment {
 
         @Override
         public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, parent, false));
+            RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_record_list, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
@@ -228,24 +228,54 @@ public class RecordFragment extends BaseSettingFragment {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = datas.get(position);
             holder.recordcomfirmTitle.setText(certificatesEntity.getName());
             holder.recordcomfirmSubtitle.setText(certificatesEntity.getOrganization().getName());
-            StringBuffer sb = new StringBuffer();
-            sb.append("有效期:");
-            sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
-            sb.append("至");
-            Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
-            Calendar c = Calendar.getInstance(Locale.getDefault());
-            c.setTime(d);
-            if (c.get(Calendar.YEAR) == 3000)
-                holder.recordcomfirmTime.setText("有效期:长期有效");
-            else {
-                sb.append(DateUtils.getServerDateDay(d));
-                holder.recordcomfirmTime.setText(sb.toString());
-            }
-            if (certificatesEntity.getIs_authenticated())
-                Glide.with(App.AppContex).load(R.drawable.img_record_comfirmed).into(holder.recordcomfirmImg);
-            else
-                Glide.with(App.AppContex).load(R.drawable.img_record_uncomfirmed).into(holder.recordcomfirmImg);
+            if (certificatesEntity.getIs_authenticated()) {
+                holder.recordcomfirmImg.setVisibility(View.VISIBLE);
+                if (!certificatesEntity.is_hidden()) {
+                    holder.hideView.setVisibility(View.GONE);
+                    if (certificatesEntity.isWill_expired()) {
+                        StringBuffer sb = new StringBuffer();
+                        sb.append("有效期:");
+                        sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+                        sb.append("至");
+                        Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
+                        Calendar c = Calendar.getInstance(Locale.getDefault());
+                        c.setTime(d);
+                        if (c.get(Calendar.YEAR) == 3000)
+                            holder.recordcomfirmTime.setText("长期有效");
+                        else {
+                            sb.append(DateUtils.getServerDateDay(d));
+                            holder.recordcomfirmTime.setText(sb.toString());
+                        }
+                    } else {
+                        holder.recordcomfirmTime.setText("长期有效");
+                    }
 
+                } else {
+                    holder.hideView.setVisibility(View.VISIBLE);
+                    holder.recordcomfirmTime.setText("已隐藏");
+                }
+
+            } else {
+                holder.recordcomfirmImg.setVisibility(View.GONE);
+                holder.hideView.setVisibility(View.GONE);
+                if (TextUtils.isEmpty(certificatesEntity.getStart()) || TextUtils.isEmpty(certificatesEntity.getEnd())){
+                    holder.recordcomfirmTime.setText("");
+                }else {
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("有效期:");
+                    sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+                    sb.append("至");
+                    Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
+                    Calendar c = Calendar.getInstance(Locale.getDefault());
+                    c.setTime(d);
+                    if (c.get(Calendar.YEAR) == 3000)
+                        holder.recordcomfirmTime.setText("长期有效");
+                    else {
+                        sb.append(DateUtils.getServerDateDay(d));
+                        holder.recordcomfirmTime.setText(sb.toString());
+                    }
+                }
+            }
         }
 
 

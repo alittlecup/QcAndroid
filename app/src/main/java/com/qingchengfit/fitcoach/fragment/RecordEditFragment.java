@@ -216,10 +216,10 @@ public class RecordEditFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
         ButterKnife.bind(this, view);
         if (mType == 0)
-            mType =1;
+            mType = 1;
         switch (mType) {
             case TYPE_MEETING:
-                fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加大会认证");
+                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加大会认证");
                 recordEditName.setLabel("大会名称");
                 recordeditDate.setLabel("大会日期");
                 recordeditUpimg.setText("上传参会凭证");
@@ -231,7 +231,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 break;
 
             case TYPE_COMFIRM:
-                fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加培训认证");
+                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加培训认证");
                 recordEditName.setLabel("培训名称");
                 recordeditDate.setLabel("培训日期");
                 comfirmHasCertification.setText("有无证书");
@@ -243,7 +243,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 mIsHidenImg = true;
                 break;
             case TYPE_COMPETITION:
-                fragmentCallBack.onToolbarMenu(mTitle ? R.menu.menu_delete : 0, 0, mTitle ? "编辑认证信息" : "添加赛事认证");
+                fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加赛事认证");
                 recordEditName.setLabel("赛事名称");
                 recordeditDate.setLabel("赛事日期");
                 comfirmHasCertification.setText("有无奖项");
@@ -270,7 +270,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             certificatesEntity = gson.fromJson(mContent, QcCertificatesReponse.DataEntity.CertificatesEntity.class);
 //            recordeditHost.setContent(certificatesEntity.getOrganization().getName());
             hostName.setText(certificatesEntity.getOrganization().getName());
-            hostAddress.setText("联系方式:"+certificatesEntity.getOrganization().getContact());
+            hostAddress.setText("联系方式:" + certificatesEntity.getOrganization().getContact());
             if (certificatesEntity.getIs_authenticated())
                 hostQcIdentify.setVisibility(View.VISIBLE);
             else hostQcIdentify.setVisibility(View.GONE);
@@ -285,8 +285,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                 comfirmScroeSwitch.setChecked(false);
 
 
-            }
-            else {
+            } else {
                 comfirmScroeSwitch.setChecked(true);
                 recordeditScore.setVisibility(View.VISIBLE);
             }
@@ -416,11 +415,11 @@ public class RecordEditFragment extends BaseSettingFragment {
             Toast.makeText(App.AppContex, "请填写生效日期和失效日期", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (comfirmScroeSwitch.isChecked() && TextUtils.isEmpty(recordeditScore.getContent())){
+        if (comfirmScroeSwitch.isChecked() && TextUtils.isEmpty(recordeditScore.getContent())) {
             Toast.makeText(App.AppContex, "请填写学分", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (comfirmCertificationSwitch.isChecked() && TextUtils.isEmpty(recordeditCertificatName.getContent())){
+        if (comfirmCertificationSwitch.isChecked() && TextUtils.isEmpty(recordeditCertificatName.getContent())) {
             if (mType == 2)
                 Toast.makeText(App.AppContex, "请填写证书名称", Toast.LENGTH_SHORT).show();
             else if (mType == 3)
@@ -446,13 +445,20 @@ public class RecordEditFragment extends BaseSettingFragment {
         String endtime = recordeditDateoff.getContent().trim();
         if (endtime.equalsIgnoreCase("长期有效")) {
             endtime = "3000-1-1";
-        } else endtime = DateUtils.formatDateToServer(recordeditDateoff.getContent());
+            addCertificate.setWill_expired(false);
+        } else {
+            endtime = DateUtils.formatDateToServer(recordeditDateoff.getContent());
+            addCertificate.setWill_expired(true);
+        }
         addCertificate.setEnd(endtime);
         if (DateUtils.formatDateFromString(addCertificate.getStart()).getTime() > DateUtils.formatDateFromString(addCertificate.getEnd()).getTime()) {
             Toast.makeText(App.AppContex, "失效日期不能小于生效日期", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        if (!comfirmCertificationSwitch.isChecked() || comfirmCertificationLayout.getVisibility() == View.GONE) {
+            addCertificate.setStart("");
+            addCertificate.setEnd("");
+        }
 
         fragmentCallBack.ShowLoading("请稍后");
         if (mTitle)
@@ -523,6 +529,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                         public void onClick(View v) {
                             mDialogSheet.dismiss();
                             recordeditDateoff.setContent("长期有效");
+
                         }
                     })
                     .addButton("选择日期", new View.OnClickListener() {
@@ -638,7 +645,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
             hostName.setText(data.getStringExtra("username"));
             Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
-            hostAddress.setText("联系方式:"+data.getStringExtra("address"));
+            hostAddress.setText("联系方式:" + data.getStringExtra("address"));
             if (data.getBooleanExtra("isauth", false))
                 hostQcIdentify.setVisibility(View.VISIBLE);
             else hostQcIdentify.setVisibility(View.GONE);

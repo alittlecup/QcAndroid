@@ -79,11 +79,11 @@ public class CourseListFragment extends VpFragment {
             course_count = datas.size();
             if (mGymType == 1) {
                 if (mCourseType == 1) {
-                    ImageThreeTextBean bean = new ImageThreeTextBean("", "+ 添加私教", "", "");
+                    ImageThreeTextBean bean = new ImageThreeTextBean("", "+ 添加私教种类", "", "");
                     bean.type = 1;
                     datas.add(bean);
                 } else {
-                    ImageThreeTextBean bean = new ImageThreeTextBean("", "+ 添加团课", "", "");
+                    ImageThreeTextBean bean = new ImageThreeTextBean("", "+ 添加团课种类", "", "");
                     bean.type = 1;
                     datas.add(bean);
                 }
@@ -164,11 +164,11 @@ public class CourseListFragment extends VpFragment {
     public String getTitle() {
         if (isAdded()) {
             if (mCourseType == 1) {
-                return getString(R.string.course_private);
+                return getString(R.string.course_private)+"排期";
             } else if (mCourseType == 2) {
-                return getString(R.string.course_group);
+                return getString(R.string.course_group)+"排期";
             } else {
-                return getString(R.string.course_group);
+                return getString(R.string.course_group)+"排期";
             }
         } else return "";
 

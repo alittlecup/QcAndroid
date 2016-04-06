@@ -179,7 +179,17 @@ public class GymDetailNativeFragment extends Fragment {
                             imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_MODEL, mModel);
                             imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_ID, mId + "");
                         }
-                        adCourse(CourseDetailFragment.newInstance(imageThreeTextBean));
+                        Fragment fragment;
+                        if (TextUtils.isEmpty(imageThreeTextBean.tags.get("isNewAdd"))) {
+                            fragment = CourseDetailFragment.newInstance(imageThreeTextBean);
+                        } else {
+                            fragment = AddCourseManageFragment.newInstance(imageThreeTextBean.tags.get("model")
+                                    , imageThreeTextBean.tags.get("gymid")
+                                    , imageThreeTextBean.tags.get(ImageThreeTextBean.TAG_COURSE)
+                                    , Integer.parseInt(imageThreeTextBean.tags.get(ImageThreeTextBean.TAG_COURSETYPE))
+                                    , imageThreeTextBean.tags.get("length"));
+                        }
+                        adCourse(fragment);
                     }
                 });
         mObservableFresh = RxBus.getBus().register(RxBus.BUS_REFRESH);

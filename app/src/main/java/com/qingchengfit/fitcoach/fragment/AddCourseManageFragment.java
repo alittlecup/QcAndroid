@@ -117,9 +117,13 @@ public class AddCourseManageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_course_manage, container, false);
         ButterKnife.bind(this, view);
-        if (mType == Configs.TYPE_GROUP)
+        if (mType == Configs.TYPE_GROUP) {
             toolbar.setTitle(R.string.title_add_group_course_batch);
-        else toolbar.setTitle(R.string.title_add_private_batch);
+            datas.add(new CmBean(0,DateUtils.formatDateHHMM("08:00"),null));
+        } else {
+            toolbar.setTitle(R.string.title_add_private_batch);
+            datas.add(new CmBean(0, DateUtils.formatDateHHMM("08:00"), DateUtils.formatDateHHMM("20:00")));
+        }
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +148,7 @@ public class AddCourseManageFragment extends Fragment {
     }
 
     /**
-     *  添加
+     * 添加
      */
     @OnClick(R.id.add)
     public void onAdd() {
@@ -152,10 +156,10 @@ public class AddCourseManageFragment extends Fragment {
 //            return;
 
         if (mType == Configs.TYPE_PRIVATE) {
-            CmBean bean = new CmBean(-1, null, null);
+            CmBean bean = new CmBean(-1, DateUtils.formatDateHHMM("8:00"), DateUtils.formatDateHHMM("20:00"));
             datas.add(bean);
         } else {
-            CmBean bean = new CmBean(-1, null);
+            CmBean bean = new CmBean(-1, DateUtils.formatDateHHMM("8:00"));
             datas.add(bean);
         }
 
@@ -237,7 +241,7 @@ public class AddCourseManageFragment extends Fragment {
                 }
                 weekTimes.add(wt);
             }
-            if (weekTimes.size() <1){
+            if (weekTimes.size() < 1) {
                 ToastUtils.showDefaultStyle(getContext().getString(R.string.please_add_one_batch));
                 return;
             }
@@ -297,6 +301,7 @@ public class AddCourseManageFragment extends Fragment {
 
     /**
      * 时间选择器
+     *
      * @param pos
      */
     public void chooseTime(int pos) {
@@ -412,7 +417,7 @@ public class AddCourseManageFragment extends Fragment {
                 holder.text1.setText(R.string.choose_week);
                 holder.down1.setVisibility(View.INVISIBLE);
             } else {
-                holder.text1.setText("每"+weeks[bean.week]);
+                holder.text1.setText("每" + weeks[bean.week]);
                 holder.down1.setVisibility(View.VISIBLE);
             }
             if (bean.dateStart == null) {

@@ -277,6 +277,7 @@ public class AddCourseFrament extends Fragment {
                                 bean.tags.put(ImageThreeTextBean.TAG_COURSE,qcResponse.data.course.id);
                                 bean.tags.put(ImageThreeTextBean.TAG_COURSETYPE,upIsPrivate? Configs.TYPE_PRIVATE+"":Configs.TYPE_GROUP+"");
                                 bean.tags.put(ImageThreeTextBean.TAG_LENGTH,qcResponse.data.course.length+"");
+                                bean.tags.put("isNewAdd","1");
                                 RxBus.getBus().post(bean);
                                 RxBus.getBus().post(RxBus.BUS_REFRESH);
                                 ToastUtils.show("新增成功");

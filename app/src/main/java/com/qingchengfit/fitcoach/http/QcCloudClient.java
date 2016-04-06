@@ -504,6 +504,9 @@ public class QcCloudClient {
         @POST("/api/experiences/{id}/hidden/")
         rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id, @Body HidenBean hidenBean);
 
+        @POST("/api/certificates/{id}/hidden/")
+        rx.Observable<QcResponse> qcHidenCertificates(@Path("id") int id, @Body HidenBean hidenBean);
+
         //删除工作经验
         @DELETE("/api/experiences/{id}/")
         rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.UpYunUtils;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
@@ -61,7 +64,7 @@ public class RecordComfirmFragment extends VpFragment {
         return view;
     }
 
-//    @Override
+    //    @Override
     protected void lazyLoad() {
 //        if (!isPrepared || isVisible)
 //            return;
@@ -78,11 +81,18 @@ public class RecordComfirmFragment extends VpFragment {
                             recyclerview.setVisibility(View.VISIBLE);
                             adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                             adapter.setListener((v, pos) -> {
-                                ComfirmDetailFragment fragment =
-                                        ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
-
-                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
-                                        .show(fragment).addToBackStack("").commit();
+                                String photo = adapter.datas.get(pos).getPhoto();
+                                if (!TextUtils.isEmpty(photo)) {
+                                    GalleryPhotoViewDialog dialog = new GalleryPhotoViewDialog(getContext());
+                                    dialog.setImage(photo);
+                                    dialog.show();
+                                }
+                                //显示图片
+//                                ComfirmDetailFragment fragment =
+//                                        ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+//
+//                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+//                                        .show(fragment).addToBackStack("").commit();
                             });
                             recyclerview.setAdapter(adapter);
                         } else {
@@ -122,6 +132,10 @@ public class RecordComfirmFragment extends VpFragment {
         TextView recordcomfirmSubtitle;
         @Bind(R.id.recordcomfirm_time)
         TextView recordcomfirmTime;
+        @Bind(R.id.recordcomfirm_date)
+        TextView recordcomfirmDate;
+        @Bind(R.id.img)
+        ImageView recordImg;
         @Bind(R.id.recordcomfirm_comfirm)
         ImageView img;
 
@@ -151,7 +165,7 @@ public class RecordComfirmFragment extends VpFragment {
         @Override
         public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
             RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, parent, false));
-            holder.itemView.setOnClickListener(this);
+
 
             return holder;
         }
@@ -159,25 +173,52 @@ public class RecordComfirmFragment extends VpFragment {
         @Override
         public void onBindViewHolder(RecordComfirmVH holder, int position) {
             holder.itemView.setTag(position);
+            holder.recordImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null)
+                        listener.onItemClick(v,position);
+                }
+            });
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = datas.get(position);
             holder.recordcomfirmTitle.setText(certificatesEntity.getName());
-            holder.recordcomfirmSubtitle.setText(certificatesEntity.getOrganization().getName());
+            holder.recordcomfirmSubtitle.setText("发证单位:" + certificatesEntity.getOrganization().getName());
             if (certificatesEntity.getIs_authenticated()) {
-                Glide.with(App.AppContex).load(R.drawable.img_record_comfirmed).into(holder.img);
+                holder.img.setVisibility(View.VISIBLE);
             } else
-                Glide.with(App.AppContex).load(R.drawable.img_record_uncomfirmed).into(holder.img);
-            StringBuffer sb = new StringBuffer();
-            sb.append("有效期:  ");
-            sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
-            sb.append("至");
-            Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
-            Calendar c = Calendar.getInstance(Locale.getDefault());
-            c.setTime(d);
-            if (c.get(Calendar.YEAR) == 3000)
-                holder.recordcomfirmTime.setText("有效期: 长期有效");
-            else {
-                sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
-                holder.recordcomfirmTime.setText(sb.toString());
+                holder.img.setVisibility(View.INVISIBLE);
+
+            holder.recordcomfirmDate.setText("发证日期:" + DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+
+            if (TextUtils.isEmpty(certificatesEntity.getPhoto())) {
+                holder.recordImg.setVisibility(View.GONE);
+            } else {
+                holder.recordImg.setVisibility(View.VISIBLE);
+                Glide.with(getContext()).load(UpYunUtils.getMiniPhoto(certificatesEntity.getPhoto())).into(holder.recordImg);
+            }
+
+            if (certificatesEntity.isWill_expired()) {
+                if (TextUtils.isEmpty(certificatesEntity.getStart()) && TextUtils.isEmpty(certificatesEntity.getEnd())) {
+                    holder.recordcomfirmTime.setText("有效期:未填写");
+                } else {
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("有效期:  ");
+                    sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+                    sb.append("至");
+                    Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
+                    Calendar c = Calendar.getInstance(Locale.getDefault());
+                    c.setTime(d);
+
+
+                    if (c.get(Calendar.YEAR) == 3000)
+                        holder.recordcomfirmTime.setText("长期有效");
+                    else {
+                        sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
+                        holder.recordcomfirmTime.setText(sb.toString());
+                    }
+                }
+            } else {
+                holder.recordcomfirmTime.setText("长期有效");
             }
 
 

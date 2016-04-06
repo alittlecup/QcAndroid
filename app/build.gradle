@@ -85,8 +85,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 193
-        versionName "1.9.3"
+        versionCode 195
+        versionName "1.9.5"
     }
     signingConfigs {
         release {

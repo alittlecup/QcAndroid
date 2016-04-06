@@ -25,6 +25,15 @@ public class AddCertificate {
     String start;
     String end;
     String certificate_name;
+    boolean will_expired;
+
+    public boolean isWill_expired() {
+        return will_expired;
+    }
+
+    public void setWill_expired(boolean will_expired) {
+        this.will_expired = will_expired;
+    }
 
     public AddCertificate(int coach_id) {
         this.coach_id = coach_id;

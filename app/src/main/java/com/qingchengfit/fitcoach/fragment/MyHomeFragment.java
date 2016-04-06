@@ -258,6 +258,7 @@ public class MyHomeFragment extends Fragment {
 
     public void initHead(String userAvatar, int userGender) {
         int gender = R.drawable.img_default_female;
+
         Glide.with(App.AppContex)
                 .load(R.drawable.ic_gender_signal_female)
                 .into(myhomeGender);

@@ -120,6 +120,25 @@ public class QcCertificateDetailResponse {
             private int type;
             private int id;
             private boolean is_authenticated;
+            private boolean is_hidden; //是否隐藏
+            private boolean will_expired; //是否有有效期
+
+
+            public boolean is_hidden() {
+                return is_hidden;
+            }
+
+            public void setIs_hidden(boolean is_hidden) {
+                this.is_hidden = is_hidden;
+            }
+
+            public boolean isWill_expired() {
+                return will_expired;
+            }
+
+            public void setWill_expired(boolean will_expired) {
+                this.will_expired = will_expired;
+            }
 
             public String getEnd() {
                 return end;
