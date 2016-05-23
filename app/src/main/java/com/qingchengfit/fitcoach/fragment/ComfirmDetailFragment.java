@@ -250,7 +250,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
                     if (recorddetailTitle != null) {
                         getActivity().runOnUiThread(() -> {
-                            QcCertificateDetailResponse.DataEntity.CertificateEntity certificateEntity = qcCertificateDetailResponse.getData().getCertificate();
+                            final QcCertificateDetailResponse.DataEntity.CertificateEntity certificateEntity = qcCertificateDetailResponse.getData().getCertificate();
                             if (certificateEntity.getIs_authenticated()) {//青橙认证
                                 workexpDetailHiden.setVisibility(View.VISIBLE);
                                 if (certificateEntity.is_hidden()) {

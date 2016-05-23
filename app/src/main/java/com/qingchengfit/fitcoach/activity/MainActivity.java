@@ -935,6 +935,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //                        button.setButtonDrawable(drawable1);
 //                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
                         button.setId(View.generateViewId());
+
                         button.setListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl, null);
