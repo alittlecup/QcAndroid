@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -40,7 +39,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
- * A simple {@link Fragment} subclass.
  */
 public class ComfirmDetailFragment extends BaseSettingFragment {
     public static final String TAG = ComfirmDetailFragment.class.getName();
