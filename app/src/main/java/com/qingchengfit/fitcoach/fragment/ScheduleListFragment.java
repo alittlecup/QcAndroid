@@ -38,6 +38,7 @@ import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import com.qingchengfit.fitcoach.server.CalendarIntentService;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +50,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -248,11 +250,26 @@ public class ScheduleListFragment extends Fragment {
                 bean.title = schedule.course.name;
                 bean.intent_url = schedule.url;
                 if (getContext() != null) {
-                    if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                        String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
-                        bean.conflict = thing;
-                        return;
-                    }
+                    RxPermissions.getInstance(getContext())
+                            .request(Manifest.permission.READ_CALENDAR)
+                            .subscribe(new Action1<Boolean>() {
+                                @Override
+                                public void call(Boolean aBoolean) {
+                                    if (aBoolean){
+                                        if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                                            String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
+                                            bean.conflict = thing;
+                                        }
+                                    }else {
+                                        ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
+                                    }
+                                }
+                            });
+//                    if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+//                        String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
+//                        bean.conflict = thing;
+//                        return;
+//                    }
 
                 }
                 scheduleBeans.add(bean);

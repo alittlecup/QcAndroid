@@ -213,6 +213,8 @@ dependencies {
 //    releaseCompile project(path: ':paperbaselibrary', configuration: 'release')
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
