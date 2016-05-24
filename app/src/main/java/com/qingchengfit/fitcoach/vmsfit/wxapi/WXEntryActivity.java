@@ -6,23 +6,24 @@
  * Copyright (c) 2013年 mob.com. All rights reserved.
  */
 
-package com.qingchengfit.fitcoach.wxapi;
+package com.qingchengfit.fitcoach.vmsfit.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import cn.sharesdk.wechat.utils.WXAppExtendObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
 import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 
 /** 微信客户端回调activity示例 */
 public class WXEntryActivity extends WechatHandlerActivity {
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-
-
 
 	/**
 	 * 处理微信发出的向第三方应用请求app message

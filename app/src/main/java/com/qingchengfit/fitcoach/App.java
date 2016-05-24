@@ -13,11 +13,13 @@ import android.support.multidex.MultiDex;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.StringUtils;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
@@ -113,9 +115,14 @@ public class App extends Application {
         AppContex = getApplicationContext();
         refWatcher = LeakCanary.install(this);
         CrashHandler.getInstance().init(this);
-        setupFile();
-//        setupGraph();
-//        setupWebView();
+        Configs.APP_ID = getString(R.string.wechat_code);
+        if(RxPermissions.getInstance(this)
+                .isGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            setupFile();
+        else ToastUtils.showDefaultStyle("请开启存储空间权限");
+
+
+
 
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override

@@ -20,7 +20,7 @@ public class Configs {
     public static final int TYPE_PRIVATE = 1;  //私教
     public static final int TYPE_GROUP = 2;    //团课
     public static final String[] STRINGS_WEEKDAY = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-    public static final String APP_ID = "wx81e378c8fd03319d";
+    public static  String APP_ID ;
     /**
      * http config
      */

@@ -26,6 +26,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
@@ -96,14 +98,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import im.fir.sdk.FIR;
-import im.fir.sdk.VersionCheckCallback;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+
 
 //import javax.inject.Inject;
 
@@ -385,6 +387,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             NonetworkSnack = Snackbar.make(mainFraglayout, "您的网络异常,请检查网络连接", Snackbar.LENGTH_INDEFINITE);
             NonetworkSnack.show();
         }
+
+
         FIR.checkForUpdateInFIR(getString(R.string.fir_token), new VersionCheckCallback() {
             @Override
             public void onSuccess(String s) {

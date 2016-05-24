@@ -32,9 +32,10 @@
 
     <TextView
         style="@style/Qc.TextCommonBlack"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/test_text"
+        android:text="快到基本信息中添加自我介绍!"
         />
 
     <ImageView

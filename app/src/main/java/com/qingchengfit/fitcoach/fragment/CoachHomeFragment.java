@@ -26,7 +26,7 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.ShareUtils;
+import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
@@ -128,10 +128,14 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
                 StringBuffer sb = new StringBuffer();
                 sb.append(Configs.Server).append("mobile/coaches/").append(App.coachid).append("/share/index/");
                 if (qcMyhomeResponse != null) {
-                    ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
-                            qcMyhomeResponse.getData().getCoach().getShort_description()
-                            , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
-                    //
+//                    ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
+//                            qcMyhomeResponse.getData().getCoach().getShort_description()
+//                            , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
+                    ShareDialogFragment.newInstance(qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页"
+                            ,qcMyhomeResponse.getData().getCoach().getShort_description()
+                            ,qcMyhomeResponse.getData().getCoach().getAvatar()
+                            ,sb.toString()
+                    ).show(getFragmentManager(),"");
                 }
             }
             return true;

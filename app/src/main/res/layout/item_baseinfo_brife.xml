@@ -49,7 +49,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:scaleType="center"
-            android:src="@drawable/test_pic"
+            tools:src="@drawable/test_pic"
             />
 
         <TextView

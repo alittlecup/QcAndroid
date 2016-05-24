@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,7 +35,7 @@ import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.ShareUtils;
+import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.PayEvent;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
@@ -42,6 +43,7 @@ import com.qingchengfit.fitcoach.bean.ShareBean;
 import com.qingchengfit.fitcoach.bean.ToolbarAction;
 import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -190,8 +192,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             }
         });
 
-        msgApi = WXAPIFactory.createWXAPI(getApplicationContext(), Configs.APP_ID);
-        msgApi.registerApp(Configs.APP_ID);
+        msgApi = WXAPIFactory.createWXAPI(getApplicationContext(), getString(R.string.wechat_code));
+        msgApi.registerApp(getString(R.string.wechat_code));
 
         paySp = RxBus.getBus().register(PayEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -242,16 +244,18 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             });
             dialog.setListener(v -> {
                         dialog.dismiss();
+                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.CAMERA)){
                         Intent intent = new Intent();
                         // 指定开启系统相机的Action
                         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                         intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);}else ToastUtils.showDefaultStyle("请开启拍照权限");
                     },
                     v -> {
                         //图片选择
                         dialog.dismiss();
+                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
                         intent.setType("image/jpeg");
@@ -259,7 +263,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                             startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
                         } else {
                             startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        }
+
+                        }}else ToastUtils.showDefaultStyle("请开启外部存储权限");
                     }
 
             );
@@ -677,7 +682,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             try {
 
                 ShareBean bean = new Gson().fromJson(json, ShareBean.class);
-                ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, bean.title);
+//                ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, ben.title);
+                ShareDialogFragment.newInstance(bean.title,bean.desc,bean.imgUrl,bean.link).show(getSupportFragmentManager(),"");
             } catch (Exception e) {
 
             }
@@ -699,7 +705,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                 JSONObject object = new JSONObject(info);
 
                 PayReq request = new PayReq();
-                request.appId = Configs.APP_ID;
+//                request.appId = Configs.APP_ID;
+                request.appId = getString(R.string.wechat_code);
                 request.partnerId = object.getString("partnerid");
 //                request.partnerId = "1316532101";
 //                request.prepayId = "wx201602261807466f5480e7010494724957";

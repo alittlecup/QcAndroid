@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.wxapi;
+package com.qingchengfit.fitcoach.vmsfit.wxapi;
 
 
 import android.app.Activity;

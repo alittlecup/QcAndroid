@@ -32,7 +32,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.ShareUtils;
+import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivityInterface;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
@@ -511,7 +511,9 @@ public class OriginWebFragment extends WebFragment {
         @JavascriptInterface
         public void shareInfo(String json) {
             ShareBean bean = gson.fromJson(json, ShareBean.class);
-            ShareUtils.oneKeyShared(getContext(), bean.title, bean.imgUrl, bean.desc, bean.title);
+//            ShareUtils.oneKeyShared(getContext(), bean.title, bean.imgUrl, bean.desc, bean.title);
+            ShareDialogFragment.newInstance(bean.title,bean.desc,bean.imgUrl,bean.link)
+                    .show(getFragmentManager(),"");
         }
 
 
