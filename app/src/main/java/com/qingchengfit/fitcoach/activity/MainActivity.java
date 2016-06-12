@@ -26,8 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import im.fir.sdk.FIR;
-import im.fir.sdk.VersionCheckCallback;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
@@ -51,6 +49,7 @@ import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
+import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.component.DrawerImgItem;
 import com.qingchengfit.fitcoach.component.DrawerModuleItem;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
@@ -80,6 +79,7 @@ import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
 
@@ -98,6 +98,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -105,6 +107,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static com.qingchengfit.fitcoach.App.diskLruCache;
 
 
 //import javax.inject.Inject;
@@ -190,6 +193,21 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
+        RxPermissions.getInstance(this)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean){
+                            setupFile();
+                            initVersion();
+                        }
+                        else ToastUtils.showDefaultStyle("请开启存储空间权限");
+                    }
+                });
+
         gson = new Gson();
         mFragmentManager = getSupportFragmentManager();
         mMainObservabel = RxBus.getBus().register(RxBus.OPEN_DRAWER);
@@ -224,9 +242,26 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initUser();
         initDialog();
         initDrawer();
-        initVersion();
+
         initBDPush();
         initCalendar();
+
+        RxPermissions.getInstance(this).request(Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ,Manifest.permission.READ_EXTERNAL_STORAGE
+                ,Manifest.permission.READ_CALENDAR
+                ,Manifest.permission.WRITE_CALENDAR
+        )
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean){
+
+                        }else {
+                            ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
+                        }
+                    }
+                });
+
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -644,6 +679,28 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         this.finish();
     }
 
+    /**
+     * create dir in SDcard
+     */
+    private void setupFile() {
+        File file = new File(Configs.ExternalPath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        File fileCache = new File(Configs.ExternalCache);
+        if (!fileCache.exists()) {
+            fileCache.mkdir();
+        }
+        try {
+            diskLruCache = DiskLruCache.open(fileCache, 1, 2000, 10000000);
+        } catch (IOException e) {
+            //e.printStackTrace();
+            //TODO 没有存储的情况
+        }
+
+    }
+
+
     private void removeCookies(CookieManager cookieManager) {
         String h = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
         if (!TextUtils.isEmpty(h)) {
@@ -728,7 +785,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         button3.setListener(v1 -> {
 
-            HashMap<String,String> params = new HashMap<>();
+            HashMap<String, String> params = new HashMap<>();
             params.put("oem", getString(R.string.oem_tag));
             QcCloudClient.getApi().getApi
                     .qcGetMeetingList(params)
@@ -737,11 +794,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                     .subscribe(new Action1<QcMeetingResponse>() {
                         @Override
                         public void call(QcMeetingResponse qcMeetingResponse) {
-                            if (qcMeetingResponse.data.meetings.size() == 1){
+                            if (qcMeetingResponse.data.meetings.size() == 1) {
                                 Intent toWeb = new Intent(MainActivity.this, WebActivity.class);
                                 toWeb.putExtra("url", qcMeetingResponse.data.meetings.get(0).link);
                                 startActivity(toWeb);
-                            }else {
+                            } else {
                                 changeFragment(mMeetingFragment);
                             }
                         }
@@ -781,9 +838,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                HashMap<String,String> params = new HashMap<String, String>();
-                params.put("oem",getString(R.string.oem_tag));
-                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid,params)
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("oem", getString(R.string.oem_tag));
+                QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid, params)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<QcDrawerResponse>() {
@@ -807,7 +864,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                                     oemActs.setVisibility(View.VISIBLE);
                                     oemActs.removeAllViews();
                                     for (QcDrawerResponse.Activity a : qcDrawerResponse.data.activities) {
-                                        oemActs.addView(new DrawerImgItem(MainActivity.this,a.image,a.name,new View.OnClickListener(){
+                                        oemActs.addView(new DrawerImgItem(MainActivity.this, a.image, a.name, new View.OnClickListener() {
 
                                             @Override
                                             public void onClick(View v) {
@@ -938,7 +995,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         button.setDrawables(drawables.toArray(new Drawable[2]));
 //                        button.setButtonDrawable(drawable1);
 //                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
-                        button.setId(View.generateViewId());
+//                        button.setId(View.generateViewId());
 
                         button.setListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
@@ -1037,7 +1094,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 //                    changeFragment(mMyGymsFragment);
                 break;
             case -1:
-                if (data != null && data.getStringExtra("url")!=null && !TextUtils.isEmpty(data.getStringExtra("url"))){
+                if (data != null && data.getStringExtra("url") != null && !TextUtils.isEmpty(data.getStringExtra("url"))) {
                     goWeb(data.getStringExtra("url"));
                 }
                 break;

@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -39,6 +38,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -144,7 +144,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         myhomeAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                LogUtil.e("verticalOffset:"+verticalOffset+"   "+scrollRoot.canScrollVertically(-1));
+//                LogUtil.e("verticalOffset:"+verticalOffset+"   "+scrollRoot.canScrollVertically(-1));
                 mAppBarOffset = verticalOffset;
             }
         });
@@ -171,7 +171,9 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initUser();
+//                initUser();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.myhome_fraglayout, new CoachHomeFragment()).commit();
             }
         });
         sfl.setCanChildScrollUpCallback(this);
@@ -206,8 +208,8 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge, fragment).
                 commit();
 
-        myhomeViewpager.setAdapter(adatper);
 
+        myhomeViewpager.setAdapter(adatper);
         myhomeViewpager.setOffscreenPageLimit(4);
         myhomeViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(myhomeViewpager);
@@ -216,6 +218,13 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         initHead(qcMyhomeResponse.getData().getCoach().getAvatar(), qcMyhomeResponse.getData().getCoach().getGender());//TODO
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "_cache_myhome", gson.toJson(qcMyhomeResponse));
         sfl.setRefreshing(false);
+    }
+
+    @OnClick(R.id.myhome_student_judge)
+    public void  onJudge(){
+        myhomeAppBar.setExpanded(false);
+        myhomeTab.setScrollPosition(3, 0, true);
+        myhomeViewpager.setCurrentItem(3);
     }
 
     public void initHead(String userAvatar, int userGender) {

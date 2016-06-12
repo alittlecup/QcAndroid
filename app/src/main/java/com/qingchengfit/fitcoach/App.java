@@ -13,16 +13,12 @@ import android.support.multidex.MultiDex;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.StringUtils;
-import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -116,10 +112,7 @@ public class App extends Application {
         refWatcher = LeakCanary.install(this);
         CrashHandler.getInstance().init(this);
         Configs.APP_ID = getString(R.string.wechat_code);
-        if(RxPermissions.getInstance(this)
-                .isGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            setupFile();
-        else ToastUtils.showDefaultStyle("请开启存储空间权限");
+
 
 
 
@@ -158,26 +151,6 @@ public class App extends Application {
         }
     }
 
-    /**
-     * create dir in SDcard
-     */
-    private void setupFile() {
-        File file = new File(Configs.ExternalPath);
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        File fileCache = new File(Configs.ExternalCache);
-        if (!fileCache.exists()) {
-            fileCache.mkdir();
-        }
-        try {
-            diskLruCache = DiskLruCache.open(fileCache, 1, 2000, 10000000);
-        } catch (IOException e) {
-            //e.printStackTrace();
-            //TODO 没有存储的情况
-        }
-
-    }
 
     //    public RefWatcher getRefWatcher(Context context) {
 //        return refWatcher;

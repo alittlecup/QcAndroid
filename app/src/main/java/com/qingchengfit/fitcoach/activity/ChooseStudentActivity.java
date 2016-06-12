@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +46,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class ChooseStudentActivity extends BaseAcitivity {
@@ -102,58 +105,73 @@ public class ChooseStudentActivity extends BaseAcitivity {
             }
         });
         ShowLoading("正在获取联系人信息");
-        Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                List<Contact> contacts = PhoneFuncUtils.initContactList(ChooseStudentActivity.this);
-                studentBeans.clear();
-                for (Contact contact : contacts) {
-                    StudentBean studentBean = new StudentBean();
-                    studentBean.phone = contact.getPhone();
-                    studentBean.username = contact.getUsername();
-                    if (AlphabetView.Alphabet.contains(contact.getSortKey()))
-                        studentBean.head = contact.getSortKey();
-                    else studentBean.head = "~";
-                    studentBean.headerPic = contact.getHeader();
-                    studentBeans.add(studentBean);
-                }
-                Collections.sort(studentBeans, new StudentCompare());
-                alphabetSort.clear();
-                String tag = "";
-                for (int i = 0; i < studentBeans.size(); i++) {
-                    StudentBean bean = studentBeans.get(i);
-                    if (!bean.head.equalsIgnoreCase(tag)) {
-                        bean.isTag = true;
-                        tag = bean.head;
-                        alphabetSort.put(tag, i);
-                    } else bean.isTag = false;
-                }
+        RxPermissions.getInstance(this)
+                .request(Manifest.permission.READ_CONTACTS)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean){
+                            Observable observable = Observable.create(new Observable.OnSubscribe<String>() {
+                                @Override
+                                public void call(Subscriber<? super String> subscriber) {
+                                    List<Contact> contacts = PhoneFuncUtils.initContactList(ChooseStudentActivity.this);
+                                    studentBeans.clear();
+                                    for (Contact contact : contacts) {
+                                        StudentBean studentBean = new StudentBean();
+                                        studentBean.phone = contact.getPhone();
+                                        studentBean.username = contact.getUsername();
+                                        if (AlphabetView.Alphabet.contains(contact.getSortKey()))
+                                            studentBean.head = contact.getSortKey();
+                                        else studentBean.head = "~";
+                                        studentBean.headerPic = contact.getHeader();
+                                        studentBeans.add(studentBean);
+                                    }
+                                    Collections.sort(studentBeans, new StudentCompare());
+                                    alphabetSort.clear();
+                                    String tag = "";
+                                    for (int i = 0; i < studentBeans.size(); i++) {
+                                        StudentBean bean = studentBeans.get(i);
+                                        if (!bean.head.equalsIgnoreCase(tag)) {
+                                            bean.isTag = true;
+                                            tag = bean.head;
+                                            alphabetSort.put(tag, i);
+                                        } else bean.isTag = false;
+                                    }
 
-                subscriber.onNext("");
-                subscriber.onCompleted();
+                                    subscriber.onNext("");
+                                    subscriber.onCompleted();
 //                subscriber.onNext(contacts);
-            }
-        });
+                                }
+                            });
 
-        observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onCompleted() {
-                        loadingDialog.dismiss();
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.dismiss();
-                    }
+                            observable.observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(new Observer<String>() {
+                                        @Override
+                                        public void onCompleted() {
+                                            loadingDialog.dismiss();
+                                        }
 
-                    @Override
-                    public void onNext(String s) {
-                        choosestudentTotalNum.setText("/" + studentBeans.size() + "人");
-                        studentAdapter.notifyDataSetChanged();
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            loadingDialog.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onNext(String s) {
+                                            choosestudentTotalNum.setText("/" + studentBeans.size() + "人");
+                                            studentAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                        }else {
+                            ChooseStudentActivity.this.finish();
+                        }
                     }
                 });
+
+
+
         choosestudentAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
