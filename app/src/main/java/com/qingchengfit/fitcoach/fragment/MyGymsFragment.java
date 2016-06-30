@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -265,7 +266,7 @@ public class MyGymsFragment extends MainBaseFragment {
             } else {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);
             }
-            Glide.with(App.AppContex).load(detail.photo).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
+            Glide.with(App.AppContex).load(PhotoUtils.getSmall(detail.photo)).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
         }
 
 

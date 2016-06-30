@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.tencent.smtt.sdk.WebView;
 
@@ -73,7 +74,7 @@ public class NotiDetailFragment extends Fragment {
                         if (getActivity() != null) {
                             getActivity().runOnUiThread(() -> {
                                 notidetailTime.setText(qcNotiDetailResponse.getData().getCreated_at().replace("T", " "));
-                                Glide.with(App.AppContex).load(qcNotiDetailResponse.getData().getPhoto()).into(notidetailImg);
+                                Glide.with(App.AppContex).load(PhotoUtils.getSmall(qcNotiDetailResponse.getData().getPhoto())).into(notidetailImg);
                                 notidetailSender.setText(qcNotiDetailResponse.getData().getSender());
                                 notidetailTitle.setText(qcNotiDetailResponse.getData().getTitle());
                                 notidetailContentWebview.loadUrl(qcNotiDetailResponse.getData().getUrl());

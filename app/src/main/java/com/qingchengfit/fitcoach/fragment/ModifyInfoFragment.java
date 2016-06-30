@@ -31,6 +31,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -271,7 +272,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
                     .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
         } else {
             Glide.with(App.AppContex)
-                    .load(headurl)
+                    .load(PhotoUtils.getSmall(headurl))
                     .asBitmap()
                     .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
         }
@@ -561,7 +562,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
                                 ToastUtils.showDefaultStyle("图片上传失败");
                             } else {
                                 mModifyCoachInfo.setAvatar(upImg);
-                                Glide.with(App.AppContex).load(upImg).asBitmap().into(new CircleImgWrapper(modifyinfoHeaderPic,App.AppContex));
+                                Glide.with(App.AppContex).load(PhotoUtils.getSmall(upImg)).asBitmap().into(new CircleImgWrapper(modifyinfoHeaderPic,App.AppContex));
                             }
                             fragmentCallBack.hideLoading();
                         }

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
@@ -107,7 +108,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
     private void initData() {
         if (!TextUtils.isEmpty(entity.getPhoto()))
-            Glide.with(getContext()).load(entity.getPhoto()).asBitmap().into(new ScaleWidthWrapper(comfirmImg));
+            Glide.with(getContext()).load(PhotoUtils.getSmall(entity.getPhoto())).asBitmap().into(new ScaleWidthWrapper(comfirmImg));
 
         if (entity.getIs_authenticated()) {//青橙认证
             workexpDetailHiden.setVisibility(View.VISIBLE);

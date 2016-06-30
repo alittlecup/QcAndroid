@@ -26,6 +26,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.HTMLUtils;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.bean.BriefInfo;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PicChooseDialog;
@@ -368,7 +369,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             else holder.itemModifybriefDown.setEnabled(true);
 
             if (briefInfo.getImg() != null) {
-                Glide.with(App.AppContex).load(briefInfo.getImg() + "!small").asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
+                Glide.with(App.AppContex).load(PhotoUtils.getSmall(briefInfo.getImg())).asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
             } else {

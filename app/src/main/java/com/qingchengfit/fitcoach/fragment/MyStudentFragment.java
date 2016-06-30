@@ -31,6 +31,7 @@ import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
 import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
@@ -757,7 +758,7 @@ public class MyStudentFragment extends MainBaseFragment {
                 else holder.itemStudentAlpha.setText(studentBean.head);
                 holder.itemStudentAlpha.setVisibility(View.VISIBLE);
             } else holder.itemStudentAlpha.setVisibility(View.GONE);
-            Glide.with(App.AppContex).load(studentBean.headerPic).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
+            Glide.with(App.AppContex).load(PhotoUtils.getSmall(studentBean.headerPic)).asBitmap().into(new CircleImgWrapper(holder.itemStudentHeader, App.AppContex));
 
         }
 

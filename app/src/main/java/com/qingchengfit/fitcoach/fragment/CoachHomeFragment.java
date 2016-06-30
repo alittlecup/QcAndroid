@@ -25,6 +25,7 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
@@ -247,7 +248,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
                     .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
         } else {
             Glide.with(App.AppContex)
-                    .load(userAvatar)
+                    .load(PhotoUtils.getSmall(userAvatar))
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(new CircleImgWrapper(myhomeHeader, App.AppContex));

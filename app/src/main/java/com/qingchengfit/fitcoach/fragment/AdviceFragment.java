@@ -23,6 +23,7 @@ import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
@@ -175,7 +176,7 @@ public class AdviceFragment extends BaseSettingFragment {
                                 LogUtil.d("success");
                                 String pppurl = UpYunClient.UPYUNPATH + "advice/" + filename + ".png";
 
-                                Glide.with(App.AppContex).load(pppurl).into(adviceUpdateImg);
+                                Glide.with(App.AppContex).load(PhotoUtils.getSmall(pppurl)).into(adviceUpdateImg);
                                 adviceUpdateImg.setVisibility(View.VISIBLE);
 
 

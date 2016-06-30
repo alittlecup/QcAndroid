@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.ImageIconBean;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
@@ -122,7 +123,7 @@ public class CourseDetailFragment extends Fragment {
                 return true;
             }
         });
-        Glide.with(App.AppContex).load(mBean.imgUrl).into(img);
+        Glide.with(App.AppContex).load(PhotoUtils.getSmall(mBean.imgUrl)).into(img);
         text1.setText(mBean.text1);
         text2.setText(mBean.text2);
         text3.setText(mBean.text3);
@@ -190,7 +191,7 @@ public class CourseDetailFragment extends Fragment {
                                     @Override
                                     public void onNext(QcOneCourseResponse qcOneCourseResponse) {
                                         if (qcOneCourseResponse.status == ResponseResult.SUCCESS) {
-                                            Glide.with(App.AppContex).load(qcOneCourseResponse.data.course.photo).into(img);
+                                            Glide.with(App.AppContex).load(PhotoUtils.getSmall(qcOneCourseResponse.data.course.photo)).into(img);
                                             text1.setText(qcOneCourseResponse.data.course.name);
                                             text2.setText("时长: " + qcOneCourseResponse.data.course.length / 60 + "min");
                                         }

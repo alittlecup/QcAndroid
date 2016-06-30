@@ -23,6 +23,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
@@ -190,7 +191,7 @@ public class AddCourseFrament extends Fragment {
                         @Override
                         public void onNext(QcOneCourseResponse qcOneCourseResponse) {
                             if (qcOneCourseResponse.status == ResponseResult.SUCCESS) {
-                                Glide.with(App.AppContex).load(qcOneCourseResponse.data.course.photo).into(gymAddcourseImg);
+                                Glide.with(App.AppContex).load(PhotoUtils.getSmall(qcOneCourseResponse.data.course.photo)).into(gymAddcourseImg);
                                 courseName.setContent(qcOneCourseResponse.data.course.name);
                                 courseTime.setContent(qcOneCourseResponse.data.course.length / 60 + "");
                                 upIsPrivate = qcOneCourseResponse.data.course.is_private;
@@ -354,7 +355,7 @@ public class AddCourseFrament extends Fragment {
                                     if (TextUtils.isEmpty(upImg)) {
                                         ToastUtils.showDefaultStyle("图片上传失败");
                                     } else {
-                                        Glide.with(App.AppContex).load(upImg).into(gymAddcourseImg);
+                                        Glide.with(App.AppContex).load(PhotoUtils.getSmall(upImg)).into(gymAddcourseImg);
                                     }
                                     hideLoading();
                                 }
