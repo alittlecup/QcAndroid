@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.os.Environment;
 
@@ -26,6 +28,16 @@ import java.io.IOException;
  * Created by Paper on 15/10/23 2015.
  */
 public class BitmapUtils {
+
+    public static Bitmap pictureDrawable2Bitmap(PictureDrawable pictureDrawable){
+        Bitmap bitmap = Bitmap.createBitmap(pictureDrawable.getIntrinsicWidth()
+                ,pictureDrawable.getIntrinsicHeight()
+                , Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawPicture(pictureDrawable.getPicture());
+        return bitmap;
+    }
+
 
     public static void saveImageToGallery(Context context, Bitmap bmp) {
         // 首先保存图片

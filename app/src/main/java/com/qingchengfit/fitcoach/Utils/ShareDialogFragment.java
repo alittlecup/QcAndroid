@@ -31,15 +31,15 @@ import rx.schedulers.Schedulers;
 
 /**
  * power by
- * <p/>
+ * <p>
  * d8888b.  .d8b.  d8888b. d88888b d8888b.
  * 88  `8D d8' `8b 88  `8D 88'     88  `8D
  * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'
  * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
  * 88      88   88 88      88.     88 `88.
  * 88      YP   YP 88      Y88888P 88   YD
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Created by Paper on 16/5/12 2016.
  */
 public class ShareDialogFragment extends BottomSheetDialogFragment {
@@ -48,6 +48,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     private IWXAPI api;
 
     private String mTitle, mText, mImg, mUrl;
+    private Bitmap mBitmap;
     private boolean isImg;
 //    public static void start(String title,String text,String img,String url){
 //        ShareDialogFragment f = newInstance(title,text,img,url);
@@ -66,6 +67,17 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
+    public static ShareDialogFragment newInstance(String title, String text, Bitmap img, String url) {
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        args.putString("text", text);
+        args.putParcelable("bitmap", img);
+        args.putString("url", url);
+        ShareDialogFragment fragment = new ShareDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +88,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
             mText = getArguments().getString("text");
             mImg = getArguments().getString("img");
             mUrl = getArguments().getString("url");
+            mBitmap = getArguments().getParcelable("bitmap");
         }
     }
 
@@ -86,7 +99,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         ButterKnife.bind(this, view);
         api = WXAPIFactory.createWXAPI(getActivity(), getString(R.string.wechat_code), true);
         api.registerApp(getString(R.string.wechat_code));
-        if (TextUtils.isEmpty(mUrl) && !TextUtils.isEmpty(mImg))
+        if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null))
             isImg = true;
         else isImg = false;
 
@@ -147,11 +160,14 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
             WXMediaMessage msg = new WXMediaMessage(webpage);
             msg.title = mTitle;
             msg.description = mText;
-            Bitmap bitmap = BitmapFactory.decodeStream(new URL(mImg).openStream());
-            Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-            bitmap.recycle();
-            msg.thumbData = Util.bmpToByteArray(thumb, true);
-
+            if (!TextUtils.isEmpty(mImg)) {
+                Bitmap bitmap = BitmapFactory.decodeStream(new URL(mImg).openStream());
+                Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+                bitmap.recycle();
+                msg.thumbData = Util.bmpToByteArray(thumb, true);
+            }else if (mBitmap != null){
+                msg.thumbData = Util.bmpToByteArray(mBitmap, true);
+            }
 
 //            WXImageObject imgObject = new WXImageObject(bitmap);
 //            WXMediaMessage mediaMessage = new WXMediaMessage();

@@ -273,6 +273,11 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
+            android:name=".activity.WebActivityWithShare"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
             android:name=".activity.FragActivity"
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait">
