@@ -152,7 +152,7 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         });
         mWebviewWebView.addJavascriptInterface(new JsInterface(), "NativeMethod");
         mToobarActionTextView.setText(R.string.share);
-
+        mToobarActionTextView.setVisibility(View.VISIBLE);
         mToobarActionTextView.setOnClickListener(v -> {
 //            if (mWebviewWebView != null)
 //                mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
@@ -361,6 +361,9 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
+                if (title.length() > 10){
+                    title = title.substring(0,10).concat("...");
+                }
                 mToolbar.setTitle(title);
 
             }
@@ -396,8 +399,8 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
-                    mToobarActionTextView.setText("");
-                    mToobarActionTextView.setVisibility(View.GONE);
+//                    mToobarActionTextView.setText("");
+//                    mToobarActionTextView.setVisibility(View.GONE);
                     URI uri = null;
                     try {
                         uri = new URI(url);

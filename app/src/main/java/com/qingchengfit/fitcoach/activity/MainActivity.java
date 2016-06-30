@@ -795,7 +795,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                         @Override
                         public void call(QcMeetingResponse qcMeetingResponse) {
                             if (qcMeetingResponse.data.meetings.size() == 1) {
-                                Intent toWeb = new Intent(MainActivity.this, WebActivity.class);
+                                Intent toWeb = new Intent(MainActivity.this, WebActivityWithShare.class);
                                 toWeb.putExtra("url", qcMeetingResponse.data.meetings.get(0).link);
                                 startActivity(toWeb);
                             } else {
@@ -1058,7 +1058,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     @Override
     public void goWeb(String url) {
-        Intent toWeb = new Intent(this, WebActivity.class);
+        Intent toWeb = new Intent(this, WebActivityWithShare.class);
         toWeb.putExtra("url", url);
         startActivity(toWeb);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.activity.WebActivityWithShare;
 import com.qingchengfit.fitcoach.bean.MeetingBean;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -84,7 +84,7 @@ public class MeetingFragment extends MainBaseFragment {
         meetingAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                Intent toWeb = new Intent(getActivity(), WebActivityWithShare.class);
                 toWeb.putExtra("url", mMeetingDatas.get(pos).url);
                 startActivity(toWeb);
             }
