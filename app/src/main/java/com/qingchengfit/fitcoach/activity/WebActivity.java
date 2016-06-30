@@ -164,7 +164,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             CookieSyncManager.createInstance(this);
             cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
-            mWebviewWebView.loadUrl("");
+
             initCookie(url);
             mWebviewWebView.loadUrl(url);
 ////            setCookie(".qingchengfit.cn", "qc_session_id", "abcd");

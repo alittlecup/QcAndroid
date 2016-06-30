@@ -45,7 +45,7 @@ def renameAPK(buildVariant, appName) {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.0-rc3"
+    buildToolsVersion "24.0.0"
 
     retrolambda {
         jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
@@ -59,8 +59,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         multiDexEnabled true
-        versionCode 195
-        versionName "1.9.5"
+        versionCode 125
+        versionName "1.2.5"
         jackOptions {
             enabled false
         }
