@@ -9,12 +9,16 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
+import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.paper.paperbaselibrary.utils.StringUtils;
 import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
+import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -112,9 +116,12 @@ public class App extends Application {
         refWatcher = LeakCanary.install(this);
         CrashHandler.getInstance().init(this);
         Configs.APP_ID = getString(R.string.wechat_code);
-
-
-
+        String id = PreferenceUtils.getPrefString(this, "coach", "");
+        if (TextUtils.isEmpty(id)) {
+        } else {
+            Coach coach = new Gson().fromJson(id, Coach.class);
+            App.coachid = Integer.parseInt(coach.id);
+        }
 
 
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
