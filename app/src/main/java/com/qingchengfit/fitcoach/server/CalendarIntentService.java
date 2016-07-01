@@ -1,8 +1,11 @@
 package com.qingchengfit.fitcoach.server;
 
+import android.Manifest;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 
 import com.google.gson.Gson;
 import com.paper.paperbaselibrary.utils.DateUtils;
@@ -114,10 +117,14 @@ public class CalendarIntentService extends IntentService {
     private void handleActionDay(long param1, String param2) {
         try {
 
-            int alertTime = PreferenceUtils.getPrefInt(App.AppContex,App.coachid +"cal_sync_time",60);
+            int alertTime = PreferenceUtils.getPrefInt(App.AppContex, App.coachid + "cal_sync_time", 60);
 
             long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
-            PhoneFuncUtils.delOndDayCal(this, calid, param1);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                PhoneFuncUtils.delOndDayCal(this, calid, param1);
+                return;
+            }
+
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
             List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
@@ -148,13 +155,14 @@ public class CalendarIntentService extends IntentService {
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
 
                     }
-                    LogUtil.e("beforeTime:"+(long)(DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime()));
+                    LogUtil.e("beforeTime:" + (long) (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime()));
 
 //                    if (bean.count > 0)
 //                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
-                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime*60000)
-                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
-                    else  PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),-1);
+                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime * 60000)
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(), alertTime);
+                    else
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(), -1);
 
                 }
 
@@ -173,12 +181,16 @@ public class CalendarIntentService extends IntentService {
     private void handleActionWeek(long param1, String param2) {
         try {
             long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
-            int alertTime = PreferenceUtils.getPrefInt(App.AppContex,"cal_sync_time",60);
+            int alertTime = PreferenceUtils.getPrefInt(App.AppContex, "cal_sync_time", 60);
             long start = DateUtils.getDayMidnight(new Date(param1));
             Calendar c = Calendar.getInstance();
             c.setTime(new Date(start));
             c.add(Calendar.DAY_OF_MONTH, 7);
-            PhoneFuncUtils.delTimeCal(this, calid, start, c.getTimeInMillis());
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                PhoneFuncUtils.delTimeCal(this, calid, start, c.getTimeInMillis());
+                return;
+            }
+
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
             List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
