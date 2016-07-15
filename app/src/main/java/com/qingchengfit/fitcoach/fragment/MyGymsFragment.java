@@ -266,7 +266,7 @@ public class MyGymsFragment extends MainBaseFragment {
             } else {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);
             }
-            Glide.with(App.AppContex).load(PhotoUtils.getSmall(detail.photo)).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
+            Glide.with(App.AppContex).load(PhotoUtils.getSmall(detail.photo)).asBitmap().placeholder(R.drawable.ic_default_header).error(R.drawable.ic_default_header).into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
         }
 
 

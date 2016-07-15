@@ -308,11 +308,11 @@ public class BodyTestFragment extends Fragment {
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
             leftCalf.setVisibility(View.VISIBLE);
-            leftCalf.setText(String.format("左小腿围: %s cm", mMeasure.circumference_of_left_calf));
+            leftCalf.setText(String.format("小腿围(左): %s cm", mMeasure.circumference_of_left_calf));
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
             rightCalf.setVisibility(View.VISIBLE);
-            rightCalf.setText(String.format("右小腿围: %s cm", mMeasure.circumference_of_right_calf));
+            rightCalf.setText(String.format("小腿围(右): %s cm", mMeasure.circumference_of_right_calf));
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
             chest.setVisibility(View.VISIBLE);
@@ -320,19 +320,19 @@ public class BodyTestFragment extends Fragment {
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
             leftThigh.setVisibility(View.VISIBLE);
-            leftThigh.setText(String.format("左大腿围: %s cm", mMeasure.circumference_of_left_thigh));
+            leftThigh.setText(String.format("大腿围(左): %s cm", mMeasure.circumference_of_left_thigh));
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
             rightThigh.setVisibility(View.VISIBLE);
-            rightThigh.setText(String.format("右大腿围: %s cm", mMeasure.circumference_of_right_thigh));
+            rightThigh.setText(String.format("大腿围(右): %s cm", mMeasure.circumference_of_right_thigh));
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
             leftUpper.setVisibility(View.VISIBLE);
-            leftUpper.setText(String.format("左上臂围: %s cm", mMeasure.circumference_of_left_upper));
+            leftUpper.setText(String.format("上臂围(左): %s cm", mMeasure.circumference_of_left_upper));
         }
          if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
             rightUpper.setVisibility(View.VISIBLE);
-            rightUpper.setText(String.format("右上臂围: %s cm", mMeasure.circumference_of_right_upper));
+            rightUpper.setText(String.format("上臂围(右): %s cm", mMeasure.circumference_of_right_upper));
         }
         if (!TextUtils.isEmpty(mMeasure.hipline)) {
             hipline.setVisibility(View.VISIBLE);

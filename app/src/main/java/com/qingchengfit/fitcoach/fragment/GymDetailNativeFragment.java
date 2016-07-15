@@ -282,7 +282,7 @@ public class GymDetailNativeFragment extends Fragment {
 
                     @Override
                     public void onNext(QcGymDetailResponse qcGymDetailResponse) {
-                        Glide.with(App.AppContex).load(PhotoUtils.getSmall(qcGymDetailResponse.data.service.photo)).asBitmap().into(new CircleImgWrapper(gymImg, App.AppContex));
+                        Glide.with(App.AppContex).load(PhotoUtils.getSmall(qcGymDetailResponse.data.service.photo)).asBitmap().placeholder(R.drawable.ic_default_header).error(R.drawable.ic_default_header).into(new CircleImgWrapper(gymImg, App.AppContex));
                         toolbar.setTitle(qcGymDetailResponse.data.service.name);
                         boolean isSyncCourse = false;
                         if (qcGymDetailResponse.data.service.model.equals("service") && qcGymDetailResponse.data.service.type == 1) {
