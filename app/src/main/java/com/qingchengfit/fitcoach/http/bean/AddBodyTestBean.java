@@ -26,12 +26,15 @@ public class AddBodyTestBean {
     public String weight;
     public String bmi;
     public String body_fat_rate;
-    public String circumference_of_upper;
+    public String circumference_of_left_upper;
+    public String circumference_of_right_upper;
     public String circumference_of_chest;
     public String waistline;
     public String hipline;
-    public String circumference_of_thigh;
-    public String circumference_of_calf;
+    public String circumference_of_left_thigh;
+    public String circumference_of_right_thigh;
+    public String circumference_of_left_calf;
+    public String circumference_of_right_calf;
     public List<Photo> photos;
     public String extra;
     public String created_at;

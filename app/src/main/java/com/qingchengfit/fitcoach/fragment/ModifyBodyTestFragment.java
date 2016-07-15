@@ -62,6 +62,15 @@ public class ModifyBodyTestFragment extends Fragment {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
+    @Bind(R.id.recyclerview)
+    RecyclerView recyclerview;
+    @Bind(R.id.delete)
+    TextView delete;
+    @Bind(R.id.other_data)
+    LinearLayout otherData;
+    @Bind(R.id.photos_title)
+    TextView photosTitle;
     @Bind(R.id.test_date)
     CommonInputView testDate;
     @Bind(R.id.height)
@@ -72,26 +81,24 @@ public class ModifyBodyTestFragment extends Fragment {
     CommonInputView bmi;
     @Bind(R.id.body_fat_rate)
     CommonInputView bodyFatRate;
-    @Bind(R.id.upper)
-    CommonInputView upper;
+    @Bind(R.id.left_upper)
+    CommonInputView leftUpper;
+    @Bind(R.id.right_upper)
+    CommonInputView rightUpper;
     @Bind(R.id.chest)
     CommonInputView chest;
     @Bind(R.id.waistline)
     CommonInputView waistline;
     @Bind(R.id.hipline)
     CommonInputView hipline;
-    @Bind(R.id.thigh)
-    CommonInputView thigh;
-    @Bind(R.id.calf)
-    CommonInputView calf;
-    @Bind(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @Bind(R.id.delete)
-    TextView delete;
-    @Bind(R.id.other_data)
-    LinearLayout otherData;
-    @Bind(R.id.photos_title)
-    TextView photosTitle;
+    @Bind(R.id.left_thigh)
+    CommonInputView leftThigh;
+    @Bind(R.id.right_thigh)
+    CommonInputView rightThigh;
+    @Bind(R.id.left_calf)
+    CommonInputView leftCalf;
+    @Bind(R.id.right_calf)
+    CommonInputView rightCalf;
     private TimeDialogWindow pwTime;
     private View view;
     private ImageGridAdapter imageGridAdapter;
@@ -295,21 +302,33 @@ public class ModifyBodyTestFragment extends Fragment {
                             bodyFatRate.setVisibility(View.VISIBLE);
                             bodyFatRate.setContent(String.format("%s", mMeasure.body_fat_rate));
                         }
-                        if (!TextUtils.isEmpty(mMeasure.circumference_of_calf)) {
-                            calf.setVisibility(View.VISIBLE);
-                            calf.setContent(String.format("%s", mMeasure.circumference_of_calf));
+                        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
+                            leftCalf.setVisibility(View.VISIBLE);
+                            leftCalf.setContent(String.format("%s", mMeasure.circumference_of_left_calf));
+                        }
+                        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
+                            rightCalf.setVisibility(View.VISIBLE);
+                            rightCalf.setContent(String.format("%s", mMeasure.circumference_of_right_calf));
                         }
                         if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
                             chest.setVisibility(View.VISIBLE);
                             chest.setContent(String.format("%s", mMeasure.circumference_of_chest));
                         }
-                        if (!TextUtils.isEmpty(mMeasure.circumference_of_thigh)) {
-                            thigh.setVisibility(View.VISIBLE);
-                            thigh.setContent(String.format("%s", mMeasure.circumference_of_thigh));
+                        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
+                            leftThigh.setVisibility(View.VISIBLE);
+                            leftThigh.setContent(String.format("%s", mMeasure.circumference_of_left_thigh));
                         }
-                        if (!TextUtils.isEmpty(mMeasure.circumference_of_upper)) {
-                            upper.setVisibility(View.VISIBLE);
-                            upper.setContent(String.format("%s", mMeasure.circumference_of_upper));
+                      if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
+                            rightThigh.setVisibility(View.VISIBLE);
+                            rightThigh.setContent(String.format("%s", mMeasure.circumference_of_right_thigh));
+                        }
+                        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
+                            leftUpper.setVisibility(View.VISIBLE);
+                            leftUpper.setContent(String.format("%s", mMeasure.circumference_of_left_upper));
+                        }
+                      if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
+                            rightUpper.setVisibility(View.VISIBLE);
+                            rightUpper.setContent(String.format("%s", mMeasure.circumference_of_right_upper));
                         }
                         if (!TextUtils.isEmpty(mMeasure.hipline)) {
                             hipline.setVisibility(View.VISIBLE);
@@ -377,12 +396,18 @@ public class ModifyBodyTestFragment extends Fragment {
                         if (mBase.show_body_fat_rate)
                             bodyFatRate.setVisibility(View.VISIBLE);
                         else bodyFatRate.setVisibility(View.GONE);
-                        if (mBase.show_circumference_of_calf)
-                            calf.setVisibility(View.VISIBLE);
-                        else calf.setVisibility(View.GONE);
+                        if (mBase.show_circumference_of_left_calf)
+                            leftCalf.setVisibility(View.VISIBLE);
+                        else leftCalf.setVisibility(View.GONE);
+                        if (mBase.show_circumference_of_right_calf)
+                            rightCalf.setVisibility(View.VISIBLE);
+                        else rightCalf.setVisibility(View.GONE);
+
                         chest.setVisibility(mBase.show_circumference_of_chest ? View.VISIBLE : View.GONE);
-                        thigh.setVisibility(mBase.show_circumference_of_thigh ? View.VISIBLE : View.GONE);
-                        upper.setVisibility(mBase.show_circumference_of_upper ? View.VISIBLE : View.GONE);
+                        leftThigh.setVisibility(mBase.show_circumference_of_left_thigh ? View.VISIBLE : View.GONE);
+                        rightThigh.setVisibility(mBase.show_circumference_of_right_thigh ? View.VISIBLE : View.GONE);
+                        leftUpper.setVisibility(mBase.show_circumference_of_left_upper ? View.VISIBLE : View.GONE);
+                        rightUpper.setVisibility(mBase.show_circumference_of_right_upper ? View.VISIBLE : View.GONE);
                         height.setVisibility(mBase.show_height ? View.VISIBLE : View.GONE);
                         hipline.setVisibility(mBase.show_hipline ? View.VISIBLE : View.GONE);
                         waistline.setVisibility(mBase.show_waistline ? View.VISIBLE : View.GONE);
@@ -430,10 +455,13 @@ public class ModifyBodyTestFragment extends Fragment {
         Measure measure = new Measure();
         measure.hipline = hipline.getContent();
         measure.waistline = waistline.getContent();
-        measure.circumference_of_upper = upper.getContent();
+        measure.circumference_of_left_upper = leftUpper.getContent();
+        measure.circumference_of_right_upper = rightUpper.getContent();
         measure.circumference_of_chest = chest.getContent();
-        measure.circumference_of_calf = calf.getContent();
-        measure.circumference_of_thigh = thigh.getContent();
+        measure.circumference_of_left_calf = leftCalf.getContent();
+        measure.circumference_of_right_calf = rightCalf.getContent();
+        measure.circumference_of_left_thigh = leftThigh.getContent();
+        measure.circumference_of_right_thigh = rightThigh.getContent();
         measure.bmi = bmi.getContent();
         measure.created_at = testDate.getContent();
         measure.body_fat_rate = bodyFatRate.getContent();
@@ -476,17 +504,26 @@ public class ModifyBodyTestFragment extends Fragment {
         if (!TextUtils.isEmpty(mMeasure.body_fat_rate)) {
             addBodyTestBean.body_fat_rate = mMeasure.body_fat_rate;
         }
-        if (!TextUtils.isEmpty(mMeasure.circumference_of_calf)) {
-            addBodyTestBean.circumference_of_calf = mMeasure.circumference_of_calf;
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
+            addBodyTestBean.circumference_of_left_calf = mMeasure.circumference_of_left_calf;
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
+            addBodyTestBean.circumference_of_right_calf = mMeasure.circumference_of_right_calf;
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
             addBodyTestBean.circumference_of_chest = mMeasure.circumference_of_chest;
         }
-        if (!TextUtils.isEmpty(mMeasure.circumference_of_thigh)) {
-            addBodyTestBean.circumference_of_thigh = mMeasure.circumference_of_thigh;
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
+            addBodyTestBean.circumference_of_left_thigh = mMeasure.circumference_of_left_thigh;
         }
-        if (!TextUtils.isEmpty(mMeasure.circumference_of_upper)) {
-            addBodyTestBean.circumference_of_upper = mMeasure.circumference_of_upper;
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
+            addBodyTestBean.circumference_of_right_thigh = mMeasure.circumference_of_right_thigh;
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
+            addBodyTestBean.circumference_of_left_upper = mMeasure.circumference_of_left_upper;
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
+            addBodyTestBean.circumference_of_right_upper = mMeasure.circumference_of_right_upper;
         }
         if (!TextUtils.isEmpty(mMeasure.hipline)) {
             addBodyTestBean.hipline = mMeasure.hipline;

@@ -58,18 +58,12 @@ public class BodyTestFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     @Bind(R.id.img_model)
     ImageView imgModel;
-    @Bind(R.id.upper)
-    TextView upper;
     @Bind(R.id.hipline)
     TextView hipline;
     @Bind(R.id.chest)
     TextView chest;
-    @Bind(R.id.thigh)
-    TextView thigh;
     @Bind(R.id.waistline)
     TextView waistline;
-    @Bind(R.id.calf)
-    TextView calf;
     @Bind(R.id.height)
     TextView height;
     @Bind(R.id.height_layout)
@@ -96,6 +90,18 @@ public class BodyTestFragment extends Fragment {
     Toolbar toolbar;
     @Bind(R.id.test_pic_title)
     TextView testPicTitle;
+    @Bind(R.id.left_upper)
+    TextView leftUpper;
+    @Bind(R.id.right_upper)
+    TextView rightUpper;
+    @Bind(R.id.left_thigh)
+    TextView leftThigh;
+    @Bind(R.id.right_thigh)
+    TextView rightThigh;
+    @Bind(R.id.right_calf)
+    TextView rightCalf;
+    @Bind(R.id.left_calf)
+    TextView leftCalf;
     private int mGender;
 
     private ImageGridAdapter imageGridAdapter;
@@ -117,7 +123,7 @@ public class BodyTestFragment extends Fragment {
      * @return A new instance of fragment BodyTestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BodyTestFragment newInstance(String measreid,int gender) {
+    public static BodyTestFragment newInstance(String measreid, int gender) {
         BodyTestFragment fragment = new BodyTestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, measreid);
@@ -154,13 +160,13 @@ public class BodyTestFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 //跳到编辑页面
-                ((BodyTestActivity)getActivity()).goModify();
+                ((BodyTestActivity) getActivity()).goModify();
                 return true;
             }
         });
-        if (mGender == 0){
+        if (mGender == 0) {
             Glide.with(App.AppContex).load(R.drawable.img_model_male).into(imgModel);
-        }else {
+        } else {
             Glide.with(App.AppContex).load(R.drawable.img_model_female).into(imgModel);
         }
         initInfo();
@@ -256,7 +262,7 @@ public class BodyTestFragment extends Fragment {
                     public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
                         initView(qcGetBodyTestResponse.data.measure);
                         datas.clear();
-                        if (qcGetBodyTestResponse.data.measure.photos != null && qcGetBodyTestResponse.data.measure.photos.size()>0)
+                        if (qcGetBodyTestResponse.data.measure.photos != null && qcGetBodyTestResponse.data.measure.photos.size() > 0)
                             datas.addAll(qcGetBodyTestResponse.data.measure.photos);
                         else
                             testPicTitle.setVisibility(View.GONE);
@@ -300,21 +306,33 @@ public class BodyTestFragment extends Fragment {
             bodyFatRateLayout.setVisibility(View.VISIBLE);
             bodyFatRate.setText(String.format("%s", mMeasure.body_fat_rate));
         }
-        if (!TextUtils.isEmpty(mMeasure.circumference_of_calf)) {
-            calf.setVisibility(View.VISIBLE);
-            calf.setText(String.format("小腿围: %s cm", mMeasure.circumference_of_calf));
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_calf)) {
+            leftCalf.setVisibility(View.VISIBLE);
+            leftCalf.setText(String.format("左小腿围: %s cm", mMeasure.circumference_of_left_calf));
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_calf)) {
+            rightCalf.setVisibility(View.VISIBLE);
+            rightCalf.setText(String.format("右小腿围: %s cm", mMeasure.circumference_of_right_calf));
         }
         if (!TextUtils.isEmpty(mMeasure.circumference_of_chest)) {
             chest.setVisibility(View.VISIBLE);
             chest.setText(String.format("胸围: %s cm", mMeasure.circumference_of_chest));
         }
-        if (!TextUtils.isEmpty(mMeasure.circumference_of_thigh)) {
-            thigh.setVisibility(View.VISIBLE);
-            thigh.setText(String.format("大腿围: %s cm", mMeasure.circumference_of_thigh));
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_thigh)) {
+            leftThigh.setVisibility(View.VISIBLE);
+            leftThigh.setText(String.format("左大腿围: %s cm", mMeasure.circumference_of_left_thigh));
         }
-        if (!TextUtils.isEmpty(mMeasure.circumference_of_upper)) {
-            upper.setVisibility(View.VISIBLE);
-            upper.setText(String.format("上臂围: %s cm", mMeasure.circumference_of_upper));
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_thigh)) {
+            rightThigh.setVisibility(View.VISIBLE);
+            rightThigh.setText(String.format("右大腿围: %s cm", mMeasure.circumference_of_right_thigh));
+        }
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_left_upper)) {
+            leftUpper.setVisibility(View.VISIBLE);
+            leftUpper.setText(String.format("左上臂围: %s cm", mMeasure.circumference_of_left_upper));
+        }
+         if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
+            rightUpper.setVisibility(View.VISIBLE);
+            rightUpper.setText(String.format("右上臂围: %s cm", mMeasure.circumference_of_right_upper));
         }
         if (!TextUtils.isEmpty(mMeasure.hipline)) {
             hipline.setVisibility(View.VISIBLE);

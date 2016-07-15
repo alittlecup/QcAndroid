@@ -43,14 +43,28 @@
                     android:text="2015-08-15体测数据"
                     />
                 <TextView
-                    android:id="@+id/upper"
+                    android:id="@+id/left_upper"
                     style="@style/Qc.TextCommonBlack"
-                    app:layout_marginTopPercent="24%"
+                    app:layout_marginTopPercent="25%"
                     app:layout_marginLeftPercent="24%"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上臂围:20cm"
                     android:visibility="gone"
+                    tools:visibility="visible"
+                    />
+
+                <TextView
+                    android:id="@+id/right_upper"
+                    style="@style/Qc.TextCommonBlack"
+                    app:layout_marginTopPercent="23%"
+                    app:layout_marginLeftPercent="54%"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上臂围:20cm"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+
                     />
 
                 <TextView
@@ -74,24 +88,30 @@
                     android:visibility="gone"
                     />
                 <TextView
+                    android:id="@+id/left_thigh"
                     style="@style/Qc.TextCommonBlack"
-                    app:layout_marginTopPercent="56%"
-                    app:layout_marginLeftPercent="52.6%"
+                    app:layout_marginTopPercent="57%"
+                    app:layout_marginLeftPercent="20.6%"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="大腿围:20cm"
+                    android:text="左大腿围:20cm"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     />
+
                 <TextView
-                    android:id="@+id/thigh"
+                    android:id="@+id/right_thigh"
                     style="@style/Qc.TextCommonBlack"
-                    app:layout_marginTopPercent="56%"
+                    app:layout_marginTopPercent="54%"
                     app:layout_marginLeftPercent="52.6%"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="大腿围:20cm"
+                    android:text="右大腿围:20cm"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     />
+
+
                 <TextView
                     android:id="@+id/waistline"
                     style="@style/Qc.TextCommonBlack"
@@ -103,14 +123,29 @@
                     android:visibility="gone"
                     />
                 <TextView
-                    android:id="@+id/calf"
+                    android:id="@+id/right_calf"
+                    android:visibility="gone"
+                    style="@style/Qc.TextCommonBlack"
+                    app:layout_marginBottomPercent="17.1%"
+                    android:text="右小腿围: 26cm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_marginRightPercent="20%"
+                    android:layout_alignParentRight="true"
+                    tools:visibility="visible"
+                    android:layout_alignParentBottom="true"
+                    />
+
+                <TextView
+                    android:id="@+id/left_calf"
                     android:visibility="gone"
                     style="@style/Qc.TextCommonBlack"
                     app:layout_marginBottomPercent="19.1%"
-                    android:text="小腿围: 26cm"
+                    android:text="左小腿围: 26cm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_marginLeftPercent="24%"
+                    tools:visibility="visible"
                     android:layout_alignParentBottom="true"
                     />
                 <LinearLayout

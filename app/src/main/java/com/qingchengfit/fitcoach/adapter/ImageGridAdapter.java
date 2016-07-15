@@ -73,11 +73,13 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         if (isEditable && position == datas.size()){
             holder.delete.setVisibility(View.GONE);
             holder.img.setScaleType(ImageView.ScaleType.CENTER);
-            Glide.with(App.AppContex).load(R.drawable.ic_add_image).into(holder.img);
+            holder.img.setPadding(40,40,40,40);
+            holder.img.setImageResource(R.drawable.ic_add_image);
             holder.img.setBackgroundResource(R.drawable.bg_rect);
 
         }else {
             holder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            holder.img.setPadding(0,0,0,0);
             Glide.with(App.AppContex).load(datas.get(position).photo).into(holder.img);
             if (isEditable)
                 holder.delete.setVisibility(View.VISIBLE);
