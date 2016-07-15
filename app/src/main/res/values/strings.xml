@@ -110,5 +110,6 @@
     <string name="choose_time">选择时间</string>
     <string name="choose_week">选择星期</string>
     <string name="wechat_code">wx81e378c8fd03319d</string>
+    <string name="err_server">服务器错误</string>
 
 </resources>

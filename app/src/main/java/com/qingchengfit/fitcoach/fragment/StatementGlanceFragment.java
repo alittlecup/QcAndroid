@@ -184,15 +184,18 @@ public class StatementGlanceFragment extends Fragment {
 
             if (curSystemId != 0 && (curSystemId != system.service.id || !system.service.model.equals(curModel)))
                 continue;
-            monthClassNum += system.stat.month.course_count;
-            monthOrderNum += system.stat.month.order_count;
-            monthServerNum += system.stat.month.user_count;
-            weekClassNum += system.stat.week.course_count;
-            weekOrderNum += system.stat.week.order_count;
-            weekServerNum += system.stat.week.user_count;
-            dayClassNum += system.stat.today.course_count;
-            dayOrderNum = +system.stat.today.order_count;
-            dayServerNum += system.stat.today.user_count;
+            if (system.stat!= null && system.stat.month != null) {
+
+                monthClassNum += system.stat.month.course_count;
+                monthOrderNum += system.stat.month.order_count;
+                monthServerNum += system.stat.month.user_count;
+                weekClassNum += system.stat.week.course_count;
+                weekOrderNum += system.stat.week.order_count;
+                weekServerNum += system.stat.week.user_count;
+                dayClassNum += system.stat.today.course_count;
+                dayOrderNum = +system.stat.today.order_count;
+                dayServerNum += system.stat.today.user_count;
+            }
         }
 
         StringBuffer monthContent = new StringBuffer();

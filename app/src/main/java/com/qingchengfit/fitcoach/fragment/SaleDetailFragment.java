@@ -370,7 +370,7 @@ public class SaleDetailFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     hideLoading();
-                                    ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                                    ToastUtils.show(R.drawable.ic_share_fail, getString(R.string.err_server));
                                 }
 
                             });
