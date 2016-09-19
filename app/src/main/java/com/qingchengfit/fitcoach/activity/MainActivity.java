@@ -315,7 +315,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     }
 
     private void initBDPush() {
-        if (!PreferenceUtils.getPrefBoolean(this, "hasPushId", false)) {
+//        if (!PreferenceUtils.getPrefBoolean(this, "hasPushId", false)) {
             String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
             String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
             if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)) {
@@ -340,7 +340,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                             @Override
                             public void onNext(QcResponse qcResponse) {
                                 if (qcResponse.status == ResponseResult.SUCCESS) {
-                                    LogUtil.e("pushId:bundle");
                                     PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
                                 }
                             }
@@ -348,9 +347,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             } else {
                 LogUtil.e("bdpush:empty");
             }
-        } else {
-            LogUtil.e("hasBunldle");
-        }
     }
 
     @Override

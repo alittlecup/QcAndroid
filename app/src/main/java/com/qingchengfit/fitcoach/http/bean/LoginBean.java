@@ -22,6 +22,7 @@ public class LoginBean {
     public String code;
     public String device_type;
 
+
     public LoginBean() {
     }
 
