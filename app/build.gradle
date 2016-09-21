@@ -108,7 +108,7 @@ android {
 //        }
         common {
 //            dimension 'oem'
-
+            minSdkVersion 21
         }
         joinfit {
             minSdkVersion 15

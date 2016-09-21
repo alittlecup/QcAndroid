@@ -144,4 +144,11 @@
         <attr name="ci_drawable_unselected" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pst_text_color" format="color"/>
+        <attr name="pst_text_size" format="dimension"/>
+        <attr name="pst_text_highlight_color" format="color"/>
+    </declare-styleable>
+
+
 </resources>

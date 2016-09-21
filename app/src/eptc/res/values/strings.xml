@@ -2,5 +2,6 @@
     <string name="app_name">健身教练助手</string>
     <string name="oem_tag">eptc</string>
     <string name="fir_token">530ff4e0cd700e974c6c42c87a9daa65</string>
+    <string name="baidu_api">Rth3x24pVQTIa3aX9BcmP8OW</string>
 
 </resources>

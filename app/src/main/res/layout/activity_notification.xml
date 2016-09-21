@@ -1,15 +1,42 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                tools:context="com.qingchengfit.fitcoach.activity.NotificationActivity">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.activity.NotificationActivity">
 
-    <include layout="@layout/common_toolbar"></include>
-    <FrameLayout
-        android:id="@+id/notification_layout"
+    <include layout="@layout/common_toolbar"/>
+    <!--<FrameLayout-->
+    <!--android:id="@+id/notification_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@id/toolbar"-->
+    <!--&gt;</FrameLayout>-->
+    <com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip
+        android:id="@+id/strip"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:pst_text_highlight_color="@color/primary"
+        />
+    <!--<android.support.design.widget.TabLayout-->
+        <!--android:id="@+id/tablayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="45dp"-->
+        <!--app:tabMode="fixed"-->
+        <!--/>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bg_grey"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        ></FrameLayout>
-</RelativeLayout>
+        />
+</LinearLayout>

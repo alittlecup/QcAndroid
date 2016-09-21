@@ -7,10 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -21,20 +19,22 @@ import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.bean.EventNotiFresh;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -57,45 +57,25 @@ public class NotificationFragment extends BaseSettingFragment {
 //    PtrFrameLayout pulltorefresh;
     private int totalPage = 1;
     private int curpage = 1;
+    private int unReadCount = 0;
     private LinearLayoutManager linearLayoutManager;
+
+    public static NotificationFragment newInstance() {
+        Bundle args = new Bundle();
+        NotificationFragment fragment = new NotificationFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public NotificationFragment() {
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(R.menu.menu_clear_noti, R.drawable.ic_arrow_left, "全部通知");
-        fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                QcCloudClient.getApi().postApi.qcClearAllNotification(App.coachid)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(new Observer<QcResponse>() {
-                            @Override
-                            public void onCompleted() {
 
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(QcResponse qcResponse) {
-                                list.clear();
-                                onRefesh();
-                            }
-                        });
-                return false;
-            }
-        });
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -142,8 +122,6 @@ public class NotificationFragment extends BaseSettingFragment {
 //        final StoreHouseHeader header = new StoreHouseHeader(getContext());
 //        header.setPadding(0, MeasureUtils.dpToPx(15f, getResources()), 0, 0);
 //        header.initWithStringArray(R.array.storehouse);
-
-
 //        pulltorefresh.setHeaderView(header);
 //        pulltorefresh.addPtrUIHandler(new PtrUIHandler() {
 //            @Override
@@ -178,6 +156,7 @@ public class NotificationFragment extends BaseSettingFragment {
             @Override
             public void onRefresh() {
                 list.clear();
+                unReadCount = 0;
                 curpage = 1;
                 onRefesh();
             }
@@ -186,6 +165,7 @@ public class NotificationFragment extends BaseSettingFragment {
             @Override
             public void onRefresh() {
                 list.clear();
+                unReadCount = 0;
                 curpage = 1;
                 onRefesh();
             }
@@ -193,7 +173,7 @@ public class NotificationFragment extends BaseSettingFragment {
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
                 refresh.setRefreshing(true);
                 onRefesh();
             }
@@ -207,18 +187,27 @@ public class NotificationFragment extends BaseSettingFragment {
         if (curpage < totalPage) {
             curpage++;
             onRefesh();
-        }else {
+        } else {
             ToastUtils.showDefaultStyle("无更多通知");
         }
     }
 
 
+    public int getUnReadCount() {
+        return unReadCount;
+    }
 
+    public void freshData(){
+        list.clear();
+        unReadCount = 0;
+        curpage = 1;
+        onRefesh();
+    }
 
     public synchronized void onRefesh() {
         HashMap<String, Integer> params = new HashMap<String, Integer>();
         params.put("page", curpage);
-        QcCloudClient.getApi().getApi.qcGetMessages(App.coachid,params)
+        QcCloudClient.getApi().getApi.qcGetMessages(App.coachid, params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcNotificationResponse>() {
                     @Override
@@ -240,7 +229,13 @@ public class NotificationFragment extends BaseSettingFragment {
                         if (refresh != null) {
                             totalPage = qcNotificationResponse.getData().getPages();
                             list.addAll(qcNotificationResponse.getData().getNotifications());
+
                             if (list != null && list.size() > 0) {
+                                for (int i = 0; i < list.size(); i++) {
+                                    if (!list.get(i).is_read()) {
+                                        unReadCount++;
+                                    }
+                                }
                                 refresh.setVisibility(View.VISIBLE);
                                 refreshNodata.setVisibility(View.GONE);
 
@@ -252,6 +247,11 @@ public class NotificationFragment extends BaseSettingFragment {
                             }
                             refresh.setRefreshing(false);
                             refreshNodata.setRefreshing(false);
+                            if (new Random(System.currentTimeMillis()).nextBoolean())
+                                unReadCount++;
+                            else unReadCount = 0;
+
+                            RxBus.getBus().post(new EventNotiFresh());
                         }
                     }
                 });
@@ -262,7 +262,7 @@ public class NotificationFragment extends BaseSettingFragment {
     public void onResume() {
         super.onResume();
 
-       adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -291,6 +291,7 @@ public class NotificationFragment extends BaseSettingFragment {
         TextView itemDesc;
         @Bind(R.id.icon_right)
         ImageView iconRight;
+
         public NotifiVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
