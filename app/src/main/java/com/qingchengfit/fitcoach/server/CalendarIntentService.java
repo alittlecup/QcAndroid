@@ -121,10 +121,10 @@ public class CalendarIntentService extends IntentService {
 
             long calid = PreferenceUtils.getPrefLong(App.AppContex, "calendar_id", -1l);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                PhoneFuncUtils.delOndDayCal(this, calid, param1);
                 return;
             }
 
+            PhoneFuncUtils.delOndDayCal(this, calid, param1);
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
             List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
@@ -187,10 +187,10 @@ public class CalendarIntentService extends IntentService {
             c.setTime(new Date(start));
             c.add(Calendar.DAY_OF_MONTH, 7);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                PhoneFuncUtils.delTimeCal(this, calid, start, c.getTimeInMillis());
+
                 return;
             }
-
+            PhoneFuncUtils.delTimeCal(this, calid, start, c.getTimeInMillis());
 
             QcSchedulesResponse qcSchedulesResponse = new Gson().fromJson(param2, QcSchedulesResponse.class);
             List<QcSchedulesResponse.Service> systems = qcSchedulesResponse.data.services;
