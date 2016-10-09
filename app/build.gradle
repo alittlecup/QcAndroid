@@ -47,12 +47,19 @@ android {
     compileSdkVersion 23
     buildToolsVersion "24.0.0"
 
+//    retrolambda {
+//        jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
+//        oldJdk System.getenv("JAVA7_HOME")
+//        javaVersion JavaVersion.VERSION_1_7
+//    }
     retrolambda {
-        jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
+        jdk System.getenv("JAVA8_HOME")
         oldJdk System.getenv("JAVA7_HOME")
         javaVersion JavaVersion.VERSION_1_7
+        jvmArgs '-arg1', '-arg2'
+        defaultMethods false
+        incremental true
     }
-
 
     defaultConfig {
         applicationId "com.qingchengfit.fitcoach"
@@ -192,7 +199,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
 
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
