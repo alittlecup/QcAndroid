@@ -40,6 +40,7 @@ import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -200,11 +201,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        if (aBoolean){
+                        if (aBoolean) {
                             setupFile();
                             initVersion();
-                        }
-                        else ToastUtils.showDefaultStyle("请开启存储空间权限");
+                        } else ToastUtils.showDefaultStyle("请开启存储空间权限");
                     }
                 });
 
@@ -246,17 +246,17 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initBDPush();
         initCalendar();
 
-        RxPermissions.getInstance(this).request(Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ,Manifest.permission.READ_EXTERNAL_STORAGE
-                ,Manifest.permission.READ_CALENDAR
-                ,Manifest.permission.WRITE_CALENDAR
+        RxPermissions.getInstance(this).request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.READ_CALENDAR
+                , Manifest.permission.WRITE_CALENDAR
         )
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        if (aBoolean){
+                        if (aBoolean) {
 
-                        }else {
+                        } else {
                             ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
                         }
                     }
@@ -316,37 +316,37 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     private void initBDPush() {
 //        if (!PreferenceUtils.getPrefBoolean(this, "hasPushId", false)) {
-            String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
-            String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
-            if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)) {
-                PushBody pushBody = new PushBody();
-                pushBody.push_channel_id = channelid;
-                pushBody.push_id = userid;
-                pushBody.device_type = "android";
-                pushBody.distribute = getString(R.string.oem_tag);
-                QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(new Subscriber<QcResponse>() {
-                            @Override
-                            public void onCompleted() {
+        String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
+        String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
+        if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)) {
+            PushBody pushBody = new PushBody();
+            pushBody.push_channel_id = channelid;
+            pushBody.push_id = userid;
+            pushBody.device_type = "android";
+            pushBody.distribute = getString(R.string.oem_tag);
+            QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<QcResponse>() {
+                        @Override
+                        public void onCompleted() {
 
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(QcResponse qcResponse) {
+                            if (qcResponse.status == ResponseResult.SUCCESS) {
+                                PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
                             }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(QcResponse qcResponse) {
-                                if (qcResponse.status == ResponseResult.SUCCESS) {
-                                    PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
-                                }
-                            }
-                        });
-            } else {
-                LogUtil.e("bdpush:empty");
-            }
+                        }
+                    });
+        } else {
+            LogUtil.e("bdpush:empty");
+        }
     }
 
     @Override
@@ -420,13 +420,22 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         }
 
 
-        FIR.checkForUpdateInFIR(getString(R.string.fir_token), new VersionCheckCallback() {
+        FIR.checkForUpdateInFIR(getString(BuildConfig.DEBUG ? R.string.fir_token_debug : R.string.fir_token), new VersionCheckCallback() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
-                if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex))
-                    return;
+                if (BuildConfig.DEBUG) {
+                    long oldupdate = PreferenceUtils.getPrefLong(MainActivity.this, "update", 0);
+                    if (updateVersion.updated_at <= oldupdate){
+                        return;
+                    }
+                    PreferenceUtils.setPrefLong(MainActivity.this, "update", updateVersion.updated_at);
+
+                } else {
+                    if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex))
+                        return;
+                }
 
                 url = updateVersion.direct_install_url;
                 newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + updateVersion.version + ".apk");

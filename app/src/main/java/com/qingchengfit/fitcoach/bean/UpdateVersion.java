@@ -25,7 +25,7 @@ public class UpdateVersion {
     @SerializedName("direct_install_url")
     public String direct_install_url;
     @SerializedName("updated_at")
-    public String updated_at;
+    public Long updated_at;
     @SerializedName("version")
     public int version;
 
