@@ -142,7 +142,7 @@ android {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             debuggable false
             proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
             zipAlignEnabled true
@@ -150,33 +150,33 @@ android {
         debug {
             signingConfig signingConfigs.release
             debuggable true
+            minifyEnabled true
+            proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
         }
     }
 
 }
 
 dependencies {
-
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
-//    compile files('libs/MobLogCollector.jar')
-//    compile files('libs/MobTools.jar')
-//    compile files('libs/ShareSDK-Core-2.6.1.jar')
-//    compile files('libs/ShareSDK-Email-2.6.1.jar')
-//    compile files('libs/ShareSDK-Facebook-2.6.1.jar')
-//    compile files('libs/ShareSDK-QQ-2.6.1.jar')
-//    compile files('libs/ShareSDK-QZone-2.6.1.jar')
-//    compile files('libs/ShareSDK-ShortMessage-2.6.1.jar')
-//    compile files('libs/ShareSDK-SinaWeibo-2.6.1.jar')
-//    compile files('libs/ShareSDK-TencentWeibo-2.6.1.jar')
-//    compile files('libs/ShareSDK-Twitter-2.6.1.jar')
-//    compile files('libs/ShareSDK-Wechat-Core-2.6.1.jar')
-//    compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
-//    compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
+    //    compile files('libs/MobLogCollector.jar')
+    //    compile files('libs/MobTools.jar')
+    //    compile files('libs/ShareSDK-Core-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Email-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Facebook-2.6.1.jar')
+    //    compile files('libs/ShareSDK-QQ-2.6.1.jar')
+    //    compile files('libs/ShareSDK-QZone-2.6.1.jar')
+    //    compile files('libs/ShareSDK-ShortMessage-2.6.1.jar')
+    //    compile files('libs/ShareSDK-SinaWeibo-2.6.1.jar')
+    //    compile files('libs/ShareSDK-TencentWeibo-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Twitter-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Wechat-Core-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/java-sdk-3.1.jar')
-//    compile files('libs/ShareSDK-Wechat-2.6.1.jar')
+    //    compile files('libs/ShareSDK-Wechat-2.6.1.jar')
     compile files('libs/pushservice-4.5.3.48.jar')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
@@ -186,14 +186,12 @@ dependencies {
     compile files('libs/youzan-sdk-v2.0.4.jar')
     compile project(path: ':fir-sdk-1.3.7')
     compile project(path: ':paperbaselibrary')
-//    debugCompile project(path: ':paperbaselibrary', configuration: 'debug')
-//    releaseCompile project(path: ':paperbaselibrary', configuration: 'release')
+    //    debugCompile project(path: ':paperbaselibrary', configuration: 'debug')
+    //    releaseCompile project(path: ':paperbaselibrary', configuration: 'release')
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
-
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
-
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
@@ -208,7 +206,7 @@ dependencies {
     //android support
     compile 'com.android.support:cardview-v7:23.2.1'
     compile 'com.android.support:percent:23.2.1'
-    compile 'com.android.support:support-v4:23.2.1'
+    //    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'

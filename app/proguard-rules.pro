@@ -355,7 +355,7 @@
     # Gson specific classes
     -keep class sun.misc.Unsafe { *; }
     # Application classes that will be serialized/deserialized over Gson
-    -keep class android.support.**{*;}
+#    -keep class android.support.**{*;}
     -keep class in.srain.**{*;}
     -keep class com.afollestad.**{*;}
     -keep class me.gujun.**{*;}
