@@ -52,14 +52,7 @@ android {
 //        oldJdk System.getenv("JAVA7_HOME")
 //        javaVersion JavaVersion.VERSION_1_7
 //    }
-    retrolambda {
-        jdk System.getenv("JAVA8_HOME")
-        oldJdk System.getenv("JAVA7_HOME")
-        javaVersion JavaVersion.VERSION_1_7
-        jvmArgs '-arg1', '-arg2'
-        defaultMethods false
-        incremental true
-    }
+
 
     defaultConfig {
         applicationId "com.qingchengfit.fitcoach"
@@ -200,6 +193,8 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
 
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
+
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
