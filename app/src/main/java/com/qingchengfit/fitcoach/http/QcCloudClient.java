@@ -105,6 +105,7 @@ import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 
@@ -269,18 +270,18 @@ public class QcCloudClient {
 //        rx.Observable<QcNotificationResponse> qcGetMessages();
 
         //获取通知 分页和不分页接口 ,后者只为拿 未读
-        @GET("/api/coaches/{id}/notifications/")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id, @QueryMap HashMap<String, Integer> params);
+        @GET("/api/notifications/")
+        rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id") int id, @QueryMap HashMap<String,String> params);
 
-        @GET("/api/coaches/{id}/notifications/")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@Path("id") int id);
+        @GET("/api/notifications/?type=COACH_0")
+        rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id")int id);
 
         //通知详情
         @GET("/api/messages/{id}/")
         rx.Observable<QcNotiDetailResponse> qcGetMsgDetails(@Path("id") int id);
 
         //教练详情
-        @GET("/api/coaches/{id}/")
+            @GET("/api/coaches/{id}/")
         rx.Observable<QcCoachRespone> qcGetCoach(@Path("id") int id);
 
         @Deprecated //版本号 现在走fir
@@ -554,12 +555,12 @@ public class QcCloudClient {
         rx.Observable<QcResponse> qcPostPushId(@Path("id") int id, @Body PushBody body);
 
         //清除notification
-        @POST("/api/coaches/{id}/notifications/clear/")
-        rx.Observable<QcResponse> qcClearAllNotification(@Path("id") int id);
+        @PUT("/api/notifications/clear/?type=COACH_0")
+        rx.Observable<QcResponse> qcClearAllNotification(@Query("coach_id") int id);
 
         //清除某条notification
-        @POST("/api/notifications/{id}/clear/")
-        rx.Observable<QcResponse> qcClearOneNotification(@Path("id") int id);
+        @PUT("/api/notifications/clear/")
+        rx.Observable<QcResponse> qcClearOneNotification(@Query("coach_id") int id,@Query("id") String notiId);
 
         @POST("/api/v1/coaches/{id}/courses/")
         rx.Observable<AddCoourseResponse> qcAddCourse(@Path("id") int id,@Body AddCourse addCourse);

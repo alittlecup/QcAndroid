@@ -14,7 +14,7 @@ package com.qingchengfit.fitcoach.http.bean;
  * Created by Paper on 15/12/8 2015.
  */
 public class PushBody {
-    public String channel_id;
+    public String push_channel_id;
     public String push_id;
     public String device_type;
     public String distribute;

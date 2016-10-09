@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.paper.paperbaselibrary.component.GlideCircleTransform;
+import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.bean.EventLatestNoti;
 import com.qingchengfit.fitcoach.bean.EventNotiFresh;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -31,7 +33,6 @@ import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,6 +45,9 @@ import rx.schedulers.Schedulers;
  */
 public class NotificationFragment extends BaseSettingFragment {
     public static final String TAG = NotificationFragment.class.getName();
+    public static final String[] TYPES  = {"COACH_1","COACH_2","COACH_3"};
+
+
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     NotifiAdapter adapter;
@@ -60,9 +64,10 @@ public class NotificationFragment extends BaseSettingFragment {
     private int unReadCount = 0;
     private LinearLayoutManager linearLayoutManager;
 
-    public static NotificationFragment newInstance() {
+    public static NotificationFragment newInstance(int type) {
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
+        args.putInt("t",type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,15 +86,23 @@ public class NotificationFragment extends BaseSettingFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new NotifiAdapter(list);
         adapter.setListener((v, pos) -> {
-            QcCloudClient.getApi().postApi.qcClearOneNotification(adapter.datas.get(pos).getId()).subscribeOn(Schedulers.io())
+//            HashMap<String,String> params = new HashMap<>();
+//            params.put("id",adapter.datas.get(pos).getId()+"");
+//            params.put("type",TYPES[getArguments().getInt("t")]);
+            QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid,adapter.datas.get(pos).getId()+"").subscribeOn(Schedulers.io())
                     .subscribe();
             adapter.datas.get(pos).setIs_read(true);
+            unReadCount--;
+            if (unReadCount < 1){
+                RxBus.getBus().post(new EventNotiFresh());
+            }
             if (!TextUtils.isEmpty(adapter.datas.get(pos).getUrl())) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
                 toWeb.putExtra("url", adapter.datas.get(pos).getUrl());
 
                 startActivity(toWeb);
             }
+            adapter.notifyItemChanged(pos);
 //            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
 //            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
         });
@@ -205,8 +218,9 @@ public class NotificationFragment extends BaseSettingFragment {
     }
 
     public synchronized void onRefesh() {
-        HashMap<String, Integer> params = new HashMap<String, Integer>();
-        params.put("page", curpage);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("page", curpage+"");
+        params.put("type",TYPES[getArguments().getInt("t")]);
         QcCloudClient.getApi().getApi.qcGetMessages(App.coachid, params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcNotificationResponse>() {
@@ -229,10 +243,12 @@ public class NotificationFragment extends BaseSettingFragment {
                         if (refresh != null) {
                             totalPage = qcNotificationResponse.getData().getPages();
                             list.addAll(qcNotificationResponse.getData().getNotifications());
-
+                            int fistUnread = -1;
                             if (list != null && list.size() > 0) {
                                 for (int i = 0; i < list.size(); i++) {
                                     if (!list.get(i).is_read()) {
+                                        if (fistUnread < 0)
+                                            fistUnread = i;
                                         unReadCount++;
                                     }
                                 }
@@ -247,11 +263,12 @@ public class NotificationFragment extends BaseSettingFragment {
                             }
                             refresh.setRefreshing(false);
                             refreshNodata.setRefreshing(false);
-                            if (new Random(System.currentTimeMillis()).nextBoolean())
-                                unReadCount++;
-                            else unReadCount = 0;
+
 
                             RxBus.getBus().post(new EventNotiFresh());
+                            if (fistUnread >0)
+                                RxBus.getBus().post(new EventLatestNoti(DateUtils.formatDateFromServer(qcNotificationResponse.getData().getNotifications().get(fistUnread).getCreated_at()).getTime(),getArguments().getInt("t")));
+
                         }
                     }
                 });

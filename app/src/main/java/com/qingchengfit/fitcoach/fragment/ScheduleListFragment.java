@@ -251,7 +251,7 @@ public class ScheduleListFragment extends Fragment {
                 bean.intent_url = schedule.url;
                 if (getContext() != null) {
                     RxPermissions.getInstance(getContext())
-                            .request(Manifest.permission.READ_CALENDAR)
+                            .request(Manifest.permission.READ_CALENDAR,Manifest.permission.WRITE_CALENDAR)
                             .subscribe(new Action1<Boolean>() {
                                 @Override
                                 public void call(Boolean aBoolean) {

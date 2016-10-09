@@ -67,7 +67,7 @@ public class NotiDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         if (id != 0)
-            QcCloudClient.getApi().postApi.qcClearOneNotification(id).subscribeOn(Schedulers.io())
+            QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid,id+"").subscribeOn(Schedulers.io())
             .subscribe();
             QcCloudClient.getApi().getApi.qcGetMsgDetails(id).subscribe(
                     qcNotiDetailResponse -> {

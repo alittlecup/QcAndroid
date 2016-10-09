@@ -320,9 +320,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
             if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)) {
                 PushBody pushBody = new PushBody();
-                pushBody.channel_id = channelid;
+                pushBody.push_channel_id = channelid;
                 pushBody.push_id = userid;
-                pushBody.device_type = "Android";
+                pushBody.device_type = "android";
                 pushBody.distribute = getString(R.string.oem_tag);
                 QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
                         .subscribeOn(Schedulers.io())

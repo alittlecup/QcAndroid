@@ -160,7 +160,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");
-
+            if (!url.startsWith("http"))
+                url = "http://"+url;
             CookieSyncManager.createInstance(this);
             cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
@@ -211,17 +212,16 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
                     @Override
                     public void onNext(PayEvent payEvent) {
-                        if (payEvent.result == 0){
-                            if (mWebviewWebView!=null)
+                        if (payEvent.result == 0) {
+                            if (mWebviewWebView != null)
                                 mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
-                        }else{
-                            if (mWebviewWebView!=null)
-                                mWebviewWebView.loadUrl("javascript:window.payErrorCallback("+payEvent.result+");");
+                        } else {
+                            if (mWebviewWebView != null)
+                                mWebviewWebView.loadUrl("javascript:window.payErrorCallback(" + payEvent.result + ");");
                         }
                     }
                 })
         ;
-
 
 
         if (dialog == null) {
@@ -236,7 +236,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    if (mValueCallback!= null)
+                    if (mValueCallback != null)
                         mValueCallback.onReceiveValue(null);
                     if (mValueCallbackNew != null)
                         mValueCallbackNew.onReceiveValue(null);
@@ -244,27 +244,29 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             });
             dialog.setListener(v -> {
                         dialog.dismiss();
-                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.CAMERA)){
-                        Intent intent = new Intent();
-                        // 指定开启系统相机的Action
-                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.addCategory(Intent.CATEGORY_DEFAULT);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);}else ToastUtils.showDefaultStyle("请开启拍照权限");
+                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.CAMERA)) {
+                            Intent intent = new Intent();
+                            // 指定开启系统相机的Action
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            intent.addCategory(Intent.CATEGORY_DEFAULT);
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                        } else ToastUtils.showDefaultStyle("请开启拍照权限");
                     },
                     v -> {
                         //图片选择
                         dialog.dismiss();
-                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("image/jpeg");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        } else {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            intent.setType("image/jpeg");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                            } else {
+                                startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
 
-                        }}else ToastUtils.showDefaultStyle("请开启外部存储权限");
+                            }
+                        } else ToastUtils.showDefaultStyle("请开启外部存储权限");
                     }
 
             );
@@ -464,9 +466,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         webSetting.setDomStorageEnabled(true);
         webSetting.setGeolocationEnabled(true);
         webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
-        webSetting.setUserAgentString(webSetting.getUserAgentString() + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:"+getString(R.string.oem_tag));
+        webSetting.setUserAgentString(webSetting.getUserAgentString() + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + getString(R.string.oem_tag));
         // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
-        LogUtil.e("uA:"+webSetting.getUserAgentString());
+        LogUtil.e("uA:" + webSetting.getUserAgentString());
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -479,13 +481,15 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
-                if (!hostArray.contains(uri.getHost())) {
+                if (uri.getHost() != null && !hostArray.contains(uri.getHost())) {
                     hostArray.add(uri.getHost());
-                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
-                    LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                    if (cookieManager != null) {
+                        LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                        LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
+                    }
                 }
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
-                setCookie(uri.getHost(),"oem",getString(R.string.oem_tag));
+                setCookie(uri.getHost(), "oem", getString(R.string.oem_tag));
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
@@ -502,6 +506,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     }
 
     public void setCookie(String url, String key, String value) {
+        if (TextUtils.isEmpty(url))
+            return;
         StringBuffer sb = new StringBuffer();
 //        String oriCookie = xWalkCookieManager.getCookie(url);
 //        if (oriCookie != null){
@@ -510,7 +516,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         sb.append(key);
         sb.append("=");
         sb.append(value).append(";");
-        cookieManager.setCookie(url, sb.toString());
+        if (cookieManager != null)
+            cookieManager.setCookie(url, sb.toString());
 //        LogUtil.e(sb.toString());
     }
 
@@ -523,9 +530,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY) {
                 filepath = FileUtils.getPath(this, data.getData());
-                if (mValueCallback!=null)
+                if (mValueCallback != null)
                     mValueCallback.onReceiveValue(data.getData());
-                if (mValueCallbackNew != null){
+                if (mValueCallbackNew != null) {
                     Uri[] uris = new Uri[1];
                     uris[0] = data.getData();
                     mValueCallbackNew.onReceiveValue(uris);
@@ -548,9 +555,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                                 ToastUtils.show("上传图片成功");
 
 //                                mValueCallback.onReceiveValue(Uri.fromFile(upFile));
-                                if (mValueCallback!=null)
+                                if (mValueCallback != null)
                                     mValueCallback.onReceiveValue(Uri.fromFile(upFile));
-                                if (mValueCallbackNew != null){
+                                if (mValueCallbackNew != null) {
                                     Uri[] uris = new Uri[1];
                                     uris[0] = Uri.fromFile(upFile);
                                     mValueCallbackNew.onReceiveValue(uris);
@@ -558,9 +565,9 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
                                 mValueCallback = null;
                                 mValueCallbackNew = null;
                             } else {
-                                if (mValueCallback!=null)
+                                if (mValueCallback != null)
                                     mValueCallback.onReceiveValue(null);
-                                if (mValueCallbackNew != null){
+                                if (mValueCallbackNew != null) {
                                     mValueCallbackNew.onReceiveValue(null);
                                 }
                                 ToastUtils.show(R.drawable.ic_share_fail, "上传图片失败");
@@ -634,8 +641,6 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
     }
 
 
-
-
     @Override
     public void onBackPressed() {
         if (canGoBack()) {
@@ -683,7 +688,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 
                 ShareBean bean = new Gson().fromJson(json, ShareBean.class);
 //                ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, ben.title);
-                ShareDialogFragment.newInstance(bean.title,bean.desc,bean.imgUrl,bean.link).show(getSupportFragmentManager(),"");
+                ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link).show(getSupportFragmentManager(), "");
             } catch (Exception e) {
 
             }
@@ -716,12 +721,12 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
 //                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
 //                request.partnerId = object.getString("partnerId");
 
-                request.prepayId= object.getString("prepayid");
+                request.prepayId = object.getString("prepayid");
                 request.packageValue = "Sign=WXPay";
-                request.nonceStr= object.getString("noncestr");
-                request.timeStamp= object.getString("timestamp");
-                request.sign= object.getString("sign");
-                LogUtil.e("xxx:"+request.checkArgs() );
+                request.nonceStr = object.getString("noncestr");
+                request.timeStamp = object.getString("timestamp");
+                request.sign = object.getString("sign");
+                LogUtil.e("xxx:" + request.checkArgs());
                 msgApi.sendReq(request);
             } catch (JSONException e) {
                 e.printStackTrace();

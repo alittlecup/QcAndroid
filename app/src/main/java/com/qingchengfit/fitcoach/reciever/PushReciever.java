@@ -13,11 +13,8 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 
 import java.util.List;
-
-import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -87,7 +84,7 @@ public class PushReciever extends PushMessageReceiver {
             if (bean ==null || TextUtils.isEmpty(bean.url)){
                 return;
             }
-            QcCloudClient.getApi().postApi.qcClearOneNotification(bean.notification_id).subscribeOn(Schedulers.io()).subscribe();
+//            QcCloudClient.getApi().postApi.qcClearOneNotification(App.bean.notification_id).subscribeOn(Schedulers.io()).subscribe();
             if (App.gMainAlive){
                 LogUtil.e("isAlive");
                 Intent toMain = new Intent(context, WebActivity.class);
