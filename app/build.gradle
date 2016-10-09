@@ -112,7 +112,7 @@ android {
 
         internal {
 //            dimension 'oem'
-            minSdkVersion 21
+            minSdkVersion 15
         }
         joinfit {
             minSdkVersion 15
