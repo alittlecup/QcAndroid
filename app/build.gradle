@@ -150,7 +150,6 @@ android {
         debug {
             signingConfig signingConfigs.release
             debuggable true
-            minifyEnabled true
         }
     }
 
