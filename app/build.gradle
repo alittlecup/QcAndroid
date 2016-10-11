@@ -144,7 +144,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled true
             debuggable false
-            proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
+            proguardFile './app/proguard-rules.pro'
             zipAlignEnabled true
         }
         debug {
