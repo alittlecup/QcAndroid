@@ -220,7 +220,7 @@ public class NotificationFragment extends BaseSettingFragment {
     public synchronized void onRefesh() {
         HashMap<String, String> params = new HashMap<>();
         params.put("page", curpage+"");
-        params.put("type",TYPES[getArguments().getInt("t")]);
+        params.put("tab",TYPES[getArguments().getInt("t")]);
         QcCloudClient.getApi().getApi.qcGetMessages(App.coachid, params)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcNotificationResponse>() {
