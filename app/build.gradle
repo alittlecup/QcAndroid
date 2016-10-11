@@ -151,7 +151,6 @@ android {
             signingConfig signingConfigs.release
             debuggable true
             minifyEnabled true
-            proguardFile '/Users/peggy/AndroidStudioProjects/android-fitcoach/app/proguard-rules.pro'
         }
     }
 
