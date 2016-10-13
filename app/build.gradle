@@ -142,7 +142,7 @@ android {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            minifyEnabled true
+            minifyEnabled false
             debuggable false
             proguardFile 'proguard-rules.pro'
             zipAlignEnabled true

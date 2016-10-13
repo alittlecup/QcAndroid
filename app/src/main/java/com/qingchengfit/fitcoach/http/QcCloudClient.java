@@ -145,7 +145,7 @@ public class QcCloudClient {
         }
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
                 .setClient(new OkClient(okHttpClient))
                 .setRequestInterceptor(request ->
                         {
