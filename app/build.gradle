@@ -209,6 +209,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
+    compile files('libs/pushservice-5.2.0.12.jar')
 }
 
 //buildscript {

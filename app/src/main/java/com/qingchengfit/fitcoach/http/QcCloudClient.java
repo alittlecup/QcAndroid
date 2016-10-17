@@ -182,7 +182,7 @@ public class QcCloudClient {
                 .build();
         RestAdapter restAdapter2 = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
 //                .setLogLevel( RestAdapter.LogLevel.FULL )
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
@@ -273,7 +273,7 @@ public class QcCloudClient {
         @GET("/api/notifications/")
         rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id") int id, @QueryMap HashMap<String,String> params);
 
-        @GET("/api/notifications/?type=COACH_0")
+        @GET("/api/notifications/?tab=COACH_0")
         rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id")int id);
 
         //通知详情

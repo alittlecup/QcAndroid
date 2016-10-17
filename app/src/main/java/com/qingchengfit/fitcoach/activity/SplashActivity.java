@@ -123,7 +123,7 @@ public class SplashActivity extends BaseAcitivity {
 
     public void goSplashViewpager() {
         LogUtil.e("oem:"+getString(R.string.oem_tag));
-        if (getString(R.string.oem_tag).equalsIgnoreCase("qingcheng")) {
+        if (getString(R.string.oem_tag).contains("qingcheng")) {
 
             for (int i = 0; i < mSplashImg.length; i++) {
                 ImageView imageView = new ImageView(this);

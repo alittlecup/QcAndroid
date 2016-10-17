@@ -56,6 +56,17 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
+
+    <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名-->
+    <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example" />
+    <permission
+        android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"
+        android:protectionLevel="normal">
+    </permission>
+
+
+
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -240,6 +251,44 @@
                 <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
             </intent-filter>
         </receiver>
+
+
+        <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名-->
+        <provider
+            android:name="com.baidu.android.pushservice.PushInfoProvider"
+            android:authorities="com.qingchengfit.fitcoach.bdpush"
+            android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"
+            android:protectionLevel = "signature"
+            android:exported="true" />
+
+        <!-- 在百度开发者中心查询应用的API Key -->
+        <meta-data
+            android:name="api_key"
+            android:value="@string/baidu_api_release" />
+
+
+        <!-- push结束 -->
+        <receiver android:name=".reciever.PushReciever">
+            <intent-filter>
+
+                <!-- 接收push消息 -->
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE"/>
+                <!-- 接收bind、setTags等method的返回结果 -->
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE"/>
+                <!-- 接收通知点击事件，和通知自定义内容 -->
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
+            </intent-filter>
+        </receiver>
+
+
+
+
+
+
+
+
+
+
 
         <service android:name=".service.UpyunService"/>
 
