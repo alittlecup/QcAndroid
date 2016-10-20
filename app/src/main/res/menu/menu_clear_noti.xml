@@ -5,7 +5,7 @@
         android:id="@+id/action_clear"
 
         android:orderInCategory="100"
-        android:title="清除未读"
+        android:title="全部已读"
         app:showAsAction="always"
         >
 
