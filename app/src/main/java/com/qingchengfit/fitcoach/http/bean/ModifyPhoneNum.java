@@ -17,14 +17,21 @@ public class ModifyPhoneNum {
     String phone;
     String password;
     String code;
+    String area_code;
 
-    public ModifyPhoneNum() {
+    private ModifyPhoneNum(Builder builder) {
+        setPhone(builder.phone);
+        setPassword(builder.password);
+        setCode(builder.code);
+        area_code = builder.area_code;
     }
 
-    public ModifyPhoneNum(String phone, String password, String code) {
-        this.phone = phone;
-        this.password = password;
-        this.code = code;
+    public String getArea_code() {
+        return area_code;
+    }
+
+    public void setArea_code(String area_code) {
+        this.area_code = area_code;
     }
 
     public String getPhone() {
@@ -49,5 +56,39 @@ public class ModifyPhoneNum {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public static final class Builder {
+        private String phone;
+        private String password;
+        private String code;
+        private String area_code;
+
+        public Builder() {
+        }
+
+        public Builder phone(String val) {
+            phone = val;
+            return this;
+        }
+
+        public Builder password(String val) {
+            password = val;
+            return this;
+        }
+
+        public Builder code(String val) {
+            code = val;
+            return this;
+        }
+
+        public Builder area_code(String val) {
+            area_code = val;
+            return this;
+        }
+
+        public ModifyPhoneNum build() {
+            return new ModifyPhoneNum(this);
+        }
     }
 }

@@ -44,8 +44,8 @@ def renameAPK(buildVariant, appName) {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
 //    retrolambda {
 //        jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
@@ -57,10 +57,10 @@ android {
     defaultConfig {
         applicationId "com.qingchengfit.fitcoach"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 24
         multiDexEnabled true
-        versionCode 127
-        versionName "1.2.7"
+        versionCode 128
+        versionName "1.2.8"
         jackOptions {
             enabled false
         }
@@ -155,23 +155,18 @@ android {
 
 }
 
+repositories {
+    jcenter()
+    mavenCentral()
+    maven(){
+        url uri('../repo')
+    }
+
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
-    //    compile files('libs/MobLogCollector.jar')
-    //    compile files('libs/MobTools.jar')
-    //    compile files('libs/ShareSDK-Core-2.6.1.jar')
-    //    compile files('libs/ShareSDK-Email-2.6.1.jar')
-    //    compile files('libs/ShareSDK-Facebook-2.6.1.jar')
-    //    compile files('libs/ShareSDK-QQ-2.6.1.jar')
-    //    compile files('libs/ShareSDK-QZone-2.6.1.jar')
-    //    compile files('libs/ShareSDK-ShortMessage-2.6.1.jar')
-    //    compile files('libs/ShareSDK-SinaWeibo-2.6.1.jar')
-    //    compile files('libs/ShareSDK-TencentWeibo-2.6.1.jar')
-    //    compile files('libs/ShareSDK-Twitter-2.6.1.jar')
-    //    compile files('libs/ShareSDK-Wechat-Core-2.6.1.jar')
-    //    compile files('libs/ShareSDK-Wechat-Favorite-2.6.1.jar')
-    //    compile files('libs/ShareSDK-Wechat-Moments-2.6.1.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/java-sdk-3.1.jar')
     //    compile files('libs/ShareSDK-Wechat-2.6.1.jar')
@@ -196,18 +191,20 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
         transitive = true
     }
+    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
+
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     //android support
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:percent:23.2.1'
+    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.android.support:percent:24.2.1'
     //    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
     compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
     compile files('libs/pushservice-5.2.0.12.jar')
 }

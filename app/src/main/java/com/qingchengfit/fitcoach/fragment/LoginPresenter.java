@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import com.paper.paperbaselibrary.di.Presenter;
+import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 
 /**
  * power by
@@ -24,9 +25,9 @@ public abstract class LoginPresenter implements   Presenter {
      * @param account
      * @param code
      */
-    public abstract void doLogin(String account,String code);
+    public abstract void doLogin(String arCode,String account,String code);
 
-    public abstract void getCode(String account);
+    public abstract void getCode(GetCodeBean getCodeBean);
     public abstract void goRegister();
 
 }

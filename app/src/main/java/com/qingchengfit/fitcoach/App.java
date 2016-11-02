@@ -26,6 +26,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import im.fir.sdk.FIR;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
@@ -113,6 +114,7 @@ public class App extends Application {
         AppContex = getApplicationContext();
 //        refWatcher = LeakCanary.install(this);
         CrashHandler.getInstance().init(this);
+        ToastUtils.init(this);
         Configs.APP_ID = getString(R.string.wechat_code);
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,10 +13,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +28,7 @@ import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.bean.RecieveMsg;
 import com.qingchengfit.fitcoach.bean.SendSmsCode;
@@ -41,6 +41,8 @@ import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.PasswordView;
+import cn.qingchengfit.widgets.PhoneEditText;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -60,22 +62,9 @@ import rx.schedulers.Schedulers;
  */
 public class RegisterFragment extends Fragment {
 
-//    RegisterviewBinding mDataBinding;
 
-    public String mcode;
-    @Bind(R.id.registe_phone_num)
-    TextInputLayout registePhoneNum;
-    @Bind(R.id.registe_getcode_btn)
-    TextView registeGetcodeBtn;
-    @Bind(R.id.telephone_layout)
-    RelativeLayout telephoneLayout;
-    @Bind(R.id.registe_phone_verity)
-    TextInputLayout registePhoneVerity;
-    @Bind(R.id.registe_btn)
-    Button registeBtn;
-    MaterialDialog materialDialog;
-    @Bind(R.id.registe_gender)
-    RelativeLayout registeGender;
+    @Bind(R.id.registe_rootview)
+    LinearLayout registeRootview;
     @Bind(R.id.comple_gender_label)
     TextView compleGenderLabel;
     @Bind(R.id.comple_gender_male)
@@ -84,24 +73,28 @@ public class RegisterFragment extends Fragment {
     RadioButton compleGenderFemale;
     @Bind(R.id.comple_gender)
     RadioGroup compleGender;
-    @Bind(R.id.comple_pw)
-    TextInputLayout complePw;
-    @Bind(R.id.comple_pw_re)
-    TextInputLayout complePwRe;
+    @Bind(R.id.registe_gender)
+    LinearLayout registeGender;
+    @Bind(R.id.phone_num)
+    PhoneEditText phoneNum;
+    @Bind(R.id.checkcode)
+    PasswordView checkcode;
+    @Bind(R.id.password)
+    PasswordView password;
+    @Bind(R.id.registe_btn)
+    Button registeBtn;
     @Bind(R.id.registe_username)
-    TextInputLayout registeUsername;
-    Gson gson;
-    @Bind(R.id.registe_rootview)
-    LinearLayout registeRootview;
+    EditText registeUsername;
     private InternalHandler handler;
     private Observable<RecieveMsg> mRecieveMsgOb;
     private Observable<SendSmsCode> mSendsmsOb;
+    private Gson gson;
+    private MaterialDialog materialDialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.registerview, null);
-//        mDataBinding = DataBindingUtil.bind(view);
         ButterKnife.bind(this, view);
         handler = new InternalHandler(getContext());
 
@@ -110,10 +103,6 @@ public class RegisterFragment extends Fragment {
                 compleGender.check(R.id.comple_gender_male);
             } else compleGender.check(R.id.comple_gender_female);
         });
-        registePhoneNum.setHint(getString(R.string.logint_phonenum_hint));
-        registePhoneVerity.setHint(getString(R.string.login_checkcode_hint));
-//        mRecieveMsgOb = RxBus.getBus().register(RecieveMsg.class);
-//        mRecieveMsgOb.subscribe(recieveMsg -> registePhoneVerity.getEditText().setText(recieveMsg.getCode()));
         registeRootview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -129,129 +118,80 @@ public class RegisterFragment extends Fragment {
         registeBtn.setOnClickListener(
                 view1 -> {
                     String userName = "";
-
-                    if (registeUsername.getEditText() != null)
-                        userName = registeUsername.getEditText().getText().toString();
-
-
-                    String phone = "";
-                    if (registePhoneNum.getEditText() != null)
-                        phone = registePhoneNum.getEditText().getText().toString().trim();
-                    String code = "";
-                    if (registePhoneVerity.getEditText() != null)
-                        code = registePhoneVerity.getEditText().getText().toString().trim();
-                    if (phone.length() < 11) {
-                        registePhoneNum.setError(getString(R.string.err_login_phonenum));
-                        return;
-                    } else registePhoneNum.setError("");
-
-                    if (code.length() < 6) {
-                        registePhoneVerity.setError(getString(R.string.err_checkcode_length));
-                        return;
-                    } else registePhoneVerity.setError("");
-                    RegisteBean bean = new RegisteBean();
-                    bean.setCode(code);
-                    bean.setPhone(phone);
-                    String pw = complePw.getEditText().getText().toString().trim();
-                    String pwRe = complePwRe.getEditText().getText().toString().trim();
-                    if (!pw.equals(pwRe)) {
-                        complePwRe.setError(getString(R.string.err_password_not_match));
+                    userName = registeUsername.getText().toString().trim();
+                    if (TextUtils.isEmpty(userName)){
+                        ToastUtils.showDefaultStyle(getString(R.string.please_input_phone_num));
                         return;
                     }
-                    if (pw.length() < 6 || pw.length() > 16) {
-                        complePw.setError(getString(R.string.err_password_length));
-                        return;
-                    }
-                    bean.setPassword(pw);
-                    if (!TextUtils.isEmpty(userName))
-                        bean.setUsername(userName);
-                    else registeUsername.setError("请输入用户名");
-
-                    if (compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female) {
-                        bean.setGender(1); //女
-                    } else bean.setGender(0);//男
-                    materialDialog.show();
-                    QcCloudClient.getApi()
-                            .postApi
-                            .qcRegister(bean)
-                            .subscribeOn(Schedulers.newThread())
-                            .subscribe(qcResponLogin ->
-                                    {
-                                        if (qcResponLogin.status == ResponseResult.SUCCESS) {
-                                            //TODO 注册成功
-                                            getActivity().runOnUiThread(() -> {
-                                                Toast.makeText(App.AppContex, "注册成功", Toast.LENGTH_SHORT).show();
+                    if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()) {
+                        materialDialog.show();
+                        QcCloudClient.getApi()
+                                .postApi
+                                .qcRegister(new RegisteBean.Builder()
+                                        .password(password.getCode())
+                                        .phone(phoneNum.getPhoneNum())
+                                        .area_code(phoneNum.getDistrictInt())
+                                        .code(checkcode.getCode())
+                                        .username(userName)
+                                        .gender(compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female ? 1 : 0)
+                                        .build())
+                                .subscribeOn(Schedulers.newThread())
+                                .subscribe(qcResponLogin ->
+                                        {
+                                            if (qcResponLogin.status == ResponseResult.SUCCESS) {
+                                                //TODO 注册成功
+                                                getActivity().runOnUiThread(() -> {
+                                                    Toast.makeText(App.AppContex, "注册成功", Toast.LENGTH_SHORT).show();
 //                                                RxBus.getBus().send(new com.qingchengfit.fitcoach.bean.LoginBean());
-                                                PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
-                                                PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
-                                                PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
-                                                Intent toMain = new Intent(getActivity(), MainActivity.class);
-                                                startActivity(toMain);
-                                                materialDialog.dismiss();
-                                                getActivity().finish();
-                                            });
-                                        } else {
+                                                    PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
+                                                    PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
+                                                    PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
+                                                    Intent toMain = new Intent(getActivity(), MainActivity.class);
+                                                    startActivity(toMain);
+                                                    materialDialog.dismiss();
+                                                    getActivity().finish();
+                                                });
+                                            } else {
 
-                                            getActivity().runOnUiThread(() -> {
+                                                getActivity().runOnUiThread(() -> {
 
-                                                materialDialog.dismiss();
-                                                Toast.makeText(App.AppContex, qcResponLogin.msg, Toast.LENGTH_SHORT).show();
-                                            });
+                                                    materialDialog.dismiss();
+                                                    Toast.makeText(App.AppContex, qcResponLogin.msg, Toast.LENGTH_SHORT).show();
+                                                });
+                                            }
+                                        }, throwable -> {
+                                        }, () -> {
                                         }
-                                    }, throwable -> {
-                                    }, () -> {
-                                    }
-                            );
-//                    QcCloudClient.getApi()
-//                            .postApi
-//                            .qcCheckCode(new CheckCode(phone, code))
-//                            .subscribeOn(Schedulers.newThread())
-//                            .subscribe(qcResponCode -> {
-//                                if (qcResponCode.status == ResponseResult.SUCCESS) {
-//                                    Intent it = new Intent(getActivity(), CompleteActivity.class);
-//                                    it.putExtra("code", qcResponCode.data.code);
-//                                    startActivity(it);
-//                                } else {
-//
-//                                    getActivity().runOnUiThread(() -> {
-//                                        registePhoneVerity.setError(qcResponCode.msg);
-//                                    });
-//
-//                                    LogUtil.d(qcResponCode.msg);
-//                                }
-//                            })
-//                    ;
-                }
+                                );
+
+                    }
+
+                    }
+
+
 
         );
+        checkcode.setOnClickListener(v -> {
+            if (phoneNum.checkPhoneNum()){
+                QcCloudClient.getApi()
+                        .postApi
+                        .qcGetCode(new GetCodeBean.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build())
+                        .subscribeOn(Schedulers.newThread())
+                        .subscribe(qcResponse -> {
+                            if (qcResponse.status == ResponseResult.SUCCESS) {
+                                LogUtil.d("succ");
+                            } else {
+                            }
+                        }, throwable -> {
+                        }, () -> {
+                        })
+                ;
+                RxBus.getBus().post(new SendSmsCode());
 
-        registeGetcodeBtn.setOnClickListener(view2 -> {
-            if (registePhoneNum.getEditText() == null)
-                return;
-            String phone2 = registePhoneNum.getEditText().getText().toString().trim();
-            if (phone2.length() < 11) {
-                registePhoneNum.setError(getString(R.string.err_login_phonenum));
-                return;
-            } else registePhoneNum.setError("");
-
-            QcCloudClient.getApi()
-                    .postApi
-                    .qcGetCode(new GetCodeBean(phone2))
-//                    .qcRegister(new RegisteBean("paper", "123456", mcode, 1))
-                    .subscribeOn(Schedulers.newThread())
-                    .subscribe(qcResponse -> {
-                        if (qcResponse.status == ResponseResult.SUCCESS) {
-                            LogUtil.d("succ");
-                        } else {
-//                            LogUtil.d(":" + qcResponse.msg);
-                        }
-                    }, throwable -> {
-                    }, () -> {
-                    })
-            ;
-            RxBus.getBus().post(new SendSmsCode());
-
+            }
         });
+
+
         return view;
     }
 
@@ -290,17 +230,17 @@ public class RegisterFragment extends Fragment {
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(Integer.toString(count));
             stringBuffer.append(App.AppContex.getString(R.string.login_resend_msg));
-            if (registeGetcodeBtn != null) {
-                registeGetcodeBtn.setText(stringBuffer.toString());
+            if (checkcode != null) {
+                checkcode.setRightText(stringBuffer.toString());
                 if (count == 60)
-                    registeGetcodeBtn.setEnabled(false);
+                    checkcode.blockRightClick(true);
                 if (count > 0) {
                     count--;
                     handler.sendEmptyMessageDelayed(0, 1000);
                 } else {
                     count = 60;
-                    registeGetcodeBtn.setEnabled(true);
-                    registeGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+                    checkcode.blockRightClick(false);
+                    checkcode.setRightText(getResources().getString(R.string.login_getcode));
                 }
             }
         }

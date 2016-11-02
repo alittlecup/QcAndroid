@@ -20,6 +20,11 @@ public class RegisteBean {
     public int gender;//0,1
     public String phone;
     public String city;
+    public String area_code;
+
+
+
+
 
     public RegisteBean() {
     }
@@ -35,6 +40,16 @@ public class RegisteBean {
 
         this.username = username;
         this.password = password;
+    }
+
+    private RegisteBean(Builder builder) {
+        setUsername(builder.username);
+        setPassword(builder.password);
+        setCode(builder.code);
+        setGender(builder.gender);
+        setPhone(builder.phone);
+        setCity(builder.city);
+        area_code = builder.area_code;
     }
 
     public String getPhone() {
@@ -83,5 +98,57 @@ public class RegisteBean {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public static final class Builder {
+        private String username;
+        private String password;
+        private String code;
+        private int gender;
+        private String phone;
+        private String city;
+        private String area_code;
+
+        public Builder() {
+        }
+
+        public Builder username(String val) {
+            username = val;
+            return this;
+        }
+
+        public Builder password(String val) {
+            password = val;
+            return this;
+        }
+
+        public Builder code(String val) {
+            code = val;
+            return this;
+        }
+
+        public Builder gender(int val) {
+            gender = val;
+            return this;
+        }
+
+        public Builder phone(String val) {
+            phone = val;
+            return this;
+        }
+
+        public Builder city(String val) {
+            city = val;
+            return this;
+        }
+
+        public Builder area_code(String val) {
+            area_code = val;
+            return this;
+        }
+
+        public RegisteBean build() {
+            return new RegisteBean(this);
+        }
     }
 }

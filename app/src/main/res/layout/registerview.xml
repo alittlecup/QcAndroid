@@ -1,96 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!---->
-<!-->-->
-<!--<data >-->
-<!--<variable-->
-<!--username="data"-->
-<!--type="com.paper.loginlibrary.viewmodel.RegisteViewModel"-->
-<!--></variable>-->
-<!--</data>-->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/white"
+>
 
     <LinearLayout
         android:id="@+id/registe_rootview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
         android:padding="15dp"
-        >
+        android:showDividers="middle"
+        android:divider="@drawable/divier_linear_vectail"
+    >
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/registe_username"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            >
-
+            android:layout_height="@dimen/qc_item_height"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+        >
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:srcCompat="@drawable/ic_login_username"
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/label_username"
+                android:paddingLeft="@dimen/little"
+                android:paddingRight="@dimen/little"
+            />
             <EditText
+                android:id="@+id/registe_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_register_username"
-                android:hint="名字"
                 android:imeActionLabel="下一个"
                 android:imeOptions="actionNext"
-
+                android:gravity="end|center_vertical"
                 android:maxLength="10"
-                android:singleLine="true"
-                android:textSize="@dimen/btn_font"
-                />
+                android:lines="1"
+                android:background="@color/transparent"
 
-        </android.support.design.widget.TextInputLayout>
+            />
 
-        <RelativeLayout
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/registe_gender"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="15dp"
-            android:paddingLeft="4dp"
-            >
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+        >
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:srcCompat="@drawable/ic_login_gender"
 
+            />
             <TextView
-
                 android:id="@+id/comple_gender_label"
-                style="?android:attr/textAppearanceMediumInverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="15dp"
-                android:drawableLeft="@drawable/ic_register_gender"
-                android:drawablePadding="@dimen/qc_edit_drawable_padding"
-                android:text="性别"
-                android:textColor="?android:attr/textColorHint"
-                android:textSize="@dimen/btn_font"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="12dp"
-                android:background="@color/divider_white"
-                >
-
-            </View>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/little"
+                android:paddingRight="@dimen/little"
+                android:layout_weight="1"
+                android:text="@string/gender"
+            />
 
             <RadioGroup
                 android:id="@+id/comple_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:orientation="horizontal"
-                >
+            >
 
                 <RadioButton
                     android:id="@+id/comple_gender_male"
@@ -99,7 +95,7 @@
                     android:button="@drawable/radio_selector"
                     android:checked="true"
                     android:text="@string/gender_male"
-                    />
+                />
 
                 <Space
                     android:layout_width="20dp"
@@ -112,134 +108,38 @@
                     android:layout_height="wrap_content"
                     android:button="@drawable/radio_selector"
                     android:text="@string/gender_female"
-                    />
+                />
             </RadioGroup>
 
-        </RelativeLayout>
+        </LinearLayout>
+        <cn.qingchengfit.widgets.PhoneEditText
+            android:id="@+id/phone_num"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
 
-
-        <RelativeLayout
-            android:id="@+id/telephone_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/registe_phone_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true"
-                >
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:drawableLeft="@drawable/ic_login_phone"
-                    android:hint="手机号"
-                    android:imeActionLabel="下一个"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:maxLength="11"
-                    android:textSize="@dimen/btn_font"
-                    />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <TextView
-                android:id="@+id/registe_getcode_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/checkcode_line"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:paddingBottom="25dp"
-                android:singleLine="true"
-                android:text="@string/login_getcode"
-                />
-        </RelativeLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/registe_phone_verity"
+        />
+        <cn.qingchengfit.widgets.PasswordView
+            android:id="@+id/checkcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/telephone_layout"
-            app:errorEnabled="true"
-            >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_register_verify"
-                android:hint="手机验证码"
-                android:imeActionLabel="下一个"
-                android:imeOptions="actionNext"
-                android:inputType="phone"
-                android:maxLength="6"
-                android:textSize="@dimen/btn_font"
-                />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/comple_pw"
+            app:pw_mode="false"
+        />
+        <cn.qingchengfit.widgets.PasswordView
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="0dp"
-            app:errorEnabled="true"
-            >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableLeft="@drawable/ic_pw"
-                android:hint="设置登录密码"
-                android:imeActionLabel="下一个"
-                android:imeOptions="actionNext"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:singleLine="true"
-                android:textSize="@dimen/btn_font"
-                />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/comple_pw_re"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableLeft="@drawable/ic_pw"
-                android:hint="确认登录密码"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:singleLine="true"
-                android:textSize="@dimen/btn_font"
-
-                />
-        </android.support.design.widget.TextInputLayout>
+            app:pw_mode="true"
+        />
 
         <Button
             android:id="@+id/registe_btn"
             android:layout_width="133dp"
             android:layout_height="48dp"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:layout_marginTop="30dp"
             android:orientation="horizontal"
             android:text="@string/complete_label"
-            >
+        >
         </Button>
 
     </LinearLayout>

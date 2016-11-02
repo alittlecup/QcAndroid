@@ -49,8 +49,8 @@ public class RegisterView extends RelativeLayout {
         super.onFinishInflate();
 //        mGetCodeBtn = (Button) findViewById(R.id.login_getcode_btn);
         mLoginBtn = (Button) findViewById(R.id.login_btn);
-        mPhoneNumInputLayout = (TextInputLayout) findViewById(R.id.login_phone_num);
-        mCheckCodeInputLaout = (TextInputLayout) findViewById(R.id.login_phone_verity);
+//        mPhoneNumInputLayout = (TextInputLayout) findViewById(R.id.login_phone_num);
+//        mCheckCodeInputLaout = (TextInputLayout) findViewById(R.id.login_phone_verity);
         mPhoneNumInputLayout.setHint(getResources().getString(R.string.logint_phonenum_hint));
         mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_checkcode_hint));
         mCheckCodeInputLaout.getEditText().addTextChangedListener(new TextWatcher() {
@@ -101,7 +101,7 @@ public class RegisterView extends RelativeLayout {
                 mCheckCodeInputLaout.requestFocus();
                 return;
             }
-            loginPresenter.doLogin(account, code);
+            loginPresenter.doLogin("",account, code);
         });
     }
 }

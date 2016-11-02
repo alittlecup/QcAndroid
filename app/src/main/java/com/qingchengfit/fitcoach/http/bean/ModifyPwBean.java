@@ -18,11 +18,20 @@ public class ModifyPwBean {
     public String phone;
     public String code;
     public String password;
+    public String area_code;
+
 
     public ModifyPwBean(String phone, String code, String password) {
         this.phone = phone;
         this.code = code;
         this.password = password;
+    }
+
+    private ModifyPwBean(Builder builder) {
+        setPhone(builder.phone);
+        setCode(builder.code);
+        setPassword(builder.password);
+        area_code = builder.area_code;
     }
 
     public String getPhone() {
@@ -47,5 +56,39 @@ public class ModifyPwBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static final class Builder {
+        private String phone;
+        private String code;
+        private String password;
+        private String area_code;
+
+        public Builder() {
+        }
+
+        public Builder phone(String val) {
+            phone = val;
+            return this;
+        }
+
+        public Builder code(String val) {
+            code = val;
+            return this;
+        }
+
+        public Builder password(String val) {
+            password = val;
+            return this;
+        }
+
+        public Builder area_code(String val) {
+            area_code = val;
+            return this;
+        }
+
+        public ModifyPwBean build() {
+            return new ModifyPwBean(this);
+        }
     }
 }
