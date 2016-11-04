@@ -173,10 +173,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private MyGymsFragment mMyGymsFragment;
     private MyCoursePlanFragment mMyCoursePlanFragment;
 
-    //    @Override
-//    protected void onXWalkReady() {
-//
-//    }
     private MaterialDialog loadingDialog;
     private SegmentLayout button;
     private SegmentLayout button2;
@@ -190,12 +186,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // ANIMATABLE_XWALK_VIEW preference key MUST be set before XWalkView creation.
-//        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-
         RxPermissions.getInstance(this)
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Action1<Boolean>() {
@@ -315,7 +307,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     }
 
     private void initBDPush() {
-//        if (!PreferenceUtils.getPrefBoolean(this, "hasPushId", false)) {
         String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
         String channelid = PreferenceUtils.getPrefString(this, PushReciever.BD_CHANNELID, null);
         if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(channelid)) {
@@ -352,16 +343,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     protected void onResume() {
         super.onResume();
-//        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
-//                .subscribe(qcCoachRespone -> {
-//                    runOnUiThread(() -> {
-//                        Glide.with(App.AppContex)
-//                                .load(qcCoachRespone.getData().getCoach().getAvatar())
-//                                .asBitmap()
-//                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
-//                        drawerName.setText(qcCoachRespone.getData().getCoach().getUsername());
-//                    });
-//                });
 
 
     }
@@ -502,101 +483,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 super.onFinish();
             }
         });
-//        FIR.checkForUpdateInFIR(getString(R.string.fir_token), new VersionCheckCallback() {
-//            @Override
-//            public void onSuccess(AppVersion appVersion, boolean b) {
-//                LogUtil.e(" fir:success" + appVersion);
-//
-//                if (appVersion.getVersionCode() <= AppUtils.getAppVerCode(App.AppContex))
-//                    return;
-//
-//                url = appVersion.getUpdateUrl();
-//                newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + appVersion.getVersionName() + ".apk");
-//                updateDialog = new MaterialDialog.Builder(MainActivity.this)
-//                        .title("前方发现新版本!!")
-//                        .content(appVersion.getChangeLog())
-//                        .positiveText("更新")
-//                        .negativeText("下次再说")
-//                        .callback(new MaterialDialog.ButtonCallback() {
-//                            @Override
-//                            public void onPositive(MaterialDialog dialog) {
-//                                super.onPositive(dialog);
-//                                updateDialog.dismiss();
-//                                if (url != null) {
-//                                    //TODO download app
-//                                    downloadDialog.show();
-//                                    mDownloadThread = new AsyncDownloader();
-//                                    mDownloadThread.execute(url);
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onNegative(MaterialDialog dialog) {
-//                                super.onNegative(dialog);
-//                                updateDialog.dismiss();
-//                            }
-//                        })
-//                        .build();
-//                downloadDialog = new MaterialDialog.Builder(MainActivity.this)
-//                        .content("正在飞速为您下载")
-//                        .progress(false, 100)
-//                        .cancelable(false)
-//                        .positiveText("后台更新")
-//                        .negativeText("取消更新")
-//                        .callback(new MaterialDialog.ButtonCallback() {
-//                            @Override
-//                            public void onPositive(MaterialDialog dialog) {
-//                                super.onPositive(dialog);
-//                            }
-//
-//                            @Override
-//                            public void onNegative(MaterialDialog dialog) {
-//                                super.onNegative(dialog);
-//                                mDownloadThread.cancel(true);
-//                            }
-//                        })
-//                        .build();
-//                updateDialog.show();
-//            }
-//
-//
-//
-//        });
-
-
-//        QcCloudClient.getApi().getApi.qcGetVersion()
-//                .subscribe(new Observer<QcVersionResponse>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        LogUtil.e("onCompleted");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        LogUtil.e("onError");
-//                    }
-//
-//                    @Override
-//                    public void onNext(QcVersionResponse qcVersionResponse) {
-//                        if (qcVersionResponse.getData().getVersion().getAndroid().getRelease() > AppUtils.getAppVerCode(getApplication())) {
-//
-//
-//                            url = qcVersionResponse.getData().getDownload().getAndroid();
-//                            newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + qcVersionResponse.getData().getVersion().getAndroid().getVersion() + ".apk");
-//                            if (!newAkp.exists()) {
-//                                try {
-//                                    boolean ret = newAkp.createNewFile();
-//                                } catch (IOException e) {
-//                                }
-//                            }
-//                            runOnUiThread(() -> {
-//
-//                            });
-//
-//                        }
-//                    }
-//                });
-
     }
 
     private void initUser() {
@@ -699,7 +585,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         try {
             diskLruCache = DiskLruCache.open(fileCache, 1, 2000, 10000000);
         } catch (IOException e) {
-            //e.printStackTrace();
             //TODO 没有存储的情况
         }
 
@@ -754,7 +639,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mScheduesFragment = new ScheduesFragment();
         mDataStatementFragment = new DataStatementFragment();
         mMyStudentFragment = new MyStudentFragment();
-//        mMeetingFragment = MainWebFragment.newInstance("http://teacher.qingchengfit.cn/meetings/");
         mMeetingFragment = new MeetingFragment();
         mMyGymsFragment = new MyGymsFragment();
         mMyCoursePlanFragment = new MyCoursePlanFragment();
@@ -777,11 +661,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         button.setListener(v -> {
             changeFragment(mScheduesFragment);
-
-//            Intent it = new Intent(this,WebActivity.class);
-//            it.putExtra("url","http://mm.qingchengfit.cn/meetings/");
-//            startActivity(it);
-
         });
 
         button2.setListener(v -> {
@@ -890,7 +769,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             @Override
             public void onDrawerClosed(View drawerView) {
                 if (mGoMyhome) {
-//                    startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
                     mGoMyhome = false;
                 }
             }
@@ -967,17 +845,12 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 .flatMap(s -> {
                     File f = new File(Configs.ExternalPath, s.substring(s.length() - 20, s.length()));
                     if (!f.exists()) {
-//                        Response response = QcCloudClient.getApi().downLoadApi
-//                                .qcDownload(s);
                         OkHttpClient httpClient = new OkHttpClient();
                         Request request = new Request.Builder().url(s).build();
 
                         try {
                             Response response = httpClient.newCall(request).execute();
                             FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
-//                            FileOutputStream output = new FileOutputStream(f);
-//                            IOUtils.write(response.body().bytes(), output);
-//                            FileUtils.copyInputStreamToFile(response.body().byteStream(),f);
 
                         } catch (FileNotFoundException e) {
                             RevenUtils.sendException("initDrawer", TAG, e);
@@ -995,23 +868,16 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 .last()
                 .subscribe(s1 -> {
                     runOnUiThread(() -> {
-//                        StateListDrawable drawable1 = DynamicSelector.getSelector(drawables.get(0), drawables.get(1));
                         button.setText(btnInfo.guideText);
                         button.setDrawables(drawables.toArray(new Drawable[2]));
-//                        button.setButtonDrawable(drawable1);
-//                        button.setPadding(MeasureUtils.dpToPx(15f, getResources()), 0, 0, 0);
-//                        button.setId(View.generateViewId());
-
                         button.setListener(view -> {
                             mainDrawerlayout.closeDrawer(Gravity.LEFT);
                             goXwalkfragment(btnInfo.intentUrl, null);
                         });
                         urls.add(btnInfo.intentUrl);
-//                        fragments.put( btnInfo.intentUrl,  WebFragment.newInstance(btnInfo.intentUrl));
                         drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
                         if (count == 0) {
-//                            drawerRadiogroup.getChildAt(0).performClick();
                             drawerRadiogroup.check(0);
                             Fragment fragment = OriginWebFragment.newInstance(btnInfo.intentUrl);
                             mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, fragment, btnInfo.intentUrl)
@@ -1026,8 +892,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {
-//        mGoMyhome = true;
-//        mainDrawerlayout.closeDrawers();
         startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
     }
 
@@ -1072,23 +936,18 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode > 0) {
         switch (resultCode) {
             case 1:
-//                    changeFragment(mScheduesFragment);
                 button.performClick();
                 break;
             case 2:
-//                    changeFragment(mDataStatementFragment);
                 button2.performClick();
                 break;
             case 3:
-//                    changeFragment(mMeetingFragment);
                 button3.performClick();
                 break;
             case 4:
                 item.performClick();
-//                    changeFragment(mMyStudentFragment);
                 break;
             case 5:
                 item1.performClick();
@@ -1117,7 +976,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
      */
 
     private class AsyncDownloader extends AsyncTask<String, Long, Boolean> {
-//        private final String URL = "file_url";
 
         @Override
         protected Boolean doInBackground(String... params) {
@@ -1181,7 +1039,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             if (result) {
                 downloadDialog.dismiss();
                 AppUtils.install(MainActivity.this, newAkp.getAbsolutePath());
-                //TODO 安装应用
             } else {
                 downloadDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();

@@ -12,7 +12,7 @@ import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
-import com.qingchengfit.fitcoach.fragment.SettingFragment;
+import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,8 +42,8 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     public void onFragmentChange(Fragment fragment) {
         AppUtils.hideKeyboard(this);
         fragmentManager.beginTransaction()
-                .replace(R.id.settting_fraglayout, fragment)
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_right_out, R.anim.slide_left_in)
+                .replace(R.id.settting_fraglayout, fragment)
                 .addToBackStack(null)
                 .commit();
 

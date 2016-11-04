@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyGymsFragment extends MainBaseFragment {
+public class MyGymsFragment extends android.support.v4.app.Fragment {
     public static final String TAG = MyGymsFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -63,7 +63,7 @@ public class MyGymsFragment extends MainBaseFragment {
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+//        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
             Intent intent = new Intent(getActivity(), FragActivity.class);

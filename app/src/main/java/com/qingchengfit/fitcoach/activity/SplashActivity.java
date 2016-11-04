@@ -88,7 +88,7 @@ public class SplashActivity extends BaseAcitivity {
                 }).subscribe(s1 -> {
             runOnUiThread(() -> {
                 if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
-                    Intent toMain = new Intent(this, MainActivity.class);
+                    Intent toMain = new Intent(this, Main2Activity.class);
                     startActivity(toMain);
                     overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
                     this.finish();

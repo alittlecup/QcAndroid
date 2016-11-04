@@ -70,7 +70,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduesFragment extends MainBaseFragment {
+public class ScheduesFragment extends Fragment {
     public static final String TAG = ScheduesFragment.class.getName();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -137,7 +137,7 @@ public class ScheduesFragment extends MainBaseFragment {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
         ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+//        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_alert);
         mTitle = getString(R.string.schedule_title);
         toolbarTitle.setText(mTitle);

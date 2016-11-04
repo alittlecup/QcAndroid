@@ -17,7 +17,7 @@ import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.LogUtil;
 import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
@@ -166,7 +166,7 @@ public class LoginFragment extends Fragment {
 //                        })
                         .subscribe(aBoolean -> {
                             if (aBoolean) {
-                                Intent toMain = new Intent(getActivity(), MainActivity.class);
+                                Intent toMain = new Intent(getActivity(), Main2Activity.class);
                                 startActivity(toMain);
                                 materialDialog.dismiss();
                                 getActivity().finish();

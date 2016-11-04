@@ -45,7 +45,7 @@ def renameAPK(buildVariant, appName) {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '24.0.2'
 
 //    retrolambda {
 //        jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
@@ -154,10 +154,20 @@ android {
     }
 
 }
+repositories {
+    jcenter()
+    mavenCentral()
+    maven(){
+        url uri('../repo')
+    }
+
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
+    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
+
     //    compile files('libs/MobLogCollector.jar')
     //    compile files('libs/MobTools.jar')
     //    compile files('libs/ShareSDK-Core-2.6.1.jar')
