@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 
 import com.bigkoo.pickerview.TimePopupWindow.Type;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 
 import java.text.DateFormat;

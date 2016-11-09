@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -13,6 +12,8 @@ import com.qingchengfit.fitcoach.http.UpYunClient;
 
 import java.io.File;
 import java.util.UUID;
+
+import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by

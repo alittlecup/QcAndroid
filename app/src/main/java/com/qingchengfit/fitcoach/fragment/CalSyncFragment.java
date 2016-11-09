@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.DialogList;
@@ -20,6 +19,7 @@ import com.qingchengfit.fitcoach.component.DialogList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 /**
  * A simple {@link Fragment} subclass.

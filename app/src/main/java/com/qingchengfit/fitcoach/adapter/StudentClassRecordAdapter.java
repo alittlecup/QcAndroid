@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.StatementBean;
@@ -14,6 +13,8 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
+
+import cn.qingchengfit.widgets.utils.DateUtils;
 
 /**
  * power by

@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
+
+import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by

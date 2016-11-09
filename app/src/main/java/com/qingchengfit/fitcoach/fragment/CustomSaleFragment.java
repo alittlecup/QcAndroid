@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.CardComparator;
@@ -36,6 +34,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;

@@ -13,8 +13,6 @@ import android.widget.RelativeLayout;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
@@ -26,6 +24,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

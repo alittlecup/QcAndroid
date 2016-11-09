@@ -6,13 +6,14 @@ import android.view.View;
 
 import com.bigkoo.pickerview.OptionsDialog;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.FileUtils;
 import com.qingchengfit.fitcoach.http.bean.CitiesData;
 import com.qingchengfit.fitcoach.http.bean.CityBean;
 import com.qingchengfit.fitcoach.http.bean.DistrictBean;
 import com.qingchengfit.fitcoach.http.bean.ProvinceBean;
 
 import java.util.ArrayList;
+
+import cn.qingchengfit.widgets.utils.FileUtils;
 
 /**
  * power by

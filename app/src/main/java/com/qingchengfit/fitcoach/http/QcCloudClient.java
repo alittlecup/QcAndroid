@@ -1,7 +1,5 @@
 package com.qingchengfit.fitcoach.http;
 
-import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
@@ -94,6 +92,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.component.DialogSheet;
@@ -19,6 +18,7 @@ import com.qingchengfit.fitcoach.component.DialogSheet;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.AppUtils;
 
 /**
  *

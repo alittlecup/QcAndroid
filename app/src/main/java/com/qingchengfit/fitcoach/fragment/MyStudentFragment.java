@@ -27,8 +27,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
@@ -58,6 +56,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;

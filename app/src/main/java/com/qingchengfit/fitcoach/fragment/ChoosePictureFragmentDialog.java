@@ -16,8 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.FileUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -25,6 +23,8 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 
+import cn.qingchengfit.widgets.utils.FileUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.functions.Action1;
 
 /**

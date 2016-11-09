@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -24,6 +23,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.schedulers.Schedulers;
 
 /**

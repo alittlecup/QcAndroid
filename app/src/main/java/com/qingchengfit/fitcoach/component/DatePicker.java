@@ -9,13 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.marcohc.robotocalendar.RobotoCalendarView;
-import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by

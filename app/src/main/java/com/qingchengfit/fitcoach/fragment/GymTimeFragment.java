@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;
@@ -19,6 +18,7 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
 
 /**
  * A simple {@link Fragment} subclass.

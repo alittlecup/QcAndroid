@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.paper.paperbaselibrary.utils.ChoosePicUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 
 import java.io.File;
+
+import cn.qingchengfit.widgets.utils.ChoosePicUtils;
 
 /**
  * power by

@@ -13,13 +13,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 public class LoginActivity extends AppCompatActivity {
 

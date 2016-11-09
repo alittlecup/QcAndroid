@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -52,6 +50,8 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;

@@ -6,8 +6,6 @@ import android.text.TextUtils;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
@@ -15,6 +13,9 @@ import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 
 import java.util.List;
+
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 /**
  * power by

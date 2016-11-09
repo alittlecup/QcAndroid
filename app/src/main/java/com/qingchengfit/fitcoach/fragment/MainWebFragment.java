@@ -13,15 +13,13 @@ import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.bean.Contact;
-import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.bean.Contact;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.tencent.smtt.sdk.CookieManager;
@@ -37,6 +35,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 
 /**

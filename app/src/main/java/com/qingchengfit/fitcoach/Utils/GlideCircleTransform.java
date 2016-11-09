@@ -1,4 +1,4 @@
-package com.paper.paperbaselibrary.component;
+package com.qingchengfit.fitcoach.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,17 +11,25 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 /**
  * power by
- * <p>
- * d8888b.  .d8b.  d8888b. d88888b d8888b.
- * 88  `8D d8' `8b 88  `8D 88'     88  `8D
- * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'
- * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
- * 88      88   88 88      88.     88 `88.
- * 88      YP   YP 88      Y88888P 88   YD
- * <p>
- * <p>
- * Created by Paper on 15/9/11 2015.
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MM.:  .:'   `:::  .:`MMMMMMMMMMM|`MMM'|MMMMMMMMMMM':  .:'   `:::  .:'.MM
+ * MMMM.     :          `MMMMMMMMMM  :*'  MMMMMMMMMM'        :        .MMMM
+ * MMMMM.    ::    .     `MMMMMMMM'  ::   `MMMMMMMM'   .     ::   .  .MMMMM
+ * MMMMMM. :   :: ::'  :   :: ::'  :   :: ::'      :: ::'  :   :: ::.MMMMMM
+ * MMMMMMM    ;::         ;::         ;::         ;::         ;::   MMMMMMM
+ * MMMMMMM .:'   `:::  .:'   `:::  .:'   `:::  .:'   `:::  .:'   `::MMMMMMM
+ * MMMMMM'     :           :           :           :           :    `MMMMMM
+ * MMMMM'______::____      ::    .     ::    .     ::     ___._::____`MMMMM
+ * MMMMMMMMMMMMMMMMMMM`---._ :: ::'  :   :: ::'  _.--::MMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMM::.         ::  .--MMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-.     ;::-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM. .:' .M:F_P:MMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * Created by Paper on 16/11/9.
  */
+
 public class GlideCircleTransform extends BitmapTransformation {
     public GlideCircleTransform(Context context) {
         super(context);
@@ -60,5 +68,4 @@ public class GlideCircleTransform extends BitmapTransformation {
     public String getId() {
         return getClass().getName();
     }
-
 }

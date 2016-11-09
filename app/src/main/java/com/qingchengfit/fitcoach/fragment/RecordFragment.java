@@ -18,8 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
@@ -34,6 +32,8 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * A simple {@link Fragment} subclass.

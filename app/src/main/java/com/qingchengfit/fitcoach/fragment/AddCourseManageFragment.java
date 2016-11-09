@@ -20,8 +20,6 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -44,6 +42,8 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -119,7 +119,7 @@ public class AddCourseManageFragment extends Fragment {
         ButterKnife.bind(this, view);
         if (mType == Configs.TYPE_GROUP) {
             toolbar.setTitle(R.string.title_add_group_course_batch);
-            datas.add(new CmBean(0,DateUtils.formatDateHHMM("08:00"),null));
+            datas.add(new CmBean(0, DateUtils.formatDateHHMM("08:00"),null));
         } else {
             toolbar.setTitle(R.string.title_add_private_batch);
             datas.add(new CmBean(0, DateUtils.formatDateHHMM("08:00"), DateUtils.formatDateHHMM("20:00")));

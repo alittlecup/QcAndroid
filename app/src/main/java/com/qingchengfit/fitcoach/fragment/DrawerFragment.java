@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -25,6 +24,7 @@ import com.qingchengfit.fitcoach.http.bean.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 /**
  * power by

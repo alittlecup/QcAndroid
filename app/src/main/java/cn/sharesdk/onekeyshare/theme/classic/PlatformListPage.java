@@ -23,11 +23,11 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 
 import java.util.ArrayList;
 
+import cn.qingchengfit.widgets.utils.MeasureUtils;
 import cn.sharesdk.onekeyshare.PlatformListFakeActivity;
 
 import static com.mob.tools.utils.R.getStringRes;

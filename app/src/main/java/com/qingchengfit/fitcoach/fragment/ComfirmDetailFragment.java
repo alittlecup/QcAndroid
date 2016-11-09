@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -35,6 +34,7 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;

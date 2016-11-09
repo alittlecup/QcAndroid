@@ -13,7 +13,6 @@ import android.view.ViewTreeObserver;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
@@ -25,6 +24,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.schedulers.Schedulers;
 
 /**

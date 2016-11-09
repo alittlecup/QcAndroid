@@ -19,9 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.utils.BitmapUtils;
-import com.paper.paperbaselibrary.utils.ChoosePicUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -45,6 +42,9 @@ import java.util.UUID;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.BitmapUtils;
+import cn.qingchengfit.widgets.utils.ChoosePicUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -228,8 +228,6 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             Observable.just(f)
                     .observeOn(Schedulers.io())
                     .subscribe(s -> {
-//                        String filename = UUID.randomUUID().toString();
-//                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
                         String filename = UUID.randomUUID().toString();
                         BitmapUtils.compressPic(s.getAbsolutePath(), Configs.ExternalCache + filename);
                         File upFile = new File(Configs.ExternalCache + filename);

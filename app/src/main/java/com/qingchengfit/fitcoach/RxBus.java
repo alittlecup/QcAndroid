@@ -2,12 +2,11 @@ package com.qingchengfit.fitcoach;
 
 import android.support.annotation.NonNull;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;

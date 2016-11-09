@@ -14,8 +14,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.R;
+
+import cn.qingchengfit.widgets.utils.AppUtils;
 
 /**
  * power by

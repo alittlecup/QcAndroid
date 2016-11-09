@@ -13,9 +13,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -30,6 +27,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

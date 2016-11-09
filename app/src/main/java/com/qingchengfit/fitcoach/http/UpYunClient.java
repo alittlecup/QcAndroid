@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.http;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 
 import java.io.File;
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import cn.qingchengfit.widgets.utils.LogUtil;
 import main.java.com.UpYun;
 
 /**

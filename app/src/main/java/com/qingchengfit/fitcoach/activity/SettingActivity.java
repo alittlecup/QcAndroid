@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.paper.paperbaselibrary.utils.AppUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
@@ -16,6 +15,7 @@ import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.AppUtils;
 
 public class SettingActivity extends BaseAcitivity implements FragmentCallBack, WebActivityInterface {
 

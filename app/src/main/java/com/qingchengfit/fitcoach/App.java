@@ -12,10 +12,6 @@ import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
-import com.paper.paperbaselibrary.utils.StringUtils;
 import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.Coach;
@@ -26,6 +22,10 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import im.fir.sdk.FIR;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;

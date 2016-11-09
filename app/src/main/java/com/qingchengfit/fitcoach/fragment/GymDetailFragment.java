@@ -20,12 +20,6 @@ import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.paper.paperbaselibrary.utils.AppUtils;
-import com.paper.paperbaselibrary.utils.BitmapUtils;
-import com.paper.paperbaselibrary.utils.ChoosePicUtils;
-import com.paper.paperbaselibrary.utils.FileUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -49,6 +43,12 @@ import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.BitmapUtils;
+import cn.qingchengfit.widgets.utils.ChoosePicUtils;
+import cn.qingchengfit.widgets.utils.FileUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

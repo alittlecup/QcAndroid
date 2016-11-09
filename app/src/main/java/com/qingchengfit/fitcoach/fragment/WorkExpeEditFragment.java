@@ -20,8 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
@@ -41,9 +39,13 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static android.text.TextUtils.isEmpty;
+import static u.aly.av.T;
 
 /**
  * power by
@@ -250,14 +252,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         String privateClass = workexpeditPrivateClass.getContent();
         String privateNum = workexpeditPrivateNum.getContent();
         String sale = workexpeditSale.getContent();
-        String gym = workexpeditGymName.getText().toString();
+        String gym = workexpeditGymName.getText().toString().trim();
 
 
-        if (TextpaperUtils.isEmpty(postion)) {
+        if (TextUtils.isEmpty(postion)) {
             Toast.makeText(getContext(), "请填写职位信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (addWorkExperience.getGym_id() == 0 || TextUtils.isEmpty(gym)) {
+        if (addWorkExperience.getGym_id() == 0 || isEmpty(gym)) {
             Toast.makeText(getContext(), "请选择健身房", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -408,7 +410,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                 hostQcIdentify.setVisibility(View.VISIBLE);
             else hostQcIdentify.setVisibility(View.GONE);
             String address = data.getStringExtra("address");
-            if (TextUtils.isEmpty(address)){
+            if (isEmpty(address)){
                 hostAddress.setVisibility(View.GONE);
             }else {
                 hostAddress.setVisibility(View.VISIBLE);

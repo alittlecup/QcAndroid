@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
-import com.paper.paperbaselibrary.di.Presenter;
+
 
 /**
  * power by
@@ -15,7 +15,7 @@ import com.paper.paperbaselibrary.di.Presenter;
  * <p/>
  * Created by Paper on 15/6/28 2015.
  */
-public abstract class LoginPresenter implements   Presenter {
+public abstract class LoginPresenter  {
 
     public abstract void onPhoneDone();
 

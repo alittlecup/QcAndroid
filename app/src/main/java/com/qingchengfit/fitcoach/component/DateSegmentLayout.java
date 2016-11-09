@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.paper.paperbaselibrary.utils.DateUtils;
-
 import java.util.Calendar;
 import java.util.Date;
+
+import cn.qingchengfit.widgets.utils.DateUtils;
 
 /**
  * power by

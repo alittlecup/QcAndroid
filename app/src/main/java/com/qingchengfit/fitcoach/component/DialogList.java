@@ -13,10 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.paper.paperbaselibrary.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 
 import java.util.List;
+
+import cn.qingchengfit.widgets.utils.MeasureUtils;
 
 /**
  * power by

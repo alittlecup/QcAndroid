@@ -8,11 +8,8 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 
 import com.google.gson.Gson;
-import com.paper.paperbaselibrary.utils.DateUtils;
-import com.paper.paperbaselibrary.utils.LogUtil;
-import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
-import com.paper.paperbaselibrary.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -20,6 +17,10 @@ import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

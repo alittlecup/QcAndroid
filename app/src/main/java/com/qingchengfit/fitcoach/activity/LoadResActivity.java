@@ -7,9 +7,10 @@ import android.support.multidex.MultiDex;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+
+import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by

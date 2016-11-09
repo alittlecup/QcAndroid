@@ -17,12 +17,12 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.qingchengfit.fitcoach.bean.Contact;
-import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
+import com.qingchengfit.fitcoach.bean.Contact;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;

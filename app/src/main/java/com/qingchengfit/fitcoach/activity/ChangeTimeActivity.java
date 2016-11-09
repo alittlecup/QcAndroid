@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.paper.paperbaselibrary.utils.DateUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
@@ -23,6 +22,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
 
 public class ChangeTimeActivity extends BaseAcitivity {
 

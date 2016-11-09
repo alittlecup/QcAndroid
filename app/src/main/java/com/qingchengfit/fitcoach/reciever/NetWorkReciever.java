@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.paper.paperbaselibrary.utils.LogUtil;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
+
+import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by
