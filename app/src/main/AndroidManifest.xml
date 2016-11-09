@@ -56,6 +56,14 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
+    //地理位置
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+
+
+
+
     <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
     <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example" />
 
@@ -263,6 +271,21 @@
         </receiver>
 
         <service android:name=".service.UpyunService" />
+
+
+
+        <!--  &&&&&&&&&&&&&&&&&&&&
+            地图SDK 高德
+            &&&&&&&&&&&&&&&&&&&&
+        -->
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="ce6997d5c6f60e84d056394ff961b7b0">
+        </meta-data>
+        <service android:name="com.amap.api.location.APSService"/>
+
+
+
+
+
 
         <activity
             android:name=".activity.TextInputActivity"

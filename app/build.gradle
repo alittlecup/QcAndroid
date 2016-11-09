@@ -167,7 +167,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
     compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
-
     //    compile files('libs/MobLogCollector.jar')
     //    compile files('libs/MobTools.jar')
     //    compile files('libs/ShareSDK-Core-2.6.1.jar')
@@ -220,6 +219,7 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
     compile files('libs/pushservice-5.2.0.12.jar')
+    compile files('libs/AMap2DMap_2.9.2_AMapLocation_3.1.0_20161027.jar')
 }
 
 //buildscript {

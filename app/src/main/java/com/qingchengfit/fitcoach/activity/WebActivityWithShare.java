@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.paper.paperbaselibrary.bean.Contact;
+import com.qingchengfit.fitcoach.bean.Contact;
 import com.paper.paperbaselibrary.utils.AppUtils;
 import com.paper.paperbaselibrary.utils.BitmapUtils;
 import com.paper.paperbaselibrary.utils.ChoosePicUtils;

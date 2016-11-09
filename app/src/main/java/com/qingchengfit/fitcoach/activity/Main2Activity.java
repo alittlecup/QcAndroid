@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.MyGymsFragment;
+import com.qingchengfit.fitcoach.fragment.AddGymFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
@@ -67,7 +67,7 @@ public class Main2Activity extends AppCompatActivity implements WebActivityInter
             if (position == 0) {
                 return new ScheduesFragment();
             } else if (position == 1) {
-                return new MyGymsFragment();
+                return new AddGymFragmentFragment();
             } else if (position == 2) {
                 return WebFragment.newInstance("http://www.baidu.com");
             } else

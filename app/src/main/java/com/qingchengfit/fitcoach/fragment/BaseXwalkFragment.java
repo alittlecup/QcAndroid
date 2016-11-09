@@ -8,7 +8,7 @@
 //import android.view.ViewGroup;
 //
 //import com.google.gson.Gson;
-//import com.paper.paperbaselibrary.bean.Contact;
+//import com.qingchengfit.fitcoach.bean.Contact;
 //import com.paper.paperbaselibrary.utils.AppUtils;
 //import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 //import com.paper.paperbaselibrary.utils.PreferenceUtils;

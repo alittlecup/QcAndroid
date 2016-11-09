@@ -115,5 +115,7 @@
     <string name="choose_week">选择星期</string>
     <string name="wechat_code">wx81e378c8fd03319d</string>
     <string name="err_server">服务器错误</string>
+    <string name="label_brand_logo">品牌LOGO</string>
+    <string name="label_gym_logo">场馆LOGO</string>
 
 </resources>

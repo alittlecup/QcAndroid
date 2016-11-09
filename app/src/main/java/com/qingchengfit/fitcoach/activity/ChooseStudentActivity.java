@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.paper.paperbaselibrary.bean.Contact;
+import com.qingchengfit.fitcoach.bean.Contact;
 import com.paper.paperbaselibrary.utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;

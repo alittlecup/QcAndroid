@@ -1,4 +1,4 @@
-package com.paper.paperbaselibrary.bean;
+package com.qingchengfit.fitcoach.bean;
 
 /**
  * power by
