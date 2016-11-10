@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
 //import com.qingchengfit.fitcoach.di.ApplicationComponet;
@@ -22,6 +23,8 @@ import com.umeng.analytics.MobclickAgent;
  * Created by Paper on 15/7/29 2015.
  */
 public class BaseAcitivity extends AppCompatActivity {
+
+    private LoadingDialog loadingDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -42,7 +45,17 @@ public class BaseAcitivity extends AppCompatActivity {
         MobclickAgent.onPause(this);
     }
 
-    //    public ApplicationComponet getAppCompent(){
-//        return ((App)getApplication()).getComponet();
-//    }
+    public void showLoading() {
+        if (loadingDialog == null)
+            loadingDialog = new LoadingDialog(this);
+        if (loadingDialog.isShowing())
+            loadingDialog.dismiss();
+        loadingDialog.show();
+    }
+
+    public void hideLoading() {
+        if (loadingDialog != null)
+            loadingDialog.dismiss();
+    }
+
 }

@@ -9,10 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.AddGymFragmentFragment;
+import com.qingchengfit.fitcoach.fragment.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
-import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
+import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,11 +67,11 @@ public class Main2Activity extends AppCompatActivity implements WebActivityInter
             if (position == 0) {
                 return new ScheduesFragment();
             } else if (position == 1) {
-                return new AddGymFragmentFragment();
+                return new ChooseAddressFragment();
             } else if (position == 2) {
                 return WebFragment.newInstance("http://www.baidu.com");
             } else
-                return new SettingFragment();
+                return new MineFragmentFragment();
         }
 
         @Override

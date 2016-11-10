@@ -46,11 +46,17 @@
 
 
     <declare-styleable name="CommonInputView">
-        <attr name="civ_lable" format="string"></attr>
-        <attr name="civ_clickable" format="boolean"></attr>
-        <attr name="civ_inputnum" format="boolean"></attr>
-        <attr name="civ_nonnull" format="boolean"></attr>
-        <attr name="civ_showdivier" format="boolean"></attr>
+        <attr name="civ_lable" format="string"/>
+        <attr name="civ_content" format="string"/>
+        <attr name="civ_clickable" format="boolean"/>
+        <attr name="civ_inputnum" format="boolean"/>
+        <attr name="civ_nonnull" format="boolean"/>
+        <attr name="civ_right_icon" format="reference"/>
+        <attr name="civ_showdivier" format="boolean"/>
+        <attr name="civ_showright" format="boolean"/>
+        <attr name="civ_max_length" format="integer"/>
+        <attr name="civ_text_color" format="integer"/>
+        <attr name="civ_hint" format="string"/>
 
     </declare-styleable>
 

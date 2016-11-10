@@ -68,6 +68,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
@@ -257,6 +258,10 @@ public class QcCloudClient {
 
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
+
+        @GET("")
+        rx.Observable<QcResponseBrands> qcGetBrands(@Path("id") String id);
+
 
         //获取用户详情
         @GET("/api/coaches/{id}/detail/")

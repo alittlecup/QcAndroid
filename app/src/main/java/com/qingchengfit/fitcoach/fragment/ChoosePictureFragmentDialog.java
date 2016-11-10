@@ -44,6 +44,34 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
 
     public static final int CHOOSE_CAMERA = 701;
     public static final int CHOOSE_GALLERY = 702;
+    public static final int CLIP = 703;
+
+
+    public static ChoosePictureFragmentDialog newInstance() {
+        Bundle args = new Bundle();
+        ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ChoosePictureFragmentDialog newInstance(boolean clip) {
+        Bundle args = new Bundle();
+        args.putBoolean("c", clip);
+        ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ChoosePictureFragmentDialog newInstance(boolean clip,int request) {
+        Bundle args = new Bundle();
+        args.putBoolean("c", clip);
+        args.putInt("r",request);
+        ChoosePictureFragmentDialog fragment = new ChoosePictureFragmentDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
 
     public ChoosePicResult getResult() {
         return mResult;
@@ -159,21 +187,6 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
 
         return view;
     }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof ChoosePicResult){
-//            setResult((ChoosePicResult) context);
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        setResult(null);
-//    }
-
     public interface ChoosePicResult {
         void onChoosePicResult(boolean isSuccess, String filePath);
     }

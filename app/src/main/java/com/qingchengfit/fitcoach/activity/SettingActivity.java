@@ -11,6 +11,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
+import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
+import com.qingchengfit.fitcoach.fragment.RecordFragment;
+import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 
 import butterknife.Bind;
@@ -34,7 +37,23 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         fragmentManager = getSupportFragmentManager();
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        onFragmentChange(SettingFragment.newInstance(), false);
+        int to = getIntent().getIntExtra("to", 0);
+        switch (to) {
+            case 1:
+                onFragmentChange(ModifyInfoFragment.newInstance("", ""),false);
+                break;
+            case 3:
+                onFragmentChange(new RecordFragment(),false);
+                break;
+            case 4:
+                onFragmentChange(new WorkExepSettingFragment(),false);
+                break;
+            default:
+                onFragmentChange(SettingFragment.newInstance(), false);
+                break;
+        }
+
+
     }
 
 

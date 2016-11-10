@@ -10,6 +10,10 @@ import java.util.UUID;
 
 import cn.qingchengfit.widgets.utils.LogUtil;
 import main.java.com.UpYun;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -34,6 +38,19 @@ public class UpYunClient {
         upyun.setApiDomain(UpYun.ED_AUTO);
         return upyun;
     }
+
+    public static Observable<String> rxUpLoad(final String cloudpath, final String filePath) {
+        return Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
+                subscriber.onNext(upImg);
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+    }
+
 
     /**
      * @param path   记得带分隔符 eg /header/

@@ -117,5 +117,11 @@
     <string name="err_server">服务器错误</string>
     <string name="label_brand_logo">品牌LOGO</string>
     <string name="label_gym_logo">场馆LOGO</string>
+    <string name="label_city">城市</string>
+    <string name="personal_homepage">个人主页</string>
+    <string name="edit_mine_info">编辑我的基本信息</string>
+    <string name="brand_id_creator" formatted="false">品牌ID: %s    创建人: %s </string>
+    <string name="no_permission_brand">只能由品牌创建人%s添加场馆</string>
+    <string name="gym_brand_name">健身房品牌名</string>
 
 </resources>
