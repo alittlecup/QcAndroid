@@ -195,8 +195,8 @@ dependencies {
     //    compile project(path: ':paperbaselibrary')
     //    debugCompile project(path: ':paperbaselibrary', configuration: 'debug')
     //    releaseCompile project(path: ':paperbaselibrary', configuration: 'release')
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     //    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
@@ -220,6 +220,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'eu.davidea:flexible-adapter:5.0.0-b7'
+    compile "com.jakewharton.rxbinding:rxbinding:0.4.0"
 
 
     compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')

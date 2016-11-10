@@ -275,7 +275,7 @@
         -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ce6997d5c6f60e84d056394ff961b7b0"></meta-data>
+            android:value="ce6997d5c6f60e84d056394ff961b7b0" />
 
         <service android:name="com.amap.api.location.APSService" />
 
@@ -337,7 +337,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.CoachHomeActivity" />
         <activity android:name=".activity.Main2Activity" />
-        <activity android:name=".activity.AddBrandActivity"></activity>
+        <activity android:name=".activity.AddBrandActivity" />
+        <activity android:name=".activity.GuideActivity"></activity>
     </application>
 
 </manifest>

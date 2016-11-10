@@ -3,17 +3,29 @@ package com.qingchengfit.fitcoach.items;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.FunctionBean;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 
 public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkVH> {
+
+    public FunctionBean bean;
+
+
+    public DailyWorkItem(FunctionBean bean) {
+        this.bean = bean;
+    }
 
     @Override
     public int getLayoutRes() {
@@ -27,6 +39,8 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, DailyWorkVH holder, int position, List payloads) {
+        holder.text.setText(bean.text);
+        Glide.with(holder.itemView.getContext()).load(bean.resImg).into(holder.img);
     }
 
     @Override
@@ -35,7 +49,10 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
     }
 
     public class DailyWorkVH extends FlexibleViewHolder {
-
+        @Bind(R.id.img)
+        ImageView img;
+        @Bind(R.id.text)
+        TextView text;
         public DailyWorkVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

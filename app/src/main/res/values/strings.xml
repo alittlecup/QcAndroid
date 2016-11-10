@@ -123,5 +123,38 @@
     <string name="brand_id_creator" formatted="false">品牌ID: %s    创建人: %s </string>
     <string name="no_permission_brand">只能由品牌创建人%s添加场馆</string>
     <string name="gym_brand_name">健身房品牌名</string>
+    <string name="coach_function_hint">教练后台功能</string>
+    <string name="more_gym_function_hint">更多健身房后台功能</string>
+    <string name="course_batch">课程排期</string>
+    <string name="course_types">课程排期</string>
+    <string name="student">学员</string>
+    <string name="course_statement">课程报表</string>
+    <string name="sale_statement">销售报表</string>
+    <string name="course_plan">课程计划模板</string>
+    <string name="set_gym_brand_hint">-- 设置健身房品牌 --</string>
+    <string name="next_step">下一步</string>
+    <string name="guide_set_gym_hint">-- 设置场馆 -- </string>
+    <string name="gym_name">场馆名称</string>
+    <string name="please_input_gym_name">请填写场馆名称</string>
+    <string name="please_input">请填写</string>
+    <string name="address">地址</string>
+    <string name="start_date">开始日期</string>
+    <string name="end_date">结束日期</string>
+
+
+
+
+
+
+
+
+    <string name="week1">星期一</string>
+    <string name="week2">星期二</string>
+    <string name="week3">星期三</string>
+    <string name="week4">星期四</string>
+    <string name="week5">星期五</string>
+    <string name="week6">星期六</string>
+    <string name="week7">星期日</string>
+    <string name="every">每个</string>
 
 </resources>

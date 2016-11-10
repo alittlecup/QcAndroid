@@ -12,6 +12,7 @@
         tools:src="@drawable/circle_prime"
         />
     <TextView
+        android:id="@+id/text"
         style="@style/Qc.TextCommonBlack"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="wrap_content"
