@@ -45,7 +45,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.text.TextUtils.isEmpty;
-import static u.aly.av.T;
 
 /**
  * power by
@@ -201,14 +200,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 //                    return true;
 //                }
 //            });
-            workexpeditStartTime.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
             if (c.get(Calendar.YEAR) == 3000) {
                 workexpeditStartEnd.setContent("至今");
             } else {
-                workexpeditStartEnd.setContent(DateUtils.getServerDateDay(d));
+                workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(d));
             }
 
 
@@ -230,8 +229,8 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             workexpeditPrivateNum.setContent(Integer.toString(experiencesEntity.getPrivate_user()));
             workexpeditSale.setContent(Integer.toString(experiencesEntity.getSale()));
         } else {
-            workexpeditStartTime.setContent(DateUtils.getServerDateDay(new Date()));
-            workexpeditStartEnd.setContent(DateUtils.getServerDateDay(new Date()));
+            workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
+            workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));
 
         }
 
@@ -268,7 +267,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         if (endtime.equalsIgnoreCase("至今")) {
             endtime = "3000-1-1";
         }
-        if (DateUtils.formatDateFromString(starttime).getTime() > DateUtils.formatDateFromString(endtime).getTime()) {
+        if (DateUtils.formatDateFromYYYYMMDD(starttime).getTime() > DateUtils.formatDateFromYYYYMMDD(endtime).getTime()) {
             Toast.makeText(getContext(), "结束时间不能早于开始时间", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -339,14 +338,14 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             }
 
             if (!TextUtils.equals("至今", workexpeditStartEnd.getContent()) &&
-                    DateUtils.formatDateFromString(workexpeditStartEnd.getContent()).getTime()
-                            < DateUtils.formatDateFromString(workexpeditStartTime.getContent()).getTime()) {
+                    DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime()
+                            < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
                 Toast.makeText(App.AppContex, "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
-            workexpeditStartTime.setContent(DateUtils.getServerDateDay(date));
+            workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(date));
             pwTime.dismiss();
         });
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
@@ -369,11 +368,11 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                             mDialogSheet.dismiss();
                             pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
                             pwTime.setOnTimeSelectListener(date -> {
-                                if (date.getTime() < DateUtils.formatDateFromString(workexpeditStartTime.getContent()).getTime()) {
+                                if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
                                     Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
-                                workexpeditStartEnd.setContent(DateUtils.getServerDateDay(date));
+                                workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(date));
                                 pwTime.dismiss();
                             });
                             pwTime.setRange(1900, 2100);

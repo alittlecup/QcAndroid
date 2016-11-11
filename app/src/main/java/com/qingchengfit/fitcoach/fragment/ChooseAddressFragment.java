@@ -74,7 +74,11 @@ public class ChooseAddressFragment extends Fragment {
                 @Override
                 public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
                     if (i == 1000){
-                        LogUtil.e("address:"+regeocodeResult.getRegeocodeAddress().getFormatAddress());
+                        LogUtil.e("address: ===================================================");
+                        LogUtil.e("address:"+regeocodeResult.getRegeocodeAddress().getDistrict());
+                        LogUtil.e("address:"+regeocodeResult.getRegeocodeAddress().getBuilding());
+                        LogUtil.e("address:"+regeocodeResult.getRegeocodeAddress().getNeighborhood());
+                        LogUtil.e("address:"+regeocodeResult.getRegeocodeAddress().getTownship());
                     }
                 }
 

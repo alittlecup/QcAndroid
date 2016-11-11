@@ -188,7 +188,7 @@ public class RecordComfirmFragment extends VpFragment {
             } else
                 holder.img.setVisibility(View.INVISIBLE);
 
-            holder.recordcomfirmDate.setText("发证日期:" + DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            holder.recordcomfirmDate.setText("发证日期:" + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
             if (TextUtils.isEmpty(certificatesEntity.getPhoto())) {
                 holder.recordImg.setVisibility(View.GONE);
@@ -203,7 +203,7 @@ public class RecordComfirmFragment extends VpFragment {
                 } else {
                     StringBuffer sb = new StringBuffer();
                     sb.append("有效期:  ");
-                    sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+                    sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
                     sb.append("至");
                     Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
                     Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -213,7 +213,7 @@ public class RecordComfirmFragment extends VpFragment {
                     if (c.get(Calendar.YEAR) == 3000)
                         holder.recordcomfirmTime.setText("长期有效");
                     else {
-                        sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
+                        sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
                         holder.recordcomfirmTime.setText(sb.toString());
                     }
                 }

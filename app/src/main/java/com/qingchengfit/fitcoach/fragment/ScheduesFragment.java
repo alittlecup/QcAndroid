@@ -451,7 +451,7 @@ public class ScheduesFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(mFragmentAdapter.getCurDay());
         calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
-        sb.append("&").append("date=").append(DateUtils.getServerDateDay(calendar.getTime()));
+        sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
         Intent toWeb = new Intent(getActivity(), WebActivity.class);
         toWeb.putExtra("url", sb.toString());
         startActivityForResult(toWeb, 404);

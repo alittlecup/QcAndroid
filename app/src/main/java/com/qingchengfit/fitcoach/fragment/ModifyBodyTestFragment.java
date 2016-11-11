@@ -172,7 +172,7 @@ public class ModifyBodyTestFragment extends Fragment {
         if (TextUtils.isEmpty(measureId)) {//添加
             toolbar.setTitle("添加体测");
             delete.setVisibility(View.GONE);
-            testDate.setContent(DateUtils.getServerDateDay(new Date()));
+            testDate.setContent(DateUtils.Date2YYYYMMDD(new Date()));
             addTest();
         } else {
             toolbar.setTitle("编辑体测");
@@ -284,7 +284,7 @@ public class ModifyBodyTestFragment extends Fragment {
                     @Override
                     public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
                         Measure mMeasure = qcGetBodyTestResponse.data.measure;
-                        testDate.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(mMeasure.created_at)));
+                        testDate.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(mMeasure.created_at)));
 
                         if (!TextUtils.isEmpty(mMeasure.bmi)) {
                             bmi.setVisibility(View.VISIBLE);
@@ -478,7 +478,7 @@ public class ModifyBodyTestFragment extends Fragment {
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                testDate.setContent(DateUtils.getServerDateDay(date));
+                testDate.setContent(DateUtils.Date2YYYYMMDD(date));
                 pwTime.dismiss();
             }
         });

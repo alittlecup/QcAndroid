@@ -194,14 +194,14 @@ public class WorkExperienceFragment extends VpFragment {
             if (gym.getDistrict() != null && gym.getDistrict().city != null && !TextUtils.isEmpty(gym.getDistrict().city.name))
                 holder.gymAddress.setText("|" + gym.getDistrict().city.name);
             //设置工作时间
-            String start = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart()));
+            String start = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart()));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
             if (c.get(Calendar.YEAR) == 3000) {
                 start = start + "至今";
             } else {
-                start = start +"至"+ DateUtils.getServerDateDay(d);
+                start = start +"至"+ DateUtils.Date2YYYYMMDD(d);
             }
             holder.gymTime.setText(start);
             if (experiencesEntity.is_authenticated())
@@ -274,7 +274,7 @@ public class WorkExperienceFragment extends VpFragment {
 //            holder.itemStudioDes.setText(sDes);
 //
 //            StringBuffer ss = new StringBuffer();
-//            ss.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+//            ss.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
 //            ss.append(getContext().getString(R.string.comom_time_to));
 //            Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
 //            Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -282,7 +282,7 @@ public class WorkExperienceFragment extends VpFragment {
 //            if (c.get(Calendar.YEAR) == 3000)
 //                ss.append(getContext().getString(R.string.common_today));
 //            else
-//                ss.append(DateUtils.getServerDateDay(d));
+//                ss.append(DateUtils.Date2YYYYMMDD(d));
 //            holder.itemTime.setText(ss.toString());
 //            if (experiencesEntity.getIs_authenticated()) {
 //                holder.itemStudioComfirm.setText("已确认");

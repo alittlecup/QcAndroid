@@ -173,8 +173,8 @@ public class CustomSaleFragment extends Fragment {
 
     private void initView() {
         customStatmentCourse.setContent("所有会员卡");
-        customStatmentStart.setContent(DateUtils.getServerDateDay(new Date()));
-        customStatmentEnd.setContent(DateUtils.getServerDateDay(new Date()));
+        customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(new Date()));
+        customStatmentEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));
         customStatmentGym.setContent("所有健身房");
 
 //        customStatmentStudent.setContent("所有学员");
@@ -208,9 +208,9 @@ public class CustomSaleFragment extends Fragment {
         pwTime.setRange(1900, 2100);
 
         pwTime.setOnTimeSelectListener(date -> {
-//            customStatmentStart.setContent(DateUtils.getServerDateDay(date));
+//            customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(date));
             try {
-                Date start = DateUtils.formatDateFromString(customStatmentStart.getContent());
+                Date start = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
                 LogUtil.e(date.getTime() + "   " + start.getTime());
                 if (date.getTime() - start.getTime() < 0) {
                     ToastUtils.show(R.drawable.ic_share_fail, "结束日期不能早于开始日期");
@@ -218,7 +218,7 @@ public class CustomSaleFragment extends Fragment {
                     ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
                 } else {
                     pwTime.dismiss();
-                    customStatmentEnd.setContent(DateUtils.getServerDateDay(date));
+                    customStatmentEnd.setContent(DateUtils.Date2YYYYMMDD(date));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -227,7 +227,7 @@ public class CustomSaleFragment extends Fragment {
         });
         Date date = new Date();
         try {
-            date = DateUtils.formatDateFromString(customStatmentEnd.getContent());
+            date = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
         } catch (Exception e) {
 
         }
@@ -248,7 +248,7 @@ public class CustomSaleFragment extends Fragment {
         pwTime.setRange(1900, 2100);
         pwTime.setOnTimeSelectListener(date -> {
             try {
-                Date end = DateUtils.formatDateFromString(customStatmentEnd.getContent());
+                Date end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
 
                 if (date.getTime() - end.getTime() > 0) {
                     ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
@@ -256,7 +256,7 @@ public class CustomSaleFragment extends Fragment {
                     ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
                 } else {
                     pwTime.dismiss();
-                    customStatmentStart.setContent(DateUtils.getServerDateDay(date));
+                    customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(date));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -266,7 +266,7 @@ public class CustomSaleFragment extends Fragment {
         });
         Date date = new Date();
         try {
-            date = DateUtils.formatDateFromString(customStatmentStart.getContent());
+            date = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
         } catch (Exception e) {
 
         }

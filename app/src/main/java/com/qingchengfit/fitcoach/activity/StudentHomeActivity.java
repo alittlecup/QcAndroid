@@ -239,7 +239,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                         }else birthDay= user.date_of_birth;
                         BaseInfoBean birth = new BaseInfoBean(R.drawable.ic_baseinfo_wechat, "生日", birthDay);
                         BaseInfoBean address = new BaseInfoBean(R.drawable.ic_baseinfo_city, "地址", user.address);
-                        BaseInfoBean registe = new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "注册日期", DateUtils.getServerDateDay(DateUtils.formatDateFromServer(user.joined_at)));
+                        BaseInfoBean registe = new BaseInfoBean(R.drawable.ic_baseinfo_introduce, "注册日期", DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(user.joined_at)));
                         beans.add(phone);
                         beans.add(birth);
                         beans.add(address);
@@ -316,8 +316,8 @@ public class StudentHomeActivity extends BaseAcitivity {
                             if (!card.check_valid) {
                                 time = "无限制";
                             } else {
-                                time = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.valid_from)) + "至"
-                                        + DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.valid_to));
+                                time = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.valid_from)) + "至"
+                                        + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.valid_to));
 
                             }
 
@@ -328,8 +328,8 @@ public class StudentHomeActivity extends BaseAcitivity {
                             } else if (card.type == 3) {
 //                                balance = "到期时间"+DateUtils.getDateDay(DateUtils.formatDateFromServer(card.end));
                                 balance = "";
-                                time = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.start)) + "至"
-                                        + DateUtils.getServerDateDay(DateUtils.formatDateFromServer(card.end));
+                                time = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.start)) + "至"
+                                        + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(card.end));
                             } else {
                                 balance = "余额" + card.account + "元";
                             }
@@ -363,7 +363,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                         List<BodyTestBean> strings = new ArrayList<BodyTestBean>();
                         for (BodyTestReponse.BodyTestMeasure measure : bodyTestReponse.data.measures) {
                             BodyTestBean bodyTestBean = new BodyTestBean();
-                            bodyTestBean.data = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(measure.created_at)) + "体测数据";
+                            bodyTestBean.data = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(measure.created_at)) + "体测数据";
                             bodyTestBean.id = measure.id;
                             strings.add(bodyTestBean);
                         }

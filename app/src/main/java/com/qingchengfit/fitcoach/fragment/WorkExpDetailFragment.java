@@ -137,14 +137,14 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                             gymAddress.setText("|" + gym.getDistrict().city.name);
                         //设置工作时间
                         experiencesEntity = qcResponse.data.experience;
-                        String start = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart()));
+                        String start = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart()));
                         Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
                         Calendar c = Calendar.getInstance(Locale.getDefault());
                         c.setTime(d);
                         if (c.get(Calendar.YEAR) == 3000) {
                             start = start + "至今";
                         } else {
-                            start = start+"至" + DateUtils.getServerDateDay(d);
+                            start = start+"至" + DateUtils.Date2YYYYMMDD(d);
                         }
                         gymTime.setText(start);
                         if (experiencesEntity.is_authenticated())

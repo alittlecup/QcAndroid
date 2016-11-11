@@ -136,7 +136,7 @@ public class AddCourseManageFragment extends Fragment {
         recyclerview.setLayoutManager(new FullyLinearLayoutManager(getContext()));
         recyclerview.setAdapter(adapter);
 
-        starttime.setContent(DateUtils.getServerDateDay(new Date()));
+        starttime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
         endtime.setContent(DateUtils.getEndDayOfMonthNew(new Date()));
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -177,7 +177,7 @@ public class AddCourseManageFragment extends Fragment {
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                starttime.setContent(DateUtils.getServerDateDay(date));
+                starttime.setContent(DateUtils.Date2YYYYMMDD(date));
                 endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
                 pwTime.dismiss();
             }
@@ -196,15 +196,15 @@ public class AddCourseManageFragment extends Fragment {
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                if (date.getTime() < DateUtils.formatDateFromString(starttime.getContent()).getTime()) {
+                if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()) {
                     Toast.makeText(App.AppContex, R.string.alert_endtime_greater_starttime, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (date.getTime() - DateUtils.formatDateFromString(starttime.getContent()).getTime() > 92 * DateUtils.DAY_TIME) {
+                if (date.getTime() - DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime() > 92 * DateUtils.DAY_TIME) {
                     Toast.makeText(App.AppContex, R.string.alert_batch_greater_three_month, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                endtime.setContent(DateUtils.getServerDateDay(date));
+                endtime.setContent(DateUtils.Date2YYYYMMDD(date));
                 pwTime.dismiss();
             }
         });

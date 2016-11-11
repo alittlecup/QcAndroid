@@ -177,8 +177,8 @@ public class CourseManageFragment extends Fragment {
                         int pos = 0;
                         for (QcBatchResponse.Schedule schedule : (mCourseType == Configs.TYPE_PRIVATE ? qcBatchResponse.data.timetables : qcBatchResponse.data.schedules)) {
                             CourseManageBean b = new CourseManageBean();
-                            b.month = DateUtils.getDateMonth(DateUtils.formatDateFromServer(schedule.start));
-                            b.day = DateUtils.getServerDateDay(DateUtils.formatDateFromServer(schedule.start));
+                            b.month = DateUtils.Date2YYYYMM(DateUtils.formatDateFromServer(schedule.start));
+                            b.day = DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(schedule.start));
                             b.WeekDay = DateUtils.getDayOfWeek(DateUtils.formatDateFromServer(schedule.start));
                             if (mCourseType == Configs.TYPE_GROUP)
                                 b.time = DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(schedule.start));
@@ -217,7 +217,7 @@ public class CourseManageFragment extends Fragment {
             timeWindow.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
                 @Override
                 public void onTimeSelect(Date date) {
-                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getServerDateDay(new Date())) && date.getTime() <= new Date().getTime()) {
+                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.Date2YYYYMMDD(new Date())) && date.getTime() <= new Date().getTime()) {
                         ToastUtils.showDefaultStyle("开始时间不能小于当前时间");
                         return;
                     }
@@ -269,7 +269,7 @@ public class CourseManageFragment extends Fragment {
                         ToastUtils.showDefaultStyle("开始时间不能小于结束时间");
                         return;
                     }
-                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.getServerDateDay(new Date())) && start.getTime() <= new Date().getTime()) {
+                    if (datas.get(pos).day.equalsIgnoreCase(DateUtils.Date2YYYYMMDD(new Date())) && start.getTime() <= new Date().getTime()) {
                         ToastUtils.showDefaultStyle("开始时间不能小于当前时间");
                         return;
                     }

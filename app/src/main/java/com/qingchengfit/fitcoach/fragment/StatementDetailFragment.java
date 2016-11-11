@@ -187,7 +187,7 @@ public class StatementDetailFragment extends Fragment {
             mDividerType = getArguments().getInt("type");
         }
         curCalendar = Calendar.getInstance();
-        start = DateUtils.getServerDateDay(new Date());
+        start = DateUtils.Date2YYYYMMDD(new Date());
         switch (mDividerType) {
             case 0:
                 end = start;
@@ -555,7 +555,7 @@ public class StatementDetailFragment extends Fragment {
                     switch (mDividerType) {
                         case 0:
                             curCalendar.add(Calendar.DAY_OF_YEAR, symbol);
-                            start = DateUtils.getServerDateDay(curCalendar.getTime());
+                            start = DateUtils.Date2YYYYMMDD(curCalendar.getTime());
                             end = start;
                             break;
                         case 1:
@@ -573,7 +573,7 @@ public class StatementDetailFragment extends Fragment {
                     }
 
                     getActivity().runOnUiThread(() -> {
-                        if (DateUtils.getServerDateDay(curCalendar.getTime()).equalsIgnoreCase(DateUtils.getServerDateDay(new Date()))) {
+                        if (DateUtils.Date2YYYYMMDD(curCalendar.getTime()).equalsIgnoreCase(DateUtils.Date2YYYYMMDD(new Date()))) {
                             statementDetailMore.setEnabled(false);
                         } else {
                             statementDetailMore.setEnabled(true);
@@ -647,9 +647,9 @@ public class StatementDetailFragment extends Fragment {
         public void onBindViewHolder(StatementDetailVH holder, int position) {
             holder.itemView.setTag(position);
             StatementBean bean = datas.get(position);
-            String now = DateUtils.getOnlyDay(bean.date);
+            String now = DateUtils.Date2MMDD(bean.date);
 
-            if (position == 0 || !now.equalsIgnoreCase(DateUtils.getOnlyDay(datas.get(position - 1).date))) {
+            if (position == 0 || !now.equalsIgnoreCase(DateUtils.Date2MMDD(datas.get(position - 1).date))) {
                 holder.itemStatementDetailHeaderdivier.setVisibility(View.VISIBLE);
                 holder.itemStatementDetailDay.setVisibility(View.VISIBLE);
                 holder.itemStatementDetailMonth.setVisibility(View.VISIBLE);

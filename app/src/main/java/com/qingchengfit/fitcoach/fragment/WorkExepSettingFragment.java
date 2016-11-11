@@ -225,7 +225,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
 
             holder.itemWorkexpeName.setText(experiencesEntity.getGym().getName());
             StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
+            stringBuffer.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             stringBuffer.append(getContext().getString(R.string.comom_time_to));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -233,7 +233,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             if (c.get(Calendar.YEAR) == 3000)
                 stringBuffer.append(getContext().getString(R.string.common_today));
             else
-                stringBuffer.append(DateUtils.getServerDateDay(d));
+                stringBuffer.append(DateUtils.Date2YYYYMMDD(d));
             holder.itemWorkexpeTime.setText(stringBuffer.toString());
             if (experiencesEntity.is_authenticated())
                 holder.qcIdentify.setVisibility(View.VISIBLE);

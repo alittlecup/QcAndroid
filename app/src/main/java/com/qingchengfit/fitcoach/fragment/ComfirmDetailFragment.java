@@ -212,7 +212,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
             validLable.setText("");
         } else {
             StringBuffer sb = new StringBuffer();
-            sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(entity
+            sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(entity
                             .getStart()
 
             )));
@@ -227,12 +227,12 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
             else
 
             {
-                sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(entity.getEnd())));
+                sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(entity.getEnd())));
                 recorddetailTime.setText(sb.toString());
             }
         }
 
-        comfirmCreatetime.setText(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(entity
+        comfirmCreatetime.setText(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(entity
                         .
                                 getDate_of_issue()
 
@@ -357,7 +357,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                             } else {
                                 validLable.setText("有效期");
                                 StringBuffer sb = new StringBuffer();
-                                sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().
+                                sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().
                                                 getCertificate()
                                                 .getStart()
 
@@ -374,12 +374,12 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
 
                                 {
                                     validLable.setText("有效期");
-                                    sb.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getEnd())));
+                                    sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().getCertificate().getEnd())));
                                     recorddetailTime.setText(sb.toString());
                                 }
                             }
 
-                            comfirmCreatetime.setText(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().
+                            comfirmCreatetime.setText(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(qcCertificateDetailResponse.getData().
 
                                             getCertificate()
                                             .

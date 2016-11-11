@@ -59,7 +59,7 @@ public class DateSegmentLayout extends CustomSetmentLayout {
 
         for (int i = 0; i < 5; i++) {
             ((ScheduleDateLayout) getChildAt(i)).setViewdate(calendar.getTime());
-            ((ScheduleDateLayout) getChildAt(i)).setWeekday(mWeek[(x + i) % 7], DateUtils.getOnlyDay(calendar.getTime()));
+            ((ScheduleDateLayout) getChildAt(i)).setWeekday(mWeek[(x + i) % 7], DateUtils.Date2MMDD(calendar.getTime()));
             if (i == 0)
                 ((ScheduleDateLayout) getChildAt(i)).setCheck(true);
             else ((ScheduleDateLayout) getChildAt(i)).setCheck(false);

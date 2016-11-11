@@ -156,5 +156,8 @@
     <string name="week6">星期六</string>
     <string name="week7">星期日</string>
     <string name="every">每个</string>
+    <string name="detail_address">具体地址</string>
+    <string name="please_input_detail_address">请填写具体地址</string>
+    <string name="please_drag_map">请拖动地图到健身房的正确位置</string>
 
 </resources>

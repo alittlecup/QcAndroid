@@ -277,10 +277,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         LogUtil.e("sync time:" + new Date().getTime() + "   " + calendar_sync_time);
         if (calendarid >= 0 && (new Date().getTime() - calendar_sync_time > DateUtils.HOUR_TIME)) {
             HashMap<String, String> params = new HashMap<>();
-            params.put("from_date", DateUtils.getServerDateDay(new Date()));
+            params.put("from_date", DateUtils.Date2YYYYMMDD(new Date()));
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DAY_OF_MONTH, 6);
-            params.put("to_date", DateUtils.getServerDateDay(calendar.getTime()));
+            params.put("to_date", DateUtils.Date2YYYYMMDD(calendar.getTime()));
             LogUtil.e("sync calendar:");
             QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params)
                     .subscribeOn(Schedulers.io())

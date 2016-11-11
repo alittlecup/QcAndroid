@@ -187,8 +187,8 @@ public class PhoneFuncUtils {
         beginTime.setTime(new Date(starttime));
         Calendar endTime = Calendar.getInstance();
         endTime.setTime(new Date(endtime));
-        LogUtil.e("startTime:" + DateUtils.getServerDay(beginTime.getTime()));
-        LogUtil.e("endTime:"+DateUtils.getServerDay(endTime.getTime()));
+        LogUtil.e("startTime:" + DateUtils.Date2YYYYMMDD(beginTime.getTime()));
+        LogUtil.e("endTime:"+DateUtils.Date2YYYYMMDD(endTime.getTime()));
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.parse("content://com.android.calendar/events");
         String selection = "(((" + CalendarContract.Events.DTSTART + " >= ?) AND ("
@@ -231,8 +231,8 @@ public class PhoneFuncUtils {
 
 
         long midtime = DateUtils.getDayMid(new Date(starttime));
-//        LogUtil.e("startTime:" + DateUtils.getServerDay(beginTime.getTime()));
-//        LogUtil.e("endTime:"+DateUtils.getServerDay(endTime.getTime()));
+//        LogUtil.e("startTime:" + DateUtils.Date2YYYYMMDD(beginTime.getTime()));
+//        LogUtil.e("endTime:"+DateUtils.Date2YYYYMMDD(endTime.getTime()));
         ContentResolver cr = context.getContentResolver();
         Uri uri = Uri.parse("content://com.android.calendar/events");
         String selection = "((" + CalendarContract.Events.DTSTART + " <= ?) AND ("
@@ -395,7 +395,7 @@ public class PhoneFuncUtils {
         Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, id);
         Long start = DateUtils.getDayMidnight(new Date(daytime));
         Long end = start + DateUtils.DAY_TIME;
-        LogUtil.e("id:" + id + "   start:" + DateUtils.getServerDateDay(new Date(start)) + "  end:" + DateUtils.getServerDateDay(new Date(end)));
+        LogUtil.e("id:" + id + "   start:" + DateUtils.Date2YYYYMMDD(new Date(start)) + "  end:" + DateUtils.Date2YYYYMMDD(new Date(end)));
         context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI, "((" + CalendarContract.Events.CALENDAR_ID + "=" + id + ")AND(("
                 + CalendarContract.Events.DTSTART + ">=" + start + ")AND(" + CalendarContract.Events.DTEND + "<=" + end + ")))", null);
         return true;
@@ -404,7 +404,7 @@ public class PhoneFuncUtils {
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
     public static boolean delTimeCal(Context context, Long id, long start,long end) {
         Uri updateUri = ContentUris.withAppendedId(CalendarContract.Calendars.CONTENT_URI, id);
-        LogUtil.e("id:" + id + "   start:" + DateUtils.getServerDateDay(new Date(start)) + "  end:" + DateUtils.getServerDateDay(new Date(end)));
+        LogUtil.e("id:" + id + "   start:" + DateUtils.Date2YYYYMMDD(new Date(start)) + "  end:" + DateUtils.Date2YYYYMMDD(new Date(end)));
         context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI, "((" + CalendarContract.Events.CALENDAR_ID + "=" + id + ")AND(("
                 + CalendarContract.Events.DTSTART + ">=" + start + ")AND(" + CalendarContract.Events.DTEND + "<=" + end + ")))", null);
         return true;

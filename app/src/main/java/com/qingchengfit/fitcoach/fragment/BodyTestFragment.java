@@ -289,7 +289,7 @@ public class BodyTestFragment extends Fragment {
     }
 
     public void initView(Measure mMeasure) {
-        title.setText(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(mMeasure.created_at)) + "体测数据");
+        title.setText(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(mMeasure.created_at)) + "体测数据");
         if (!TextUtils.isEmpty(mMeasure.bmi)) {
             bmiLayout.setVisibility(View.VISIBLE);
             bmi.setText(String.format("%s", mMeasure.bmi));

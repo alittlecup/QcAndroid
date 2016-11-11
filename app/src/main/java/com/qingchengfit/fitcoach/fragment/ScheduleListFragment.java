@@ -188,7 +188,7 @@ public class ScheduleListFragment extends Fragment {
 
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("date", DateUtils.getServerDateDay(date));
+        params.put("date", DateUtils.Date2YYYYMMDD(date));
         QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

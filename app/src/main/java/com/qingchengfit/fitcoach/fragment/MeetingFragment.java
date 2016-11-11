@@ -116,8 +116,8 @@ public class MeetingFragment extends MainBaseFragment {
                             bean.title = meeting.name;
                             bean.address = meeting.city + "  " + meeting.address;
                             StringBuffer stringBuffer = new StringBuffer();
-                            stringBuffer.append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(meeting.open_start)))
-                                    .append("至").append(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(meeting.open_end)));
+                            stringBuffer.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(meeting.open_start)))
+                                    .append("至").append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(meeting.open_end)));
                             bean.time = stringBuffer.toString();
                             bean.img = meeting.image;
                             bean.url = meeting.link;

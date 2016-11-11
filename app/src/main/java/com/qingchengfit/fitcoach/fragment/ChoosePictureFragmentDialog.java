@@ -17,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -27,8 +28,6 @@ import java.io.File;
 
 import cn.qingchengfit.widgets.utils.FileUtils;
 import rx.functions.Action1;
-
-import static java.security.AccessController.getContext;
 
 /**
  * power by

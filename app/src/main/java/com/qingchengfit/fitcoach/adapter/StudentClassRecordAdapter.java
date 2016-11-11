@@ -55,13 +55,13 @@ public class StudentClassRecordAdapter extends RecyclerView.Adapter<ClassRecordV
         holder.itemView.setTag(position);
         if (datas != null && datas.size() > 0) {
             StatementBean bean = datas.get(position);
-            String now = DateUtils.getOnlyDay(bean.date);
+            String now = DateUtils.Date2MMDD(bean.date);
             if (bean.year) {
                 holder.yearTextView.setVisibility(View.VISIBLE);
                 holder.yearTextView.setText(String.format("%d年上课记录", DateUtils.getYear(bean.date)));
             } else holder.yearTextView.setVisibility(View.GONE);
 
-            if (position == 0 || !now.equalsIgnoreCase(DateUtils.getOnlyDay(datas.get(position - 1).date))) {
+            if (position == 0 || !now.equalsIgnoreCase(DateUtils.Date2MMDD(datas.get(position - 1).date))) {
                 holder.itemStatementDetailHeaderdivierView.setVisibility(View.VISIBLE);
                 holder.itemStatementDetailDayTextView.setVisibility(View.VISIBLE);
                 holder.itemStatementDetailMonthTextView.setVisibility(View.VISIBLE);

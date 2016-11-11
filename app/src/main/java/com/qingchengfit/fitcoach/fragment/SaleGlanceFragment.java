@@ -130,7 +130,7 @@ public class SaleGlanceFragment extends Fragment {
                 freshData();
             }
         });
-        statmentGlanceTodayTitle.setText("今日(" + DateUtils.getServerDateDay(new Date()) + ")");
+        statmentGlanceTodayTitle.setText("今日(" + DateUtils.Date2YYYYMMDD(new Date()) + ")");
         statmentGlanceWeekTitle.setText("本周("+DateUtils.getMondayOfThisWeek(new Date())+"至"+DateUtils.getSundayOfThisWeek(new Date())+")");
         statmentGlanceMonthTitle.setText("本月("+DateUtils.getStartDayOfMonth(new Date())+"至"+DateUtils.getEndDayOfMonth(new Date())+")");
         freshData();

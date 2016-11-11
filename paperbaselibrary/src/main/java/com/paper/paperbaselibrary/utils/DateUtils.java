@@ -41,7 +41,7 @@ public class DateUtils {
 
     }
 
-    public static Date formatDateFromString(String s) {
+    public static Date formatDateFromYYYYMMDD(String s) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         Date date = null;
         try {
@@ -52,7 +52,7 @@ public class DateUtils {
         return date;
     }
 
-    public static Date formatDateFromStringDot(String s) {
+    public static Date formatDateFromYYYYMMDDDot(String s) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd", Locale.CHINA);
         Date date = null;
         try {
@@ -68,23 +68,23 @@ public class DateUtils {
         return formatter.format(d);
     }
 
-    public static String getServerDateDay(Date d) {
+    public static String Date2YYYYMMDD(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         return formatter.format(d);
     }
-    public static String getServerDateDayAddMonth(Date d,int i) {
+    public static String Date2YYYYMMDDAddMonth(Date d,int i) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         return formatter.format(addDateMonth(d,i));
     }
-    public static String getServerDay(Date d) {
+    public static String Date2YYYYMMDD(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
         return formatter.format(d);
     }
 
-    public static String getOnlyDay(Date d) {
+    public static String Date2MMDD(Date d) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd", Locale.CHINA);
         return formatter.format(d);
@@ -139,7 +139,7 @@ public class DateUtils {
         if (day_of_week == 0)
             day_of_week = 7;
         c.add(Calendar.DATE, -day_of_week + 1);
-        return getServerDateDay(c.getTime());
+        return Date2YYYYMMDD(c.getTime());
     }
 
     /**
@@ -154,7 +154,7 @@ public class DateUtils {
         if (day_of_week == 0)
             day_of_week = 7;
         c.add(Calendar.DATE, -day_of_week + 7);
-        return getServerDateDay(c.getTime());
+        return Date2YYYYMMDD(c.getTime());
     }
 
     public static String getEndDayOfMonth(Date date) {
@@ -162,7 +162,7 @@ public class DateUtils {
         c.setTime(date);
         c.add(Calendar.MONTH, 1);
         c.set(Calendar.DAY_OF_MONTH, 0);
-        return getServerDateDay(c.getTime());
+        return Date2YYYYMMDD(c.getTime());
     }
     public static String getEndDayOfMonthNew(Date date) {
         Calendar c = Calendar.getInstance();
@@ -170,14 +170,14 @@ public class DateUtils {
         c.add(Calendar.MONTH, 1);
         c.set(Calendar.DAY_OF_MONTH, 0);
         c.add(Calendar.DAY_OF_MONTH, -1);
-        return getServerDateDay(c.getTime());
+        return Date2YYYYMMDD(c.getTime());
     }
 
     public static String getStartDayOfMonth(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.set(Calendar.DAY_OF_MONTH, 1);
-        return getServerDateDay(c.getTime());
+        return Date2YYYYMMDD(c.getTime());
     }
     public static int getDayOfWeek(Date date) {
         Calendar c = Calendar.getInstance();

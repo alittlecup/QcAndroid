@@ -276,8 +276,8 @@ public class RecordEditFragment extends BaseSettingFragment {
             else hostQcIdentify.setVisibility(View.GONE);
             Glide.with(App.AppContex).load(certificatesEntity.getOrganization().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
             addCertificate.setOrganization_id(certificatesEntity.getOrganization().getId() + "");
-            recordeditDatestart.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
-            recordeditDate.setContent(DateUtils.getServerDateDay(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            recordeditDatestart.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
+            recordeditDate.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
             recordEditName.setContent(certificatesEntity.getName());
             recordeditScore.setContent(certificatesEntity.getGrade());
@@ -306,7 +306,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             if (c.get(Calendar.YEAR) == 3000) {
                 recordeditDateoff.setContent("长期有效");
             } else {
-                recordeditDateoff.setContent(DateUtils.getServerDateDay(d));
+                recordeditDateoff.setContent(DateUtils.Date2YYYYMMDD(d));
             }
 //            switch (certificatesEntity.getType()) {
 //                case TYPE_MEETING:
@@ -324,8 +324,8 @@ public class RecordEditFragment extends BaseSettingFragment {
                 Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).into(recordeditImg);
             } else recordeditImg.setVisibility(View.GONE);
         } else {
-            recordeditDatestart.setContent(DateUtils.getServerDateDay(new Date()));
-            recordeditDateoff.setContent(DateUtils.getServerDateDay(new Date()));
+            recordeditDatestart.setContent(DateUtils.Date2YYYYMMDD(new Date()));
+            recordeditDateoff.setContent(DateUtils.Date2YYYYMMDD(new Date()));
         }
 //        recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
@@ -451,7 +451,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             addCertificate.setWill_expired(true);
         }
         addCertificate.setEnd(endtime);
-        if (DateUtils.formatDateFromString(addCertificate.getStart()).getTime() > DateUtils.formatDateFromString(addCertificate.getEnd()).getTime()) {
+        if (DateUtils.formatDateFromYYYYMMDD(addCertificate.getStart()).getTime() > DateUtils.formatDateFromYYYYMMDD(addCertificate.getEnd()).getTime()) {
             Toast.makeText(App.AppContex, "失效日期不能小于生效日期", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -489,18 +489,18 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_datestart)
     public void onClickStart() {
         if (!TextUtils.isEmpty(recordeditDatestart.getContent())) {
-            pwTime.setTime(DateUtils.formatDateFromString(recordeditDatestart.getContent()));
+            pwTime.setTime(DateUtils.formatDateFromYYYYMMDD(recordeditDatestart.getContent()));
         }
         pwTime.setOnTimeSelectListener(date -> {
             if (!TextUtils.equals(recordeditDateoff.getContent(), "长期有效") &&
-                    DateUtils.formatDateFromString(recordeditDateoff.getContent()).getTime()
+                    DateUtils.formatDateFromYYYYMMDD(recordeditDateoff.getContent()).getTime()
                             < date.getTime()
                     ) {
                 Toast.makeText(App.AppContex, "生效日期不能晚于失效日期", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            recordeditDatestart.setContent(DateUtils.getServerDateDay(date));
+            recordeditDatestart.setContent(DateUtils.Date2YYYYMMDD(date));
             pwTime.dismiss();
         });
         pwTime.setRange(1900, 2100);
@@ -511,10 +511,10 @@ public class RecordEditFragment extends BaseSettingFragment {
     @OnClick(R.id.recordedit_date)
     public void onClickDate() {
         if (!TextUtils.isEmpty(recordeditDate.getContent())) {
-            pwTime.setTime(DateUtils.formatDateFromString(recordeditDate.getContent()));
+            pwTime.setTime(DateUtils.formatDateFromYYYYMMDD(recordeditDate.getContent()));
         }
         pwTime.setOnTimeSelectListener(date -> {
-            recordeditDate.setContent(DateUtils.getServerDateDay(date));
+            recordeditDate.setContent(DateUtils.Date2YYYYMMDD(date));
         });
         pwTime.setRange(1900, 2100);
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
@@ -537,17 +537,17 @@ public class RecordEditFragment extends BaseSettingFragment {
                         public void onClick(View v) {
                             mDialogSheet.dismiss();
                             if (!TextUtils.isEmpty(recordeditDateoff.getContent())) {
-                                pwTime.setTime(DateUtils.formatDateFromString(recordeditDateoff.getContent()));
+                                pwTime.setTime(DateUtils.formatDateFromYYYYMMDD(recordeditDateoff.getContent()));
                             }
                             pwTime.setOnTimeSelectListener(date -> {
                                 if (date.getTime()
-                                        < DateUtils.formatDateFromString(recordeditDatestart.getContent()).getTime()
+                                        < DateUtils.formatDateFromYYYYMMDD(recordeditDatestart.getContent()).getTime()
                                         ) {
                                     Toast.makeText(App.AppContex, "失效日期不能早于生效日期", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                recordeditDateoff.setContent(DateUtils.getServerDateDay(date));
+                                recordeditDateoff.setContent(DateUtils.Date2YYYYMMDD(date));
                                 pwTime.dismiss();
                             });
                             pwTime.setRange(1900, 2100);

@@ -34,7 +34,23 @@
             app:srcCompat="@drawable/ic_arrow_right"
             />
     </LinearLayout>
-
+    <include layout="@layout/divider_grey_left_right"/>
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_lable="@string/detail_address"
+        app:civ_hint="@string/please_input_detail_address"
+        />
+    <include layout="@layout/divider_grey"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/bg_grey"
+        android:layout_height="38dp"
+        android:text="@string/please_drag_map"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        />
+    <include layout="@layout/divider_grey"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +62,7 @@
             android:layout_height="match_parent"
             />
         <ImageView
-            app:srcCompat="@drawable/red_dot"
+            app:srcCompat="@drawable/ic_map_pin"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_centerInParent="true"
