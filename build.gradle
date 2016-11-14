@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
 //        classpath "com.android.databinding:dataBinder:1.0-rc1"
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.6'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
 //        classpath 'com.mcxiaoke.gradle:packer:1.0.4'
 //        classpath "com.github.piasy:okbuck-gradle-plugin:0.3.0"

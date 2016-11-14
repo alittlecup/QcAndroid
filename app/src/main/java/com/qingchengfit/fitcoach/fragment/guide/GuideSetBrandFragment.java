@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +8,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.bean.EventChooseImage;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -50,8 +60,40 @@ public class GuideSetBrandFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_brand, container, false);
         ButterKnife.bind(this, view);
+        RxBusAdd(EventChooseImage.class)
+                .subscribe(new Action1<EventChooseImage>() {
+                    @Override
+                    public void call(EventChooseImage eventChooseImage) {
+                        UpYunClient.rxUpLoad("brand/", eventChooseImage.filePath)
+                                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Action1<String>() {
+                                    @Override
+                                    public void call(String s) {
+                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(brandImg,getContext()));
+                                    }
+                                });
+                    }
+                });
         return view;
     }
+
+    @OnClick(R.id.layout_brand_logo)
+    public void onClickBrandLogo() {
+        RxPermissions.getInstance(getContext())
+                .request(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                            ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
+                        } else {
+                            ToastUtils.showDefaultStyle(getString(R.string.permission_request_camara));
+                        }
+                    }
+                });
+    }
+
+
 
 
     @Override
@@ -65,14 +107,22 @@ public class GuideSetBrandFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.brand_img, R.id.next_step})
+
+
+    @OnClick({ R.id.next_step})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.brand_img:
-                ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(),"");
-                break;
             case R.id.next_step:
-
+                if (brandName.isEmpty()){
+                    ToastUtils.showDefaultStyle(getString(R.string.alert_write_brand_name));
+                    return;
+                }
+                // TODO: 16/11/14 write data
+                getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
+                        .replace(R.id.guide_frag,new GuideSetGymFragmentBuilder("url","测试品牌","1").build())
+                        .addToBackStack(null)
+                        .commit();
                 break;
         }
     }

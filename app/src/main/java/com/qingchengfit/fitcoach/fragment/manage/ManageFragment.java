@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.manage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -85,7 +87,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @Override
     public boolean onItemClick(int position) {
-
+        Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+        startActivity(toGuide);
         return false;
     }
 }

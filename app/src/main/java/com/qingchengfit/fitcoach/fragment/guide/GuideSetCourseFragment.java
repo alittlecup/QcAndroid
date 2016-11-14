@@ -1,25 +1,15 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hannesdorfmann.fragmentargs.FragmentArgs;
-import com.hannesdorfmann.fragmentargs.annotation.Arg;
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.activity.ChooseActivity;
-import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
-import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -31,6 +21,7 @@ import com.qingchengfit.fitcoach.http.UpYunClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.CheckableButton;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -54,62 +45,40 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 16/11/10.
+ * Created by Paper on 16/11/14.
  */
-@FragmentWithArgs
-public class GuideSetGymFragment extends BaseFragment {
-    @Arg
-    String brandid;
-    @Arg
-    String brandImgUrl;
-    @Arg
-    String brandNameStr;
+public class GuideSetCourseFragment extends BaseFragment {
 
-    @Bind(R.id.brand_img)
-    ImageView brandImg;
-    @Bind(R.id.brand_name)
-    TextView brandName;
-    @Bind(R.id.gym_img)
-    ImageView gymImg;
-    @Bind(R.id.gym_name)
-    CommonInputView gymName;
+    @Bind(R.id.btn_group)
+    CheckableButton btnGroup;
+    @Bind(R.id.btn_private)
+    CheckableButton btnPrivate;
+    @Bind(R.id.course_img)
+    ImageView courseImg;
+    @Bind(R.id.name)
+    CommonInputView name;
+    @Bind(R.id.time_long)
+    CommonInputView timeLong;
+    @Bind(R.id.order_count)
+    CommonInputView orderCount;
     @Bind(R.id.next_step)
     Button nextStep;
-    @Bind(R.id.gym_address)
-    CommonInputView gymAddress;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FragmentArgs.inject(this);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
+        View view = inflater.inflate(R.layout.fragment_guide_set_course, container, false);
         ButterKnife.bind(this, view);
-        Glide.with(getContext()).load(brandImgUrl).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
-        brandName.setText(brandNameStr);
-        RxBus.getBus().post(new EventStep.Builder().step(0).build());
-        RxBusAdd(EventAddress.class)
-                .subscribe(new Action1<EventAddress>() {
-                    @Override
-                    public void call(EventAddress eventAddress) {
-                        gymAddress.setContent(eventAddress.address);
-                        // TODO: 16/11/14 设置城市和latlng
-
-                    }
-                });
+        RxBus.getBus().post(new EventStep.Builder().step(1).build());
         RxBusAdd(EventChooseImage.class)
                 .subscribe(new Action1<EventChooseImage>() {
                     @Override
                     public void call(EventChooseImage eventChooseImage) {
-                        UpYunClient.rxUpLoad("gym/", eventChooseImage.filePath)
+                        UpYunClient.rxUpLoad("course/", eventChooseImage.filePath)
                                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
+                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(courseImg,getContext()));
 
                                     }
                                 });
@@ -117,6 +86,7 @@ public class GuideSetGymFragment extends BaseFragment {
                 });
         return view;
     }
+
 
     @Override
     protected void lazyLoad() {
@@ -129,42 +99,29 @@ public class GuideSetGymFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.layout_brand, R.id.layout_gym_img, R.id.gym_address, R.id.next_step})
+    @OnClick({R.id.layout_gym_img, R.id.next_step})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.layout_brand:
-                Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-                startActivityForResult(toChooseBrand, 1);
-                break;
             case R.id.layout_gym_img:
-                ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
-                break;
-            case R.id.gym_address:
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.frag, new ChooseAddressFragment())
-//                        .addToBackStack(null)
-//                        .commit();
-                Intent toAddress = new Intent(getActivity(), ChooseActivity.class);
-                startActivity(toAddress);
+                ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(),"");
                 break;
             case R.id.next_step:
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
-                        .replace(R.id.guide_frag,new GuideSetCourseFragment())
+                        .replace(R.id.guide_frag,new GuideAddBatchFragment())
                         .addToBackStack(null)
                         .commit();
-
                 break;
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
-                // TODO: 16/11/14 选择的品牌
-            }
+    @OnClick({R.id.btn_group, R.id.btn_private})
+    public void privateChange(View view) {
+        switch (view.getId()) {
+            case R.id.btn_group:
+
+                break;
+            case R.id.btn_private:
+                break;
         }
     }
 }

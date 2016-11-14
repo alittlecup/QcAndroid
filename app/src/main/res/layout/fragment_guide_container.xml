@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal"
+        android:layout_height="100dp"
         android:background="@color/bg_grey"
+        android:gravity="center"
+        android:orientation="vertical"
         >
+
+        <com.badoualy.stepperindicator.StepperIndicator
+            android:id="@+id/step_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            app:stpi_lineColor="@color/text_grey"
+            app:stpi_showStepNumberInstead="true"
+            app:stpi_stepCount="3"
+            app:stpi_circleStrokeWidth="2dp"
+            app:stpi_lineDoneColor="@color/primary"
+            app:stpi_indicatorRadius="8dp"
+            app:stpi_showDoneIcon="true"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="28dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置健身房"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="安排课程"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成"
+                />
+        </LinearLayout>
     </LinearLayout>
+
     <FrameLayout
         android:id="@+id/guide_frag"
         android:layout_width="match_parent"

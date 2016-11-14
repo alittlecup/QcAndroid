@@ -59,6 +59,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
     <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example" />
@@ -322,6 +323,9 @@
         <activity
             android:name=".activity.StudentHomeActivity"
             android:screenOrientation="portrait" />
+       <activity
+            android:name=".activity.ChooseBrandActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ChooseStudentActivity"
             android:label="@string/title_activity_choose_student"
@@ -338,7 +342,8 @@
         <activity android:name=".activity.CoachHomeActivity" />
         <activity android:name=".activity.Main2Activity" />
         <activity android:name=".activity.AddBrandActivity" />
-        <activity android:name=".activity.GuideActivity"></activity>
+        <activity android:name=".activity.GuideActivity" />
+        <activity android:name=".activity.ChooseActivity"></activity>
     </application>
 
 </manifest>

@@ -1,91 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="@string/guide_set_gym_hint" />
-
-    <include layout="@layout/divider_grey" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:id="@+id/course_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
 
         <TextView
-            android:id="@+id/course_name"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/guide_set_gym_hint" />
+
+        <include layout="@layout/divider_grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <ImageView
+                android:id="@+id/course_img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                />
+
+            <TextView
+                android:id="@+id/course_name"
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                tools:text="中美引力"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_arrow_right" />
+
+        </LinearLayout>
+
+        <include layout="@layout/divider_grey" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            tools:text="中美引力" />
+            android:text="@string/course_batch" />
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/startdate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrow_right" />
+            app:civ_lable="@string/start_date"
+            app:civ_showright="true"
+            app:civ_clickable="true"
+            />
+
+        <com.qingchengfit.fitcoach.component.CommonInputView
+            android:id="@+id/enddate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:civ_lable="@string/end_date"
+            app:civ_showright="true"
+            app:civ_clickable="true"
+            />
+        <include layout="@layout/divider_grey"/>
+        <include layout="@layout/divider_grey_margin"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/batch_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="60dp"
+            />
+        <Button
+            android:id="@+id/completed"
+            android:text="@string/complete_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            />
 
     </LinearLayout>
-
-    <include layout="@layout/divider_grey" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:text="@string/course_batch" />
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/startdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="@string/start_date"
-        app:civ_showright="true"
-        app:civ_clickable="true"
-        />
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/enddate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="@string/end_date"
-        app:civ_showright="true"
-        app:civ_clickable="true"
-        />
-    <include layout="@layout/divider_grey"/>
-    <include layout="@layout/divider_grey_margin"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/batch_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:minHeight="60dp"
-        />
-    <Button
-        android:id="@+id/completed"
-        android:text="@string/complete_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        />
-
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

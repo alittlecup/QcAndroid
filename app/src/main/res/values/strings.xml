@@ -142,12 +142,6 @@
     <string name="end_date">结束日期</string>
 
 
-
-
-
-
-
-
     <string name="week1">星期一</string>
     <string name="week2">星期二</string>
     <string name="week3">星期三</string>
@@ -159,5 +153,16 @@
     <string name="detail_address">具体地址</string>
     <string name="please_input_detail_address">请填写具体地址</string>
     <string name="please_drag_map">请拖动地图到健身房的正确位置</string>
+    <string name="permission_request_camara">请打开拍照权限</string>
+    <string name="alert_write_brand_name">请填写健身房品牌名</string>
+    <string name="guide_set_course_hint">-- 设置课程信息 --</string>
+    <string name="name_call">名称</string>
+    <string name="please_input_course_name">填写课程名称</string>
+    <string name="single_ordre_count">单节可约人数</string>
+    <string name="input_student_count">填写人数</string>
+    <string name="time_long_min">时长（分钟）</string>
+    <string name="input_course_time_long">填写课程时长</string>
+    <string name="course_img">课程图片</string>
+    <string name="add_circle">添加周期</string>
 
 </resources>

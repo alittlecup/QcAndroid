@@ -1,6 +1,18 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
+
+import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.RxBus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.qingchengfit.widgets.utils.AppUtils;
+import rx.Observable;
+import rx.Subscription;
 
 /**
  * power by
@@ -21,6 +33,21 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isVisible;
     boolean isPrepared;
 
+
+
+    public void showLoading() {
+        if (getActivity() instanceof BaseAcitivity) {
+            ((BaseAcitivity) getActivity()).showLoading();
+        }
+    }
+
+    public void hideLoading() {
+        if (getActivity() instanceof BaseAcitivity) {
+            ((BaseAcitivity) getActivity()).hideLoading();
+        }
+    }
+
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -40,6 +67,40 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void lazyLoad();
 
     protected void onInVisible() {
+    }
+
+    private List<Pair<String, Observable>> observables  = new ArrayList<>();
+
+    @Override
+    public void onDestroyView() {
+        if (getActivity() != null){
+            AppUtils.hideKeyboard(getActivity());
+        }
+        unattachView();
+        super.onDestroyView();
+    }
+    List<Subscription> sps = new ArrayList<>();
+
+    public void unattachView() {
+        for (int i = 0; i < sps.size(); i++) {
+            sps.get(i).unsubscribe();
+        }
+        for (int i = 0; i < observables.size(); i++) {
+            RxBus.getBus().unregister(observables.get(i).first,observables.get(i).second);
+        }
+
+    }
+
+
+    public Subscription RxRegiste(Subscription subscription) {
+        sps.add(subscription);
+        return subscription;
+    }
+
+    public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz){
+        Observable ob = RxBus.getBus().register(clazz);
+        observables.add(new Pair<String, Observable>(clazz.getName(),ob));
+        return ob;
     }
 
 }

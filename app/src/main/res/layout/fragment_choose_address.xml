@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/common_toolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -12,10 +13,11 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
+        android:background="@color/white"
 
         >
         <TextView
-
+            style="@style/Qc.TextCommonGrey"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -36,6 +38,7 @@
     </LinearLayout>
     <include layout="@layout/divider_grey_left_right"/>
     <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="@string/detail_address"

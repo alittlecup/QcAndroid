@@ -8,8 +8,6 @@
 
 
 
-<color name="text_grey">@color/warm_grey</color>
-    <color name="text_black">@color/cm_black</color>
     <color name="backgroud_grey">#f4f4f4</color>
     <!--<color username="backgroud_grey">#aaaaaa</color>-->
     <color name="text_red">#f1693c</color>

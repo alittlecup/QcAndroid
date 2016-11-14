@@ -94,9 +94,6 @@ public class ChooseBrandActivity extends AppCompatActivity {
                             adapter.setListener(new OnRecycleItemClickListener() {
                                 @Override
                                 public void onItemClick(View v, int pos) {
-
-
-
                                     if (pos < datas.size() - 1) {
                                         if (datas.get(pos).isHas_add_permission()) {
                                             if (datas.get(pos).getGym_count() > 0) {
@@ -104,6 +101,7 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                                 ChooseBrandActivity.this.finish();
                                                 overridePendingTransition(R.anim.slide_hold,R.anim.slide_top_out);
                                             }else {
+
                                             }
                                         } else {
                                             ToastUtils.show(String.format(Locale.CHINA, getString(R.string.no_permission_brand), datas.get(pos).getCreated_by()==null||datas.get(pos).getCreated_by().getUsername()==null?"":datas.get(pos).getCreated_by().getUsername()));
@@ -111,7 +109,6 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                     } else {
                                         if (Long.parseLong(datas.get(pos).getId()) < 0) {
                                             startActivityForResult(new Intent(ChooseBrandActivity.this, AddBrandActivity.class), 1);
-
                                         }
                                     }
                                 }

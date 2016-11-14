@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.guide;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -70,6 +71,10 @@ public class AddCycleFragment extends BaseFragment {
     Button comfirm;
 
     List<Integer> x = new ArrayList<>();
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private Date mStart = new Date();
     private Date mEnd = new Date();
 
@@ -91,7 +96,7 @@ public class AddCycleFragment extends BaseFragment {
     public static AddCycleFragment newInstance(long length) {
 
         Bundle args = new Bundle();
-        args.putLong("length",length);
+        args.putLong("length", length);
         AddCycleFragment fragment = new AddCycleFragment();
         fragment.setArguments(args);
         return fragment;
@@ -112,6 +117,15 @@ public class AddCycleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_cycle, container, false);
         ButterKnife.bind(this, view);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbarTitle.setText(R.string.add_circle);
+
 
         starttime.setContent("8:00");
         endtime.setContent("21:00");
@@ -148,7 +162,7 @@ public class AddCycleFragment extends BaseFragment {
         cmBean.dateStart = mStart;
         cmBean.dateEnd = mEnd;
         RxBus.getBus().post(cmBean);
-
+        getActivity().onBackPressed();
 
     }
 
@@ -230,7 +244,7 @@ public class AddCycleFragment extends BaseFragment {
                     starttime.setContent(DateUtils.getTimeHHMM(date));
                     mStart = DateUtils.getDateFromHHmm(starttime.getContent());
                     if (mCourselength != 0)
-                        mEnd = new Date(mStart.getTime() + mCourselength*1000);
+                        mEnd = new Date(mStart.getTime() + mCourselength * 1000);
 
                 }
             });

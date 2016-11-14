@@ -112,7 +112,8 @@ public class App extends Application {
 //        LeakCanary.install(this);
         AppContex = getApplicationContext();
 //        refWatcher = LeakCanary.install(this);
-        CrashHandler.getInstance().init(this);
+        if (!BuildConfig.DEBUG)
+            CrashHandler.getInstance().init(this);
         Configs.APP_ID = getString(R.string.wechat_code);
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {

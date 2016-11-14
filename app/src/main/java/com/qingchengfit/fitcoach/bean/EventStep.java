@@ -18,64 +18,29 @@ package com.qingchengfit.fitcoach.bean;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 16/11/11.
+ * Created by Paper on 16/11/14.
  */
 
-public class EventAddress {
+public class EventStep {
+    public int step;
 
-    public int city_code;
-    public String address;
-    public String city;
-    public double lat;
-    public double log;
-
-
-    private EventAddress(Builder builder) {
-        city_code = builder.city_code;
-        address = builder.address;
-        city = builder.city;
-        lat = builder.lat;
-        log = builder.log;
+    private EventStep(Builder builder) {
+        step = builder.step;
     }
 
-
     public static final class Builder {
-        private int city_code;
-        private String address;
-        private String city;
-        private double lat;
-        private double log;
+        private int step;
 
         public Builder() {
         }
 
-        public Builder city_code(int val) {
-            city_code = val;
+        public Builder step(int val) {
+            step = val;
             return this;
         }
 
-        public Builder address(String val) {
-            address = val;
-            return this;
-        }
-
-        public Builder city(String val) {
-            city = val;
-            return this;
-        }
-
-        public Builder lat(double val) {
-            lat = val;
-            return this;
-        }
-
-        public Builder log(double val) {
-            log = val;
-            return this;
-        }
-
-        public EventAddress build() {
-            return new EventAddress(this);
+        public EventStep build() {
+            return new EventStep(this);
         }
     }
 }

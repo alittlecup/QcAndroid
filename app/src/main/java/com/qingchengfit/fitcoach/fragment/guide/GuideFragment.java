@@ -5,8 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.badoualy.stepperindicator.StepperIndicator;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 
 /**
@@ -31,20 +37,41 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
  */
 public class GuideFragment extends BaseFragment {
 
+    @Bind(R.id.step_indicator)
+    StepperIndicator stepIndicator;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
-
-
+        ButterKnife.bind(this, view);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.guide_frag,new GuideSetBrandFragment())
-                .commit();
+                .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                    .commit();
+        RxBusAdd(EventStep.class)
+                .subscribe(new Action1<EventStep>() {
+                    @Override
+                    public void call(EventStep eventStep) {
+                        setSetp(eventStep.step);
+                    }
+                });
         return view;
+    }
+
+    public void setSetp(int s){
+        stepIndicator.setCurrentStep(s);
     }
 
     @Override
     protected void lazyLoad() {
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+
 }

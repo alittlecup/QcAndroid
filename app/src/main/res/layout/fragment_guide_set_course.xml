@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/guide_set_course_hint"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <cn.qingchengfit.widgets.CheckableButton
+            android:id="@+id/btn_group"
+            android:layout_width="112dp"
+            android:layout_height="40dp"
+            app:cb_background_normal="@color/white"
+            app:cb_background_select="@color/primary"
+            app:cb_select="true"
+            app:cb_text_content="@string/course_group"
+            />
+
+        <cn.qingchengfit.widgets.CheckableButton
+            android:id="@+id/btn_private"
+            android:layout_width="112dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            app:cb_background_normal="@color/white"
+            app:cb_background_select="@color/primary"
+            app:cb_select="false"
+            app:cb_text_content="@string/course_private"
+            />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:id="@+id/layout_gym_img"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/course_img"/>
+
+        <ImageView
+            android:id="@+id/course_img"
+            tools:src="@drawable/ic_default_header"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_arrow_right"/>
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey_left_right"/>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_hint="@string/please_input_course_name"
+        app:civ_lable="@string/name_call"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey_left_right"/>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/time_long"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_hint="@string/input_course_time_long"
+        app:civ_lable="@string/time_long_min"
+        app:civ_showdivier="false"
+        app:civ_inputnum="true"
+        />
+
+    <include layout="@layout/divider_grey_left_right"/>
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/order_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:civ_inputnum="true"
+        app:civ_hint="@string/input_student_count"
+        app:civ_lable="@string/single_ordre_count"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey"/>
+    <Button
+        android:id="@+id/next_step"
+        android:text="@string/next_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        />
+</LinearLayout>

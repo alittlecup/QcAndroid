@@ -109,6 +109,7 @@ public class CmBean implements Parcelable {
 //    }
 
 
+
     public CmBean(ArrayList<Integer> week, Date dateStart) {
         this.week = week;
         this.dateStart = dateStart;
