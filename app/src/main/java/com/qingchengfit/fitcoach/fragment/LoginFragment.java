@@ -97,21 +97,19 @@ public class LoginFragment extends Fragment {
                         .subscribeOn(Schedulers.newThread())
                         .flatMap(qcResponLogin -> {
                             if (qcResponLogin.status == ResponseResult.SUCCESS) {
-                                PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
-                                PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
-                                PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
-                                PreferenceUtils.setPrefBoolean(getActivity(), "first", false);
-                                PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
-
-                                return rx.Observable.just(true);
+                                if (qcResponLogin.data.coach != null && qcResponLogin.data.coach.id != null) {
+                                    PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
+                                    PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
+                                    PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
+                                    PreferenceUtils.setPrefBoolean(getActivity(), "first", false);
+                                    PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
+                                    return rx.Observable.just(true);
+                                } else {
+                                    SnackbarOnUiThread("该号码未注册教练");
+                                    return rx.Observable.just(false);
+                                }
                             } else {
-
-                                getActivity().runOnUiThread(() -> {
-//                                    Toast.makeText(getActivity(), qcResponLogin.msg, Toast.LENGTH_SHORT).show();
-                                    Snackbar
-                                            .make(loginview, qcResponLogin.msg, Snackbar.LENGTH_LONG)
-                                            .show();
-                                });
+                                SnackbarOnUiThread(qcResponLogin.msg);
                                 return rx.Observable.just(false);
                             }
                         })
@@ -200,15 +198,8 @@ public class LoginFragment extends Fragment {
                                 LogUtil.d("send msg success!");
                             } else {
                                 LogUtil.d(qcResponse.msg);
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getActivity(), qcResponse.msg, Toast.LENGTH_SHORT).show();
-                                        Snackbar
-                                                .make(loginview, qcResponse.msg, Snackbar.LENGTH_LONG)
-                                                .show();
-                                    }
-                                });
+                                Toast.makeText(getActivity(), qcResponse.msg, Toast.LENGTH_SHORT).show();
+                                SnackbarOnUiThread(qcResponse.msg);
                             }
                         }, throwable -> {
                         }, () -> {
@@ -248,5 +239,13 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
 
+    }
+
+    public void SnackbarOnUiThread(String msg) {
+        getActivity().runOnUiThread(() -> {
+            Snackbar
+                    .make(loginview, msg, Snackbar.LENGTH_LONG)
+                    .show();
+        });
     }
 }
