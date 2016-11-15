@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -25,8 +24,6 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
-import com.qingchengfit.fitcoach.activity.MyHomeActivity;
-import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
@@ -117,15 +114,13 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         View view = inflater.inflate(R.layout.fragment_my_home, container, false);
         ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
-        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> {
-            ((MyHomeActivity) getActivity()).openDrawer();
+            getActivity().onBackPressed();
         });
         toolbar.inflateMenu(R.menu.menu_myhome);
         toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_myhome_settings) {
-                startActivityForResult(new Intent(getActivity(), SettingActivity.class), 333);
-            } else if (item.getItemId() == R.id.action_myhome_share) {
+           if (item.getItemId() == R.id.action_myhome_share) {
                 StringBuffer sb = new StringBuffer();
                 sb.append(Configs.Server).append("mobile/coaches/").append(App.coachid).append("/share/index/").append("?oem=").append(getString(R.string.oem_tag));
                 if (qcMyhomeResponse != null) {

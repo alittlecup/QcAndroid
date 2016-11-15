@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
 /**
  *
  */
-public class MeetingFragment extends MainBaseFragment {
+public class MeetingFragment extends BaseFragment {
 
 
     List<MeetingBean> mMeetingDatas = new ArrayList<>();
@@ -58,7 +58,7 @@ public class MeetingFragment extends MainBaseFragment {
         mRefreshSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mToolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-        mToolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+        mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mToolbar.setTitle("会议培训");
 
         mRefreshSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
@@ -127,6 +127,11 @@ public class MeetingFragment extends MainBaseFragment {
                         mRefreshSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    @Override
+    protected void lazyLoad() {
+
     }
 
     /**

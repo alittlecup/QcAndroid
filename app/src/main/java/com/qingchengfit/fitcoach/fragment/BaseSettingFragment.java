@@ -19,7 +19,7 @@ import android.support.v4.app.Fragment;
 public class BaseSettingFragment extends Fragment {
 
 
-    FragmentCallBack fragmentCallBack;
+    public FragmentCallBack fragmentCallBack;
 
     @Override
     public void onAttach(Context context) {

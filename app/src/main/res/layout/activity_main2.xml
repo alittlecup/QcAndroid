@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main2"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -15,9 +16,12 @@
         android:layout_weight="1"
 
         />
+    <include layout="@layout/divider_grey"/>
     <cn.qingchengfit.widgets.TabView
         android:id="@+id/tabview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        app:text_size="12sp"
         />
 </LinearLayout>

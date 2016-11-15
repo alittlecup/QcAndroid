@@ -45,15 +45,15 @@ public class Main2Activity extends AppCompatActivity implements WebActivityInter
 
 
     public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
-        private int[] mIconSelect = {R.drawable.ic_achievement_group
-                , R.drawable.ic_achievement_private
-                , R.drawable.ic_achievement_sale
-                , R.drawable.ic_actionbar_settings
+        private int[] mIconSelect = {R.drawable.ic_tabbar_schedule_active
+                , R.drawable.ic_tabbar_manage_active
+                , R.drawable.ic_tabbar_discover_active
+                , R.drawable.ic_tabbar_account_active
         };
-        private int[] mIconNormal = {R.drawable.ic_action_delete
-                , R.drawable.ic_action_rest
-                , R.drawable.ic_action_editor
-                , R.drawable.ic_actionbar_settings
+        private int[] mIconNormal = {R.drawable.ic_tabbar_schedule_normal
+                , R.drawable.ic_tabbar_manage_normal
+                , R.drawable.ic_tabbar_discover_normal
+                , R.drawable.ic_tabbar_account_normal
         };
         private Context context;
 

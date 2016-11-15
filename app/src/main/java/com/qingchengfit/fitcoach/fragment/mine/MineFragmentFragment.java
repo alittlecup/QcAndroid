@@ -3,13 +3,16 @@ package com.qingchengfit.fitcoach.fragment.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.MeetActivity;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 
@@ -43,11 +46,26 @@ public class MineFragmentFragment extends Fragment {
     ImageView imgHeader;
     @Bind(R.id.tv_name)
     TextView tvName;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
+        toolbarTitle.setText(R.string.mine);
+        toolbar.inflateMenu(R.menu.menu_setting);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent toBaseInfo = new Intent(getActivity(), SettingActivity.class);
+                toBaseInfo.putExtra("to", 0);
+                startActivity(toBaseInfo);
+                return false;
+            }
+        });
         return view;
     }
 
@@ -66,21 +84,22 @@ public class MineFragmentFragment extends Fragment {
                 break;
             case R.id.layout_baseinfo:
                 Intent toBaseInfo = new Intent(getActivity(), SettingActivity.class);
-                toBaseInfo.putExtra("to",1);
+                toBaseInfo.putExtra("to", 1);
                 startActivity(toBaseInfo);
                 break;
             case R.id.layout_my_meeting:
                 //会议
-
+                Intent toMeeting = new Intent(getActivity(), MeetActivity.class);
+                startActivity(toMeeting);
                 break;
             case R.id.layout_my_comfirm:
                 Intent toComfirm = new Intent(getActivity(), SettingActivity.class);
-                toComfirm.putExtra("to",3);
+                toComfirm.putExtra("to", 3);
                 startActivity(toComfirm);
                 break;
             case R.id.layout_my_exp:
                 Intent toExp = new Intent(getActivity(), SettingActivity.class);
-                toExp.putExtra("to",4);
+                toExp.putExtra("to", 4);
                 startActivity(toExp);
                 break;
         }

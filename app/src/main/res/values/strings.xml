@@ -164,5 +164,9 @@
     <string name="input_course_time_long">填写课程时长</string>
     <string name="course_img">课程图片</string>
     <string name="add_circle">添加周期</string>
+    <string name="my_meetings">我的会议/培训</string>
+    <string name="my_comfirms">我的资质认证</string>
+    <string name="my_experience">我的工作经历</string>
+    <string name="mine">我</string>
 
 </resources>

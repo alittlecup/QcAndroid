@@ -5,8 +5,6 @@ apply plugin: 'com.neenbedankt.android-apt'
 //apply plugin: 'packer'                     //版本管理 多渠道打包
 
 
-
-
 def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMddHHmm')
@@ -157,11 +155,11 @@ android {
 repositories {
     jcenter()
     mavenCentral()
-    maven(){
+    maven() {
         url uri('../repo')
     }
-  maven(){
-      url "https://jitpack.io"
+    maven() {
+        url "https://jitpack.io"
     }
 
 }
@@ -169,7 +167,6 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
-    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
     //    compile files('libs/MobLogCollector.jar')
     //    compile files('libs/MobTools.jar')
     //    compile files('libs/ShareSDK-Core-2.6.1.jar')
@@ -188,8 +185,6 @@ dependencies {
     compile files('libs/java-sdk-3.1.jar')
     //    compile files('libs/ShareSDK-Wechat-2.6.1.jar')
     compile files('libs/pushservice-4.5.3.48.jar')
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
     compile files('libs/tbs_sdk_v1.4.1.1109_25433_obfs_20151027_212539.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/pushservice-4.5.6.88.jar')
@@ -198,43 +193,46 @@ dependencies {
     //    compile project(path: ':paperbaselibrary')
     //    debugCompile project(path: ':paperbaselibrary', configuration: 'debug')
     //    releaseCompile project(path: ':paperbaselibrary', configuration: 'release')
+    //    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
+        transitive = true
+    }
+    //android support
+    //    compile 'com.android.support:support-v4:23.2.1'
+
+
+    compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
+    compile files('libs/pushservice-5.2.0.12.jar')
+    compile files('libs/AMap2DMap_2.9.2_AMapLocation_3.1.0_20161027.jar')
+    compile files(
+            'libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
+    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
-    //    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
-        transitive = true
-    }
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
-    //android support
     compile 'com.android.support:cardview-v7:23.2.1'
     compile 'com.android.support:percent:23.2.1'
-    //    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'eu.davidea:flexible-adapter:5.0.0-b7'
-    compile "com.jakewharton.rxbinding:rxbinding:0.4.0"
-
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.2'
-    apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
-
     compile 'com.github.badoualy:stepper-indicator:1.0.6'
-
-
-    compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
-    compile files('libs/pushservice-5.2.0.12.jar')
-    compile files('libs/AMap2DMap_2.9.2_AMapLocation_3.1.0_20161027.jar')
-    compile files('libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 }
 
 //buildscript {
