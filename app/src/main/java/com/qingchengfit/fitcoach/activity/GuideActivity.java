@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.fragment.guide.GuideFragment;
 
 public class GuideActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,5 +18,10 @@ public class GuideActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frag,new GuideFragment())
                 .commit();
+
     }
+
+
+
+
 }

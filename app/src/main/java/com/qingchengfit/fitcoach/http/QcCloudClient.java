@@ -5,6 +5,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -16,6 +17,7 @@ import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
+import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
 import com.qingchengfit.fitcoach.http.bean.DelCourseManage;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
@@ -67,6 +69,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
+import com.qingchengfit.fitcoach.http.bean.QcResponsCreatBrand;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
@@ -451,6 +454,15 @@ public class QcCloudClient {
         @POST("/api/coaches/register/")
         rx.Observable<QcResponLogin> qcRegister(
                 @Body RegisteBean params);
+
+        //创建品牌
+        @POST("/api/brands/")
+        rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
+        //初始化系统
+        @POST("/api/coach/systems/initial/")
+        rx.Observable<QcResponse> qcInit(@Body CoachInitBean body);
+
+
 
         //获取电话验证码
         @POST("/api/send/verify/")

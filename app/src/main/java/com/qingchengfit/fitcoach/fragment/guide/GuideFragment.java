@@ -6,12 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.badoualy.stepperindicator.StepperIndicator;
+import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.functions.Action1;
 
 
@@ -40,10 +44,19 @@ public class GuideFragment extends BaseFragment {
     @Bind(R.id.step_indicator)
     StepperIndicator stepIndicator;
 
+    CoachInitBean initBean;
+    Gson gson = new Gson();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
         ButterKnife.bind(this, view);
+
+        String initStr = PreferenceUtils.getPrefString(getContext(),"initSystem","");
+        if (initStr.isEmpty())
+            initBean = new CoachInitBean();
+        else initBean = gson.fromJson(initStr,CoachInitBean.class);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
@@ -55,11 +68,23 @@ public class GuideFragment extends BaseFragment {
                         setSetp(eventStep.step);
                     }
                 });
+        RxBusAdd(CoachInitBean.class)
+                .subscribe(new Action1<CoachInitBean>() {
+                    @Override
+                    public void call(CoachInitBean coachInitBean) {
+                        PreferenceUtils.setPrefString(getContext(),"initSystem",gson.toJson(initBean));
+                        LogUtil.e(gson.toJson(initBean));
+                    }
+                });
         return view;
     }
 
     public void setSetp(int s){
         stepIndicator.setCurrentStep(s);
+    }
+
+    public CoachInitBean getInitBean() {
+        return initBean;
     }
 
     @Override

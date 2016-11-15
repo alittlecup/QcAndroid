@@ -17,11 +17,14 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.EventStep;
+import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -78,6 +81,11 @@ public class GuideSetGymFragment extends BaseFragment {
     @Bind(R.id.gym_address)
     CommonInputView gymAddress;
 
+    private double lat;
+    private double lng;
+    private int city_code;
+    private String imgUrl;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +105,9 @@ public class GuideSetGymFragment extends BaseFragment {
                     public void call(EventAddress eventAddress) {
                         gymAddress.setContent(eventAddress.address);
                         // TODO: 16/11/14 设置城市和latlng
+                        city_code = eventAddress.city_code;
+                        lat = eventAddress.lat;
+                        lng = eventAddress.log;
 
                     }
                 });
@@ -110,7 +121,7 @@ public class GuideSetGymFragment extends BaseFragment {
                                     @Override
                                     public void call(String s) {
                                         Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
-
+                                        imgUrl = s;
                                     }
                                 });
                     }
@@ -140,19 +151,36 @@ public class GuideSetGymFragment extends BaseFragment {
                 ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
                 break;
             case R.id.gym_address:
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.frag, new ChooseAddressFragment())
-//                        .addToBackStack(null)
-//                        .commit();
                 Intent toAddress = new Intent(getActivity(), ChooseActivity.class);
                 startActivity(toAddress);
                 break;
             case R.id.next_step:
-                getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
-                        .replace(R.id.guide_frag,new GuideSetCourseFragment())
-                        .addToBackStack(null)
-                        .commit();
+                if (gymAddress.isEmpty()){
+                    ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
+                    return;
+                }
+                if (gymName.isEmpty() || lat == 0 || lng == 0 ||city_code == 0){
+                    ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
+                    return;
+                }
+                if (getParentFragment() instanceof GuideFragment){
+                    ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder()
+                            .address(gymAddress.getContent())
+                            .gd_city_code(city_code+"")
+                            .gd_lat(lat)
+                            .gd_lng(lng)
+                            .phone(imgUrl)
+                            .build();
+                    RxBus.getBus().post(new CoachInitBean());
+                    getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
+                            .replace(R.id.guide_frag,new GuideSetCourseFragment())
+                            .addToBackStack(null)
+                            .commit();
+                }
+
+
+
 
                 break;
         }

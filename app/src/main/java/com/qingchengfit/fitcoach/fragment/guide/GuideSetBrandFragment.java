@@ -10,13 +10,17 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.Bind;
@@ -55,6 +59,7 @@ public class GuideSetBrandFragment extends BaseFragment {
     CommonInputView brandName;
     @Bind(R.id.next_step)
     Button nextStep;
+    String imgUrl = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +74,8 @@ public class GuideSetBrandFragment extends BaseFragment {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(brandImg,getContext()));
+                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
+                                        imgUrl = s;
                                     }
                                 });
                     }
@@ -94,8 +100,6 @@ public class GuideSetBrandFragment extends BaseFragment {
     }
 
 
-
-
     @Override
     protected void lazyLoad() {
 
@@ -108,21 +112,40 @@ public class GuideSetBrandFragment extends BaseFragment {
     }
 
 
-
-    @OnClick({ R.id.next_step})
+    @OnClick({R.id.next_step})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_step:
-                if (brandName.isEmpty()){
+                if (brandName.isEmpty()) {
                     ToastUtils.showDefaultStyle(getString(R.string.alert_write_brand_name));
                     return;
                 }
-                // TODO: 16/11/14 write data
-                getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
-                        .replace(R.id.guide_frag,new GuideSetGymFragmentBuilder("url","测试品牌","1").build())
-                        .addToBackStack(null)
-                        .commit();
+                showLoading();
+                QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder()
+                        .name(brandName.getContent())
+                        .photo(imgUrl)
+                        .build())
+                        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(qcResponsCreatBrand -> {
+                            hideLoading();
+                            if (qcResponsCreatBrand.status == 200) {
+
+                                getFragmentManager().beginTransaction()
+                                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+                                        .replace(R.id.guide_frag, new GuideSetGymFragmentBuilder(imgUrl, brandName.getContent(), qcResponsCreatBrand.data.id).build())
+                                        .addToBackStack(null)
+                                        .commit();
+                                if (getParentFragment() instanceof GuideFragment) {
+                                    ((GuideFragment) getParentFragment()).initBean.brand_id = qcResponsCreatBrand.data.id;
+                                    RxBus.getBus().post(new CoachInitBean());
+                                }
+
+                            } else ToastUtils.showDefaultStyle(qcResponsCreatBrand.msg);
+                        }, throwable -> {
+                            hideLoading();
+                        });
+
+
                 break;
         }
     }

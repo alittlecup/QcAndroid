@@ -177,5 +177,12 @@
     <string name="staff_manage_app">健身房管理</string>
     <string name="open_staff_app">打开健身房管理App</string>
     <string name="hint_function_in_staff_app">请在青橙健身房管理App中使用该功能</string>
+    <string name="err_write_gym_name">请填写场馆名称</string>
+    <string name="err_write_address">请选择地址信息</string>
+    <string name="err_write_course_name">请填写课程名称</string>
+    <string name="err_write_course_time_long">请填写课程时长</string>
+    <string name="err_write_course_order_num">请填写单节可约人数</string>
+    <string name="add_course_circle">+课程周期</string>
+    <string name="time_long_d_min">时长%d分钟</string>
 
 </resources>

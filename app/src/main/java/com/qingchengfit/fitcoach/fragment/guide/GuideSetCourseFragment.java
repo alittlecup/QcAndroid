@@ -10,13 +10,18 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.EventStep;
+import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,6 +30,7 @@ import cn.qingchengfit.widgets.CheckableButton;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
 
 
 /**
@@ -64,6 +70,12 @@ public class GuideSetCourseFragment extends BaseFragment {
     @Bind(R.id.next_step)
     Button nextStep;
 
+
+
+    private String imgUrl;
+    private boolean isPrivate = false;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_set_course, container, false);
@@ -79,7 +91,7 @@ public class GuideSetCourseFragment extends BaseFragment {
                                     @Override
                                     public void call(String s) {
                                         Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(courseImg,getContext()));
-
+                                        imgUrl = s;
                                     }
                                 });
                     }
@@ -106,10 +118,40 @@ public class GuideSetCourseFragment extends BaseFragment {
                 ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(),"");
                 break;
             case R.id.next_step:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.guide_frag,new GuideAddBatchFragment())
-                        .addToBackStack(null)
-                        .commit();
+                if (name.isEmpty()){
+                    ToastUtils.showDefaultStyle(getString(R.string.err_write_course_name));
+                    return;
+                }
+                if (timeLong.isEmpty()){
+                    ToastUtils.showDefaultStyle(getString(R.string.err_write_course_time_long));
+                    return;
+                }
+                /**
+                 * 可约人数限制
+                 */
+//                if (orderCount.isEmpty()){
+//                    ToastUtils.showDefaultStyle(getString(R.string.err_write_course_order_num));
+//                    return;
+//                }
+                if (getParentFragment() instanceof GuideFragment){
+                    ((GuideFragment) getParentFragment()).initBean.courses = new ArrayList<>();
+                    ((GuideFragment) getParentFragment()).initBean.courses.add(new Course.Builder()
+                            .photo(imgUrl)
+                            .name(name.getContent())
+                            .is_private(isPrivate)
+                            .length(Integer.parseInt(timeLong.getContent())*60)
+                            // TODO: 16/11/15 可约人数
+                            .build());
+
+                    RxBus.getBus().post(new CoachInitBean());
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.guide_frag,new GuideAddBatchFragment())
+                            .addToBackStack(null)
+                            .commit();
+
+                }
+
+
                 break;
         }
     }
@@ -118,9 +160,14 @@ public class GuideSetCourseFragment extends BaseFragment {
     public void privateChange(View view) {
         switch (view.getId()) {
             case R.id.btn_group:
-
+                isPrivate = false;
+                btnGroup.setChecked(true);
+                btnPrivate.setChecked(false);
                 break;
             case R.id.btn_private:
+                isPrivate = true;
+                btnPrivate.setChecked(true);
+                btnGroup.setChecked(false);
                 break;
         }
     }

@@ -2,8 +2,13 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Pair;
+
+import com.qingchengfit.fitcoach.Utils.PairFirstComparer;
+import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -50,63 +55,62 @@ public class CmBean implements Parcelable {
 
     }
 
-//    public static ArrayList<Time_repeat> geTimeRepFromBean(List<CmBean> cmBeens) {
-//        ArrayList<Time_repeat> ret = new ArrayList<>();
-//        try {
-//            for (CmBean cmBean : cmBeens) {
-//                for (Integer week : cmBean.week) {
-//                    Time_repeat time_repeat = new Time_repeat();
-//                    time_repeat.setStart(DateUtils.getTimeHHMM(cmBean.dateStart));
-//                    time_repeat.setEnd(DateUtils.getTimeHHMM(cmBean.dateEnd));
-//                    time_repeat.setWeekday(week);
-//                    ret.add(time_repeat);
-//                }
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//        return ret;
-//    }
+    public static ArrayList<TimeRepeat> geTimeRepFromBean(List<CmBean> cmBeens) {
+        ArrayList<TimeRepeat> ret = new ArrayList<>();
+        try {
+            for (CmBean cmBean : cmBeens) {
+                for (Integer week : cmBean.week) {
+                    TimeRepeat time_repeat = new TimeRepeat(DateUtils.getTimeHHMM(cmBean.dateStart),
+                            DateUtils.getTimeHHMM(cmBean.dateEnd),week
+                            );
+                    ret.add(time_repeat);
+                }
+            }
+        } catch (Exception e) {
 
-//    public static boolean CheckCmBean(List<CmBean> older, CmBean bean) {
-//        HashMap<Integer, List<Pair<Long, Long>>> dates = new HashMap<>();
-//        for (CmBean b : older) {
-//            for (Integer week : b.week) {
-//                if (dates.get(week) != null) {
-//                    dates.get(week).add(new Pair<Long, Long>(b.dateStart.getTime(), b.dateEnd.getTime()));
-//                } else {
-//                    List<Pair<Long, Long>> ttt = new ArrayList<>();
-//                    ttt.add(new Pair<Long, Long>(b.dateStart.getTime(), b.dateEnd.getTime()));
-//                    dates.put(week, ttt);
-//                }
-//            }
-//        }
-//
-//        for (Integer week : bean.week) {
-//            if (dates.get(week) != null) {
-//                dates.get(week).add(new Pair<Long, Long>(bean.dateStart.getTime(), bean.dateEnd.getTime()));
-//            } else {
-//                List<Pair<Long, Long>> ttt = new ArrayList<>();
-//                ttt.add(new Pair<Long, Long>(bean.dateStart.getTime(), bean.dateEnd.getTime()));
-//                dates.put(week, ttt);
-//            }
-//        }
-//
-//        for (int i = 1; i < 8; i++) {
-//            List<Pair<Long, Long>> ttt = dates.get(i);
-//            if (ttt != null && ttt.size() > 0) {
-//                Collections.sort(ttt, new PairFirstComparer());
-//                for (int j = 0; j < ttt.size() - 1; j++) {
-//                    if (ttt.get(j).second > ttt.get(j + 1).first) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//        return true;
-//
-//
-//    }
+        }
+        return ret;
+    }
+
+    public static boolean checkCmBean(List<CmBean> older, CmBean bean) {
+        HashMap<Integer, List<Pair<Long, Long>>> dates = new HashMap<>();
+        for (CmBean b : older) {
+            for (Integer week : b.week) {
+                if (dates.get(week) != null) {
+                    dates.get(week).add(new Pair<Long, Long>(b.dateStart.getTime(), b.dateEnd.getTime()));
+                } else {
+                    List<Pair<Long, Long>> ttt = new ArrayList<>();
+                    ttt.add(new Pair<Long, Long>(b.dateStart.getTime(), b.dateEnd.getTime()));
+                    dates.put(week, ttt);
+                }
+            }
+        }
+
+        for (Integer week : bean.week) {
+            if (dates.get(week) != null) {
+                dates.get(week).add(new Pair<Long, Long>(bean.dateStart.getTime(), bean.dateEnd.getTime()));
+            } else {
+                List<Pair<Long, Long>> ttt = new ArrayList<>();
+                ttt.add(new Pair<Long, Long>(bean.dateStart.getTime(), bean.dateEnd.getTime()));
+                dates.put(week, ttt);
+            }
+        }
+
+        for (int i = 1; i < 8; i++) {
+            List<Pair<Long, Long>> ttt = dates.get(i);
+            if (ttt != null && ttt.size() > 0) {
+                Collections.sort(ttt, new PairFirstComparer());
+                for (int j = 0; j < ttt.size() - 1; j++) {
+                    if (ttt.get(j).second > ttt.get(j + 1).first) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+
+
+    }
 
 
 
