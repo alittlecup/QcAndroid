@@ -161,7 +161,6 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
                 .subscribeOn(Schedulers.io())
                 .map(qcCoachSystemDetailResponse -> {
                     adapterData.clear();
-
                     adapterData.addAll(qcCoachSystemDetailResponse.data.services);
                     if (adapterData.size() > 0) {
 

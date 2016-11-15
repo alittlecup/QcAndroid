@@ -20,7 +20,7 @@
     <cn.qingchengfit.widgets.TabView
         android:id="@+id/tabview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
+        android:layout_height="52dp"
         android:background="@color/white"
         app:text_size="12sp"
         />

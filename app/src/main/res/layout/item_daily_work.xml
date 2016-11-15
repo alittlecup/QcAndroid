@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="125dp"
+    android:layout_width="wrap_content"
+    android:minWidth="123dp"
     android:layout_height="125dp"
+    android:background="@color/white"
     android:gravity="center">
     <ImageView
         android:id="@+id/img"

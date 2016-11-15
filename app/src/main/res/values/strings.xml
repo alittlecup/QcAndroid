@@ -168,5 +168,14 @@
     <string name="my_comfirms">我的资质认证</string>
     <string name="my_experience">我的工作经历</string>
     <string name="mine">我</string>
+    <string name="student_card_manage">会员卡管理</string>
+    <string name="manage_salers">销售管理</string>
+    <string name="manage_staffs">员工管理</string>
+    <string name="manage_cards">会员卡管理</string>
+    <string name="manage_signin">入场签到</string>
+    <string name="manage_acitivity">活动营销</string>
+    <string name="staff_manage_app">健身房管理</string>
+    <string name="open_staff_app">打开健身房管理App</string>
+    <string name="hint_function_in_staff_app">请在青橙健身房管理App中使用该功能</string>
 
 </resources>

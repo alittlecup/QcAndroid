@@ -75,8 +75,6 @@ public class SplashActivity extends BaseAcitivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, getString(R.string.baidu_api_release));
-//        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder();
-//        builder.setStatusbarIcon(R.drawable.);
         Observable.just("")
                 .subscribeOn(Schedulers.newThread())
                 .flatMap(s -> {
@@ -88,6 +86,23 @@ public class SplashActivity extends BaseAcitivity {
                 }).subscribe(s1 -> {
             runOnUiThread(() -> {
                 if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
+
+//                    QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribeOn(Schedulers.io())
+//                            .subscribe(new Action1<QcCoachServiceResponse>() {
+//                                @Override
+//                                public void call(QcCoachServiceResponse qcCoachServiceResponse) {
+//
+//
+//                                }
+//                            }, new Action1<Throwable>() {
+//                                @Override
+//                                public void call(Throwable throwable) {
+//
+//                                }
+//                            });
+
                     Intent toMain = new Intent(this, Main2Activity.class);
                     startActivity(toMain);
                     overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
@@ -131,20 +146,8 @@ public class SplashActivity extends BaseAcitivity {
                 imageView.setBackgroundColor(Color.parseColor(mColors[i]));
                 imageViews.add(imageView);
             }
-//            ImageView imageViewlast = new ImageView(this);
-//            imageViews.add(imageViewlast);
-//            imageViewlast.setId(R.id.splash_last);
-
             splashViewpager.setAdapter(new ImagesAdapter(imageViews));
             splashIndicator.setViewPager(splashViewpager);
-//            splashViewpager.setPageTransformer(true, (page, position) -> {
-//                LogUtil.d("page:" + page.getId() + "    positon:" + position);
-//                if (page.getId() == R.id.splash_last && position < 0.5) {
-//                    LogUtil.e("gologin");
-//                    splashViewpager.setPageTransformer(true, null);
-//                    goLogin(1);
-//                }
-//            });
         } else {
             goLogin(0);
         }
@@ -170,22 +173,4 @@ public class SplashActivity extends BaseAcitivity {
         } else goLogin(0);
 
     }
-
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (splashViewpager.getCurrentItem() != 3)
-//            return super.dispatchTouchEvent(ev);
-//        switch (MotionEventCompat.getActionMasked(ev)) {
-//            case MotionEvent.ACTION_DOWN:
-//                touchX = ev.getRawX();
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                if (ev.getRawY() - touchX < -50) {
-//                    goLogin(1);
-//                }
-//                return true;
-//        }
-//        return super.dispatchTouchEvent(ev);
-//
-//    }
 }

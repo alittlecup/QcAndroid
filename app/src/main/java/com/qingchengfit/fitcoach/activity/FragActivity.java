@@ -11,6 +11,7 @@ import com.qingchengfit.fitcoach.fragment.AddSelfNotiFragment;
 import com.qingchengfit.fitcoach.fragment.AddStudentManulkFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailNativeFragment;
+import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 
@@ -71,6 +72,9 @@ public class FragActivity extends BaseAcitivity {
                 break;
             case 7:
                 fragment = AddStudentManulkFragment.newInstance();
+                break;
+            case 8:
+                fragment = new MyCoursePlanFragment();
                 break;
             default:
                 break;

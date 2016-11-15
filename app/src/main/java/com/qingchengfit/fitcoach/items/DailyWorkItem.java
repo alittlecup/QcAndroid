@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 
@@ -40,7 +39,8 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, DailyWorkVH holder, int position, List payloads) {
         holder.text.setText(bean.text);
-        Glide.with(holder.itemView.getContext()).load(bean.resImg).into(holder.img);
+        holder.img.setImageResource(bean.resImg);
+//        Glide.with(holder.itemView.getContext()).load(bean.resImg).into(holder.img);
     }
 
     @Override

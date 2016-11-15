@@ -184,7 +184,6 @@ public class QcCloudClient {
         RestAdapter restAdapter2 = new RestAdapter.Builder()
                 .setEndpoint(Configs.Server)
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
-//                .setLogLevel( RestAdapter.LogLevel.FULL )
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
@@ -194,16 +193,6 @@ public class QcCloudClient {
                     }
                 })
                 .setClient(new OkClient(okHttpClient))
-//                .setErrorHandler(new ErrorHandler() {
-//                    @Override
-//                    public Throwable handleError(RetrofitError cause) {
-//                        if (cause.getKind().equals(RetrofitError.Kind.NETWORK)) {
-//                            ToastUtils.show(R.drawable.ic_share_fail,"网络错误");
-//                        }
-//                        return null;
-//                    }
-//                })
-//                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
                 .build();
 //        RestAdapter restAdapter3 = new RestAdapter.Builder()
 //                .setEndpoint("")

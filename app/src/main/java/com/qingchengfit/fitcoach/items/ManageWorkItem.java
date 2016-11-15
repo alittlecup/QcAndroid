@@ -1,12 +1,13 @@
 package com.qingchengfit.fitcoach.items;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -41,11 +43,16 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, ManageWorkVH holder, int position, List payloads) {
         holder.title.setText(bean.text);
-        if (TextpaperUtils.isEmpty(bean.subname)){
+        if (!TextpaperUtils.isEmpty(bean.subname)){
             holder.subTitle.setVisibility(View.VISIBLE);
             holder.subTitle.setText(bean.subname);
         }else holder.subTitle.setVisibility(View.GONE);
-        Glide.with(holder.itemView.getContext()).load(bean.resImg).into(holder.image);
+        Drawable drawable;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+           drawable = holder.image.getContext().getResources().getDrawable(bean.resImg,null);
+        }else drawable = holder.image.getContext().getResources().getDrawable(bean.resImg);
+        DrawableCompat.setTint(drawable, CompatUtils.getColor(holder.itemView.getContext(),R.color.text_grey));
+        holder.image.setImageDrawable(drawable);
     }
 
     @Override
