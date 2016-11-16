@@ -2,48 +2,81 @@ package com.qingchengfit.fitcoach.fragment;
 
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
-import cn.qingchengfit.widgets.utils.LogUtil;
+import java.util.HashMap;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * 新增健身房页面
- *
- *  与引导公用  ！！！！！！！！！！！
- *
+ * <p>
+ * 与引导公用  ！！！！！！！！！！！
  */
 
 @FragmentWithArgs
-public class AddGymFragment extends GuideSetGymFragment{
-
-//    @Arg
-//    String brandid;
-//    @Arg
-//    String brandImgUrl;
-//    @Arg
-//    String brandNameStr;
-//
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        FragmentArgs.inject(this);
-//    }
+public class AddGymFragment extends GuideSetGymFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view  = super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         view.findViewById(R.id.hint).setVisibility(View.GONE);
+        ((Button) view.findViewById(R.id.next_step)).setText(R.string.login_comfirm);
+        if (view instanceof ViewGroup) {
+            Toolbar tb = (Toolbar) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
+            ((ViewGroup) view).addView(tb, 0);
+            ((TextView) tb.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
+            tb.setNavigationIcon(R.drawable.ic_arrow_left);
+            tb.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
+        }
         return view;
     }
 
+
     @Override
     public void onNextStep() {
-        LogUtil.e("nextStep!!!");
+        showLoading();
+        //// TODO: 16/11/16 新建健身房
+        RxRegiste(QcCloudClient.getApi().postApi.qcCreateGym(1, new HashMap<>())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<QcResponse>() {
+                    @Override
+                    public void call(QcResponse qcResponse) {
+                        hideLoading();
+                        if (ResponseConstant.checkSuccess(qcResponse)) {
+                            // TODO: 16/11/16 新建成功
+
+                        } else ToastUtils.showDefaultStyle(qcResponse.msg);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoading();
+                        ToastUtils.showDefaultStyle("error!");
+                    }
+                })
+        );
+
     }
 }
 

@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,7 +55,7 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/9.
  */
-public class ChooseAddressFragment extends Fragment {
+public class ChooseAddressFragment extends BaseFragment {
 
     @BindView(R.id.mapview)
     MapView mMapview;
@@ -89,7 +89,6 @@ public class ChooseAddressFragment extends Fragment {
                     ToastUtils.showDefaultStyle("尚未获取gp信息");
                     return true;
                 }
-
                 RxBus.getBus().post(new EventAddress.Builder()
                         .city_code(Integer.parseInt(mCityCode))
                         .city(cityName.getText().toString().trim())
@@ -102,39 +101,6 @@ public class ChooseAddressFragment extends Fragment {
             }
         });
 
-        mMapview.onCreate(savedInstanceState);
-        if (mAMap == null) {
-            mAMap = mMapview.getMap();
-            UiSettings uiSettings = mAMap.getUiSettings();
-            uiSettings.setZoomGesturesEnabled(true);
-            geocoderSearch = new GeocodeSearch(getContext());
-            geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
-                @Override
-                public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-                    if (i == 1000) {
-
-                    }
-                }
-
-                @Override
-                public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-                }
-            });
-
-
-            mAMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
-                @Override
-                public void onCameraChange(CameraPosition cameraPosition) {
-                }
-
-                @Override
-                public void onCameraChangeFinish(CameraPosition cameraPosition) {
-//                    RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(cameraPosition.target.latitude,cameraPosition.target.longitude), 200,GeocodeSearch.AMAP);
-//                    geocoderSearch.getFromLocationAsyn(query);
-                    mLatLng = cameraPosition.target;
-                }
-            });
-        }
 
         mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
         mLocationOption = new AMapLocationClientOption();
@@ -167,7 +133,45 @@ public class ChooseAddressFragment extends Fragment {
 
             }
         });
+        showLoading();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mMapview.onCreate(savedInstanceState);
+        if (mAMap == null) {
+            mAMap = mMapview.getMap();
+            UiSettings uiSettings = mAMap.getUiSettings();
+            uiSettings.setZoomGesturesEnabled(true);
+            geocoderSearch = new GeocodeSearch(getContext());
+            geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+                @Override
+                public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+                    if (i == 1000) {
+
+                    }
+                }
+
+                @Override
+                public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+                }
+            });
+
+
+            mAMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+                }
+
+                @Override
+                public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                    mLatLng = cameraPosition.target;
+                }
+            });
+        }
+
     }
 
     @Override
@@ -187,6 +191,11 @@ public class ChooseAddressFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapview.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void lazyLoad() {
+
     }
 
     @Override

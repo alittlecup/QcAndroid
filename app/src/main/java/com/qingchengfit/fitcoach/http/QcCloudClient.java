@@ -543,6 +543,12 @@ public class QcCloudClient {
         @PUT("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcPostPrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
+        //新建健身房
+        @POST("/api/coaches/{id}/personal/system/")
+        rx.Observable<QcResponse> qcCreateGym(@Path("id") int id, @Body HashMap<String,Object> body);
+
+
+
         //新建个人健身房
         @POST("/api/coaches/{id}/personal/system/")
         rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id, @Body PostPrivateGym gym);

@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.manage;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +12,11 @@ import android.view.ViewGroup;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -56,7 +61,7 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/16.
  */
-public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener{
+public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -69,10 +74,10 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         mDatas.clear();
         mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
-        mAdapter = new CommonFlexAdapter(mDatas,this);
+        mAdapter = new CommonFlexAdapter(mDatas, this);
         mAdapter.setMode(SelectableAdapter.MODE_SINGLE);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -83,7 +88,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     }
 
     public void refresh() {
-        RxRegiste( QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcCoachServiceResponse>() {
@@ -99,22 +104,21 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
                     @Override
                     public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
-                        if (qcCoachServiceResponse.status == 200){
+                        if (qcCoachServiceResponse.status == 200) {
                             mDatas.clear();
                             List<CoachService> services = qcCoachServiceResponse.data.services;
-                            if (services != null){
+                            if (services != null) {
                                 for (int i = 0; i < services.size(); i++) {
                                     mDatas.add(new GymItem(services.get(i)));
                                 }
                             }
                             mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
                             mAdapter.notifyDataSetChanged();
-                        }else ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
+                        } else ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
 
                     }
                 }));
     }
-
 
 
     @Override
@@ -130,15 +134,28 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
 
     @Override
     public boolean onItemClick(int position) {
-        if (mAdapter.getItem(position) instanceof  GymItem){
+        if (mAdapter.getItem(position) instanceof GymItem) {
             RxBus.getBus().post(((GymItem) mAdapter.getItem(position)).coachService);
-        }else if (mAdapter.getItem(position) instanceof AddBatchCircleItem){
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.activity_choose_address,new AddGymFragmentBuilder("","哈哈哈","1").build())
-                    .addToBackStack(null)
-                    .commit();
-
+        } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
+            Intent goBrands = new Intent(getActivity(), ChooseBrandActivity.class);
+            startActivityForResult(goBrands, 1);
         }
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
+                Brand brand = (Brand) IntentUtils.getParcelable(data);
+                if (brand != null) {
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.activity_choose_address, new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
+                            .addToBackStack(null)
+                            .commit();
+                }
+            }
+        }
     }
 }

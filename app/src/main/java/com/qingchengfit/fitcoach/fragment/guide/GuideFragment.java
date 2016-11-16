@@ -60,7 +60,7 @@ public class GuideFragment extends BaseFragment {
             initBean = new CoachInitBean();
         else initBean = gson.fromJson(initStr,CoachInitBean.class);
 
-        getFragmentManager().beginTransaction()
+        getChildFragmentManager().beginTransaction()
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
                     .commit();
         RxBusAdd(EventStep.class)

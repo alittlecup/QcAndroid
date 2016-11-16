@@ -31,6 +31,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.ToastUtils;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 
@@ -134,11 +135,12 @@ public class AddCycleFragment extends BaseFragment {
         mStart = DateUtils.getDateFromHHmm(starttime.getContent());
         mEnd = DateUtils.getDateFromHHmm(endtime.getContent());
         obConflict = RxBus.getBus().register(RxbusBatchLooperConfictEvent.class);
-        obConflict.subscribe(new Action1<RxbusBatchLooperConfictEvent>() {
+        obConflict.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<RxbusBatchLooperConfictEvent>() {
             @Override
             public void call(RxbusBatchLooperConfictEvent rxbusBatchLooperConfictEvent) {
                 if (rxbusBatchLooperConfictEvent.isConfict) {
-                    ToastUtils.show("与现有周期有冲突");
+                    ToastUtils.showDefaultStyle("与现有周期有冲突");
                 } else {
                     getActivity().onBackPressed();
                 }

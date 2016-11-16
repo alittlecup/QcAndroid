@@ -185,5 +185,6 @@
     <string name="add_course_circle">+课程周期</string>
     <string name="time_long_d_min">时长%d分钟</string>
     <string name="change_gym">切换健身房</string>
+    <string name="write_gym_info">填写健身房信息</string>
 
 </resources>
