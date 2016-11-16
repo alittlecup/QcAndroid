@@ -134,11 +134,11 @@ public class GuideSetBrandFragment extends BaseFragment {
 
                                 getFragmentManager().beginTransaction()
                                         .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-                                        .replace(R.id.guide_frag, new GuideSetGymFragmentBuilder(imgUrl, brandName.getContent(), qcResponsCreatBrand.data.id).build())
+                                        .replace(R.id.guide_frag, new GuideSetGymFragmentBuilder(imgUrl, brandName.getContent(), qcResponsCreatBrand.data.brand.getId()).build())
                                         .addToBackStack(null)
                                         .commit();
                                 if (getParentFragment() instanceof GuideFragment) {
-                                    ((GuideFragment) getParentFragment()).initBean.brand_id = qcResponsCreatBrand.data.id;
+                                    ((GuideFragment) getParentFragment()).initBean.brand_id = qcResponsCreatBrand.data.brand.getId();
                                     RxBus.getBus().post(new CoachInitBean());
                                 }
 

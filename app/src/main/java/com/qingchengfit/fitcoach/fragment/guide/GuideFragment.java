@@ -53,16 +53,16 @@ public class GuideFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
-        String initStr = PreferenceUtils.getPrefString(getContext(),"initSystem","");
-        if (initStr != null  || initStr.isEmpty())
+        String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
+        if (initStr != null || initStr.isEmpty())
             initBean = new CoachInitBean();
-        else initBean = gson.fromJson(initStr,CoachInitBean.class);
+        else initBean = gson.fromJson(initStr, CoachInitBean.class);
 
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
-                    .commit();
+                .commit();
         RxBusAdd(EventStep.class)
                 .subscribe(new Action1<EventStep>() {
                     @Override
@@ -74,14 +74,14 @@ public class GuideFragment extends BaseFragment {
                 .subscribe(new Action1<CoachInitBean>() {
                     @Override
                     public void call(CoachInitBean coachInitBean) {
-                        PreferenceUtils.setPrefString(getContext(),"initSystem",gson.toJson(initBean));
+                        PreferenceUtils.setPrefString(getContext(), "initSystem", gson.toJson(initBean));
                         LogUtil.e(gson.toJson(initBean));
                     }
                 });
         return view;
     }
 
-    public void setSetp(int s){
+    public void setSetp(int s) {
         stepIndicator.setCurrentStep(s);
     }
 

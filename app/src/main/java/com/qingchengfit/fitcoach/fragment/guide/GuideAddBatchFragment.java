@@ -25,6 +25,7 @@ import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.bean.RxbusBatchLooperConfictEvent;
+import com.qingchengfit.fitcoach.bean.base.InitBatch;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -217,10 +218,32 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
 
     @OnClick(R.id.completed)
     public void onClick() {
+        if (startdate.getContent().isEmpty() || enddate.getContent().isEmpty()){
+            ToastUtils.showDefaultStyle(getString(R.string.err_please_input_start_end));
+            return;
+        }
+        if (mData.size() <=1){
+            ToastUtils.showDefaultStyle(getString(R.string.err_at_least_one_circle));
+            return;
+        }
+
 
         if (getParentFragment() instanceof GuideFragment) {
             RxBus.getBus().post(new EventStep.Builder().step(2).build());
-
+            List<CmBean> initBatches = new ArrayList<>();
+            for (int i = 0; i < mData.size(); i++) {
+                if (mAdapter.getItem(i) instanceof BatchCircleItem){
+                    initBatches.add(((BatchCircleItem) mAdapter.getItem(i)).cmBean);
+                }
+            }
+            List<InitBatch> initBatches1 = new ArrayList<>();
+            initBatches1.add(new InitBatch.Builder()
+                    .from_date(startdate.getContent())
+                    .to_date(startdate.getContent())
+                    .course_name(courseName.getText().toString().trim())
+                    .time_repeats(CmBean.geTimeRepFromBean(initBatches))
+                    .build());
+            ((GuideFragment) getParentFragment()).initBean.batches = initBatches1;
             showLoading();
             QcCloudClient.getApi().postApi
                     .qcInit(((GuideFragment) getParentFragment()).getInitBean())

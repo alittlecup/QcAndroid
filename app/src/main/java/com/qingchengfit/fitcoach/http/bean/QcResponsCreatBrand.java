@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.Brand;
 
 /**
  * power by
@@ -20,7 +21,7 @@ public class QcResponsCreatBrand extends QcResponse {
     public Data data;
 
     public static class Data {
-        @SerializedName("id")
-        public String id;
+        @SerializedName("brand")
+        public Brand brand;
     }
 }
