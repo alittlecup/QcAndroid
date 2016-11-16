@@ -66,9 +66,6 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void doLogin(String account, String code) {
-//                Uri uri = Uri.fromParts("weixin", "wxpay/bizpayurl", "appid=wxc6a77068671948fa&mch_id=1229776802&nonce_str=ZTvdtqVJwKbe5Ua&product_id=122&time_stamp=1440998807&sign=461F09C69743638397CFEA2422516656");
-//                Uri uri = Uri.parse("weixin://wxpay/bizpayurl?appid=wxc6a77068671948fa&mch_id=1229776802&nonce_str=ZTvdtqVJwKbe5Ua&product_id=122&time_stamp=1440998807&sign=461F09C69743638397CFEA2422516656");
-//                Intent toWeixin = new Intent(Intent.ACTION_VIEW);
 //                toWeixin.setData(uri);
 //                getActivity().startActivity(toWeixin);
 //                return;

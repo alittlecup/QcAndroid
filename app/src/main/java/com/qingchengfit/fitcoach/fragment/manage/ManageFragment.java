@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
@@ -112,10 +113,13 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @Override
     public boolean onItemClick(int position) {
-        if (mAdapter.getItem(position) instanceof FunctionBean) {
-            int res = ((FunctionBean) mAdapter.getItem(position)).resImg;
+        if (mAdapter.getItem(position) instanceof DailyWorkItem) {
+            int res = ((DailyWorkItem) mAdapter.getItem(position)).bean.resImg;
             switch (res) {
                 case R.drawable.ic_weight://排课
+                    Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+                    startActivity(toGuide);
+
                     break;
                 case R.drawable.ic_category_course://课程种类
 

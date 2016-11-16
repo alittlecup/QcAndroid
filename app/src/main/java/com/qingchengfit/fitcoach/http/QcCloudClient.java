@@ -251,8 +251,8 @@ public class QcCloudClient {
         @GET("/api/coaches/{id}/systems/")
         rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
 
-        @GET("")
-        rx.Observable<QcResponseBrands> qcGetBrands(@Path("id") String id);
+        @GET("/api/users/{user_id}/brands/")
+        rx.Observable<QcResponseBrands> qcGetBrands(@Path("user_id") String id);
 
 
         //获取用户详情

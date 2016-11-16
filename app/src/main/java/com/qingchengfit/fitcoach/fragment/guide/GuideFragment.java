@@ -54,7 +54,7 @@ public class GuideFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         String initStr = PreferenceUtils.getPrefString(getContext(),"initSystem","");
-        if (initStr.isEmpty())
+        if (initStr != null  || initStr.isEmpty())
             initBean = new CoachInitBean();
         else initBean = gson.fromJson(initStr,CoachInitBean.class);
 

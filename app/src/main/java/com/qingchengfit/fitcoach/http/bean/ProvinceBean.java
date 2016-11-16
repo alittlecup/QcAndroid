@@ -22,7 +22,7 @@ import java.util.List;
  * Created by Paper on 15/9/18 2015.
  */
 public class ProvinceBean implements Parcelable {
-    @SerializedName("id")
+    @SerializedName("code")
     public int id;
     @SerializedName("name")
     public String name;

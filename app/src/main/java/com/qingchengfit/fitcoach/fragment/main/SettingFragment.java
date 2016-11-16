@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DialogSheet;
@@ -157,6 +158,10 @@ public class SettingFragment extends BaseSettingFragment {
             case R.id.setting_update:
                 break;
             case R.id.setting_logout:
+                Intent it = new Intent(getActivity(), Main2Activity.class);
+                it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
+                startActivity(it);
                 break;
         }
     }
