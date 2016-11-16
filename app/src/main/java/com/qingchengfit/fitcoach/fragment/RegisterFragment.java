@@ -36,8 +36,9 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
@@ -60,49 +61,50 @@ import rx.schedulers.Schedulers;
  */
 public class RegisterFragment extends Fragment {
 
-//    RegisterviewBinding mDataBinding;
+//    RegisterviewBindViewing mDataBindViewing;
 
     public String mcode;
-    @Bind(R.id.registe_phone_num)
+    @BindView(R.id.registe_phone_num)
     TextInputLayout registePhoneNum;
-    @Bind(R.id.registe_getcode_btn)
+    @BindView(R.id.registe_getcode_btn)
     TextView registeGetcodeBtn;
-    @Bind(R.id.telephone_layout)
+    @BindView(R.id.telephone_layout)
     RelativeLayout telephoneLayout;
-    @Bind(R.id.registe_phone_verity)
+    @BindView(R.id.registe_phone_verity)
     TextInputLayout registePhoneVerity;
-    @Bind(R.id.registe_btn)
+    @BindView(R.id.registe_btn)
     Button registeBtn;
     MaterialDialog materialDialog;
-    @Bind(R.id.registe_gender)
+    @BindView(R.id.registe_gender)
     RelativeLayout registeGender;
-    @Bind(R.id.comple_gender_label)
+    @BindView(R.id.comple_gender_label)
     TextView compleGenderLabel;
-    @Bind(R.id.comple_gender_male)
+    @BindView(R.id.comple_gender_male)
     RadioButton compleGenderMale;
-    @Bind(R.id.comple_gender_female)
+    @BindView(R.id.comple_gender_female)
     RadioButton compleGenderFemale;
-    @Bind(R.id.comple_gender)
+    @BindView(R.id.comple_gender)
     RadioGroup compleGender;
-    @Bind(R.id.comple_pw)
+    @BindView(R.id.comple_pw)
     TextInputLayout complePw;
-    @Bind(R.id.comple_pw_re)
+    @BindView(R.id.comple_pw_re)
     TextInputLayout complePwRe;
-    @Bind(R.id.registe_username)
+    @BindView(R.id.registe_username)
     TextInputLayout registeUsername;
     Gson gson;
-    @Bind(R.id.registe_rootview)
+    @BindView(R.id.registe_rootview)
     LinearLayout registeRootview;
     private InternalHandler handler;
     private Observable<RecieveMsg> mRecieveMsgOb;
     private Observable<SendSmsCode> mSendsmsOb;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.registerview, null);
-//        mDataBinding = DataBindingUtil.bind(view);
-        ButterKnife.bind(this, view);
+//        mDataBindViewing = DataBindViewingUtil.bind(view);
+        unbinder=ButterKnife.bind(this, view);
         handler = new InternalHandler(getContext());
 
         registeGender.setOnClickListener(v -> {
@@ -270,7 +272,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         RxBus.getBus().unregister(RecieveMsg.class.getName(), mRecieveMsgOb);
         RxBus.getBus().unregister(SendSmsCode.class.getName(), mSendsmsOb);
     }

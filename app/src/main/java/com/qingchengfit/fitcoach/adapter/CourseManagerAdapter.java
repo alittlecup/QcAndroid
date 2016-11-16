@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -109,19 +109,19 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
     }
 
     public static class CourseManagerVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.month)
+        @BindView(R.id.month)
         TextView month;
-        @Bind(R.id.item_checkbox)
+        @BindView(R.id.item_checkbox)
         CheckBox itemCheckbox;
-        @Bind(R.id.date)
+        @BindView(R.id.date)
         TextView date;
-        @Bind(R.id.weekday)
+        @BindView(R.id.weekday)
         TextView weekday;
-        @Bind(R.id.time)
+        @BindView(R.id.time)
         TextView time;
-        @Bind(R.id.outofdate)
+        @BindView(R.id.outofdate)
         TextView outofdate;
-        @Bind(R.id.outofdatelayout)
+        @BindView(R.id.outofdatelayout)
         View view;
         public CourseManagerVH(View itemView) {
             super(itemView);

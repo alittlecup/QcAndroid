@@ -25,8 +25,9 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,13 +35,13 @@ import butterknife.ButterKnife;
 public class CourseListFragment extends VpFragment {
 
 
-    @Bind(R.id.course_count)
+    @BindView(R.id.course_count)
     TextView courseCount;
-    @Bind(R.id.preview)
+    @BindView(R.id.preview)
     TextView preview;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.no_data)
+    @BindView(R.id.no_data)
     LinearLayout noData;
 
     private ImageThreeTextAdapter mImageTwoTextAdapter;
@@ -49,6 +50,7 @@ public class CourseListFragment extends VpFragment {
     private int mGymType = 1;//个人健身房 0是同步健身房
     private int course_count;
     private String toUrl;
+    private Unbinder unbinder;
 
     /**
      * @param GymType    0是同步健身房 1是个人
@@ -102,7 +104,7 @@ public class CourseListFragment extends VpFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         if (mCourseType == Configs.TYPE_PRIVATE) {
             courseCount.setText(course_count + "节私教课");
             preview.setText("会员私教页预览");
@@ -157,7 +159,7 @@ public class CourseListFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

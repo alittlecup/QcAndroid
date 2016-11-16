@@ -26,9 +26,10 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -45,24 +46,25 @@ public class ModifyPwFragment extends BaseSettingFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    @Bind(R.id.modifypw_new_pw)
+    @BindView(R.id.modifypw_new_pw)
     EditText modifypwNewPw;
-    @Bind(R.id.modifypw_comfirm_pw)
+    @BindView(R.id.modifypw_comfirm_pw)
     EditText modifypwComfirmPw;
-    @Bind(R.id.modifypw_comfirm_btn)
+    @BindView(R.id.modifypw_comfirm_btn)
     Button modifypwComfirmBtn;
     Gson gson = new Gson();
-    @Bind(R.id.modifyphone_phone)
+    @BindView(R.id.modifyphone_phone)
     EditText modifyphonePhone;
-    @Bind(R.id.modifyphone_getcode_btn)
+    @BindView(R.id.modifyphone_getcode_btn)
     TextView modifyphoneGetcodeBtn;
-    @Bind(R.id.modifyphone_code)
+    @BindView(R.id.modifyphone_code)
     EditText modifyphoneCode;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private PostMsgHandler handler;
+    private Unbinder unbinder;
 
     public ModifyPwFragment() {
     }
@@ -99,7 +101,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_modify_pw, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "更改密码");
         handler = new PostMsgHandler(getContext());
         return view;
@@ -211,7 +213,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public class PostMsgHandler extends Handler {

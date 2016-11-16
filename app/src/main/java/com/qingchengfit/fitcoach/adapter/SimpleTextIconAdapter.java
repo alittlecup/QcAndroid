@@ -12,7 +12,7 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -78,9 +78,9 @@ public class SimpleTextIconAdapter extends RecyclerView.Adapter<SimpleTextIconAd
 
     public class SimpleTextVH extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.imageicon_text)
+        @BindView(R.id.imageicon_text)
         TextView imageiconText;
-        @Bind(R.id.icon)
+        @BindView(R.id.icon)
         ImageView icon;
         public SimpleTextVH(View itemView) {
             super(itemView);

@@ -22,8 +22,9 @@ import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 /**
@@ -41,23 +42,24 @@ import cn.qingchengfit.widgets.utils.PreferenceUtils;
  */
 public class DrawerFragment extends Fragment {
     Gson gson;
-    @Bind(R.id.header_icon)
+    @BindView(R.id.header_icon)
     ImageView headerIcon;
-    @Bind(R.id.drawer_name)
+    @BindView(R.id.drawer_name)
     TextView drawerName;
-    @Bind(R.id.drawer_headerview)
+    @BindView(R.id.drawer_headerview)
     RelativeLayout drawerHeaderview;
-    @Bind(R.id.drawer_radiogroup)
+    @BindView(R.id.drawer_radiogroup)
     CustomSetmentLayout drawerRadiogroup;
-    @Bind(R.id.drawer_modules)
+    @BindView(R.id.drawer_modules)
     LinearLayout drawerModules;
     private User user;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_drawer, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         gson = new Gson();
 
         String u = PreferenceUtils.getPrefString(getContext(), "user_info", "");
@@ -105,6 +107,6 @@ public class DrawerFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

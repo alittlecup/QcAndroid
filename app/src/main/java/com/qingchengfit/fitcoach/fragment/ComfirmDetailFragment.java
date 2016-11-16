@@ -32,8 +32,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -43,30 +44,31 @@ import rx.schedulers.Schedulers;
  */
 public class ComfirmDetailFragment extends BaseSettingFragment {
     public static final String TAG = ComfirmDetailFragment.class.getName();
-    @Bind(R.id.recorddetail_title)
+    @BindView(R.id.recorddetail_title)
     TextView recorddetailTitle;
-    @Bind(R.id.recorddetail_host)
+    @BindView(R.id.recorddetail_host)
     TextView recorddetailHost;
-    @Bind(R.id.recorddetail_time)
+    @BindView(R.id.recorddetail_time)
     TextView recorddetailTime;
-    @Bind(R.id.recorddetail_score)
+    @BindView(R.id.recorddetail_score)
     TextView recorddetailScore;
-    @Bind(R.id.recorddetail_comment)
+    @BindView(R.id.recorddetail_comment)
     TextView recorddetailComment;
-    @Bind(R.id.comfirm_img)
+    @BindView(R.id.comfirm_img)
     ImageView comfirmImg;
-    @Bind(R.id.comfirm_createtime)
+    @BindView(R.id.comfirm_createtime)
     TextView comfirmCreatetime;
-    @Bind(R.id.record_comfirm_img)
+    @BindView(R.id.record_comfirm_img)
     ImageView recordComfirmImg;
-    @Bind(R.id.workexp_detail_hiden)
+    @BindView(R.id.workexp_detail_hiden)
     TextView workexpDetailHiden;
-    @Bind(R.id.valid_lable)
+    @BindView(R.id.valid_lable)
     TextView validLable;
     private int id;
     private DialogSheet dialogSheet;
     private MaterialDialog delDialog;
     private QcCertificatesReponse.DataEntity.CertificatesEntity entity;
+    private Unbinder unbinder;
 
     public ComfirmDetailFragment() {
     }
@@ -93,7 +95,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comfirm_detail, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         initData();
 
@@ -442,6 +444,6 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

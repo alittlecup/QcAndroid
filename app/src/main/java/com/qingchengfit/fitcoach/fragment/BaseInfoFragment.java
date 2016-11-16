@@ -27,8 +27,9 @@ import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +41,7 @@ public class BaseInfoFragment extends VpFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_COACH = "coach";
     private static final String ARG_PARAM2 = "param2";
-    @Bind(R.id.baseinfo_recyclerview)
+    @BindView(R.id.baseinfo_recyclerview)
     RecyclerViewInScroll baseinfoRecyclerview;
 
     // TODO: Rename and change types of parameters
@@ -50,6 +51,7 @@ public class BaseInfoFragment extends VpFragment {
     private boolean canScrollup;
     private ArrayList<BaseInfoBean> datas;
     private Gson gson = new Gson();
+    private Unbinder unbinder;
 
     public BaseInfoFragment() {
     }
@@ -78,7 +80,7 @@ public class BaseInfoFragment extends VpFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_info, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 //        isPrepared = true;
         lazyLoad();
         return view;
@@ -145,7 +147,7 @@ public class BaseInfoFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -156,13 +158,13 @@ public class BaseInfoFragment extends VpFragment {
 
     public static class BaseInfoVH extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.baseinfo_item_icon)
+        @BindView(R.id.baseinfo_item_icon)
         ImageView itemImg;
-        @Bind(R.id.baseinfo_item_label)
+        @BindView(R.id.baseinfo_item_label)
         TextView itemLabel;
-        @Bind(R.id.baseinfo_item_content)
+        @BindView(R.id.baseinfo_item_content)
         TextView itemContent;
-        @Bind(R.id.item_divider)
+        @BindView(R.id.item_divider)
         View itemDivider;
 
         public BaseInfoVH(View itemView) {

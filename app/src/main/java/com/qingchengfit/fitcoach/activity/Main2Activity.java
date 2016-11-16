@@ -48,7 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.TabView;
 import cn.qingchengfit.widgets.utils.AppUtils;
@@ -73,9 +73,9 @@ public class Main2Activity extends AppCompatActivity implements WebActivityInter
     public static final int NOTIFICATION = 1;
 
 
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewpager;
-    @Bind(R.id.tabview)
+    @BindView(R.id.tabview)
     TabView tabview;
 
     /**

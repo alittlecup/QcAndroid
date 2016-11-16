@@ -33,8 +33,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -48,21 +49,22 @@ public class NotificationFragment extends BaseSettingFragment {
     public static final String[] TYPES  = {"COACH_1","COACH_2","COACH_3"};
 
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     NotifiAdapter adapter;
     //    List<QcNotificationResponse.DataEntity.MsgsEntity> list;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.refresh_nodata)
+    @BindView(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
     List<QcNotificationResponse.DataEntity.MsgsEntity> list = new ArrayList<>();
-    //    @Bind(R.id.pulltorefresh)
+    //    @BindView(R.id.pulltorefresh)
 //    PtrFrameLayout pulltorefresh;
     private int totalPage = 1;
     private int curpage = 1;
     private int unReadCount = 0;
     private LinearLayoutManager linearLayoutManager;
+    private Unbinder unbinder;
 
     public static NotificationFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -79,7 +81,7 @@ public class NotificationFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
@@ -285,7 +287,7 @@ public class NotificationFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public interface OnRecycleItemClickListener {
@@ -294,19 +296,19 @@ public class NotificationFragment extends BaseSettingFragment {
 
     public static class NotifiVH extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.item_noti_unread)
+        @BindView(R.id.item_noti_unread)
         ImageView itemNotiUnread;
-        @Bind(R.id.item_noti_icon)
+        @BindView(R.id.item_noti_icon)
         ImageView itemNotiIcon;
-        @Bind(R.id.item_noti_title)
+        @BindView(R.id.item_noti_title)
         TextView itemNotiTitle;
-        @Bind(R.id.item_noti_time)
+        @BindView(R.id.item_noti_time)
         TextView itemNotiTime;
-        @Bind(R.id.item_noti_sender)
+        @BindView(R.id.item_noti_sender)
         TextView itemNotiSender;
-        @Bind(R.id.item_noti_desc)
+        @BindView(R.id.item_noti_desc)
         TextView itemDesc;
-        @Bind(R.id.icon_right)
+        @BindView(R.id.icon_right)
         ImageView iconRight;
 
         public NotifiVH(View itemView) {

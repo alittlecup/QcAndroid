@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.component.CircleIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.LogUtil;
@@ -44,13 +44,13 @@ import rx.schedulers.Schedulers;
  */
 public class SplashActivity extends BaseAcitivity {
 
-    @Bind(R.id.splash_viewpager)
+    @BindView(R.id.splash_viewpager)
     ViewPager splashViewpager;
-    @Bind(R.id.splash_indicator)
+    @BindView(R.id.splash_indicator)
     CircleIndicator splashIndicator;
 
     List<View> imageViews = new ArrayList<>();
-    @Bind(R.id.main_loading)
+    @BindView(R.id.main_loading)
     RelativeLayout mainLoading;
     float touchX;
     private int[] mSplashImg = new int[]{

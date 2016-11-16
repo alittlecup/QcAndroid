@@ -27,9 +27,10 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,18 +42,20 @@ import rx.schedulers.Schedulers;
 public class ModifyPhoneFragment extends BaseSettingFragment {
     public static final String TAG = ModifyPhoneFragment.class.getName();
 
-    @Bind(R.id.modifyphone_pw)
+    @BindView(R.id.modifyphone_pw)
     EditText modifyphonePw;
-    @Bind(R.id.modifyphone_phone)
+    @BindView(R.id.modifyphone_phone)
     EditText modifyphonePhone;
-    @Bind(R.id.modifyphone_getcode_btn)
+    @BindView(R.id.modifyphone_getcode_btn)
     TextView modifyphoneGetcodeBtn;
-    @Bind(R.id.modifyphone_code)
+    @BindView(R.id.modifyphone_code)
     EditText modifyphoneCode;
-    @Bind(R.id.modifyphone_comfirm_btn)
+    @BindView(R.id.modifyphone_comfirm_btn)
     Button modifyphoneComfirmBtn;
     //    MaterialDialog materialDialog;
     private  PostMsgHandler handler;
+    private Unbinder unbinder;
+
     public ModifyPhoneFragment() {
     }
 
@@ -71,7 +74,7 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_phone, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "更改手机号码");
         return view;
     }
@@ -170,7 +173,7 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public class PostMsgHandler extends Handler {

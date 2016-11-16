@@ -47,9 +47,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.BitmapUtils;
 import cn.qingchengfit.widgets.utils.ChoosePicUtils;
 import cn.qingchengfit.widgets.utils.DateUtils;
@@ -76,64 +77,64 @@ public class RecordEditFragment extends BaseSettingFragment {
     private static final String TYPE = "param_type";
 
     private static String FILE_PATH = Configs.CameraPic;
-    //    @Bind(R.id.recordedit_host)
+    //    @BindView(R.id.recordedit_host)
 //    CommonInputView recordeditHost;
-//    @Bind(R.id.recordedit_type_meeting)
+//    @BindView(R.id.recordedit_type_meeting)
 //    RadioButton recordeditTypeMeeting;
-//    @Bind(R.id.recordedit_type_comfirm)
+//    @BindView(R.id.recordedit_type_comfirm)
 //    RadioButton recordeditTypeComfirm;
-//    @Bind(R.id.recordedit_type_competition)
+//    @BindView(R.id.recordedit_type_competition)
 //    RadioButton recordeditTypeCompetition;
-//    @Bind(R.id.recordedit_type)
+//    @BindView(R.id.recordedit_type)
 //    RadioGroup recordeditType;
-//    @Bind(R.id.recordedit_date)
+//    @BindView(R.id.recordedit_date)
 //    CommonInputView recordeditDate;
-    @Bind(R.id.recordedit_score)
+    @BindView(R.id.recordedit_score)
     CommonInputView recordeditScore;
-    @Bind(R.id.recordedit_dateoff)
+    @BindView(R.id.recordedit_dateoff)
     CommonInputView recordeditDateoff;
-    @Bind(R.id.recordedit_upimg)
+    @BindView(R.id.recordedit_upimg)
     TextView recordeditUpimg;
-    @Bind(R.id.recordedit_img)
+    @BindView(R.id.recordedit_img)
     ImageView recordeditImg;
-    @Bind(R.id.recordedit_comfirm_btn)
+    @BindView(R.id.recordedit_comfirm_btn)
     Button recordeditComfirmBtn;
     TimeDialogWindow pwTime;
-    @Bind(R.id.rootview)
+    @BindView(R.id.rootview)
     ScrollView rootview;
-    @Bind(R.id.record_edit_name)
+    @BindView(R.id.record_edit_name)
     CommonInputView recordEditName;
-    @Bind(R.id.recordedit_datestart)
+    @BindView(R.id.recordedit_datestart)
     CommonInputView recordeditDatestart;
-    @Bind(R.id.host_img)
+    @BindView(R.id.host_img)
     ImageView hostImg;
-    @Bind(R.id.host_qc_identify)
+    @BindView(R.id.host_qc_identify)
     ImageView hostQcIdentify;
-    @Bind(R.id.host_name)
+    @BindView(R.id.host_name)
     TextView hostName;
-    @Bind(R.id.host_address)
+    @BindView(R.id.host_address)
     TextView hostAddress;
-    @Bind(R.id.comfirm_scroe_layout)
+    @BindView(R.id.comfirm_scroe_layout)
     RelativeLayout comfirmScroeLayout;
-    @Bind(R.id.comfirm_has_certification)
+    @BindView(R.id.comfirm_has_certification)
     TextView comfirmHasCertification;
-    @Bind(R.id.comfirm_certification_layout)
+    @BindView(R.id.comfirm_certification_layout)
     RelativeLayout comfirmCertificationLayout;
-    @Bind(R.id.recordedit_certificat_name)
+    @BindView(R.id.recordedit_certificat_name)
     CommonInputView recordeditCertificatName;
-    @Bind(R.id.host_layout)
+    @BindView(R.id.host_layout)
     RelativeLayout hostLayout;
-    @Bind(R.id.recordedit_date)
+    @BindView(R.id.recordedit_date)
     CommonInputView recordeditDate;
-    @Bind(R.id.comfirm_scroe_switch)
+    @BindView(R.id.comfirm_scroe_switch)
     Switch comfirmScroeSwitch;
-    @Bind(R.id.comfirm_certification_switch)
+    @BindView(R.id.comfirm_certification_switch)
     Switch comfirmCertificationSwitch;
-    @Bind(R.id.recordedit_upimg_layout)
+    @BindView(R.id.recordedit_upimg_layout)
     RelativeLayout recordeditUpimgLayout;
-//    @Bind(R.id.divider_margin)
+//    @BindView(R.id.divider_margin)
 //    View divder;
-//    @Bind(R.id.divider)
+//    @BindView(R.id.divider)
 //    View divder2;
 
 
@@ -146,6 +147,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     private AddCertificate addCertificate;
     private MaterialDialog delDialog;
     private DialogSheet mDialogSheet;
+    private Unbinder unbinder;
 
     public RecordEditFragment() {
     }
@@ -214,7 +216,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_record_edit, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         if (mType == 0)
             mType = 1;
         switch (mType) {
@@ -658,7 +660,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

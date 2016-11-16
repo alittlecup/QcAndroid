@@ -16,9 +16,10 @@ import com.qingchengfit.fitcoach.activity.MeetActivity;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * power by
@@ -42,19 +43,20 @@ import butterknife.OnClick;
  */
 public class MineFragmentFragment extends Fragment {
 
-    @Bind(R.id.img_header)
+    @BindView(R.id.img_header)
     ImageView imgHeader;
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView tvName;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.mine);
         toolbar.inflateMenu(R.menu.menu_setting);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -72,7 +74,7 @@ public class MineFragmentFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick({R.id.layout_header, R.id.layout_baseinfo, R.id.layout_my_meeting, R.id.layout_my_comfirm, R.id.layout_my_exp})

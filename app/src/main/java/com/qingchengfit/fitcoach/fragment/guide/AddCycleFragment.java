@@ -24,9 +24,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.ToastUtils;
 import rx.Observable;
@@ -47,33 +48,33 @@ import rx.functions.Action1;
  * Created by Paper on 16/3/29 2016.
  */
 public class AddCycleFragment extends BaseFragment {
-    @Bind(R.id.starttime)
+    @BindView(R.id.starttime)
     CommonInputView starttime;
-    @Bind(R.id.endtime)
+    @BindView(R.id.endtime)
     CommonInputView endtime;
-    @Bind(R.id.desc)
+    @BindView(R.id.desc)
     TextView desc;
-    @Bind(R.id.week1)
+    @BindView(R.id.week1)
     CommonInputView week1;
-    @Bind(R.id.week2)
+    @BindView(R.id.week2)
     CommonInputView week2;
-    @Bind(R.id.week3)
+    @BindView(R.id.week3)
     CommonInputView week3;
-    @Bind(R.id.week4)
+    @BindView(R.id.week4)
     CommonInputView week4;
-    @Bind(R.id.week5)
+    @BindView(R.id.week5)
     CommonInputView week5;
-    @Bind(R.id.week6)
+    @BindView(R.id.week6)
     CommonInputView week6;
-    @Bind(R.id.week7)
+    @BindView(R.id.week7)
     CommonInputView week7;
-    @Bind(R.id.comfirm)
+    @BindView(R.id.comfirm)
     Button comfirm;
 
     List<Integer> x = new ArrayList<>();
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private Date mStart = new Date();
     private Date mEnd = new Date();
@@ -82,6 +83,7 @@ public class AddCycleFragment extends BaseFragment {
     private CmBean mCmBean;
     private Observable<RxbusBatchLooperConfictEvent> obConflict;
     private long mCourselength = 0;
+    private Unbinder unbinder;
 
     public static AddCycleFragment newInstance(CmBean cmBean) {
 
@@ -116,7 +118,7 @@ public class AddCycleFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_cycle, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +154,7 @@ public class AddCycleFragment extends BaseFragment {
     public void onDestroyView() {
         RxBus.getBus().unregister(RxbusBatchLooperConfictEvent.class.getName(), obConflict);
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick(R.id.comfirm)

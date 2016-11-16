@@ -36,9 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Observable;
 import rx.Observer;
@@ -54,30 +55,30 @@ public class SaleDetailFragment extends Fragment {
     public static final int TYPE_MONTH = 2;
     public static final int TYPE_WEEK = 1;
     public static final int TYPE_DAY = 0;
-    @Bind(R.id.spinner_nav)
+    @BindView(R.id.spinner_nav)
     Spinner spinnerNav;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.statement_detail_time)
+    @BindView(R.id.statement_detail_time)
     TextView statementDetailTime;
-    @Bind(R.id.item_statement_detail_content)
+    @BindView(R.id.item_statement_detail_content)
     TextView itemStatementDetailContent;
 
-    @Bind(R.id.statement_detail_less)
+    @BindView(R.id.statement_detail_less)
     ImageButton statementDetailLess;
-    @Bind(R.id.statement_detail_more)
+    @BindView(R.id.statement_detail_more)
     ImageButton statementDetailMore;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.refresh_nodata)
+    @BindView(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
-    @Bind(R.id.statement_detail_change)
+    @BindView(R.id.statement_detail_change)
     Button statementDetailChange;
-    @Bind(R.id.statement_detail_filter)
+    @BindView(R.id.statement_detail_filter)
     TextView statementDetailFilter;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
     private StatementDetailAdapter mStatementDetailAdapter;
@@ -105,6 +106,7 @@ public class SaleDetailFragment extends Fragment {
 
     private MaterialDialog loadingDialog;
     private String card_name;
+    private Unbinder unbinder;
 
     public SaleDetailFragment() {
 
@@ -189,7 +191,7 @@ public class SaleDetailFragment extends Fragment {
         view.setOnTouchListener((v, event) -> {
             return true;
         });
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         setupToolbar();
         mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -436,7 +438,7 @@ public class SaleDetailFragment extends Fragment {
     public void onDestroyView() {
         if (loadingDialog!=null)
             loadingDialog.dismiss();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         super.onDestroyView();
 
     }
@@ -499,21 +501,21 @@ public class SaleDetailFragment extends Fragment {
      * recycle view
      */
     class StatementDetailVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_statement_detail_bottomdivier)
+        @BindView(R.id.item_statement_detail_bottomdivier)
         View itemStatementDetailBottomdivier;
-        @Bind(R.id.item_statement_detail_headerdivier)
+        @BindView(R.id.item_statement_detail_headerdivier)
         View itemStatementDetailHeaderdivier;
-        @Bind(R.id.item_statement_detail_day)
+        @BindView(R.id.item_statement_detail_day)
         TextView itemStatementDetailDay;
-        @Bind(R.id.item_statement_detail_month)
+        @BindView(R.id.item_statement_detail_month)
         TextView itemStatementDetailMonth;
-        @Bind(R.id.item_statement_detail_date)
+        @BindView(R.id.item_statement_detail_date)
         LinearLayout itemStatementDetailDate;
-        @Bind(R.id.item_statement_detail_name)
+        @BindView(R.id.item_statement_detail_name)
         TextView itemStatementDetailName;
-        @Bind(R.id.item_statement_detail_content)
+        @BindView(R.id.item_statement_detail_content)
         TextView itemStatementDetailContent;
-        @Bind(R.id.item_statement_detail_price)
+        @BindView(R.id.item_statement_detail_price)
         TextView itemStatementDetailPrice;
 
         public StatementDetailVH(View itemView) {

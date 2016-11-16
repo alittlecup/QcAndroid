@@ -13,7 +13,7 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeLi
 
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -33,11 +33,11 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
 
     public SegmentListener segmentListener;
     public TouchUpListener listener;
-    @Bind(R.id.weekday)
+    @BindView(R.id.weekday)
     TextView weekday;
-    @Bind(R.id.date)
+    @BindView(R.id.date)
     TextView date;
-    @Bind(R.id.indicator)
+    @BindView(R.id.indicator)
     TextView indicator;
     private Date Viewdate;
 

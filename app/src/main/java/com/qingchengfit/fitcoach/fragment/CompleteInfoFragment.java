@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.qingchengfit.fitcoach.R;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 public class CompleteInfoFragment extends Fragment {
 
 
+    private Unbinder unbinder;
 
     public CompleteInfoFragment() {
     }
@@ -27,7 +29,7 @@ public class CompleteInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_complete_info, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
 
         ;
@@ -38,6 +40,6 @@ public class CompleteInfoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

@@ -11,19 +11,21 @@ import android.widget.Button;
 
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddSelfNotiFragment extends Fragment {
     public static final String TAG = AddSelfNotiFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.add_gym_private_btn)
+    @BindView(R.id.add_gym_private_btn)
     Button addGymPrivateBtn;
+    private Unbinder unbinder;
 
 
     public AddSelfNotiFragment() {
@@ -36,7 +38,7 @@ public class AddSelfNotiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_self_noti, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setTitle("添加个人健身房");
@@ -52,6 +54,6 @@ public class AddSelfNotiFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

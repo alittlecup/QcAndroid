@@ -16,7 +16,7 @@ import com.qingchengfit.fitcoach.fragment.RecordFragment;
 import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.AppUtils;
 
@@ -24,7 +24,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
 
     public static String TAG = SettingActivity.class.getName();
     FragmentManager fragmentManager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private MaterialDialog loadingDialog;
     private int result = 0;

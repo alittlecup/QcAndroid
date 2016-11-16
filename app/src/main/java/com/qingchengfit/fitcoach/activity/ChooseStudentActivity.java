@@ -39,7 +39,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
@@ -51,19 +51,19 @@ import rx.schedulers.Schedulers;
 
 public class ChooseStudentActivity extends BaseAcitivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.choosestudent_rv)
+    @BindView(R.id.choosestudent_rv)
     RecyclerView choosestudentRv;
-    @Bind(R.id.choosestudent_all)
+    @BindView(R.id.choosestudent_all)
     CheckBox choosestudentAll;
-    @Bind(R.id.choosestudent_choose_num)
+    @BindView(R.id.choosestudent_choose_num)
     TextView choosestudentChooseNum;
-    @Bind(R.id.choosestudent_total_num)
+    @BindView(R.id.choosestudent_total_num)
     TextView choosestudentTotalNum;
-    @Bind(R.id.choosestudent_comfirm)
+    @BindView(R.id.choosestudent_comfirm)
     TextView choosestudentComfirm;
-    @Bind(R.id.alphabetview)
+    @BindView(R.id.alphabetview)
     AlphabetView alphabetview;
     List<StudentBean> studentBeans = new ArrayList<>(); //通讯录中所有联系人
 
@@ -267,17 +267,17 @@ public class ChooseStudentActivity extends BaseAcitivity {
      * recycle adapter
      */
     public static class StudentsHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_student_header)
+        @BindView(R.id.item_student_header)
         ImageView itemStudentHeader;
-        @Bind(R.id.item_student_name)
+        @BindView(R.id.item_student_name)
         TextView itemStudentName;
-        @Bind(R.id.item_student_phonenum)
+        @BindView(R.id.item_student_phonenum)
         TextView itemStudentPhonenum;
-        @Bind(R.id.item_checkbox)
+        @BindView(R.id.item_checkbox)
         CheckBox itemCheckbox;
-        @Bind(R.id.item_student_alpha)
+        @BindView(R.id.item_student_alpha)
         TextView itemStudentAlpha;
-        @Bind(R.id.item_student_divider)
+        @BindView(R.id.item_student_divider)
         View itemStudentDivder;
 
         public StudentsHolder(View itemView) {

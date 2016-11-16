@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Subscription;
@@ -40,9 +40,9 @@ import rx.schedulers.Schedulers;
 
 public class ChooseBrandActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recycleview)
+    @BindView(R.id.recycleview)
     RecyclerView recycleview;
 
     private Subscription sp;

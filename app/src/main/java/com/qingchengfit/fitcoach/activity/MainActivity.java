@@ -90,7 +90,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.AppUtils;
@@ -133,23 +133,23 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             R.id.segmentbtn_9,
     };
     FragmentManager mFragmentManager;
-    @Bind(R.id.main_drawerlayout)
+    @BindView(R.id.main_drawerlayout)
     DrawerLayout mainDrawerlayout;
-    @Bind(R.id.main_fraglayout)
+    @BindView(R.id.main_fraglayout)
     FrameLayout mainFraglayout;
-    @Bind(R.id.drawer_headerview)
+    @BindView(R.id.drawer_headerview)
     RelativeLayout drawerHeaderview;
-    @Bind(R.id.drawer_radiogroup)
+    @BindView(R.id.drawer_radiogroup)
     CustomSetmentLayout drawerRadiogroup;
-    @Bind(R.id.header_icon)
+    @BindView(R.id.header_icon)
     ImageView headerIcon;
-    @Bind(R.id.drawer_modules)
+    @BindView(R.id.drawer_modules)
     LinearLayout drawerModules;
-    @Bind(R.id.drawer_name)
+    @BindView(R.id.drawer_name)
     TextView drawerName;
     AsyncDownloader mDownloadThread;
     HashMap<String, Fragment> fragments = new HashMap<>();
-    @Bind(R.id.oem_acts)
+    @BindView(R.id.oem_acts)
     LinearLayout oemActs;
     private boolean mGoMyhome = false;
     private User user;

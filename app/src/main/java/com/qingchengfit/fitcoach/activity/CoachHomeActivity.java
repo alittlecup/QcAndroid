@@ -6,12 +6,12 @@ import android.support.v7.widget.Toolbar;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CoachHomeActivity extends BaseAcitivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Override

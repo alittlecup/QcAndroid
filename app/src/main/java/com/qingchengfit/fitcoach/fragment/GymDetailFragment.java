@@ -41,8 +41,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.BitmapUtils;
 import cn.qingchengfit.widgets.utils.ChoosePicUtils;
@@ -57,11 +58,11 @@ import rx.schedulers.Schedulers;
  */
 public class GymDetailFragment extends Fragment {
     public static final String TAG = GymDetailFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.gymdetail_webview)
+    @BindView(R.id.gymdetail_webview)
     WebView webview;
-    @Bind(R.id.webview_root)
+    @BindView(R.id.webview_root)
     LinearLayout webviewRoot;
 
 
@@ -78,6 +79,7 @@ public class GymDetailFragment extends Fragment {
     private List<String> hostArray = new ArrayList<>();
     private List<String> urls = new ArrayList<>();
     private String sessionid;
+    private Unbinder unbinder;
 
     public GymDetailFragment() {
     }
@@ -174,7 +176,7 @@ public class GymDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gym_detail, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setTitle("");
@@ -409,7 +411,7 @@ public class GymDetailFragment extends Fragment {
             webview.removeAllViews();
             webview.destroy();
         }
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         super.onDestroyView();
     }
 

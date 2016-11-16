@@ -31,9 +31,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observer;
@@ -48,19 +49,19 @@ import rx.schedulers.Schedulers;
 public class CustomSaleFragment extends Fragment {
 
     public static final String TAG = CustomSaleFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.custom_statment_gym)
+    @BindView(R.id.custom_statment_gym)
     CommonInputView customStatmentGym;
-    @Bind(R.id.custom_statment_start)
+    @BindView(R.id.custom_statment_start)
     CommonInputView customStatmentStart;
-    @Bind(R.id.custom_statment_end)
+    @BindView(R.id.custom_statment_end)
     CommonInputView customStatmentEnd;
-    @Bind(R.id.custom_statment_course)
+    @BindView(R.id.custom_statment_course)
     CommonInputView customStatmentCourse;
-    @Bind(R.id.rootview)
+    @BindView(R.id.rootview)
     LinearLayout rootview;
-//    @Bind(R.id.custom_statment_student)
+//    @BindView(R.id.custom_statment_student)
 //    CommonInputView customStatmentStudent;
 
     private Calendar date;
@@ -97,6 +98,8 @@ public class CustomSaleFragment extends Fragment {
     private List<QcCardsResponse.Card> cards = new ArrayList<>();
     private TimeDialogWindow pwTime;
     private Subscription cardSp;
+    private Unbinder unbinder;
+
     public CustomSaleFragment() {
 
     }
@@ -162,7 +165,7 @@ public class CustomSaleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_sale, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("自定义销售报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -371,7 +374,7 @@ public class CustomSaleFragment extends Fragment {
         if (cardSp != null && !cardSp.isUnsubscribed())
             cardSp.unsubscribe();
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.bean.FunctionBean;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -61,11 +61,11 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
     }
 
     public class ManageWorkVH extends FlexibleViewHolder {
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         ImageView image;
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.subTitle)
+        @BindView(R.id.subTitle)
         TextView subTitle;
         public ManageWorkVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

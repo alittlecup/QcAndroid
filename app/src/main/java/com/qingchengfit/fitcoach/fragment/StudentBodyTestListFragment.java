@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * power by
@@ -37,14 +38,15 @@ import butterknife.ButterKnife;
  */
 public class StudentBodyTestListFragment extends VpFragment {
 
-//    @Bind(R.id.add1)
+//    @BindView(R.id.add1)
 //    Button add1;
-//    @Bind(R.id.add2)
+//    @BindView(R.id.add2)
 //    Button add2;
     private List<BodyTestBean> mDataList = new ArrayList<>();
     private SimpleAdapter mAdapter;
     private String model;
     private String modelid;
+    private Unbinder unbinder;
 
 
     public static StudentBodyTestListFragment newInstance(String model,String modelid) {
@@ -68,7 +70,7 @@ public class StudentBodyTestListFragment extends VpFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 //        add1.setVisibility(View.VISIBLE);
 //        add2.setVisibility(View.GONE);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -119,6 +121,6 @@ public class StudentBodyTestListFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

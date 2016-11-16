@@ -7,25 +7,34 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -49,17 +58,33 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  */
 public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     List<AbstractFlexibleItem> mData = new ArrayList<>();
-    @Bind(R.id.recyclerview2)
+    @BindView(R.id.recyclerview2)
     RecyclerView recyclerview2;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.angle_show)
+    ImageView angleShow;
+    @BindView(R.id.name_brand)
+    TextView nameBrand;
+    @BindView(R.id.address_phone)
+    TextView addressPhone;
+    @BindView(R.id.dataoff)
+    TextView dataoff;
+    @BindView(R.id.gym_info_layout)
+    LinearLayout gymInfoLayout;
+    @BindView(R.id.shop_img)
+    ImageView shopImg;
     private CommonFlexAdapter mAdapter;
+    private Unbinder unbinder;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manange, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_weight).text(getString(R.string.course_batch)).build()));
         mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_category_course).text(getString(R.string.course_types)).build()));
         mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_student).text(getString(R.string.student)).build()));
@@ -97,6 +122,17 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview2.setLayoutManager(manager2);
         recyclerview2.setAdapter(adapter2);
 
+        RxBusAdd(CoachService.class)
+                .subscribe(new Action1<CoachService>() {
+                    @Override
+                    public void call(CoachService coachService) {
+                        if (coachService != null) {
+                            title.setText(coachService.name);
+                            Glide.with(getContext()).load(coachService.photo).into(shopImg);
+                        }
+                    }
+                });
+
         return view;
     }
 
@@ -108,7 +144,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -129,18 +165,18 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     break;
                 case R.drawable.ic_img_statement_signin:
                     Intent toCourse = new Intent(getActivity(), FragActivity.class);
-                    toCourse.putExtra("to",0);
+                    toCourse.putExtra("to", 0);
                     startActivity(toCourse);
                     break;
                 case R.drawable.ic_sale_statement:
                     Intent tosale = new Intent(getActivity(), FragActivity.class);
-                    tosale.putExtra("to",1);
+                    tosale.putExtra("to", 1);
                     startActivity(tosale);
 
                     break;
                 case R.drawable.ic_template_coursepaln:
                     Intent toPlan = new Intent(getActivity(), FragActivity.class);
-                    toPlan.putExtra("to",1);
+                    toPlan.putExtra("to", 1);
                     startActivity(toPlan);
                     break;
                 default:
@@ -149,5 +185,25 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
         }
         return true;
+    }
+
+    @OnClick({R.id.change_gym, R.id.title, R.id.angle_show})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.change_gym:
+                Intent toGym = new Intent(getActivity(), ChooseActivity.class);
+                toGym.putExtra("to",ChooseActivity.TO_CHOSSE_GYM);
+                startActivity(toGym);
+                break;
+            case R.id.title:
+            case R.id.angle_show:
+
+
+                break;
+        }
+    }
+
+    @OnClick(R.id.renewal)
+    public void onClick() {
     }
 }

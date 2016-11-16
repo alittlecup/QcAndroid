@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
@@ -40,11 +40,11 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
     public static final String TAG = NotificationActivity.class.getName();
 
     FragmentManager mFragmentManager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewpager;
-    @Bind(R.id.strip)
+    @BindView(R.id.strip)
     PagerSlidingTabImageStrip strip;
     private Observable<EventNotiFresh> mOb;
     private NotiFragmentAdater adater;

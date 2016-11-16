@@ -31,8 +31,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Subscriber;
 import rx.Subscription;
@@ -45,37 +46,37 @@ import rx.schedulers.Schedulers;
 public class WorkExpDetailFragment extends BaseSettingFragment {
 
 
-    @Bind(R.id.gym_img)
+    @BindView(R.id.gym_img)
     ImageView gymImg;
-    @Bind(R.id.gym_time)
+    @BindView(R.id.gym_time)
     TextView gymTime;
-    @Bind(R.id.workexp_detail_hiden)
+    @BindView(R.id.workexp_detail_hiden)
     TextView workexpDetailHiden;
-    @Bind(R.id.workexp_detail_position)
+    @BindView(R.id.workexp_detail_position)
     TextView workexpDetailPosition;
-    @Bind(R.id.workexp_detail_desc)
+    @BindView(R.id.workexp_detail_desc)
     TextView workexpDetailDesc;
-    @Bind(R.id.workexp_detail_group_count)
+    @BindView(R.id.workexp_detail_group_count)
     TextView workexpDetailGroupCount;
-    @Bind(R.id.workexp_detail_group_server)
+    @BindView(R.id.workexp_detail_group_server)
     TextView workexpDetailGroupServer;
-    @Bind(R.id.workexp_detail_group_layout)
+    @BindView(R.id.workexp_detail_group_layout)
     LinearLayout workexpDetailGroupLayout;
-    @Bind(R.id.workexp_detail_private_count)
+    @BindView(R.id.workexp_detail_private_count)
     TextView workexpDetailPrivateCount;
-    @Bind(R.id.workexp_detail_private_server)
+    @BindView(R.id.workexp_detail_private_server)
     TextView workexpDetailPrivateServer;
-    @Bind(R.id.workexp_detail_private_layout)
+    @BindView(R.id.workexp_detail_private_layout)
     LinearLayout workexpDetailPrivateLayout;
-    @Bind(R.id.workexp_detail_sale)
+    @BindView(R.id.workexp_detail_sale)
     TextView workexpDetailSale;
-    @Bind(R.id.workexp_detail_sale_layout)
+    @BindView(R.id.workexp_detail_sale_layout)
     LinearLayout workexpDetailSaleLayout;
-    @Bind(R.id.gym_name)
+    @BindView(R.id.gym_name)
     TextView gymName;
-    @Bind(R.id.gym_address)
+    @BindView(R.id.gym_address)
     TextView gymAddress;
-    @Bind(R.id.gym_identify)
+    @BindView(R.id.gym_identify)
     ImageView gymIdentify;
     private int mExpId;
     Subscription httpsub;
@@ -85,6 +86,8 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
 
 
     QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
+    private Unbinder unbinder;
+
     public WorkExpDetailFragment() {
     }
 
@@ -108,7 +111,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_work_exp_detail, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         freshData();
         return view;
@@ -322,6 +325,6 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
         if (!httpsub.isUnsubscribed())
             httpsub.unsubscribe();
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

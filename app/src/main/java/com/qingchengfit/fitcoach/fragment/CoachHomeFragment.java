@@ -32,9 +32,10 @@ import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.MeasureUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
@@ -56,29 +57,29 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
 
-    @Bind(R.id.header)
+    @BindView(R.id.header)
     ImageView myhomeHeader;
-    @Bind(R.id.gender)
+    @BindView(R.id.gender)
     ImageView myhomeGender;
-    @Bind(R.id.name)
+    @BindView(R.id.name)
     TextView myhomeName;
-    @Bind(R.id.myhome_brief)
+    @BindView(R.id.myhome_brief)
     TextView myhomeBrief;
-    @Bind(R.id.myhome_location)
+    @BindView(R.id.myhome_location)
     TextView myhomeLocation;
-    @Bind(R.id.myhome_sawtooth)
+    @BindView(R.id.myhome_sawtooth)
     ImageView myhomeSawtooth;
-    @Bind(R.id.myhome_appBar)
+    @BindView(R.id.myhome_appBar)
     AppBarLayout myhomeAppBar;
-    @Bind(R.id.tab)
+    @BindView(R.id.tab)
     TabLayout myhomeTab;
-    @Bind(R.id.student)
+    @BindView(R.id.student)
     ViewPager myhomeViewpager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.sfl)
+    @BindView(R.id.sfl)
     CustomSwipeRefreshLayout sfl;
-    @Bind(R.id.scroll_root)
+    @BindView(R.id.scroll_root)
     CoordinatorLayout scrollRoot;
     private Gson gson = new Gson();
     private int mAppBarOffset = 0;
@@ -106,13 +107,14 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
             handleResponse(qcMyhomeResponse);
         }
     };
+    private Unbinder unbinder;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_home, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> {
@@ -256,7 +258,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

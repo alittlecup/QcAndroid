@@ -12,8 +12,9 @@ import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.functions.Action1;
@@ -41,17 +42,18 @@ import rx.functions.Action1;
  */
 public class GuideFragment extends BaseFragment {
 
-    @Bind(R.id.step_indicator)
+    @BindView(R.id.step_indicator)
     StepperIndicator stepIndicator;
 
     CoachInitBean initBean;
     Gson gson = new Gson();
+    private Unbinder unbinder;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         String initStr = PreferenceUtils.getPrefString(getContext(),"initSystem","");
         if (initStr != null  || initStr.isEmpty())
@@ -95,7 +97,7 @@ public class GuideFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

@@ -56,9 +56,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
@@ -72,33 +73,33 @@ import rx.schedulers.Schedulers;
  */
 public class ScheduesFragment extends Fragment {
     public static final String TAG = ScheduesFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    //      @Bind(R.id.drawer_radiogroup)
+    //      @BindView(R.id.drawer_radiogroup)
     //    DateSegmentLayout drawerRadiogroup;
-    @Bind(R.id.web_floatbtn)
+    @BindView(R.id.web_floatbtn)
     FloatingActionsMenu webFloatbtn;
-    @Bind(R.id.spinner_nav)
+    @BindView(R.id.spinner_nav)
     Spinner spinnerNav;
-    @Bind(R.id.schedule_tab)
+    @BindView(R.id.schedule_tab)
     PagerSlidingTabStrip scheduleTab;
-    @Bind(R.id.schedule_vp)
+    @BindView(R.id.schedule_vp)
     ViewPager scheduleVp;
-    @Bind(R.id.schedule_floatbg)
+    @BindView(R.id.schedule_floatbg)
     View scheduleFloatbg;
-    @Bind(R.id.schedule_notification)
+    @BindView(R.id.schedule_notification)
     ImageView scheduleNotification;
-    @Bind(R.id.schedule_notification_count)
+    @BindView(R.id.schedule_notification_count)
     TextView scheduleNotificationCount;
-    @Bind(R.id.schedule_notification_layout)
+    @BindView(R.id.schedule_notification_layout)
     RelativeLayout scheduleNotificationLayout;
-    @Bind(R.id.schedule_calendar)
+    @BindView(R.id.schedule_calendar)
     RelativeLayout scheduleCalendar;
-    @Bind(R.id.first_guide)
+    @BindView(R.id.first_guide)
     RelativeLayout firstGuide;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    //    @Bind(R.id.schedule_expend_view)
+    //    @BindView(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
     private FloatingActionButton btn2;
@@ -121,6 +122,7 @@ public class ScheduesFragment extends Fragment {
     private Observable<String> mObservableReresh;
     private String curModel;
     private String mTitle;
+    private Unbinder unbinder;
 
     public ScheduesFragment() {
     }
@@ -135,7 +137,7 @@ public class ScheduesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
 //        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
 //        toolbar.inflateMenu(R.menu.menu_alert);
@@ -600,22 +602,22 @@ public class ScheduesFragment extends Fragment {
     public void onDestroyView() {
         RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
         RxBus.getBus().unregister(RxRefreshList.class.getName(), mObservableReresh);
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         super.onDestroyView();
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_schedule_time)
+        @BindView(R.id.item_schedule_time)
         TextView itemScheduleTime;
-        @Bind(R.id.item_schedule_classname)
+        @BindView(R.id.item_schedule_classname)
         TextView itemScheduleClassname;
-        @Bind(R.id.item_schedule_gymname)
+        @BindView(R.id.item_schedule_gymname)
         TextView itemScheduleGymname;
-        @Bind(R.id.item_schedule_num)
+        @BindView(R.id.item_schedule_num)
         TextView itemScheduleNum;
-        @Bind(R.id.item_schedule_classpic)
+        @BindView(R.id.item_schedule_classpic)
         ImageView itemScheduleClasspic;
-        @Bind(R.id.item_schedule_status)
+        @BindView(R.id.item_schedule_status)
         ImageView itemScheduleStatus;
 
         public SchedulesVH(View itemView) {

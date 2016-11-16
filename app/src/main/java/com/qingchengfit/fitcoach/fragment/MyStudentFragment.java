@@ -53,9 +53,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
@@ -67,35 +68,35 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyStudentFragment extends MainBaseFragment {
+public class MyStudentFragment extends BaseFragment {
     public static final String TAG = MyStudentFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.searchview_et)
+    @BindView(R.id.searchview_et)
     EditText searchviewEt;
-    @Bind(R.id.searchview_clear)
+    @BindView(R.id.searchview_clear)
     ImageView searchviewClear;
-    @Bind(R.id.searchview_cancle)
+    @BindView(R.id.searchview_cancle)
     Button searchviewCancle;
-    @Bind(R.id.searchview)
+    @BindView(R.id.searchview)
     LinearLayout searchview;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.spinner_nav)
+    @BindView(R.id.spinner_nav)
     Spinner spinnerNav;
-    @Bind(R.id.student_no_layout)
+    @BindView(R.id.student_no_layout)
     LinearLayout studentNoLayout;
-    @Bind(R.id.alphabetview)
+    @BindView(R.id.alphabetview)
     AlphabetView alphabetView;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.student_add)
+    @BindView(R.id.student_add)
     Button studentAdd;
-    @Bind(R.id.student_no_text)
+    @BindView(R.id.student_no_text)
     TextView studentNoText;
-    @Bind(R.id.student_no_img)
+    @BindView(R.id.student_no_img)
     ImageView studentNoImg;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     private LinearLayoutManager mLinearLayoutManager;
     private QcAllStudentResponse mQcAllStudentResponse;
@@ -117,6 +118,7 @@ public class MyStudentFragment extends MainBaseFragment {
     private String curModel;
     private String mTitle;
     private boolean hasPrivate = false;
+    private Unbinder unbinder;
 
     public MyStudentFragment() {
     }
@@ -126,9 +128,9 @@ public class MyStudentFragment extends MainBaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_student, container, false);
-        ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+        unbinder=ButterKnife.bind(this, view);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.menu_students);
         mTitle = getString(R.string.mystudents_title);
         toolbarTitle.setText(mTitle);
@@ -240,9 +242,14 @@ public class MyStudentFragment extends MainBaseFragment {
 
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public void freshData() {
@@ -688,21 +695,21 @@ public class MyStudentFragment extends MainBaseFragment {
      * recycle adapter
      */
     public static class StudentsHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_student_header)
+        @BindView(R.id.item_student_header)
         ImageView itemStudentHeader;
-        @Bind(R.id.item_student_name)
+        @BindView(R.id.item_student_name)
         TextView itemStudentName;
-        @Bind(R.id.item_student_phonenum)
+        @BindView(R.id.item_student_phonenum)
         TextView itemStudentPhonenum;
-        @Bind(R.id.item_student_gymname)
+        @BindView(R.id.item_student_gymname)
         TextView itemStudentGymname;
-        @Bind(R.id.item_student_gender)
+        @BindView(R.id.item_student_gender)
         ImageView itemStudentGender;
-        @Bind(R.id.item_student_alpha)
+        @BindView(R.id.item_student_alpha)
         TextView itemStudentAlpha;
-        @Bind(R.id.item_student_divider)
+        @BindView(R.id.item_student_divider)
         View itemStudentDivder;
-        @Bind(R.id.item_student_header_loop)
+        @BindView(R.id.item_student_header_loop)
         RelativeLayout itemHeaderLoop;
 
         public StudentsHolder(View itemView) {

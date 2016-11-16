@@ -17,7 +17,7 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
@@ -25,13 +25,13 @@ import rx.functions.Action1;
 
 public class AddBrandActivity extends BaseAcitivity {
 
-    @Bind(R.id.btn)
+    @BindView(R.id.btn)
     Button btn;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.brand_photo)
+    @BindView(R.id.brand_photo)
     ImageView brandPhoto;
-    @Bind(R.id.content)
+    @BindView(R.id.content)
     CommonInputView content;
     private Subscription sp;
     private String uploadImg;

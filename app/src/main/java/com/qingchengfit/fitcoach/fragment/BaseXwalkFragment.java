@@ -20,7 +20,7 @@
 //
 //import java.util.List;
 //
-//import butterknife.Bind;
+//import butterknife.BindView;
 //import butterknife.ButterKnife;
 //
 ///**
@@ -38,7 +38,7 @@
 // */
 //public class BaseXwalkFragment extends Fragment {
 //
-//    @Bind(R.id.webview)
+//    @BindView(R.id.webview)
 //    XWalkView mWebview;
 //
 //
@@ -46,7 +46,7 @@
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
-//        ButterKnife.bind(this, view);
+//        unbinder=ButterKnife.bind(this, view);
 //
 //        return view;
 //    }
@@ -77,7 +77,7 @@
 //    @Override
 //    public void onDestroyView() {
 //        super.onDestroyView();
-//        ButterKnife.unbind(this);
+//        unbinder.unbind();
 //    }
 //
 //

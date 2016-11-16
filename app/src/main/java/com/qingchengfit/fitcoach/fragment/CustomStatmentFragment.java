@@ -36,9 +36,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observer;
@@ -53,20 +54,20 @@ import rx.schedulers.Schedulers;
 public class CustomStatmentFragment extends Fragment {
 
     public static final String TAG = CustomStatmentFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.custom_statment_gym)
+    @BindView(R.id.custom_statment_gym)
     CommonInputView customStatmentGym;
-    @Bind(R.id.custom_statment_start)
+    @BindView(R.id.custom_statment_start)
     CommonInputView customStatmentStart;
-    @Bind(R.id.custom_statment_end)
+    @BindView(R.id.custom_statment_end)
     CommonInputView customStatmentEnd;
-    @Bind(R.id.custom_statment_course)
+    @BindView(R.id.custom_statment_course)
     CommonInputView customStatmentCourse;
-    @Bind(R.id.custom_statment_student)
+    @BindView(R.id.custom_statment_student)
     CommonInputView customStatmentStudent;
     TimeDialogWindow pwTime;
-    @Bind(R.id.rootview)
+    @BindView(R.id.rootview)
     LinearLayout rootview;
 
     private Calendar date;
@@ -129,6 +130,7 @@ public class CustomStatmentFragment extends Fragment {
     };
     private String model;
     private Subscription sp;
+    private Unbinder unbinder;
 
     public CustomStatmentFragment() {
 
@@ -161,7 +163,7 @@ public class CustomStatmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_statment, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("自定义课程报表");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -479,7 +481,7 @@ public class CustomStatmentFragment extends Fragment {
         if (sp != null && !sp.isUnsubscribed())
             sp.unsubscribe();
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

@@ -37,9 +37,10 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.io.File;
 import java.util.HashMap;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Subscriber;
@@ -53,33 +54,33 @@ import rx.schedulers.Schedulers;
 public class AddCourseFrament extends Fragment {
 
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.gym_addcourse_img)
+    @BindView(R.id.gym_addcourse_img)
     ImageView gymAddcourseImg;
-    @Bind(R.id.gym_addcourse_img_layout)
+    @BindView(R.id.gym_addcourse_img_layout)
     RelativeLayout gymAddcourseImgLayout;
-    @Bind(R.id.course_type_private)
+    @BindView(R.id.course_type_private)
     RadioButton courseTypePrivate;
-    @Bind(R.id.course_type_group)
+    @BindView(R.id.course_type_group)
     RadioButton courseTypeGroup;
-    @Bind(R.id.course_type_rg)
+    @BindView(R.id.course_type_rg)
     RadioGroup courseTypeRg;
-    @Bind(R.id.course_name)
+    @BindView(R.id.course_name)
     CommonInputView courseName;
-    @Bind(R.id.course_time)
+    @BindView(R.id.course_time)
     CommonInputView courseTime;
-    @Bind(R.id.gym_course_detail_layout)
+    @BindView(R.id.gym_course_detail_layout)
     LinearLayout gymCourseDetailLayout;
-    @Bind(R.id.add_gym_course_btn)
+    @BindView(R.id.add_gym_course_btn)
     Button addGymCourseBtn;
 
     public static final int TYPE_ADD = 1;
     public static final int TYPE_EDIT = 2;
     public static final int TYPE_DEL = 3;
-    @Bind(R.id.course_type_layout)
+    @BindView(R.id.course_type_layout)
     RelativeLayout courseTypeLayout;
-    @Bind(R.id.course_capacity)
+    @BindView(R.id.course_capacity)
     CommonInputView courseCapacity;
     private int mType;
     private String mModel;
@@ -95,6 +96,7 @@ public class AddCourseFrament extends Fragment {
     private Boolean upIsPrivate = true;
     private MaterialDialog delDialog;
     private MaterialDialog loadingDialog;
+    private Unbinder unbinder;
 
     public AddCourseFrament() {
     }
@@ -145,7 +147,7 @@ public class AddCourseFrament extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_course_frament, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -388,7 +390,7 @@ public class AddCourseFrament extends Fragment {
         if (upPic != null)
             upPic.unsubscribe();
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     /**

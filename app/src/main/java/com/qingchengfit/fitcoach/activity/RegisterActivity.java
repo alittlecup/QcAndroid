@@ -12,25 +12,25 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @Bind(R.id.registe_phone_num)
+    @BindView(R.id.registe_phone_num)
     TextInputLayout registePhoneNum;
-    @Bind(R.id.registe_username)
+    @BindView(R.id.registe_username)
     TextInputLayout registeUsername;
-    @Bind(R.id.registe_password)
+    @BindView(R.id.registe_password)
     TextInputLayout registePassword;
-    @Bind(R.id.registe_phone_verity)
+    @BindView(R.id.registe_phone_verity)
     TextInputLayout registePhoneVerity;
-    @Bind(R.id.registe_getcode_btn)
+    @BindView(R.id.registe_getcode_btn)
     Button registeGetcodeBtn;
-    @Bind(R.id.registe_checkcode_layout)
+    @BindView(R.id.registe_checkcode_layout)
     LinearLayout registeCheckcodeLayout;
-    @Bind(R.id.registe_btn)
+    @BindView(R.id.registe_btn)
     Button registeBtn;
 
     @Override

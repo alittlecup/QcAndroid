@@ -33,8 +33,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.android.schedulers.AndroidSchedulers;
@@ -54,24 +55,25 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class WorkExepSettingFragment extends BaseSettingFragment {
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.record_comfirm_no_img)
+    @BindView(R.id.record_comfirm_no_img)
     ImageView recordComfirmNoImg;
-    @Bind(R.id.record_comfirm_no_txt)
+    @BindView(R.id.record_comfirm_no_txt)
     TextView recordComfirmNoTxt;
-    @Bind(R.id.record_confirm_none)
+    @BindView(R.id.record_confirm_none)
     RelativeLayout recordConfirmNone;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     private WorkExepAdapter adapter;
+    private Unbinder unbinder;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.workexper_title));
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -163,7 +165,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 
@@ -172,19 +174,19 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     }
 
     public static class WorkExepVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_workexpe_name)
+        @BindView(R.id.item_workexpe_name)
         TextView itemWorkexpeName;
-        @Bind(R.id.item_workexpe_time)
+        @BindView(R.id.item_workexpe_time)
         TextView itemWorkexpeTime;
-        @Bind(R.id.item_workexpe)
+        @BindView(R.id.item_workexpe)
         LinearLayout itemWorkexpe;
-        @Bind(R.id.item_workexpe_address)
+        @BindView(R.id.item_workexpe_address)
         TextView itemAddress;
-        @Bind(R.id.qc_identify)
+        @BindView(R.id.qc_identify)
         ImageView qcIdentify;
-        @Bind(R.id.item_workexpe_hidden)
+        @BindView(R.id.item_workexpe_hidden)
         View isHidden;
-        @Bind(R.id.item_workexpe_img)
+        @BindView(R.id.item_workexpe_img)
         ImageView img;
 
         public WorkExepVH(View itemView) {

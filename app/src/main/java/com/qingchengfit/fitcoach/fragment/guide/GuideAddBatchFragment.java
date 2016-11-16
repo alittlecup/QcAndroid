@@ -39,9 +39,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -75,30 +76,31 @@ import rx.schedulers.Schedulers;
 
 public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @Bind(R.id.course_img)
+    @BindView(R.id.course_img)
     ImageView courseImg;
-    @Bind(R.id.course_name)
+    @BindView(R.id.course_name)
     TextView courseName;
-    @Bind(R.id.startdate)
+    @BindView(R.id.startdate)
     CommonInputView startdate;
-    @Bind(R.id.enddate)
+    @BindView(R.id.enddate)
     CommonInputView enddate;
-    @Bind(R.id.batch_date)
+    @BindView(R.id.batch_date)
     RecyclerView batchDate;
-    @Bind(R.id.completed)
+    @BindView(R.id.completed)
     Button completed;
-    @Bind(R.id.img_private)
+    @BindView(R.id.img_private)
     ImageView imgPrivate;
-    @Bind(R.id.course_time_long)
+    @BindView(R.id.course_time_long)
     TextView courseTimeLong;
     private TimeDialogWindow pwTime;
     private CommonFlexAdapter mAdapter;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_add_batch, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         if (getParentFragment() instanceof GuideFragment) {
             CoachInitBean bean = ((GuideFragment) getParentFragment()).initBean;
             if (bean.courses == null || bean.courses.size() == 0) {
@@ -165,7 +167,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick({R.id.startdate, R.id.enddate})

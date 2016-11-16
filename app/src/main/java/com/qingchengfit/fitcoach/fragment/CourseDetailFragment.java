@@ -37,9 +37,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -50,27 +51,27 @@ import rx.schedulers.Schedulers;
  */
 public class CourseDetailFragment extends Fragment {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.img)
+    @BindView(R.id.img)
     ImageView img;
-    @Bind(R.id.text1)
+    @BindView(R.id.text1)
     TextView text1;
-    @Bind(R.id.texticon)
+    @BindView(R.id.texticon)
     ImageView texticon;
-    @Bind(R.id.text2)
+    @BindView(R.id.text2)
     TextView text2;
-    @Bind(R.id.text3)
+    @BindView(R.id.text3)
     TextView text3;
-    @Bind(R.id.righticon)
+    @BindView(R.id.righticon)
     ImageView righticon;
-    @Bind(R.id.course_count)
+    @BindView(R.id.course_count)
     TextView courseCount;
-    @Bind(R.id.preview)
+    @BindView(R.id.preview)
     TextView preview;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.no_data)
+    @BindView(R.id.no_data)
     LinearLayout noData;
     private ImageThreeTextBean mBean;
     private SimpleTextIconAdapter simpleTextIconAdapter;
@@ -80,6 +81,7 @@ public class CourseDetailFragment extends Fragment {
     private Observable<String> mObservableRefresh;
     private MaterialDialog delDialog;
     private MaterialDialog delBatchComfirmDialog;
+    private Unbinder unbinder;
 
     public static CourseDetailFragment newInstance(ImageThreeTextBean bean) {
 
@@ -106,7 +108,7 @@ public class CourseDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_detail, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -421,6 +423,6 @@ public class CourseDetailFragment extends Fragment {
     public void onDestroyView() {
         RxBus.getBus().unregister(RxBus.BUS_REFRESH, mObservableRefresh);
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

@@ -13,7 +13,7 @@ import com.qingchengfit.fitcoach.component.LoopView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -89,9 +89,9 @@ public class QcSpinnerAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.spinner_icon)
+        @BindView(R.id.spinner_icon)
         ImageView spinnerIcon;
-        @Bind(R.id.spinner_tv)
+        @BindView(R.id.spinner_tv)
         TextView spinnerTv;
 
         ViewHolder(View view) {

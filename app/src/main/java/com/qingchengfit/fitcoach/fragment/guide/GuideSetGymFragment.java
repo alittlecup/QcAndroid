@@ -31,9 +31,10 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -62,29 +63,30 @@ import rx.schedulers.Schedulers;
 @FragmentWithArgs
 public class GuideSetGymFragment extends BaseFragment {
     @Arg
-    String brandid;
+    public String brandid;
     @Arg
-    String brandImgUrl;
+    public String brandImgUrl;
     @Arg
-    String brandNameStr;
+    public String brandNameStr;
 
-    @Bind(R.id.brand_img)
+    @BindView(R.id.brand_img)
     ImageView brandImg;
-    @Bind(R.id.brand_name)
+    @BindView(R.id.brand_name)
     TextView brandName;
-    @Bind(R.id.gym_img)
+    @BindView(R.id.gym_img)
     ImageView gymImg;
-    @Bind(R.id.gym_name)
+    @BindView(R.id.gym_name)
     CommonInputView gymName;
-    @Bind(R.id.next_step)
+    @BindView(R.id.next_step)
     Button nextStep;
-    @Bind(R.id.gym_address)
+    @BindView(R.id.gym_address)
     CommonInputView gymAddress;
 
     private double lat;
     private double lng;
     private int city_code;
     private String imgUrl;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class GuideSetGymFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(GuideSetGymFragment.this, view);
         Glide.with(getContext()).load(brandImgUrl).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
         brandName.setText(brandNameStr);
         RxBus.getBus().post(new EventStep.Builder().step(0).build());
@@ -137,10 +139,10 @@ public class GuideSetGymFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
-    @OnClick({R.id.layout_brand, R.id.layout_gym_img, R.id.gym_address, R.id.next_step})
+    @OnClick({R.id.layout_brand, R.id.layout_gym_img, R.id.gym_address})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_brand:
@@ -154,37 +156,40 @@ public class GuideSetGymFragment extends BaseFragment {
                 Intent toAddress = new Intent(getActivity(), ChooseActivity.class);
                 startActivity(toAddress);
                 break;
-            case R.id.next_step:
-                if (gymAddress.isEmpty()){
-                    ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
-                    return;
-                }
-                if (gymName.isEmpty() || lat == 0 || lng == 0 ||city_code == 0){
-                    ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
-                    return;
-                }
-                if (getParentFragment() instanceof GuideFragment){
-                    ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder()
-                            .address(gymAddress.getContent())
-                            .gd_city_code(city_code+"")
-                            .gd_lat(lat)
-                            .gd_lng(lng)
-                            .phone(imgUrl)
-                            .build();
-                    RxBus.getBus().post(new CoachInitBean());
-                    getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
-                            .replace(R.id.guide_frag,new GuideSetCourseFragment())
-                            .addToBackStack(null)
-                            .commit();
-                }
-
-
-
-
-                break;
+//            case R.id.next_step:
+//
+//                break;
         }
     }
+    @OnClick(R.id.next_step)
+    public void onNextStep(){
+        if (gymAddress.isEmpty()){
+            ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
+            return;
+        }
+        if (gymName.isEmpty() || lat == 0 || lng == 0 ||city_code == 0){
+            ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
+            return;
+        }
+        if (getParentFragment() instanceof GuideFragment){
+            ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder()
+                    .address(gymAddress.getContent())
+                    .gd_city_code(city_code+"")
+                    .gd_lat(lat)
+                    .gd_lng(lng)
+                    .phone(imgUrl)
+                    .build();
+            RxBus.getBus().post(new CoachInitBean());
+            getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out)
+                    .replace(R.id.guide_frag,new GuideSetCourseFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
+
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

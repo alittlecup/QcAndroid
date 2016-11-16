@@ -30,8 +30,9 @@ import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.functions.Action1;
 
 /**
@@ -56,27 +57,28 @@ import rx.functions.Action1;
  */
 public class ChooseAddressFragment extends Fragment {
 
-    @Bind(R.id.mapview)
+    @BindView(R.id.mapview)
     MapView mMapview;
     AMap mAMap;
-    @Bind(R.id.city_name)
+    @BindView(R.id.city_name)
     TextView cityName;
-    @Bind(R.id.address)
+    @BindView(R.id.address)
     CommonInputView address;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private GeocodeSearch geocoderSearch;
     private LatLng mLatLng;
     private String mCityCode;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_address, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbarTitle.setText(R.string.address);
         toolbar.inflateMenu(R.menu.menu_comfirm);
@@ -110,6 +112,7 @@ public class ChooseAddressFragment extends Fragment {
                 @Override
                 public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
                     if (i == 1000) {
+
                     }
                 }
 
@@ -190,6 +193,6 @@ public class ChooseAddressFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mMapview.onDestroy();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

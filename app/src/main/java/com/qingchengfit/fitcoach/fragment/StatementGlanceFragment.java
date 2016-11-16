@@ -21,9 +21,10 @@ import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.schedulers.Schedulers;
 
@@ -32,25 +33,25 @@ import rx.schedulers.Schedulers;
  */
 public class StatementGlanceFragment extends Fragment {
     public static final String TAG = StatementGlanceFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.spinner_nav)
+    @BindView(R.id.spinner_nav)
     Spinner spinnerNav;
-    @Bind(R.id.statment_glance_month_title)
+    @BindView(R.id.statment_glance_month_title)
     TextView statmentGlanceMonthTitle;
-    @Bind(R.id.statment_glance_month_data)
+    @BindView(R.id.statment_glance_month_data)
     TextView statmentGlanceMonthData;
-    @Bind(R.id.statment_glance_week_title)
+    @BindView(R.id.statment_glance_week_title)
     TextView statmentGlanceWeekTitle;
-    @Bind(R.id.statment_glance_week_data)
+    @BindView(R.id.statment_glance_week_data)
     TextView statmentGlanceWeekData;
-    @Bind(R.id.statment_glance_today_title)
+    @BindView(R.id.statment_glance_today_title)
     TextView statmentGlanceTodayTitle;
-    @Bind(R.id.statment_glance_today_data)
+    @BindView(R.id.statment_glance_today_data)
     TextView statmentGlanceTodayData;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 //    private ArrayAdapter<SpinnerBean> adapter;
 //    private ArrayList<SpinnerBean> spinnerBeans;
@@ -58,6 +59,7 @@ public class StatementGlanceFragment extends Fragment {
     private String curModel;
     private int curSystemId = 0;
     private String mTitle;
+    private Unbinder unbinder;
 
     public StatementGlanceFragment() {
     }
@@ -68,7 +70,7 @@ public class StatementGlanceFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mTitle = getString(R.string.statement_course);
@@ -266,6 +268,6 @@ public class StatementGlanceFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

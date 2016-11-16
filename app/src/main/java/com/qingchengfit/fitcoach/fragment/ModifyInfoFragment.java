@@ -47,9 +47,10 @@ import com.qingchengfit.fitcoach.service.UpyunService;
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
@@ -74,40 +75,40 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     public static int SELECT_CAM = 12;
     private static String FILE_PATH = Configs.ExternalPath + "header.png";
 
-    @Bind(R.id.modifyinfo_header_pic)
+    @BindView(R.id.modifyinfo_header_pic)
     ImageView modifyinfoHeaderPic;
-    @Bind(R.id.comple_gender)
+    @BindView(R.id.comple_gender)
     RadioGroup compleGender;
     Gson gson = new Gson();
-    @Bind(R.id.mofifyinfo_name)
+    @BindView(R.id.mofifyinfo_name)
     CommonInputView mofifyinfoName;
-    @Bind(R.id.comple_gender_label)
+    @BindView(R.id.comple_gender_label)
     TextView compleGenderLabel;
-    @Bind(R.id.comple_gender_male)
+    @BindView(R.id.comple_gender_male)
     RadioButton compleGenderMale;
-    @Bind(R.id.comple_gender_female)
+    @BindView(R.id.comple_gender_female)
     RadioButton compleGenderFemale;
-    @Bind(R.id.mofifyinfo_city)
+    @BindView(R.id.mofifyinfo_city)
     CommonInputView mofifyinfoCity;
-    @Bind(R.id.mofifyinfo_wechat)
+    @BindView(R.id.mofifyinfo_wechat)
     CommonInputView mofifyinfoWechat;
-    @Bind(R.id.mofifyinfo_weibo)
+    @BindView(R.id.mofifyinfo_weibo)
     CommonInputView mofifyinfoWeibo;
-    @Bind(R.id.modifyinfo_label)
+    @BindView(R.id.modifyinfo_label)
     TextView modifyinfoLabel;
-    @Bind(R.id.modifyinfo_sign_et)
+    @BindView(R.id.modifyinfo_sign_et)
     EditText modifyinfoSignEt;
-    @Bind(R.id.modifyinfo_right_arrow)
+    @BindView(R.id.modifyinfo_right_arrow)
     ImageView modifyinfoRightArrow;
-    @Bind(R.id.modifyinfo_brief)
+    @BindView(R.id.modifyinfo_brief)
     RelativeLayout modifyinfoBrief;
-    @Bind(R.id.modifyinfo_name)
+    @BindView(R.id.modifyinfo_name)
     EditText modifyinfoName;
-    @Bind(R.id.modifyinfo_desc)
+    @BindView(R.id.modifyinfo_desc)
     EditText modifyinfoDesc;
-    @Bind(R.id.modifyinfo_inputpan)
+    @BindView(R.id.modifyinfo_inputpan)
     LinearLayout modifyinfoInputpan;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -121,6 +122,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     private Bundle saveState;
     private boolean isLoading = false;
     private Uri mAvatarResult;
+    private Unbinder unbinder;
 
     public ModifyInfoFragment() {
         // Required empty public constructor
@@ -183,7 +185,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_info, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "基本信息设置");
         String coachStr = PreferenceUtils.getPrefString(getContext(), "coach", "");
         coach = gson.fromJson(coachStr, Coach.class);
@@ -527,7 +529,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
 //        state.putString("avatar", user.getAvatar());
 //        getArguments().putBundle(this.getClass().getName(), state);
         RxBus.getBus().unregister(UpyunService.UpYunResult.class.getName(),uppicObserver);
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         super.onDestroyView();
 
     }

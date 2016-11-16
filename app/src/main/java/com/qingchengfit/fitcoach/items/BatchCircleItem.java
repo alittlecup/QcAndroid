@@ -12,7 +12,7 @@ import com.qingchengfit.fitcoach.bean.CmBean;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -56,11 +56,11 @@ public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchC
 
     public class BatchCircleVH extends FlexibleViewHolder {
 
-        @Bind(R.id.delete)
+        @BindView(R.id.delete)
         ImageView delete;
-        @Bind(R.id.work_time)
+        @BindView(R.id.work_time)
         TextView workTime;
-        @Bind(R.id.work_weekday)
+        @BindView(R.id.work_weekday)
         TextView workWeekday;
 
         public BatchCircleVH(View view, FlexibleAdapter adapter) {

@@ -39,9 +39,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,15 +53,15 @@ import rx.schedulers.Schedulers;
  */
 public class CourseManageFragment extends Fragment {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.del_layout)
+    @BindView(R.id.del_layout)
     FrameLayout delLayout;
-    @Bind(R.id.rootview)
+    @BindView(R.id.rootview)
     RelativeLayout rootview;
-    @Bind(R.id.no_data)
+    @BindView(R.id.no_data)
     LinearLayout noData;
 
     private String mBatchId; //排期id
@@ -74,6 +75,7 @@ public class CourseManageFragment extends Fragment {
     private TimeDialogWindow timeWindow;
     private TimePeriodChooser timeDialogWindow;
     private MaterialDialog delDialog;
+    private Unbinder unbinder;
 
     public static CourseManageFragment newInstance(String Model, String id, String Batchid, int coursetype) {
 
@@ -107,7 +109,7 @@ public class CourseManageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_manage, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("编辑课程安排");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -373,6 +375,6 @@ public class CourseManageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

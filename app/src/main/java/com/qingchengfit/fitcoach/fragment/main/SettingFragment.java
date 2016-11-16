@@ -22,9 +22,10 @@ import com.qingchengfit.fitcoach.fragment.CalSyncFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPwFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * setting view
@@ -32,18 +33,19 @@ import butterknife.OnClick;
 public class SettingFragment extends BaseSettingFragment {
 
 
-    @Bind(R.id.settting_modifyinfo)
+    @BindView(R.id.settting_modifyinfo)
     RelativeLayout setttingModifyinfo;
-    @Bind(R.id.setting_modifypw)
+    @BindView(R.id.setting_modifypw)
     RelativeLayout settingModifypw;
-    @Bind(R.id.setting_advice)
+    @BindView(R.id.setting_advice)
     RelativeLayout settingAdvice;
-    @Bind(R.id.setting_aboutus)
+    @BindView(R.id.setting_aboutus)
     RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
     DialogSheet logoutSheet;
-    @Bind(R.id.version_code)
+    @BindView(R.id.version_code)
     TextView versionCode;
+    private Unbinder unbinder;
 
     public SettingFragment() {
     }
@@ -80,7 +82,7 @@ public class SettingFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         return view;
     }
 
@@ -147,7 +149,7 @@ public class SettingFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick({R.id.setting_share, R.id.setting_update, R.id.setting_logout})

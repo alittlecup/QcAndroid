@@ -25,7 +25,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
@@ -35,21 +35,21 @@ import rx.schedulers.Schedulers;
 
 public class ChooseGymActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.sfl)
+    @BindView(R.id.sfl)
     SwipeRefreshLayout sfl;
-    @Bind(R.id.item_gym_name)
+    @BindView(R.id.item_gym_name)
     TextView itemGymName;
-    @Bind(R.id.item_is_personal)
+    @BindView(R.id.item_is_personal)
     TextView itemIsPersonal;
-    @Bind(R.id.qc_identify)
+    @BindView(R.id.qc_identify)
     ImageView qcIdentify;
-    @Bind(R.id.item_gym_phonenum)
+    @BindView(R.id.item_gym_phonenum)
     TextView itemGymPhonenum;
-    @Bind(R.id.item_right)
+    @BindView(R.id.item_right)
     ImageView itemRight;
 
     private Subscription mHttpsub;
@@ -66,7 +66,6 @@ public class ChooseGymActivity extends AppCompatActivity {
         mCurModel = getIntent().getStringExtra("model");
         mCurId = getIntent().getIntExtra("id", 0);
         mTitle = getIntent().getStringExtra("title");
-//        LogUtil.e("curmodel:"+mCurModel +"   xxid:"+mCurId);
         toolbar.setTitle("请选择您的场馆");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

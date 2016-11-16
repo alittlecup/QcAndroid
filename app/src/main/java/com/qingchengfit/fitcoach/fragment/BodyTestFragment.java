@@ -37,8 +37,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
@@ -56,51 +57,51 @@ public class BodyTestFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @Bind(R.id.img_model)
+    @BindView(R.id.img_model)
     ImageView imgModel;
-    @Bind(R.id.hipline)
+    @BindView(R.id.hipline)
     TextView hipline;
-    @Bind(R.id.chest)
+    @BindView(R.id.chest)
     TextView chest;
-    @Bind(R.id.waistline)
+    @BindView(R.id.waistline)
     TextView waistline;
-    @Bind(R.id.height)
+    @BindView(R.id.height)
     TextView height;
-    @Bind(R.id.height_layout)
+    @BindView(R.id.height_layout)
     LinearLayout heightLayout;
-    @Bind(R.id.weight)
+    @BindView(R.id.weight)
     TextView weight;
-    @Bind(R.id.weight_layout)
+    @BindView(R.id.weight_layout)
     LinearLayout weightLayout;
-    @Bind(R.id.bmi)
+    @BindView(R.id.bmi)
     TextView bmi;
-    @Bind(R.id.bmi_layout)
+    @BindView(R.id.bmi_layout)
     LinearLayout bmiLayout;
-    @Bind(R.id.body_fat_rate)
+    @BindView(R.id.body_fat_rate)
     TextView bodyFatRate;
-    @Bind(R.id.body_fat_rate_layout)
+    @BindView(R.id.body_fat_rate_layout)
     LinearLayout bodyFatRateLayout;
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
-    @Bind(R.id.other_data)
+    @BindView(R.id.other_data)
     InterupteLinearLayout otherData;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.test_pic_title)
+    @BindView(R.id.test_pic_title)
     TextView testPicTitle;
-    @Bind(R.id.left_upper)
+    @BindView(R.id.left_upper)
     TextView leftUpper;
-    @Bind(R.id.right_upper)
+    @BindView(R.id.right_upper)
     TextView rightUpper;
-    @Bind(R.id.left_thigh)
+    @BindView(R.id.left_thigh)
     TextView leftThigh;
-    @Bind(R.id.right_thigh)
+    @BindView(R.id.right_thigh)
     TextView rightThigh;
-    @Bind(R.id.right_calf)
+    @BindView(R.id.right_calf)
     TextView rightCalf;
-    @Bind(R.id.left_calf)
+    @BindView(R.id.left_calf)
     TextView leftCalf;
     private int mGender;
 
@@ -108,6 +109,7 @@ public class BodyTestFragment extends Fragment {
     private FullyGridLayoutManager gridLayoutManager;
     private String mMeasureId;
     private List<AddBodyTestBean.Photo> datas = new ArrayList<>();
+    private Unbinder unbinder;
     // TODO: Rename and change types of parameters
 //    private QcBodyTestTemplateRespone.Base mBase;
 
@@ -146,7 +148,7 @@ public class BodyTestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_body_test, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,6 +358,7 @@ public class BodyTestFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
+
     }
 }

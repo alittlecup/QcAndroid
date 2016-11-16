@@ -30,9 +30,10 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.io.File;
 import java.util.UUID;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.BitmapUtils;
 import cn.qingchengfit.widgets.utils.ChoosePicUtils;
 import cn.qingchengfit.widgets.utils.FileUtils;
@@ -48,17 +49,18 @@ import rx.schedulers.Schedulers;
 public class AdviceFragment extends BaseSettingFragment {
 
 
-    @Bind(R.id.setting_advice_mail)
+    @BindView(R.id.setting_advice_mail)
     EditText settingAdviceMail;
-    @Bind(R.id.setting_advice_content)
+    @BindView(R.id.setting_advice_content)
     EditText settingAdviceContent;
-    @Bind(R.id.advice_update)
+    @BindView(R.id.advice_update)
     RelativeLayout adviceUpdate;
-    @Bind(R.id.advice_update_img)
+    @BindView(R.id.advice_update_img)
     ImageView adviceUpdateImg;
     private FeedBackBean feedBackBean;
     private DialogSheet dialogSheet;
     private String filepath;
+    private Unbinder unbinder;
 
     public AdviceFragment() {
     }
@@ -68,7 +70,7 @@ public class AdviceFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_advice, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "意见反馈");
         feedBackBean = new FeedBackBean();
 
@@ -195,6 +197,6 @@ public class AdviceFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

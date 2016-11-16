@@ -23,6 +23,7 @@ import java.net.URL;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Subscriber;
@@ -50,6 +51,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     private String mTitle, mText, mImg, mUrl;
     private Bitmap mBitmap;
     private boolean isImg;
+    private Unbinder unbinder;
 //    public static void start(String title,String text,String img,String url){
 //        ShareDialogFragment f = newInstance(title,text,img,url);
 //        f
@@ -96,7 +98,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         api = WXAPIFactory.createWXAPI(getActivity(), getString(R.string.wechat_code), true);
         api.registerApp(getString(R.string.wechat_code));
         if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null))
@@ -115,7 +117,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick({R.id.wechat_friend, R.id.wechat_circle, R.id.copy_link})

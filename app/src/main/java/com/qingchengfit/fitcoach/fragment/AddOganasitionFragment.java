@@ -23,9 +23,10 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -34,25 +35,26 @@ import rx.schedulers.Schedulers;
  */
 public class AddOganasitionFragment extends Fragment {
     public static final String TAG = AddOganasitionFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.addgym_name)
+    @BindView(R.id.addgym_name)
     CommonInputView addgymName;
-    @Bind(R.id.addgym_contact)
+    @BindView(R.id.addgym_contact)
     CommonInputView addgymContact;
-    @Bind(R.id.addgym_city)
+    @BindView(R.id.addgym_city)
     CommonInputView addgymCity;
-    @Bind(R.id.workexpedit_descripe)
+    @BindView(R.id.workexpedit_descripe)
     EditText workexpeditDescripe;
-    @Bind(R.id.addgym_addbtn)
+    @BindView(R.id.addgym_addbtn)
     Button addgymAddbtn;
-    @Bind(R.id.addgym_brand)
+    @BindView(R.id.addgym_brand)
     CommonInputView addgymBrand;
 
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
     private SearchInterface searchListener;
+    private Unbinder unbinder;
 
 
     public AddOganasitionFragment() {
@@ -69,7 +71,7 @@ public class AddOganasitionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_gym, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setTitle("添加主办机构");
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -90,7 +92,7 @@ public class AddOganasitionFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick(R.id.decript_layout)

@@ -29,9 +29,10 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,31 +44,32 @@ import rx.schedulers.Schedulers;
 public class AddStudentManulkFragment extends Fragment {
 
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.choose_gym)
+    @BindView(R.id.choose_gym)
     CommonInputView chooseGym;
-    @Bind(R.id.choose_name)
+    @BindView(R.id.choose_name)
     CommonInputView chooseName;
-    @Bind(R.id.comple_gender_label)
+    @BindView(R.id.comple_gender_label)
     TextView compleGenderLabel;
-    @Bind(R.id.comple_gender_male)
+    @BindView(R.id.comple_gender_male)
     RadioButton compleGenderMale;
-    @Bind(R.id.comple_gender_female)
+    @BindView(R.id.comple_gender_female)
     RadioButton compleGenderFemale;
-    @Bind(R.id.comple_gender)
+    @BindView(R.id.comple_gender)
     RadioGroup compleGender;
-    @Bind(R.id.choose_phone)
+    @BindView(R.id.choose_phone)
     CommonInputView choosePhone;
-    @Bind(R.id.btn)
+    @BindView(R.id.btn)
     Button btn;
-    @Bind(R.id.hint)
+    @BindView(R.id.hint)
     TextView hint;
 
     private List<String> gymStrings = new ArrayList<>();
     private int chooseGymId = 0;
     private String chooseGymModel;
     List<CoachService> systems = new ArrayList<>();
+    private Unbinder unbinder;
 
     public AddStudentManulkFragment() {
     }
@@ -92,7 +94,7 @@ public class AddStudentManulkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_student_manulk, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("添加学员");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -204,6 +206,6 @@ public class AddStudentManulkFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

@@ -53,8 +53,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
@@ -64,12 +65,12 @@ import cn.qingchengfit.widgets.utils.PreferenceUtils;
 public class OriginWebFragment extends WebFragment {
     public static final String TAG = OriginWebFragment.class.getName();
     private static final int REQUEST_UPLOAD_FILE_CODE = 12343;
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView webview;
     CookieManager cookieManager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toobar_action)
+    @BindView(R.id.toobar_action)
     TextView toobarAction;
     private String base_url;
     private Gson gson;
@@ -87,6 +88,7 @@ public class OriginWebFragment extends WebFragment {
     private List<String> hostArray = new ArrayList<>();
     private String sessionid;
     private List<String> urls = new ArrayList<>();
+    private Unbinder unbinder;
 
     public OriginWebFragment() {
     }
@@ -143,7 +145,7 @@ public class OriginWebFragment extends WebFragment {
         mWebviewRootLinearLayout = (LinearLayout) view.findViewById(R.id.webview_root);
 
 
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -468,7 +470,7 @@ public class OriginWebFragment extends WebFragment {
 //            webview.removeAllViews();
             webview.destroy();
         }
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         super.onDestroyView();
 
     }

@@ -36,7 +36,7 @@
 //
 //import java.util.List;
 //
-//import butterknife.Bind;
+//import butterknife.BindView;
 //import butterknife.ButterKnife;
 //import rx.Observable;
 //
@@ -47,15 +47,15 @@
 //public class XWalkFragment extends WebFragment {
 //
 //
-//    @Bind(R.id.webview)
+//    @BindView(R.id.webview)
 //    XWalkView mWebview;
-//    //    @Bind(R.id.web_floatbtn)
+//    //    @BindView(R.id.web_floatbtn)
 ////    FloatingActionsMenu webFloatbtn;
 ////    FloatingActionButton btn1;
 ////    FloatingActionButton btn2;
 //    //    private XWalkCookieManager mCookieManager;
 //    Gson gson;
-//    @Bind(R.id.toolbar)
+//    @BindView(R.id.toolbar)
 //    Toolbar toolbar;
 //    private XWalkCookieManager xWalkCookieManager;
 //    private String base_url;
@@ -88,7 +88,7 @@
 //                             Bundle savedInstanceState) {
 //        // Inflate the layout for this fragment
 //        View view = inflater.inflate(R.layout.fragment_xwalk, container, false);
-//        ButterKnife.bind(this, view);
+//        unbinder=ButterKnife.bind(this, view);
 //        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
 ////      toolbarXWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 //
@@ -297,7 +297,7 @@
 //    @Override
 //    public void onDestroyView() {
 //        super.onDestroyView();
-//        ButterKnife.unbind(this);
+//        unbinder.unbind();
 //        RxBus.getBus().unregister(NewPushMsg.class, mObservable);
 //    }
 //

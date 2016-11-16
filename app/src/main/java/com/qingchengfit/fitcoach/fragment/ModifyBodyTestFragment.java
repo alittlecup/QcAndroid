@@ -45,9 +45,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -60,44 +61,44 @@ import rx.schedulers.Schedulers;
 public class ModifyBodyTestFragment extends Fragment {
 
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.delete)
+    @BindView(R.id.delete)
     TextView delete;
-    @Bind(R.id.other_data)
+    @BindView(R.id.other_data)
     LinearLayout otherData;
-    @Bind(R.id.photos_title)
+    @BindView(R.id.photos_title)
     TextView photosTitle;
-    @Bind(R.id.test_date)
+    @BindView(R.id.test_date)
     CommonInputView testDate;
-    @Bind(R.id.height)
+    @BindView(R.id.height)
     CommonInputView height;
-    @Bind(R.id.weight)
+    @BindView(R.id.weight)
     CommonInputView weight;
-    @Bind(R.id.bmi)
+    @BindView(R.id.bmi)
     CommonInputView bmi;
-    @Bind(R.id.body_fat_rate)
+    @BindView(R.id.body_fat_rate)
     CommonInputView bodyFatRate;
-    @Bind(R.id.left_upper)
+    @BindView(R.id.left_upper)
     CommonInputView leftUpper;
-    @Bind(R.id.right_upper)
+    @BindView(R.id.right_upper)
     CommonInputView rightUpper;
-    @Bind(R.id.chest)
+    @BindView(R.id.chest)
     CommonInputView chest;
-    @Bind(R.id.waistline)
+    @BindView(R.id.waistline)
     CommonInputView waistline;
-    @Bind(R.id.hipline)
+    @BindView(R.id.hipline)
     CommonInputView hipline;
-    @Bind(R.id.left_thigh)
+    @BindView(R.id.left_thigh)
     CommonInputView leftThigh;
-    @Bind(R.id.right_thigh)
+    @BindView(R.id.right_thigh)
     CommonInputView rightThigh;
-    @Bind(R.id.left_calf)
+    @BindView(R.id.left_calf)
     CommonInputView leftCalf;
-    @Bind(R.id.right_calf)
+    @BindView(R.id.right_calf)
     CommonInputView rightCalf;
     private TimeDialogWindow pwTime;
     private View view;
@@ -111,6 +112,7 @@ public class ModifyBodyTestFragment extends Fragment {
     private String mStudentId;
     private MaterialDialog delBatchComfirmDialog;
     private MaterialDialog loadingDialog;
+    private Unbinder unbinder;
 
     /**
      * @return
@@ -153,7 +155,7 @@ public class ModifyBodyTestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_modify_body_test, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,7 +450,7 @@ public class ModifyBodyTestFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public Measure getMeasure() {

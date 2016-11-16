@@ -20,8 +20,9 @@ import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 
 import java.text.DecimalFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,23 +32,24 @@ public class StudentJudgeFragment extends BaseFragment {
     public static final String TAGS = "tags";
     public static final String EVALUATE = "EvaluateEntitys";
     QcMyhomeResponse.DataEntity.CoachEntity.EvaluateEntity mEntityls;
-    @Bind(R.id.tag_group)
+    @BindView(R.id.tag_group)
     TagGroup tagGroup;
-    @Bind(R.id.student_judge_coach_score)
+    @BindView(R.id.student_judge_coach_score)
     TextView studentJudgeCoachScore;
-    @Bind(R.id.student_judge_coach_star)
+    @BindView(R.id.student_judge_coach_star)
     RatingBar studentJudgeCoachStar;
-    @Bind(R.id.student_judge_course_score)
+    @BindView(R.id.student_judge_course_score)
     TextView studentJudgeCourseScore;
-    @Bind(R.id.student_judge_course_star)
+    @BindView(R.id.student_judge_course_star)
     RatingBar studentJudgeCourseStar;
-    @Bind(R.id.student_judge_text)
+    @BindView(R.id.student_judge_text)
     TextView studentJudgeText;
-    @Bind(R.id.student_judge_tag_count)
+    @BindView(R.id.student_judge_tag_count)
     TextView studentJudgeTagCount;
-    @Bind(R.id.student_judge_goodat_tv)
+    @BindView(R.id.student_judge_goodat_tv)
     TextView studentJudgeGoodatTv;
     private String[] mTags;
+    private Unbinder unbinder;
 
     public StudentJudgeFragment() {
         // Required empty public constructor
@@ -79,7 +81,7 @@ public class StudentJudgeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_judge, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         isPrepared = true;
         lazyLoad();
         return view;
@@ -167,6 +169,6 @@ public class StudentJudgeFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

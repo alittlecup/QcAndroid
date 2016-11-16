@@ -38,9 +38,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -54,13 +55,13 @@ import rx.schedulers.Schedulers;
  */
 public class AddSelfGymFragment extends Fragment {
     public static final String TAG = AddSelfGymFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.addselfgym_name)
+    @BindView(R.id.addselfgym_name)
     CommonInputView addselfgymName;
-    @Bind(R.id.addselfgym_time)
+    @BindView(R.id.addselfgym_time)
     CommonInputView addselfgymTime;
-    @Bind(R.id.addselfgym_comfirm)
+    @BindView(R.id.addselfgym_comfirm)
     Button addselfgymComfirm;
     int id = -1;
     private QcPrivateGymReponse reponse;
@@ -68,6 +69,7 @@ public class AddSelfGymFragment extends Fragment {
     private boolean mIsNew;
     private MaterialDialog delDialog;
     private MaterialDialog loadingDialog;
+    private Unbinder unbinder;
 
     public AddSelfGymFragment() {
     }
@@ -201,7 +203,7 @@ public class AddSelfGymFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_self_gym, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         if (mIsNew) {
@@ -483,6 +485,6 @@ public class AddSelfGymFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

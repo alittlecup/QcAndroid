@@ -28,8 +28,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -39,16 +40,17 @@ import rx.android.schedulers.AndroidSchedulers;
 public class RecordComfirmFragment extends VpFragment {
 
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.record_confirm_none)
+    @BindView(R.id.record_confirm_none)
     RelativeLayout recordConfirmNone;
-    @Bind(R.id.record_comfirm_no_img)
+    @BindView(R.id.record_comfirm_no_img)
     ImageView recordComfirmNoImg;
-    @Bind(R.id.record_comfirm_no_txt)
+    @BindView(R.id.record_comfirm_no_txt)
     TextView recordComfirmNoTxt;
     private RecordComfirmAdapter adapter;
     private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
+    private Unbinder unbinder;
 
     public RecordComfirmFragment() {
     }
@@ -58,7 +60,7 @@ public class RecordComfirmFragment extends VpFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 //        isPrepared = true;
         lazyLoad();
         return view;
@@ -116,7 +118,7 @@ public class RecordComfirmFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -126,17 +128,17 @@ public class RecordComfirmFragment extends VpFragment {
 
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.recordcomfirm_title)
+        @BindView(R.id.recordcomfirm_title)
         TextView recordcomfirmTitle;
-        @Bind(R.id.recordcomfirm_subtitle)
+        @BindView(R.id.recordcomfirm_subtitle)
         TextView recordcomfirmSubtitle;
-        @Bind(R.id.recordcomfirm_time)
+        @BindView(R.id.recordcomfirm_time)
         TextView recordcomfirmTime;
-        @Bind(R.id.recordcomfirm_date)
+        @BindView(R.id.recordcomfirm_date)
         TextView recordcomfirmDate;
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView recordImg;
-        @Bind(R.id.recordcomfirm_comfirm)
+        @BindView(R.id.recordcomfirm_comfirm)
         ImageView img;
 
         public RecordComfirmVH(View itemView) {

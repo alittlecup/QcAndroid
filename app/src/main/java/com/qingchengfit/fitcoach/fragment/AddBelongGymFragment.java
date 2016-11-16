@@ -11,19 +11,21 @@ import android.widget.Button;
 
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddBelongGymFragment extends Fragment {
     public static final String TAG = AddBelongGymFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.add_gym_private_btn)
+    @BindView(R.id.add_gym_private_btn)
     Button addGymPrivateBtn;
+    private Unbinder unbinder;
 
 
     public AddBelongGymFragment() {
@@ -34,7 +36,7 @@ public class AddBelongGymFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_belong_gym, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("添加所属健身房");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -49,6 +51,6 @@ public class AddBelongGymFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

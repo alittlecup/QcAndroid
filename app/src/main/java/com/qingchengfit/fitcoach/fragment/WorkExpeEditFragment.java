@@ -36,9 +36,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -62,40 +63,40 @@ import static android.text.TextUtils.isEmpty;
 public class WorkExpeEditFragment extends BaseSettingFragment {
 
 
-    @Bind(R.id.workexpedit_start_time)
+    @BindView(R.id.workexpedit_start_time)
     CommonInputView workexpeditStartTime;
-    @Bind(R.id.workexpedit_start_end)
+    @BindView(R.id.workexpedit_start_end)
     CommonInputView workexpeditStartEnd;
-    @Bind(R.id.workexpedit_city)
+    @BindView(R.id.workexpedit_city)
     CommonInputView workexpeditCity;
-    @Bind(R.id.workexpedit_gym_name)
+    @BindView(R.id.workexpedit_gym_name)
     TextView workexpeditGymName;
-    @Bind(R.id.workexpedit_position)
+    @BindView(R.id.workexpedit_position)
     CommonInputView workexpeditPosition;
-    @Bind(R.id.workexpedit_descripe)
+    @BindView(R.id.workexpedit_descripe)
     EditText workexpeditDescripe;
-    @Bind(R.id.workexpedit_group_class)
+    @BindView(R.id.workexpedit_group_class)
     CommonInputView workexpeditGroupClass;
-    @Bind(R.id.workexpedit_group_num)
+    @BindView(R.id.workexpedit_group_num)
     CommonInputView workexpeditGroupNum;
-    @Bind(R.id.workexpedit_private_class)
+    @BindView(R.id.workexpedit_private_class)
     CommonInputView workexpeditPrivateClass;
-    @Bind(R.id.workexpedit_private_num)
+    @BindView(R.id.workexpedit_private_num)
     CommonInputView workexpeditPrivateNum;
-    @Bind(R.id.workexpedit_sale)
+    @BindView(R.id.workexpedit_sale)
     CommonInputView workexpeditSale;
-    @Bind(R.id.workexpedit_comfirm_btn)
+    @BindView(R.id.workexpedit_comfirm_btn)
     Button workexpeditComfirmBtn;
-    @Bind(R.id.rootview)
+    @BindView(R.id.rootview)
     ScrollView rootview;
     TimeDialogWindow pwTime;
-    @Bind(R.id.workexpedit_expe_layout)
+    @BindView(R.id.workexpedit_expe_layout)
     LinearLayout workexpeditExpeLayout;
-    @Bind(R.id.host_img)
+    @BindView(R.id.host_img)
     ImageView hostImg;
-    @Bind(R.id.host_qc_identify)
+    @BindView(R.id.host_qc_identify)
     ImageView hostQcIdentify;
-    @Bind(R.id.host_address)
+    @BindView(R.id.host_address)
     TextView hostAddress;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
@@ -103,6 +104,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     private MaterialDialog delDialog;
     private DialogSheet mDialogSheet;
     private boolean mIsAdd;
+    private Unbinder unbinder;
 
 
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
@@ -184,7 +186,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workexepedit, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);
 
@@ -395,7 +397,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

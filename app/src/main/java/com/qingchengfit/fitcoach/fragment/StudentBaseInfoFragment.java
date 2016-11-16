@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * power by
@@ -34,6 +35,7 @@ public class StudentBaseInfoFragment extends VpFragment {
     private RecyclerView mRecyclerView;
     private BaseInfoAdapter mAdapter;
     private List<BaseInfoBean> datas = new ArrayList<>();
+    private Unbinder unbinder;
 
     @Nullable
     @Override
@@ -46,7 +48,7 @@ public class StudentBaseInfoFragment extends VpFragment {
         mAdapter = new BaseInfoAdapter(datas);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         return view;
     }
 
@@ -64,6 +66,6 @@ public class StudentBaseInfoFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

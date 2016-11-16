@@ -9,7 +9,7 @@ import com.qingchengfit.fitcoach.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -44,7 +44,7 @@ public class AddBatchCircleItem extends AbstractFlexibleItem<AddBatchCircleItem.
     }
 
     public class AddBatchCircleVH extends FlexibleViewHolder {
-        @Bind(R.id.text)
+        @BindView(R.id.text)
         TextView text;
 
         public AddBatchCircleVH(View view, FlexibleAdapter adapter) {

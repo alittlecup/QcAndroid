@@ -11,7 +11,7 @@ import com.qingchengfit.fitcoach.bean.FunctionBean;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -49,9 +49,9 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
     }
 
     public class DailyWorkVH extends FlexibleViewHolder {
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView img;
-        @Bind(R.id.text)
+        @BindView(R.id.text)
         TextView text;
         public DailyWorkVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

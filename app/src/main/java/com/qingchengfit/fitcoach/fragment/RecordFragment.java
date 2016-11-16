@@ -30,8 +30,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 
@@ -40,25 +41,26 @@ import cn.qingchengfit.widgets.utils.LogUtil;
  */
 public class RecordFragment extends BaseSettingFragment {
     public static final String TAG = RecordFragment.class.getName();
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     Gson gson = new Gson();
-    @Bind(R.id.record_comfirm_no_img)
+    @BindView(R.id.record_comfirm_no_img)
     ImageView recordComfirmNoImg;
-    @Bind(R.id.record_comfirm_no_txt)
+    @BindView(R.id.record_comfirm_no_txt)
     TextView recordComfirmNoTxt;
-    @Bind(R.id.record_confirm_none)
+    @BindView(R.id.record_confirm_none)
     RelativeLayout recordConfirmNone;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     private RecordComfirmAdapter adapter;
+    private Unbinder unbinder;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add_certification, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
 //            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
@@ -172,7 +174,7 @@ public class RecordFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 
@@ -181,15 +183,15 @@ public class RecordFragment extends BaseSettingFragment {
     }
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.recordcomfirm_title)
+        @BindView(R.id.recordcomfirm_title)
         TextView recordcomfirmTitle;
-        @Bind(R.id.recordcomfirm_subtitle)
+        @BindView(R.id.recordcomfirm_subtitle)
         TextView recordcomfirmSubtitle;
-        @Bind(R.id.recordcomfirm_time)
+        @BindView(R.id.recordcomfirm_time)
         TextView recordcomfirmTime;
-        @Bind(R.id.recordcomfirm_comfirm)
+        @BindView(R.id.recordcomfirm_comfirm)
         ImageView recordcomfirmImg;
-        @Bind(R.id.item__hidden)
+        @BindView(R.id.item__hidden)
         View hideView;
 
         public RecordComfirmVH(View itemView) {

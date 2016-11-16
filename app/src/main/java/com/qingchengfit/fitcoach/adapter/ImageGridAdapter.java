@@ -15,7 +15,7 @@ import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -105,11 +105,11 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
 
     public class ImageGridVh extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView img;
-        @Bind(R.id.delete)
+        @BindView(R.id.delete)
         ImageView delete;
-        @Bind(R.id.progress)
+        @BindView(R.id.progress)
         ProgressBar progress;
 
         public ImageGridVh(View itemView) {

@@ -10,7 +10,7 @@
     android:orientation="vertical"
     tools:context="com.qingchengfit.fitcoach.fragment.AddGymFragment">
 
-    <include layout="@layout/common_toolbar"></include>
+    <include layout="@layout/common_toolbar"/>
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/addgym_brand"
         android:layout_width="match_parent"

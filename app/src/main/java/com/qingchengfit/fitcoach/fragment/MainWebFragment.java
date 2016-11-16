@@ -33,8 +33,9 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
@@ -53,15 +54,16 @@ import rx.Observable;
  * Created by Paper on 15/10/12 2015.
  */
 public class MainWebFragment extends MainBaseFragment {
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView webview;
     CookieManager cookieManager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private String base_url;
     private Gson gson;
     private Observable<NewPushMsg> mObservable;
     private List<Integer> mlastPosition = new ArrayList<>();
+    private Unbinder unbinder;
 
     public MainWebFragment() {
     }
@@ -89,7 +91,7 @@ public class MainWebFragment extends MainBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.setTitle("会议培训");
@@ -247,7 +249,7 @@ public class MainWebFragment extends MainBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         RxBus.getBus().unregister(NewPushMsg.class.getSimpleName(), mObservable);
     }
 

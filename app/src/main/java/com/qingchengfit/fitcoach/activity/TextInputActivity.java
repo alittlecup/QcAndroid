@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,9 +23,9 @@ public class TextInputActivity extends AppCompatActivity {
      */
     public static final String ORIGIN = "TextInputActivity.origin";
     public static final String FIX_TEXT = "TextInputActivity.fixtext";
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.textinput_et)
+    @BindView(R.id.textinput_et)
     EditText textinputEt;
 
     @Override

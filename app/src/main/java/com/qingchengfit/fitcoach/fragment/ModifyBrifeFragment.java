@@ -39,9 +39,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.BitmapUtils;
 import cn.qingchengfit.widgets.utils.ChoosePicUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
@@ -59,12 +60,13 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     public static int INSERT_PIC_GALLEY = 102;
     public static int CHANGE_PIC_CAMERA = 103;
     public static int CHANGE_PIC_GALLEY = 104;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     private List<BriefInfo> mListData = new ArrayList<>();
     private ModifyBrifeAdapter adapter;
     private String mBrifeData;
     private TextInputDialog mTextInputDialog;
+    private Unbinder unbinder;
 
 
     public ModifyBrifeFragment() {
@@ -99,7 +101,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_brief, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.menu_save, 0, "自我介绍");
         fragmentCallBack.onToolbarClickListener(item -> {
             onSave();
@@ -280,19 +282,19 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public static class ModifyBrifeVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_modifybrief_text)
+        @BindView(R.id.item_modifybrief_text)
         TextView itemModifybriefText;
-        @Bind(R.id.item_modifybrief_img)
+        @BindView(R.id.item_modifybrief_img)
         ImageView itemModifybriefImg;
-        @Bind(R.id.item_modifybrief_del)
+        @BindView(R.id.item_modifybrief_del)
         Button itemModifybriefDel;
-        @Bind(R.id.item_modifybrief_up)
+        @BindView(R.id.item_modifybrief_up)
         Button itemModifybriefUp;
-        @Bind(R.id.item_modifybrief_down)
+        @BindView(R.id.item_modifybrief_down)
         Button itemModifybriefDown;
 
         public ModifyBrifeVH(View itemView) {

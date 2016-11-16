@@ -15,7 +15,7 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -132,17 +132,17 @@ public class ImageThreeTextAdapter extends RecyclerView.Adapter<ImageThreeTextAd
 
     public static class ImageTwoTextVH extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView img;
-        @Bind(R.id.text1)
+        @BindView(R.id.text1)
         TextView text1;
-        @Bind(R.id.texticon)
+        @BindView(R.id.texticon)
         ImageView texticon;
-        @Bind(R.id.text2)
+        @BindView(R.id.text2)
         TextView text2;
-        @Bind(R.id.text3)
+        @BindView(R.id.text3)
         TextView text3;
-        @Bind(R.id.righticon)
+        @BindView(R.id.righticon)
         ImageView righticon;
 
         public ImageTwoTextVH(View itemView) {

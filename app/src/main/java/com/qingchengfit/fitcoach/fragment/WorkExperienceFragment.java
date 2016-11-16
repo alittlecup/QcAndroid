@@ -27,8 +27,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -38,16 +39,17 @@ import rx.android.schedulers.AndroidSchedulers;
 public class WorkExperienceFragment extends VpFragment {
 
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.record_comfirm_no_img)
+    @BindView(R.id.record_comfirm_no_img)
     ImageView recordComfirmNoImg;
-    @Bind(R.id.record_comfirm_no_txt)
+    @BindView(R.id.record_comfirm_no_txt)
     TextView recordComfirmNoTxt;
-    @Bind(R.id.record_confirm_none)
+    @BindView(R.id.record_confirm_none)
     RelativeLayout recordConfirmNone;
     private QcExperienceResponse qcExperienceResponse;
     private WorkExperiencAdapter adapter;
+    private Unbinder unbinder;
 
     public WorkExperienceFragment() {
     }
@@ -58,7 +60,7 @@ public class WorkExperienceFragment extends VpFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 //        isPrepared = true;
         lazyLoad();
         return view;
@@ -106,7 +108,7 @@ public class WorkExperienceFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -116,37 +118,37 @@ public class WorkExperienceFragment extends VpFragment {
 
 
     public static class WorkExperienceVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.gym_img)
+        @BindView(R.id.gym_img)
         ImageView gymImg;
-        @Bind(R.id.gym_identify)
+        @BindView(R.id.gym_identify)
         ImageView gymIdentify;
-        @Bind(R.id.gym_name)
+        @BindView(R.id.gym_name)
         TextView gymName;
-        @Bind(R.id.gym_address)
+        @BindView(R.id.gym_address)
         TextView gymAddress;
-        @Bind(R.id.gym_time)
+        @BindView(R.id.gym_time)
         TextView gymTime;
-        @Bind(R.id.workexp_detail_position)
+        @BindView(R.id.workexp_detail_position)
         TextView workexpDetailPosition;
-        @Bind(R.id.workexp_detail_desc)
+        @BindView(R.id.workexp_detail_desc)
         TextView workexpDetailDesc;
-        @Bind(R.id.workexp_detail_group_count)
+        @BindView(R.id.workexp_detail_group_count)
         TextView workexpDetailGroupCount;
-        @Bind(R.id.workexp_detail_group_server)
+        @BindView(R.id.workexp_detail_group_server)
         TextView workexpDetailGroupServer;
-        @Bind(R.id.workexp_detail_group_layout)
+        @BindView(R.id.workexp_detail_group_layout)
         LinearLayout workexpDetailGroupLayout;
-        @Bind(R.id.workexp_detail_private_count)
+        @BindView(R.id.workexp_detail_private_count)
         TextView workexpDetailPrivateCount;
-        @Bind(R.id.workexp_detail_private_server)
+        @BindView(R.id.workexp_detail_private_server)
         TextView workexpDetailPrivateServer;
-        @Bind(R.id.workexp_detail_private_layout)
+        @BindView(R.id.workexp_detail_private_layout)
         LinearLayout workexpDetailPrivateLayout;
-        @Bind(R.id.workexp_detail_sale)
+        @BindView(R.id.workexp_detail_sale)
         TextView workexpDetailSale;
-        @Bind(R.id.workexp_detail_sale_layout)
+        @BindView(R.id.workexp_detail_sale_layout)
         LinearLayout workexpDetailSaleLayout;
-//        @Bind(R.id.item_studio_expaned)
+//        @BindView(R.id.item_studio_expaned)
 //        ToggleButton itemStudioExpaned;
 
         public WorkExperienceVH(View itemView) {

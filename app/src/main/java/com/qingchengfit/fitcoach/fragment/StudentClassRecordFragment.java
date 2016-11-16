@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * power by
@@ -38,12 +39,13 @@ public class StudentClassRecordFragment extends VpFragment {
     private RecyclerView mRecyclerView;
     private StudentClassRecordAdapter mAdapter;
     private List<StatementBean> datas = new ArrayList<>();
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
 //        add1.setVisibility(View.VISIBLE);
 //        add2.setVisibility(View.VISIBLE);
@@ -104,6 +106,6 @@ public class StudentClassRecordFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

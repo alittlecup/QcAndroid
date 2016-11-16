@@ -43,8 +43,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
@@ -58,17 +59,17 @@ import rx.schedulers.Schedulers;
  */
 public class ScheduleListFragment extends Fragment {
     public static final String TAG = ScheduleListFragment.class.getName();
-    @Bind(R.id.schedule_rv)
+    @BindView(R.id.schedule_rv)
     RecyclerView scheduleRv;
-    @Bind(R.id.schedule_no_img)
+    @BindView(R.id.schedule_no_img)
     ImageView scheduleNoImg;
-    @Bind(R.id.schedule_no_tv)
+    @BindView(R.id.schedule_no_tv)
     TextView scheduleNoTv;
-    @Bind(R.id.schedule_no_schedule)
+    @BindView(R.id.schedule_no_schedule)
     SwipeRefreshLayout scheduleNoSchedule;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.schedule_timeline)
+    @BindView(R.id.schedule_timeline)
     View scheduleTimeline;
 
     private Date mCurDate;                              //当前日期
@@ -105,6 +106,7 @@ public class ScheduleListFragment extends Fragment {
             handleResponse(qcSchedulesResponse);
         }
     };
+    private Unbinder unbinder;
 
     public ScheduleListFragment() {
     }
@@ -135,7 +137,7 @@ public class ScheduleListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         scheduesAdapter = new ScheduesAdapter(scheduleBeans);
 
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -306,7 +308,7 @@ public class ScheduleListFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
@@ -323,21 +325,21 @@ public class ScheduleListFragment extends Fragment {
     }
 
     public static class SchedulesVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_schedule_time)
+        @BindView(R.id.item_schedule_time)
         TextView itemScheduleTime;
-        @Bind(R.id.item_schedule_classname)
+        @BindView(R.id.item_schedule_classname)
         TextView itemScheduleClassname;
-        @Bind(R.id.item_schedule_gymname)
+        @BindView(R.id.item_schedule_gymname)
         TextView itemScheduleGymname;
-        @Bind(R.id.item_schedule_num)
+        @BindView(R.id.item_schedule_num)
         TextView itemScheduleNum;
-        @Bind(R.id.item_schedule_classpic)
+        @BindView(R.id.item_schedule_classpic)
         ImageView itemScheduleClasspic;
-        @Bind(R.id.item_schedule_status)
+        @BindView(R.id.item_schedule_status)
         ImageView itemScheduleStatus;
-        @Bind(R.id.item_schedule_done)
+        @BindView(R.id.item_schedule_done)
         TextView getItemScheduleDone;
-        @Bind(R.id.item_schedule_conflict)
+        @BindView(R.id.item_schedule_conflict)
         TextView itemScheduleConflict;
 
         public SchedulesVH(View itemView) {

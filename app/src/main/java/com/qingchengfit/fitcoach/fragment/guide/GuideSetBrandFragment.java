@@ -23,9 +23,10 @@ import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -53,18 +54,19 @@ import rx.schedulers.Schedulers;
  */
 public class GuideSetBrandFragment extends BaseFragment {
 
-    @Bind(R.id.brand_img)
+    @BindView(R.id.brand_img)
     ImageView brandImg;
-    @Bind(R.id.brand_name)
+    @BindView(R.id.brand_name)
     CommonInputView brandName;
-    @Bind(R.id.next_step)
+    @BindView(R.id.next_step)
     Button nextStep;
     String imgUrl = "";
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_set_brand, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         RxBusAdd(EventChooseImage.class)
                 .subscribe(new Action1<EventChooseImage>() {
                     @Override
@@ -108,7 +110,7 @@ public class GuideSetBrandFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

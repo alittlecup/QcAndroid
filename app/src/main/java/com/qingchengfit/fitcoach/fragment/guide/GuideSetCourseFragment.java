@@ -23,9 +23,10 @@ import com.qingchengfit.fitcoach.http.UpYunClient;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.CheckableButton;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -55,31 +56,32 @@ import rx.schedulers.Schedulers;
  */
 public class GuideSetCourseFragment extends BaseFragment {
 
-    @Bind(R.id.btn_group)
+    @BindView(R.id.btn_group)
     CheckableButton btnGroup;
-    @Bind(R.id.btn_private)
+    @BindView(R.id.btn_private)
     CheckableButton btnPrivate;
-    @Bind(R.id.course_img)
+    @BindView(R.id.course_img)
     ImageView courseImg;
-    @Bind(R.id.name)
+    @BindView(R.id.name)
     CommonInputView name;
-    @Bind(R.id.time_long)
+    @BindView(R.id.time_long)
     CommonInputView timeLong;
-    @Bind(R.id.order_count)
+    @BindView(R.id.order_count)
     CommonInputView orderCount;
-    @Bind(R.id.next_step)
+    @BindView(R.id.next_step)
     Button nextStep;
 
 
 
     private String imgUrl;
     private boolean isPrivate = false;
+    private Unbinder unbinder;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_set_course, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         RxBus.getBus().post(new EventStep.Builder().step(1).build());
         RxBusAdd(EventChooseImage.class)
                 .subscribe(new Action1<EventChooseImage>() {
@@ -108,7 +110,7 @@ public class GuideSetCourseFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick({R.id.layout_gym_img, R.id.next_step})

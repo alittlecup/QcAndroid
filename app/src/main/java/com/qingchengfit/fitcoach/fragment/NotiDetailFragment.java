@@ -16,8 +16,9 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.tencent.smtt.sdk.WebView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.schedulers.Schedulers;
 
 /**
@@ -25,19 +26,20 @@ import rx.schedulers.Schedulers;
  */
 public class NotiDetailFragment extends Fragment {
     public static final String TAG = NotiDetailFragment.class.getName();
-    @Bind(R.id.notidetail_time)
+    @BindView(R.id.notidetail_time)
     TextView notidetailTime;
-    @Bind(R.id.notidetail_sender)
+    @BindView(R.id.notidetail_sender)
     TextView notidetailSender;
-    @Bind(R.id.notidetail_img)
+    @BindView(R.id.notidetail_img)
     ImageView notidetailImg;
-    @Bind(R.id.notidetail_content)
+    @BindView(R.id.notidetail_content)
     TextView notidetailContent;
-    @Bind(R.id.notidetail_title)
+    @BindView(R.id.notidetail_title)
     TextView notidetailTitle;
-    @Bind(R.id.notidetail_content_webview)
+    @BindView(R.id.notidetail_content_webview)
     WebView notidetailContentWebview;
     private int id = 0;
+    private Unbinder unbinder;
 
     public NotiDetailFragment() {
     }
@@ -64,7 +66,7 @@ public class NotiDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_noti_detail, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         if (id != 0)
             QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid,id+"").subscribeOn(Schedulers.io())
@@ -92,6 +94,6 @@ public class NotiDetailFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

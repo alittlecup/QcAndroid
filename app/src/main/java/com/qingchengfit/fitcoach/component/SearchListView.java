@@ -22,7 +22,7 @@ import com.qingchengfit.fitcoach.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -41,11 +41,11 @@ import butterknife.ButterKnife;
 public class SearchListView extends RelativeLayout {
 
     public String keyword;
-    @Bind(R.id.searchresult_btn)
+    @BindView(R.id.searchresult_btn)
     Button searchresultBtn;
-    @Bind(R.id.searchresult_none)
+    @BindView(R.id.searchresult_none)
     LinearLayout searchresultNone;
-    @Bind(R.id.searchresult_rv)
+    @BindView(R.id.searchresult_rv)
     RecyclerView searchresultRv;
     SearchResultAdapter adapter;
     private List<String> strings;
@@ -107,7 +107,7 @@ public class SearchListView extends RelativeLayout {
     }
 
     public static class SearchResultVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_text)
+        @BindView(R.id.item_text)
         TextView itemText;
 
         public SearchResultVH(View itemView) {

@@ -17,17 +17,17 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.LoginFragment;
 import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
-    //    @Bind(R.id.toolbar)
+    //    @BindView(R.id.toolbar)
 //    Toolbar toolbar;
-    @Bind(R.id.login_viewpager)
+    @BindView(R.id.login_viewpager)
     ViewPager loginViewpager;
-    @Bind(R.id.login_tabview)
+    @BindView(R.id.login_tabview)
     TabLayout loginTablayout;
 
     private SmsObserver smsObserver;

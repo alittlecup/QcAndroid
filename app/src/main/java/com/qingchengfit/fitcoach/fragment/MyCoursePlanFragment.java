@@ -28,9 +28,10 @@ import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -40,18 +41,19 @@ import rx.schedulers.Schedulers;
  */
 public class MyCoursePlanFragment extends MainBaseFragment {
     public static final String TAG = MyCoursePlanFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.course_add)
+    @BindView(R.id.course_add)
     Button courseAdd;
-    @Bind(R.id.no_data)
+    @BindView(R.id.no_data)
     LinearLayout noData;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
     private GymsAdapter mGymAdapter;
     private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
+    private Unbinder unbinder;
 
     public MyCoursePlanFragment() {
 
@@ -63,7 +65,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle(getString(R.string.my_course_template));
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
@@ -198,19 +200,19 @@ public class MyCoursePlanFragment extends MainBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public static class GymsVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_gym_header)
+        @BindView(R.id.item_gym_header)
         ImageView itemGymHeader;
-        @Bind(R.id.item_gym_name)
+        @BindView(R.id.item_gym_name)
         TextView itemGymName;
-        @Bind(R.id.item_gym_phonenum)
+        @BindView(R.id.item_gym_phonenum)
         TextView itemGymPhonenum;
-        @Bind(R.id.qc_identify)
+        @BindView(R.id.qc_identify)
         ImageView itemIsPersonal;
-        @Bind(R.id.item_gym_brand)
+        @BindView(R.id.item_gym_brand)
         TextView itemItemBrand;
         public GymsVH(View itemView) {
             super(itemView);

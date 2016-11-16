@@ -15,9 +15,10 @@ import com.qingchengfit.fitcoach.component.TimePeriodChooser;
 
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 
 /**
@@ -25,23 +26,24 @@ import cn.qingchengfit.widgets.utils.DateUtils;
  */
 public class GymTimeFragment extends Fragment {
     public static final String TAG = GymTimeFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.gymtime_mon)
+    @BindView(R.id.gymtime_mon)
     CommonInputView gymtimeMon;
-    @Bind(R.id.gymtime_tus)
+    @BindView(R.id.gymtime_tus)
     CommonInputView gymtimeTus;
-    @Bind(R.id.gymtime_wen)
+    @BindView(R.id.gymtime_wen)
     CommonInputView gymtimeWen;
-    @Bind(R.id.gymtime_thu)
+    @BindView(R.id.gymtime_thu)
     CommonInputView gymtimeThu;
-    @Bind(R.id.gymtime_fri)
+    @BindView(R.id.gymtime_fri)
     CommonInputView gymtimeFri;
-    @Bind(R.id.gymtime_sat)
+    @BindView(R.id.gymtime_sat)
     CommonInputView gymtimeSat;
-    @Bind(R.id.gymtime_sun)
+    @BindView(R.id.gymtime_sun)
     CommonInputView gymtimeSun;
     TimePeriodChooser timeDialogWindow;
+    private Unbinder unbinder;
 
     public GymTimeFragment() {
     }
@@ -52,7 +54,7 @@ public class GymTimeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gym_time, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("营业时间");
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -78,6 +80,6 @@ public class GymTimeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

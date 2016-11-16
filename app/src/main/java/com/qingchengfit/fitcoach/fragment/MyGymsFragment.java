@@ -28,9 +28,10 @@ import com.qingchengfit.fitcoach.http.bean.CoachService;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -39,17 +40,18 @@ import rx.schedulers.Schedulers;
  */
 public class MyGymsFragment extends android.support.v4.app.Fragment {
     public static final String TAG = MyGymsFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.refresh_nodata)
+    @BindView(R.id.refresh_nodata)
     SwipeRefreshLayout refreshNodata;
     private GymsAdapter mGymAdapter;
     private List<CoachService> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
+    private Unbinder unbinder;
 
     public MyGymsFragment() {
     }
@@ -60,7 +62,7 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms_true, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
 //        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
@@ -207,19 +209,19 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public static class GymsVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_gym_header)
+        @BindView(R.id.item_gym_header)
         ImageView itemGymHeader;
-        @Bind(R.id.item_gym_name)
+        @BindView(R.id.item_gym_name)
         TextView itemGymName;
-        @Bind(R.id.item_gym_phonenum)
+        @BindView(R.id.item_gym_phonenum)
         TextView itemGymPhonenum;
-        @Bind(R.id.qc_identify)
+        @BindView(R.id.qc_identify)
         ImageView itemIsPersonal;
-        @Bind(R.id.item_gym_brand)
+        @BindView(R.id.item_gym_brand)
         TextView brand;
         public GymsVH(View itemView) {
             super(itemView);

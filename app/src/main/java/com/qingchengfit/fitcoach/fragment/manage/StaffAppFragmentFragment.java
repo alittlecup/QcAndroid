@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 /**
@@ -44,6 +45,8 @@ import butterknife.OnClick;
 public class StaffAppFragmentFragment extends DialogFragment {
 
 
+    private Unbinder unbinder;
+
     public static StaffAppFragmentFragment newInstance() {
         Bundle args = new Bundle();
         StaffAppFragmentFragment fragment = new StaffAppFragmentFragment();
@@ -52,13 +55,13 @@ public class StaffAppFragmentFragment extends DialogFragment {
     }
 
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_staff_app, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
 
         return view;
     }
@@ -67,7 +70,7 @@ public class StaffAppFragmentFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick({R.id.close, R.id.open_app})

@@ -18,7 +18,7 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -110,13 +110,13 @@ public class BrandManageAdapterAdapter extends RecyclerView.Adapter<BrandManageA
     }
 
     public class BrandManageAdapterVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.background)
+        @BindView(R.id.background)
         ImageView bg;
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         ImageView image;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.brand)
+        @BindView(R.id.brand)
         TextView brand;
 
         public BrandManageAdapterVH(View itemView) {

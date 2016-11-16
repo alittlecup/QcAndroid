@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -33,9 +33,9 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
 
     public SegmentListener segmentListener;
     public TouchUpListener listener;
-    @Bind(R.id.segment_img)
+    @BindView(R.id.segment_img)
     ImageView segmentImg;
-    @Bind(R.id.segment_text)
+    @BindView(R.id.segment_text)
     TextView segmentText;
     Drawable[] drawables;
     private String text;

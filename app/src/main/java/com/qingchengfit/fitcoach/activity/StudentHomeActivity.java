@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.DateUtils;
@@ -71,9 +71,9 @@ import rx.schedulers.Schedulers;
  */
 public class StudentHomeActivity extends BaseAcitivity {
 
-    @Bind(R.id.add1)
+    @BindView(R.id.add1)
     Button add1;
-    @Bind(R.id.add2)
+    @BindView(R.id.add2)
     Button add2;
     private View mMyhomeBgView;
     private ImageView mHeaderImageView;

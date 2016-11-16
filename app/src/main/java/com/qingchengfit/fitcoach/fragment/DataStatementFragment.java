@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
@@ -22,9 +23,9 @@ import cn.qingchengfit.widgets.utils.LogUtil;
  */
 public class DataStatementFragment extends MainBaseFragment {
     public static final String TAG = DataStatementFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    private Unbinder unbinder;
 
 
     public DataStatementFragment() {
@@ -41,7 +42,7 @@ public class DataStatementFragment extends MainBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data_statement, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.setTitle("数据报表");
@@ -66,6 +67,6 @@ public class DataStatementFragment extends MainBaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

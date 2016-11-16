@@ -20,9 +20,10 @@ import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.schedulers.Schedulers;
 
@@ -31,30 +32,31 @@ import rx.schedulers.Schedulers;
  */
 public class SaleGlanceFragment extends Fragment {
     public static final String TAG = SaleGlanceFragment.class.getName();
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.spinner_nav)
+    @BindView(R.id.spinner_nav)
     Spinner spinnerNav;
-    @Bind(R.id.statment_glance_month_title)
+    @BindView(R.id.statment_glance_month_title)
     TextView statmentGlanceMonthTitle;
-    @Bind(R.id.statment_glance_month_data)
+    @BindView(R.id.statment_glance_month_data)
     TextView statmentGlanceMonthData;
-    @Bind(R.id.statment_glance_week_title)
+    @BindView(R.id.statment_glance_week_title)
     TextView statmentGlanceWeekTitle;
-    @Bind(R.id.statment_glance_week_data)
+    @BindView(R.id.statment_glance_week_data)
     TextView statmentGlanceWeekData;
-    @Bind(R.id.statment_glance_today_title)
+    @BindView(R.id.statment_glance_today_title)
     TextView statmentGlanceTodayTitle;
-    @Bind(R.id.statment_glance_today_data)
+    @BindView(R.id.statment_glance_today_data)
     TextView statmentGlanceTodayData;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     //    private ArrayAdapter<SpinnerBean> adapter;
 //    private ArrayList<SpinnerBean> spinnerBeans;
     private QcSaleGlanceResponse response;
     private int curSystem = 0;
+    private Unbinder unbinder;
 
     public SaleGlanceFragment() {
     }
@@ -64,7 +66,7 @@ public class SaleGlanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statement_glance, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         view.setOnTouchListener((v, event) -> {
@@ -232,6 +234,6 @@ public class SaleGlanceFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

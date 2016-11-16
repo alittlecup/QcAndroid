@@ -40,9 +40,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -54,29 +55,30 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     public static final int TYPE_GYM = 0;
     public static final int TYPE_ORGANASITON = 1;
     public String keyword;
-    @Bind(R.id.searchview_et)
+    @BindView(R.id.searchview_et)
     EditText searchviewEt;
-    @Bind(R.id.searchview_clear)
+    @BindView(R.id.searchview_clear)
     ImageView searchviewClear;
-    @Bind(R.id.searchresult_btn)
+    @BindView(R.id.searchresult_btn)
     Button searchresultBtn;
-    @Bind(R.id.searchresult_none)
+    @BindView(R.id.searchresult_none)
     LinearLayout searchresultNone;
-    @Bind(R.id.searchresult_rv)
+    @BindView(R.id.searchresult_rv)
     RecyclerView searchresultRv;
     SearchResultAdapter adapter;
-    @Bind(R.id.search_hottable)
+    @BindView(R.id.search_hottable)
     TextView searchHottable;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.search_hint)
+    @BindView(R.id.search_hint)
     TextView searchHint;
-    @Bind(R.id.searchresult_hint)
+    @BindView(R.id.searchresult_hint)
     TextView searchresultHint;
     private int type;
     private List<SearchItemBean> strings;
     private InternalSearchHandler handler;
     private SearchInterface searchListener;
+    private Unbinder unbinder;
 
     public SearchFragment() {
     }
@@ -103,7 +105,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -352,7 +354,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 
@@ -379,13 +381,13 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     }
 
     public static class SearchResultVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_text)
+        @BindView(R.id.item_text)
         TextView itemText;
-        @Bind(R.id.item_img)
+        @BindView(R.id.item_img)
         ImageView imageView;
-        @Bind(R.id.item_qc_identify)
+        @BindView(R.id.item_qc_identify)
         ImageView qcIdentify;
-        @Bind(R.id.item_address)
+        @BindView(R.id.item_address)
         TextView itemAddress;
 
         public SearchResultVH(View itemView) {

@@ -16,9 +16,10 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.DialogList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 
 /**
@@ -31,19 +32,20 @@ public class CalSyncFragment extends BaseSettingFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @Bind(R.id.cal_sync_switch)
+    @BindView(R.id.cal_sync_switch)
     Switch calSyncSwitch;
-    @Bind(R.id.cal_sync_switch_layout)
+    @BindView(R.id.cal_sync_switch_layout)
     RelativeLayout calSyncSwitchLayout;
-    @Bind(R.id.cal_sync_time)
+    @BindView(R.id.cal_sync_time)
     TextView calSyncTime;
-    @Bind(R.id.cal_sync_time_layout)
+    @BindView(R.id.cal_sync_time_layout)
     RelativeLayout calSyncTimeLayout;
     private String[] mTimeArray = {"不提醒", "15分钟提醒", "30分钟提醒", "1小时提醒", "2小时提醒", "24小时提醒"};
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Unbinder unbinder;
 
 
     public CalSyncFragment() {
@@ -82,7 +84,7 @@ public class CalSyncFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cal_sync, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, getActivity().getString(R.string.setting_cal_sync_title));
         calSyncSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -154,6 +156,6 @@ public class CalSyncFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

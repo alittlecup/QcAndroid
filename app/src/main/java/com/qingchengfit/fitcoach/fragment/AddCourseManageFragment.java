@@ -39,9 +39,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Subscriber;
@@ -54,18 +55,18 @@ import rx.schedulers.Schedulers;
 public class AddCourseManageFragment extends Fragment {
 
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.starttime)
+    @BindView(R.id.starttime)
     CommonInputView starttime;
-    @Bind(R.id.endtime)
+    @BindView(R.id.endtime)
     CommonInputView endtime;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.add)
+    @BindView(R.id.add)
     TextView add;
     List<CmBean> datas = new ArrayList<>();
-    @Bind(R.id.rootview)
+    @BindView(R.id.rootview)
     LinearLayout rootview;
     private CmAdapter adapter;
     private TimePeriodChooser timeDialogWindow;
@@ -79,6 +80,7 @@ public class AddCourseManageFragment extends Fragment {
     private String mId;
     private String mCourseid;
     private long mCourseLength;
+    private Unbinder unbinder;
 
     public static AddCourseManageFragment newInstance(String mode, String gymid, String courseid, int coursetype, String courseLength) {
 
@@ -116,7 +118,7 @@ public class AddCourseManageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_course_manage, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         if (mType == Configs.TYPE_GROUP) {
             toolbar.setTitle(R.string.title_add_group_course_batch);
             datas.add(new CmBean(0, DateUtils.formatDateHHMM("08:00"),null));
@@ -354,23 +356,23 @@ public class AddCourseManageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     public class CmVh extends RecyclerView.ViewHolder {
-        @Bind(R.id.text1)
+        @BindView(R.id.text1)
         TextView text1;
-        @Bind(R.id.layout1)
+        @BindView(R.id.layout1)
         RelativeLayout layout1;
-        @Bind(R.id.text2)
+        @BindView(R.id.text2)
         TextView text2;
-        @Bind(R.id.layout2)
+        @BindView(R.id.layout2)
         RelativeLayout layout2;
-        @Bind(R.id.delete)
+        @BindView(R.id.delete)
         ImageView delete;
-        @Bind(R.id.down1)
+        @BindView(R.id.down1)
         ImageView down1;
-        @Bind(R.id.down2)
+        @BindView(R.id.down2)
         ImageView down2;
 
         public CmVh(View itemView) {

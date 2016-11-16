@@ -33,8 +33,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Subscriber;
@@ -47,21 +48,21 @@ import rx.schedulers.Schedulers;
  */
 public class GymDetailNativeFragment extends Fragment {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.gym_name)
+    @BindView(R.id.gym_name)
     TextView gymName;
-    @Bind(R.id.gym_count)
+    @BindView(R.id.gym_count)
     TextView gymCount;
-    @Bind(R.id.gym_img)
+    @BindView(R.id.gym_img)
     ImageView gymImg;
-    @Bind(R.id.linearlayout)
+    @BindView(R.id.linearlayout)
     LinearLayout linearlayout;
-    @Bind(R.id.gym_title_tag)
+    @BindView(R.id.gym_title_tag)
     ImageView gymTitleTag;
-    @Bind(R.id.myhome_tab)
+    @BindView(R.id.myhome_tab)
     TabLayout myhomeTab;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewpager;
     private long mId;
     private boolean mIsPrivate;
@@ -72,6 +73,7 @@ public class GymDetailNativeFragment extends Fragment {
     private Observable mAddObserable;
     private Observable<ImageThreeTextBean> mCourseObserable;
     private Observable<String> mObservableFresh;
+    private Unbinder unbinder;
 
     public GymDetailNativeFragment() {
     }
@@ -103,7 +105,7 @@ public class GymDetailNativeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_detail_native, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -368,6 +370,6 @@ public class GymDetailNativeFragment extends Fragment {
         RxBus.getBus().unregister(RxBus.BUS_REFRESH, mObservableFresh);
         RxBus.getBus().unregister(ImageThreeTextBean.class.getName(), mCourseObserable);
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

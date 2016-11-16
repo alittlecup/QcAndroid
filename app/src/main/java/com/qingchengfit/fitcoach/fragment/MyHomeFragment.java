@@ -38,9 +38,10 @@ import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.MeasureUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
@@ -52,40 +53,40 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class MyHomeFragment extends Fragment {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.myhome_header)
+    @BindView(R.id.myhome_header)
     ImageView myhomeHeader;
-    @Bind(R.id.myhome_tab)
+    @BindView(R.id.myhome_tab)
     TabLayout myhomeTab;
-    @Bind(R.id.myhome_name)
+    @BindView(R.id.myhome_name)
     TextView myhomeName;
-    @Bind(R.id.myhome_brief)
+    @BindView(R.id.myhome_brief)
     TextView myhomeBrief;
-    @Bind(R.id.myhome_student_judge)
+    @BindView(R.id.myhome_student_judge)
     FrameLayout myhomeStudentJudge;
-    @Bind(R.id.myhome_scroller)
+    @BindView(R.id.myhome_scroller)
     HalfScrollView myhomeScroller;
-    @Bind(R.id.myhome_bg)
+    @BindView(R.id.myhome_bg)
     View myhomeBg;
-    @Bind(R.id.myhome_gender)
+    @BindView(R.id.myhome_gender)
     ImageView myhomeGender;
-    @Bind(R.id.myhome_location)
+    @BindView(R.id.myhome_location)
     TextView myhomeLocation;
-    @Bind(R.id.myhome_sawtooth)
+    @BindView(R.id.myhome_sawtooth)
     ImageView myhomeSawtooth;
-    @Bind(R.id.myhome_tab_layout)
+    @BindView(R.id.myhome_tab_layout)
     RelativeLayout myhomeTabLayout;
-    @Bind(R.id.myhome_viewpager)
+    @BindView(R.id.myhome_viewpager)
     MyhomeViewPager myhomeViewpager;
-    @Bind(R.id.halfscroll_first)
+    @BindView(R.id.halfscroll_first)
     LinearLayout halfscrollFirst;
-    @Bind(R.id.sfl)
+    @BindView(R.id.sfl)
     SwipeRefreshLayout sfl;
     private int mHomeBgHeight = 1;
     private boolean isFresh = false;
     private Gson gson;
-    //    @Bind(R.id.myhome_coolaosingtoorbar)
+    //    @BindView(R.id.myhome_coolaosingtoorbar)
     //    CollapsingToolbarLayout myhomeCoolaosingtoorbar;
     private FragmentCallBack fragmentCallBack;
     private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
@@ -111,6 +112,7 @@ public class MyHomeFragment extends Fragment {
             handleResponse(qcMyhomeResponse);
         }
     };
+    private Unbinder unbinder;
 
 
     public MyHomeFragment() {
@@ -121,7 +123,7 @@ public class MyHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_home_test, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         gson = new Gson();
         toolbar.setTitle("我的主页");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -302,7 +304,7 @@ public class MyHomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
 

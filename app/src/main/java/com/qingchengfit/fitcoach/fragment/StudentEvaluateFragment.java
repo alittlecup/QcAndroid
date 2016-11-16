@@ -18,8 +18,9 @@ import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -29,10 +30,11 @@ import rx.schedulers.Schedulers;
 public class StudentEvaluateFragment extends VpFragment {
 
 
-    @Bind(R.id.evaluate_tags)
+    @BindView(R.id.evaluate_tags)
     TagGroup evaluateTags;
-    @Bind(R.id.no_evaluate)
+    @BindView(R.id.no_evaluate)
     LinearLayout noEvaluate;
+    private Unbinder unbinder;
 
     public StudentEvaluateFragment() {
         // Required empty public constructor
@@ -44,7 +46,7 @@ public class StudentEvaluateFragment extends VpFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_evaluate, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         evaluateTags.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -89,7 +91,7 @@ public class StudentEvaluateFragment extends VpFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

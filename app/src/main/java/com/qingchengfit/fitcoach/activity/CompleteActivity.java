@@ -13,29 +13,29 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.schedulers.Schedulers;
 
 public class CompleteActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.comple_name)
+    @BindView(R.id.comple_name)
     TextInputLayout compleName;
-    @Bind(R.id.comple_city)
+    @BindView(R.id.comple_city)
     TextInputLayout compleCity;
-    @Bind(R.id.comple_pw)
+    @BindView(R.id.comple_pw)
     TextInputLayout complePw;
-    @Bind(R.id.comple_pw_re)
+    @BindView(R.id.comple_pw_re)
     TextInputLayout complePwRe;
-    @Bind(R.id.comple_btn)
+    @BindView(R.id.comple_btn)
     Button compleBtn;
 
     String mCode;   //服务器验证验证码后返回的code
 
-    @Bind(R.id.comple_gender)
+    @BindView(R.id.comple_gender)
     RadioGroup compleGender;
 
     @Override

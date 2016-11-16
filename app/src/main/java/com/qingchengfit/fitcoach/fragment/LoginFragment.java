@@ -25,8 +25,9 @@ import com.qingchengfit.fitcoach.reciever.PushReciever;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
@@ -39,12 +40,13 @@ import rx.schedulers.Schedulers;
 public class LoginFragment extends Fragment {
     LoginPresenter loginPresenter;
 
-    @Bind(R.id.loginview)
+    @BindView(R.id.loginview)
     LoginView loginview;
     Gson gson = new Gson();
 
     MaterialDialog materialDialog;
     private Observable mObservable;
+    private Unbinder unbinder;
 
     public LoginFragment() {
 
@@ -224,7 +226,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         loginview.setLoginPresenter(loginPresenter);
         loginview.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -243,7 +245,7 @@ public class LoginFragment extends Fragment {
         if (loginview != null)
             loginview.unRegiste();
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
 
     }
 }
