@@ -156,7 +156,7 @@ public class ChooseAddressFragment extends Fragment {
 
                 //设置城市
                 cityName.setText(aMapLocation.getCity());
-                mCityCode = aMapLocation.getCityCode();
+                mCityCode = aMapLocation.getAdCode();
 
                 //设置地理位置
                 address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
