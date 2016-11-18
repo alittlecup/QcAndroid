@@ -1,13 +1,403 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:background="@color/backgroud_grey"
-             tools:context="com.qingchengfit.fitcoach.fragment.CourseDetailFragment">
-        <include layout="@layout/common_toolbar"/>
-        <include layout="@layout/layout_course"/>
-        <include layout="@layout/divider_grey"/>
-        <include layout="@layout/divider_grey_margin"/>
-        <include layout="@layout/fragment_course_list"/>
-</LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/srl"
+    >
+
+
+    <android.support.v4.widget.NestedScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="40dp"
+        android:clipToPadding="false"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            android:orientation="vertical"
+            >
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/jacket_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    />
+
+                <TextView
+                    android:id="@+id/no_jacket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/bg_grey"
+                    android:gravity="center"
+                    android:text="暂无封面照片"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/edit_jacket"
+                    android:layout_width="168dp"
+                    android:layout_height="26dp"
+                    android:background="@color/halftrans_background"
+                    android:drawableLeft="@drawable/ic_mode_edit_white_24dp"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_mode_edit_white_24dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="@string/edit_course_jacket"
+                    android:textColor="@color/white"
+                    />
+                <com.qingchengfit.fitcoach.component.CircleIndicator
+                    android:id="@+id/splash_indicator"
+                    android:layout_gravity="bottom"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:ci_drawable="@drawable/circle_white"
+                    app:ci_count_less="1"
+                    />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+
+                <FrameLayout
+                    android:id="@+id/course_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    />
+                <FrameLayout
+                    android:id="@+id/edit_base_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:drawableLeft="@drawable/ic_edit"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/ic_edit"
+                        android:text="编辑基本信息"
+
+                        />
+                    <include layout="@layout/divider_grey_left_right"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/divider_grey"/>
+
+            <include layout="@layout/divider_grey_margin"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="评分评价"
+                        android:drawableLeft="@drawable/square_green"
+                        android:drawablePadding="7dp"
+                        />
+
+                </FrameLayout>
+                <include layout="@layout/divider_grey"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            style="@style/Qc.TextCommonGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="教练评分"
+                            />
+
+                        <TextView
+                            android:id="@+id/student_judge_coach_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5.0"
+                            android:textColor="@color/orange"
+                            android:textSize="30sp"
+                            />
+
+                        <cn.qingchengfit.widgets.RatingBarVectorFix
+                            android:id="@+id/student_judge_coach_star"
+                            style="@style/Qc.RatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            tools:rating="4.7"
+
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            style="@style/Qc.TextCommonGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="课程评分"
+                            />
+
+                        <TextView
+                            android:id="@+id/student_judge_course_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5.0"
+                            android:textColor="@color/orange"
+                            android:textSize="30sp"
+                            />
+
+                        <cn.qingchengfit.widgets.RatingBarVectorFix
+                            android:id="@+id/student_judge_course_star"
+                            style="@style/Qc.RatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            tools:rating="4.2"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Qc.TextCommonGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="服务评分"
+                            />
+
+                        <TextView
+                            android:id="@+id/server_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5.0"
+                            android:textColor="@color/orange"
+                            android:textSize="30sp"
+                            />
+
+                        <cn.qingchengfit.widgets.RatingBarVectorFix
+                            android:id="@+id/server_rate"
+                            style="@style/Qc.RatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            tools:rating="4.2"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <co.hkm.soltag.TagContainerLayout
+                    android:id="@+id/course_impression"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:padding="10dp"
+                    app:container_enable_drag="false"
+                    app:container_gravity="center"
+                    app:horizontal_interval="10dp"
+                    app:vertical_interval="10dp"
+                    app:container_background_color="@color/white"
+                    app:container_border_color="@color/transparent"
+                    app:container_border_radius="0dp"
+                    app:container_border_width="0dp"
+                    app:tag_background_color="@color/orange"
+                    app:tag_border_color="@color/orange"
+                    app:tag_border_width="1dp"
+                    app:tag_text_color="@color/text_black"
+                    app:tag_corner_radius="4dp"
+                    app:tag_theme="none"
+                    />
+                <TextView
+                    android:id="@+id/no_impression"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="@color/bg_grey"
+                    android:text="暂无印象"
+                    />
+
+                <FrameLayout
+                    android:id="@+id/comments_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:text="查看评价详情"
+                        android:drawableRight="@drawable/ic_arrow_right"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:drawablePadding="8dp"
+                        />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/divider_grey"/>
+
+            <include layout="@layout/divider_grey_margin"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:drawableLeft="@drawable/square_green"
+                    android:drawablePadding="7dp"
+                    android:text="课程教练"
+                    />
+                <include layout="@layout/divider_grey_left_right"/>
+                <android.support.v7.widget.RecyclerView
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:id="@+id/course_teacher_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/no_teacher"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="暂未安排教练"
+                    />
+            </LinearLayout>
+            <include layout="@layout/divider_grey"/>
+
+            <include layout="@layout/divider_grey_margin"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:text="课程简介"
+                        android:drawableLeft="@drawable/square_green"
+                        android:drawablePadding="7dp"
+                        android:background="@color/white"
+                        />
+                    <TextView
+                        android:id="@+id/go_to_scan"
+                        android:text="编辑简介详情"
+                        android:drawableLeft="@drawable/ic_edit"
+                        android:drawablePadding="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/activity_vertical_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/desc_html"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    tools:text="暂无简介"
+                    android:background="@color/white"
+                    />
+                <com.qingchengfit.fitcoach.component.TouchyWebView
+                    android:id="@+id/web_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

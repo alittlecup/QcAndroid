@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="58dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                        android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+    >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_loading_outside"
+            android:layout_centerInParent="true"
+            />
+
+        <cn.qingchengfit.staffkit.views.custom.LoadingPointerView
+            android:id="@+id/pointer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            />
+
+
+
+</RelativeLayout>
