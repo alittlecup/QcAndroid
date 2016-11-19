@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.action;
 
+import java.util.List;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -22,4 +24,16 @@ package com.qingchengfit.fitcoach.action;
  */
 
 public class SerPermisAction {
+    public static boolean checkAtLeastOne(String s){
+        return true;
+    }
+
+    public static boolean checkMuti(String prisettingCanChange, List<String> shopIdList) {
+        return true;
+    }
+
+    public static boolean check(String id, String prisettingCanChange) {
+
+       return true;
+    }
 }

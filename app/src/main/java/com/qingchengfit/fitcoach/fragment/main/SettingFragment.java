@@ -83,6 +83,7 @@ public class SettingFragment extends BaseSettingFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         unbinder=ButterKnife.bind(this, view);
+        fragmentCallBack.onToolbarMenu(0 ,R.drawable.ic_arrow_left,"设置");
         return view;
     }
 

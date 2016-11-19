@@ -2,17 +2,14 @@ package com.qingchengfit.fitcoach.fragment.batch.list;
 
 import android.content.Intent;
 
+import com.anbillon.qcmvplib.PView;
+import com.anbillon.qcmvplib.Presenter;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+
 import javax.inject.Inject;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
-import cn.qingchengfit.staffkit.usecase.GymUseCase;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseGroupDetail;
-import cn.qingchengfit.staffkit.usecase.response.QcResponsePrivateDetail;
-import cn.qingchengfit.staffkit.usecase.response.ResponseConstant;
 import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -30,7 +27,6 @@ import rx.functions.Action1;
 public class CourseBatchDetailPresenter implements Presenter {
 
 
-    GymUseCase gymUseCase;
     CoachService coachService;
 
     private CourseBatchDetailView view;
@@ -38,8 +34,11 @@ public class CourseBatchDetailPresenter implements Presenter {
     private Subscription priSp;
 
     @Inject
-    public CourseBatchDetailPresenter(GymUseCase gymUseCase, CoachService coachService) {
-        this.gymUseCase = gymUseCase;
+    RestRepository restRepository;
+
+    @Inject
+    public CourseBatchDetailPresenter( CoachService coachService) {
+//        this.gymUseCase = gymUseCase;
         this.coachService = coachService;
     }
 
@@ -98,29 +97,29 @@ public class CourseBatchDetailPresenter implements Presenter {
     }
 
     public void queryGroup(String id) {
-        groupSp = gymUseCase.getGroupBatches(id, coachService.getId(), coachService.getModel(), null, new Action1<QcResponseGroupDetail>() {
-            @Override
-            public void call(QcResponseGroupDetail qcResponseGroupDetail) {
-                if (qcResponseGroupDetail.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onGoup(qcResponseGroupDetail.data.course, qcResponseGroupDetail.data.batches);
-                } else {
-
-                }
-            }
-        });
+//        groupSp = gymUseCase.getGroupBatches(id, coachService.getId(), coachService.getModel(), null, new Action1<QcResponseGroupDetail>() {
+//            @Override
+//            public void call(QcResponseGroupDetail qcResponseGroupDetail) {
+//                if (qcResponseGroupDetail.getStatus() == ResponseConstant.SUCCESS) {
+//                    view.onGoup(qcResponseGroupDetail.data.course, qcResponseGroupDetail.data.batches);
+//                } else {
+//
+//                }
+//            }
+//        });
     }
 
     public void queryPrivate(String id) {
-        priSp = gymUseCase.getPrivateBatches(id, coachService.getId(), coachService.getModel(), null, new Action1<QcResponsePrivateDetail>() {
-            @Override
-            public void call(QcResponsePrivateDetail qcResponsePrivateDetail) {
-                if (qcResponsePrivateDetail.getStatus() == ResponseConstant.SUCCESS) {
-                    view.onPrivate(qcResponsePrivateDetail.data.coach, qcResponsePrivateDetail.data.batches);
-                } else {
-
-                }
-            }
-        });
+//        priSp = restRepository.getGet_api().get  getPrivateBatches(id, coachService.getId(), coachService.getModel(), null, new Action1<QcResponsePrivateDetail>() {
+//            @Override
+//            public void call(QcResponsePrivateDetail qcResponsePrivateDetail) {
+//                if (qcResponsePrivateDetail.getStatus() == ResponseConstant.SUCCESS) {
+//                    view.onPrivate(qcResponsePrivateDetail.data.coach, qcResponsePrivateDetail.data.batches);
+//                } else {
+//
+//                }
+//            }
+//        });
     }
 
 }

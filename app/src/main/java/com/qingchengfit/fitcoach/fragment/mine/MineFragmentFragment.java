@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.MeetActivity;
 import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +59,7 @@ public class MineFragmentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.mine);
         toolbar.inflateMenu(R.menu.menu_setting);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -68,6 +71,10 @@ public class MineFragmentFragment extends Fragment {
                 return false;
             }
         });
+        if (App.gUser != null) {
+            tvName.setText(App.gUser.username);
+            Glide.with(getContext()).load(App.gUser.avatar).asBitmap().into(new CircleImgWrapper(imgHeader, getContext()));
+        }
         return view;
     }
 

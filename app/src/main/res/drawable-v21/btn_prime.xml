@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/btn_selected_prime" android:state_pressed="true" />
-
-    <item android:state_pressed="false">
-        <shape android:shape="rectangle">
-            <corners android:radius="2dp" />
-            <solid android:color="@color/primary"></solid>
-            <stroke android:color="@color/primary"></stroke>
-            <size android:width="130dp" android:height="50dp" />
-        </shape>
-    </item>
-    <item android:state_enabled="false">
-        <shape android:shape="rectangle">
-            <corners android:radius="2dp"></corners>
-            <solid android:color="@color/grey"></solid>
-            <stroke android:color="@color/grey"></stroke>
-            <size android:width="130dp" android:height="50dp"></size>
-        </shape>
-    </item>
-</selector>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorPrimaryDark"
+    >
+    <item android:drawable="@drawable/btn_selected_prime"/>
+</ripple>

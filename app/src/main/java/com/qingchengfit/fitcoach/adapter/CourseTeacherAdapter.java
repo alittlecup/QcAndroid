@@ -8,16 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
-import cn.qingchengfit.staffkit.views.custom.CircleImgWrapper;
-import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
 
 /**
  * power by
@@ -87,11 +87,11 @@ public class CourseTeacherAdapter extends RecyclerView.Adapter<CourseTeacherAdap
 
     public class CourseTeacherVH extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.header)
+        @BindView(R.id.header)
         ImageView header;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.rate_star)
+        @BindView(R.id.rate_star)
         RatingBarVectorFix rateStar;
 
         public CourseTeacherVH(View itemView) {

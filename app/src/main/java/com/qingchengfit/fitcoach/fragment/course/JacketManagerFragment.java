@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,24 +14,25 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.adapter.JacketManageAdapter;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.items.JackManageItem;
+import com.qingchengfit.fitcoach.items.JackTitleItem;
+import com.qingchengfit.fitcoach.items.JacketAddItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.model.item.JackManageItem;
-import cn.qingchengfit.staffkit.model.item.JackTitleItem;
-import cn.qingchengfit.staffkit.model.item.JacketAddItem;
-import cn.qingchengfit.staffkit.model.item.JacketManageAdapter;
-import cn.qingchengfit.staffkit.utils.ToastUtils;
-import cn.qingchengfit.staffkit.utils.UpYunClient;
-import cn.qingchengfit.staffkit.views.custom.ChoosePictureFragmentDialog;
-import cn.qingchengfit.staffkit.views.custom.ExpandedLayout;
+import cn.qingchengfit.widgets.ExpandedLayout;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -62,11 +62,11 @@ import rx.functions.Action1;
 public class JacketManagerFragment extends BaseFragment implements
         FlexibleAdapter.OnItemClickListener, JacketManagerPresenter.JacketManagerView {
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.custom_switch)
+    @BindView(R.id.custom_switch)
     ExpandedLayout customSwitch;
-    @Bind(R.id.costum_jacket_hint)
+    @BindView(R.id.costum_jacket_hint)
     TextView costumJacketHint;
     private ArrayList<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private JacketManageAdapter mAdapter;
@@ -103,18 +103,18 @@ public class JacketManagerFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_jacket_manager, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity) {
             ((CourseActivity) getActivity()).getComponent().inject(this);
             delegatePresenter(mPresenter, this);
         }
-        mCallbackActivity.setToolbar("编辑封面照片", false, null, R.menu.menu_compelete, new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                mPresenter.completeJacket(courseid, item2Str(), customSwitch.isExpanded());
-                return true;
-            }
-        });
+//        mCallbackActivity.setToolbar("编辑封面照片", false, null, R.menu.menu_compelete, new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                mPresenter.completeJacket(courseid, item2Str(), customSwitch.isExpanded());
+//                return true;
+//            }
+//        });
         mAdapter = new JacketManageAdapter(mDatas, this);
         mAdapter.addItem(0, new JackTitleItem());
         mAdapter.addItem(1, new JacketAddItem());
@@ -145,7 +145,7 @@ public class JacketManagerFragment extends BaseFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_compelete, menu);
+//        inflater.inflate(R.menu.menu_compelete, menu);
     }
 
     @Override
@@ -228,7 +228,6 @@ public class JacketManagerFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

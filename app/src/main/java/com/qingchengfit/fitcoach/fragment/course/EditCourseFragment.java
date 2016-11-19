@@ -14,32 +14,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.BusinessUtils;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
+import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.bean.CoursePlan;
+import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.CourseBody;
+import com.qingchengfit.fitcoach.http.bean.QcResponseBrandShops;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.bean.CoursePlan;
-import cn.qingchengfit.staffkit.usecase.body.CourseBody;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseBrandShops;
-import cn.qingchengfit.staffkit.utils.BusinessUtils;
-import cn.qingchengfit.staffkit.utils.IntentUtils;
-import cn.qingchengfit.staffkit.utils.ToastUtils;
-import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
-import cn.qingchengfit.staffkit.views.gym.MutiChooseGymFragment;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import rx.functions.Action1;
+
 
 /**
  * power by
@@ -63,13 +64,13 @@ import rx.functions.Action1;
  */
 public class EditCourseFragment extends BaseFragment implements EditCoursePresenter.EditCourseView {
 
-    @Bind(R.id.edit_hint)
+    @BindView(R.id.edit_hint)
     TextView editHint;
-    @Bind(R.id.suit_gyms_hint)
+    @BindView(R.id.suit_gyms_hint)
     TextView suitGymsHint;
-    @Bind(R.id.suit_gyms_edit)
+    @BindView(R.id.suit_gyms_edit)
     CommonInputView suitGymsEdit;
-    @Bind(R.id.suit_gyms_rv)
+    @BindView(R.id.suit_gyms_rv)
     RecyclerView suitGymsRv;
     private Fragment mCourseInfoFragment;
 
@@ -77,6 +78,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     EditCoursePresenter mPresenter;
     @Inject
     CoachService coachService;
+    private Unbinder unbinding;
 
     public static EditCourseFragment newInstance(CourseDetail course) {
 
@@ -90,8 +92,8 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_course, container, false);
-        ButterKnife.bind(this, view);
-        mCallbackActivity.setToolbar("编辑基本信息", false, null, 0, null);
+        unbinding = ButterKnife.bind(this, view);
+//        mCallbackActivity.setToolbar("编辑基本信息", false, null, 0, null);
         if (getActivity() instanceof CourseActivity)
             ((CourseActivity) getActivity()).getComponent().inject(this);
         delegatePresenter(mPresenter, this);
@@ -99,7 +101,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
         RxBusAdd(CoursePlan.class).subscribe(new Action1<CoursePlan>() {
             @Override
             public void call(CoursePlan coursePlan) {
-                mCallbackActivity.setToolbar("编辑基本信息", false, null, R.menu.menu_compelete, menuItemClickListener);
+//                mCallbackActivity.setToolbar("编辑基本信息", false, null, R.menu.menu_compelete, menuItemClickListener);
             }
         });
         return view;
@@ -120,7 +122,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
 //                    }
 
                     CourseBody body = new CourseBody.Builder()
-                            .length(Integer.parseInt(courseDetail.getLength()))
+                            .length(courseDetail.getLength())
                             .is_private(courseDetail.is_private() ? 1 : 0)
                             .capacity(courseDetail.getCapacity())
                             .min_users(courseDetail.getMin_users())
@@ -146,7 +148,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinding.unbind();
     }
 
     @Override
@@ -172,7 +174,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @Override
     public void editBaseInfo(CourseDetail courseDetail) {
 
-        mCallbackActivity.setToolbar("编辑基本信息", false, null, R.menu.menu_compelete, menuItemClickListener);
+//        mCallbackActivity.setToolbar("编辑基本信息", false, null, R.menu.menu_compelete, menuItemClickListener);
         mCourseInfoFragment = CourseBaseInfoEditFragment.newInstance(courseDetail);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.course_layout, mCourseInfoFragment)
@@ -199,7 +201,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
         ArrayList<String> stringList = new ArrayList<>();
         if (courseDetail != null) {
             stringList.addAll(courseDetail.getShopIdList());
-            MutiChooseGymFragment.start(this, false, stringList, courseDetail.is_private() ? PermissionServerUtils.PRISETTING_CAN_CHANGE : PermissionServerUtils.TEAMSETTING_CAN_CHANGE, 1);
+//            MutiChooseGymFragment.start(this, false, stringList, courseDetail.is_private() ? PermissionServerUtils.PRISETTING_CAN_CHANGE : PermissionServerUtils.TEAMSETTING_CAN_CHANGE, 1);
         }
     }
 

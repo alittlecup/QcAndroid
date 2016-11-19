@@ -1,11 +1,10 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.base.Course;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.model.bean.Course;
-import cn.qingchengfit.staffkit.model.bean.Teacher;
 
 /**
  * power by
@@ -36,13 +35,15 @@ public class QcResponseGroupDetail extends QcResponse {
 
     public class GroupBatch {
         @SerializedName("teacher")
-        public Teacher teacher;
+        public QcSchedulesResponse.Teacher teacher;
         @SerializedName("from_date")
         public String from_date;
         @SerializedName("to_date")
         public String to_date;
         @SerializedName("id")
         public String id;
+
+
     }
 
 

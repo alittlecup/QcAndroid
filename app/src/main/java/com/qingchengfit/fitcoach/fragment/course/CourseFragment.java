@@ -12,15 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
+import butterknife.Unbinder;
+
 
 /**
  * power by
@@ -45,19 +48,20 @@ import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
 public class CourseFragment extends BaseFragment {
 
 
-    @Bind(R.id.myhome_tab)
+    @BindView(R.id.myhome_tab)
     TabLayout myhomeTab;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewpager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     private FragmentAdapter fragmentAdater;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
-        mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
+//        mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
 
 
         if (fragments.size() == 0) {
@@ -91,14 +95,14 @@ public class CourseFragment extends BaseFragment {
                         if (fragmentAdater.getItem(i) instanceof CourseListFragment)
                             ((CourseListFragment) fragments.get(i)).setEditMode();
                     }
-                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_compelete, menuItemClickListener);
+//                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_compelete, menuItemClickListener);
                     break;
                 case R.id.action_complete:
                     for (int i = 0; i < fragments.size(); i++) {
                         if (fragments.get(i) instanceof CourseListFragment)
                             ((CourseListFragment) fragments.get(i)).cancelEdit();
                     }
-                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
+//                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
                     break;
             }
             return true;
@@ -128,7 +132,7 @@ public class CourseFragment extends BaseFragment {
 
     public void addCourse(boolean isP) {
         getFragmentManager().beginTransaction()
-                .replace(mCallbackActivity.getFragId(), AddCourseFragment.newInstance(isP))
+                .replace(R.id.frag, AddCourseFragment.newInstance(isP))
                 .addToBackStack(getFragmentName())
                 .commit();
     }
@@ -141,6 +145,6 @@ public class CourseFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

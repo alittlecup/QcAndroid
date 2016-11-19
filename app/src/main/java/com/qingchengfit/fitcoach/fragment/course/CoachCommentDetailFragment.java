@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.BusinessUtils;
+import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.usecase.bean.CourseTeacher;
-import cn.qingchengfit.staffkit.utils.BusinessUtils;
-import cn.qingchengfit.staffkit.utils.StringUtils;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import co.hkm.soltag.TagContainerLayout;
+
 
 /**
  * power by
@@ -38,19 +41,17 @@ import co.hkm.soltag.TagContainerLayout;
  */
 public class CoachCommentDetailFragment extends BaseFragment {
 
-    @Bind(R.id.coach_score)
+    @BindView(R.id.coach_score)
     TextView coachScore;
-    @Bind(R.id.course_score)
+    @BindView(R.id.course_score)
     TextView courseScore;
-    @Bind(R.id.server_score)
+    @BindView(R.id.server_score)
     TextView serverScore;
-    @Bind(R.id.comments)
+    @BindView(R.id.comments)
     TagContainerLayout comments;
 
     private CourseTeacher mCourseTeacher;
-
-
-
+    private Unbinder unbinder;
 
 
     public static CoachCommentDetailFragment newInstance(CourseTeacher courseTeacher) {
@@ -73,7 +74,7 @@ public class CoachCommentDetailFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_comment, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         if (mCourseTeacher == null || mCourseTeacher.getImpressions() == null
                 || mCourseTeacher.getImpressions().size() == 0){
@@ -97,6 +98,6 @@ public class CoachCommentDetailFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

@@ -7,16 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.event.DelCourseEvent;
 
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
-import cn.qingchengfit.staffkit.rxbus.event.DelCourseEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -76,7 +76,7 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, CourseVh holder, int position, List payloads) {
-        holder.courseLength.setText(String.format(Locale.CHINA, "时长%d分钟", Integer.parseInt(courseDetail.getLength()) / 60));
+        holder.courseLength.setText(String.format(Locale.CHINA, "时长%d分钟", courseDetail.getLength() / 60));
         holder.courseName.setText(courseDetail.getName());
         holder.courseTypeImg.setImageResource(courseDetail.is_private()?R.drawable.ic_course_private_conner:R.drawable.ic_course_group_conner);
         Glide.with(adapter.getRecyclerView().getContext()).load(courseDetail.getPhoto()).placeholder(R.drawable.img_loadingimage).into(holder.courseImg);
@@ -87,15 +87,15 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
     public static class CourseVh extends FlexibleViewHolder {
 
-        @Bind(R.id.course_img)
+        @BindView(R.id.course_img)
         ImageView courseImg;
-        @Bind(R.id.course_type_img)
+        @BindView(R.id.course_type_img)
         ImageView courseTypeImg;
-        @Bind(R.id.course_name)
+        @BindView(R.id.course_name)
         TextView courseName;
-        @Bind(R.id.course_length)
+        @BindView(R.id.course_length)
         TextView courseLength;
-        @Bind(R.id.del)
+        @BindView(R.id.del)
         ImageView del;
 
         public CourseVh(View view, final FlexibleAdapter adapter) {

@@ -1,5 +1,12 @@
 package com.qingchengfit.fitcoach.di;
 
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+
+import dagger.Module;
+import dagger.Provides;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -20,6 +27,59 @@ package com.qingchengfit.fitcoach.di;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/17.
  */
-
+@Module
 public class CourseModule {
+
+    CoachService coachService;
+    Brand brand;
+    RestRepository restRepository;
+
+    private CourseModule(Builder builder) {
+        coachService = builder.coachService;
+        brand = builder.brand;
+        restRepository = builder.restRepository;
+    }
+
+    @Provides
+    CoachService provideService(){
+        return this.coachService;
+    }
+
+    @Provides
+    public Brand getBrand() {
+        return brand;
+    }
+
+    @Provides
+    public RestRepository getRestRepository() {
+        return restRepository;
+    }
+
+    public static final class Builder {
+        private CoachService coachService;
+        private Brand brand;
+        private RestRepository restRepository;
+
+        public Builder() {
+        }
+
+        public Builder coachService(CoachService val) {
+            coachService = val;
+            return this;
+        }
+
+        public Builder brand(Brand val) {
+            brand = val;
+            return this;
+        }
+
+        public Builder restRepository(RestRepository val) {
+            restRepository = val;
+            return this;
+        }
+
+        public CourseModule build() {
+            return new CourseModule(this);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.BaseAcitivity;
@@ -26,6 +27,8 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     FragmentManager fragmentManager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     private MaterialDialog loadingDialog;
     private int result = 0;
 
@@ -40,13 +43,13 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
         int to = getIntent().getIntExtra("to", 0);
         switch (to) {
             case 1:
-                onFragmentChange(ModifyInfoFragment.newInstance("", ""),false);
+                onFragmentChange(ModifyInfoFragment.newInstance("", ""), false);
                 break;
             case 3:
-                onFragmentChange(new RecordFragment(),false);
+                onFragmentChange(new RecordFragment(), false);
                 break;
             case 4:
-                onFragmentChange(new WorkExepSettingFragment(),false);
+                onFragmentChange(new WorkExepSettingFragment(), false);
                 break;
             default:
                 onFragmentChange(SettingFragment.newInstance(), false);
@@ -76,7 +79,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
 
     @Override
     public void onToolbarMenu(@MenuRes int menu, int icon, String title) {
-        toolbar.setTitle(title);
+        toolbarTitle.setText(title);
         toolbar.getMenu().clear();
         if (menu != 0)
             toolbar.inflateMenu(menu);

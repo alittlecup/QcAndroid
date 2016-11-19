@@ -48,7 +48,7 @@ public class CommonInputView extends RelativeLayout {
     private EditText edit;
     private String str_label;
     private ImageView rightview;
-    private int textColor = 0xaa9b9b9b;
+    private int textColor = 0xff999999;
     private String str_hint;
 
     public boolean isNum() {

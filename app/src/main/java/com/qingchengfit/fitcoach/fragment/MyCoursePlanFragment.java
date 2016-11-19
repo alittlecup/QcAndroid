@@ -39,7 +39,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyCoursePlanFragment extends MainBaseFragment {
+public class MyCoursePlanFragment extends BaseFragment {
     public static final String TAG = MyCoursePlanFragment.class.getName();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -68,7 +68,7 @@ public class MyCoursePlanFragment extends MainBaseFragment {
         unbinder=ButterKnife.bind(this, view);
         toolbar.setTitle(getString(R.string.my_course_template));
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
             Intent toWeb = new Intent(getContext(), WebActivity.class);

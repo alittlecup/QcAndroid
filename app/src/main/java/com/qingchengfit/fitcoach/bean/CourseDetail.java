@@ -3,13 +3,13 @@ package com.qingchengfit.fitcoach.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.bean.base.Course;
+import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
-import cn.qingchengfit.staffkit.usecase.bean.CoursePlan;
-import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
 
 /**
  * power by
@@ -31,7 +31,7 @@ import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/7/29.
  */
-public class CourseDetail extends Course  implements Cloneable {
+public class CourseDetail extends Course implements Cloneable {
 
     private List<String> photos;
     private int min_users;
@@ -62,7 +62,7 @@ public class CourseDetail extends Course  implements Cloneable {
         String ret = "";
         if (shops!= null && shops.size()>0){
             for (int i = 0; i < shops.size(); i++) {
-                ret = ret.concat(shops.get(i).name).concat(i == shops.size()-1?"":Configs.SEPARATOR);
+                ret = ret.concat(shops.get(i).name).concat(i == shops.size()-1?"": Configs.SEPARATOR);
             }
             return ret;
         }else return "";

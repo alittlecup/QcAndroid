@@ -12,14 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.utils.IntentUtils;
+import butterknife.Unbinder;
+
+import static butterknife.ButterKnife.bind;
+
 
 /**
  * power by
@@ -36,10 +41,10 @@ import cn.qingchengfit.staffkit.utils.IntentUtils;
  */
 public class BottomSheetListDialogFragment extends BottomSheetDialogFragment {
 
-    @Bind(R.id.recycleview)
+    @BindView(R.id.recycleview)
     RecyclerView recycleview;
     private List<String> d;
-
+    Unbinder unbinder;
     public static void start(Fragment fragment, int requestCode, ArrayList<String> datas) {
         BottomSheetListDialogFragment f = newInstance(datas);
         f.setTargetFragment(fragment, requestCode);
@@ -74,7 +79,7 @@ public class BottomSheetListDialogFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_list, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         BSAdapter adatper = new BSAdapter();
         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
         recycleview.setAdapter(adatper);
@@ -96,16 +101,16 @@ public class BottomSheetListDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     class BSVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.item_text)
+        @BindView(R.id.item_text)
         TextView text;
 
         public BSVH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            bind(this, itemView);
         }
     }
 

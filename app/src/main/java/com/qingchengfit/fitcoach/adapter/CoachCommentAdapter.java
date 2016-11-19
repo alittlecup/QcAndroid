@@ -5,12 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip;
+import com.qingchengfit.fitcoach.fragment.course.CoachCommentDetailFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qingchengfit.staffkit.usecase.bean.CourseTeacher;
-import cn.qingchengfit.staffkit.views.course.CoachCommentDetailFragment;
-import cn.qingchengfit.staffkit.views.custom.PagerSlidingTabImageStrip;
 
 /**
  * power by
@@ -82,6 +83,11 @@ public class CoachCommentAdapter extends FragmentStatePagerAdapter implements Pa
     }
 
     @Override
+    public boolean getShowRed(int position) {
+        return false;
+    }
+
+//    @Override
     public String getHeaderUrl(int position) {
         return mCoaches.get(position).getUser().header;
     }

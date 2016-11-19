@@ -8,17 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.usecase.response.QcResponsePrivateDetail;
-import cn.qingchengfit.staffkit.utils.DateUtils;
-import cn.qingchengfit.staffkit.utils.PhotoUtils;
-import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
+import cn.qingchengfit.widgets.utils.DateUtils;
 
 /**
  * power by
@@ -82,13 +82,13 @@ public class PrivateBatchAdapter extends RecyclerView.Adapter<PrivateBatchAdapte
     }
 
     public class BatchViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.course_name)
+        @BindView(R.id.course_name)
         TextView courseName;
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView img;
-        @Bind(R.id.outofdate)
+        @BindView(R.id.outofdate)
         View view;
 
         public BatchViewHolder(View itemView) {

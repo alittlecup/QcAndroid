@@ -8,13 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -80,15 +80,15 @@ public class JackManageItem extends AbstractFlexibleItem<JackManageItem.JackMana
     }
 
     public static class JackManageVH extends FlexibleViewHolder {
-        @Bind(R.id.delete)
+        @BindView(R.id.delete)
         ImageView delete;
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView img;
-        @Bind(R.id.drag_tag)
+        @BindView(R.id.drag_tag)
         ImageView dragTag;
-        @Bind(R.id.container)
+        @BindView(R.id.container)
         LinearLayout container;
-        @Bind(R.id.text)
+        @BindView(R.id.text)
         TextView textView;
         public JackManageVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);

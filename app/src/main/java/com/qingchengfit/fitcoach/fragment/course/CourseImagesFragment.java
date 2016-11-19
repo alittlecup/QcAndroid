@@ -7,32 +7,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.adapter.AllCourseImagesAdapter;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.SchedulePhoto;
+import com.qingchengfit.fitcoach.bean.SchedulePhotos;
+import com.qingchengfit.fitcoach.event.CourseImageManageEvent;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
+import com.qingchengfit.fitcoach.items.AllCourseImageHeaderItem;
+import com.qingchengfit.fitcoach.items.AllCourseImageItem;
+import com.qingchengfit.fitcoach.items.CommonNoDataItem;
+import com.qingchengfit.fitcoach.items.ProgressItem;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.model.item.AllCourseImageHeaderItem;
-import cn.qingchengfit.staffkit.model.item.AllCourseImageItem;
-import cn.qingchengfit.staffkit.model.item.CommonNoDataItem;
-import cn.qingchengfit.staffkit.model.item.ProgressItem;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rxbus.event.CourseImageManageEvent;
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.bean.SchedulePhoto;
-import cn.qingchengfit.staffkit.usecase.bean.SchedulePhotos;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseSchedulePhotos;
-import cn.qingchengfit.staffkit.usecase.response.ResponseConstant;
-import cn.qingchengfit.staffkit.utils.GymUtils;
-import cn.qingchengfit.staffkit.views.WebActivity;
-import cn.qingchengfit.staffkit.views.adapter.AllCourseImagesAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
@@ -64,7 +65,7 @@ import rx.schedulers.Schedulers;
  */
 public class CourseImagesFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     AllCourseImagesAdapter mAdatper;
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
@@ -93,12 +94,12 @@ public class CourseImagesFragment extends BaseFragment implements FlexibleAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_course_images, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         if (getActivity() instanceof CourseActivity) {
             ((CourseActivity) getActivity()).getComponent().inject(this);
         }
-        mCallbackActivity.setToolbar("全部课程照片", false, null, 0, null);
+//        mCallbackActivity.setToolbar("全部课程照片", false, null, 0, null);
         //init recycle
         mAdatper = new AllCourseImagesAdapter(mDatas, this);
         mAdatper.setMode(SelectableAdapter.MODE_SINGLE);
@@ -182,7 +183,7 @@ public class CourseImagesFragment extends BaseFragment implements FlexibleAdapte
                     @Override
                     public void call(AllCourseImageItem allCourseImageItem) {
                         getFragmentManager().beginTransaction()
-                                .add(mCallbackActivity.getFragId(), CourseImageViewFragment.newInstance(allCourseImageItem.schedulePhoto))
+                                .add(R.id.frag, CourseImageViewFragment.newInstance(allCourseImageItem.schedulePhoto))
                                 .addToBackStack(getFragmentName())
                                 .commit();
                     }
@@ -199,7 +200,7 @@ public class CourseImagesFragment extends BaseFragment implements FlexibleAdapte
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+
     }
 
     @Override

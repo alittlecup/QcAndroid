@@ -54,6 +54,7 @@ public class QcSchedulesResponse extends QcResponse {
         public List<QcScheduleBean> schedules;
 
     }
+
     public static class Schedule {
         @SerializedName("rests")
         public List<Rest> rests;
@@ -78,6 +79,35 @@ public class QcSchedulesResponse extends QcResponse {
     public static class Teacher {
         @SerializedName("username")
         public String username;
+        @SerializedName("id")
+        public String id;
+        @SerializedName("avatar")
+        public String avatar;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
     }
+
 
 }

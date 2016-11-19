@@ -11,14 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
+import butterknife.Unbinder;
 
 
 /**
@@ -43,39 +44,40 @@ import cn.qingchengfit.staffkit.model.bean.CourseDetail;
  */
 public class CourseBaseInfoShowFragment extends BaseFragment {
 
-    @Bind(R.id.img)
+    @BindView(R.id.img)
     ImageView img;
-    @Bind(R.id.img_foot)
-    ImageView imgFoot;
-    @Bind(R.id.text1)
+//    @BindView(R.id.img_foot)
+//    ImageView imgFoot;
+    @BindView(R.id.text1)
     TextView text1;
-    @Bind(R.id.texticon)
+    @BindView(R.id.texticon)
     ImageView texticon;
-    @Bind(R.id.text2)
+    @BindView(R.id.text2)
     TextView text2;
-    @Bind(R.id.text3)
+    @BindView(R.id.text3)
     TextView text3;
-    @Bind(R.id.righticon)
+    @BindView(R.id.righticon)
     ImageView righticon;
-    @Bind(R.id.course_layout)
+    @BindView(R.id.course_layout)
     RelativeLayout courseLayout;
-    @Bind(R.id.min_course_num)
+    @BindView(R.id.min_course_num)
     TextView minCourseNum;
-    @Bind(R.id.min_course_num_layout)
+    @BindView(R.id.min_course_num_layout)
     LinearLayout minCourseNumLayout;
-    @Bind(R.id.default_course_plan)
+    @BindView(R.id.default_course_plan)
     TextView defaultCoursePlan;
-    @Bind(R.id.default_course_plan_layout)
+    @BindView(R.id.default_course_plan_layout)
     LinearLayout defaultCoursePlanLayout;
-    @Bind(R.id.suit_gyms)
+    @BindView(R.id.suit_gyms)
     TextView suitGyms;
-    @Bind(R.id.suit_gyms_layout)
+    @BindView(R.id.suit_gyms_layout)
     LinearLayout suitGymsLayout;
-    @Bind(R.id.single_order_count)
+    @BindView(R.id.single_order_count)
     TextView singleOrderCount;
 
 
     private CourseDetail mCourse;
+    private Unbinder unbinder;
 
     public static CourseBaseInfoShowFragment newInstance(CourseDetail course) {
 
@@ -98,7 +100,7 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_base_info_show, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         setView();
         return view;
     }
@@ -107,10 +109,10 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
     private void setView() {
         if (mCourse != null) {
             Glide.with(getContext()).load(mCourse.getPhoto()).placeholder(R.drawable.img_loadingimage).into(img);
-            imgFoot.setVisibility(View.GONE);
+//            imgFoot.setVisibility(View.GONE);
             text1.setText(mCourse.getName());
             text2.setVisibility(View.GONE);
-            text3.setText(String.format(Locale.CHINA, "时长%d分钟", Integer.parseInt(mCourse.getLength()) / 60).concat(", ").concat(String.format(Locale.CHINA, "累计%d节课", mCourse.getSchedule_count())));
+            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength() / 60).concat(", ").concat(String.format(Locale.CHINA, "累计%d节课", mCourse.getSchedule_count())));
             singleOrderCount.setText(mCourse.getCapacity()+"");
 
             //默认课程计划
@@ -147,6 +149,6 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

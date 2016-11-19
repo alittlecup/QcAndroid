@@ -4,6 +4,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -128,7 +129,7 @@ public class MyStudentFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_student, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.menu_students);
@@ -144,7 +145,8 @@ public class MyStudentFragment extends BaseFragment {
                 startActivityForResult(choosegym, 501);
             }
         });
-        toolbar.setOverflowIcon(getContext().getResources().getDrawable(R.drawable.ic_action_add));
+
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_action_add));
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_search) {
                 searchview.setVisibility(View.VISIBLE);
@@ -177,8 +179,8 @@ public class MyStudentFragment extends BaseFragment {
                 Intent it = new Intent(getContext(), StudentHomeActivity.class);
                 it.putExtra("id", adapterData.get(pos).modelid);
                 it.putExtra("model", adapterData.get(pos).model);
-                it.putExtra("student_id",adapterData.get(pos).id);
-                it.putExtra("modeltype",adapterData.get(pos).modeltype);
+                it.putExtra("student_id", adapterData.get(pos).id);
+                it.putExtra("modeltype", adapterData.get(pos).modeltype);
                 MyStudentFragment.this.startActivityForResult(it, 404);
             }
         });
@@ -393,7 +395,7 @@ public class MyStudentFragment extends BaseFragment {
                         bean.systemUrl = ship.service.host;
                         bean.id = student.id;
                         bean.color = ship.service.color;
-                        bean.modelid = ship.service.id+"";
+                        bean.modelid = ship.service.id + "";
                         bean.model = ship.service.model;
                         bean.modeltype = ship.service.type;
                         if (TextUtils.isEmpty(student.head) || !AlphabetView.Alphabet.contains(student.head)) {

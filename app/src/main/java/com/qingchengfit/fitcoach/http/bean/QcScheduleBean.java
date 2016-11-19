@@ -1,5 +1,8 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -44,9 +47,42 @@ public class QcScheduleBean {
         public String username;
     }
 
-    public static class Shop {
+    public static class Shop implements Parcelable {
         @SerializedName("name")
         public String name;
+        @SerializedName("id")
+        public String id;
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.name);
+            dest.writeString(this.id);
+        }
+
+        public Shop() {
+        }
+
+        protected Shop(Parcel in) {
+            this.name = in.readString();
+            this.id = in.readString();
+        }
+
+        public static final Parcelable.Creator<Shop> CREATOR = new Parcelable.Creator<Shop>() {
+            @Override
+            public Shop createFromParcel(Parcel source) {
+                return new Shop(source);
+            }
+
+            @Override
+            public Shop[] newArray(int size) {
+                return new Shop[size];
+            }
+        };
     }
 
     public static class Course {

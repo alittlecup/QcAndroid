@@ -15,6 +15,25 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.event.DelCourseEvent;
+import com.qingchengfit.fitcoach.fragment.VpFragment;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
+import com.qingchengfit.fitcoach.items.CourseEmptyItem;
+import com.qingchengfit.fitcoach.items.CourseItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,29 +41,10 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.model.item.CourseEmptyItem;
-import cn.qingchengfit.staffkit.model.item.CourseItem;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.rxbus.event.DelCourseEvent;
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.response.QcResponse;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseCourseList;
-import cn.qingchengfit.staffkit.usecase.response.ResponseConstant;
-import cn.qingchengfit.staffkit.utils.GymUtils;
-import cn.qingchengfit.staffkit.utils.ToastUtils;
-import cn.qingchengfit.staffkit.views.TitleFragment;
-import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -52,6 +52,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+
 
 /**
  * power by
@@ -73,10 +75,10 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/2.
  */
-public class CourseListFragment extends BaseFragment implements
-        FlexibleAdapter.OnItemClickListener, TitleFragment,View.OnClickListener {
+public class CourseListFragment extends VpFragment implements
+        FlexibleAdapter.OnItemClickListener,View.OnClickListener {
 
-    @Bind(R.id.rv)
+    @BindView(R.id.rv)
     RecycleViewWithNoImg rv;
 
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
@@ -91,6 +93,7 @@ public class CourseListFragment extends BaseFragment implements
     @Inject
     CoachService coachService;
     private boolean mIsPrivate;
+    private Unbinder unbinding;
 
     public static CourseListFragment newInstance(boolean isPrivate) {
 
@@ -112,7 +115,7 @@ public class CourseListFragment extends BaseFragment implements
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rv_no_data, container, false);
-        ButterKnife.bind(this, view);
+        unbinding = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity)
             ((CourseActivity) getActivity()).getComponent().inject(this);
 
@@ -284,7 +287,7 @@ public class CourseListFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinding.unbind();
     }
 
     @Override
@@ -292,7 +295,7 @@ public class CourseListFragment extends BaseFragment implements
         if (mAdatper.getItem(position) instanceof CourseItem) {
 
             getParentFragment().getFragmentManager().beginTransaction()
-                    .replace(mCallbackActivity.getFragId(), CourseDetailFragment.newInstance(((CourseItem) mAdatper.getItem(position)).courseDetail))
+                    .replace(R.id.frag, CourseDetailFragment.newInstance(((CourseItem) mAdatper.getItem(position)).courseDetail))
                     .addToBackStack(((CourseFragment) getParentFragment()).getFragmentName())
                     .commit();
         }

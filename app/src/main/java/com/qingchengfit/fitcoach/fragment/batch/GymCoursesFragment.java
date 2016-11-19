@@ -14,28 +14,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
+import com.qingchengfit.fitcoach.bean.RxAddCourse;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourse;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.inject.commpont.GymComponent;
-import cn.qingchengfit.staffkit.model.bean.ImageThreeTextBean;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
-import cn.qingchengfit.staffkit.rxbus.event.RxAddCourse;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseCourse;
-import cn.qingchengfit.staffkit.views.adapter.FragmentAdapter;
-import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
 
 /**
  * power by
@@ -52,17 +52,17 @@ import rx.functions.Action1;
  */
 public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
 
-    @Bind(R.id.gym_img)
+    @BindView(R.id.gym_img)
     ImageView gymImg;
-    @Bind(R.id.gym_name)
+    @BindView(R.id.gym_name)
     TextView gymName;
-    @Bind(R.id.gym_title_tag)
+    @BindView(R.id.gym_title_tag)
     ImageView gymTitleTag;
-    @Bind(R.id.gym_count)
+    @BindView(R.id.gym_count)
     TextView gymCount;
-    @Bind(R.id.myhome_tab)
+    @BindView(R.id.myhome_tab)
     TabLayout myhomeTab;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewpager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     private FragmentAdapter fragmentAdater;
@@ -78,12 +78,13 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_courses, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
+        if (getActivity() instanceof BatchActivity)
+            ((BatchActivity) getActivity()).getComponent().inject(this);
 
-        ((GymComponent) mCallbackActivity.getComponent()).inject(this);
 
         presenter.attachView(this);
-        mCallbackActivity.setToolbar("课程排期", false, null, 0, null);
+//        mCallbackActivity.setToolbar("课程排期", false, null, 0, null);
         if (fragments.size() == 0) {
             fragments.clear();
             fragments.add(CourseListFragment.newInstance(Configs.TYPE_GROUP));
@@ -94,8 +95,6 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
         myhomeTab.setupWithViewPager(viewpager);
         initRxBus();
-
-
         return view;
     }
 
@@ -118,7 +117,7 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
                             c.is_private = false;
                         } else if (((RxAddCourse) o).type == Configs.TYPE_PRIVATE) {//新增私教排期
                             c.is_private = true;
-                            ChooseCoachFragment.start(GymCoursesFragment.this, 2, "", Configs.INIT_TYPE_CHOOSE);
+//                            ChooseCoachFragment.start(GymCoursesFragment.this, 2, "", Configs.INIT_TYPE_CHOOSE);
                         }
 
                     }
@@ -143,10 +142,6 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
 
                     @Override
                     public void onNext(ImageThreeTextBean imageThreeTextBean) {
-//                        getFragmentManager().beginTransaction()
-//                                .add(mCallbackActivity.getFragId(), CourseBatchDetailFragment.newInstance())
-//                                .addToBackStack(null)
-//                                .commit();
                         if (TextUtils.isEmpty(imageThreeTextBean.tags.get(ImageThreeTextBean.TAG_MODEL))) {
 //                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_MODEL, mModel);
 //                            imageThreeTextBean.tags.put(ImageThreeTextBean.TAG_ID, mId + "");
@@ -186,7 +181,7 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
         RxBus.getBus().unregister(RxAddCourse.class.getName(), mAddObserable);
         RxBus.getBus().unregister(ImageThreeTextBean.class.getName(), mCourseObserable);
         super.onDestroyView();
-        ButterKnife.unbind(this);
+
     }
 
 

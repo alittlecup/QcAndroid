@@ -1,9 +1,10 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
+import com.anbillon.qcmvplib.PView;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
+
 import java.util.ArrayList;
 
-import cn.qingchengfit.staffkit.model.bean.ImageThreeTextBean;
-import cn.qingchengfit.staffkit.mvpbase.PView;
 
 /**
  * power by

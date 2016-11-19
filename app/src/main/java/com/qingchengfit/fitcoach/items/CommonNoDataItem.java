@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -71,9 +72,9 @@ public class CommonNoDataItem extends AbstractFlexibleItem<CommonNoDataItem.Comm
     }
 
     public static class CommonNodataVH extends FlexibleViewHolder {
-        @Bind(R.id.img)
+        @BindView(R.id.img)
         ImageView img;
-        @Bind(R.id.hint)
+        @BindView(R.id.hint)
         TextView hint;
 
         public CommonNodataVH(View view, FlexibleAdapter adapter) {

@@ -12,6 +12,7 @@ import com.qingchengfit.fitcoach.fragment.AddStudentManulkFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailFragment;
 import com.qingchengfit.fitcoach.fragment.GymDetailNativeFragment;
 import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
+import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 
@@ -68,13 +69,16 @@ public class FragActivity extends BaseAcitivity {
             case 6:
                 long gymid = getIntent().getLongExtra("id", 1l);
                 String isPrivategym = getIntent().getStringExtra("model");
-                fragment = GymDetailNativeFragment.newInstance(gymid,isPrivategym);
+                fragment = GymDetailNativeFragment.newInstance(gymid, isPrivategym);
                 break;
             case 7:
                 fragment = AddStudentManulkFragment.newInstance();
                 break;
             case 8:
                 fragment = new MyCoursePlanFragment();
+                break;
+            case 9:
+                fragment = new MyStudentFragment();
                 break;
             default:
                 break;

@@ -83,7 +83,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
-
+        refresh();
         return view;
     }
 
@@ -136,6 +136,8 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     public boolean onItemClick(int position) {
         if (mAdapter.getItem(position) instanceof GymItem) {
             RxBus.getBus().post(((GymItem) mAdapter.getItem(position)).coachService);
+            getActivity().onBackPressed();
+
         } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
             Intent goBrands = new Intent(getActivity(), ChooseBrandActivity.class);
             startActivityForResult(goBrands, 1);

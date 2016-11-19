@@ -8,16 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.bean.SchedulePhoto;
 
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
-import cn.qingchengfit.staffkit.usecase.bean.SchedulePhoto;
-import cn.qingchengfit.staffkit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.flexibleadapter.items.IHeader;
@@ -106,11 +106,11 @@ public class AllCourseImageItem extends AbstractFlexibleItem implements ISection
 
     public static class AllCourseImageItemHolder extends FlexibleViewHolder {
 
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         ImageView image;
-        @Bind(R.id.reader)
+        @BindView(R.id.reader)
         TextView reader;
-        @Bind(R.id.uploader)
+        @BindView(R.id.uploader)
         TextView uploader;
 
 

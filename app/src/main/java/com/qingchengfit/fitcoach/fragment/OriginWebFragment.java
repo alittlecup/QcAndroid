@@ -72,6 +72,8 @@ public class OriginWebFragment extends WebFragment {
     Toolbar toolbar;
     @BindView(R.id.toobar_action)
     TextView toobarAction;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     private String base_url;
     private Gson gson;
     //    private Observable<NewPushMsg> mObservable;
@@ -145,11 +147,11 @@ public class OriginWebFragment extends WebFragment {
         mWebviewRootLinearLayout = (LinearLayout) view.findViewById(R.id.webview_root);
 
 
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        toolbar.setTitle("");
+        toolbarTitle.setText("");
         if (isTitle)
             toolbar.setVisibility(View.GONE);
 
@@ -182,7 +184,7 @@ public class OriginWebFragment extends WebFragment {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading" + url);
-                if (!TextUtils.isEmpty(toolbar.getTitle().toString())) {
+                if (!TextUtils.isEmpty(toolbarTitle.getText().toString())) {
                     URI uri = null;
                     try {
                         uri = new URI(url);
@@ -197,7 +199,7 @@ public class OriginWebFragment extends WebFragment {
                     } catch (URISyntaxException e) {
 
                     }
-                    mTitleStack.add(toolbar.getTitle().toString());
+                    mTitleStack.add(toolbarTitle.getText().toString());
                     WebBackForwardList webBackForwardList = mWebviewWebView.copyBackForwardList();
                     if (uri != null) {
                         String path = uri.getHost() + uri.getPath();
@@ -211,25 +213,17 @@ public class OriginWebFragment extends WebFragment {
                             urls.add(path);
                             mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                         }
-//                        urls.add(path);
-
 
                     } else {
                         mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                     }
-//                    mTitleStack.add(toolbar.getTitle().toString());
-//                    WebBackForwardList webBackForwardList = webview.copyBackForwardList();
-//                    mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
-//                    LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-//                super.onReceivedError(view, errorCode, description, failingUrl);
-                LogUtil.e("errorCode:" + errorCode);
-                toolbar.setTitle("");
+                toolbarTitle.setText("");
                 webview.loadUrl("");
                 showDialog();
 
@@ -301,8 +295,7 @@ public class OriginWebFragment extends WebFragment {
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
 
-                toolbar.setTitle(title);
-//                }
+                toolbarTitle.setText(title);
 
             }
 
@@ -420,7 +413,7 @@ public class OriginWebFragment extends WebFragment {
         WebBackForwardList webBackForwardList = webview.copyBackForwardList();
         LogUtil.e("goback:" + (mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1));
         webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
-        toolbar.setTitle(mTitleStack.get(mTitleStack.size() - 1));
+        toolbarTitle.setText(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
 //        if (mlastPosition.size()>0){
@@ -514,8 +507,8 @@ public class OriginWebFragment extends WebFragment {
         public void shareInfo(String json) {
             ShareBean bean = gson.fromJson(json, ShareBean.class);
 //            ShareUtils.oneKeyShared(getContext(), bean.title, bean.imgUrl, bean.desc, bean.title);
-            ShareDialogFragment.newInstance(bean.title,bean.desc,bean.imgUrl,bean.link)
-                    .show(getFragmentManager(),"");
+            ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link)
+                    .show(getFragmentManager(), "");
         }
 
 
@@ -553,7 +546,7 @@ public class OriginWebFragment extends WebFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        toolbar.setTitle(s);
+                        toolbarTitle.setText(s);
                     }
                 });
             }

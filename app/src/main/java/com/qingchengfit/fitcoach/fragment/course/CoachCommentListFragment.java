@@ -10,6 +10,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.adapter.CoachCommentAdapter;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,23 +28,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.bean.CourseTeacher;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseCourseTeacher;
-import cn.qingchengfit.staffkit.utils.GymUtils;
-import cn.qingchengfit.staffkit.utils.StringUtils;
-import cn.qingchengfit.staffkit.views.adapter.CoachCommentAdapter;
-import cn.qingchengfit.staffkit.views.custom.PagerSlidingTabImageStrip;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
 
 /**
  * power by
@@ -57,9 +59,9 @@ import rx.schedulers.Schedulers;
  */
 public class CoachCommentListFragment extends BaseFragment {
 
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewpager;
-    @Bind(R.id.strip)
+    @BindView(R.id.strip)
     PagerSlidingTabImageStrip strip;
     List<CourseTeacher> coaches = new ArrayList<>();
 
@@ -69,23 +71,24 @@ public class CoachCommentListFragment extends BaseFragment {
     CoachService coachService;
     @Inject
     Brand brand;
-    @Bind(R.id.shop_img)
+    @BindView(R.id.shop_img)
     ImageView shopImg;
-    @Bind(R.id.shop_name)
+    @BindView(R.id.shop_name)
     TextView shopName;
-    @Bind(R.id.coach_score)
+    @BindView(R.id.coach_score)
     TextView coachScore;
-    @Bind(R.id.course_score)
+    @BindView(R.id.course_score)
     TextView courseScore;
-    @Bind(R.id.server_score)
+    @BindView(R.id.server_score)
     TextView serverScore;
-    @Bind(R.id.img)
+    @BindView(R.id.img)
     ImageView img;
-    @Bind(R.id.hint)
+    @BindView(R.id.hint)
     TextView hint;
-    @Bind(R.id.no_data_layout)
+    @BindView(R.id.no_data_layout)
     LinearLayout noDataLayout;
     private CoachCommentAdapter adapter;
+    private Unbinder unbinder;
 
     public static CoachCommentListFragment newInstance(String courseid) {
 
@@ -110,10 +113,10 @@ public class CoachCommentListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_comment_list, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity)
             ((CourseActivity) getActivity()).getComponent().inject(this);
-        mCallbackActivity.setToolbar("", false, null, 0, null);
+//        mCallbackActivity.setToolbar("", false, null, 0, null);
         String shopid = getArguments().getString("shop");
         HashMap<String, String> params = new HashMap<>();
         if (GymUtils.isInBrand(coachService)) {
@@ -142,7 +145,7 @@ public class CoachCommentListFragment extends BaseFragment {
                             hint.setText(R.string.no_teacher_in_course);
                         }
                         if (qcResponseCourseTeacher.data != null && qcResponseCourseTeacher.data.shop != null) {
-                            mCallbackActivity.setToolbar(qcResponseCourseTeacher.data.courseDetail.getName(), false, null, 0, null);
+//                            mCallbackActivity.setToolbar(qcResponseCourseTeacher.data.courseDetail.getName(), false, null, 0, null);
                             Glide.with(getContext()).load(qcResponseCourseTeacher.data.shop.logo).placeholder(R.drawable.ic_default_header).into(shopImg);
                             shopName.setText(qcResponseCourseTeacher.data.shop.name);
                             courseScore.setText(StringUtils.getFloatDot1(qcResponseCourseTeacher.data.courseDetail.getCourse_score()));
@@ -171,6 +174,6 @@ public class CoachCommentListFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 }

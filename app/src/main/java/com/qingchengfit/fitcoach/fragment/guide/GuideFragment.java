@@ -1,15 +1,18 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.badoualy.stepperindicator.StepperIndicator;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
+import com.qingchengfit.fitcoach.event.EventToolbar;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 import butterknife.BindView;
@@ -47,6 +50,10 @@ public class GuideFragment extends BaseFragment {
 
     CoachInitBean initBean;
     Gson gson = new Gson();
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     private Unbinder unbinder;
 
 
@@ -54,6 +61,16 @@ public class GuideFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbarTitle.setText("设置健身房");
+        RxBusAdd(EventToolbar.class).subscribe(eventToolbar -> toolbarTitle.setText(eventToolbar.title));
 
         String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
         if (initStr != null || initStr.isEmpty())

@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.fragment.batch;
 
 import android.content.Intent;
 
+import com.anbillon.qcmvplib.PView;
+import com.anbillon.qcmvplib.Presenter;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+
 import javax.inject.Inject;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.mvpbase.Presenter;
-import cn.qingchengfit.staffkit.usecase.GymUseCase;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
 
 /**
  * power by
@@ -23,13 +23,12 @@ import cn.qingchengfit.staffkit.usecase.bean.CoachService;
  * Created by Paper on 16/3/23 2016.
  */
 public class GymCoursesPresenter implements Presenter {
-    GymUseCase useCase;
+
     CoachService coachService;
     GymCoursesView view;
 
     @Inject
-    public GymCoursesPresenter(GymUseCase useCase, CoachService coachService) {
-        this.useCase = useCase;
+    public GymCoursesPresenter(CoachService coachService) {
         this.coachService = coachService;
     }
 

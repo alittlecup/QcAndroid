@@ -1,14 +1,17 @@
 package com.qingchengfit.fitcoach.di;
 
 import android.content.Intent;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
-import android.support.annotation.CallSuper;
+
+import com.anbillon.qcmvplib.PView;
+import com.anbillon.qcmvplib.Presenter;
+import com.qingchengfit.fitcoach.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qingchengfit.staffkit.rxbus.RxBus;
 import rx.Observable;
 import rx.Subscription;
 

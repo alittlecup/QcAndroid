@@ -1,23 +1,23 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
+import com.anbillon.qcmvplib.PView;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.di.BasePresenter;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.CourseBody;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+
 import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.inject.moudle.GymStatus;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.body.CourseBody;
-import cn.qingchengfit.staffkit.usecase.response.QcResponse;
-import cn.qingchengfit.staffkit.usecase.response.ResponseConstant;
-import cn.qingchengfit.staffkit.utils.GymUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -48,14 +48,14 @@ public class EditCoursePresenter extends BasePresenter {
     private CoachService coachService;
     private EditCourseView view;
     private RestRepository restRepository;
-    private GymStatus gymStatus;
+//    private GymStatus gymStatus;
 
     @Inject
-    public EditCoursePresenter(Brand brand, CoachService coachService, RestRepository restRepository, GymStatus gymStatus) {
+    public EditCoursePresenter(Brand brand, CoachService coachService, RestRepository restRepository) {
         this.brand = brand;
         this.coachService = coachService;
         this.restRepository = restRepository;
-        this.gymStatus = gymStatus;
+//        this.gymStatus = gymStatus;
     }
 
 
@@ -86,24 +86,26 @@ public class EditCoursePresenter extends BasePresenter {
             }
             view.editSuitGym(courseDetail);
         } else {//场馆下
-            if (gymStatus.getSingle()) { //但场馆模式
-                view.showBaseInfoHint(null);
-                view.editBaseInfo(courseDetail);
+//            if (gymStatus.getSingle()) { //但场馆模式
+//                view.showBaseInfoHint(null);
+//                view.editBaseInfo(courseDetail);
 
-            } else {//多场馆进入
-                if (courseDetail.getShopIdList().size() > 1){
-                    view.showBaseInfoHint("请在「连锁运营」中修改基本信息");
-                    view.showbaseInfo(courseDetail);
-                } else if ((courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.PRISETTING_CAN_CHANGE))
-                        || (!courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.TEAMSETTING_CAN_CHANGE))
-                        ) {
-                    view.showBaseInfoHint(null);
-                    view.editBaseInfo(courseDetail);
-                } else {
-                    view.showBaseInfoHint("抱歉!您没有修改权限");
-                    view.showbaseInfo(courseDetail);
-                }
-            }
+//            }
+//            else{
+//          多场馆进入
+//                if (courseDetail.getShopIdList().size() > 1){
+//                    view.showBaseInfoHint("请在「连锁运营」中修改基本信息");
+//                    view.showbaseInfo(courseDetail);
+//                } else if ((courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.PRISETTING_CAN_CHANGE))
+//                        || (!courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.TEAMSETTING_CAN_CHANGE))
+//                        ) {
+//                    view.showBaseInfoHint(null);
+//                    view.editBaseInfo(courseDetail);
+//                } else {
+//                    view.showBaseInfoHint("抱歉!您没有修改权限");
+//                    view.showbaseInfo(courseDetail);
+//                }
+//            }
             view.showSuitGymHint("请在「连锁运营」中修改所属场馆");
             view.showSuitGym(courseDetail);
         }

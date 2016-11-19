@@ -5,14 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+
 
 /**
  * power by
@@ -61,7 +63,7 @@ public class JacketAddItem extends AbstractFlexibleItem<JacketAddItem.JacketAddV
     }
 
     public static class JacketAddVH extends FlexibleViewHolder {
-        @Bind(R.id.add_img)
+        @BindView(R.id.add_img)
         TextView addImg;
         public JacketAddVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

@@ -2,29 +2,29 @@ package com.qingchengfit.fitcoach.fragment.course;
 
 import android.support.annotation.StringRes;
 
+import com.anbillon.qcmvplib.PView;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.Utils.Utils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
+import com.qingchengfit.fitcoach.bean.TeacherImpression;
+import com.qingchengfit.fitcoach.di.BasePresenter;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseDetail;
+
 import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.inject.moudle.GymStatus;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.model.bean.TeacherImpression;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
-import cn.qingchengfit.staffkit.usecase.response.QcResponse;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseCourseDetail;
-import cn.qingchengfit.staffkit.usecase.response.ResponseConstant;
-import cn.qingchengfit.staffkit.utils.GymUtils;
-import cn.qingchengfit.staffkit.utils.Utils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -54,14 +54,14 @@ public class CourseDetailPresenter extends BasePresenter {
     private CoachService coachService;
     private RestRepository restRepository;
     private CourseDetailView view;
-    private GymStatus gymStatus;
+//    private GymStatus gymStatus;
 
     @Inject
-    public CourseDetailPresenter(Brand brand, CoachService coachService, GymStatus gymStatus, RestRepository restRepository) {
+    public CourseDetailPresenter(Brand brand, CoachService coachService, RestRepository restRepository) {
         this.brand = brand;
         this.coachService = coachService;
         this.restRepository = restRepository;
-        this.gymStatus = gymStatus;
+//        this.gymStatus = gymStatus;
     }
 
 
@@ -123,10 +123,12 @@ public class CourseDetailPresenter extends BasePresenter {
                     view.showDelFailed(R.string.alert_permission_forbid);
                     return false;
                 }
-            } else if (gymStatus.getSingle()) {
-                view.showDelFailed(R.string.alert_edit_course_all_permission);
+            }
+//            else if (gymStatus.getSingle()) {
+//                view.showDelFailed(R.string.alert_edit_course_all_permission);
 
-            } else {
+//            }
+        else {
                 view.showDelFailed("此课程种类适用于多个场馆，请在【连锁运营】里进行编辑");
                 return false;
             }
@@ -157,19 +159,21 @@ public class CourseDetailPresenter extends BasePresenter {
             if (courseDetail.is_private() && SerPermisAction.checkMuti(PermissionServerUtils.PRISETTING_CAN_DELETE, courseDetail.getShopIdList())
                     || !courseDetail.is_private() && SerPermisAction.checkMuti(PermissionServerUtils.TEAMSETTING_CAN_DELETE, courseDetail.getShopIdList())
                     ) {
-                view.showDelDialog(String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course), shopcount));
+                view.showDelDialog(String.format(Locale.CHINA, App.AppContex.getString(R.string.alert_del_course), shopcount));
             } else
-                view.showDelFailed(String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course_forbid), shopcount));
+                view.showDelFailed(String.format(Locale.CHINA, App.AppContex.getString(R.string.alert_del_course_forbid), shopcount));
         } else {
             if (shopcount == 1) {
-                if (courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.PRISETTING_CAN_DELETE)
-                        || !courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.TEAMSETTING_CAN_DELETE)
-                        )
-                    view.showDelDialog("删除后，已有的排期和课程预约都不会受到影响");
-                else view.showDelFailed("抱歉!您没有该功能权限");
-            } else if (gymStatus.getSingle()) {
-                view.showDelFailed(String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course_forbid), shopcount));
-            } else {
+//                if (courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.PRISETTING_CAN_DELETE)
+//                        || !courseDetail.is_private() && SerPermisAction.check(coachService.getShop_id(), PermissionServerUtils.TEAMSETTING_CAN_DELETE)
+//                        )
+//                    view.showDelDialog("删除后，已有的排期和课程预约都不会受到影响");
+//                else view.showDelFailed("抱歉!您没有该功能权限");
+            }
+//            else if (gymStatus.getSingle()) {
+//                view.showDelFailed(String.format(Locale.CHINA, App.context.getString(R.string.alert_del_course_forbid), shopcount));
+//            }
+            else {
                 view.showDelFailed("该课程适用于多家场馆,请到【连锁运营】里进行删除");
             }
         }

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch.list;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
+
+import com.anbillon.qcmvplib.PView;
 
 /**
  * power by

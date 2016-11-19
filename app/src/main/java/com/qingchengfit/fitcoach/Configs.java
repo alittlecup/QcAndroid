@@ -23,6 +23,7 @@ public class Configs {
 
     public static final String SIGN_PAUSE = "、";
     public static  String APP_ID ;
+    public static  String SEPARATOR = ",";
     /**
      * http config
      */

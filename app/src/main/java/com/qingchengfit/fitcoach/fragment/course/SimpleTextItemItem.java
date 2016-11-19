@@ -5,14 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+
+
 
 public class SimpleTextItemItem extends AbstractFlexibleItem<SimpleTextItemItem.SimpleTextItemVH> {
 
@@ -44,7 +47,7 @@ public class SimpleTextItemItem extends AbstractFlexibleItem<SimpleTextItemItem.
 
     public class SimpleTextItemVH extends FlexibleViewHolder {
 
-        @Bind(R.id.item_text)
+        @BindView(R.id.item_text)
         TextView itemText;
 
         public SimpleTextItemVH(View view, FlexibleAdapter adapter) {

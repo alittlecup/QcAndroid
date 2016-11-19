@@ -413,34 +413,34 @@ public class AddCourseFrament extends Fragment {
                             params.put("course_id", mCourseId + "");
                             params.put("model", mModel);
 
-                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe(new Subscriber<QcResponse>() {
-                                        @Override
-                                        public void onCompleted() {
-
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-
-                                        }
-
-                                        @Override
-                                        public void onNext(QcResponse qcResponse) {
-                                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                                                ToastUtils.show("删除成功");
-                                                getActivity().onBackPressed();
-                                                getActivity().onBackPressed();
-                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
-                                            } else {
-
-                                            }
-                                        }
-                                    });
-
-
+//                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
+//                                    .observeOn(AndroidSchedulers.mainThread())
+//                                    .subscribeOn(Schedulers.io())
+//                                    .subscribe(new Subscriber<QcResponse>() {
+//                                        @Override
+//                                        public void onCompleted() {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onError(Throwable e) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onNext(QcResponse qcResponse) {
+//                                            if (qcResponse.status == ResponseResult.SUCCESS) {
+//                                                ToastUtils.show("删除成功");
+//                                                getActivity().onBackPressed();
+//                                                getActivity().onBackPressed();
+//                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
+//                                            } else {
+//
+//                                            }
+//                                        }
+//                                    });
+//
+//
                         }
 
                         @Override

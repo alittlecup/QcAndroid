@@ -1,5 +1,8 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -22,4 +25,36 @@ package com.qingchengfit.fitcoach.Utils;
  */
 
 public class Utils {
+    public static String checkNull(String t) {
+        if (t == null) {
+            return "";
+        } else return t;
+    }
+
+    public static List checkNull(List t) {
+        if (t == null) {
+            return new ArrayList();
+        } else return t;
+    }
+
+    public static Long permissNoNull(Long l){
+        if (l == null)
+            return 0L;
+        else return l;
+
+    }
+    public static float permissNoNull(Float l){
+        if (l == null)
+            return 0f;
+        else return l;
+
+    }
+
+    public static int[] toIntArray(List<Integer> list){
+        int[] ret = new int[list.size()];
+        for(int i = 0;i < ret.length;i++)
+            ret[i] = list.get(i);
+        return ret;
+    }
+
 }

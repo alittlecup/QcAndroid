@@ -1,9 +1,10 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+
 import java.util.HashMap;
 
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
 
 /**
  * power by
@@ -20,13 +21,13 @@ import cn.qingchengfit.staffkit.usecase.bean.CoachService;
  */
 public class GymUtils {
     public static boolean isInBrand(CoachService gymBase) {
-        return gymBase == null || gymBase.getId() == null || gymBase.getModel() == null;
+        return gymBase == null || gymBase.id == 0 || gymBase.model == null;
     }
     public static String getBrandId(CoachService coachService, Brand brand){
         if (isInBrand(coachService)){
             return brand.getId();
         }else {
-            return coachService.getBrand_id();
+            return coachService.brand_name;
         }
     }
     public static HashMap<String,String> getParams(CoachService gymBase, Brand brand){
@@ -35,7 +36,7 @@ public class GymUtils {
             params.put("brand_id",brand.getId());
         }
         else {
-            params.put("id",gymBase.getId());
+            params.put("id",gymBase.getId()+"");
             params.put("model",gymBase.getModel());
         }
         return params;
@@ -49,7 +50,7 @@ public class GymUtils {
                 params.put("shop_id",shopid);
         }
         else {
-            params.put("id",gymBase.getId());
+            params.put("id",gymBase.getId()+"");
             params.put("model",gymBase.getModel());
         }
         return params;

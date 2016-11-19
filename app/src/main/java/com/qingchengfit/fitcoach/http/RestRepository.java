@@ -22,4 +22,19 @@ package com.qingchengfit.fitcoach.http;
  */
 
 public class RestRepository {
+
+    public RestRepository(QcCloudClient client) {
+        this.client = client;
+    }
+
+    private QcCloudClient client;
+
+    public QcCloudClient.GetApi getGet_api(){
+        return client.getApi;
+    }
+    public QcCloudClient.PostApi getPost_api(){
+        return client.postApi;
+    }
+
+
 }

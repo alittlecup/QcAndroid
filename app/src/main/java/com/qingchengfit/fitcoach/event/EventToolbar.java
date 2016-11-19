@@ -22,4 +22,26 @@ package com.qingchengfit.fitcoach.event;
  */
 
 public class EventToolbar {
+    public String title;
+
+    private EventToolbar(Builder builder) {
+        title = builder.title;
+    }
+
+
+    public static final class Builder {
+        private String title;
+
+        public Builder() {
+        }
+
+        public Builder title(String val) {
+            title = val;
+            return this;
+        }
+
+        public EventToolbar build() {
+            return new EventToolbar(this);
+        }
+    }
 }

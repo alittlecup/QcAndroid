@@ -327,6 +327,12 @@
             android:name=".activity.ChooseBrandActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".fragment.course.CourseActivity"
+            android:screenOrientation="portrait"/>
+     <activity
+            android:name=".fragment.batch.BatchActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.ChooseStudentActivity"
             android:label="@string/title_activity_choose_student"
             android:theme="@style/AppTheme"/>

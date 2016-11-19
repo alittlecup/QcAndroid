@@ -7,8 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-
 /**
  * power by
  * <p/>

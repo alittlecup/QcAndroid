@@ -24,6 +24,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
     private int mIndicatorMargin = -1;
     private int mIndicatorWidth = -1;
     private int mIndicatorHeight = -1;
+    @AnimatorRes
     private int mAnimatorResId = R.anim.scale_with_alpha;
     private int mAnimatorReverseResId = 0;
     private int mIndicatorBackgroundResId = R.drawable.white_radius;
@@ -31,6 +32,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
     private int mCurrentPosition = 0;
     private Animator mAnimationOut;
     private Animator mAnimationIn;
+    private int mCountLess = 0;
 
     public CircleIndicator(Context context) {
         super(context);
@@ -72,16 +74,17 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
         mIndicatorUnselectedBackgroundResId =
                 typedArray.getResourceId(R.styleable.CircleIndicator_ci_drawable_unselected,
                         mIndicatorBackgroundResId);
+        mCountLess = typedArray.getInt(R.styleable.CircleIndicator_ci_count_less,0);
         typedArray.recycle();
     }
 
     /**
      * Create and configure Indicator in Java code.
      */
-//    public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
-//        configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
-//                R.anim.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
-//    }
+    public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
+        configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
+                mAnimatorResId, 0, R.drawable.white_radius, R.drawable.white_radius);
+    }
 
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin,
                                    @AnimatorRes int animatorId, @AnimatorRes int animatorReverseId,
@@ -107,7 +110,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
         mIndicatorMargin =
                 (mIndicatorMargin < 0) ? dip2px(DEFAULT_INDICATOR_WIDTH) : mIndicatorMargin;
 
-        mAnimatorResId = (mAnimatorResId == 0) ? R.anim.scale_with_alpha : mAnimatorResId;
+//        mAnimatorResId = (mAnimatorResId == 0) ? R.anim.scale_with_alpha : mAnimatorResId;
         mAnimationOut = AnimatorInflater.loadAnimator(context, mAnimatorResId);
         if (mAnimatorReverseResId == 0) {
             mAnimationIn = AnimatorInflater.loadAnimator(context, mAnimatorResId);
@@ -123,12 +126,13 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
     }
 
     public void setViewPager(ViewPager viewPager) {
+
         mViewpager = viewPager;
-        mCurrentPosition = mViewpager.getCurrentItem();
+        mCurrentPosition = 0;
         createIndicators(viewPager);
         mViewpager.removeOnPageChangeListener(this);
         mViewpager.addOnPageChangeListener(this);
-        onPageSelected(mCurrentPosition);
+        onPageSelected(mViewpager.getCurrentItem());
     }
 
     /**
@@ -156,18 +160,21 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
 
         if (mAnimationIn.isRunning()) mAnimationIn.end();
         if (mAnimationOut.isRunning()) mAnimationOut.end();
+        try {
+            View currentIndicator = getChildAt(mCurrentPosition);
+            currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
+            mAnimationIn.setTarget(currentIndicator);
+            mAnimationIn.start();
 
-        View currentIndicator = getChildAt(mCurrentPosition);
-        currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
-        mAnimationIn.setTarget(currentIndicator);
-        mAnimationIn.start();
+            View selectedIndicator = getChildAt(position);
+            selectedIndicator.setBackgroundResource(mIndicatorBackgroundResId);
+            mAnimationOut.setTarget(selectedIndicator);
+            mAnimationOut.start();
 
-        View selectedIndicator = getChildAt(position);
-        selectedIndicator.setBackgroundResource(mIndicatorBackgroundResId);
-        mAnimationOut.setTarget(selectedIndicator);
-        mAnimationOut.start();
+            mCurrentPosition = position;
+        }catch (Exception e){
 
-        mCurrentPosition = position;
+        }
     }
 
     @Override
@@ -180,7 +187,7 @@ public class CircleIndicator extends LinearLayout implements OnPageChangeListene
             return;
         }
 
-        int count = viewPager.getAdapter().getCount();//changed for qc
+        int count = viewPager.getAdapter().getCount()-mCountLess;//changed for qc
         if (count <= 0) {
             return;
         }

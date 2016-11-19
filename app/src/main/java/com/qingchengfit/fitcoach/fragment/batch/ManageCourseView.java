@@ -1,7 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
+
+import com.anbillon.qcmvplib.PView;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 /**
  * power by

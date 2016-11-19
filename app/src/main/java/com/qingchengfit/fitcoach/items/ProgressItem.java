@@ -7,15 +7,17 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.qingchengfit.fitcoach.R;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.views.custom.LoadingPointerView;
+import cn.qingchengfit.widgets.LoadingPointerView;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+
 
 /**
  * power by
@@ -67,7 +69,7 @@ public class ProgressItem extends AbstractFlexibleItem<ProgressItem.ProgressVH> 
     }
 
     public static class ProgressVH extends FlexibleViewHolder {
-        @Bind(R.id.pointer)
+        @BindView(R.id.pointer)
         LoadingPointerView loadingPointerView;
         public ProgressVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

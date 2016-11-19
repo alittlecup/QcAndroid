@@ -3,8 +3,6 @@ package com.qingchengfit.fitcoach.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import cn.qingchengfit.staffkit.model.bean.Coach;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

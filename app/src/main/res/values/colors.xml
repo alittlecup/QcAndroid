@@ -11,6 +11,10 @@
     <color name="backgroud_grey">#f4f4f4</color>
     <!--<color username="backgroud_grey">#aaaaaa</color>-->
     <color name="text_red">#f1693c</color>
+    <color name="text_orange">#f9944e</color>
+
+
+
     <color name="most_black">#222222</color>
     <color name="cm_black">#666666</color>
     <color name="less_black">#aaaaaa</color>

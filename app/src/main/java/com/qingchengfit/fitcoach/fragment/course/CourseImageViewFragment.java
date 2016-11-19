@@ -9,16 +9,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.SchedulePhoto;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.usecase.bean.SchedulePhoto;
-import cn.qingchengfit.staffkit.utils.DateUtils;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import uk.co.senab.photoview.PhotoView;
+
 
 /**
  * power by
@@ -42,15 +44,16 @@ import uk.co.senab.photoview.PhotoView;
  */
 public class CourseImageViewFragment extends BaseFragment {
 
-    @Bind(R.id.photoview)
+    @BindView(R.id.photoview)
     PhotoView photoview;
-    @Bind(R.id.seer)
+    @BindView(R.id.seer)
     TextView seer;
-    @Bind(R.id.uploader_date)
+    @BindView(R.id.uploader_date)
     TextView uploaderDate;
-    @Bind(R.id.time)
+    @BindView(R.id.time)
     TextView time;
     private SchedulePhoto mPhoto;
+    private Unbinder unbinding;
 
     public static CourseImageViewFragment newInstance(SchedulePhoto photo) {
 
@@ -72,8 +75,8 @@ public class CourseImageViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_image_viewer, container, false);
-        ButterKnife.bind(this, view);
-        mCallbackActivity.setToolbar("查看大图",false,null,0,null);
+        unbinding = ButterKnife.bind(this, view);
+//        mCallbackActivity.setToolbar("查看大图",false,null,0,null);
         Glide.with(getContext()).load(mPhoto.getPhoto()).placeholder(R.drawable.img_loadingimage).into(photoview);
         seer.setText(mPhoto.is_public()?"": String.format(Locale.CHINA, "仅%s可见", mPhoto.getOwner().name));
         uploaderDate.setText(String.format(Locale.CHINA, "由%s上传", mPhoto.getCreated_by().name).concat(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(mPhoto.getCreated_at()))));
@@ -94,8 +97,8 @@ public class CourseImageViewFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
-        mCallbackActivity.setToolbar("全部课程照片",false,null,0,null);
+//        mCallbackActivity.setToolbar("全部课程照片",false,null,0,null);
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinding.unbind();
     }
 }

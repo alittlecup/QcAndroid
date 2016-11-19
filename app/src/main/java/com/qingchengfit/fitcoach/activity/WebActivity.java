@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -88,6 +89,14 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 15/10/12 2015.
  */
 public class WebActivity extends BaseAcitivity implements WebActivityInterface, CustomSwipeRefreshLayout.CanChildScrollUpCallback {
+
+    public static void startWeb(String url, Context context) {
+        Intent intent = new Intent(context, WebActivity.class);
+        intent.putExtra("url", url);
+        context.startActivity(intent);
+    }
+
+
     //    OriginWebFragment originWebFragment;
     private TextView mToobarActionTextView;
     private Toolbar mToolbar;

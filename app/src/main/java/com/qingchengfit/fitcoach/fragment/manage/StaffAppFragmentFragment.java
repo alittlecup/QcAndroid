@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.manage;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,11 +81,15 @@ public class StaffAppFragmentFragment extends DialogFragment {
                 break;
             case R.id.open_app:
                 try {
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "MainActivity");
-                    intent.setComponent(cn);
-                    startActivity(intent);
+                    Intent toGuide= new Intent(getActivity(), GuideActivity.class);
+                    startActivity(toGuide);
+
+
+//                    Intent intent = new Intent(Intent.ACTION_MAIN);
+//                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//                    ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "cn.qingchengfit.staffkit.MainActivity");
+//                    intent.setComponent(cn);
+//                    startActivity(intent);
                 }catch (Exception e){
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("http://fir.im/qcfit"));

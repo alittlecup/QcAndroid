@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.base.Course;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.model.bean.Course;
 
 /**
  * power by

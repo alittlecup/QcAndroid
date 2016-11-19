@@ -128,6 +128,7 @@ public class GuideSetGymFragment extends BaseFragment {
                                 });
                     }
                 });
+
         return view;
     }
 

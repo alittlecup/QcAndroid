@@ -4,12 +4,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 
+import com.anbillon.qcmvplib.PView;
+import com.anbillon.qcmvplib.Presenter;
+import com.anbillon.qcmvplib.PresenterDelegate;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import rx.Observable;
 import rx.Subscription;
@@ -32,7 +36,13 @@ public abstract class BaseFragment extends Fragment {
     // 标志位，标志已经初始化完成
     protected boolean isVisible;
     boolean isPrepared;
+    private PresenterDelegate delegate;
+    public Unbinder unbinder;
 
+    protected void delegatePresenter(Presenter presenter, PView pView) {
+        delegate = new PresenterDelegate(presenter);
+        delegate.attachView(pView);
+    }
 
 
     public void showLoading() {
@@ -64,21 +74,36 @@ public abstract class BaseFragment extends Fragment {
 //        lazyLoad();
     }
 
-    protected abstract void lazyLoad();
+    protected void lazyLoad() {
+
+    }
+
+    public void showAlert(int res) {
+
+    }
+
+    public void showAlert(String res) {
+
+    }
 
     protected void onInVisible() {
     }
 
-    private List<Pair<String, Observable>> observables  = new ArrayList<>();
+    private List<Pair<String, Observable>> observables = new ArrayList<>();
 
     @Override
     public void onDestroyView() {
-        if (getActivity() != null){
+        if (getActivity() != null) {
             AppUtils.hideKeyboard(getActivity());
         }
+        if (delegate != null)
+            delegate.unattachView();
         unattachView();
         super.onDestroyView();
+        if (unbinder != null)
+            unbinder.unbind();
     }
+
     List<Subscription> sps = new ArrayList<>();
 
     public void unattachView() {
@@ -86,20 +111,22 @@ public abstract class BaseFragment extends Fragment {
             sps.get(i).unsubscribe();
         }
         for (int i = 0; i < observables.size(); i++) {
-            RxBus.getBus().unregister(observables.get(i).first,observables.get(i).second);
+            RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }
 
     }
-
+    public String getFragmentName(){
+        return "fragment";
+    }
 
     public Subscription RxRegiste(Subscription subscription) {
         sps.add(subscription);
         return subscription;
     }
 
-    public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz){
+    public <T> Observable<T> RxBusAdd(@NonNull Class<T> clazz) {
         Observable ob = RxBus.getBus().register(clazz);
-        observables.add(new Pair<String, Observable>(clazz.getName(),ob));
+        observables.add(new Pair<String, Observable>(clazz.getName(), ob));
         return ob;
     }
 

@@ -33,7 +33,6 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -98,6 +97,18 @@ public class GuideSetCourseFragment extends BaseFragment {
                                 });
                     }
                 });
+        btnGroup.setClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnPrivate.toggle();
+            }
+        });
+        btnPrivate.setClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnGroup.toggle();
+            }
+        });
         return view;
     }
 
@@ -158,19 +169,5 @@ public class GuideSetCourseFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.btn_group, R.id.btn_private})
-    public void privateChange(View view) {
-        switch (view.getId()) {
-            case R.id.btn_group:
-                isPrivate = false;
-                btnGroup.setChecked(true);
-                btnPrivate.setChecked(false);
-                break;
-            case R.id.btn_private:
-                isPrivate = true;
-                btnPrivate.setChecked(true);
-                btnGroup.setChecked(false);
-                break;
-        }
-    }
+
 }

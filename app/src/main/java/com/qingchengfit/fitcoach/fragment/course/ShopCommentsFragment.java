@@ -9,24 +9,26 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
+import com.qingchengfit.fitcoach.items.ShopCommentItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.model.item.ShopCommentItem;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseShopComment;
-import cn.qingchengfit.staffkit.utils.StringUtils;
-import cn.qingchengfit.staffkit.views.adapter.CommonFlexAdapter;
-import cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+
 
 /**
  * power by
@@ -50,21 +52,21 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
  */
 public class ShopCommentsFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, ShopCommentPresenter.ShopCommentView {
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     @Inject
     ShopCommentPresenter mPresenter;
-    @Bind(R.id.student_judge_coach_score)
+    @BindView(R.id.student_judge_coach_score)
     TextView studentJudgeCoachScore;
-    @Bind(R.id.student_judge_coach_star)
+    @BindView(R.id.student_judge_coach_star)
     RatingBarVectorFix studentJudgeCoachStar;
-    @Bind(R.id.student_judge_course_score)
+    @BindView(R.id.student_judge_course_score)
     TextView studentJudgeCourseScore;
-    @Bind(R.id.student_judge_course_star)
+    @BindView(R.id.student_judge_course_star)
     RatingBarVectorFix studentJudgeCourseStar;
-    @Bind(R.id.server_score)
+    @BindView(R.id.server_score)
     TextView serverScore;
-    @Bind(R.id.server_rate)
+    @BindView(R.id.server_rate)
     RatingBarVectorFix serverRate;
 
 
@@ -92,10 +94,10 @@ public class ShopCommentsFragment extends BaseFragment implements FlexibleAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop_comment_list, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity)
             ((CourseActivity) getActivity()).getComponent().inject(this);
-        mCallbackActivity.setToolbar("",false,null,0,null);
+//        mCallbackActivity.setToolbar("",false,null,0,null);
         delegatePresenter(mPresenter, this);
 //        initRv();
         mPresenter.queryShopComments(mCourseId);
@@ -125,14 +127,13 @@ public class ShopCommentsFragment extends BaseFragment implements FlexibleAdapte
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override
     public boolean onItemClick(int position) {
         if (mData.get(position) instanceof ShopCommentItem){
             getFragmentManager().beginTransaction()
-                    .replace(mCallbackActivity.getFragId(),  CoachCommentListFragment.newInstance(mCourseId,((ShopCommentItem) mData.get(position)).commentShop.id+""))
+                    .replace(R.id.frag,  CoachCommentListFragment.newInstance(mCourseId,((ShopCommentItem) mData.get(position)).commentShop.id+""))
                     .addToBackStack(getFragmentName())
                     .commit();
 
@@ -157,7 +158,7 @@ public class ShopCommentsFragment extends BaseFragment implements FlexibleAdapte
 
     @Override
     public void onCourse(CourseDetail courseDetail) {
-        mCallbackActivity.setToolbar(courseDetail.getName(),false,null,0,null);
+//        mCallbackActivity.setToolbar(courseDetail.getName(),false,null,0,null);
         studentJudgeCoachScore.setText(StringUtils.getFloatDot1(courseDetail.getTeacher_score()));
         studentJudgeCoachStar.setRating(courseDetail.getTeacher_score());
         studentJudgeCourseScore.setText(StringUtils.getFloatDot1(courseDetail.getCourse_score()));

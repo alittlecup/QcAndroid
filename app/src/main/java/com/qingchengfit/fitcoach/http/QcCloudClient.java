@@ -17,8 +17,10 @@ import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.CheckCode;
 import com.qingchengfit.fitcoach.http.bean.CheckPhoneBean;
+import com.qingchengfit.fitcoach.http.bean.CourseBody;
 import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
 import com.qingchengfit.fitcoach.http.bean.DelCourseManage;
+import com.qingchengfit.fitcoach.http.bean.EditJacketBody;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
 import com.qingchengfit.fitcoach.http.bean.GetBatchesResponse;
@@ -72,6 +74,17 @@ import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponsCreatBrand;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseDetail;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCoursePlan;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
+import com.qingchengfit.fitcoach.http.bean.QcResponseJacket;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
+import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
+import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
@@ -440,6 +453,92 @@ public class QcCloudClient {
         rx.Observable<QcGetBodyTestResponse> qcGetBodyTest(@Path("measure_id") String measure_id, @QueryMap Map<String, String> params);
 
 
+        /**
+         *
+         *
+         *   课程
+         *
+         *
+         */
+
+        //获取健身房课程列表
+        @GET("/api/v2/staffs/{id}/courses/?&show_all=1")
+        rx.Observable<QcResponseCourseList> qcGetCourses(@Path("id") String staff_id, @QueryMap HashMap<String, String> params, @Query("is_private") int is_private);
+
+        /**
+         * 获取课程计划
+         */
+        @GET("/api/v2/staffs/{staff_id}/plantpls/?show_all=1")
+        rx.Observable<QcResponseCoursePlan> qcGetCoursePlan(@Path("staff_id") String id, @QueryMap HashMap<String, String> params);
+
+
+
+
+        /**
+         * 获取课程下教练
+         */
+        @GET("/api/v2/staffs/{staff_id}/courses/teachers/")
+        rx.Observable<QcResponseCourseTeacher> qcGetCourseTeacher(@Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
+
+        /**
+         * 课程下照片
+         */
+        @GET("/api/v2/staffs/{staff_id}/courses/schedules/photos/")
+        rx.Observable<QcResponseSchedulePhotos> qcGetSchedulePhotos(@Path("staff_id") String staff_id, @Query("course_id") String id, @Query("page") int page, @QueryMap HashMap<String, String> params);
+
+        /**
+         * 获取课程详情
+         */
+        @GET("/api/v2/staffs/{staff_id}/courses/")
+        rx.Observable<QcResponseCourseDetail> qcGetCourseDetail(@Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
+
+        /**
+         * 分场馆评分
+         */
+        @GET("/api/v2/staffs/{staff_id}/courses/shops/score/")
+        rx.Observable<QcResponseShopComment> qcGetShopComment(@Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
+
+
+        @GET("/api/v2/staffs/{staff_id}/courses/photos/")
+        rx.Observable<QcResponseJacket> qcGetJacket(@Path("staff_id") String id, @Query("course_id") String course_id, @QueryMap HashMap<String, String> params);
+
+
+        /**
+         * ***********************************    end     ********************
+         */
+
+        /**
+         *
+         *
+         *       权限
+         *
+         */
+
+
+//        @GET("/api/staffs/{id}/permissions/")
+//        rx.Observable<QcResponsePermission> qcPermission(@Path("id") String staff_id, @QueryMap HashMap<String, String> params);
+
+
+
+
+        //获取团课排课
+        @GET("/api/staffs/{id}/group/courses/")
+        rx.Observable<QcResponseGroupCourse> qcGetGroupCourse(@Path("id") String staff_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+
+        //获取私教排课
+        @GET("/api/staffs/{id}/private/coaches/")
+        rx.Observable<QcResponsePrivateCourse> qcGetPrivateCrourse(@Path("id") String staff_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+
+        //获取教练排期
+        @GET("/api/staffs/{id}/coaches/{coach_id}/batches/?course__is_private=1")
+        rx.Observable<QcResponsePrivateDetail> qcGetPrivateBatches(@Path("id") String staff_id, @Path("coach_id") String coach_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+
+        //获取团课排期
+        @GET("/api/staffs/{id}/courses/{course_id}/batches/")
+        rx.Observable<QcResponseGroupDetail> qcGetGroupCourses(@Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+
+
+
     }
 
 
@@ -580,8 +679,8 @@ public class QcCloudClient {
         @PUT("/api/v1/coaches/{id}/courses/")
         rx.Observable<QcResponse> qcEditCourse(@Path("id") int id, @Body AddCourse addCourse);
 
-        @DELETE("/api/v1/coaches/{id}/courses/")
-        rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
+//        @DELETE("/api/v1/coaches/{id}/courses/")
+//        rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
 
         @POST("/api/v1/coaches/{id}/students/add/")
         rx.Observable<QcResponse> qcAddStudent(@Path("id") int id,@Body AddStudentBean StudentBean);
@@ -620,6 +719,34 @@ public class QcCloudClient {
         //删除学员
         @DELETE("/api/students/{id}/")
         rx.Observable<QcResponse> qcDelStudent(@Path("id") String studentid,@QueryMap Map<String, String> params);
+
+        /**
+         * 创建课程
+         *
+         * @param staffid
+         * @param courseBody
+         * @return
+         */
+        @POST("/api/v2/staffs/{id}/courses/")
+        rx.Observable<QcResponse> qcCreateCourse(@Path("id") String staffid, @Body CourseBody courseBody, @QueryMap HashMap<String, String> params);
+
+        //修改课程
+        @PUT("/api/v2/staffs/{id}/courses/{course_id}/")
+        rx.Observable<QcResponse> qcUpdateCourse(@Path("id") String staffid, @Path("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body CourseBody courseBody);
+
+        //删除课程
+        @DELETE("/api/v2/staffs/{id}/courses/{course_id}/")
+        rx.Observable<QcResponse> qcDelCourse(@Path("id") String staffid, @Path("course_id") String course_id, @QueryMap HashMap<String, String> params);
+
+        //修改封面
+        @POST("/api/v2/staffs/{id}/courses/photos/")
+        rx.Observable<QcResponse> qcEditJacket(@Path("id") String staffid, @Query("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body EditJacketBody body);
+        //修改课程适用场馆
+        @PUT("/api/v2/staffs/{staff_id}/courses/{course_id}/shops/")
+        rx.Observable<QcResponse> qcEditCourseShops(@Path("staff_id") String staffid,@Path("course_id") String course_id,@Body HashMap<String, String> params);
+
+
+
 
     }
 

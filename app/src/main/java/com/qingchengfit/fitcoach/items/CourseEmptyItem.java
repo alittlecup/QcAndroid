@@ -6,14 +6,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+
+
 
 /**
  * power by
@@ -73,9 +76,9 @@ public class CourseEmptyItem extends AbstractFlexibleItem<CourseEmptyItem.Course
 
     public static class CourseEmptyVH extends FlexibleViewHolder {
 
-        @Bind(R.id.nodata_hint)
+        @BindView(R.id.nodata_hint)
         TextView nodataHint;
-        @Bind(R.id.add_course_btn)
+        @BindView(R.id.add_course_btn)
         Button addCourseBtn;
 
         public CourseEmptyVH(View view, FlexibleAdapter adapter) {

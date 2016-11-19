@@ -1,14 +1,11 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.base.Course;
+import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.model.bean.Course;
-import cn.qingchengfit.staffkit.model.bean.Rule;
-import cn.qingchengfit.staffkit.model.bean.Space;
-import cn.qingchengfit.staffkit.model.bean.Time_repeat;
-import cn.qingchengfit.staffkit.usecase.bean.QcScheduleBean;
 
 /**
  * power by
@@ -45,16 +42,16 @@ public class QcResponsePrivateBatchDetail extends QcResponse {
         public String from_date;
         @SerializedName("to_date")
         public String to_date;
-        @SerializedName("spaces")
-        public List<Space> spaces;
+//        @SerializedName("spaces")
+//        public List<Space> spaces;
         @SerializedName("course")
         public Course course;
-        @SerializedName("rule")
-        public List<Rule> rule;
+//        @SerializedName("rule")
+//        public List<Rule> rule;
         @SerializedName("teacher")
         public QcSchedulesResponse.Teacher teacher;
         @SerializedName("time_repeats")
-        public List<Time_repeat> time_repeats;
+        public List<TimeRepeat> time_repeats;
 
     }
 }

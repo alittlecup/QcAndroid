@@ -250,31 +250,31 @@ public class CourseDetailFragment extends Fragment {
                             params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
                             params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
 
-                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe(new Subscriber<QcResponse>() {
-                                        @Override
-                                        public void onCompleted() {
-
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-
-                                        }
-
-                                        @Override
-                                        public void onNext(QcResponse qcResponse) {
-                                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                                                ToastUtils.show("删除成功");
-                                                getActivity().onBackPressed();
-                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
-                                            } else {
-
-                                            }
-                                        }
-                                    });
+//                            QcCloudClient.getApi().postApi.qcDelCourse(App.coachid, params)
+//                                    .observeOn(AndroidSchedulers.mainThread())
+//                                    .subscribeOn(Schedulers.io())
+//                                    .subscribe(new Subscriber<QcResponse>() {
+//                                        @Override
+//                                        public void onCompleted() {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onError(Throwable e) {
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onNext(QcResponse qcResponse) {
+//                                            if (qcResponse.status == ResponseResult.SUCCESS) {
+//                                                ToastUtils.show("删除成功");
+//                                                getActivity().onBackPressed();
+//                                                RxBus.getBus().post(RxBus.BUS_REFRESH);
+//                                            } else {
+//
+//                                            }
+//                                        }
+//                                    });
 
 
                         }

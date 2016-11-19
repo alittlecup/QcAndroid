@@ -10,20 +10,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.bean.CoursePlan;
+import com.qingchengfit.fitcoach.component.CommonInputView;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.UpYunClient;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.usecase.bean.CoursePlan;
-import cn.qingchengfit.staffkit.utils.PhotoUtils;
-import cn.qingchengfit.staffkit.utils.ToastUtils;
-import cn.qingchengfit.staffkit.utils.UpYunClient;
-import cn.qingchengfit.staffkit.views.custom.ChoosePictureFragmentDialog;
-import cn.qingchengfit.staffkit.views.custom.CommonInputView;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import rx.functions.Action1;
+
+
 
 
 /**
@@ -48,22 +51,23 @@ import rx.functions.Action1;
  */
 public class CourseBaseInfoEditFragment extends BaseFragment {
 
-    @Bind(R.id.header_img)
+    @BindView(R.id.header_img)
     ImageView headerImg;
-    @Bind(R.id.header_layout)
+    @BindView(R.id.header_layout)
     RelativeLayout headerLayout;
-    @Bind(R.id.course_name)
+    @BindView(R.id.course_name)
     CommonInputView courseName;
-    @Bind(R.id.course_length)
+    @BindView(R.id.course_length)
     CommonInputView courseLength;
-    @Bind(R.id.course_min_count)
+    @BindView(R.id.course_min_count)
     CommonInputView courseMinCount;
-    @Bind(R.id.default_course_plan)
+    @BindView(R.id.default_course_plan)
     CommonInputView defaultCoursePlan;
-    @Bind(R.id.single_count)
+    @BindView(R.id.single_count)
     CommonInputView singleCount;
 
     private CourseDetail mCourse;
+    private Unbinder unbinder;
 
 
     public static CourseBaseInfoEditFragment newInstance(CourseDetail course) {
@@ -86,12 +90,12 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_base_info_edit, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         if (mCourse != null) {
             Glide.with(getContext()).load(mCourse.getPhoto()).placeholder(R.drawable.ic_default_header).into(headerImg);
             courseName.setContent(mCourse.getName());
-            if (mCourse.getLength() != null && Integer.parseInt(mCourse.getLength()) != 0)
-                courseLength.setContent(Integer.toString(Integer.parseInt(mCourse.getLength()) / 60));
+            if (mCourse.getLength() != 0)
+                courseLength.setContent(Integer.toString(mCourse.getLength() / 60));
             if (mCourse.getMin_users() != 0)
                 courseMinCount.setContent(Integer.toString(mCourse.getMin_users()));
             if (mCourse.getCapacity() != 0)
@@ -137,7 +141,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             ToastUtils.show("请填写课程时长");
             return null;
         }
-        mCourse.setLength(Integer.toString(Integer.parseInt(courseLength.getContent())*60 ));
+        mCourse.setLength(Integer.parseInt(courseLength.getContent())*60 );
 
         if (courseMinCount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(courseMinCount.getContent())) {
             ToastUtils.show("请填写课程最小上课人数");
@@ -167,13 +171,13 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick(R.id.default_course_plan)
     public void onCoursePlan() {
         getActivity().getSupportFragmentManager().beginTransaction()
-                .add(mCallbackActivity.getFragId(), ChooseCoursePlanFragment.newInstance((mCourse.getPlan() == null || mCourse.getPlan().getId()==null)?0L:mCourse.getPlan().getId()))
+                .add(R.id.frag, ChooseCoursePlanFragment.newInstance((mCourse.getPlan() == null || mCourse.getPlan().getId()==null)?0L:mCourse.getPlan().getId()))
                 .addToBackStack("")
                 .commit();
     }

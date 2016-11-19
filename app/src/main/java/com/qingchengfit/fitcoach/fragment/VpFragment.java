@@ -1,7 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-import android.support.v4.app.Fragment;
-
 /**
  * power by
  * <p>
@@ -15,6 +13,6 @@ import android.support.v4.app.Fragment;
  * <p>
  * Created by Paper on 15/12/21 2015.
  */
-public abstract class VpFragment extends Fragment {
+public abstract class VpFragment extends BaseFragment {
     public abstract String getTitle();
 }

@@ -1,22 +1,23 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
+import com.anbillon.qcmvplib.CView;
+import com.anbillon.qcmvplib.PView;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.di.BasePresenter;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.RestRepository;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.EditJacketBody;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseJacket;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.mvpbase.BasePresenter;
-import cn.qingchengfit.staffkit.mvpbase.CView;
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.rest.RestRepository;
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.body.EditJacketBody;
-import cn.qingchengfit.staffkit.usecase.response.QcResponse;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseJacket;
-import cn.qingchengfit.staffkit.usecase.response.ResponseConstant;
-import cn.qingchengfit.staffkit.utils.GymUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;

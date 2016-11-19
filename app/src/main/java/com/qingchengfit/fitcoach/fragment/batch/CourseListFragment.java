@@ -17,54 +17,49 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextAdapter;
+import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.fragment.VpFragment;
+import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.inject.commpont.GymComponent;
-import cn.qingchengfit.staffkit.model.bean.Course;
-import cn.qingchengfit.staffkit.model.bean.ImageThreeTextBean;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseGroupCourse;
-import cn.qingchengfit.staffkit.usecase.response.QcResponsePrivateCourse;
-import cn.qingchengfit.staffkit.usecase.response.QcSchedulesResponse;
-import cn.qingchengfit.staffkit.utils.DateUtils;
-import cn.qingchengfit.staffkit.utils.IntentUtils;
-import cn.qingchengfit.staffkit.views.ChooseActivity;
-import cn.qingchengfit.staffkit.views.TitleFragment;
-import cn.qingchengfit.staffkit.views.WebActivity;
-import cn.qingchengfit.staffkit.views.adapter.ImageThreeTextAdapter;
-import cn.qingchengfit.staffkit.views.batch.addbatch.AddBatchFragment;
-import cn.qingchengfit.staffkit.views.batch.list.CourseBatchDetailFragment;
-import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
-import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
-import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.utils.DateUtils;
+
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CourseListFragment extends BaseFragment implements TitleFragment, CourseListView {
+public class CourseListFragment extends VpFragment implements CourseListView {
 
 
-    @Bind(R.id.course_count)
+    @BindView(R.id.course_count)
     TextView courseCount;
-    @Bind(R.id.preview)
+    @BindView(R.id.preview)
     TextView preview;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecycleViewWithNoImg recyclerview;
-    @Bind(R.id.no_data)
+    @BindView(R.id.no_data)
     LinearLayout noData;
-    @Bind(R.id.add_batch_btn)
+    @BindView(R.id.add_batch_btn)
     Button addBatchBtn;
 
     private ImageThreeTextAdapter mImageTwoTextAdapter;
@@ -121,9 +116,13 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
             return v;
         }
 
-        View view = inflater.inflate(R.layout.fragment_course_list, container, false);
-        ButterKnife.bind(this, view);
-        ((GymComponent) mCallbackActivity.getComponent()).inject(this);
+        View view = inflater.inflate(R.layout.fragment_batch_course_list, container, false);
+        unbinder = ButterKnife.bind(this, view);
+
+        if (getActivity() instanceof BatchActivity){
+            ((BatchActivity) getActivity()).getComponent().inject(this);
+        }
+
         presenter.attachView(this);
         mImageTwoTextAdapter = new ImageThreeTextAdapter(datas);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -183,12 +182,12 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
         }
 
         if (mCourseType == Configs.TYPE_PRIVATE) {
-            ChooseCoachFragment.start(this, 1, "", Configs.INIT_TYPE_CHOOSE);
+//            ChooseCoachFragment.start(this, 1, "", Configs.INIT_TYPE_CHOOSE);
         } else {
-            Intent toChooseGourp = new Intent(getActivity(), ChooseActivity.class);
-            toChooseGourp.putExtra(Configs.EXTRA_GYM_SERVICE,coachService);
-            toChooseGourp.putExtra("type", Configs.TYPE_GROUP);
-            startActivityForResult(toChooseGourp, 2);
+//            Intent toChooseGourp = new Intent(getActivity(), ChooseActivity.class);
+//            toChooseGourp.putExtra(Configs.EXTRA_GYM_SERVICE,coachService);
+//            toChooseGourp.putExtra("type", Configs.TYPE_GROUP);
+//            startActivityForResult(toChooseGourp, 2);
         }
     }
 
@@ -196,30 +195,30 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
-                QcSchedulesResponse.Teacher teacher = new QcSchedulesResponse.Teacher();
-                teacher.username = IntentUtils.getIntentString(data, 0);
-                teacher.id = IntentUtils.getIntentString(data, 1);
-                teacher.avatar = IntentUtils.getIntentString(data, 2);
-                getParentFragment().getFragmentManager().beginTransaction()
-                        .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(teacher, null))
-                        .addToBackStack(GymCoursesFragment.TAG)
-                        .commit();
-
-
-            } else if (requestCode == 2) {
-
-                Course course = data.getParcelableExtra("course");
-                QcResponseGroupCourse.GroupClass groupClass = new QcResponseGroupCourse.GroupClass();
-                groupClass.id = course.getId();
-                groupClass.photo = course.getPhoto();
-                groupClass.length = course.getLength();
-                groupClass.name = course.getName();
-                getParentFragment().getFragmentManager().beginTransaction()
-                        .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(null, groupClass))
-                        .addToBackStack(GymCoursesFragment.TAG)
-                        .commit();
-            }
+//            if (requestCode == 1) {
+//                QcSchedulesResponse.Teacher teacher = new QcSchedulesResponse.Teacher();
+//                teacher.username = IntentUtils.getIntentString(data, 0);
+//                teacher.id = IntentUtils.getIntentString(data, 1);
+//                teacher.avatar = IntentUtils.getIntentString(data, 2);
+//                getParentFragment().getFragmentManager().beginTransaction()
+//                        .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(teacher, null))
+//                        .addToBackStack(GymCoursesFragment.TAG)
+//                        .commit();
+//
+//
+//            } else if (requestCode == 2) {
+//
+//                Course course = data.getParcelableExtra("course");
+//                QcResponseGroupCourse.GroupClass groupClass = new QcResponseGroupCourse.GroupClass();
+//                groupClass.id = course.getId();
+//                groupClass.photo = course.getPhoto();
+//                groupClass.length = course.getLength();
+//                groupClass.name = course.getName();
+//                getParentFragment().getFragmentManager().beginTransaction()
+//                        .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(null, groupClass))
+//                        .addToBackStack(GymCoursesFragment.TAG)
+//                        .commit();
+//            }
         }
     }
 
@@ -227,7 +226,7 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+
     }
 
     @Override
@@ -270,7 +269,7 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
 //                }
                 //团课详情
                 getParentFragment().getFragmentManager().beginTransaction()
-                        .replace(mCallbackActivity.getFragId(), CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP, groupClasses.get(pos).id))
+                        .replace(R.id.frag, CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP, groupClasses.get(pos).id))
                         .addToBackStack("")
                         .commit();
             }
@@ -307,7 +306,7 @@ public class CourseListFragment extends BaseFragment implements TitleFragment, C
 //                }
 //                私教课详情
                 getParentFragment().getFragmentManager().beginTransaction()
-                        .replace(mCallbackActivity.getFragId(), CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, privateClasses.get(pos).id))
+                        .replace(R.id.frag, CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, privateClasses.get(pos).id))
                         .addToBackStack("")
                         .commit();
             }

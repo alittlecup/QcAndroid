@@ -1,9 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch.looplist;
 
-import java.util.List;
+import com.anbillon.qcmvplib.PView;
 
-import cn.qingchengfit.staffkit.mvpbase.PView;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseBatchSchedules;
 
 /**
  * power by
@@ -19,7 +17,7 @@ import cn.qingchengfit.staffkit.usecase.response.QcResponseBatchSchedules;
  * Created by Paper on 16/5/6 2016.
  */
 public interface CourseManageView extends PView {
-    void onList(List<QcResponseBatchSchedules.Schedule> schedules);
+//    void onList(List<QcResponseBatchSchedules.Schedule> schedules);
 
     void onDelSuccess();
     void onFixSuccess();

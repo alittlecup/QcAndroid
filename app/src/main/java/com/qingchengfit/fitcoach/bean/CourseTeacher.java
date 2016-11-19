@@ -5,9 +5,6 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.model.bean.Coach;
-import cn.qingchengfit.staffkit.model.bean.TeacherImpression;
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

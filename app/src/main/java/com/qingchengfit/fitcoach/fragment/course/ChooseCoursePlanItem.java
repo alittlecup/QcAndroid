@@ -6,13 +6,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.CoursePlan;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.usecase.bean.CoursePlan;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -79,11 +80,11 @@ public class ChooseCoursePlanItem extends AbstractFlexibleItem<ChooseCoursePlanI
     }
 
     public static class ChooseCoursePlanVH extends FlexibleViewHolder {
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.content)
+        @BindView(R.id.content)
         TextView content;
-        @Bind(R.id.chosen)
+        @BindView(R.id.chosen)
         ImageView chosen;
         public ChooseCoursePlanVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

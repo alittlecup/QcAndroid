@@ -3,9 +3,9 @@ package com.qingchengfit.fitcoach.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 
-import cn.qingchengfit.staffkit.model.bean.Coach;
+import java.util.List;
 
 /**
  * power by

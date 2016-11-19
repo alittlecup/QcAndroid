@@ -4,10 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.Brand;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.usecase.bean.Brand;
 
 /**
  * Created by peggy on 16/5/28.

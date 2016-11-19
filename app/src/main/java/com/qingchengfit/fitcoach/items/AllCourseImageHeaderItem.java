@@ -6,15 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.bean.SchedulePhotos;
+import com.qingchengfit.fitcoach.event.CourseImageManageEvent;
+
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.rxbus.RxBus;
-import cn.qingchengfit.staffkit.rxbus.event.CourseImageManageEvent;
-import cn.qingchengfit.staffkit.usecase.bean.SchedulePhotos;
-import cn.qingchengfit.staffkit.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractHeaderItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -85,13 +86,13 @@ public class AllCourseImageHeaderItem extends AbstractHeaderItem {
     }
 
     public static class CourseImageHeaderHolder extends FlexibleViewHolder {
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.sub_title)
+        @BindView(R.id.sub_title)
         TextView subTitle;
-        @Bind(R.id.btn_manage)
+        @BindView(R.id.btn_manage)
         TextView btnManage;
-        @Bind(R.id.no_data)
+        @BindView(R.id.no_data)
         TextView noData;
 
         public CourseImageHeaderHolder(View view, FlexibleAdapter adapter) {

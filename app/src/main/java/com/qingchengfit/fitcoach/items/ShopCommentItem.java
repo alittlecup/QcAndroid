@@ -7,16 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.BusinessUtils;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseShopComment;
-import cn.qingchengfit.staffkit.utils.BusinessUtils;
-import cn.qingchengfit.staffkit.utils.StringUtils;
-import cn.qingchengfit.staffkit.views.custom.CircleImgWrapper;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import co.hkm.soltag.TagContainerLayout;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -87,21 +87,21 @@ public class ShopCommentItem extends AbstractFlexibleItem<ShopCommentItem.ShopCo
 
     public static class ShopCommentVH extends FlexibleViewHolder {
 
-        @Bind(R.id.shop_img)
+        @BindView(R.id.shop_img)
         ImageView shopImg;
-        @Bind(R.id.coach_score)
+        @BindView(R.id.coach_score)
         TextView coachScore;
-        @Bind(R.id.course_score)
+        @BindView(R.id.course_score)
         TextView courseScore;
-        @Bind(R.id.server_score)
+        @BindView(R.id.server_score)
         TextView serverScore;
-        @Bind(R.id.comments)
+        @BindView(R.id.comments)
         TagContainerLayout comments;
-        @Bind(R.id.check_detail)
+        @BindView(R.id.check_detail)
         TextView checkDetail;
-        @Bind(R.id.shop_name)
+        @BindView(R.id.shop_name)
         TextView shopName;
-        @Bind(R.id.no_impression)
+        @BindView(R.id.no_impression)
         TextView noImpression;
         public ShopCommentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

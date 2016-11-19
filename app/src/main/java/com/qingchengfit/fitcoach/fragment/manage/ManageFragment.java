@@ -15,11 +15,12 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
+import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
@@ -153,30 +154,34 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             int res = ((DailyWorkItem) mAdapter.getItem(position)).bean.resImg;
             switch (res) {
                 case R.drawable.ic_weight://排课
-                    Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+                    Intent toGuide = new Intent(getActivity(), BatchActivity.class);
                     startActivity(toGuide);
 
                     break;
                 case R.drawable.ic_category_course://课程种类
+                    Intent toCourse = new Intent(getActivity(), CourseActivity.class);
+                    startActivity(toCourse);
 
                     break;
                 case R.drawable.ic_users_student:
-
+                    Intent toStudent = new Intent(getActivity(),FragActivity.class);
+                    toStudent.putExtra("type",9);
+                    startActivity(toStudent);
                     break;
                 case R.drawable.ic_img_statement_signin:
-                    Intent toCourse = new Intent(getActivity(), FragActivity.class);
-                    toCourse.putExtra("to", 0);
-                    startActivity(toCourse);
+                    Intent toCourseStatement = new Intent(getActivity(), FragActivity.class);
+                    toCourseStatement.putExtra("type", 0);
+                    startActivity(toCourseStatement);
                     break;
                 case R.drawable.ic_sale_statement:
                     Intent tosale = new Intent(getActivity(), FragActivity.class);
-                    tosale.putExtra("to", 1);
+                    tosale.putExtra("type", 1);
                     startActivity(tosale);
 
                     break;
                 case R.drawable.ic_template_coursepaln:
                     Intent toPlan = new Intent(getActivity(), FragActivity.class);
-                    toPlan.putExtra("to", 1);
+                    toPlan.putExtra("type", 8);
                     startActivity(toPlan);
                     break;
                 default:

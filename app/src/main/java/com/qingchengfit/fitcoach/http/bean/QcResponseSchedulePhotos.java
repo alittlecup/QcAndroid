@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.SchedulePhotos;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.usecase.bean.SchedulePhotos;
 
 public class QcResponseSchedulePhotos extends QcResponse {
     @SerializedName("data")

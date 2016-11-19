@@ -1,11 +1,11 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.bean.TeacherImpression;
 
 import java.util.List;
 
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.model.bean.TeacherImpression;
 
 public class QcResponseShopComment extends QcResponse {
     @SerializedName("data")

@@ -14,6 +14,24 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.adapter.GroupBatchAdapter;
+import com.qingchengfit.fitcoach.adapter.ImageIconBean;
+import com.qingchengfit.fitcoach.adapter.PrivateBatchAdapter;
+import com.qingchengfit.fitcoach.bean.base.Course;
+import com.qingchengfit.fitcoach.component.DialogSheet;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
+import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,31 +39,10 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.constant.Configs;
-import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
-import cn.qingchengfit.staffkit.inject.commpont.GymComponent;
-import cn.qingchengfit.staffkit.model.bean.Course;
-import cn.qingchengfit.staffkit.model.bean.ImageIconBean;
-import cn.qingchengfit.staffkit.model.dataaction.SerPermisAction;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseGroupCourse;
-import cn.qingchengfit.staffkit.usecase.response.QcResponseGroupDetail;
-import cn.qingchengfit.staffkit.usecase.response.QcResponsePrivateDetail;
-import cn.qingchengfit.staffkit.usecase.response.QcSchedulesResponse;
-import cn.qingchengfit.staffkit.utils.PhotoUtils;
-import cn.qingchengfit.staffkit.views.adapter.GroupBatchAdapter;
-import cn.qingchengfit.staffkit.views.adapter.PrivateBatchAdapter;
-import cn.qingchengfit.staffkit.views.batch.GymCoursesFragment;
-import cn.qingchengfit.staffkit.views.batch.addbatch.AddBatchFragment;
-import cn.qingchengfit.staffkit.views.batch.details.BatchDetailFragment;
-import cn.qingchengfit.staffkit.views.custom.DialogSheet;
-import cn.qingchengfit.staffkit.views.custom.DividerItemDecoration;
-import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
-import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
+
 
 /**
  * power by
@@ -61,23 +58,23 @@ import cn.qingchengfit.staffkit.views.gym.ChooseCoachFragment;
  * Created by Paper on 16/3/29 2016.
  */
 public class CourseBatchDetailFragment extends BaseFragment implements CourseBatchDetailView {
-    @Bind(R.id.img)
+    @BindView(R.id.img)
     ImageView img;
-    @Bind(R.id.img_foot)
+    @BindView(R.id.img_foot)
     ImageView imgFoot;
-    @Bind(R.id.text1)
+    @BindView(R.id.text1)
     TextView text1;
-    @Bind(R.id.texticon)
+    @BindView(R.id.texticon)
     ImageView texticon;
-    @Bind(R.id.text2)
+    @BindView(R.id.text2)
     TextView text2;
-    @Bind(R.id.text3)
+    @BindView(R.id.text3)
     TextView text3;
-    @Bind(R.id.righticon)
+    @BindView(R.id.righticon)
     ImageView righticon;
-    @Bind(R.id.course_layout)
+    @BindView(R.id.course_layout)
     RelativeLayout courseLayout;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
 //    @Bind(R.id.no_data)
 //    LinearLayout noData;
@@ -127,11 +124,13 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_batch, container, false);
-        ButterKnife.bind(this, view);
-        ((GymComponent) mCallbackActivity.getComponent()).inject(this);
+        unbinder = ButterKnife.bind(this, view);
+        if (getActivity() instanceof BatchActivity){
+            ((BatchActivity) getActivity()).getComponent().inject(this);
+        }
         presenter.attachView(this);
 
-        mCallbackActivity.setToolbar(mType == Configs.TYPE_PRIVATE ? "私教排期" : "团课排期", false, null, 0, null);
+//        mCallbackActivity.setToolbar(mType == Configs.TYPE_PRIVATE ? "私教排期" : "团课排期", false, null, 0, null);
         if (mType == Configs.TYPE_PRIVATE) {
             presenter.queryPrivate(mId);
         } else presenter.queryGroup(mId);
@@ -145,7 +144,7 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
     public void onDestroyView() {
         presenter.unattachView();
         super.onDestroyView();
-        ButterKnife.unbind(this);
+
     }
 
 
@@ -196,7 +195,7 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
 //    @OnClick(R.id.course_layout)
     public void onChange() {
 
-        ChooseCoachFragment.start(this, 1, "", Configs.INIT_TYPE_CHOOSE);
+//        ChooseCoachFragment.start(this, 1, "", Configs.INIT_TYPE_CHOOSE);
     }
 
 
@@ -224,15 +223,15 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
         if (mCourese != null) {
             groupClass = new QcResponseGroupCourse.GroupClass();
             groupClass.id = mCourese.getId();
-            groupClass.length = mCourese.getLength();
+            groupClass.length = mCourese.getLength()+"";
             groupClass.name = mCourese.getName();
             groupClass.photo = mCourese.getPhoto();
         }
 
-        getFragmentManager().beginTransaction()
-                .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(teacher, groupClass))
-                .addToBackStack(GymCoursesFragment.TAG)
-                .commit();
+//        getFragmentManager().beginTransaction()
+//                .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(teacher, groupClass))
+//                .addToBackStack(GymCoursesFragment.TAG)
+//                .commit();
 
     }
 
@@ -248,7 +247,7 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
         Glide.with(getContext()).load(PhotoUtils.getSmall(course.getPhoto())).placeholder(R.drawable.img_default_course).into(img);
         imgFoot.setVisibility(View.GONE);
         text1.setText(course.getName());
-        text2.setText("时长" + ((int)(Float.parseFloat(course.getLength()) / 60)) + "分钟");
+        text2.setText("时长" + ((int)(course.getLength() / 60)) + "分钟");
 
         adapter = new GroupBatchAdapter(batch);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -261,16 +260,11 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
                 @Override
                 public void onItemClick(View v, int pos) {
 
-//                    if ((mType == Configs.TYPE_GROUP  && !SerPermisAction.checkAll(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE))
-//                            || (mType == Configs.TYPE_PRIVATE  && !SerPermisAction.checkAll(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
-//                        showAlert(R.string.alert_permission_forbid);
-//                        return;
-//                    }
 
-                    getFragmentManager().beginTransaction()
-                            .replace(mCallbackActivity.getFragId(), BatchDetailFragment.newInstance(mType, batch.get(pos).id))
-                            .addToBackStack(null)
-                            .commit();
+//                    getFragmentManager().beginTransaction()
+//                            .replace(mCallbackActivity.getFragId(), BatchDetailFragment.newInstance(mType, batch.get(pos).id))
+//                            .addToBackStack(null)
+//                            .commit();
                 }
             });
         }
@@ -293,10 +287,10 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
                 public void onItemClick(View v, int pos) {
 
 
-                    getFragmentManager().beginTransaction()
-                            .replace(mCallbackActivity.getFragId(), BatchDetailFragment.newInstance(mType, batch.get(pos).id))
-                            .addToBackStack(null)
-                            .commit();
+//                    getFragmentManager().beginTransaction()
+//                            .replace(mCallbackActivity.getFragId(), BatchDetailFragment.newInstance(mType, batch.get(pos).id))
+//                            .addToBackStack(null)
+//                            .commit();
                 }
             });
         }

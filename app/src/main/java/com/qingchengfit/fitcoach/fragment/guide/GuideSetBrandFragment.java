@@ -87,13 +87,14 @@ public class GuideSetBrandFragment extends BaseFragment {
 
     @OnClick(R.id.layout_brand_logo)
     public void onClickBrandLogo() {
+        ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
+
         RxPermissions.getInstance(getContext())
                 .request(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
-                            ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
                         } else {
                             ToastUtils.showDefaultStyle(getString(R.string.permission_request_camara));
                         }

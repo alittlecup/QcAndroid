@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,39 +24,37 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.BusinessUtils;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.adapter.CourseTeacherAdapter;
+import com.qingchengfit.fitcoach.adapter.ViewPaperEndlessAdapter;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
+import com.qingchengfit.fitcoach.bean.TeacherImpression;
+import com.qingchengfit.fitcoach.component.BottomSheetListDialogFragment;
+import com.qingchengfit.fitcoach.component.CircleIndicator;
+import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
+import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
+import com.qingchengfit.fitcoach.component.TouchyWebView;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.staffkit.App;
-import cn.qingchengfit.staffkit.R;
-import cn.qingchengfit.staffkit.constant.BaseFragment;
-import cn.qingchengfit.staffkit.model.bean.CourseDetail;
-import cn.qingchengfit.staffkit.model.bean.TeacherImpression;
-import cn.qingchengfit.staffkit.usecase.bean.CoachService;
-import cn.qingchengfit.staffkit.usecase.bean.CourseDetailTeacher;
-import cn.qingchengfit.staffkit.utils.BusinessUtils;
-import cn.qingchengfit.staffkit.utils.GymUtils;
-import cn.qingchengfit.staffkit.utils.MeasureUtils;
-import cn.qingchengfit.staffkit.utils.StringUtils;
-import cn.qingchengfit.staffkit.utils.ToastUtils;
-import cn.qingchengfit.staffkit.views.QRActivity;
-import cn.qingchengfit.staffkit.views.adapter.CourseTeacherAdapter;
-import cn.qingchengfit.staffkit.views.adapter.ViewPaperEndlessAdapter;
-import cn.qingchengfit.staffkit.views.custom.BottomSheetListDialogFragment;
-import cn.qingchengfit.staffkit.views.custom.CircleIndicator;
-import cn.qingchengfit.staffkit.views.custom.GalleryPhotoViewDialog;
-import cn.qingchengfit.staffkit.views.custom.RatingBarVectorFix;
-import cn.qingchengfit.staffkit.views.custom.ScaleWidthWrapper;
-import cn.qingchengfit.staffkit.views.custom.TouchyWebView;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
+import cn.qingchengfit.widgets.utils.MeasureUtils;
+import cn.qingchengfit.widgets.utils.StringUtils;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import co.hkm.soltag.TagContainerLayout;
-import rx.functions.Action1;
+
 
 /**
  * power by
@@ -85,48 +81,48 @@ public class CourseDetailFragment extends BaseFragment implements
 
     public static final int RESULT_DEL = 0;
 
-    @Bind(R.id.student_judge_coach_score)
+    @BindView(R.id.student_judge_coach_score)
     TextView studentJudgeCoachScore;
-    @Bind(R.id.student_judge_coach_star)
+    @BindView(R.id.student_judge_coach_star)
     RatingBarVectorFix studentJudgeCoachStar;
-    @Bind(R.id.student_judge_course_score)
+    @BindView(R.id.student_judge_course_score)
     TextView studentJudgeCourseScore;
-    @Bind(R.id.student_judge_course_star)
+    @BindView(R.id.student_judge_course_star)
     RatingBarVectorFix studentJudgeCourseStar;
-    @Bind(R.id.server_score)
+    @BindView(R.id.server_score)
     TextView serverScore;
-    @Bind(R.id.server_rate)
+    @BindView(R.id.server_rate)
     RatingBarVectorFix serverRate;
-    @Bind(R.id.course_impression)
+    @BindView(R.id.course_impression)
     TagContainerLayout courseImpression;
 
 
-    @Bind(R.id.jacket_vp)
+    @BindView(R.id.jacket_vp)
     ViewPager jacketVp;
-    @Bind(R.id.desc_html)
+    @BindView(R.id.desc_html)
     TextView descHtml;
-    @Bind(R.id.no_impression)
+    @BindView(R.id.no_impression)
     TextView noImpression;
-    @Bind(R.id.course_teacher_rv)
+    @BindView(R.id.course_teacher_rv)
     RecyclerView courseTeacherRv;
 
     @Inject
     CourseDetailPresenter mPresenter;
     @Inject
     CoachService coachService;
-    @Bind(R.id.no_jacket)
+    @BindView(R.id.no_jacket)
     TextView noJacket;
-    @Bind(R.id.comments_detail)
+    @BindView(R.id.comments_detail)
     FrameLayout commentsDetail;
-    @Bind(R.id.go_to_scan)
+    @BindView(R.id.go_to_scan)
     TextView goToScan;
-    @Bind(R.id.web_desc)
+    @BindView(R.id.web_desc)
     TouchyWebView webDesc;
-    @Bind(R.id.no_teacher)
+    @BindView(R.id.no_teacher)
     TextView noTeacher;
-    @Bind(R.id.srl)
+    @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    @Bind(R.id.splash_indicator)
+    @BindView(R.id.splash_indicator)
     CircleIndicator splashIndicator;
     private CourseDetail mCourseDetail;
     private ViewPaperEndlessAdapter viewpageradapter;
@@ -153,15 +149,15 @@ public class CourseDetailFragment extends BaseFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_detail, container, false);
         ButterKnife.bind(this, view);
-        mCallbackActivity.setToolbar("课程种类详情", false, null, R.menu.menu_flow, new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                ArrayList<String> d = new ArrayList<>();
-                d.add("删除该课程种类");
-                BottomSheetListDialogFragment.start(CourseDetailFragment.this, RESULT_DEL, d);
-                return true;
-            }
-        });
+//        mCallbackActivity.setToolbar("课程种类详情", false, null, R.menu.menu_flow, new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                ArrayList<String> d = new ArrayList<>();
+//                d.add("删除该课程种类");
+//                BottomSheetListDialogFragment.start(CourseDetailFragment.this, RESULT_DEL, d);
+//                return true;
+//            }
+//        });
         initDI();
         delegatePresenter(mPresenter, this);
         initView(mCourseDetail);
@@ -244,10 +240,10 @@ public class CourseDetailFragment extends BaseFragment implements
         for (int i = 0; i < photos.size(); i++) {
             View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_vp_image, null);
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.img);
-            Glide.with(getContext()).load(photos.get(i)).asBitmap().into(new ScaleWidthWrapper(imageView, MeasureUtils.getScreenWidth(getResources())));
+            ImageView imageViewItem = (ImageView) view.findViewById(R.id.img);
+            Glide.with(getContext()).load(photos.get(i)).asBitmap().into(new ScaleWidthWrapper(imageViewItem, MeasureUtils.getScreenWidth(getResources())));
             final  int curPos = i;
-            imageView.setOnClickListener(new View.OnClickListener() {
+            imageViewItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                    GalleryPhotoViewDialog dialog = new GalleryPhotoViewDialog(getContext());
@@ -409,7 +405,7 @@ public class CourseDetailFragment extends BaseFragment implements
 //                showAlert("此课程种类适用于多个场馆，请在【连锁运营】里对封面照片进行编辑");
 //            } else {
         getFragmentManager().beginTransaction()
-                .replace(mCallbackActivity.getFragId(), JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
+                .replace(R.id.frag, JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
                 .addToBackStack(getFragmentName())
                 .commit();
 //            }
@@ -426,12 +422,12 @@ public class CourseDetailFragment extends BaseFragment implements
     public void checkComments() {
         if (GymUtils.isInBrand(coachService)) {
             getFragmentManager().beginTransaction()
-                    .replace(mCallbackActivity.getFragId(), ShopCommentsFragment.newInstance(mCourseDetail.getId()))
+                    .replace(R.id.frag, ShopCommentsFragment.newInstance(mCourseDetail.getId()))
                     .addToBackStack(getFragmentName())
                     .commit();
         } else {
             getFragmentManager().beginTransaction()
-                    .replace(mCallbackActivity.getFragId(), CoachCommentListFragment.newInstance(mCourseDetail.getId()))
+                    .replace(R.id.frag, CoachCommentListFragment.newInstance(mCourseDetail.getId()))
                     .addToBackStack(getFragmentName())
                     .commit();
         }
@@ -446,21 +442,21 @@ public class CourseDetailFragment extends BaseFragment implements
     public void gotoScan() {
         if (!mPresenter.hasAllEditPermission(mCourseDetail))
             return;
-        RxPermissions.getInstance(getContext())
-                .request(Manifest.permission.CAMERA)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            Intent toScan = new Intent(getActivity(), QRActivity.class);
-                            toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
-                            startActivity(toScan);
-                        } else {
-                            ToastUtils.show(getString(R.string.please_open_camera));
-                        }
-                    }
-                });
-
+//        RxPermissions.getInstance(getContext())
+//                .request(Manifest.permission.CAMERA)
+//                .subscribe(new Action1<Boolean>() {
+//                    @Override
+//                    public void call(Boolean aBoolean) {
+//                        if (aBoolean) {
+//                            Intent toScan = new Intent(getActivity(), QRActivity.class);
+//                            toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
+//                            startActivity(toScan);
+//                        } else {
+//                            ToastUtils.show(getString(R.string.please_open_camera));
+//                        }
+//                    }
+//                });
+//
 
     }
 
@@ -470,7 +466,7 @@ public class CourseDetailFragment extends BaseFragment implements
     @OnClick(R.id.edit_base_info)
     public void editBaseInfo() {
         getFragmentManager().beginTransaction()
-                .replace(mCallbackActivity.getFragId(), EditCourseFragment.newInstance(mCourseDetail))
+                .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
                 .addToBackStack(getFragmentName())
                 .commit();
 
@@ -486,7 +482,7 @@ public class CourseDetailFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+
     }
 
     boolean isJumped = false;
@@ -498,7 +494,7 @@ public class CourseDetailFragment extends BaseFragment implements
             isJumped = true;
             jacketVp.setCurrentItem(0);
             getFragmentManager().beginTransaction()
-                    .replace(mCallbackActivity.getFragId(), CourseImagesFragment.newInstance(mCourseDetail.getId()))
+                    .replace(R.id.frag, CourseImagesFragment.newInstance(mCourseDetail.getId()))
                     .addToBackStack(getFragmentName())
                     .commit();
 
