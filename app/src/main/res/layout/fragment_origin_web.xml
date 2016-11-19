@@ -1,45 +1,58 @@
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/webview_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-              android:orientation="vertical"
-             tools:context="com.qingchengfit.fitcoach.fragment.OriginWebFragment">
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.OriginWebFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:gravity="center_vertical"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize">
 
-        app:popupTheme="@style/ToolbarStyle.Overflow"
-        app:theme="@style/Qc.toolbarStyle"
-        app:titleTextAppearance="@style/ToolbarStyle"
-        >
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            android:gravity="center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetLeft="0dp"
+            app:popupTheme="@style/ToolbarStyle.Overflow"
+            app:theme="@style/Qc.toolbarStyle"
+            app:titleTextAppearance="@style/ToolbarStyle" />
 
         <TextView
             android:id="@+id/toobar_action"
             style="@style/ToolbarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="right|end"
             android:padding="10dp"
             android:visibility="gone"
-            tools:text="测试"
-            />
-    </android.support.v7.widget.Toolbar>
+            tools:text="测试" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxWidth="150dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="标题标题标题标题标题标题" />
+
+
+    </RelativeLayout>
 
     <com.tencent.smtt.sdk.WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
 
     </com.tencent.smtt.sdk.WebView>
 </LinearLayout>

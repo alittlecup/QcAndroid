@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/bg_grey"
+              android:orientation="vertical"
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider_grey"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+
+        >
+
+        <TextView
+            android:id="@+id/course_count"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            tools:text="团课5节"
+            />
+
+        <TextView
+            android:id="@+id/preview"
+            style="@style/Qc.TextCommonGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_rect"
+            android:drawableLeft="@drawable/ic_register_verify"
+            android:paddingLeft="4dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:textSize="12sp"
+            tools:text="约课页预览"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_grey"
+            />
+    </RelativeLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <cn.qingchengfit.widgets.RecycleViewWithNoImg
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            app:rn_bottom_padding="@dimen/qc_item_height"
+            app:rn_drawable="@drawable/no_batch"
+            app:rn_hint="暂无排期"
+
+            />
+
+        <LinearLayout
+            android:id="@+id/no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/img_no_statment_detail"
+                />
+
+            <TextView
+                style="@style/Qc.TextCommonBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center_horizontal"
+                android:text="暂无课程"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_batch_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_gravity="bottom"
+            tools:text="+ 添加私教排期"
+            />
+
+    </FrameLayout>
+
+</LinearLayout>

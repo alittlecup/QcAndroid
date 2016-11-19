@@ -24,8 +24,8 @@
             android:id="@+id/btn_group"
             android:layout_width="112dp"
             android:layout_height="40dp"
-            app:cb_background_normal="@color/white"
-            app:cb_background_select="@color/primary"
+            app:cb_background_normal="@drawable/btn_white_corners"
+            app:cb_background_select="@drawable/btn_prime"
             app:cb_select="true"
             app:cb_text_content="@string/course_group"
             />
@@ -35,8 +35,8 @@
             android:layout_width="112dp"
             android:layout_height="40dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            app:cb_background_normal="@color/white"
-            app:cb_background_select="@color/primary"
+            app:cb_background_normal="@drawable/btn_white_corners"
+            app:cb_background_select="@drawable/btn_prime"
             app:cb_select="false"
             app:cb_text_content="@string/course_private"
             />
@@ -63,7 +63,7 @@
 
         <ImageView
             android:id="@+id/course_img"
-            tools:src="@drawable/ic_default_header"
+            app:srcCompat="@drawable/ic_camera_alt_black_24dp"
             android:layout_width="60dp"
             android:layout_height="60dp"/>
 

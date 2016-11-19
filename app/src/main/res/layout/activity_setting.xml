@@ -10,7 +10,7 @@
     tools:context="com.qingchengfit.fitcoach.activity.SettingActivity"
     >
 
-    <include layout="@layout/common_toolbar"></include>
+    <include layout="@layout/common_toolbar"/>
 
     <FrameLayout
         android:id="@+id/settting_fraglayout"

@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/primary"
-    android:gravity="center"
-    android:minHeight="?attr/actionBarSize"
-    android:theme="@style/Qc.toolbarStyle"
-    app:popupTheme="@style/ToolbarStyle.Overflow"
-    app:theme="@style/Qc.toolbarStyle"
-    app:titleTextAppearance="@style/ToolbarStyle"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
         android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        app:layout_anchorGravity="center"
+        xmlns:tools="http://schemas.android.com/tools"
+        />
 
-        >
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:textColor="@color/white"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:textSize="18sp"
-            android:ellipsize="end"
-            android:gravity="center"
-            tools:text="测试数据"
-            />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:textColor="@color/white"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        tools:text="测试数据"
+        />
+</RelativeLayout>
 
-</android.support.v7.widget.Toolbar>
+
