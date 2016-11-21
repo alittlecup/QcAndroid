@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.Main2Activity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.LoginBean;
@@ -165,7 +165,8 @@ public class LoginFragment extends Fragment {
 //                        })
                         .subscribe(aBoolean -> {
                             if (aBoolean) {
-                                Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                                Intent toMain = new Intent(getActivity(), FragActivity.class);
+                                toMain.putExtra("type",10);
                                 startActivity(toMain);
                                 materialDialog.dismiss();
                                 getActivity().finish();

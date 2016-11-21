@@ -26,7 +26,7 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.RecieveMsg;
 import com.qingchengfit.fitcoach.bean.SendSmsCode;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -187,7 +187,8 @@ public class RegisterFragment extends Fragment {
                                                 PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
                                                 PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
                                                 PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
-                                                Intent toMain = new Intent(getActivity(), MainActivity.class);
+                                                Intent toMain = new Intent(getActivity(), FragActivity.class);
+                                                toMain.putExtra("type",10);
                                                 startActivity(toMain);
                                                 materialDialog.dismiss();
                                                 getActivity().finish();

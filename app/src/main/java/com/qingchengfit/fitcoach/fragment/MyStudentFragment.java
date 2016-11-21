@@ -43,9 +43,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
-import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 
@@ -62,8 +60,6 @@ import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -153,11 +149,11 @@ public class MyStudentFragment extends BaseFragment {
                 searchviewEt.requestFocus();
                 AppUtils.showKeyboard(getContext(), searchviewEt);
             } else if (item.getItemId() == R.id.action_add_mannul) {
-                showAlert(0);
-//                onAddstudent();//手动添加学员
+//                showAlert(0);
+                onAddstudent();//手动添加学员
             } else if (item.getItemId() == R.id.action_add_phone) {
-//                addStudentFromContact();
-                showAlert(1);
+                addStudentFromContact();
+//                showAlert(1);
             }
             return true;
         });
@@ -276,38 +272,38 @@ public class MyStudentFragment extends BaseFragment {
                         handleResponse(qcAllStudentResponse);
                     }
                 });
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<QcCoachServiceResponse>() {
-                    @Override
-                    public void onCompleted() {
+//        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<QcCoachServiceResponse>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
+//                        hasPrivate = false;
+//                        for (CoachService service : qcCoachServiceResponse.data.services) {
+//                            if (service.model.equals("service") && service.type == 1) {
+//                                hasPrivate = true;
+//                                break;
+//                            }
+//                        }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
-                        hasPrivate = false;
-                        for (CoachService service : qcCoachServiceResponse.data.services) {
-                            if (service.model.equals("service") && service.type == 1) {
-                                hasPrivate = true;
-                                break;
-                            }
-                        }
-
-                        if (hasPrivate) {
-                            toolbar.getMenu().clear();
-                            toolbar.inflateMenu(R.menu.menu_students);
-                        } else {
-                            toolbar.getMenu().clear();
-                            toolbar.inflateMenu(R.menu.menu_search);
-                        }
-                    }
-                });
+//                        if (hasPrivate) {
+//                            toolbar.getMenu().clear();
+//                            toolbar.inflateMenu(R.menu.menu_students);
+//                        } else {
+//                            toolbar.getMenu().clear();
+//                            toolbar.inflateMenu(R.menu.menu_search);
+//                        }
+//                    }
+//                });
     }
 
     @Override

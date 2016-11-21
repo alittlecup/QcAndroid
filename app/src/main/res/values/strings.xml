@@ -251,4 +251,7 @@
     <string name="choose_gym">选择场馆</string>
     <string name="course_no_batch">无有效排期</string>
     <string name="add_gym_brand">添加健身房品牌</string>
+    <string name="hint_sync_gyms">检测到您是以下%d家健身房的教练\n系统会自动同步健身房数据</string>
+    <string name="hint_sync_waiting">正在同步数据，请稍后…</string>
+    <string name="go_my_schedule">进入我的日程</string>
 </resources>

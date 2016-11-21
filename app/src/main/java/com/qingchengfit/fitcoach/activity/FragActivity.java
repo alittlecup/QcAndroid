@@ -15,6 +15,7 @@ import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
+import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 
 import cn.qingchengfit.widgets.utils.AppUtils;
 
@@ -79,6 +80,9 @@ public class FragActivity extends BaseAcitivity {
                 break;
             case 9:
                 fragment = new MyStudentFragment();
+                break;
+            case 10://Go sync page
+                fragment = new SyncGymFragment();
                 break;
             default:
                 break;
