@@ -61,7 +61,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -212,30 +211,6 @@ public class ScheduesFragment extends Fragment {
                 scheduleFloatbg.setVisibility(View.VISIBLE);
                 firstGuide.setVisibility(View.GONE);
                 PreferenceUtils.setPrefBoolean(App.AppContex, App.coachid + "first_guide", true);
-//                if (scheduleActionPopWin == null) {
-//                    scheduleActionPopWin = new ScheduleActionPopWin(getContext());
-//                    scheduleActionPopWin.setOnDismissListenser(new PopupWindow.OnDismissListener() {
-//                        @Override
-//                        public void onDismiss() {
-//                            webFloatbtn.collapse();
-//                        }
-//                    });
-//                    scheduleActionPopWin.setActionCallback(v -> {
-//                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-//                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=rest");
-//                        startActivity(toWeb);
-//                    }, v2 -> {
-//                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-//                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=privatelesson");
-//                        startActivity(toWeb);
-//                    }, v3 -> {
-//                        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-//                        toWeb.putExtra("url", Configs.Server + "mobile/coaches/systems/?action=grouplesson");
-//                        startActivity(toWeb);
-//                    });
-//                }
-//
-//                scheduleActionPopWin.show(webFloatbtn);
             }
 
             @Override
@@ -264,23 +239,7 @@ public class ScheduesFragment extends Fragment {
                         queryNotify();
                     }
                 });
-//        mObservableReresh = RxBus.getBus().register(RxRefreshList.class);
-//        mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<RxRefreshList>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(RxRefreshList rxRefreshList) {
-//                setUpNaviSpinner();
-//            }
-//        });
+
         mObservableReresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
         mObservableReresh.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
@@ -299,19 +258,12 @@ public class ScheduesFragment extends Fragment {
                         mFragmentAdapter.notifyDataSetChanged();
                     }
                 });
-//        setUpNaviSpinner();
         return view;
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-//        if (!hidden) {
-//            int x = curPostion;
-//            setUpNaviSpinner();
-//            spinnerNav.setSelection(x);
-//            queryNotify();
-//        }
     }
 
 
@@ -436,7 +388,6 @@ public class ScheduesFragment extends Fragment {
 
     }
 
-    //    @OnClick({R.id.schedule_rest_btn, R.id.schedule_group_btn, R.id.schedule_private_btn})
     public void onAction(int v) {
         StringBuffer sb = new StringBuffer(Configs.Server);
         switch (v) {
@@ -460,28 +411,14 @@ public class ScheduesFragment extends Fragment {
         webFloatbtn.collapse();
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        LogUtil.e("onResume");
-//        queryNotify();
-//        int x = curPostion;
-//        setUpNaviSpinner();
-//        spinnerNav.setSelection(x);
-//    }
 
     @Override
     public void onStart() {
         super.onStart();
         queryNotify();
-//        int x = curPostion;
-//        setUpNaviSpinner();
-//        spinnerNav.setSelection(x);
     }
 
     public void queryNotify() {
-        //TODO 获取未读通知数
-
         QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -521,7 +458,6 @@ public class ScheduesFragment extends Fragment {
             toolbarTitle.setText(data.getStringExtra("name"));
             curModel = data.getStringExtra("model");
             curSystemId = Integer.parseInt(data.getStringExtra("id"));
-            LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
             mFragmentAdapter.notifyDataSetChanged();
 
         }
@@ -679,12 +615,8 @@ public class ScheduesFragment extends Fragment {
     }
 
     class ScheduesAdapter extends RecyclerView.Adapter<SchedulesVH> implements View.OnClickListener {
-
-
         private List<ScheduleBean> datas;
         private OnRecycleItemClickListener listener;
-
-
         public ScheduesAdapter(List datas) {
             this.datas = datas;
         }

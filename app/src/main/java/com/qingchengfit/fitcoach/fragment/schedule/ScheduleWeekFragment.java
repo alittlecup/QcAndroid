@@ -1,6 +1,20 @@
 package com.qingchengfit.fitcoach.fragment.schedule;
 
-import cn.qingchengfit.staffkit.constant.BaseFragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+
+import java.util.Calendar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 /**
  * power by
@@ -24,9 +38,17 @@ import cn.qingchengfit.staffkit.constant.BaseFragment;
  */
 public class ScheduleWeekFragment extends BaseFragment {
 
+    @BindView(R.id.weekView)
+    WeekView weekView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
+        ButterKnife.bind(this, view);
+        Calendar end = Calendar.getInstance();
+        end.add(Calendar.HOUR,1);
+        WeekViewEvent event = new WeekViewEvent(1L,"测试", Calendar.getInstance(),end);
+        weekView.notifyDatasetChanged();
         return view;
     }
 

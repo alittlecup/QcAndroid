@@ -25,10 +25,10 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
-import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
+import com.qingchengfit.fitcoach.fragment.schedule.ScheduleWeekFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
@@ -160,7 +160,7 @@ public class Main2Activity extends AppCompatActivity implements WebActivityInter
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new ScheduesFragment();
+                return new ScheduleWeekFragment();
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {
