@@ -21,10 +21,7 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class SyncWaitingItemItem extends AbstractFlexibleItem<SyncWaitingItemItem.SyncWaitingItemVH> {
 
     public boolean isDone = false;
-    @BindView(R.id.btn)
-    Button btn;
-    @BindView(R.id.wait_hint)
-    TextView waitHint;
+
 
     @Override
     public int getLayoutRes() {
@@ -38,7 +35,8 @@ public class SyncWaitingItemItem extends AbstractFlexibleItem<SyncWaitingItemIte
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, SyncWaitingItemVH holder, int position, List payloads) {
-        waitHint.setVisibility(isDone ? View.GONE : View.VISIBLE);
+        holder.waitHint.setVisibility(isDone ? View.GONE : View.VISIBLE);
+        holder.btn.setVisibility((!isDone) ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -47,7 +45,10 @@ public class SyncWaitingItemItem extends AbstractFlexibleItem<SyncWaitingItemIte
     }
 
     public class SyncWaitingItemVH extends FlexibleViewHolder {
-
+        @BindView(R.id.btn)
+        Button btn;
+        @BindView(R.id.wait_hint)
+        TextView waitHint;
         public SyncWaitingItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

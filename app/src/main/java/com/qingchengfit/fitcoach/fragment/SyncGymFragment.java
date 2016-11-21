@@ -14,6 +14,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.event.EventSyncDone;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.items.GymItem;
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -68,7 +68,7 @@ public class SyncGymFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext()));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
         mData.clear();
         syncItem = new SyncWaitingItemItem();
         mData.add(syncItem);
@@ -78,7 +78,9 @@ public class SyncGymFragment extends BaseFragment {
                 .subscribe(new Action1<EventSyncDone>() {
                     @Override
                     public void call(EventSyncDone eventSyncDone) {
-
+                        Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                        startActivity(toMain);
+                        getActivity().finish();
                     }
                 });
 
@@ -99,11 +101,8 @@ public class SyncGymFragment extends BaseFragment {
                                     @Override
                                     public void call(String s) {
                                         syncItem.isDone =true;
-                                        commonFlexAdapter.notifyItemChanged(mData.size()-2);
+                                        commonFlexAdapter.notifyItemChanged(mData.size()-1);
 
-                                        Intent toMain = new Intent(getActivity(), Main2Activity.class);
-                                        startActivity(toMain);
-                                        getActivity().finish();
                                     }
                                 })
                         );

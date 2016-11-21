@@ -100,7 +100,9 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing|stateUnchanged"/>
+            android:windowSoftInputMode="adjustNothing|stateUnchanged"
+
+            />
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/app_name"
@@ -346,11 +348,28 @@
             android:name=".activity.BodyTestActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".activity.CoachHomeActivity"/>
-        <activity android:name=".activity.Main2Activity"/>
-        <activity android:name=".activity.AddBrandActivity"/>
-        <activity android:name=".activity.GuideActivity"/>
-        <activity android:name=".activity.ChooseActivity"/>
-        <activity android:name=".activity.MeetActivity">
+        <activity android:name=".activity.Main2Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing|stateUnchanged"
+            android:hardwareAccelerated="true"
+            />
+        <activity android:name=".activity.AddBrandActivity"
+            android:screenOrientation="portrait"
+
+            />
+        <activity android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait"
+
+            />
+        <activity android:name=".activity.ChooseActivity"
+            android:screenOrientation="portrait"
+
+            />
+        <activity android:name=".activity.MeetActivity"
+            android:screenOrientation="portrait"
+
+            >
         </activity>
     </application>
 
