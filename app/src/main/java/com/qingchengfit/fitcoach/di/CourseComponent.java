@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.di;
 
 import com.qingchengfit.fitcoach.fragment.batch.GymCoursesFragment;
+import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
 import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.fragment.course.AddCourseFragment;
 import com.qingchengfit.fitcoach.fragment.course.ChooseCoursePlanFragment;
@@ -65,6 +66,7 @@ public interface CourseComponent {
     void inject(GymCoursesFragment fragment);
     void inject(com.qingchengfit.fitcoach.fragment.batch.CourseListFragment fragment);
     void inject(CourseBatchDetailFragment fragment);
+    void inject(AddBatchFragment fragment);
 
 
 

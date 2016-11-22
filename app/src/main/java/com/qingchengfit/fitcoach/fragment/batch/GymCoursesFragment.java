@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -23,6 +24,7 @@ import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourse;
 
 import java.util.ArrayList;
@@ -88,7 +90,7 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
         if (fragments.size() == 0) {
             fragments.clear();
             fragments.add(CourseListFragment.newInstance(Configs.TYPE_GROUP));
-            fragments.add(CourseListFragment.newInstance(Configs.TYPE_PRIVATE));
+            fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, App.gUser.id));
         }
         fragmentAdater = new FragmentAdapter(getChildFragmentManager(), fragments);
         viewpager.setAdapter(fragmentAdater);

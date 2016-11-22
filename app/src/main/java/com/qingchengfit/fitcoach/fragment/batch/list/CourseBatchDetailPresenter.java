@@ -4,12 +4,21 @@ import android.content.Intent;
 
 import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.di.BasePresenter;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import javax.inject.Inject;
 
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -24,7 +33,7 @@ import rx.Subscription;
  * <p>
  * Created by Paper on 16/3/29 2016.
  */
-public class CourseBatchDetailPresenter implements Presenter {
+public class CourseBatchDetailPresenter extends BasePresenter {
 
 
     CoachService coachService;
@@ -77,6 +86,7 @@ public class CourseBatchDetailPresenter implements Presenter {
 
     @Override
     public void unattachView() {
+        super.unattachView();
         view = null;
         if (groupSp != null)
             groupSp.unsubscribe();
@@ -96,7 +106,23 @@ public class CourseBatchDetailPresenter implements Presenter {
 
     }
 
-    public void queryGroup(String id) {
+    public void queryGroup(String staffid,String id) {
+        RxRegiste(restRepository.getGet_api().qcGetGroupCourses(staffid,id,coachService.id+"",coachService.getModel(),null)
+                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                 .subscribe(new Action1<QcResponseGroupDetail>() {
+                                     @Override
+                                     public void call(QcResponseGroupDetail qcResponse) {
+                                         if (ResponseConstant.checkSuccess(qcResponse)) {
+                                             view.onGoup(qcResponse.data.course, qcResponse.data.batches);
+                                         } else view.onShowError(qcResponse.getMsg());
+                                     }
+                                 }, new Action1<Throwable>() {
+                                     @Override
+                                     public void call(Throwable throwable) {
+                                         view.onShowError(throwable.getMessage());
+                                     }
+                                 })
+        );
 //        groupSp = gymUseCase.getGroupBatches(id, coachService.getId(), coachService.getModel(), null, new Action1<QcResponseGroupDetail>() {
 //            @Override
 //            public void call(QcResponseGroupDetail qcResponseGroupDetail) {
@@ -109,17 +135,22 @@ public class CourseBatchDetailPresenter implements Presenter {
 //        });
     }
 
-    public void queryPrivate(String id) {
-//        priSp = restRepository.getGet_api().get  getPrivateBatches(id, coachService.getId(), coachService.getModel(), null, new Action1<QcResponsePrivateDetail>() {
-//            @Override
-//            public void call(QcResponsePrivateDetail qcResponsePrivateDetail) {
-//                if (qcResponsePrivateDetail.getStatus() == ResponseConstant.SUCCESS) {
-//                    view.onPrivate(qcResponsePrivateDetail.data.coach, qcResponsePrivateDetail.data.batches);
-//                } else {
-//
-//                }
-//            }
-//        });
+    public void queryPrivate(String staffid,String coachid) {
+        priSp = restRepository.getGet_api().qcGetPrivateBatches(staffid,coachid,coachService.id+"",coachService.model,null)
+             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                             .subscribe(new Action1<QcResponsePrivateDetail>() {
+                                 @Override
+                                 public void call(QcResponsePrivateDetail qcResponse) {
+                                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                                         view.onPrivate(qcResponse.data.coach,qcResponse.data.batches);
+                                     } else view.onShowError(qcResponse.getMsg());
+                                 }
+                             }, new Action1<Throwable>() {
+                                 @Override
+                                 public void call(Throwable throwable) {
+                                     view.onShowError(throwable.getMessage());
+                                 }
+                             });
     }
 
 }

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.batch.list;
 
+import com.anbillon.qcmvplib.CView;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
@@ -21,7 +22,7 @@ import java.util.List;
  * <p>
  * Created by Paper on 16/3/29 2016.
  */
-public interface CourseBatchDetailView extends PView {
+public interface CourseBatchDetailView extends CView {
     void onGoup(Course course, List<QcResponseGroupDetail.GroupBatch> batch);
 
     void onPrivate(QcResponsePrivateDetail.PrivateCoach coach, List<QcResponsePrivateDetail.PrivateBatch> batch);

@@ -33,131 +33,114 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-
 /**
  * Created by peggy on 16/5/26.
  */
 
 public class ChooseBrandActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recycleview)
-    RecyclerView recycleview;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recycleview) RecyclerView recycleview;
 
     private Subscription sp;
     List<Brand> datas = new ArrayList<>();
     private BrandManageAdapterAdapter adapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recyleview_toolbar);
         ButterKnife.bind(this);
-
+        toolbar.setTitle(R.string.choose_brand);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 setResult(Activity.RESULT_CANCELED);
                 onBackPressed();
             }
         });
 
-
         datas = new ArrayList<>();
         adapter = new BrandManageAdapterAdapter(datas);
         recycleview.setLayoutManager(new LinearLayoutManager(this));
-        recycleview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recycleview.addItemDecoration(
+            new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recycleview.setAdapter(adapter);
 
         queryData();
-
     }
 
     public void queryData() {
-        if (sp != null)
-            sp.unsubscribe();
-        String curUser = PreferenceUtils.getPrefString(this, "user_info","");
-        if (curUser != null && !curUser.isEmpty()){
-             User u = new Gson().fromJson(curUser, User.class);
-
+        if (sp != null) sp.unsubscribe();
+        String curUser = PreferenceUtils.getPrefString(this, "user_info", "");
+        if (curUser != null && !curUser.isEmpty()) {
+            User u = new Gson().fromJson(curUser, User.class);
 
             sp = QcCloudClient.getApi().getApi.qcGetBrands(u.id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<QcResponseBrands>() {
-                        @Override
-                        public void call(final QcResponseBrands qcResponseBrands) {
-                            if (qcResponseBrands.status == 200) {
-                                datas.clear();
-                                datas.addAll(qcResponseBrands.data.brands);
-                                if (!getIntent().getBooleanExtra("disable", false)) {
-                                    Brand add = new Brand("-1");
-                                    datas.add(add);
-                                }
-                                adapter.notifyDataSetChanged();
-                                adapter.setListener(new OnRecycleItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View v, int pos) {
-                                        if (pos < datas.size() - 1) {
-                                            if (datas.get(pos).isHas_add_permission()) {
-                                                if (datas.get(pos).getGym_count() > 0) {
-                                                    setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
-                                                    ChooseBrandActivity.this.finish();
-                                                    overridePendingTransition(R.anim.slide_hold,R.anim.slide_top_out);
-                                                }else {
-
-                                                }
-                                            } else {
-                                                ToastUtils.show(String.format(Locale.CHINA, getString(R.string.no_permission_brand), datas.get(pos).getCreated_by()==null||datas.get(pos).getCreated_by().getUsername()==null?"":datas.get(pos).getCreated_by().getUsername()));
-                                            }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<QcResponseBrands>() {
+                    @Override public void call(final QcResponseBrands qcResponseBrands) {
+                        if (qcResponseBrands.status == 200) {
+                            datas.clear();
+                            datas.addAll(qcResponseBrands.data.brands);
+                            if (!getIntent().getBooleanExtra("disable", false)) {
+                                Brand add = new Brand("-1");
+                                datas.add(add);
+                            }
+                            adapter.notifyDataSetChanged();
+                            adapter.setListener(new OnRecycleItemClickListener() {
+                                @Override public void onItemClick(View v, int pos) {
+                                    if (pos < datas.size() - 1) {
+                                        if (datas.get(pos).isHas_add_permission()) {
+                                            setResult(RESULT_OK, IntentUtils.instancePacecle(
+                                                qcResponseBrands.data.brands.get(pos)));
+                                            ChooseBrandActivity.this.finish();
+                                            overridePendingTransition(R.anim.slide_hold,
+                                                R.anim.slide_top_out);
                                         } else {
-                                            if (Long.parseLong(datas.get(pos).getId()) < 0) {
-                                                startActivityForResult(new Intent(ChooseBrandActivity.this, AddBrandActivity.class), 1);
-                                            }
+                                            ToastUtils.show(String.format(Locale.CHINA,
+                                                getString(R.string.no_permission_brand),
+                                                datas.get(pos).getCreated_by() == null
+                                                    || datas.get(pos).getCreated_by().getUsername()
+                                                    == null ? "" : datas.get(pos)
+                                                    .getCreated_by()
+                                                    .getUsername()));
+                                        }
+                                    } else {
+                                        if (Long.parseLong(datas.get(pos).getId()) < 0) {
+                                            startActivityForResult(
+                                                new Intent(ChooseBrandActivity.this,
+                                                    AddBrandActivity.class), 1);
                                         }
                                     }
-                                });
-
-                            } else {
-
-                            }
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
+                                }
+                            });
+                        } else {
 
                         }
-                    });
+                    }
+                }, new Action1<Throwable>() {
+                    @Override public void call(Throwable throwable) {
 
-
+                    }
+                });
         }
-
-
-
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             queryData();
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        if (sp != null)
-            sp.unsubscribe();
+    @Override protected void onDestroy() {
+        if (sp != null) sp.unsubscribe();
         super.onDestroy();
-
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         this.finish();
-        overridePendingTransition(R.anim.slide_hold,R.anim.slide_top_out);
-
+        overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
     }
 }

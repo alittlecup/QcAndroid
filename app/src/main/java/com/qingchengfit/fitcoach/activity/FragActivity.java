@@ -18,6 +18,7 @@ import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 
 import cn.qingchengfit.widgets.utils.AppUtils;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 /**
  * power by
@@ -35,13 +36,14 @@ import cn.qingchengfit.widgets.utils.AppUtils;
 public class FragActivity extends BaseAcitivity {
 
     Fragment fragment;
+    CoachService mCoachService ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
         int type = getIntent().getIntExtra("type", 0);
-
+        mCoachService = getIntent().getParcelableExtra("service");
 
         switch (type) {
             case 0:
@@ -91,6 +93,10 @@ public class FragActivity extends BaseAcitivity {
                 .replace(R.id.web_frag_layout, fragment)
                 .commit();
 
+    }
+
+    public CoachService getCoachService() {
+        return mCoachService;
     }
 
     @Override

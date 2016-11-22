@@ -7,7 +7,7 @@
               android:background="@color/bg_grey"
               android:orientation="vertical"
     >
-
+    <include layout="@layout/common_toolbar"/>
     <LinearLayout
         android:id="@+id/linearlayout"
         android:layout_width="match_parent"

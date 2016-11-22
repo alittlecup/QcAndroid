@@ -29,6 +29,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.StatementBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
@@ -289,6 +290,17 @@ public class StatementDetailFragment extends Fragment {
                 freshDate();
             }
         });
+
+        if (getActivity() instanceof FragActivity){
+            if (((FragActivity) getActivity()).getCoachService() != null){
+                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+                toolbarTitle.setText(coachService.getName());
+                curModel = coachService.model;
+                curSystemId = (int) coachService.getId();
+            }
+
+        }
+
         return view;
     }
 

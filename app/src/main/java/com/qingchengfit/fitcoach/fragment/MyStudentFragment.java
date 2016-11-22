@@ -43,6 +43,7 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
@@ -131,16 +132,16 @@ public class MyStudentFragment extends BaseFragment {
         toolbar.inflateMenu(R.menu.menu_students);
         mTitle = getString(R.string.mystudents_title);
         toolbarTitle.setText(mTitle);
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
-                choosegym.putExtra("model", curModel);
-                choosegym.putExtra("id", curSystemId);
-                choosegym.putExtra("title", mTitle);
-                startActivityForResult(choosegym, 501);
-            }
-        });
+        //toolbarTitle.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
+        //        choosegym.putExtra("model", curModel);
+        //        choosegym.putExtra("id", curSystemId);
+        //        choosegym.putExtra("title", mTitle);
+        //        startActivityForResult(choosegym, 501);
+        //    }
+        //});
 
         toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_action_add));
         toolbar.setOnMenuItemClickListener(item -> {
@@ -165,13 +166,6 @@ public class MyStudentFragment extends BaseFragment {
         mStudentAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-
-//                StringBuffer sb = new StringBuffer();
-//                sb.append(adapterData.get(pos).systemUrl)
-//                        .append("/mobile/students/")
-//                        .append(adapterData.get(pos).id)
-//                        .append("/details/");
-//                Intent it = new Intent(getContext(), WebActivity.class);
                 Intent it = new Intent(getContext(), StudentHomeActivity.class);
                 it.putExtra("id", adapterData.get(pos).modelid);
                 it.putExtra("model", adapterData.get(pos).model);
@@ -235,6 +229,15 @@ public class MyStudentFragment extends BaseFragment {
             }
         });
 
+        if (getActivity() instanceof FragActivity){
+            if (((FragActivity) getActivity()).getCoachService() != null){
+                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+                toolbarTitle.setText(coachService.getName());
+                curModel = coachService.model;
+                curSystemId = (int) coachService.getId();
+            }
+
+        }
         return view;
     }
 

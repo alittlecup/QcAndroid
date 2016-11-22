@@ -236,6 +236,7 @@ public class SaleDetailFragment extends Fragment {
                 freshData();
             }
         });
+
         return view;
     }
 

@@ -1,10 +1,8 @@
-package com.qingchengfit.fitcoach.fragment.batch.addbatch;
+package com.qingchengfit.fitcoach.bean;
 
-import com.anbillon.qcmvplib.PView;
-import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * power by
@@ -19,10 +17,18 @@ import java.util.ArrayList;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-public interface AddBatchView extends PView {
-    void onSuccess();
-    void onFailed();
-    void checkOk();
-    void checkFailed(String s);
-    void onTemplete(ArrayList<Rule> rules, ArrayList<TimeRepeat> time_repeats, int maxuer);
+public class ArrangeBatchBody {
+
+    public String teacher_id;
+    public String course_id;
+    public String shop_id;
+    public String from_date;
+    public String to_date;
+    public int max_users;
+    public List<String> spaces;
+    public ArrayList<Rule> rules;
+    public ArrayList<TimeRepeat> time_repeats;
+    public String batch_id;
+
+
 }

@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -76,7 +78,7 @@ public class QcSchedulesResponse extends QcResponse {
         public Teacher teacher;
     }
 
-    public static class Teacher {
+    public static class Teacher implements Parcelable {
         @SerializedName("username")
         public String username;
         @SerializedName("id")
@@ -107,6 +109,35 @@ public class QcSchedulesResponse extends QcResponse {
         public void setAvatar(String avatar) {
             this.avatar = avatar;
         }
+
+        @Override public int describeContents() {
+            return 0;
+        }
+
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.username);
+            dest.writeString(this.id);
+            dest.writeString(this.avatar);
+        }
+
+        public Teacher() {
+        }
+
+        protected Teacher(Parcel in) {
+            this.username = in.readString();
+            this.id = in.readString();
+            this.avatar = in.readString();
+        }
+
+        public static final Parcelable.Creator<Teacher> CREATOR = new Parcelable.Creator<Teacher>() {
+            @Override public Teacher createFromParcel(Parcel source) {
+                return new Teacher(source);
+            }
+
+            @Override public Teacher[] newArray(int size) {
+                return new Teacher[size];
+            }
+        };
     }
 
 

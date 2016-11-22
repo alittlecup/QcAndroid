@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 
 import java.util.List;
@@ -87,6 +89,16 @@ public class StatementGlanceFragment extends Fragment {
                 startActivityForResult(choosegym,501);
             }
         });
+        if (getActivity() instanceof FragActivity){
+            if (((FragActivity) getActivity()).getCoachService() != null){
+                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+                toolbarTitle.setText(coachService.getName());
+                curModel = coachService.model;
+                curSystemId = (int) coachService.getId();
+            }
+
+        }
+
 //        spinnerBeans = new ArrayList<>();
 //        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
 //        adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {

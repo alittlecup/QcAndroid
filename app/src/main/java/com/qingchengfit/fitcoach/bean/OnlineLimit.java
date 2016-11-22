@@ -1,7 +1,9 @@
-package com.qingchengfit.fitcoach.bean.base;
+package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -21,43 +23,16 @@ import android.os.Parcelable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 16/11/15.
+ * Created by Paper on 16/11/17.
  */
 
-public class TimeRepeat implements Parcelable {
+public class OnlineLimit implements Parcelable {
+    public int user_count;
+    public List<Integer> user_status;
 
-    public TimeRepeat(String start, String end, int weekday) {
-        this.start = start;
-        this.end = end;
-        this.weekday = weekday;
-    }
-
-    public String start;
-    public String end;
-    public int weekday;
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-    public int getWeekday() {
-        return weekday;
-    }
-
-    public void setWeekday(int weekday) {
-        this.weekday = weekday;
+    public OnlineLimit(int user_count, List<Integer> user_status) {
+        this.user_count = user_count;
+        this.user_status = user_status;
     }
 
     @Override
@@ -67,26 +42,25 @@ public class TimeRepeat implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.start);
-        dest.writeString(this.end);
-        dest.writeInt(this.weekday);
+        dest.writeInt(this.user_count);
+        dest.writeList(this.user_status);
     }
 
-    protected TimeRepeat(Parcel in) {
-        this.start = in.readString();
-        this.end = in.readString();
-        this.weekday = in.readInt();
+    protected OnlineLimit(Parcel in) {
+        this.user_count = in.readInt();
+        this.user_status = new ArrayList<Integer>();
+        in.readList(this.user_status, Integer.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<TimeRepeat> CREATOR = new Parcelable.Creator<TimeRepeat>() {
+    public static final Creator<OnlineLimit> CREATOR = new Creator<OnlineLimit>() {
         @Override
-        public TimeRepeat createFromParcel(Parcel source) {
-            return new TimeRepeat(source);
+        public OnlineLimit createFromParcel(Parcel source) {
+            return new OnlineLimit(source);
         }
 
         @Override
-        public TimeRepeat[] newArray(int size) {
-            return new TimeRepeat[size];
+        public OnlineLimit[] newArray(int size) {
+            return new OnlineLimit[size];
         }
     };
 }

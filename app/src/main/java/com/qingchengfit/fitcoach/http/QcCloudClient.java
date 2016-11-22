@@ -5,6 +5,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
+import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
@@ -125,7 +126,6 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
-
 /**
  * power by
  * <p>
@@ -148,7 +148,6 @@ public class QcCloudClient {
     public DownLoadApi downLoadApi;
     private OkHttpClient okHttpClient;
 
-
     public QcCloudClient() {
         okHttpClient = new OkHttpClient();
         okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
@@ -160,604 +159,540 @@ public class QcCloudClient {
         } catch (IOException e) {
             RevenUtils.sendException("http Cache error!", "http", e);
         }
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
-                .setClient(new OkClient(okHttpClient))
-                .setRequestInterceptor(request ->
-                        {
-                            QcResponToken responToken = null;
-                            try {
-                                responToken = getApi.qcGetToken();
-                            } catch (Exception e) {
-                            }
-                            if (responToken != null) {
-                                request.addHeader("X-CSRFToken", responToken.data.token);
-                                request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
-                                        PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
-                                request.addHeader("Cache-Control", "max-age=0");
-                                request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER+"  OEM:"+App.AppContex.getString(R.string.oem_tag));
-                            }
-                        }
-                )
-//                .setErrorHandler(new ErrorHandler() {
-//                    @Override
-//                    public Throwable handleError(RetrofitError cause) {
-//                        if (cause.getKind() == RetrofitError.Kind.NETWORK) {
-//                            ToastUtils.show(R.drawable.ic_share_fail,"网络错误");
-//                        }
-//                        return null;
-//                    }
-//                })
-//                .setErrorHandler(cause -> {
-//                    LogUtil.e(cause.getCause().getMessage());
-//                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
-//
-//                    }
-//                    return null;
-//                })
-                .build();
-        RestAdapter restAdapter2 = new RestAdapter.Builder()
-                .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestFacade request) {
-                        request.addHeader("Cookie", "sessionid=" +
-                                PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
-                        request.addHeader("User-Agent", "FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android " + android.os.Build.VERSION.RELEASE + " " + android.os.Build.BRAND + " " + android.os.Build.MODEL + " " + android.os.Build.MANUFACTURER+"  OEM:"+App.AppContex.getString(R.string.oem_tag));
-                    }
-                })
-                .setClient(new OkClient(okHttpClient))
-                .build();
-//        RestAdapter restAdapter3 = new RestAdapter.Builder()
-//                .setEndpoint("")
-//                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-//                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
-//                .build();
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Configs.Server)
+            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
+            .setClient(new OkClient(okHttpClient))
+            .setRequestInterceptor(request -> {
+                QcResponToken responToken = null;
+                try {
+                    responToken = getApi.qcGetToken();
+                } catch (Exception e) {
+                }
+                if (responToken != null) {
+                    request.addHeader("X-CSRFToken", responToken.data.token);
+                    request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
+                        PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
+                    request.addHeader("Cache-Control", "max-age=0");
+                    request.addHeader("User-Agent", "FitnessTrainerAssistant/"
+                        + AppUtils.getAppVer(App.AppContex)
+                        + " Android "
+                        + android.os.Build.VERSION.RELEASE
+                        + " "
+                        + android.os.Build.BRAND
+                        + " "
+                        + android.os.Build.MODEL
+                        + " "
+                        + android.os.Build.MANUFACTURER
+                        + "  OEM:"
+                        + App.AppContex.getString(R.string.oem_tag));
+                }
+            })
+            //                .setErrorHandler(new ErrorHandler() {
+            //                    @Override
+            //                    public Throwable handleError(RetrofitError cause) {
+            //                        if (cause.getKind() == RetrofitError.Kind.NETWORK) {
+            //                            ToastUtils.show(R.drawable.ic_share_fail,"网络错误");
+            //                        }
+            //                        return null;
+            //                    }
+            //                })
+            //                .setErrorHandler(cause -> {
+            //                    LogUtil.e(cause.getCause().getMessage());
+            //                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
+            //
+            //                    }
+            //                    return null;
+            //                })
+            .build();
+        RestAdapter restAdapter2 = new RestAdapter.Builder().setEndpoint(Configs.Server)
+            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
+            .setRequestInterceptor(new RequestInterceptor() {
+                @Override public void intercept(RequestFacade request) {
+                    request.addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
+                    request.addHeader("User-Agent", "FitnessTrainerAssistant/"
+                        + AppUtils.getAppVer(App.AppContex)
+                        + " Android "
+                        + android.os.Build.VERSION.RELEASE
+                        + " "
+                        + android.os.Build.BRAND
+                        + " "
+                        + android.os.Build.MODEL
+                        + " "
+                        + android.os.Build.MANUFACTURER
+                        + "  OEM:"
+                        + App.AppContex.getString(R.string.oem_tag));
+                }
+            })
+            .setClient(new OkClient(okHttpClient))
+            .build();
+        //        RestAdapter restAdapter3 = new RestAdapter.Builder()
+        //                .setEndpoint("")
+        //                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+        //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
+        //                .build();
 
         postApi = restAdapter.create(PostApi.class);
         getApi = restAdapter2.create(GetApi.class);
-//        downLoadApi = restAdapter3.create(DownLoadApi.class);
+        //        downLoadApi = restAdapter3.create(DownLoadApi.class);
     }
 
     public static QcCloudClient getApi() {
         if (client == null) {
             return new QcCloudClient();
-        } else return client;
-
+        } else {
+            return client;
+        }
     }
 
     public RestAdapter.Builder getRestAdapter() {
-        return new RestAdapter.Builder()
-                .setClient(new OkClient(okHttpClient))
-                .setEndpoint(Configs.Server)
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-                .setRequestInterceptor(request ->
-                        {
-                            QcResponToken responToken = null;
-                            try {
-                                responToken = getApi.qcGetToken();
-                            } catch (Exception e) {
-                                //TODO handle error
-                            }
-                            if (responToken != null) {
-//                                request.addHeader("X-CSRFToken", responToken.data.token);
-//                                request.addHeader("Cache-Control", "max-age=0");
-                            }
-                        }
-                );
+        return new RestAdapter.Builder().setClient(new OkClient(okHttpClient))
+            .setEndpoint(Configs.Server)
+            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+            .setRequestInterceptor(request -> {
+                QcResponToken responToken = null;
+                try {
+                    responToken = getApi.qcGetToken();
+                } catch (Exception e) {
+                    //TODO handle error
+                }
+                if (responToken != null) {
+                    //                                request.addHeader("X-CSRFToken", responToken.data.token);
+                    //                                request.addHeader("Cache-Control", "max-age=0");
+                }
+            });
     }
-
 
     public interface GetApi {
         //获取token
-        @GET("/api/csrftoken/")
-        QcResponToken qcGetToken();
+        @GET("/api/csrftoken/") QcResponToken qcGetToken();
 
-        @POST("/api/users/{id}/")
-        rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
+        @POST("/api/users/{id}/") rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
 
-        @GET("/api/android/coaches/{id}/welcome/")
-        rx.Observable<QcResponDrawer> getDrawerInfo(@Path("id") String id);
+        @GET("/api/android/coaches/{id}/welcome/") rx.Observable<QcResponDrawer> getDrawerInfo(@Path("id") String id);
 
-        @GET("/api/coaches/{id}/systems/")
-        rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id, @Header("Cookie") String session_id);
+        @GET("/api/coaches/{id}/systems/") rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id,
+            @Header("Cookie") String session_id);
 
-        @GET("/api/users/{user_id}/brands/")
-        rx.Observable<QcResponseBrands> qcGetBrands(@Path("user_id") String id);
-
+        @GET("/api/users/{user_id}/brands/") rx.Observable<QcResponseBrands> qcGetBrands(@Path("user_id") String id);
 
         //获取用户详情
-        @GET("/api/coaches/{id}/detail/")
-        rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
+        @GET("/api/coaches/{id}/detail/") rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
 
-//
-//        //获取通知 分页和不分页接口 ,后者只为拿 未读
-//        @GET("/api/messages/")
-//        rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
-//        @GET("/api/messages/")
-//        rx.Observable<QcNotificationResponse> qcGetMessages();
+        //
+        //        //获取通知 分页和不分页接口 ,后者只为拿 未读
+        //        @GET("/api/messages/")
+        //        rx.Observable<QcNotificationResponse> qcGetMessages(@QueryMap HashMap<String, Integer> params);
+        //        @GET("/api/messages/")
+        //        rx.Observable<QcNotificationResponse> qcGetMessages();
 
         //获取通知 分页和不分页接口 ,后者只为拿 未读
-        @GET("/api/notifications/")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id") int id, @QueryMap HashMap<String,String> params);
+        @GET("/api/notifications/") rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id") int id,
+            @QueryMap HashMap<String, String> params);
 
-        @GET("/api/notifications/?tab=COACH_0")
-        rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id")int id);
+        @GET("/api/notifications/?tab=COACH_0") rx.Observable<QcNotificationResponse> qcGetMessages(@Query("coach_id") int id);
 
         //通知详情
-        @GET("/api/messages/{id}/")
-        rx.Observable<QcNotiDetailResponse> qcGetMsgDetails(@Path("id") int id);
+        @GET("/api/messages/{id}/") rx.Observable<QcNotiDetailResponse> qcGetMsgDetails(@Path("id") int id);
 
         //教练详情
-            @GET("/api/coaches/{id}/")
-        rx.Observable<QcCoachRespone> qcGetCoach(@Path("id") int id);
+        @GET("/api/coaches/{id}/") rx.Observable<QcCoachRespone> qcGetCoach(@Path("id") int id);
 
         @Deprecated //版本号 现在走fir
-        @GET("/api/app/version/")
-        rx.Observable<QcVersionResponse> qcGetVersion();
+        @GET("/api/app/version/") rx.Observable<QcVersionResponse> qcGetVersion();
 
         //获取认证列表
-        @GET("/api/coaches/{id}/certificates/")
-        rx.Observable<QcCertificatesReponse> qcGetCertificates(@Path("id") int id);
+        @GET("/api/coaches/{id}/certificates/") rx.Observable<QcCertificatesReponse> qcGetCertificates(@Path("id") int id);
 
         //获取工作经验列表
-        @GET("/api/coaches/{id}/experiences/")
-        rx.Observable<QcExperienceResponse> qcGetExperiences(@Path("id") int id);
+        @GET("/api/coaches/{id}/experiences/") rx.Observable<QcExperienceResponse> qcGetExperiences(@Path("id") int id);
 
         //获取单条工作经验
-        @GET("/api/experiences/{id}/")
-        rx.Observable<OneExperienceResponse> qcGetExperience(@Path("id") int id);
+        @GET("/api/experiences/{id}/") rx.Observable<OneExperienceResponse> qcGetExperience(@Path("id") int id);
 
         //获取认证列表
-        @GET("/api/certificates/{id}/")
-        rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
+        @GET("/api/certificates/{id}/") rx.Observable<QcCertificateDetailResponse> qcGetCertificateDetail(@Path("id") int id);
 
         //获取评价 评分
-        @GET("/api/coaches/{id}/evaluate/")
-        rx.Observable<QcEvaluateResponse> qcGetEvaluate(@Path("id") int id);
+        @GET("/api/coaches/{id}/evaluate/") rx.Observable<QcEvaluateResponse> qcGetEvaluate(@Path("id") int id);
 
         //搜索健身房
-        @GET("/api/gym/search/")
-        rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);        //搜索健身房
+        @GET("/api/gym/search/") rx.Observable<QcSerachGymRepsonse> qcSearchGym(@QueryMap Map<String, String> params);        //搜索健身房
 
         //搜索热门健身房
-        @GET("/api/gym/")
-        rx.Observable<QcSerachGymRepsonse> qcHotGym(@QueryMap Map<String, String> params);
+        @GET("/api/gym/") rx.Observable<QcSerachGymRepsonse> qcHotGym(@QueryMap Map<String, String> params);
 
         //搜索机构
-        @GET("/api/organizations/search/")
-        rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
+        @GET("/api/organizations/search/") rx.Observable<QcSearchOrganResponse> qcSearchOrganization(@QueryMap Map<String, String> params);
 
         //热门机构
-        @GET("/api/organizations/")
-        rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
+        @GET("/api/organizations/") rx.Observable<QcSearchOrganResponse> qcHotOrganization(@QueryMap Map<String, String> params);
 
         //获取教练日程
-        @Deprecated
-        @GET("/api/coaches/{id}/schedules/")
-        rx.Observable<QcSchedulesResponse> qcGetCoachSchedule(@Path("id") int id, @QueryMap Map<String, String> params);
+        @Deprecated @GET("/api/coaches/{id}/schedules/") rx.Observable<QcSchedulesResponse> qcGetCoachSchedule(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
-        @GET("/api/v1/coaches/{id}/schedules/")
-        rx.Observable<QcSchedulesResponse> qcGetCoachScheduleV1(@Path("id") int id, @QueryMap Map<String, String> params);
-
+        @GET("/api/v1/coaches/{id}/schedules/") rx.Observable<QcSchedulesResponse> qcGetCoachScheduleV1(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
         //获取教练预约概览
-        @GET("/api/v1/coaches/{id}/reports/schedules/glance/")
-        rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(@Path("id") int id);
+        @GET("/api/v1/coaches/{id}/reports/schedules/glance/") rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(
+            @Path("id") int id);
 
         //获取教练预约概览
-        @GET("/api/v1/coaches/{id}/reports/sale/glance/")
-        rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
+        @GET("/api/v1/coaches/{id}/reports/sale/glance/") rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
 
         //获取教练系统
-        @Deprecated
-        @GET("/api/coaches/{id}/systems/")
-        rx.Observable<QcCoachSystemResponse> qcGetCoachSystem(@Path("id") int id);
+        @Deprecated @GET("/api/coaches/{id}/systems/") rx.Observable<QcCoachSystemResponse> qcGetCoachSystem(@Path("id") int id);
 
         //获取教练系统
-        @GET("/api/v1/coaches/{id}/services/")
-        rx.Observable<QcCoachServiceResponse> qcGetCoachService(@Path("id") int id);
-
+        @GET("/api/v1/coaches/{id}/services/") rx.Observable<QcCoachServiceResponse> qcGetCoachService(@Path("id") int id);
 
         //获取教练系统
-        @GET("/api/coaches/{id}/systems/detail/")
-        rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
+        @GET("/api/coaches/{id}/systems/detail/") rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
 
+        @GET("/api/v1/coaches/{id}/reports/schedules/") rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
-        @GET("/api/v1/coaches/{id}/reports/schedules/")
-        rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id, @QueryMap Map<String, String> params);
-
-        @GET("/api/v1/services/detail/")
-        rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String, String> params);
+        @GET("/api/v1/services/detail/") rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String, String> params);
 
         //获取教练销售详情
-        @GET("/api/coaches/{id}/systems/report/sale/")
-        rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id, @QueryMap Map<String, String> params);
+        @GET("/api/coaches/{id}/systems/report/sale/") rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
         //获取教练销售 充值卡信息
-        @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/")
-        rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
-
+        @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/") rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
 
         //获取教练课程
-        @GET("/api/coaches/{id}/systems/courses/")
-        rx.Observable<QcCourseResponse> qcGetSystemCourses(@Path("id") int id, @QueryMap Map<String, String> params);
-
+        @GET("/api/coaches/{id}/systems/courses/") rx.Observable<QcCourseResponse> qcGetSystemCourses(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
         //获取教练某个系统下的学员
-        @GET("/api/coaches/{id}/systems/users/")
-        rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id, @QueryMap Map<String, String> params);
+        @GET("/api/coaches/{id}/systems/users/") rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
         //获取教练所有学员
-        @GET("/api/v1/coaches/{id}/students/")
-        rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
+        @GET("/api/v1/coaches/{id}/students/") rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
 
         //获取所有课程计划
-        @GET("/api/coaches/{id}/plans/")
-        rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id);
+        @GET("/api/coaches/{id}/plans/") rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id);
 
         //获取所有健身房充值卡
-        @GET("/api/coaches/{id}/systems/cardtpls/")
-        rx.Observable<QcSystemCardsResponse> qcGetSystemCard(@Path("id") int id, @QueryMap Map<String, String> params);
+        @GET("/api/coaches/{id}/systems/cardtpls/") rx.Observable<QcSystemCardsResponse> qcGetSystemCard(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
-        @GET("/api/android/coaches/{id}/")
-        rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id,@QueryMap Map<String, String> params);
+        @GET("/api/android/coaches/{id}/") rx.Observable<QcDrawerResponse> qcGetDrawerInfo(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
         //获取预约预览
-        @GET("/api/coaches/{id}/schedules/glance/")
-        rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id, @QueryMap Map<String, String> params);
+        @GET("/api/coaches/{id}/schedules/glance/") rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
         //获取个人的健身房
-        @GET("/api/coaches/{id}/personal/system/")
-        rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
+        @GET("/api/coaches/{id}/personal/system/") rx.Observable<QcPrivateGymReponse> qcGetPrivateGym(@Path("id") int id);
 
-        @GET("/api/v1/coaches/{id}/shop/")
-        rx.Observable<QcGymDetailResponse> qcGetGymDetail(@Path("id") int id, @QueryMap Map<String, String> params);
+        @GET("/api/v1/coaches/{id}/shop/") rx.Observable<QcGymDetailResponse> qcGetGymDetail(@Path("id") int id,
+            @QueryMap Map<String, String> params);
 
-        @GET("/api/meetings/")
-        rx.Observable<QcMeetingResponse> qcGetMeetingList(@QueryMap Map<String, String> params);
+        @GET("/api/meetings/") rx.Observable<QcMeetingResponse> qcGetMeetingList(@QueryMap Map<String, String> params);
 
         //所有的团课排期
-        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/")
-        rx.Observable<QcBatchResponse> qcGetGroupManageDetail(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@Path("schedules") String schedules,@QueryMap Map<String, String> params);
+        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/") rx.Observable<QcBatchResponse> qcGetGroupManageDetail(
+            @Path("coach_id") int coach_id, @Path("batch_id") String batch_id, @Path("schedules") String schedules,
+            @QueryMap Map<String, String> params);
 
         //排期列表
-        @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/batches/")
-        rx.Observable<GetBatchesResponse> qcGetGroupManage(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
+        @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/batches/") rx.Observable<GetBatchesResponse> qcGetGroupManage(
+            @Path("coach_id") int coach_id, @Path("course_id") String course_id, @QueryMap Map<String, String> params);
 
-        @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/")
-        rx.Observable<QcOneCourseResponse> qcGetOneCourse(@Path("coach_id") int coach_id,@Path("course_id") String course_id,@QueryMap Map<String, String> params);
+        @GET("/api/v1/coaches/{coach_id}/courses/{course_id}/") rx.Observable<QcOneCourseResponse> qcGetOneCourse(
+            @Path("coach_id") int coach_id, @Path("course_id") String course_id, @QueryMap Map<String, String> params);
+
         //学员基础信息
-        @GET("/api/students/{id}/")
-        rx.Observable<StudentInfoResponse> qcGetStudentInfo(@Path("id") String student_id,@QueryMap Map<String, String> params);
+        @GET("/api/students/{id}/") rx.Observable<StudentInfoResponse> qcGetStudentInfo(@Path("id") String student_id,
+            @QueryMap Map<String, String> params);
+
         //学员课程列表
-        @GET("/api/students/{id}/schedules/")
-        rx.Observable<StudentCourseResponse> qcGetStuedntCourse(@Path("id") String student_id,@QueryMap Map<String, String> params);
+        @GET("/api/students/{id}/schedules/") rx.Observable<StudentCourseResponse> qcGetStuedntCourse(@Path("id") String student_id,
+            @QueryMap Map<String, String> params);
 
         //学员卡列表
-        @GET("/api/students/{id}/cards/")
-        rx.Observable<StudentCarsResponse> qcGetStuedntCard(@Path("id") String student_id,@QueryMap Map<String, String> params);
+        @GET("/api/students/{id}/cards/") rx.Observable<StudentCarsResponse> qcGetStuedntCard(@Path("id") String student_id,
+            @QueryMap Map<String, String> params);
 
         //学员卡
-        @GET("/api/students/{id}/measures/")
-        rx.Observable<BodyTestReponse> qcGetStuedntBodyTest(@Path("id") String student_id,@QueryMap Map<String, String> params);
+        @GET("/api/students/{id}/measures/") rx.Observable<BodyTestReponse> qcGetStuedntBodyTest(@Path("id") String student_id,
+            @QueryMap Map<String, String> params);
 
         //体测模板接口
-        @GET("/api/measures/tpl/")
-        rx.Observable<QcBodyTestTemplateRespone> qcGetBodyTestModel(@QueryMap Map<String, String> params);
+        @GET("/api/measures/tpl/") rx.Observable<QcBodyTestTemplateRespone> qcGetBodyTestModel(@QueryMap Map<String, String> params);
 
         //获取体测数据
-        @GET("/api/measures/{measure_id}/")
-        rx.Observable<QcGetBodyTestResponse> qcGetBodyTest(@Path("measure_id") String measure_id, @QueryMap Map<String, String> params);
-
+        @GET("/api/measures/{measure_id}/") rx.Observable<QcGetBodyTestResponse> qcGetBodyTest(@Path("measure_id") String measure_id,
+            @QueryMap Map<String, String> params);
 
         /**
-         *
-         *
-         *   课程
-         *
-         *
+         * 课程
          */
 
         //获取健身房课程列表
-        @GET("/api/v2/staffs/{id}/courses/?&show_all=1")
-        rx.Observable<QcResponseCourseList> qcGetCourses(@Path("id") String staff_id, @QueryMap HashMap<String, String> params, @Query("is_private") int is_private);
+        @GET("/api/v2/staffs/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCourses(@Path("id") String staff_id,
+            @QueryMap HashMap<String, String> params, @Query("is_private") int is_private);
 
         /**
          * 获取课程计划
          */
-        @GET("/api/v2/staffs/{staff_id}/plantpls/?show_all=1")
-        rx.Observable<QcResponseCoursePlan> qcGetCoursePlan(@Path("staff_id") String id, @QueryMap HashMap<String, String> params);
-
-
-
+        @GET("/api/v2/staffs/{staff_id}/plantpls/?show_all=1") rx.Observable<QcResponseCoursePlan> qcGetCoursePlan(
+            @Path("staff_id") String id, @QueryMap HashMap<String, String> params);
 
         /**
          * 获取课程下教练
          */
-        @GET("/api/v2/staffs/{staff_id}/courses/teachers/")
-        rx.Observable<QcResponseCourseTeacher> qcGetCourseTeacher(@Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
+        @GET("/api/v2/staffs/{staff_id}/courses/teachers/") rx.Observable<QcResponseCourseTeacher> qcGetCourseTeacher(
+            @Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
 
         /**
          * 课程下照片
          */
-        @GET("/api/v2/staffs/{staff_id}/courses/schedules/photos/")
-        rx.Observable<QcResponseSchedulePhotos> qcGetSchedulePhotos(@Path("staff_id") String staff_id, @Query("course_id") String id, @Query("page") int page, @QueryMap HashMap<String, String> params);
+        @GET("/api/v2/staffs/{staff_id}/courses/schedules/photos/") rx.Observable<QcResponseSchedulePhotos> qcGetSchedulePhotos(
+            @Path("staff_id") String staff_id, @Query("course_id") String id, @Query("page") int page,
+            @QueryMap HashMap<String, String> params);
 
         /**
          * 获取课程详情
          */
-        @GET("/api/v2/staffs/{staff_id}/courses/")
-        rx.Observable<QcResponseCourseDetail> qcGetCourseDetail(@Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
+        @GET("/api/v2/staffs/{staff_id}/courses/") rx.Observable<QcResponseCourseDetail> qcGetCourseDetail(
+            @Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
 
         /**
          * 分场馆评分
          */
-        @GET("/api/v2/staffs/{staff_id}/courses/shops/score/")
-        rx.Observable<QcResponseShopComment> qcGetShopComment(@Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
+        @GET("/api/v2/staffs/{staff_id}/courses/shops/score/") rx.Observable<QcResponseShopComment> qcGetShopComment(
+            @Path("staff_id") String staff_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
 
-
-        @GET("/api/v2/staffs/{staff_id}/courses/photos/")
-        rx.Observable<QcResponseJacket> qcGetJacket(@Path("staff_id") String id, @Query("course_id") String course_id, @QueryMap HashMap<String, String> params);
-
+        @GET("/api/v2/staffs/{staff_id}/courses/photos/") rx.Observable<QcResponseJacket> qcGetJacket(@Path("staff_id") String id,
+            @Query("course_id") String course_id, @QueryMap HashMap<String, String> params);
 
         /**
          * ***********************************    end     ********************
          */
 
         /**
-         *
-         *
-         *       权限
-         *
+         * 权限
          */
 
-
-//        @GET("/api/staffs/{id}/permissions/")
-//        rx.Observable<QcResponsePermission> qcPermission(@Path("id") String staff_id, @QueryMap HashMap<String, String> params);
-
-
-
+        //        @GET("/api/staffs/{id}/permissions/")
+        //        rx.Observable<QcResponsePermission> qcPermission(@Path("id") String staff_id, @QueryMap HashMap<String, String> params);
 
         //获取团课排课
-        @GET("/api/staffs/{id}/group/courses/")
-        rx.Observable<QcResponseGroupCourse> qcGetGroupCourse(@Path("id") String staff_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+        @GET("/api/staffs/{id}/group/courses/") rx.Observable<QcResponseGroupCourse> qcGetGroupCourse(@Path("id") String staff_id,
+            @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
         //获取私教排课
-        @GET("/api/staffs/{id}/private/coaches/")
-        rx.Observable<QcResponsePrivateCourse> qcGetPrivateCrourse(@Path("id") String staff_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+        @GET("/api/staffs/{id}/private/coaches/") rx.Observable<QcResponsePrivateCourse> qcGetPrivateCrourse(@Path("id") String staff_id,
+            @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
         //获取教练排期
         @GET("/api/staffs/{id}/coaches/{coach_id}/batches/?course__is_private=1")
-        rx.Observable<QcResponsePrivateDetail> qcGetPrivateBatches(@Path("id") String staff_id, @Path("coach_id") String coach_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+        rx.Observable<QcResponsePrivateDetail> qcGetPrivateBatches(@Path("id") String staff_id, @Path("coach_id") String coach_id,
+            @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
         //获取团课排期
         @GET("/api/staffs/{id}/courses/{course_id}/batches/")
-        rx.Observable<QcResponseGroupDetail> qcGetGroupCourses(@Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
+        rx.Observable<QcResponseGroupDetail> qcGetGroupCourses(
+            @Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id, @Query("model") String gym_model,
+            @Query("brand_id") String brand_id);
 
-
-
+        //排课填充
+        @GET("/api/staffs/{id}/{type}/arrange/template/")
+        rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(@Path("id") String id,
+            @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel, @Query("teacher_id") String teacher_id,
+            @Query("course_id") String course_id);
     }
-
 
     public interface PostApi {
 
-
         //登录
-        @POST("/api/coaches/login/")
-        rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
+        @POST("/api/coaches/login/") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
 
         //注册
-        @POST("/api/coaches/register/")
-        rx.Observable<QcResponLogin> qcRegister(
-                @Body RegisteBean params);
+        @POST("/api/coaches/register/") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);
 
         //创建品牌
-        @POST("/api/brands/")
-        rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
+        @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
+
         //初始化系统
-        @POST("/api/coach/systems/initial/")
-        rx.Observable<QcResponse> qcInit(@Body CoachInitBean body);
-
-
+        @POST("/api/coach/systems/initial/") rx.Observable<QcResponse> qcInit(@Body CoachInitBean body);
 
         //获取电话验证码
-        @POST("/api/send/verify/")
-        rx.Observable<QcResponse> qcGetCode(@Body GetCodeBean account);
+        @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBean account);
 
-        @POST("/api/check/verify/")
-        rx.Observable<QcResponCode> qcCheckCode(@Body CheckCode checkCode);
+        @POST("/api/check/verify/") rx.Observable<QcResponCode> qcCheckCode(@Body CheckCode checkCode);
 
-        @POST("/api/users/phone/check/")
-        rx.Observable<QcResponCheckPhone> qcCheckPhone(@Body CheckPhoneBean phone);
+        @POST("/api/users/phone/check/") rx.Observable<QcResponCheckPhone> qcCheckPhone(@Body CheckPhoneBean phone);
 
-        @PUT("/api/users/{id}/")
-        rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
+        @PUT("/api/users/{id}/") rx.Observable<QcResponse> qcModifyInfo(@Path("id") String id);
 
         //修改教练信息
-        @PUT("/api/coaches/{id}/")
-        rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body ModifyCoachInfo coachInfo);
+        @PUT("/api/coaches/{id}/") rx.Observable<QcResponse> qcModifyCoach(@Path("id") int id, @Body ModifyCoachInfo coachInfo);
 
         //修改密码
-        @POST("/api/coaches/{id}/change/password/")
-        rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id, @Body ModifyPwBean modifyPwBean);
+        @POST("/api/coaches/{id}/change/password/") rx.Observable<QcResponse> qcMoidfyPw(@Path("id") int id,
+            @Body ModifyPwBean modifyPwBean);
 
         //发送意见
-        @POST("/api/feedback/")
-        rx.Observable<QcEvaluateResponse> qcFeedBack(@Body FeedBackBean bean);
+        @POST("/api/feedback/") rx.Observable<QcEvaluateResponse> qcFeedBack(@Body FeedBackBean bean);
 
         //新增认证
-        @POST("/api/certificates/")
-        rx.Observable<QcResponse> qcAddCertificate(@Body AddCertificate addExperience);
+        @POST("/api/certificates/") rx.Observable<QcResponse> qcAddCertificate(@Body AddCertificate addExperience);
 
         //修改认证
-        @PUT("/api/certificates/{id}/")
-        rx.Observable<QcResponse> qcEditCertificate(@Path("id") int id, @Body AddCertificate addExperience);
+        @PUT("/api/certificates/{id}/") rx.Observable<QcResponse> qcEditCertificate(@Path("id") int id, @Body AddCertificate addExperience);
 
         //删除认证
-        @DELETE("/api/certificates/{id}/")
-        rx.Observable<QcResponse> qcDelCertificate(@Path("id") int id);
+        @DELETE("/api/certificates/{id}/") rx.Observable<QcResponse> qcDelCertificate(@Path("id") int id);
 
         //新增工作经验
-        @POST("/api/experiences/")
-        rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
+        @POST("/api/experiences/") rx.Observable<QcResponse> qcAddExperience(@Body AddWorkExperience addWorkExperience);
 
         //修改工作经验
-        @PUT("/api/experiences/{id}/")
-        rx.Observable<QcResponse> qcEditExperience(@Path("id") int id, @Body AddWorkExperience addWorkExperience);
+        @PUT("/api/experiences/{id}/") rx.Observable<QcResponse> qcEditExperience(@Path("id") int id,
+            @Body AddWorkExperience addWorkExperience);
 
-        @POST("/api/experiences/{id}/hidden/")
-        rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id, @Body HidenBean hidenBean);
+        @POST("/api/experiences/{id}/hidden/") rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id, @Body HidenBean hidenBean);
 
-        @POST("/api/certificates/{id}/hidden/")
-        rx.Observable<QcResponse> qcHidenCertificates(@Path("id") int id, @Body HidenBean hidenBean);
+        @POST("/api/certificates/{id}/hidden/") rx.Observable<QcResponse> qcHidenCertificates(@Path("id") int id,
+            @Body HidenBean hidenBean);
 
         //删除工作经验
-        @DELETE("/api/experiences/{id}/")
-        rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);
+        @DELETE("/api/experiences/{id}/") rx.Observable<QcResponse> qcDelExperience(@Path("id") int id);
 
         //新增健身房
-        @POST("/api/gym/")
-        rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymPostBean addGymBean);
+        @POST("/api/gym/") rx.Observable<QcAddGymResponse> qcAddGym(@Body AddGymPostBean addGymBean);
 
         //新增组织
-        @POST("/api/organizations/")
-        rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
+        @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
 
         //修改电话号码
-        @POST("/api/coaches/{id}/change/phone/")
-        rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id, @Body ModifyPhoneNum modifyPwBean);
+        @POST("/api/coaches/{id}/change/phone/") rx.Observable<QcResponse> qcModifyPhoneNum(@Path("id") int id,
+            @Body ModifyPhoneNum modifyPwBean);
 
         //修改个人描述
-        @POST("/api/coaches/{id}/change/description/")
-        rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);
+        @POST("/api/coaches/{id}/change/description/") rx.Observable<QcResponse> qcModifyDes(@Path("id") int id, @Body ModifyDes modifyDes);
 
         //上传手机用户
-        @POST("/api/coaches/{id}/systems/users/bulk/create/")
-        rx.Observable<QcResponse> qcPostCreatStudents(@Path("id") int id, @Body PostStudents students);
+        @POST("/api/coaches/{id}/systems/users/bulk/create/") rx.Observable<QcResponse> qcPostCreatStudents(@Path("id") int id,
+            @Body PostStudents students);
 
         //修改个人健身房
-        @PUT("/api/coaches/{id}/personal/system/")
-        rx.Observable<QcResponse> qcPostPrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
+        @PUT("/api/coaches/{id}/personal/system/") rx.Observable<QcResponse> qcPostPrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
 
         //新建健身房
-        @POST("/api/coaches/{id}/personal/system/")
-        rx.Observable<QcResponse> qcCreateGym(@Path("id") int id, @Body HashMap<String,Object> body);
-
-
+        @POST("/api/coaches/{id}/personal/system/") rx.Observable<QcResponse> qcCreateGym(@Path("id") int id,
+            @Body HashMap<String, Object> body);
 
         //新建个人健身房
-        @POST("/api/coaches/{id}/personal/system/")
-        rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id, @Body PostPrivateGym gym);
+        @POST("/api/coaches/{id}/personal/system/") rx.Observable<QcResponse> qcCreatePrivateGym(@Path("id") int id,
+            @Body PostPrivateGym gym);
 
         //删除个人健身房
-        @DELETE("/api/coaches/{id}/personal/system/")
-        rx.Observable<QcResponse> qcDelPrivateGym(@Path("id") int id);
+        @DELETE("/api/coaches/{id}/personal/system/") rx.Observable<QcResponse> qcDelPrivateGym(@Path("id") int id);
 
         @Deprecated
         //清除notification
-        @POST("/api/messages/clear/")
-        rx.Observable<QcResponse> qcClearNotification();
+        @POST("/api/messages/clear/") rx.Observable<QcResponse> qcClearNotification();
 
         //百度pushid绑定
-        @POST("/api/coaches/{id}/push/update/")
-        rx.Observable<QcResponse> qcPostPushId(@Path("id") int id, @Body PushBody body);
+        @POST("/api/coaches/{id}/push/update/") rx.Observable<QcResponse> qcPostPushId(@Path("id") int id, @Body PushBody body);
 
         //清除notification
-        @PUT("/api/notifications/clear/?type=COACH_0")
-        rx.Observable<QcResponse> qcClearAllNotification(@Query("coach_id") int id);
+        @PUT("/api/notifications/clear/?type=COACH_0") rx.Observable<QcResponse> qcClearAllNotification(@Query("coach_id") int id);
 
         //清除某条notification
-        @PUT("/api/notifications/clear/")
-        rx.Observable<QcResponse> qcClearOneNotification(@Query("coach_id") int id,@Query("id") String notiId);
+        @PUT("/api/notifications/clear/") rx.Observable<QcResponse> qcClearOneNotification(@Query("coach_id") int id,
+            @Query("id") String notiId);
 
-        @POST("/api/v1/coaches/{id}/courses/")
-        rx.Observable<AddCoourseResponse> qcAddCourse(@Path("id") int id,@Body AddCourse addCourse);
+        @POST("/api/v1/coaches/{id}/courses/") rx.Observable<AddCoourseResponse> qcAddCourse(@Path("id") int id, @Body AddCourse addCourse);
 
-        @PUT("/api/v1/coaches/{id}/courses/")
-        rx.Observable<QcResponse> qcEditCourse(@Path("id") int id, @Body AddCourse addCourse);
+        @PUT("/api/v1/coaches/{id}/courses/") rx.Observable<QcResponse> qcEditCourse(@Path("id") int id, @Body AddCourse addCourse);
 
-//        @DELETE("/api/v1/coaches/{id}/courses/")
-//        rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
+        //        @DELETE("/api/v1/coaches/{id}/courses/")
+        //        rx.Observable<QcResponse> qcDelCourse(@Path("id") int id, @QueryMap HashMap<String,String> params);
 
-        @POST("/api/v1/coaches/{id}/students/add/")
-        rx.Observable<QcResponse> qcAddStudent(@Path("id") int id,@Body AddStudentBean StudentBean);
+        @POST("/api/v1/coaches/{id}/students/add/") rx.Observable<QcResponse> qcAddStudent(@Path("id") int id,
+            @Body AddStudentBean StudentBean);
 
-        @POST("/api/v1/coaches/{id}/students/add/")
-        rx.Observable<QcResponse> qcAddStudents(@Path("id") int id,@Body PostStudents addStudentBeans);
+        @POST("/api/v1/coaches/{id}/students/add/") rx.Observable<QcResponse> qcAddStudents(@Path("id") int id,
+            @Body PostStudents addStudentBeans);
 
         //批量排课
-        @POST("/api/v1/coaches/{id}/schedules/batches/")
-        rx.Observable<QcResponse> qcAddCourseManage(@Path("id") int id,@Body AddBatchCourse addBatchCourse);
+        @POST("/api/v1/coaches/{id}/schedules/batches/") rx.Observable<QcResponse> qcAddCourseManage(@Path("id") int id,
+            @Body AddBatchCourse addBatchCourse);
 
-        @POST("/api/v1/coaches/{id}/{schedules}/bulk/delete/")
-        rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,@Path("schedules") String schedules,@Body DelCourseManage delCourseManage);
+        @POST("/api/v1/coaches/{id}/{schedules}/bulk/delete/") rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,
+            @Path("schedules") String schedules, @Body DelCourseManage delCourseManage);
 
-        @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/")
-        rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,@Path("batch_id") String batch_id,@QueryMap HashMap<String,String> params);
+        @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/") rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,
+            @Path("batch_id") String batch_id, @QueryMap HashMap<String, String> params);
         //修改单挑排期
+
         /**
-         *
-         * @param coach_id
-         * @param schedule_id
-         * @param schedules  私教 timetables
-         * @return
+         * @param schedules 私教 timetables
          */
-        @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/")
-        rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,@Path("schedule_id") String schedule_id,@Path("schedules") String schedules,@Body FixBatchBean batchBean);
+        @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/") rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,
+            @Path("schedule_id") String schedule_id, @Path("schedules") String schedules, @Body FixBatchBean batchBean);
 
-        @POST("/api/measures/")
-        rx.Observable<QcResponse> qcAddBodyTest(@Body AddBodyTestBean addBodyTestBean);
+        @POST("/api/measures/") rx.Observable<QcResponse> qcAddBodyTest(@Body AddBodyTestBean addBodyTestBean);
 
-        @PUT("/api/measures/{measure_id}/")
-        rx.Observable<QcResponse> qcUpdateBodyTest(@Path("measure_id") String id,@Body AddBodyTestBean addBodyTestBean);
+        @PUT("/api/measures/{measure_id}/") rx.Observable<QcResponse> qcUpdateBodyTest(@Path("measure_id") String id,
+            @Body AddBodyTestBean addBodyTestBean);
 
-        @DELETE("/api/measures/{measure_id}/")
-        rx.Observable<QcResponse> qcDelBodyTest(@Path("measure_id") String id,@QueryMap Map<String, String> params);
+        @DELETE("/api/measures/{measure_id}/") rx.Observable<QcResponse> qcDelBodyTest(@Path("measure_id") String id,
+            @QueryMap Map<String, String> params);
+
         //删除学员
-        @DELETE("/api/students/{id}/")
-        rx.Observable<QcResponse> qcDelStudent(@Path("id") String studentid,@QueryMap Map<String, String> params);
+        @DELETE("/api/students/{id}/") rx.Observable<QcResponse> qcDelStudent(@Path("id") String studentid,
+            @QueryMap Map<String, String> params);
 
         /**
          * 创建课程
-         *
-         * @param staffid
-         * @param courseBody
-         * @return
          */
-        @POST("/api/v2/staffs/{id}/courses/")
-        rx.Observable<QcResponse> qcCreateCourse(@Path("id") String staffid, @Body CourseBody courseBody, @QueryMap HashMap<String, String> params);
+        @POST("/api/v2/staffs/{id}/courses/") rx.Observable<QcResponse> qcCreateCourse(@Path("id") String staffid,
+            @Body CourseBody courseBody, @QueryMap HashMap<String, String> params);
 
         //修改课程
-        @PUT("/api/v2/staffs/{id}/courses/{course_id}/")
-        rx.Observable<QcResponse> qcUpdateCourse(@Path("id") String staffid, @Path("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body CourseBody courseBody);
+        @PUT("/api/v2/staffs/{id}/courses/{course_id}/") rx.Observable<QcResponse> qcUpdateCourse(@Path("id") String staffid,
+            @Path("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body CourseBody courseBody);
 
         //删除课程
-        @DELETE("/api/v2/staffs/{id}/courses/{course_id}/")
-        rx.Observable<QcResponse> qcDelCourse(@Path("id") String staffid, @Path("course_id") String course_id, @QueryMap HashMap<String, String> params);
+        @DELETE("/api/v2/staffs/{id}/courses/{course_id}/") rx.Observable<QcResponse> qcDelCourse(@Path("id") String staffid,
+            @Path("course_id") String course_id, @QueryMap HashMap<String, String> params);
 
         //修改封面
-        @POST("/api/v2/staffs/{id}/courses/photos/")
-        rx.Observable<QcResponse> qcEditJacket(@Path("id") String staffid, @Query("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body EditJacketBody body);
+        @POST("/api/v2/staffs/{id}/courses/photos/") rx.Observable<QcResponse> qcEditJacket(@Path("id") String staffid,
+            @Query("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body EditJacketBody body);
+
         //修改课程适用场馆
-        @PUT("/api/v2/staffs/{staff_id}/courses/{course_id}/shops/")
-        rx.Observable<QcResponse> qcEditCourseShops(@Path("staff_id") String staffid,@Path("course_id") String course_id,@Body HashMap<String, String> params);
+        @PUT("/api/v2/staffs/{staff_id}/courses/{course_id}/shops/") rx.Observable<QcResponse> qcEditCourseShops(
+            @Path("staff_id") String staffid, @Path("course_id") String course_id, @Body HashMap<String, String> params);
 
+        /**
+         * 排期
+         */
+        @POST("/api/staffs/{id}/arrange/batches/") rx.Observable<QcResponse> qcArrangeBatch(@Path("id") String staff_id,
+            @Query("id") String gymid, @Query("model") String model, @Body ArrangeBatchBody body);
 
+        @PUT("/api/staffs/{id}/batches/{batchid}/") rx.Observable<QcResponse> qcUpdateBatch(@Path("id") String staff_id,
+            @Path("batchid") String batchid, @Query("id") String gymid, @Query("model") String model, @Body ArrangeBatchBody body);
 
-
+        @POST("/api/staffs/{id}/{type}/arrange/check/") rx.Observable<QcResponse> qcCheckBatch(@Path("id") String staff_id,
+            @Path("type") String type, @Query("id") String gymid, @Query("model") String model, @Body ArrangeBatchBody body);
     }
 
     public interface DownLoadApi {
-        @GET("/")
-        Response qcDownload();
+        @GET("/") Response qcDownload();
     }
 
     public interface MutiSystemApi {
-        @POST("/api/cloud/authenticate/")
-        rx.Observable<QcResponSystem> qcGetSession(@Body GetSysSessionBean phone);
+        @POST("/api/cloud/authenticate/") rx.Observable<QcResponSystem> qcGetSession(@Body GetSysSessionBean phone);
     }
-
 }

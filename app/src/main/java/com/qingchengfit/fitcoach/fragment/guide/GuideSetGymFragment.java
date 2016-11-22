@@ -17,9 +17,11 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
+import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
@@ -197,7 +199,17 @@ public class GuideSetGymFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {
-                // TODO: 16/11/14 选择的品牌
+
+                Brand brand = (Brand) IntentUtils.getParcelable(data);
+                brandImgUrl = brand.getPhoto();
+                brandNameStr = brand.getName();
+                Glide.with(getContext()).load(brand.getPhoto()).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
+                brandName.setText(brand.getName());
+                if (getParentFragment() instanceof GuideFragment) {
+                    ((GuideFragment) getParentFragment()).initBean.brand_id = brand.getId();
+                    RxBus.getBus().post(new CoachInitBean());
+                }
+
             }
         }
     }

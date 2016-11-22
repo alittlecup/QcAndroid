@@ -74,6 +74,7 @@ public class SaleGlanceFragment extends Fragment {
         });
         toolbar.setTitle("销售报表");
         toolbarTitle.setVisibility(View.GONE);
+
 //        spinnerBeans = new ArrayList<>();
 //        spinnerBeans.add(new SpinnerBean("", "全部销售报表", true));
 //        adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {

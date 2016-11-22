@@ -113,8 +113,6 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
                 courseName.setText(bean.courses.get(0).name);
                 courseTimeLong.setText(getString(R.string.time_long_d_min, bean.courses.get(0).length / 60));
             }
-//            if (bean.batches != null && bean.batches.size() > 0) {
-//                InitBatch batch = bean.batches.get(0);
 //                startdate.setContent(batch.from_date);
 //                enddate.setContent(batch.to_date);
 //                CmBean.geTimeRepFromBean()

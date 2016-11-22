@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.batch.list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
@@ -27,7 +31,9 @@ import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.VpFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
+import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
@@ -57,7 +63,7 @@ import butterknife.OnClick;
  * <p/>
  * Created by Paper on 16/3/29 2016.
  */
-public class CourseBatchDetailFragment extends BaseFragment implements CourseBatchDetailView {
+public class CourseBatchDetailFragment extends VpFragment implements CourseBatchDetailView {
     @BindView(R.id.img)
     ImageView img;
     @BindView(R.id.img_foot)
@@ -132,8 +138,8 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
 
 //        mCallbackActivity.setToolbar(mType == Configs.TYPE_PRIVATE ? "私教排期" : "团课排期", false, null, 0, null);
         if (mType == Configs.TYPE_PRIVATE) {
-            presenter.queryPrivate(mId);
-        } else presenter.queryGroup(mId);
+            presenter.queryPrivate(App.staffId,mId);
+        } else presenter.queryGroup(App.staffId,mId);
         presenter.queryBatches();
 
         return view;
@@ -228,10 +234,10 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
             groupClass.photo = mCourese.getPhoto();
         }
 
-//        getFragmentManager().beginTransaction()
-//                .replace(mCallbackActivity.getFragId(), AddBatchFragment.newInstance(teacher, groupClass))
-//                .addToBackStack(GymCoursesFragment.TAG)
-//                .commit();
+        getParentFragment().getFragmentManager().beginTransaction()
+                .replace(R.id.frag, AddBatchFragment.newInstance(teacher, groupClass))
+                .addToBackStack(null)
+                .commit();
 
     }
 
@@ -270,6 +276,8 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
         }
     }
 
+
+
     @Override
     public void onPrivate(QcResponsePrivateDetail.PrivateCoach coach, final List<QcResponsePrivateDetail.PrivateBatch> batch) {
         mTeacher = coach;
@@ -295,5 +303,18 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
             });
         }
 
+    }
+
+    @Override public String getTitle() {
+        return "私教排期";
+    }
+
+    @Override public void onShowError(String s) {
+        //ToastUtils.show(s);
+        LogUtil.e(s);
+    }
+
+    @Override public void onShowError(@StringRes int i) {
+        onShowError(getString(i));
     }
 }
