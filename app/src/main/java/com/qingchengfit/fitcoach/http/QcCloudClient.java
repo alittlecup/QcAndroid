@@ -497,10 +497,9 @@ public class QcCloudClient {
             @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
 
         //获取团课排期
-        @GET("/api/staffs/{id}/courses/{course_id}/batches/")
+        @GET("/api/v1/coaches/{id}/batches/")
         rx.Observable<QcResponseGroupDetail> qcGetGroupCourses(
-            @Path("id") String staff_id, @Path("course_id") String course_id, @Query("id") String gym_id, @Query("model") String gym_model,
-            @Query("brand_id") String brand_id);
+            @Path("id") String coach_id, @Query("id") String gym_id, @Query("model") String gym_model,@Query("is_private") int isPrivate);
 
         //排课填充
         @GET("/api/staffs/{id}/{type}/arrange/template/")

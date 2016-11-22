@@ -83,7 +83,7 @@ public class CourseListFragment extends VpFragment implements
 
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
 
-    private CommonFlexAdapter mAdatper;
+    public CommonFlexAdapter mAdatper;
 
 
     @Inject

@@ -89,7 +89,7 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
 //        mCallbackActivity.setToolbar("课程排期", false, null, 0, null);
         if (fragments.size() == 0) {
             fragments.clear();
-            fragments.add(CourseListFragment.newInstance(Configs.TYPE_GROUP));
+            fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP, App.gUser.id));
             fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, App.gUser.id));
         }
         fragmentAdater = new FragmentAdapter(getChildFragmentManager(), fragments);

@@ -5,7 +5,6 @@
               android:layout_height="match_parent"
               android:background="@color/bg_grey"
     >
-    <include layout="@layout/common_toolbar"/>
     <include layout="@layout/layout_course_detail"/>
 
     <include layout="@layout/divider_grey"/>
