@@ -156,7 +156,7 @@ public class CourseListFragment extends VpFragment implements
     }
 
     public void freshData(){
-        RxRegiste(restRepository.getGet_api().qcGetCourses(App.staffId, GymUtils.getParams(coachService, brand), mIsPrivate ? 1 : 0)
+        RxRegiste(restRepository.getGet_api().qcGetCourses(App.coachid+"", GymUtils.getParams(coachService, brand), mIsPrivate ? 1 : 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<QcResponseCourseList, Boolean>() {
@@ -223,7 +223,7 @@ public class CourseListFragment extends VpFragment implements
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         showLoading();
-                        RxRegiste(restRepository.getPost_api().qcDelCourse(App.staffId,courseDetail.getId(),GymUtils.getParams(coachService,brand))
+                        RxRegiste(restRepository.getPost_api().qcDelCourse(App.coachid+"",courseDetail.getId(),GymUtils.getParams(coachService,brand))
                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Action1<QcResponse>() {
                                     @Override

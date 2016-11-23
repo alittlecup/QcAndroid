@@ -6,18 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.DateUtils;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
+import java.util.List;
 
 
 /**
@@ -61,8 +56,8 @@ public class GroupBatchAdapter extends RecyclerView.Adapter<GroupBatchAdapter.Ba
     public void onBindViewHolder(GroupBatchAdapter.BatchViewHolder holder, int position) {
         holder.itemView.setTag(position);
         QcResponseGroupDetail.GroupBatch batch = data.get(position);
-        holder.courseName.setText(batch.teacher.getUsername());
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.teacher.getAvatar())).into(holder.img);
+        //holder.courseName.setText(batch.teacher.getUsername());
+        //Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.teacher.getAvatar())).into(holder.img);
         holder.title.setText(batch.from_date + "至" + batch.to_date);
         holder.view.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date))? View.VISIBLE: View.GONE);
     }

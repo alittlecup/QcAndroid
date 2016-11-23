@@ -125,7 +125,7 @@ public class CoachCommentListFragment extends BaseFragment {
         } else {
             params = GymUtils.getParams(coachService, brand);
         }
-        RxRegiste(restRepository.getGet_api().qcGetCourseTeacher(App.staffId, getArguments().getString("c"), params)
+        RxRegiste(restRepository.getGet_api().qcGetCourseTeacher(App.coachid+"", getArguments().getString("c"), params)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseCourseTeacher>() {
                     @Override

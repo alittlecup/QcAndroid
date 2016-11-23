@@ -62,7 +62,7 @@ public class JacketManagerPresenter extends BasePresenter {
     }
 
     public void completeJacket(String courseid, List<String> jackets, boolean openCustom){
-        RxRegiste(restRepository.getPost_api().qcEditJacket(App.staffId,courseid, GymUtils.getParams(coachService,brand),new EditJacketBody.Builder().photos(jackets).random_show_photos(!openCustom).build())
+        RxRegiste(restRepository.getPost_api().qcEditJacket(App.coachid+"",courseid, GymUtils.getParams(coachService,brand),new EditJacketBody.Builder().photos(jackets).random_show_photos(!openCustom).build())
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {
                     @Override

@@ -137,7 +137,7 @@ public class JacketManagerFragment extends BaseFragment implements
         });
         onSwitch(getArguments().getBoolean("s",false));
 //        setJacket(stringList);
-        mPresenter.queryJacket(App.staffId,courseid);
+        mPresenter.queryJacket(App.coachid+"",courseid);
 
         return view;
     }

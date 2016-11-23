@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch.list;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -8,12 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,16 +23,19 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.VpFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
-import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
+import com.qingchengfit.fitcoach.fragment.batch.details.BatchDetailFragment;
+import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
-import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
+import com.qingchengfit.fitcoach.items.BatchItem;
+import com.qingchengfit.fitcoach.items.HintItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -53,16 +56,9 @@ import javax.inject.Inject;
  * Created by Paper on 16/3/29 2016.
  */
 public class CourseBatchDetailFragment extends VpFragment implements CourseBatchDetailView, FlexibleAdapter.OnItemClickListener {
-    @BindView(R.id.img) ImageView img;
-    @BindView(R.id.img_foot) ImageView imgFoot;
-    @BindView(R.id.text1) TextView text1;
-    @BindView(R.id.texticon) ImageView texticon;
-    @BindView(R.id.text2) TextView text2;
-    @BindView(R.id.text3) TextView text3;
-    @BindView(R.id.righticon) ImageView righticon;
-    @BindView(R.id.course_layout) RelativeLayout courseLayout;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    public static final int RESULT_COURSE = 1;
 
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @Inject CourseBatchDetailPresenter presenter;
     private DialogSheet delCourseDialog;
     private MaterialDialog delDialog;
@@ -99,7 +95,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         }
         presenter.attachView(this);
 
-        presenter.queryGroup(App.staffId, mType == Configs.TYPE_PRIVATE);
+        presenter.queryGroup(App.coachid+"", mType == Configs.TYPE_PRIVATE);
         mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -162,28 +158,16 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             showAlert(R.string.alert_permission_forbid);
             return;
         }
+        Intent toChooseCourse = new Intent(getActivity(), CourseActivity.class);
+        toChooseCourse.putExtra("to",CourseActivity.TO_CHOOSE);
+        toChooseCourse.putExtra("type",mType);
+        startActivityForResult(toChooseCourse,RESULT_COURSE);
 
-        QcSchedulesResponse.Teacher teacher = null;
-        QcResponseGroupCourse.GroupClass groupClass = null;
-        if (mTeacher != null) {
-            teacher = new QcSchedulesResponse.Teacher();
-            teacher.id = mTeacher.id;
-            teacher.username = mTeacher.username;
-            teacher.avatar = mTeacher.avatar;
-        }
-        if (mCourese != null) {
-            groupClass = new QcResponseGroupCourse.GroupClass();
-            groupClass.id = mCourese.getId();
-            groupClass.length = mCourese.getLength() + "";
-            groupClass.name = mCourese.getName();
-            groupClass.photo = mCourese.getPhoto();
-        }
-
-        getParentFragment().getFragmentManager()
-            .beginTransaction()
-            .replace(R.id.frag, AddBatchFragment.newInstance(teacher, groupClass))
-            .addToBackStack(null)
-            .commit();
+        //getParentFragment().getFragmentManager()
+        //    .beginTransaction()
+        //    .replace(R.id.frag, AddBatchFragment.newInstance(teacher, groupClass))
+        //    .addToBackStack(null)
+        //    .commit();
     }
 
     @Override public String getFragmentName() {
@@ -191,23 +175,34 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     }
 
     @Override public void onGoup(Course course, final List<QcResponseGroupDetail.GroupBatch> batch) {
-        //mCourese = course;
-        //Glide.with(getContext()).load(PhotoUtils.getSmall(course.getPhoto())).placeholder(R.drawable.img_default_course).into(img);
-        //imgFoot.setVisibility(View.GONE);
-        //text1.setText(course.getName());
-        //text2.setText("时长" + ((int)(course.getLength() / 60)) + "分钟");
-        //
-        //adapter = new GroupBatchAdapter(batch);
-        //   recyclerview.setAdapter(adapter);
-        //if (adapter instanceof GroupBatchAdapter) {
-        //
-        //
-        //    ((GroupBatchAdapter) adapter).setListener(new OnRecycleItemClickListener() {
-        //        @Override
-        //        public void onItemClick(View v, int pos) {
-        //        }
-        //    });
-        //}
+        mDatas.clear();
+        boolean isOutofDate = false;
+        for (int i = 0; i < batch.size(); i++) {
+            if (!isOutofDate && DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))){
+                mDatas.add(new HintItem.Builder().text("--已过期排期--").resBg(R.color.bg_grey).build());
+                isOutofDate = true;
+            }
+            mDatas.add(new BatchItem(batch.get(i)));
+        }
+        mCommonFlexAdapter.notifyDataSetChanged();
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == RESULT_COURSE){
+
+                CourseDetail course = data.getParcelableExtra("course");
+                if (course != null) {
+                    getParentFragment().getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frag, AddBatchFragment.newInstance(course))
+                        .addToBackStack(null)
+                        .commit();
+                }
+            }
+
+        }
     }
 
     @Deprecated
@@ -227,7 +222,13 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     }
 
     @Override public boolean onItemClick(int position) {
-
+        if (mCommonFlexAdapter.getItem(position) instanceof BatchItem) {
+            QcResponseGroupDetail.GroupBatch batch = ((BatchItem) mCommonFlexAdapter.getItem(position)).getBatch();
+            getParentFragment().getFragmentManager().beginTransaction()
+                .replace(R.id.frag, BatchDetailFragment.newInstance(mType,batch.id))
+                .addToBackStack(null)
+                .commit();
+        }
         return true;
     }
 }

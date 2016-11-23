@@ -1,9 +1,10 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.bean.Rule;
+import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
-
 import java.util.List;
 
 
@@ -42,12 +43,12 @@ public class QcResponsePrivateBatchDetail extends QcResponse {
         public String from_date;
         @SerializedName("to_date")
         public String to_date;
-//        @SerializedName("spaces")
-//        public List<Space> spaces;
+        @SerializedName("spaces")
+        public List<Space> spaces;
         @SerializedName("course")
         public Course course;
-//        @SerializedName("rule")
-//        public List<Rule> rule;
+        @SerializedName("rule")
+        public List<Rule> rule;
         @SerializedName("teacher")
         public QcSchedulesResponse.Teacher teacher;
         @SerializedName("time_repeats")

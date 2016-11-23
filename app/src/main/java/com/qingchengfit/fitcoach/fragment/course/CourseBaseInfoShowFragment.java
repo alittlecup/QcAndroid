@@ -112,7 +112,7 @@ public class CourseBaseInfoShowFragment extends BaseFragment {
 //            imgFoot.setVisibility(View.GONE);
             text1.setText(mCourse.getName());
             text2.setVisibility(View.GONE);
-            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength() / 60).concat(", ").concat(String.format(Locale.CHINA, "累计%d节课", mCourse.getSchedule_count())));
+            text3.setText(String.format(Locale.CHINA, "时长%f分钟", Float.parseFloat(mCourse.getLength()) / 60).concat(", ").concat(String.format(Locale.CHINA, "累计%d节课", mCourse.getSchedule_count())));
             singleOrderCount.setText(mCourse.getCapacity()+"");
 
             //默认课程计划

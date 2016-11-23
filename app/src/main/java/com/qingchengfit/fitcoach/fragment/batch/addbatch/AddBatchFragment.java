@@ -15,38 +15,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.util.DialogUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.activity.ChooseActivity;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.CmBean;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.RxbusBatchLooperConfictEvent;
+import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
-import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
-import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
-
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.BatchCircleItem;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -55,20 +61,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.MeasureUtils;
-import cn.qingchengfit.widgets.utils.ToastUtils;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import static butterknife.ButterKnife.bind;
 
 /**
  * power by
@@ -83,7 +78,9 @@ import static butterknife.ButterKnife.bind;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-public class AddBatchFragment extends BaseFragment implements AddBatchView {
+public class AddBatchFragment extends BaseFragment implements AddBatchView,FlexibleAdapter.OnItemClickListener {
+
+    public static final int RESULT_ACCOUNT = 5;
 
 
     @BindView(R.id.course_img)
@@ -121,10 +118,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     @Inject
     AddBatchPresenter presenter;
 
-    private String[] weeks = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
     private ArrangeBatchBody body = new ArrangeBatchBody();
     private QcSchedulesResponse.Teacher mTeacher;
-    private QcResponseGroupCourse.GroupClass mCourse;
+    private CourseDetail mCourse;
     private int mType;
     private TimeDialogWindow pwTime;
     private Observable<CmBean> RxObCmBean;
@@ -133,10 +129,11 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     private HashMap<String, ArrayList<Integer>> mTimeRep = new HashMap<>();
     private MaterialDialog failDialog;
 
-    public static AddBatchFragment newInstance(QcSchedulesResponse.Teacher teacher, QcResponseGroupCourse.GroupClass course) {
+    @Inject CoachService mCoachService;
+
+    public static AddBatchFragment newInstance(CourseDetail course) {
 
         Bundle args = new Bundle();
-        args.putParcelable("teacher", teacher);
         args.putParcelable("course", course);
         AddBatchFragment fragment = new AddBatchFragment();
         fragment.setArguments(args);
@@ -147,7 +144,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTeacher = getArguments().getParcelable("teacher");
+            //mTeacher = getArguments().getParcelable("teacher");
             mCourse = getArguments().getParcelable("course");
         }
 
@@ -171,13 +168,17 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
             coach.setLabel("教练");
             Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);
             text1.setText(mCourse.name);
-            text3.setText(String.format(Locale.CHINA, "时长%d分钟", (int) (Float.parseFloat(mCourse.length) / 60)));
+            text3.setText(String.format(Locale.CHINA, "时长%f分钟", Float.parseFloat(mCourse.getLength())));
         } else if (mTeacher != null) {
             mType = Configs.TYPE_PRIVATE;
             coach.setLabel("课程");
             Glide.with(getContext()).load(PhotoUtils.getSmall(mTeacher.avatar)).asBitmap().placeholder(R.drawable.ic_default_head_nogender).into(new CircleImgWrapper(img, getContext()));
             text1.setText(mTeacher.username);
             body.teacher_id = mTeacher.id;
+        }
+        if (App.gUser != null){
+            body.teacher_id = App.coachid+"";
+            coach.setContent(App.gUser.username);
         }
 
         mData.add(0, new AddBatchCircleItem(getString(R.string.add_course_circle)));
@@ -206,20 +207,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
 
                 }
             });
-
-
-
-        //RxObDone = RxBus.getBus().register(DoneAccountEvent.class);
-        //RxObDone.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<DoneAccountEvent>() {
-        //    @Override
-        //    public void call(DoneAccountEvent doneAccountEvent) {
-        //        accountType.setContent(getString(R.string.common_have_setting));
-        //        mCallbackActivity.setToolbar("添加排期", false, null, R.menu.menu_compelete, listener);
-        //        body.rules = doneAccountEvent.rules;
-        //        body.max_users = doneAccountEvent.max_user;
-        //    }
-        //});
-
         return view;
     }
 
@@ -277,11 +264,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     public void onSuccess() {
         hideLoading();
         getActivity().onBackPressed();
-//        mCallbackActivity.cleanToolbar();
-//        getFragmentManager().popBackStack(GymCoursesFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//        getFragmentManager().beginTransaction()
-//                .replace(mCallbackActivity.getFragId(), CourseBatchDetailFragment.newInstance(mType, mType == Configs.TYPE_PRIVATE ? mTeacher.id : mCourse.id))
-//                .commit();
     }
 
     @Override
@@ -351,20 +333,20 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.coach:
-                //if (mType == Configs.TYPE_GROUP) {
-                //    ChooseCoachFragment.start(this, 1, null, Configs.INIT_TYPE_ADD);//选择教练
-                //} else {
-                //    ChooseGroupCourseFragment.start(this, 2, body.course_id, mType);//选择课程
-                //}
                 break;
             case R.id.space:
-                //MutiChooseSiteFragment.start(this, 3, "", mType);
+                Intent toChooseSpace = new Intent(getActivity(), FragActivity.class);
+                toChooseSpace.putExtra("type",11);
+                toChooseSpace.putExtra("course_type",mType);
+                toChooseSpace.putExtra("service",mCoachService);
+                startActivityForResult(toChooseSpace,3);
                 break;
             case R.id.account_type:
-                //getFragmentManager().beginTransaction()
-                //        .add(R.id.frag, SetAccountTypeAddFragment.newInstance(mType, body.rules, body.max_users))
-                //        .addToBackStack(null)
-                //        .commit();
+                Intent toAccount = new Intent(getActivity(),FragActivity.class);
+                toAccount.putExtra("type",12);
+                toAccount.putExtra("count",Integer.parseInt(accountType.getContent()));
+                startActivityForResult(toAccount,RESULT_ACCOUNT);
+
                 break;
         }
     }
@@ -390,12 +372,24 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
                 //    presenter.getBatchTemplete(mType, body.teacher_id, body.course_id);
 
             } else if (requestCode == 3) {//选择场地
-                List<String> ids = data.getStringArrayListExtra("ids");
-                String names = data.getStringExtra("string");
+                ArrayList<Space> spaces = data.getParcelableArrayListExtra("spaces");
+                if (spaces != null){
+                    String spaceStr = "";
+                    List<String> ids = new ArrayList<>();
+                    for (int i = 0; i < spaces.size(); i++) {
+                        ids.add(spaces.get(i).id);
+                        if (TextUtils.isEmpty(spaceStr)){
+                           spaceStr = spaceStr.concat(spaces.get(i).name);
+                        }else spaceStr = spaceStr.concat("、").concat(spaces.get(i).name);
+                    }
 
-                space.setContent(names);
-                body.spaces = ids;
-
+                    space.setContent(spaceStr);
+                    body.spaces = ids;
+                }
+            }else if (requestCode == RESULT_ACCOUNT){
+                int count = data.getIntExtra("count",1);
+                body.max_users= count;
+                accountType.setContent(getString(R.string.has_set));
             }
         }
     }
@@ -447,4 +441,14 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
 
     }
 
+    @Override public boolean onItemClick(int position) {
+        if (mAdapter.getItem(position) instanceof BatchCircleItem) {
+
+        } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
+            Intent to = new Intent(getActivity(), ChooseActivity.class);
+            to.putExtra("to", ChooseActivity.TO_CHOSSE_CIRCLE);
+            startActivity(to);
+        }
+        return true;
+    }
 }

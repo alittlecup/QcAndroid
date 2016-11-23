@@ -165,7 +165,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
                             .build();
                     showLoading();
                     // TODO: 16/11/18
-                    mPresenter.addCourse(App.staffId, body);
+                    mPresenter.addCourse(App.coachid+"", body);
                 }
             }
 

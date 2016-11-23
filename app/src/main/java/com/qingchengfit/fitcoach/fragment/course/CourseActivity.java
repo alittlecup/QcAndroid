@@ -2,7 +2,9 @@ package com.qingchengfit.fitcoach.fragment.course;
 
 import android.os.Bundle;
 
+import android.support.v4.app.Fragment;
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.di.CourseComponent;
@@ -16,7 +18,7 @@ import butterknife.ButterKnife;
 
 
 public class CourseActivity extends BaseAcitivity {
-
+    public static final int TO_CHOOSE = 1;
 
     private CourseComponent mComponent;
     @Override
@@ -30,8 +32,15 @@ public class CourseActivity extends BaseAcitivity {
                 .restRepository(new RestRepository(QcCloudClient.getApi()))
                 .build()).build();
         mComponent.inject(this);
+        Fragment f = new CourseFragment();
+        int to = getIntent().getIntExtra("to",0);
+        switch (to){
+            case TO_CHOOSE:
+                f = new ChooseCourseFragmentBuilder(getIntent().getIntExtra("type", Configs.TYPE_GROUP)).build();
+                break;
+        }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frag, new CourseFragment())
+                .replace(R.id.frag, f)
                 .commit();
     }
 

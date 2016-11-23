@@ -152,7 +152,7 @@ public class GuideSetCourseFragment extends BaseFragment {
                             .photo(imgUrl)
                             .name(name.getContent())
                             .is_private(isPrivate)
-                            .length(Integer.parseInt(timeLong.getContent())*60)
+                            .length(Float.toString(  Float.parseFloat(timeLong.getContent())*60))
                             // TODO: 16/11/15 可约人数
                             .build());
 

@@ -16,7 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
@@ -27,21 +31,12 @@ import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.VpFragment;
-import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.qingchengfit.widgets.RecycleViewWithNoImg;
-import cn.qingchengfit.widgets.utils.DateUtils;
 
 
 
@@ -268,10 +263,10 @@ public class CourseListFragment extends VpFragment implements CourseListView {
 //                    return;
 //                }
                 //团课详情
-                getParentFragment().getFragmentManager().beginTransaction()
-                        .replace(R.id.frag, CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP, groupClasses.get(pos).id))
-                        .addToBackStack("")
-                        .commit();
+                //getParentFragment().getFragmentManager().beginTransaction()
+                //        .replace(R.id.frag, CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP, groupClasses.get(pos).id))
+                //        .addToBackStack("")
+                //        .commit();
             }
         });
     }
@@ -305,10 +300,10 @@ public class CourseListFragment extends VpFragment implements CourseListView {
 //                    return;
 //                }
 //                私教课详情
-                getParentFragment().getFragmentManager().beginTransaction()
-                        .replace(R.id.frag, CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, privateClasses.get(pos).id))
-                        .addToBackStack("")
-                        .commit();
+//                getParentFragment().getFragmentManager().beginTransaction()
+//                        .replace(R.id.frag, CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, privateClasses.get(pos).id))
+//                        .addToBackStack("")
+//                        .commit();
             }
         });
 

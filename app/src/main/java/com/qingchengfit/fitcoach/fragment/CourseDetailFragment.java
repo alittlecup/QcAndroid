@@ -319,7 +319,7 @@ public class CourseDetailFragment extends Fragment {
                                 HashMap<String, String> params = new HashMap<String, String>();
                                 params.put("model", mBean.tags.get(ImageThreeTextBean.TAG_MODEL));
                                 params.put("id", mBean.tags.get(ImageThreeTextBean.TAG_ID));
-                                QcCloudClient.getApi().postApi.qcDelBatch(App.coachid, datas.get(pos).id, params)
+                                QcCloudClient.getApi().postApi.qcDelBatch(App.coachid+"", datas.get(pos).id, params)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(new Subscriber<QcResponse>() {

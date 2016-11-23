@@ -1,9 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch.addbatch;
 
 import android.content.Intent;
-
 import com.anbillon.qcmvplib.PView;
-import com.anbillon.qcmvplib.Presenter;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
@@ -14,7 +12,6 @@ import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import javax.inject.Inject;
-
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -96,7 +93,7 @@ public class AddBatchPresenter extends BasePresenter {
 
 
     public void arrangeBatch(ArrangeBatchBody body) {
-        sp = mRestRepository.getPost_api().qcArrangeBatch(App.staffId,coachService.getId()+"",coachService.getModel(),body)
+        sp = mRestRepository.getPost_api().qcArrangeBatch(App.coachid+"",coachService.getId()+"",coachService.getModel(),body)
              .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                              .subscribe(new Action1<QcResponse>() {
                                  @Override
@@ -114,7 +111,7 @@ public class AddBatchPresenter extends BasePresenter {
     }
 
     public void checkBatch(int coursetype, ArrangeBatchBody body) {
-        spCheck = mRestRepository.getPost_api().qcCheckBatch(App.staffId,coursetype== Configs.TYPE_PRIVATE ? "private" : "group",coachService.getId()+"",coachService.getModel(),body)
+        spCheck = mRestRepository.getPost_api().qcCheckBatch(App.coachid+"",coursetype== Configs.TYPE_PRIVATE ? "private" : "group",coachService.getId()+"",coachService.getModel(),body)
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override
@@ -131,7 +128,7 @@ public class AddBatchPresenter extends BasePresenter {
     }
 
     public void getBatchTemplete(int coursetype, String teacher_id, String course_id) {
-        mRestRepository.getGet_api().qcGetBatchTemplate(App.staffId,coursetype== Configs.TYPE_PRIVATE ? "private" : "group",coachService.getId()+"",coachService.getModel(),teacher_id,course_id)
+        mRestRepository.getGet_api().qcGetBatchTemplate(App.coachid+"",coursetype== Configs.TYPE_PRIVATE ? "private" : "group",coachService.getId()+"",coachService.getModel(),teacher_id,course_id)
              .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                              .subscribe(new Action1<QcResponseBtachTemplete>() {
                                  @Override

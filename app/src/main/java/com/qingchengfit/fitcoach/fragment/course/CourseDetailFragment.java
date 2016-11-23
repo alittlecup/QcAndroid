@@ -165,7 +165,7 @@ public class CourseDetailFragment extends BaseFragment implements
         setTeachers(mCourseDetail.getTeachers());
         setCourseDescripe(mCourseDetail.getDescription());
         setImpress(mCourseDetail.getImpressions());
-        mPresenter.queryDetail(App.staffId, mCourseDetail.getId());
+        mPresenter.queryDetail(App.coachid+"", mCourseDetail.getId());
         isJumped = false;
         webDesc.getSettings().setUseWideViewPort(true);
         webDesc.getSettings().setLoadWithOverviewMode(true);
@@ -173,7 +173,7 @@ public class CourseDetailFragment extends BaseFragment implements
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.queryDetail(App.staffId, mCourseDetail.getId());
+                mPresenter.queryDetail(App.coachid+"", mCourseDetail.getId());
             }
         });
 //        setScore(mCourseDetail.getTeacher_score(),mCourseDetail.getCourse_score(),mCourseDetail.getService_score());
@@ -346,7 +346,7 @@ public class CourseDetailFragment extends BaseFragment implements
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         showLoading();
-                        mPresenter.delCourse(App.staffId, mCourseDetail.getId());
+                        mPresenter.delCourse(App.coachid+"", mCourseDetail.getId());
                     }
                 })
                 .show();

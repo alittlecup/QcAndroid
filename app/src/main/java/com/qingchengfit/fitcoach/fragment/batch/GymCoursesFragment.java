@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.App;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -26,13 +26,8 @@ import com.qingchengfit.fitcoach.bean.RxAddCourse;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourse;
-
 import java.util.ArrayList;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -89,8 +84,8 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
 //        mCallbackActivity.setToolbar("课程排期", false, null, 0, null);
         if (fragments.size() == 0) {
             fragments.clear();
-            fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP, App.gUser.id));
-            fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE, App.gUser.id));
+            fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP));
+            fragments.add(CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE));
         }
         fragmentAdater = new FragmentAdapter(getChildFragmentManager(), fragments);
         viewpager.setAdapter(fragmentAdater);

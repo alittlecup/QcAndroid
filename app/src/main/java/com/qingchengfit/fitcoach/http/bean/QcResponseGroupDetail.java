@@ -34,8 +34,8 @@ public class QcResponseGroupDetail extends QcResponse {
 
 
     public class GroupBatch {
-        @SerializedName("teacher")
-        public QcSchedulesResponse.Teacher teacher;
+        @SerializedName("course")
+        public Course course;
         @SerializedName("from_date")
         public String from_date;
         @SerializedName("to_date")

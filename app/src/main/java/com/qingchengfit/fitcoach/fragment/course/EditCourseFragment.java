@@ -224,7 +224,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
                         suitGymsEdit.setTag(shops.size() + "家");
                         if (courseDetail != null){
                             showLoading();
-                            mPresenter.editCourseShops(App.staffId, courseDetail.getId(), ids);
+                            mPresenter.editCourseShops(App.coachid+"", courseDetail.getId(), ids);
                         }
                     }
                     break;

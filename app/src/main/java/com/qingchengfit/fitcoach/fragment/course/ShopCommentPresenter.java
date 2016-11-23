@@ -60,7 +60,7 @@ public class ShopCommentPresenter extends BasePresenter {
     }
 
     public void queryShopComments(String courseid){
-        RxRegiste(restRepository.getGet_api().qcGetShopComment(App.staffId,courseid, GymUtils.getParams(coachService,brand))
+        RxRegiste(restRepository.getGet_api().qcGetShopComment(App.coachid+"",courseid, GymUtils.getParams(coachService,brand))
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                 .subscribe(new Action1<QcResponseShopComment>() {
                     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;
 import com.qingchengfit.fitcoach.fragment.AddSelfGymFragment;
@@ -18,6 +19,8 @@ import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 
 import cn.qingchengfit.widgets.utils.AppUtils;
+import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
+import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 /**
@@ -85,6 +88,12 @@ public class FragActivity extends BaseAcitivity {
                 break;
             case 10://Go sync page
                 fragment = new SyncGymFragment();
+                break;
+            case 11:
+                fragment = SpaceListFragment.newInstance(getIntent().getIntExtra("course_type", Configs.TYPE_GROUP));
+                break;
+            case 12:
+                fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count",1));
                 break;
             default:
                 break;

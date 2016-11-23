@@ -1,9 +1,8 @@
-package com.qingchengfit.fitcoach.fragment.course;
+package com.qingchengfit.fitcoach.bean;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import com.qingchengfit.fitcoach.items.CourseItem;
+import com.google.gson.annotations.SerializedName;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import java.util.List;
 
 /**
  * power by
@@ -23,26 +22,13 @@ import com.qingchengfit.fitcoach.items.CourseItem;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 16/11/22.
+ * Created by Paper on 16/11/23.
  */
 
-public class CourseListWrapForChooseFragment extends CourseListFragment {
-    public static CourseListWrapForChooseFragment newInstance(boolean isPrivate) {
-        Bundle args = new Bundle();
-        args.putBoolean("isPrivate", isPrivate);
-        CourseListWrapForChooseFragment fragment = new CourseListWrapForChooseFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override public boolean onItemClick(int position) {
-        //super.onItemClick(position);
-        if (mAdatper.getItem(position) instanceof CourseItem) {
-            Intent rst = new Intent();
-            rst.putExtra("course", ((CourseItem) mAdatper.getItem(position)).courseDetail);
-            getActivity().setResult(Activity.RESULT_OK, rst);
-            getActivity().finish();
-        }
-        return true;
+public class QcResponseSpaces extends QcResponse {
+    @SerializedName("data")
+    public Data data;
+    public static class Data {
+        @SerializedName("spaces") public List<Space> spaces;
     }
 }

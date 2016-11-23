@@ -21,7 +21,7 @@ public class CourseBody {
 
 
 
-    public CourseBody(String name, int length, int is_private, String model, String model_id) {
+    public CourseBody(String name, String length, int is_private, String model, String model_id) {
         this.name = name;
         this.length = length;
         this.is_private = is_private;
@@ -30,7 +30,7 @@ public class CourseBody {
     }
 
     public String name;
-    public int length;
+    public String length;
     public int is_private;
     public String model;
     public String id;
@@ -60,10 +60,9 @@ public class CourseBody {
         shop_ids = builder.shop_ids;
     }
 
-
     public static final class Builder {
         private String name;
-        private int length;
+        private String length;
         private int is_private;
         private String model;
         private String id;
@@ -82,10 +81,11 @@ public class CourseBody {
             return this;
         }
 
-        public Builder length(int val) {
+        public Builder length(String val) {
             length = val;
             return this;
         }
+
 
         public Builder is_private(int val) {
             is_private = val;

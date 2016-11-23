@@ -21,6 +21,18 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
     QcResponseGroupDetail.GroupBatch batch;
 
+    public void setBatch(QcResponseGroupDetail.GroupBatch batch) {
+        this.batch = batch;
+    }
+
+    public QcResponseGroupDetail.GroupBatch getBatch() {
+        return batch;
+    }
+
+    public BatchItem(QcResponseGroupDetail.GroupBatch batch) {
+        this.batch = batch;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_batch;
     }
@@ -30,8 +42,8 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchVH holder, int position, List payloads) {
-        holder.courseName.setText(batch.teacher.getUsername());
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.teacher.getAvatar())).into(holder.img);
+        holder.courseName.setText(batch.course.getName());
+        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.course.getPhoto())).into(holder.img);
         holder.title.setText(batch.from_date + "至" + batch.to_date);
         holder.outofdate.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date))? View.VISIBLE: View.GONE);
     }

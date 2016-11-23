@@ -185,6 +185,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             switch (res) {
                 case R.drawable.ic_weight://排课
                     Intent toGuide = new Intent(getActivity(), BatchActivity.class);
+                    toGuide.putExtra("service",mCoachService);
                     startActivity(toGuide);
 
                     break;

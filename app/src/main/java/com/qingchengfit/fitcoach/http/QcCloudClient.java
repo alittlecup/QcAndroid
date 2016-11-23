@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http;
 
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
@@ -7,6 +9,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -82,6 +85,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseJacket;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateBatchDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
@@ -103,15 +107,11 @@ import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -486,7 +486,7 @@ public class QcCloudClient {
         //获取团课排课
         @GET("/api/staffs/{id}/group/courses/") rx.Observable<QcResponseGroupCourse> qcGetGroupCourse(@Path("id") String staff_id,
             @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
-
+        //
         //获取私教排课
         @GET("/api/staffs/{id}/private/coaches/") rx.Observable<QcResponsePrivateCourse> qcGetPrivateCrourse(@Path("id") String staff_id,
             @Query("id") String gym_id, @Query("model") String gym_model, @Query("brand_id") String brand_id);
@@ -502,10 +502,19 @@ public class QcCloudClient {
             @Path("id") String coach_id, @Query("id") String gym_id, @Query("model") String gym_model,@Query("is_private") int isPrivate);
 
         //排课填充
-        @GET("/api/staffs/{id}/{type}/arrange/template/")
+        @GET("/api/v1/coaches/{id}/{type}/arrange/template/")
         rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(@Path("id") String id,
             @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel, @Query("teacher_id") String teacher_id,
             @Query("course_id") String course_id);
+        //获取某个排期的详情
+        @GET("/api/v1/coaches/{id}/batches/{batch_id}/")
+        rx.Observable<QcResponsePrivateBatchDetail> qcGetBatchDetail(@Path("id") String staff_id, @Path("batch_id") String batch_id, @Query("id") String gym_id, @Query("model") String gym_model);
+
+
+        //获取场地列表
+        @GET("/api/v1/coaches/{coach_id}/spaces/")
+        rx.Observable<QcResponseSpaces> qcGetSpace(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
+
     }
 
     public interface PostApi {
@@ -630,9 +639,7 @@ public class QcCloudClient {
         @POST("/api/v1/coaches/{id}/{schedules}/bulk/delete/") rx.Observable<QcResponse> qcDelCourseManage(@Path("id") int id,
             @Path("schedules") String schedules, @Body DelCourseManage delCourseManage);
 
-        @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/") rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") int coach_id,
-            @Path("batch_id") String batch_id, @QueryMap HashMap<String, String> params);
-        //修改单挑排期
+         //修改单挑排期
 
         /**
          * @param schedules 私教 timetables
@@ -679,12 +686,18 @@ public class QcCloudClient {
          */
         @POST("/api/staffs/{id}/arrange/batches/") rx.Observable<QcResponse> qcArrangeBatch(@Path("id") String staff_id,
             @Query("id") String gymid, @Query("model") String model, @Body ArrangeBatchBody body);
-
-        @PUT("/api/staffs/{id}/batches/{batchid}/") rx.Observable<QcResponse> qcUpdateBatch(@Path("id") String staff_id,
+        //修改排期
+        @PUT("/api/v1/coaches/{id}/batches/{batchid}/") rx.Observable<QcResponse> qcUpdateBatch(@Path("id") String staff_id,
             @Path("batchid") String batchid, @Query("id") String gymid, @Query("model") String model, @Body ArrangeBatchBody body);
-
-        @POST("/api/staffs/{id}/{type}/arrange/check/") rx.Observable<QcResponse> qcCheckBatch(@Path("id") String staff_id,
+        //排期检查
+        @POST("/api/v1/coaches/{id}/{type}/arrange/check/") rx.Observable<QcResponse> qcCheckBatch(@Path("id") String staff_id,
             @Path("type") String type, @Query("id") String gymid, @Query("model") String model, @Body ArrangeBatchBody body);
+        //删除排期
+        //@DELETE("/api/v1/coaches/{id}/batches/{batchid}/") rx.Observable<QcResponse> qcDelBatch(@Path("id") String staff_id,
+        //    @Path("batchid") String batchid, @Query("id") String gymid, @Query("model") String model);
+        @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/") rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") String coach_id,
+            @Path("batch_id") String batch_id, @QueryMap HashMap<String, String> params);
+
     }
 
     public interface DownLoadApi {

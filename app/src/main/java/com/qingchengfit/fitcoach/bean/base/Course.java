@@ -27,10 +27,17 @@ import android.os.Parcelable;
 public class Course implements Parcelable {
     public String id;
     public String name;
-    public int length;
+    public String length;
     public boolean is_private;
     public String photo;
 
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
 
     public String getId() {
         return id;
@@ -48,13 +55,6 @@ public class Course implements Parcelable {
         this.name = name;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
 
     public boolean is_private() {
         return is_private;
@@ -86,7 +86,7 @@ public class Course implements Parcelable {
 
     public static final class Builder {
         private String name;
-        private int length;
+        private String length;
         private boolean is_private;
         private String photo;
         private String id;
@@ -99,7 +99,7 @@ public class Course implements Parcelable {
             return this;
         }
 
-        public Builder length(int val) {
+        public Builder length(String val) {
             length = val;
             return this;
         }
@@ -124,16 +124,14 @@ public class Course implements Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeInt(this.length);
+        dest.writeString(this.length);
         dest.writeByte(this.is_private ? (byte) 1 : (byte) 0);
         dest.writeString(this.photo);
     }
@@ -141,19 +139,17 @@ public class Course implements Parcelable {
     protected Course(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
-        this.length = in.readInt();
+        this.length = in.readString();
         this.is_private = in.readByte() != 0;
         this.photo = in.readString();
     }
 
     public static final Creator<Course> CREATOR = new Creator<Course>() {
-        @Override
-        public Course createFromParcel(Parcel source) {
+        @Override public Course createFromParcel(Parcel source) {
             return new Course(source);
         }
 
-        @Override
-        public Course[] newArray(int size) {
+        @Override public Course[] newArray(int size) {
             return new Course[size];
         }
     };

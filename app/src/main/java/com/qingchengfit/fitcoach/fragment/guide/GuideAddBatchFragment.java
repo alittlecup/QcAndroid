@@ -111,19 +111,8 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
                 Glide.with(getContext()).load(bean.courses.get(0).photo).into(courseImg);
                 imgPrivate.setImageResource(bean.courses.get(0).is_private ? R.drawable.ic_course_type_private : R.drawable.ic_course_type_group);
                 courseName.setText(bean.courses.get(0).name);
-                courseTimeLong.setText(getString(R.string.time_long_d_min, bean.courses.get(0).length / 60));
+                courseTimeLong.setText(getString(R.string.time_long_d_min, Float.parseFloat(bean.courses.get(0).length) / 60));
             }
-//                startdate.setContent(batch.from_date);
-//                enddate.setContent(batch.to_date);
-//                CmBean.geTimeRepFromBean()
-//                for (int i = 0; i < batch.time_repeats.size(); i++) {
-//                    TimeRepeat timeRepeat = batch.time_repeats.get(i);
-//                    mData.add(new BatchCircleItem(new CmBean(timeRepeat.weekday)));
-//                }
-//
-//
-//            }
-
         }
 
 
@@ -211,7 +200,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
             to.putExtra("to", ChooseActivity.TO_CHOSSE_CIRCLE);
             startActivity(to);
         }
-        return false;
+        return true;
     }
 
     @OnClick(R.id.completed)

@@ -124,7 +124,7 @@ public class CourseImagesFragment extends BaseFragment implements FlexibleAdapte
         recyclerview.setHasFixedSize(true);
 
 
-        RxRegiste(restRepository.getGet_api().qcGetSchedulePhotos(App.staffId, getArguments().getString("courseid"), page, GymUtils.getParams(coachService, brand))
+        RxRegiste(restRepository.getGet_api().qcGetSchedulePhotos(App.coachid+"", getArguments().getString("courseid"), page, GymUtils.getParams(coachService, brand))
                         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<QcResponseSchedulePhotos>() {
                             @Override
@@ -224,7 +224,7 @@ public class CourseImagesFragment extends BaseFragment implements FlexibleAdapte
             mAdatper.onLoadMoreComplete(null);
             return;
         }
-        RxRegiste(restRepository.getGet_api().qcGetSchedulePhotos(App.staffId, getArguments().getString("courseid"), page, GymUtils.getParams(coachService, brand))
+        RxRegiste(restRepository.getGet_api().qcGetSchedulePhotos(App.coachid+"", getArguments().getString("courseid"), page, GymUtils.getParams(coachService, brand))
                 .delay(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 

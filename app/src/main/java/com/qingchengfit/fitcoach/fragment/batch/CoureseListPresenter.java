@@ -84,7 +84,7 @@ public class CoureseListPresenter implements Presenter {
     }
 
     public void getGroup() {
-        spgourp = restRepository.getGet_api().qcGetGroupCourse(App.staffId,coachService.id+"",coachService.model,"")
+        spgourp = restRepository.getGet_api().qcGetGroupCourse(App.coachid+"",coachService.id+"",coachService.model,"")
          .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                          .subscribe(new Action1<QcResponseGroupCourse>() {
                              @Override
@@ -103,7 +103,7 @@ public class CoureseListPresenter implements Presenter {
     public void getPrivate() {
 
 
-        spPrivate = restRepository.getGet_api().qcGetPrivateCrourse(App.staffId, coachService.getId()+"", coachService.getModel(),null)
+        spPrivate = restRepository.getGet_api().qcGetPrivateCrourse(App.coachid+"", coachService.getId()+"", coachService.getModel(),null)
                  .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                  .subscribe(new Action1<QcResponsePrivateCourse>() {
                                      @Override

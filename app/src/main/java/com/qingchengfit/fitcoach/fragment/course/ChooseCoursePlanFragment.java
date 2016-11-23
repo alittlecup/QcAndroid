@@ -119,7 +119,7 @@ public class ChooseCoursePlanFragment extends BaseFragment implements
         recyclerview.setHasFixedSize(true);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
         recyclerview.setAdapter(mAdapter);
-        RxRegiste(restRepository.getGet_api().qcGetCoursePlan(App.staffId, GymUtils.getParams(coachService, brand))
+        RxRegiste(restRepository.getGet_api().qcGetCoursePlan(App.coachid+"", GymUtils.getParams(coachService, brand))
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseCoursePlan>() {
                     @Override

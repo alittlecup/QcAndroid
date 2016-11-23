@@ -112,7 +112,7 @@ public class EditCoursePresenter extends BasePresenter {
     }
 
     public void editCourse(String courseid, CourseBody body) {
-        RxRegiste(restRepository.getPost_api().qcUpdateCourse(App.staffId, courseid, GymUtils.getParams(coachService, brand), body)
+        RxRegiste(restRepository.getPost_api().qcUpdateCourse(App.coachid+"", courseid, GymUtils.getParams(coachService, brand), body)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {
                     @Override

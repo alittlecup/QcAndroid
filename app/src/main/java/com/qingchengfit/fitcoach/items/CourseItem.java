@@ -76,7 +76,7 @@ public class CourseItem extends AbstractFlexibleItem<CourseItem.CourseVh> {
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, CourseVh holder, int position, List payloads) {
-        holder.courseLength.setText(String.format(Locale.CHINA, "时长%d分钟", courseDetail.getLength() / 60));
+        holder.courseLength.setText(String.format(Locale.CHINA, "时长%f分钟", Float.parseFloat(courseDetail.getLength()) / 60));
         holder.courseName.setText(courseDetail.getName());
         holder.courseTypeImg.setImageResource(courseDetail.is_private()?R.drawable.ic_course_private_conner:R.drawable.ic_course_group_conner);
         Glide.with(adapter.getRecyclerView().getContext()).load(courseDetail.getPhoto()).placeholder(R.drawable.img_loadingimage).into(holder.courseImg);
