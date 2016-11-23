@@ -73,6 +73,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym, container, false);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -80,7 +81,7 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
             }
         });
         toolbarTitle.setText("选择健身房");
-        unbinder = ButterKnife.bind(this, view);
+
         mDatas.clear();
         mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
         mAdapter = new CommonFlexAdapter(mDatas, this);

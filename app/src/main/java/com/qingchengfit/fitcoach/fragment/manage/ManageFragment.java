@@ -141,7 +141,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 if (coachService != null) {
                     mCoachService = coachService;
                     title.setText(coachService.name);
-
                     Glide.with(getContext()).load(coachService.photo).into(shopImg);
                 }
             }
@@ -154,6 +153,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
                             mCoachService = qcResponse.data.services.get(0);
+                            title.setText(mCoachService.name);
+                            Glide.with(getContext()).load(mCoachService.photo).into(shopImg);
                         } else {
                             ToastUtils.show("服务器错误");
                         }

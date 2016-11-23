@@ -67,9 +67,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ScheduesFragment extends Fragment {
     public static final String TAG = ScheduesFragment.class.getName();
     @BindView(R.id.toolbar)
