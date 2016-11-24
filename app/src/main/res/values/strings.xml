@@ -149,6 +149,13 @@
     <string name="week5">星期五</string>
     <string name="week6">星期六</string>
     <string name="week7">星期日</string>
+    <string name="simple_week1">一</string>
+    <string name="simple_week2">二</string>
+    <string name="simple_week3">三</string>
+    <string name="simple_week4">四</string>
+    <string name="simple_week5">五</string>
+    <string name="simple_week6">六</string>
+    <string name="simple_week7">日</string>
     <string name="every">每个</string>
     <string name="detail_address">具体地址</string>
     <string name="please_input_detail_address">请填写具体地址</string>

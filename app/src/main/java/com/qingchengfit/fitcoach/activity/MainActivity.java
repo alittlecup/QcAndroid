@@ -54,7 +54,7 @@ import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.MyGymsFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
-import com.qingchengfit.fitcoach.fragment.ScheduesFragment;
+import com.qingchengfit.fitcoach.fragment.schedule.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;

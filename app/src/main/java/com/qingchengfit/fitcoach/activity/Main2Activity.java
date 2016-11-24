@@ -10,15 +10,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.TabView;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.NetWorkUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -28,7 +34,7 @@ import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
-import com.qingchengfit.fitcoach.fragment.schedule.ScheduleWeekFragment;
+import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
@@ -41,28 +47,19 @@ import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.TabView;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.NetWorkUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import im.fir.sdk.FIR;
-import im.fir.sdk.VersionCheckCallback;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class Main2Activity extends AppCompatActivity implements WebActivityInterface {
+public class Main2Activity extends BaseAcitivity implements WebActivityInterface {
 
     /**
      * 进入主页用途
@@ -160,7 +157,7 @@ public class Main2Activity extends AppCompatActivity implements WebActivityInter
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new ScheduleWeekFragment();
+                return new MainScheduleFragment();
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {

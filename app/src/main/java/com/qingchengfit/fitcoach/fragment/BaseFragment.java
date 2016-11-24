@@ -71,7 +71,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void onVisible() {
-//        lazyLoad();
+        lazyLoad();
     }
 
     protected void lazyLoad() {

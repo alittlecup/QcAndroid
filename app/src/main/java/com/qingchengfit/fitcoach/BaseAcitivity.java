@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.app.AppCompatDelegate;
 import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -23,7 +24,9 @@ import com.umeng.analytics.MobclickAgent;
  * Created by Paper on 15/7/29 2015.
  */
 public class BaseAcitivity extends AppCompatActivity {
-
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     private LoadingDialog loadingDialog;
 
     @Override

@@ -31,7 +31,9 @@ public class MainScheduleFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
-
+        getFragmentManager().beginTransaction()
+            .replace(R.id.schedule_frag,new ScheduesFragment())
+            .commitAllowingStateLoss();
         return view;
     }
 

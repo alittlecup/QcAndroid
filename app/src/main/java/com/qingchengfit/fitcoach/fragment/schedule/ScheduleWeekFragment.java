@@ -1,23 +1,21 @@
 package com.qingchengfit.fitcoach.fragment.schedule;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.alamkanak.weekview.MonthLoader;
-import com.alamkanak.weekview.WeekView;
-import com.alamkanak.weekview.WeekViewEvent;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 /**
  * power by
@@ -41,61 +39,61 @@ import butterknife.ButterKnife;
  */
 public class ScheduleWeekFragment extends BaseFragment {
 
-    @BindView(R.id.weekView)
-    WeekView weekView;
-    private Calendar startTime;
-    private Calendar endTime;
-    private WeekViewEvent event;
+    @BindView(R.id.viewpager) ViewPager viewpager;
+    @BindView(R.id.tv_month) TextView tvMonth;
+    private CoachService mCoachService;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
+        viewpager.setAdapter(new ScheduleWeekAdapter(getChildFragmentManager()));
+        viewpager.setCurrentItem(1000);
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        weekView.notifyDatasetChanged();
-        weekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
-            @Override
-            public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-                List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+            }
 
-                
+            @Override public void onPageSelected(int position) {
+                LogUtil.e("pos:"+position);
+            }
 
+            @Override public void onPageScrollStateChanged(int state) {
 
-
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.HOUR_OF_DAY, 5);
-                startTime.set(Calendar.MINUTE, 30);
-                startTime.set(Calendar.MONTH, newMonth-1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.add(Calendar.HOUR_OF_DAY, 2);
-                endTime.set(Calendar.MONTH, newMonth-1);
-                event = new WeekViewEvent(2, "哈哈哈", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.green));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.HOUR_OF_DAY, 2);
-                startTime.set(Calendar.MINUTE, 30);
-                startTime.set(Calendar.MONTH, newMonth-1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.add(Calendar.HOUR_OF_DAY, 1);
-                endTime.set(Calendar.MONTH, newMonth-1);
-                event = new WeekViewEvent(3, "测试", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.green));
-                events.add(event);
-
-
-                return events;
             }
         });
         return view;
     }
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return ScheduleWeekFragment.class.getName();
+    }
+
+    @OnClick({ R.id.tv_month, R.id.day_view }) public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_month:
+
+                break;
+            case R.id.day_view:
+                getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_fade_in,R.anim.slide_fade_out)
+                    .replace(R.id.schedule_frag,new ScheduesFragment())
+                    .commitAllowingStateLoss();
+                break;
+        }
+    }
+
+    public class ScheduleWeekAdapter extends FragmentStatePagerAdapter {
+
+        public ScheduleWeekAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override public Fragment getItem(int position) {
+            return ScheduleOneWeekFragment.newInstance(position - 1000, mCoachService);
+        }
+
+        @Override public int getCount() {
+            return Integer.MAX_VALUE;
+        }
     }
 }

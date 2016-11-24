@@ -196,6 +196,7 @@ dependencies {
             'libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
 
     compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
+    compile 'cn.qingchegfit.widgets:weekview:1.0@aar'
     compile 'cn.qingchegfit.mvplib:mvplib:1.0@aar'
 
 
@@ -227,7 +228,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     compile 'com.hkm.taglib:tag:1.6.0'
 
-    compile 'com.github.alamkanak:android-week-view:1.2.6'
 
 
     apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'

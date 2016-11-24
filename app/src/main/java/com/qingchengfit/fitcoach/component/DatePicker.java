@@ -63,13 +63,13 @@ public class DatePicker extends Dialog {
     public void show() {
         mCurCalendar.setTime(new Date());
         Window window = this.getWindow();
-        window.setGravity(Gravity.BOTTOM);
+        window.setGravity(Gravity.TOP);
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(lp);
-        window.setWindowAnimations(R.style.ButtomDialogStyle);
+        window.setWindowAnimations(R.style.TopDialogStyle);
         super.show();
         updateCalendar();
         robotoCalendarView.markDayAsSelectedDay(new Date());

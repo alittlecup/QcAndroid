@@ -23,6 +23,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.qingchengfit.fitcoach.R;
 
 /*
  * Copyright (C) 2013 Andreas Stuetz <andreas.stuetz@gmail.com>
@@ -38,6 +39,8 @@ import android.widget.TextView;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * 只用在schedules页面
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
     /**
@@ -118,10 +121,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
         mTabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTabTextSize, dm);
         mNumTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mNumTextSize, dm);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
-        mTabTextSize = a.getDimensionPixelSize(0, mTabTextSize);
-        mNumTextSize = a.getDimensionPixelSize(0, mNumTextSize);
-        mTabTextColor = a.getColor(1, mTabTextColor);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
+        mTabTextSize = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pst_text_size, mTabTextSize);
+        mTabTextColor  = a.getColor(R.styleable.PagerSlidingTabStrip_pst_text_color, mTabTextColor);
+         mIndicatorColor= a.getColor(R.styleable.PagerSlidingTabStrip_pst_text_highlight_color, mTabTextColor);
         a.recycle();
 
         mRectPaint = new Paint();

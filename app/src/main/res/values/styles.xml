@@ -101,6 +101,7 @@
         //退出时的动画
     </style>
 
+
     <style name="ChoosePicDialogStyle" parent="AlertDialog.AppCompat">
         <!-- 背景颜色及透明程度 -->
         <item name="android:windowBackground">@android:color/white</item>

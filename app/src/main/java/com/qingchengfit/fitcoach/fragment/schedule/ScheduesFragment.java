@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment;
+package com.qingchengfit.fitcoach.fragment.schedule;
 
 
 import android.content.DialogInterface;
@@ -9,30 +9,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
-import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
@@ -41,6 +38,7 @@ import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
+import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
@@ -49,19 +47,11 @@ import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -69,32 +59,10 @@ import rx.schedulers.Schedulers;
 
 public class ScheduesFragment extends Fragment {
     public static final String TAG = ScheduesFragment.class.getName();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    //      @BindView(R.id.drawer_radiogroup)
-    //    DateSegmentLayout drawerRadiogroup;
-    @BindView(R.id.web_floatbtn)
-    FloatingActionsMenu webFloatbtn;
-    @BindView(R.id.spinner_nav)
-    Spinner spinnerNav;
     @BindView(R.id.schedule_tab)
     PagerSlidingTabStrip scheduleTab;
     @BindView(R.id.schedule_vp)
     ViewPager scheduleVp;
-    @BindView(R.id.schedule_floatbg)
-    View scheduleFloatbg;
-    @BindView(R.id.schedule_notification)
-    ImageView scheduleNotification;
-    @BindView(R.id.schedule_notification_count)
-    TextView scheduleNotificationCount;
-    @BindView(R.id.schedule_notification_layout)
-    RelativeLayout scheduleNotificationLayout;
-    @BindView(R.id.schedule_calendar)
-    RelativeLayout scheduleCalendar;
-    @BindView(R.id.first_guide)
-    RelativeLayout firstGuide;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
     //    @BindView(R.id.schedule_expend_view)
 //    LinearLayout scheduleExpendView;
     private FloatingActionButton btn1;
@@ -134,30 +102,6 @@ public class ScheduesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
         unbinder=ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-//        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-//        toolbar.inflateMenu(R.menu.menu_alert);
-        mTitle = getString(R.string.schedule_title);
-        toolbarTitle.setText(mTitle);
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
-                choosegym.putExtra("model", curModel);
-                choosegym.putExtra("id", curSystemId);
-                choosegym.putExtra("title", mTitle);
-                startActivityForResult(choosegym, 501);
-            }
-        });
-
-        scheduleNotificationLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), NotificationActivity.class));
-//                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
-            }
-        });
-//        drawerRadiogroup.setDate(new Date());
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
         if (TextUtils.isEmpty(id)) {
@@ -181,43 +125,38 @@ public class ScheduesFragment extends Fragment {
         btn3.setIcon(R.drawable.ic_action_private);
         btn3.setColorNormal(getResources().getColor(R.color.purple));
         btn3.setTitle("代约私教");
-//
-//        btn1.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=rest"));
-//        btn2.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=grouplesson"));
-//        btn3.setOnClickListener(v -> openDrawerInterface.goWeb(Configs.Server + "mobile/coaches/systems/?action=privatelesson"));
-//
         btn1.setOnClickListener(v1 -> onAction(1));
         btn2.setOnClickListener(v1 -> onAction(3));
         btn3.setOnClickListener(v1 -> onAction(2));
-        webFloatbtn.addButton(btn1);
-        webFloatbtn.addButton(btn2);
-        webFloatbtn.addButton(btn3);
-        firstGuide.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        if (!PreferenceUtils.getPrefBoolean(App.AppContex, App.coachid + "first_guide", false)) {
-            firstGuide.setVisibility(View.VISIBLE);
-        }
-
-        webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
-            @Override
-            public void onMenuExpanded() {
-                scheduleFloatbg.setVisibility(View.VISIBLE);
-                firstGuide.setVisibility(View.GONE);
-                PreferenceUtils.setPrefBoolean(App.AppContex, App.coachid + "first_guide", true);
-            }
-
-            @Override
-            public void onMenuCollapsed() {
-                scheduleFloatbg.setVisibility(View.GONE);
-            }
-        });
-        scheduleFloatbg.setOnClickListener(v -> {
-            webFloatbtn.collapse();
-        });
+        //webFloatbtn.addButton(btn1);
+        //webFloatbtn.addButton(btn2);
+        //webFloatbtn.addButton(btn3);
+        //firstGuide.setOnTouchListener(new View.OnTouchListener() {
+        //    @Override
+        //    public boolean onTouch(View v, MotionEvent event) {
+        //        return true;
+        //    }
+        //});
+        //if (!PreferenceUtils.getPrefBoolean(App.AppContex, App.coachid + "first_guide", false)) {
+        //    firstGuide.setVisibility(View.VISIBLE);
+        //}
+        //
+        //webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+        //    @Override
+        //    public void onMenuExpanded() {
+        //        scheduleFloatbg.setVisibility(View.VISIBLE);
+        //        firstGuide.setVisibility(View.GONE);
+        //        PreferenceUtils.setPrefBoolean(App.AppContex, App.coachid + "first_guide", true);
+        //    }
+        //
+        //    @Override
+        //    public void onMenuCollapsed() {
+        //        scheduleFloatbg.setVisibility(View.GONE);
+        //    }
+        //});
+        //scheduleFloatbg.setOnClickListener(v -> {
+        //    webFloatbtn.collapse();
+        //});
         mObservable = RxBus.getBus().register(NewPushMsg.class);
         mObservable.subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<NewPushMsg>() {
@@ -366,21 +305,6 @@ public class ScheduesFragment extends Fragment {
             }
         };
         spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerNav.setAdapter(spinnerBeanArrayAdapter);
-
-        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                curPostion = position;
-                curSystemId = spinnerBeanArrayAdapter.getItem(position).id;
-                mFragmentAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
     }
@@ -405,7 +329,7 @@ public class ScheduesFragment extends Fragment {
         Intent toWeb = new Intent(getActivity(), WebActivity.class);
         toWeb.putExtra("url", sb.toString());
         startActivityForResult(toWeb, 404);
-        webFloatbtn.collapse();
+        //webFloatbtn.collapse();
     }
 
 
@@ -433,14 +357,14 @@ public class ScheduesFragment extends Fragment {
                     @Override
                     public void onNext(QcNotificationResponse qcNotificationResponse) {
                         if (getActivity() != null) {
-                            if (qcNotificationResponse.getData().getUnread_count() > 0) {
-                                if (qcNotificationResponse.getData().getUnread_count() < 100)
-                                    scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
-                                else scheduleNotificationCount.setText("99");
-                                scheduleNotificationCount.setVisibility(View.VISIBLE);
-                            } else {
-                                scheduleNotificationCount.setVisibility(View.GONE);
-                            }
+                            //if (qcNotificationResponse.getData().getUnread_count() > 0) {
+                            //    if (qcNotificationResponse.getData().getUnread_count() < 100)
+                            //        scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
+                            //    else scheduleNotificationCount.setText("99");
+                            //    scheduleNotificationCount.setVisibility(View.VISIBLE);
+                            //} else {
+                            //    scheduleNotificationCount.setVisibility(View.GONE);
+                            //}
                         }
                     }
                 });
@@ -452,7 +376,6 @@ public class ScheduesFragment extends Fragment {
         if (resultCode > 0 && requestCode == 404) {
             mFragmentAdapter.notifyDataSetChanged();
         } else if (resultCode > 0 && requestCode == 501) {
-            toolbarTitle.setText(data.getStringExtra("name"));
             curModel = data.getStringExtra("model");
             curSystemId = Integer.parseInt(data.getStringExtra("id"));
             mFragmentAdapter.notifyDataSetChanged();
@@ -474,15 +397,15 @@ public class ScheduesFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.schedule_calendar)
+    //@OnClick(R.id.schedule_calendar)
     public void onCalendarClick() {
-        scheduleCalendar.setClickable(false);
+        //scheduleCalendar.setClickable(false);
         if (mDatePicker == null) {
             mDatePicker = new DatePicker(getContext());
             mDatePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    scheduleCalendar.setClickable(true);
+                    //scheduleCalendar.setClickable(true);
                 }
             });
             mDatePicker.setDayClickListener(new RobotoCalendarView.RobotoCalendarListener() {
@@ -539,6 +462,39 @@ public class ScheduesFragment extends Fragment {
         super.onDestroyView();
     }
 
+
+
+    @OnClick(R.id.month_view)
+    public void onMonth(){
+        getFragmentManager().beginTransaction()
+            .setCustomAnimations(R.anim.slide_fade_in,R.anim.slide_fade_out)
+            .replace(R.id.schedule_frag,new ScheduleWeekFragment())
+            .commitAllowingStateLoss();
+
+    }
+
+
+
+
+
+
+
+    /***
+     *
+     *
+     *
+     *    单个日程
+     *
+     *
+     *
+     *
+     *
+     */
+
+
+
+
+
     public static class SchedulesVH extends RecyclerView.ViewHolder {
         @BindView(R.id.item_schedule_time)
         TextView itemScheduleTime;
@@ -562,7 +518,7 @@ public class ScheduesFragment extends Fragment {
     public class FragmentAdapter extends FragmentStatePagerAdapter {
 
         private String[] weekDays = new String[]{
-                "周日", "周一", "周二", "周三", "周四", "周五", "周六"
+                "日", "一", "二", "三", "四", "五", "六"
         };
         private Date curDate = new Date();
 
@@ -599,8 +555,8 @@ public class ScheduesFragment extends Fragment {
             StringBuffer sb = new StringBuffer();
             sb.append(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
             sb.append("\n");
-            sb.append(calendar.get(Calendar.MONTH) + 1);
-            sb.append(".");
+            //sb.append(calendar.get(Calendar.MONTH) + 1);
+            //sb.append(".");
             sb.append(calendar.get(Calendar.DAY_OF_MONTH));
             return sb.toString();
         }
