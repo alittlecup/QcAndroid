@@ -208,7 +208,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
 
     @OnClick(R.id.batch_loop) public void onBatchLoop() {
         getFragmentManager().beginTransaction()
-            .add(R.id.frag, CourseManageFragment.newInstance(coachService.getId()+"",coachService.getModel(),mId, mType))
+            .add(R.id.frag, CourseManageFragment.newInstance(coachService.getModel(),coachService.getId()+"",mId, mType))
             .addToBackStack(null)
             .commit();
     }

@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,8 +20,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
+import cn.qingchengfit.widgets.utils.MeasureUtils;
+import cn.qingchengfit.widgets.utils.StringUtils;
+import cn.qingchengfit.widgets.utils.ToastUtils;
+import co.hkm.soltag.TagContainerLayout;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -40,21 +49,9 @@ import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.component.TouchyWebView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.qingchengfit.widgets.RatingBarVectorFix;
-import cn.qingchengfit.widgets.utils.MeasureUtils;
-import cn.qingchengfit.widgets.utils.StringUtils;
-import cn.qingchengfit.widgets.utils.ToastUtils;
-import co.hkm.soltag.TagContainerLayout;
-
 
 /**
  * power by
@@ -76,57 +73,37 @@ import co.hkm.soltag.TagContainerLayout;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/7/25.
  */
-public class CourseDetailFragment extends BaseFragment implements
-        CourseDetailPresenter.CourseDetailView, ViewPager.OnPageChangeListener {
+public class CourseDetailFragment extends BaseFragment implements CourseDetailPresenter.CourseDetailView, ViewPager.OnPageChangeListener {
 
     public static final int RESULT_DEL = 0;
 
-    @BindView(R.id.student_judge_coach_score)
-    TextView studentJudgeCoachScore;
-    @BindView(R.id.student_judge_coach_star)
-    RatingBarVectorFix studentJudgeCoachStar;
-    @BindView(R.id.student_judge_course_score)
-    TextView studentJudgeCourseScore;
-    @BindView(R.id.student_judge_course_star)
-    RatingBarVectorFix studentJudgeCourseStar;
-    @BindView(R.id.server_score)
-    TextView serverScore;
-    @BindView(R.id.server_rate)
-    RatingBarVectorFix serverRate;
-    @BindView(R.id.course_impression)
-    TagContainerLayout courseImpression;
+    @BindView(R.id.student_judge_coach_score) TextView studentJudgeCoachScore;
+    @BindView(R.id.student_judge_coach_star) RatingBarVectorFix studentJudgeCoachStar;
+    @BindView(R.id.student_judge_course_score) TextView studentJudgeCourseScore;
+    @BindView(R.id.student_judge_course_star) RatingBarVectorFix studentJudgeCourseStar;
+    @BindView(R.id.server_score) TextView serverScore;
+    @BindView(R.id.server_rate) RatingBarVectorFix serverRate;
+    @BindView(R.id.course_impression) TagContainerLayout courseImpression;
 
+    @BindView(R.id.jacket_vp) ViewPager jacketVp;
+    @BindView(R.id.desc_html) TextView descHtml;
+    @BindView(R.id.no_impression) TextView noImpression;
+    @BindView(R.id.course_teacher_rv) RecyclerView courseTeacherRv;
 
-    @BindView(R.id.jacket_vp)
-    ViewPager jacketVp;
-    @BindView(R.id.desc_html)
-    TextView descHtml;
-    @BindView(R.id.no_impression)
-    TextView noImpression;
-    @BindView(R.id.course_teacher_rv)
-    RecyclerView courseTeacherRv;
-
-    @Inject
-    CourseDetailPresenter mPresenter;
-    @Inject
-    CoachService coachService;
-    @BindView(R.id.no_jacket)
-    TextView noJacket;
-    @BindView(R.id.comments_detail)
-    FrameLayout commentsDetail;
-    @BindView(R.id.go_to_scan)
-    TextView goToScan;
-    @BindView(R.id.web_desc)
-    TouchyWebView webDesc;
-    @BindView(R.id.no_teacher)
-    TextView noTeacher;
-    @BindView(R.id.srl)
-    SwipeRefreshLayout srl;
-    @BindView(R.id.splash_indicator)
-    CircleIndicator splashIndicator;
+    @Inject CourseDetailPresenter mPresenter;
+    @Inject CoachService coachService;
+    @BindView(R.id.no_jacket) TextView noJacket;
+    @BindView(R.id.comments_detail) FrameLayout commentsDetail;
+    @BindView(R.id.go_to_scan) TextView goToScan;
+    @BindView(R.id.web_desc) TouchyWebView webDesc;
+    @BindView(R.id.no_teacher) TextView noTeacher;
+    @BindView(R.id.srl) SwipeRefreshLayout srl;
+    @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     private CourseDetail mCourseDetail;
     private ViewPaperEndlessAdapter viewpageradapter;
-
 
     public static CourseDetailFragment newInstance(CourseDetail courseDetail) {
         Bundle args = new Bundle();
@@ -136,28 +113,38 @@ public class CourseDetailFragment extends BaseFragment implements
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCourseDetail = getArguments().getParcelable("c");
         }
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_detail, container, false);
         ButterKnife.bind(this, view);
-//        mCallbackActivity.setToolbar("课程种类详情", false, null, R.menu.menu_flow, new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                ArrayList<String> d = new ArrayList<>();
-//                d.add("删除该课程种类");
-//                BottomSheetListDialogFragment.start(CourseDetailFragment.this, RESULT_DEL, d);
-//                return true;
-//            }
-//        });
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbarTitle.setText("课程种类详情");
+        toolbar.inflateMenu(R.menu.menu_flow);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                ArrayList<String> d = new ArrayList<>();
+                d.add("删除该课程种类");
+                BottomSheetListDialogFragment.start(CourseDetailFragment.this, RESULT_DEL, d);
+                return true;
+            }
+        });
+        //        mCallbackActivity.setToolbar("课程种类详情", false, null, R.menu.menu_flow, new Toolbar.OnMenuItemClickListener() {
+        //            @Override
+        //            public boolean onMenuItemClick(MenuItem item) {
+        //
+        //            }
+        //        });
         initDI();
         delegatePresenter(mPresenter, this);
         initView(mCourseDetail);
@@ -165,18 +152,17 @@ public class CourseDetailFragment extends BaseFragment implements
         setTeachers(mCourseDetail.getTeachers());
         setCourseDescripe(mCourseDetail.getDescription());
         setImpress(mCourseDetail.getImpressions());
-        mPresenter.queryDetail(App.coachid+"", mCourseDetail.getId());
+        mPresenter.queryDetail(App.coachid + "", mCourseDetail.getId());
         isJumped = false;
         webDesc.getSettings().setUseWideViewPort(true);
         webDesc.getSettings().setLoadWithOverviewMode(true);
         webDesc.setHorizontalScrollBarEnabled(false);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.queryDetail(App.coachid+"", mCourseDetail.getId());
+            @Override public void onRefresh() {
+                mPresenter.queryDetail(App.coachid + "", mCourseDetail.getId());
             }
         });
-//        setScore(mCourseDetail.getTeacher_score(),mCourseDetail.getCourse_score(),mCourseDetail.getService_score());
+        //        setScore(mCourseDetail.getTeacher_score(),mCourseDetail.getCourse_score(),mCourseDetail.getService_score());
         return view;
     }
 
@@ -187,20 +173,16 @@ public class CourseDetailFragment extends BaseFragment implements
     }
 
     private void initView(CourseDetail courseDetail) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.course_info, CourseBaseInfoShowFragment.newInstance(courseDetail))
-                .commit();
+        getFragmentManager().beginTransaction().replace(R.id.course_info, CourseBaseInfoShowFragment.newInstance(courseDetail)).commit();
 
-//        setScore();
+        //        setScore();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_flow, menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         ArrayList<String> d = new ArrayList<>();
         d.add("删除该课程种类");
@@ -208,9 +190,7 @@ public class CourseDetailFragment extends BaseFragment implements
         return true;
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case RESULT_DEL://删除课程
@@ -222,15 +202,13 @@ public class CourseDetailFragment extends BaseFragment implements
         }
     }
 
-    @Override
-    public void setCourseInfo(CourseDetail course) {
+    @Override public void setCourseInfo(CourseDetail course) {
         srl.setRefreshing(false);
         mCourseDetail = course;
         initView(course);
     }
 
-    @Override
-    public void setJacket(final List<String> photos) {
+    @Override public void setJacket(final List<String> photos) {
         List<View> data = new ArrayList<>();
         if (photos.size() == 0) {
             noJacket.setVisibility(View.VISIBLE);
@@ -241,12 +219,14 @@ public class CourseDetailFragment extends BaseFragment implements
             View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_vp_image, null);
 
             ImageView imageViewItem = (ImageView) view.findViewById(R.id.img);
-            Glide.with(getContext()).load(photos.get(i)).asBitmap().into(new ScaleWidthWrapper(imageViewItem, MeasureUtils.getScreenWidth(getResources())));
-            final  int curPos = i;
+            Glide.with(getContext())
+                .load(photos.get(i))
+                .asBitmap()
+                .into(new ScaleWidthWrapper(imageViewItem, MeasureUtils.getScreenWidth(getResources())));
+            final int curPos = i;
             imageViewItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                   GalleryPhotoViewDialog dialog = new GalleryPhotoViewDialog(getContext());
+                @Override public void onClick(View view) {
+                    GalleryPhotoViewDialog dialog = new GalleryPhotoViewDialog(getContext());
                     dialog.setImage(photos);
                     dialog.setSelected(curPos);
                     dialog.show();
@@ -262,13 +242,12 @@ public class CourseDetailFragment extends BaseFragment implements
         splashIndicator.setViewPager(jacketVp);
     }
 
-
     /**
      * 填写评分
      *
      * @param teacherScore teacher score
-     * @param courseScore  course score
-     * @param serScore     server score
+     * @param courseScore course score
+     * @param serScore server score
      */
     public void setScore(@NonNull float teacherScore, @NonNull float courseScore, @NonNull float serScore) {
         studentJudgeCoachScore.setText(StringUtils.getFloatDot1(teacherScore));
@@ -279,8 +258,7 @@ public class CourseDetailFragment extends BaseFragment implements
         serverRate.setRating(serScore);
     }
 
-    @Override
-    public void setTeachers(List<CourseDetailTeacher> teachers) {
+    @Override public void setTeachers(List<CourseDetailTeacher> teachers) {
         if (teachers == null || teachers.size() == 0) {
             noTeacher.setVisibility(View.VISIBLE);
             return;
@@ -291,9 +269,7 @@ public class CourseDetailFragment extends BaseFragment implements
         courseTeacherRv.setLayoutManager(manager);
         CourseTeacherAdapter adapter = new CourseTeacherAdapter(teachers);
         courseTeacherRv.setAdapter(adapter);
-
     }
-
 
     /**
      * 课程映像
@@ -310,204 +286,175 @@ public class CourseDetailFragment extends BaseFragment implements
         }
     }
 
-    @Override
-    public void setCourseDescripe(String descripe) {
+    @Override public void setCourseDescripe(String descripe) {
         if (TextUtils.isEmpty(descripe)) {
             descHtml.setVisibility(View.VISIBLE);
             descHtml.setText("暂无介绍");
         } else {
             descHtml.setVisibility(View.GONE);
             webDesc.loadData("<html>\n" +
-                    "<head>\n" +
-                    "\t<title>容器</title>\n" +
-                    "\t<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\">\n" +
-                    "\t<style type=\"text/css\">\n" +
-                    "\t\tbody{overflow-x:hidden;overflow-y:auto;}\n" +
-                    "\t\t.richTxtCtn{margin:0;padding:0;}\n" +
-                    "\t\t.richTxtCtn *{max-width:100% !important;}\n" +
-                    "\t</style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "\t<div class=\"richTxtCtn\">" + descripe + "</div></body></html>", "text/html; charset=UTF-8", null);
+                "<head>\n" +
+                "\t<title>容器</title>\n" +
+                "\t<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\">\n" +
+                "\t<style type=\"text/css\">\n" +
+                "\t\tbody{overflow-x:hidden;overflow-y:auto;}\n" +
+                "\t\t.richTxtCtn{margin:0;padding:0;}\n" +
+                "\t\t.richTxtCtn *{max-width:100% !important;}\n" +
+                "\t</style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "\t<div class=\"richTxtCtn\">" + descripe + "</div></body></html>", "text/html; charset=UTF-8", null);
         }
     }
 
-    @Override
-    public void showDelDialog(String content) {
+    @Override public void showDelDialog(String content) {
 
-        new MaterialDialog.Builder(getContext())
-                .title("确定删除该课程类型")
-                .content(content)
-                .autoDismiss(true)
-                .canceledOnTouchOutside(true)
-                .positiveText(R.string.common_del)
-                .negativeText(R.string.pickerview_cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        showLoading();
-                        mPresenter.delCourse(App.coachid+"", mCourseDetail.getId());
-                    }
-                })
-                .show();
-
+        new MaterialDialog.Builder(getContext()).title("确定删除该课程类型")
+            .content(content)
+            .autoDismiss(true)
+            .canceledOnTouchOutside(true)
+            .positiveText(R.string.common_del)
+            .negativeText(R.string.pickerview_cancel)
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    showLoading();
+                    mPresenter.delCourse(App.coachid + "", mCourseDetail.getId());
+                }
+            })
+            .show();
     }
 
-    @Override
-    public void showDelFailed(String content) {
+    @Override public void showDelFailed(String content) {
         showAlert(content);
     }
 
-    @Override
-    public void showDelFailed(@StringRes int content) {
+    @Override public void showDelFailed(@StringRes int content) {
         showAlert(content);
     }
 
-    @Override
-    public void onDelSuccess() {
+    @Override public void onDelSuccess() {
         hideLoading();
         getActivity().onBackPressed();
     }
 
-    @Override
-    public void onDelfailed(String content) {
+    @Override public void onDelfailed(String content) {
         srl.setRefreshing(false);
         hideLoading();
         ToastUtils.show(content);
     }
 
-
     /**
      * 封面管理
      */
-    @OnClick(R.id.edit_jacket)
-    public void onJacketVp() {
-        if (!mPresenter.hasAllEditPermission(mCourseDetail))
-            return;
-//        if (GymUtils.isInBrand(gymBase)) {
-//            if ((!mCourseDetail.is_private() && !SerPermisAction.checkAll(PermissionServerUtils.TEAMSETTING_CAN_CHANGE))
-//                    || (mCourseDetail.is_private() && !SerPermisAction.checkAll(PermissionServerUtils.PRISETTING_CAN_CHANGE))) {
-//                showAlert(R.string.alert_permission_forbid);
-//                return;
-//            }
-//            if (mCourseDetail.getPermission() == 1) {//全权限
-//                getFragmentManager().beginTransaction()
-//                        .replace(mCallbackActivity.getFragId(), JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId()))
-//                        .addToBackStack(getFragmentName())
-//                        .commit();
-//            } else {
-//                showAlert("需要具有全部适用场馆管理员权限的用户才可以编辑封面照片。");
-//            }
-//        } else {
-//
-//
-//            if (mCourseDetail.getShops().size() > 1) {
-//                showAlert("此课程种类适用于多个场馆，请在【连锁运营】里对封面照片进行编辑");
-//            } else {
+    @OnClick(R.id.edit_jacket) public void onJacketVp() {
+        if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
+        //        if (GymUtils.isInBrand(gymBase)) {
+        //            if ((!mCourseDetail.is_private() && !SerPermisAction.checkAll(PermissionServerUtils.TEAMSETTING_CAN_CHANGE))
+        //                    || (mCourseDetail.is_private() && !SerPermisAction.checkAll(PermissionServerUtils.PRISETTING_CAN_CHANGE))) {
+        //                showAlert(R.string.alert_permission_forbid);
+        //                return;
+        //            }
+        //            if (mCourseDetail.getPermission() == 1) {//全权限
+        //                getFragmentManager().beginTransaction()
+        //                        .replace(mCallbackActivity.getFragId(), JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId()))
+        //                        .addToBackStack(getFragmentName())
+        //                        .commit();
+        //            } else {
+        //                showAlert("需要具有全部适用场馆管理员权限的用户才可以编辑封面照片。");
+        //            }
+        //        } else {
+        //
+        //
+        //            if (mCourseDetail.getShops().size() > 1) {
+        //                showAlert("此课程种类适用于多个场馆，请在【连锁运营】里对封面照片进行编辑");
+        //            } else {
         getFragmentManager().beginTransaction()
-                .replace(R.id.frag, JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
-                .addToBackStack(getFragmentName())
-                .commit();
-//            }
-//        }
-
+            .replace(R.id.frag,
+                JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
+            .addToBackStack(getFragmentName())
+            .commit();
+        //            }
+        //        }
 
     }
-
 
     /**
      * 查看评价详情
      */
-    @OnClick(R.id.comments_detail)
-    public void checkComments() {
+    @OnClick(R.id.comments_detail) public void checkComments() {
         if (GymUtils.isInBrand(coachService)) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.frag, ShopCommentsFragment.newInstance(mCourseDetail.getId()))
-                    .addToBackStack(getFragmentName())
-                    .commit();
+                .replace(R.id.frag, ShopCommentsFragment.newInstance(mCourseDetail.getId()))
+                .addToBackStack(getFragmentName())
+                .commit();
         } else {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.frag, CoachCommentListFragment.newInstance(mCourseDetail.getId()))
-                    .addToBackStack(getFragmentName())
-                    .commit();
+                .replace(R.id.frag, CoachCommentListFragment.newInstance(mCourseDetail.getId()))
+                .addToBackStack(getFragmentName())
+                .commit();
         }
-
-
     }
 
     /**
      * 编辑简介 跳转二维码扫码
      */
-    @OnClick(R.id.go_to_scan)
-    public void gotoScan() {
-        if (!mPresenter.hasAllEditPermission(mCourseDetail))
-            return;
-//        RxPermissions.getInstance(getContext())
-//                .request(Manifest.permission.CAMERA)
-//                .subscribe(new Action1<Boolean>() {
-//                    @Override
-//                    public void call(Boolean aBoolean) {
-//                        if (aBoolean) {
-//                            Intent toScan = new Intent(getActivity(), QRActivity.class);
-//                            toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
-//                            startActivity(toScan);
-//                        } else {
-//                            ToastUtils.show(getString(R.string.please_open_camera));
-//                        }
-//                    }
-//                });
-//
+    @OnClick(R.id.go_to_scan) public void gotoScan() {
+        if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
+        //        RxPermissions.getInstance(getContext())
+        //                .request(Manifest.permission.CAMERA)
+        //                .subscribe(new Action1<Boolean>() {
+        //                    @Override
+        //                    public void call(Boolean aBoolean) {
+        //                        if (aBoolean) {
+        //                            Intent toScan = new Intent(getActivity(), QRActivity.class);
+        //                            toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
+        //                            startActivity(toScan);
+        //                        } else {
+        //                            ToastUtils.show(getString(R.string.please_open_camera));
+        //                        }
+        //                    }
+        //                });
+        //
 
     }
 
     /**
      * 编辑基本信息
      */
-    @OnClick(R.id.edit_base_info)
-    public void editBaseInfo() {
+    @OnClick(R.id.edit_base_info) public void editBaseInfo() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
-                .addToBackStack(getFragmentName())
-                .commit();
-
+            .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
+            .addToBackStack(getFragmentName())
+            .commit();
     }
 
-
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return CourseDetailFragment.class.getName();
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
-
     }
 
     boolean isJumped = false;
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
         if (position == viewpageradapter.getCount() - 2 && positionOffset > 0.4 && !isJumped) {
             isJumped = true;
             jacketVp.setCurrentItem(0);
             getFragmentManager().beginTransaction()
-                    .replace(R.id.frag, CourseImagesFragment.newInstance(mCourseDetail.getId()))
-                    .addToBackStack(getFragmentName())
-                    .commit();
-
+                .replace(R.id.frag, CourseImagesFragment.newInstance(mCourseDetail.getId()))
+                .addToBackStack(getFragmentName())
+                .commit();
         }
     }
 
-    @Override
-    public void onPageSelected(int position) {
+    @Override public void onPageSelected(int position) {
 
     }
 
-    @Override
-    public void onPageScrollStateChanged(int state) {
+    @Override public void onPageScrollStateChanged(int state) {
 
     }
 }

@@ -16,9 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.marcohc.robotocalendar.CalendarFragment;
-import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 
 
 /**
@@ -51,19 +49,19 @@ public class DatePicker extends DialogFragment {
         unbinder = ButterKnife.bind(this,view);
         vp.setAdapter(new CalendarAdapter(getChildFragmentManager()));
         vp.setCurrentItem(500);
-        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override public void onPageSelected(int position) {
-                RxBus.getBus().post(new EventMonthChange(position-500));
-            }
-
-            @Override public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        //vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        //    @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        //
+        //    }
+        //
+        //    @Override public void onPageSelected(int position) {
+        //        RxBus.getBus().post(new EventMonthChange(position-500));
+        //    }
+        //
+        //    @Override public void onPageScrollStateChanged(int state) {
+        //
+        //    }
+        //});
         return view;
     }
 

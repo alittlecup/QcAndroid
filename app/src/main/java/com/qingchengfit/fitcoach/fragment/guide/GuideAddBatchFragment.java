@@ -11,7 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
@@ -24,31 +29,23 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
+import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.RxbusBatchLooperConfictEvent;
 import com.qingchengfit.fitcoach.bean.base.InitBatch;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.BatchCircleItem;
-
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -235,13 +232,15 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
             QcCloudClient.getApi().postApi
                     .qcInit(((GuideFragment) getParentFragment()).getInitBean())
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<QcResponse>() {
+                    .subscribe(new Action1<QcResponseSystenInit>() {
                         @Override
-                        public void call(QcResponse qcResponse) {
+                        public void call(QcResponseSystenInit qcResponse) {
                             hideLoading();
                             if (qcResponse.status == 200) {
                                 PreferenceUtils.setPrefString(getContext(), "initSystem", "");
                                 Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                                toMain.putExtra("to", Main2Activity.INIT);
+                                toMain.putExtra("service", qcResponse.data);
                                 startActivity(toMain);
                                 getActivity().finish();
                             } else ToastUtils.showDefaultStyle(qcResponse.msg);

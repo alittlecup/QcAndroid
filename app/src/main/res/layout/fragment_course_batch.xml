@@ -12,7 +12,24 @@
         android:layout_height="48dp"
         android:background="@color/white"
         >
-
+      <TextView
+          android:id="@+id/preview"
+          style="@style/Qc.TextCommonGrey"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentRight="true"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:layout_marginTop="4dp"
+          android:background="@drawable/bg_rect"
+          android:drawableLeft="@drawable/ic_register_verify"
+          android:paddingLeft="4dp"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:textSize="12sp"
+          android:layout_gravity="right"
+          android:text="约课页预览"
+          />
     </FrameLayout>
     <include layout="@layout/divider_grey"/>
 

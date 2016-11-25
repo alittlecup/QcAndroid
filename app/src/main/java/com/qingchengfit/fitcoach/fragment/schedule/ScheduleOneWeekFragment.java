@@ -131,8 +131,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                 if (!calledNetwork) {
                     HashMap<String, String> params = new HashMap<>();
                     Pair<String, String> dates = DateUtils.getWeek(getArguments().getInt("pos"));
-                    params.put("start", dates.first);
-                    params.put("end", dates.second);
+                    params.put("from_date", dates.first);
+                    params.put("to_date", dates.second);
 
                     RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
                         .subscribeOn(Schedulers.io())

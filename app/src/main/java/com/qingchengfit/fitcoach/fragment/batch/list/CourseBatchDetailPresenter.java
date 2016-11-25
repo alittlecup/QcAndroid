@@ -7,7 +7,6 @@ import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
-import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -118,22 +117,22 @@ public class CourseBatchDetailPresenter extends BasePresenter {
     }
 
     public void queryPrivate(String staffid, String coachid) {
-        priSp = restRepository.getGet_api()
-            .qcGetPrivateBatches(staffid, coachid, coachService.id + "", coachService.model, null)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponsePrivateDetail>() {
-                @Override public void call(QcResponsePrivateDetail qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        view.onPrivate(qcResponse.data.coach, qcResponse.data.batches);
-                    } else {
-                        view.onShowError(qcResponse.getMsg());
-                    }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    view.onShowError(throwable.getMessage());
-                }
-            });
+        //priSp = restRepository.getGet_api()
+        //    .qcGetPrivateBatches(staffid, coachid, coachService.id + "", coachService.model, null)
+        //    .subscribeOn(Schedulers.io())
+        //    .observeOn(AndroidSchedulers.mainThread())
+        //    .subscribe(new Action1<QcResponsePrivateDetail>() {
+        //        @Override public void call(QcResponsePrivateDetail qcResponse) {
+        //            if (ResponseConstant.checkSuccess(qcResponse)) {
+        //                view.onPrivate(qcResponse.data.coach, qcResponse.data.batches);
+        //            } else {
+        //                view.onShowError(qcResponse.getMsg());
+        //            }
+        //        }
+        //    }, new Action1<Throwable>() {
+        //        @Override public void call(Throwable throwable) {
+        //            view.onShowError(throwable.getMessage());
+        //        }
+        //    });
     }
 }

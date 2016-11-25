@@ -139,7 +139,7 @@ public class ScheduleListFragment extends Fragment {
         scheduesAdapter = new ScheduesAdapter(scheduleBeans);
 
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        scheduleRv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL,7f));
+        scheduleRv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL,5f));
         scheduleRv.setAdapter(scheduesAdapter);
         scheduesAdapter.setListener(new OnRecycleItemClickListener() {
             @Override

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,6 +61,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
 
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @Inject CourseBatchDetailPresenter presenter;
+    @BindView(R.id.preview) TextView preview;
     private DialogSheet delCourseDialog;
     private MaterialDialog delDialog;
 
@@ -94,8 +96,8 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             ((BatchActivity) getActivity()).getComponent().inject(this);
         }
         presenter.attachView(this);
-
-        presenter.queryGroup(App.coachid+"", mType == Configs.TYPE_PRIVATE);
+        preview.setText(mType == Configs.TYPE_PRIVATE?getString(R.string.private_course_preview):getString(R.string.group_course_preview));
+        presenter.queryGroup(App.coachid + "", mType == Configs.TYPE_PRIVATE);
         mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
@@ -159,9 +161,9 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             return;
         }
         Intent toChooseCourse = new Intent(getActivity(), CourseActivity.class);
-        toChooseCourse.putExtra("to",CourseActivity.TO_CHOOSE);
-        toChooseCourse.putExtra("type",mType);
-        startActivityForResult(toChooseCourse,RESULT_COURSE);
+        toChooseCourse.putExtra("to", CourseActivity.TO_CHOOSE);
+        toChooseCourse.putExtra("type", mType);
+        startActivityForResult(toChooseCourse, RESULT_COURSE);
 
         //getParentFragment().getFragmentManager()
         //    .beginTransaction()
@@ -178,7 +180,11 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         mDatas.clear();
         boolean isOutofDate = false;
         for (int i = 0; i < batch.size(); i++) {
-            if (!isOutofDate && DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))){
+            if (!isOutofDate && DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))) {
+                if (mDatas.size() == 0) {
+                    mDatas.add(new HintItem.Builder().text(mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
+                        : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
+                }
                 mDatas.add(new HintItem.Builder().text("--已过期排期--").resBg(R.color.bg_grey).build());
                 isOutofDate = true;
             }
@@ -189,8 +195,8 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == RESULT_COURSE){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RESULT_COURSE) {
 
                 CourseDetail course = data.getParcelableExtra("course");
                 if (course != null) {
@@ -201,16 +207,15 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
                         .commit();
                 }
             }
-
         }
     }
 
-    @Deprecated
-    @Override public void onPrivate(QcResponsePrivateDetail.PrivateCoach coach, final List<QcResponsePrivateDetail.PrivateBatch> batch) {
+    @Deprecated @Override
+    public void onPrivate(QcResponsePrivateDetail.PrivateCoach coach, final List<QcResponsePrivateDetail.PrivateBatch> batch) {
     }
 
     @Override public String getTitle() {
-        return getArguments().getInt("type") == Configs.TYPE_PRIVATE?"私教排期":"团课排期";
+        return getArguments().getInt("type") == Configs.TYPE_PRIVATE ? "私教排期" : "团课排期";
     }
 
     @Override public void onShowError(String s) {
@@ -224,11 +229,15 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     @Override public boolean onItemClick(int position) {
         if (mCommonFlexAdapter.getItem(position) instanceof BatchItem) {
             QcResponseGroupDetail.GroupBatch batch = ((BatchItem) mCommonFlexAdapter.getItem(position)).getBatch();
-            getParentFragment().getFragmentManager().beginTransaction()
-                .replace(R.id.frag, BatchDetailFragment.newInstance(mType,batch.id))
+            getParentFragment().getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frag, BatchDetailFragment.newInstance(mType, batch.id))
                 .addToBackStack(null)
                 .commit();
         }
         return true;
+    }
+
+    @OnClick(R.id.preview) public void onClick() {
     }
 }

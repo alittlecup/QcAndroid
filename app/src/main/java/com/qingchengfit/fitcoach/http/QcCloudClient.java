@@ -10,6 +10,7 @@ import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
+import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -335,7 +336,7 @@ public class QcCloudClient {
 
         //获取教练预约概览
         @GET("/api/v1/coaches/{id}/reports/schedules/glance/") rx.Observable<QcReportGlanceResponse> qcGetCoachReportGlance(
-            @Path("id") int id);
+            @Path("id") int id,@QueryMap HashMap<String,Object> params);
 
         //获取教练预约概览
         @GET("/api/v1/coaches/{id}/reports/sale/glance/") rx.Observable<QcSaleGlanceResponse> qcGetCoachSaleGlance(@Path("id") int id);
@@ -524,7 +525,7 @@ public class QcCloudClient {
         @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
 
         //初始化系统
-        @POST("/api/coach/systems/initial/") rx.Observable<QcResponse> qcInit(@Body CoachInitBean body);
+        @POST("/api/coach/systems/initial/") rx.Observable<QcResponseSystenInit> qcInit(@Body CoachInitBean body);
 
         //获取电话验证码
         @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBean account);

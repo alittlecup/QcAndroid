@@ -11,19 +11,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
-
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * power by
@@ -47,22 +45,27 @@ import butterknife.Unbinder;
  */
 public class CourseFragment extends BaseFragment {
 
-
-    @BindView(R.id.myhome_tab)
-    TabLayout myhomeTab;
-    @BindView(R.id.viewpager)
-    ViewPager viewpager;
+    @BindView(R.id.myhome_tab) TabLayout myhomeTab;
+    @BindView(R.id.viewpager) ViewPager viewpager;
     ArrayList<Fragment> fragments = new ArrayList<>();
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     private FragmentAdapter fragmentAdater;
     private Unbinder unbinder;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-//        mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
-
+        //        mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbar.setTitle("课程种类");
 
         if (fragments.size() == 0) {
             fragments.add(CourseListFragment.newInstance(false));
@@ -76,74 +79,63 @@ public class CourseFragment extends BaseFragment {
     }
 
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
+        @Override public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_add:
                     boolean isPrivate = viewpager.getCurrentItem() == 1;
 
-                    if ((isPrivate && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))
-                        ||(!isPrivate && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))
-                            ){
+                    if ((isPrivate && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE)) || (!isPrivate
+                        && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))) {
                         showAlert(R.string.alert_permission_forbid);
-                    }else
+                    } else {
                         addCourse(isPrivate);
+                    }
                     break;
                 case R.id.action_edit:
 
                     for (int i = 0; i < fragments.size(); i++) {
-                        if (fragmentAdater.getItem(i) instanceof CourseListFragment)
-                            ((CourseListFragment) fragments.get(i)).setEditMode();
+                        if (fragmentAdater.getItem(i) instanceof CourseListFragment) ((CourseListFragment) fragments.get(i)).setEditMode();
                     }
-//                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_compelete, menuItemClickListener);
+                    //                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_compelete, menuItemClickListener);
                     break;
                 case R.id.action_complete:
                     for (int i = 0; i < fragments.size(); i++) {
-                        if (fragments.get(i) instanceof CourseListFragment)
-                            ((CourseListFragment) fragments.get(i)).cancelEdit();
+                        if (fragments.get(i) instanceof CourseListFragment) ((CourseListFragment) fragments.get(i)).cancelEdit();
                     }
-//                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
+                    //                    mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
                     break;
             }
             return true;
         }
     };
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_edit, menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         if (item.getItemId() == R.id.action_edit) {
             for (int i = 0; i < fragments.size(); i++) {
-                if (fragments.get(i) instanceof CourseListFragment)
-                    ((CourseListFragment) fragments.get(i)).setEditMode();
+                if (fragments.get(i) instanceof CourseListFragment) ((CourseListFragment) fragments.get(i)).setEditMode();
             }
-
         }
         return true;
-
     }
 
     public void addCourse(boolean isP) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.frag, AddCourseFragment.newInstance(isP))
-                .addToBackStack(getFragmentName())
-                .commit();
+            .replace(R.id.frag, AddCourseFragment.newInstance(isP))
+            .addToBackStack(getFragmentName())
+            .commit();
     }
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return CourseFragment.class.getName();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }

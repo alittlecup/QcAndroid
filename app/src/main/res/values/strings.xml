@@ -273,4 +273,8 @@
     <string name="err_at_least_one_space">至少选择一个场地</string>
     <string name="need_pay">需要支付</string>
     <string name="has_set">已设置</string>
+    <string name="hint_no_private_course">目前还未排私教课，将无法约课\n快添加新排期吧</string>
+    <string name="hint_no_group_course">目前还未排团课，将无法约课\n快添加新排期吧</string>
+    <string name="private_course_preview">私教约课页预览</string>
+    <string name="group_course_preview">团课约课页预览</string>
 </resources>

@@ -5,39 +5,37 @@
               android:background="@color/white"
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.StatementDetailFragment">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        android:gravity="center_vertical"
-        android:minHeight="?attr/actionBarSize"
-
-        app:theme="@style/Qc.toolbarStyle"
-        app:titleTextAppearance="@style/ToolbarStyle"
+        android:layout_height="?android:actionBarSize"
 
         >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            android:gravity="center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/Qc.toolbarStyle"
+            app:titleTextAppearance="@style/ToolbarStyle"
+
+            >
+
+        </android.support.v7.widget.Toolbar>
         <TextView
             android:id="@+id/toolbar_title"
             style="@style/ToolbarStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:maxWidth="250dp"
-            android:drawableRight="@drawable/ic_navigation_arrow_drop_down"
             tools:text="标题此二十标题撒发生地方萨芬的阿斯蒂芬"
-            android:singleLine="true"
+            android:lines="1"
+            android:layout_centerInParent="true"
             />
-        <Spinner
-            android:id="@+id/spinner_nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/Qc.toolbarStyle"
-            android:visibility="gone"
-            />
-    </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -10,24 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
-import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
-import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
+import java.util.HashMap;
+import java.util.List;
 import rx.schedulers.Schedulers;
 
 /**
@@ -37,8 +34,8 @@ public class StatementGlanceFragment extends Fragment {
     public static final String TAG = StatementGlanceFragment.class.getName();
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.spinner_nav)
-    Spinner spinnerNav;
+    //@BindView(R.id.spinner_nav)
+    //Spinner spinnerNav;
     @BindView(R.id.statment_glance_month_title)
     TextView statmentGlanceMonthTitle;
     @BindView(R.id.statment_glance_month_data)
@@ -77,18 +74,6 @@ public class StatementGlanceFragment extends Fragment {
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mTitle = getString(R.string.statement_course);
         toolbarTitle.setText(mTitle);
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent choosegym =new Intent(getContext(), ChooseGymActivity.class);
-                
-                choosegym.putExtra("model",curModel);
-                LogUtil.e("curSystemid:"+curSystemId);
-                choosegym.putExtra("id",curSystemId);
-                choosegym.putExtra("title",mTitle);
-                startActivityForResult(choosegym,501);
-            }
-        });
         if (getActivity() instanceof FragActivity){
             if (((FragActivity) getActivity()).getCoachService() != null){
                 CoachService coachService = ((FragActivity) getActivity()).getCoachService();
@@ -98,55 +83,10 @@ public class StatementGlanceFragment extends Fragment {
             }
 
         }
-
-//        spinnerBeans = new ArrayList<>();
-//        spinnerBeans.add(new SpinnerBean("", "全部课程报表", true));
-//        adapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                if (convertView == null) {
-//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-//                }
-//                ((TextView) convertView).setText(spinnerBeans.get(position).text);
-//                return convertView;
-//            }
-//
-//            @Override
-//            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-//                if (convertView == null) {
-//                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-//                }
-//                SpinnerBean bean = getItem(position);
-//                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-//                if (bean.isTitle) {
-//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-//                } else {
-//                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-//                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-//                }
-//                return convertView;
-//            }
-//        };
-//        adapter.setDropDownViewResource(R.layout.spinner_item);
-//        spinnerNav.setAdapter(adapter);
-//        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                curSystem = adapter.getItem(position).id;
-//                handleReponse(response);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
                 refresh.setRefreshing(true);
                 freshData();
             }
@@ -163,7 +103,10 @@ public class StatementGlanceFragment extends Fragment {
     }
 
     public void freshData() {
-        QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid).subscribeOn(Schedulers.newThread())
+        HashMap<String,Object> prams = new HashMap<>();
+        prams.put("id",curSystemId+"");
+        prams.put("model",curModel);
+        QcCloudClient.getApi().getApi.qcGetCoachReportGlance(App.coachid,prams).subscribeOn(Schedulers.newThread())
                 .subscribe(qcReportGlanceResponse -> {
                     response = qcReportGlanceResponse;
                     handleReponse(qcReportGlanceResponse);

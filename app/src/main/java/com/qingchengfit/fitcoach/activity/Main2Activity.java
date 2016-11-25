@@ -37,6 +37,7 @@ import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
@@ -68,6 +69,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     public static final int LOGOUT = 0;
     public static final int FINISH = 2;
     public static final int NOTIFICATION = 1;
+    public static final int INIT = 3;
 
 
     @BindView(R.id.viewpager)
@@ -81,6 +83,16 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     MaterialDialog logoutDialog;
     private Gson gson;
     private User user;
+
+    private CoachService mCoachService;
+
+    public CoachService getCoachService() {
+        return mCoachService;
+    }
+
+    public void setCoachService(CoachService coachService) {
+        mCoachService = coachService;
+    }
 
     private Snackbar NonetworkSnack;
     private Observable mMainObservabel;
@@ -113,7 +125,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         initUser();
 
         initBDPush();
-
+        initVersion();
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = getIntent().getStringExtra("url");
@@ -414,6 +426,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             Intent toWeb = new Intent(this, WebActivity.class);
             toWeb.putExtra("url", contetn);
             startActivity(toWeb);
+        } else if (intent.getIntExtra(ACTION ,-1) == INIT){
+            viewpager.setCurrentItem(1);
+            mCoachService = intent.getParcelableExtra("service");
         }
     }
 

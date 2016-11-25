@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,16 +18,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.StatementBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -37,7 +38,6 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcStatementDetailRespone;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -45,13 +45,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,8 +59,6 @@ public class StatementDetailFragment extends Fragment {
     public static final int TYPE_MONTH = 2;
     public static final int TYPE_WEEK = 1;
     public static final int TYPE_DAY = 0;
-    @BindView(R.id.spinner_nav)
-    Spinner spinnerNav;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recyclerview)
@@ -229,18 +220,25 @@ public class StatementDetailFragment extends Fragment {
         mTitle = getString(R.string.statement_course);
         toolbarTitle.setText(mTitle);
 
+        //
+        //toolbarTitle.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
+        //        choosegym.putExtra("model", curModel);
+        //        choosegym.putExtra("id", curSystemId);
+        //        choosegym.putExtra("title", mTitle);
+        //        startActivityForResult(choosegym, 501);
+        //    }
+        //});
+        if (getActivity() instanceof FragActivity){
+            if (((FragActivity) getActivity()).getCoachService() != null){
+                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
 
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent choosegym = new Intent(getContext(), ChooseGymActivity.class);
-                choosegym.putExtra("model", curModel);
-                choosegym.putExtra("id", curSystemId);
-                choosegym.putExtra("title", mTitle);
-                startActivityForResult(choosegym, 501);
+                curModel = coachService.model;
+                curSystemId = (int) coachService.getId();
             }
-        });
-
+        }
         mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(mStatementDetailAdapter);
@@ -364,45 +362,45 @@ public class StatementDetailFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0 && requestCode == 501) {
-            toolbarTitle.setText(data.getStringExtra("name"));
-            curModel = data.getStringExtra("model");
-            curSystemId = Integer.parseInt(data.getStringExtra("id"));
-            LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
-//            handleReponse(response);  TODO
-            showData();
-
-        }
+        //if (resultCode > 0 && requestCode == 501) {
+        //    toolbarTitle.setText(data.getStringExtra("name"));
+        //    curModel = data.getStringExtra("model");
+        //    curSystemId = Integer.parseInt(data.getStringExtra("id"));
+        //    LogUtil.e("curModel:" + curModel + "   id:" + curSystemId);
+        //    showData();
+        //
+        //}
     }
 
 
     public void freshDate() {
-        //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(qcCoachSystemResponse -> {
-                    List<CoachService> systems = qcCoachSystemResponse.data.services;
-                    mSystemsId.clear();
-                    for (int i = 0; i < systems.size(); i++) {
-                        CoachService system = systems.get(i);
-                        if (curSystemId == system.id && curModel.equals(system.model)){
-                            if (!TextUtils.isEmpty(curModel) && curSystemId != 0){
-                                toolbar.setTitle(system.name);
-                            }
-                        }
-                        mSystemsId.add(new Pair<Integer, String>((int) system.id, system.model));
-                    }
-                    queryStatement();
-                }, throwable -> {
-                }, () -> {
-                });
+        mSystemsId.add(new Pair<>(curSystemId,curModel));
+        queryStatement();
+
+        ////获取用户拥有系统信息
+        //QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+        //        .observeOn(AndroidSchedulers.mainThread())
+        //        .subscribeOn(Schedulers.newThread())
+        //        .subscribe(qcCoachSystemResponse -> {
+        //            List<CoachService> systems = qcCoachSystemResponse.data.services;
+        //            mSystemsId.clear();
+        //            for (int i = 0; i < systems.size(); i++) {
+        //                CoachService system = systems.get(i);
+        //                if (curSystemId == system.id && curModel.equals(system.model)){
+        //                    if (!TextUtils.isEmpty(curModel) && curSystemId != 0){
+        //                        toolbar.setTitle(system.name);
+        //                    }
+        //                }
+        //                mSystemsId.add(new Pair<Integer, String>((int) system.id, system.model));
+        //            }
+        //
+        //        }, throwable -> {
+        //        }, () -> {
+        //        });
     }
 
 
     private void queryStatement() {
-        if (mSystemsId.size() == 0)
-            return;
         mOrderNum.clear();
         mServerNum.clear();
         mAllStatemet.clear();

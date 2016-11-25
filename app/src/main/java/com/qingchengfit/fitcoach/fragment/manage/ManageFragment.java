@@ -22,6 +22,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
@@ -152,7 +153,18 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 @Override public void call(QcCoachServiceResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
-                            mCoachService = qcResponse.data.services.get(0);
+                            if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null){
+                                CoachService coachService = ((Main2Activity) getActivity()).getCoachService();
+                                for (int i = 0; i < qcResponse.data.services.size(); i++) {
+                                    if (coachService.id == qcResponse.data.services.get(i).id &&
+                                         coachService.model.equalsIgnoreCase(qcResponse.data.services.get(i).model)
+                                        ){
+                                        mCoachService = qcResponse.data.services.get(i);
+                                        break;
+                                    }
+                                }
+                            }else
+                                mCoachService = qcResponse.data.services.get(0);
                             title.setText(mCoachService.name);
                             Glide.with(getContext()).load(mCoachService.photo).into(shopImg);
                         } else {
