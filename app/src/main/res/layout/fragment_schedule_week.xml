@@ -22,6 +22,7 @@
         <ImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
+            android:padding="4dp"
             app:srcCompat="@drawable/ic_arrow_down"
             />
         <Space

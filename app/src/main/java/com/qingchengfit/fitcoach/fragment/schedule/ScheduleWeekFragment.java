@@ -13,10 +13,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.DateUtils;
+import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
+import java.util.Calendar;
 import java.util.Date;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -43,6 +47,7 @@ public class ScheduleWeekFragment extends BaseFragment {
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.tv_month) TextView tvMonth;
     private CoachService mCoachService;
+    private DatePicker dataPicker;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
@@ -56,13 +61,27 @@ public class ScheduleWeekFragment extends BaseFragment {
 
             @Override public void onPageSelected(int position) {
                 Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-1000).first);
-                //tvMonth.setText();
+                tvMonth.setText(DateUtils.getChineseMonth(d));
             }
 
             @Override public void onPageScrollStateChanged(int state) {
 
             }
         });
+        RxBusAdd(Date.class)
+            .subscribe(new Action1<Date>() {
+                @Override public void call(Date date) {
+                    int num = DateUtils.dayNumFromToday(date);
+                    int todayCount = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+                    viewpager.setCurrentItem((num-todayCount+1)/7);
+                }
+            });
+        RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {
+            @Override public void call(EventMonthChange eventMonthChange) {
+                viewpager.setCurrentItem(eventMonthChange.pos);
+            }
+        });
+
         return view;
     }
 
@@ -73,7 +92,8 @@ public class ScheduleWeekFragment extends BaseFragment {
     @OnClick({ R.id.tv_month, R.id.day_view }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_month:
-
+                dataPicker = new DatePicker();
+                dataPicker.show(getFragmentManager(),"");
                 break;
             case R.id.day_view:
                 getFragmentManager().beginTransaction()

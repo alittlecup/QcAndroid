@@ -1,15 +1,16 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,12 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -28,7 +34,7 @@ import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
-import com.qingchengfit.fitcoach.component.LoopView;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
@@ -36,19 +42,11 @@ import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import com.qingchengfit.fitcoach.server.CalendarIntentService;
 import com.tbruyelle.rxpermissions.RxPermissions;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -141,6 +139,7 @@ public class ScheduleListFragment extends Fragment {
         scheduesAdapter = new ScheduesAdapter(scheduleBeans);
 
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        scheduleRv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL,7f));
         scheduleRv.setAdapter(scheduesAdapter);
         scheduesAdapter.setListener(new OnRecycleItemClickListener() {
             @Override
@@ -289,12 +288,10 @@ public class ScheduleListFragment extends Fragment {
                 if (scheduleBeans.size() > 0) {
                     scheduleNoSchedule.setVisibility(View.GONE);
                     scheduleRv.setVisibility(View.VISIBLE);
-                    scheduleTimeline.setVisibility(View.VISIBLE);
 
                 } else {
                     scheduleRv.setVisibility(View.GONE);
                     scheduleNoSchedule.setVisibility(View.VISIBLE);
-                    scheduleTimeline.setVisibility(View.VISIBLE);
                 }
 
 
@@ -341,7 +338,7 @@ public class ScheduleListFragment extends Fragment {
         TextView getItemScheduleDone;
         @BindView(R.id.item_schedule_conflict)
         TextView itemScheduleConflict;
-
+        @BindView(R.id.indicator) View indicator;
         public SchedulesVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -403,38 +400,43 @@ public class ScheduleListFragment extends Fragment {
 
 
             }
+            holder.indicator.setVisibility(bean.type == 0 ? View.GONE:View.VISIBLE);
             if (bean.conflict == null) {
-                //TODO conflict 事件不冲突
                 holder.itemScheduleConflict.setVisibility(View.GONE);
             } else {
                 holder.itemScheduleConflict.setVisibility(View.VISIBLE);
                 holder.itemScheduleConflict.setText("时间冲突: " + bean.conflict);
             }
             if (bean.time < new Date().getTime()) {
-                holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.text_grey));
-                holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.text_grey));
-                holder.itemScheduleStatus.setImageResource(R.drawable.ic_calendar_done);
-                holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_grey));
-                holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_grey));
+                holder.itemScheduleClassname.setTextColor(ContextCompat.getColor(getContext(),R.color.text_grey));
+                holder.itemScheduleTime.setTextColor(ContextCompat.getColor(getContext(),R.color.text_grey));
+                holder.itemScheduleStatus.setVisibility(View.GONE);
+                holder.itemScheduleGymname.setTextColor(ContextCompat.getColor(getContext(),R.color.text_grey));
+                holder.itemScheduleNum.setTextColor(ContextCompat.getColor(getContext(),R.color.text_grey));
                 if (bean.isSingle) {
                     holder.itemScheduleNum.setText(bean.count + "人: " + bean.users);
                 } else {
                     holder.itemScheduleNum.setText("共" + bean.count + "人上课");
                 }
-
+                holder.indicator.setBackgroundResource(R.color.warm_grey);
                 holder.getItemScheduleDone.setVisibility(View.VISIBLE);
             } else {
-                holder.itemScheduleClassname.setTextColor(getContext().getResources().getColor(R.color.most_black));
-                holder.itemScheduleTime.setTextColor(getContext().getResources().getColor(R.color.most_black));
-                holder.itemScheduleGymname.setTextColor(getResources().getColor(R.color.text_black));
-                holder.itemScheduleNum.setTextColor(getResources().getColor(R.color.text_black));
-                holder.itemScheduleStatus.setImageDrawable(new LoopView(bean.color));
+                holder.itemScheduleClassname.setTextColor(ContextCompat.getColor(getContext(),R.color.most_black));
+                holder.itemScheduleTime.setTextColor(ContextCompat.getColor(getContext(),R.color.most_black));
+                holder.itemScheduleGymname.setTextColor(ContextCompat.getColor(getContext(),R.color.text_black));
+                holder.itemScheduleNum.setTextColor(ContextCompat.getColor(getContext(),R.color.text_black));
+
+                holder.itemScheduleStatus.setVisibility(bean.count > 0? View.VISIBLE:View.GONE);
+                holder.itemScheduleStatus.setImageResource(R.drawable.ic_schedule_orderd);
+
                 if (bean.isSingle) {
                     holder.itemScheduleNum.setText(bean.count + "人: " + bean.users);
                 } else {
-                    holder.itemScheduleNum.setText(bean.count + "人已预约");
-                }
 
+                    String html = "<font color='#0db14b'>"+bean.count+"人</font>"+"<font color='#999999'>已预约</font>";
+                    holder.itemScheduleNum.setText(bean.count > 0?Html.fromHtml(html):"0人预约");
+                }
+                holder.indicator.setBackgroundResource(bean.count > 0?R.color.primary:R.color.grey );
                 holder.getItemScheduleDone.setVisibility(View.GONE);
             }
 

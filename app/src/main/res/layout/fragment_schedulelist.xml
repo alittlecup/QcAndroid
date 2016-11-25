@@ -25,8 +25,8 @@
             android:id="@+id/schedule_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:clipToPadding="false"
+            android:paddingTop="15dp"
             android:paddingBottom="50dp"
             >
         </android.support.v7.widget.RecyclerView>

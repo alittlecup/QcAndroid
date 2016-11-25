@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
@@ -14,6 +13,7 @@ public class ChooseActivity extends AppCompatActivity {
     public static final int TO_CHOSSE_ADDRESS = 0;
     public static final int TO_CHOSSE_CIRCLE = 1;
     public static final int TO_CHOSSE_GYM = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,21 +1,25 @@
 package com.qingchengfit.fitcoach.component;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.MeasureUtils;
-import com.marcohc.robotocalendar.RobotoCalendarView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import com.marcohc.robotocalendar.CalendarFragment;
+import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.R;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import com.qingchengfit.fitcoach.RxBus;
+
 
 /**
  * power by
@@ -30,115 +34,79 @@ import java.util.Locale;
  * <p>
  * Created by Paper on 15/10/17 2015.
  */
-public class DatePicker extends Dialog {
+public class DatePicker extends DialogFragment {
 
+    @BindView(R.id.vp) ViewPager vp;
+    @BindView(R.id.bg) View bg;
+    private Unbinder unbinder;
 
-    private final RobotoCalendarView robotoCalendarView;
-    private Calendar mCurCalendar;
-    private Calendar today;
-    private int mMonthOffset = 0;
-    private Context mContext;
-    public DatePicker(Context context) {
-        super(context, R.style.TopDialogWindowStyle);
-        mContext = context;
-        View view = getLayoutInflater().inflate(R.layout.dialog_datepicker, null);
-        setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        robotoCalendarView = (RobotoCalendarView) findViewById(R.id.calendarView);
-        mCurCalendar = Calendar.getInstance(Locale.getDefault());
-        today = Calendar.getInstance(Locale.getDefault());
-        robotoCalendarView.markDayAsSelectedDay(new Date());
-        findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                dismiss();
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.TopDialogWindowStyle);
+    }
+
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_datepicker, container, false);
+        unbinder = ButterKnife.bind(this,view);
+        vp.setAdapter(new CalendarAdapter(getChildFragmentManager()));
+        vp.setCurrentItem(500);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+                RxBus.getBus().post(new EventMonthChange(position-500));
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
             }
         });
+        return view;
     }
-
-    public void setDayClickListener(RobotoCalendarView.RobotoCalendarListener listener) {
-        robotoCalendarView.setRobotoCalendarListener(listener);
-    }
-
-    public Calendar getmCurCalendar() {
-        return mCurCalendar;
-    }
-
 
     @Override
-    public void show() {
-        mCurCalendar.setTime(new Date());
-        Window window = this.getWindow();
-        window.setGravity(Gravity.TOP);
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-        window.setWindowAnimations(R.style.TopDialogStyle);
-        super.show();
-        updateCalendar();
-        robotoCalendarView.markDayAsSelectedDay(new Date());
+    public void onResume() {
+        // Get existing layout params for the window
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        // Assign window properties to fill the parent
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        // Call super onResume after sizing
+        super.onResume();
     }
 
-    public void show(float padingTop) {
-        mCurCalendar.setTime(new Date());
-        Window window = this.getWindow();
-        window.setGravity(Gravity.TOP);
-        TypedValue typedValue = new TypedValue();
-        float padtop = mContext.getResources().getDimension(R.dimen.qc_item_height)+ MeasureUtils.dpToPx(44f,mContext.getResources());
-        window.getDecorView().setPadding(0,(int)padtop, 0, 0);
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-        window.setWindowAnimations(R.style.TopDialogStyle);
-        super.show();
-        updateCalendar();
-        robotoCalendarView.markDayAsSelectedDay(new Date());
+    @OnClick(R.id.bg)
+    public void onBg(){
+        this.dismiss();
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
 
-    public void addMonth() {
+    public class CalendarAdapter extends FragmentStatePagerAdapter{
 
-        mCurCalendar.add(Calendar.MONTH, 1);
-        updateCalendar();
-
-
-    }
-
-    public void minlusMonth() {
-        mCurCalendar.add(Calendar.MONTH, -1);
-        updateCalendar();
-    }
-
-    private void updateCalendar() {
-
-        robotoCalendarView.initializeCalendar(mCurCalendar);
-        markCurDay();
-    }
-
-    public void markDay(String day) {
-        Date makeD = DateUtils.formatDateFromYYYYMMDD(day);
-        LogUtil.e("makedate:" + makeD.getTime() + " today:" + DateUtils.getToadayMidnight());
-        if ((makeD.getTime() + 3600000) < DateUtils.getToadayMidnight())
-            robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.GREY_COLOR, makeD);
-        else robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.RED_COLOR, makeD);
-    }
-//    public void markDay(String day,int color) {
-//        robotoCalendarView.markSecondUnderlineWithStyle(RobotoCalendarView.GREY_COLOR, DateUtils.formatDateFromYYYYMMDD(day));
-//    }
-
-    public void markCurDay() {
-        if (mCurCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
-                mCurCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)
-                ) {
-            robotoCalendarView.markDayAsSelectedDay(new Date());
+        public CalendarAdapter(FragmentManager fm) {
+            super(fm);
         }
+
+        @Override public Fragment getItem(int position) {
+            return CalendarFragment.newInstance(position -500);
+        }
+
+        @Override public int getCount() {
+            return 1000;
+        }
+
     }
 
-    @Override
-    public void hide() {
-        super.hide();
 
-    }
+
 
 }

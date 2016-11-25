@@ -51,4 +51,5 @@
     <color name="day_of_month">@color/most_black</color>
     <color name="current_day_of_month">@color/white</color>
     <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
+    <color name="half_red">#1aea6161</color>
 </resources>

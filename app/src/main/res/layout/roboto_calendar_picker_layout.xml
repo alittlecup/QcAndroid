@@ -7,10 +7,10 @@
               android:paddingLeft="@dimen/padding"
               android:paddingRight="@dimen/padding">
 
-    <include
-        layout="@layout/roboto_calendar_date_title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<include-->
+        <!--layout="@layout/roboto_calendar_date_title_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
     <View
         android:layout_width="match_parent"

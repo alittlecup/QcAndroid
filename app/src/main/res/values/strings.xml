@@ -126,7 +126,7 @@
     <string name="coach_function_hint">教练后台功能</string>
     <string name="more_gym_function_hint">更多健身房后台功能</string>
     <string name="course_batch">课程排期</string>
-    <string name="course_types">课程排期</string>
+    <string name="course_types">课程种类</string>
     <string name="student">学员</string>
     <string name="course_statement">课程报表</string>
     <string name="sale_statement">销售报表</string>

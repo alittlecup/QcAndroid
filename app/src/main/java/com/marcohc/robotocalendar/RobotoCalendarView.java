@@ -22,16 +22,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -58,9 +54,9 @@ public class RobotoCalendarView extends LinearLayout {
     private static final String SECOND_UNDERLINE = "secondUnderlineView";
     // View
     private Context context;
-    private TextView dateTitle;
-    private ImageView leftButton;
-    private ImageView rightButton;
+    //private TextView dateTitle;
+    //private ImageView leftButton;
+    //private ImageView rightButton;
     private View view;
     // Class
     private RobotoCalendarListener robotoCalendarListener;
@@ -143,32 +139,32 @@ public class RobotoCalendarView extends LinearLayout {
     }
 
     private void findViewsById(View view) {
-        leftButton = (ImageView) view.findViewById(R.id.leftButton);
-        rightButton = (ImageView) view.findViewById(R.id.rightButton);
-        dateTitle = (TextView) view.findViewById(R.id.dateTitle);
+        //leftButton = (ImageView) view.findViewById(leftButton);
+        //rightButton = (ImageView) view.findViewById(rightButton);
+        //dateTitle = (TextView) view.findViewById(R.id.dateTitle);
     }
 
     private void initializeEventListeners() {
 
-        leftButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (robotoCalendarListener == null) {
-                    throw new IllegalStateException("You must assing a valid RobotoCalendarListener first!");
-                }
-                robotoCalendarListener.onLeftButtonClick();
-            }
-        });
-
-        rightButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (robotoCalendarListener == null) {
-                    throw new IllegalStateException("You must assing a valid RobotoCalendarListener first!");
-                }
-                robotoCalendarListener.onRightButtonClick();
-            }
-        });
+        //leftButton.setOnClickListener(new OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        if (robotoCalendarListener == null) {
+        //            throw new IllegalStateException("You must assing a valid RobotoCalendarListener first!");
+        //        }
+        //        robotoCalendarListener.onLeftButtonClick();
+        //    }
+        //});
+        //
+        //rightButton.setOnClickListener(new OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        if (robotoCalendarListener == null) {
+        //            throw new IllegalStateException("You must assing a valid RobotoCalendarListener first!");
+        //        }
+        //        robotoCalendarListener.onRightButtonClick();
+        //    }
+        //});
     }
 
     // ************************************************************************************************************************************************************************
@@ -185,19 +181,11 @@ public class RobotoCalendarView extends LinearLayout {
     @SuppressLint("DefaultLocale")
     private void initializeTitleLayout() {
 
-        // Apply styles
-        int color = monthTitleColor;
-        dateTitle.setTextColor(color);
-
-//        String dateText = new DateFormatSymbols(locale).getMonths()[currentCalendar.get(Calendar.MONTH)].toString();
-//        dateText = dateText.substring(0, 1).toUpperCase() + dateText.subSequence(1, dateText.length());
-        String dateText = Integer.toString(currentCalendar.get(Calendar.MONTH) + 1);
-//        Calendar calendar = Calendar.getInstance();
-//        if (currentCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
-//            dateTitle.setText(dateText);
-//        } else {
-        dateTitle.setText(currentCalendar.get(Calendar.YEAR) + getResources().getString(R.string.pickerview_year) + dateText + getResources().getString(R.string.pickerview_month));
-//        }
+        //int color = monthTitleColor;
+        //dateTitle.setTextColor(color);
+        //
+        //String dateText = Integer.toString(currentCalendar.get(Calendar.MONTH) + 1);
+        //dateTitle.setText(currentCalendar.get(Calendar.YEAR) + getResources().getString(R.string.pickerview_year) + dateText + getResources().getString(R.string.pickerview_month));
     }
 
     @SuppressLint("DefaultLocale")

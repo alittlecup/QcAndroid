@@ -171,7 +171,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     endTime.setTime(DateUtils.formatDateFromServer(rest.end));
                     event = new WeekViewEvent(startTime.getTime().getTime(), "休息", null, startTime, endTime, false);
                     event.setColor(ContextCompat.getColor(getContext(), R.color.rest_color));
-
+                    HashMap<String,Object> tag = new HashMap<>();
+                    tag.put("url",rest.url);
+                    event.setTag(tag);
                     mEvents.add(event);
                 }
                 for (int k = 0; k < scheduleService.schedules.size(); k++) {
@@ -183,6 +185,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name, "人数", startTime, endTime, false);
                     event.setColor(endTime.getTime().getTime() < new Date().getTime() ?ContextCompat.getColor(getContext(),R.color.grey):
                         ContextCompat.getColor(getContext(), schedule.course.is_private ? R.color.private_color : R.color.group_color));
+                    HashMap<String,Object> tag = new HashMap<>();
+                    tag.put("url",schedule.url);
+                    event.setTag(tag);
                     mEvents.add(event);
                 }
             }

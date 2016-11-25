@@ -7,10 +7,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.qingchengfit.fitcoach.R;
-
 import cn.qingchengfit.widgets.utils.MeasureUtils;
+import com.qingchengfit.fitcoach.R;
 
 /**
  * power by
@@ -65,6 +63,19 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         mPaint.setStyle(Paint.Style.FILL);
     }
 
+    public DividerItemDecoration(Context context, int orientation,float dividerHeight) {
+        this.mOrientation = orientation;
+        if (orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL) {
+            throw new IllegalArgumentException("请传入正确的参数");
+        }
+        this.context = context;
+        mItemSize = (int) MeasureUtils.dpToPx(dividerHeight,context.getResources());
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(context.getResources().getColor(R.color.bg_grey));
+         /*设置填充*/
+        mPaint.setStyle(Paint.Style.FILL);
+    }
+
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == LinearLayoutManager.VERTICAL) {
@@ -89,7 +100,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + layoutParams.bottomMargin;
             final int bottom = top + mItemSize;
-            canvas.drawRect(left+30, top, right-30, bottom, mPaint);
+            canvas.drawRect(left, top, right, bottom, mPaint);
         }
     }
 
