@@ -42,6 +42,8 @@
 
     <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:actionBarSize">44dp</item>
+        <item name="actionBarSize">44dp</item>
     </style>
 
     <style name="Qc.ScrollviewStyle" parent="android:Widget.ScrollView">
@@ -102,15 +104,15 @@
     </style>
 
 
-    <style name="ChoosePicDialogStyle" parent="AlertDialog.AppCompat">
+    <style name="TopDialogWindowStyle" parent="AlertDialog.AppCompat">
         <!-- 背景颜色及透明程度 -->
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <!-- 是否有标题 -->
         <item name="android:windowNoTitle">true</item>
         <!-- 是否浮现在activity之上 -->
         <item name="android:windowIsFloating">true</item>
         <!-- 是否模糊 -->
-        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowFrame">@null</item>
     </style>

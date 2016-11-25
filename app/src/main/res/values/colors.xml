@@ -27,6 +27,10 @@
     <color name="wheel_timebtn_nor">#54a3fa</color>
     <color name="wheel_timebtn_pre">#CCCCCC</color>
 
+    <color name="rest_color">#f69683</color>
+    <color name="group_color">#1ca5e7</color>
+    <color name="private_color">#7986cb</color>
+
 
     <!-- General -->
     <color name="line">#CC0000</color>

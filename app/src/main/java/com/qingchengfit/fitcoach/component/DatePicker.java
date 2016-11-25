@@ -2,21 +2,20 @@ package com.qingchengfit.fitcoach.component;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.MeasureUtils;
 import com.marcohc.robotocalendar.RobotoCalendarView;
 import com.qingchengfit.fitcoach.R;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by
@@ -38,16 +37,21 @@ public class DatePicker extends Dialog {
     private Calendar mCurCalendar;
     private Calendar today;
     private int mMonthOffset = 0;
+    private Context mContext;
     public DatePicker(Context context) {
-        super(context, R.style.ChoosePicDialogStyle);
+        super(context, R.style.TopDialogWindowStyle);
+        mContext = context;
         View view = getLayoutInflater().inflate(R.layout.dialog_datepicker, null);
         setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         robotoCalendarView = (RobotoCalendarView) findViewById(R.id.calendarView);
         mCurCalendar = Calendar.getInstance(Locale.getDefault());
         today = Calendar.getInstance(Locale.getDefault());
         robotoCalendarView.markDayAsSelectedDay(new Date());
-
-
+        findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 
     public void setDayClickListener(RobotoCalendarView.RobotoCalendarListener listener) {
@@ -74,6 +78,24 @@ public class DatePicker extends Dialog {
         updateCalendar();
         robotoCalendarView.markDayAsSelectedDay(new Date());
     }
+
+    public void show(float padingTop) {
+        mCurCalendar.setTime(new Date());
+        Window window = this.getWindow();
+        window.setGravity(Gravity.TOP);
+        TypedValue typedValue = new TypedValue();
+        float padtop = mContext.getResources().getDimension(R.dimen.qc_item_height)+ MeasureUtils.dpToPx(44f,mContext.getResources());
+        window.getDecorView().setPadding(0,(int)padtop, 0, 0);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        window.setWindowAnimations(R.style.TopDialogStyle);
+        super.show();
+        updateCalendar();
+        robotoCalendarView.markDayAsSelectedDay(new Date());
+    }
+
 
     public void addMonth() {
 

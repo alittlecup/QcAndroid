@@ -30,28 +30,70 @@ public class Shop implements Parcelable {
     public String description;
     public String address;
     public String phone;
-    public String gd_city_code;
+    public String name;
+    public String photo;
+    public String gd_district_id;
     public double gd_lat;
     public double gd_lng;
-
 
     private Shop(Builder builder) {
         id = builder.id;
         description = builder.description;
         address = builder.address;
         phone = builder.phone;
-        gd_city_code = builder.gd_city_code;
+        name = builder.name;
+        photo = builder.photo;
+        gd_district_id = builder.gd_district_id;
         gd_lat = builder.gd_lat;
         gd_lng = builder.gd_lng;
     }
 
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.description);
+        dest.writeString(this.address);
+        dest.writeString(this.phone);
+        dest.writeString(this.name);
+        dest.writeString(this.photo);
+        dest.writeString(this.gd_district_id);
+        dest.writeDouble(this.gd_lat);
+        dest.writeDouble(this.gd_lng);
+    }
+
+    protected Shop(Parcel in) {
+        this.id = in.readString();
+        this.description = in.readString();
+        this.address = in.readString();
+        this.phone = in.readString();
+        this.name = in.readString();
+        this.photo = in.readString();
+        this.gd_district_id = in.readString();
+        this.gd_lat = in.readDouble();
+        this.gd_lng = in.readDouble();
+    }
+
+    public static final Creator<Shop> CREATOR = new Creator<Shop>() {
+        @Override public Shop createFromParcel(Parcel source) {
+            return new Shop(source);
+        }
+
+        @Override public Shop[] newArray(int size) {
+            return new Shop[size];
+        }
+    };
 
     public static final class Builder {
         private String id;
         private String description;
         private String address;
         private String phone;
-        private String gd_city_code;
+        private String name;
+        private String photo;
+        private String gd_district_id;
         private double gd_lat;
         private double gd_lng;
 
@@ -78,8 +120,18 @@ public class Shop implements Parcelable {
             return this;
         }
 
-        public Builder gd_city_code(String val) {
-            gd_city_code = val;
+        public Builder name(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder photo(String val) {
+            photo = val;
+            return this;
+        }
+
+        public Builder gd_district_id(String val) {
+            gd_district_id = val;
             return this;
         }
 
@@ -97,42 +149,4 @@ public class Shop implements Parcelable {
             return new Shop(this);
         }
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.description);
-        dest.writeString(this.address);
-        dest.writeString(this.phone);
-        dest.writeString(this.gd_city_code);
-        dest.writeDouble(this.gd_lat);
-        dest.writeDouble(this.gd_lng);
-    }
-
-    protected Shop(Parcel in) {
-        this.id = in.readString();
-        this.description = in.readString();
-        this.address = in.readString();
-        this.phone = in.readString();
-        this.gd_city_code = in.readString();
-        this.gd_lat = in.readDouble();
-        this.gd_lng = in.readDouble();
-    }
-
-    public static final Creator<Shop> CREATOR = new Creator<Shop>() {
-        @Override
-        public Shop createFromParcel(Parcel source) {
-            return new Shop(source);
-        }
-
-        @Override
-        public Shop[] newArray(int size) {
-            return new Shop[size];
-        }
-    };
 }

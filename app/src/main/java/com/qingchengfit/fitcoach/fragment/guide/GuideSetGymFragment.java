@@ -177,10 +177,11 @@ public class GuideSetGymFragment extends BaseFragment {
         if (getParentFragment() instanceof GuideFragment){
             ((GuideFragment) getParentFragment()).initBean.shop = new Shop.Builder()
                     .address(gymAddress.getContent())
-                    .gd_city_code(city_code+"")
+                    .gd_district_id(city_code+"")
+                    .name(gymName.getContent())
                     .gd_lat(lat)
                     .gd_lng(lng)
-                    .phone(imgUrl)
+                    .photo(imgUrl)
                     .build();
             RxBus.getBus().post(new CoachInitBean());
             getFragmentManager().beginTransaction()

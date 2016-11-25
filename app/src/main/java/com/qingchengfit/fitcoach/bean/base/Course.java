@@ -30,6 +30,15 @@ public class Course implements Parcelable {
     public String length;
     public boolean is_private;
     public String photo;
+    public int capacity;
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 
     public String getLength() {
         return length;
@@ -73,11 +82,12 @@ public class Course implements Parcelable {
     }
 
     private Course(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-        length = builder.length;
-        is_private = builder.is_private;
-        photo = builder.photo;
+        setId(builder.id);
+        setName(builder.name);
+        setLength(builder.length);
+        setIs_private(builder.is_private);
+        setPhoto(builder.photo);
+        setCapacity(builder.capacity);
     }
 
 
@@ -89,6 +99,7 @@ public class Course implements Parcelable {
         private String length;
         private boolean is_private;
         private String photo;
+        private int capacity;
         private String id;
 
         public Builder() {
@@ -111,6 +122,11 @@ public class Course implements Parcelable {
 
         public Builder photo(String val) {
             photo = val;
+            return this;
+        }
+
+        public Builder capacity(int val) {
+            capacity = val;
             return this;
         }
 

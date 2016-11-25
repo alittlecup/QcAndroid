@@ -12,10 +12,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
+import java.util.Date;
 
 /**
  * power by
@@ -54,7 +55,8 @@ public class ScheduleWeekFragment extends BaseFragment {
             }
 
             @Override public void onPageSelected(int position) {
-                LogUtil.e("pos:"+position);
+                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-1000).first);
+                //tvMonth.setText();
             }
 
             @Override public void onPageScrollStateChanged(int state) {

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -29,17 +34,11 @@ import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
+import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -76,6 +75,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @BindView(R.id.dataoff) TextView dataoff;
     @BindView(R.id.gym_info_layout) LinearLayout gymInfoLayout;
     @BindView(R.id.shop_img) ImageView shopImg;
+    @BindView(R.id.gym_layout) RelativeLayout gymLayout;
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
     private CoachService mCoachService;
@@ -171,6 +171,18 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         return view;
     }
 
+    @OnClick({ R.id.title, R.id.angle_show }) public void onTilteClick() {
+        gymLayout.setPivotY(0);
+        if (gymLayout.getVisibility() == View.VISIBLE) {
+            gymLayout.setVisibility(View.GONE);
+            ViewCompat.setRotation(angleShow, 0);
+        } else {
+            gymLayout.setVisibility(View.VISIBLE);
+            ViewCompat.setRotation(angleShow, 180);
+        }
+        ViewCompat.animate(angleShow).rotationBy(180).setDuration(300).start();
+    }
+
     @Override protected void lazyLoad() {
 
     }
@@ -186,7 +198,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             switch (res) {
                 case R.drawable.ic_weight://排课
                     Intent toGuide = new Intent(getActivity(), BatchActivity.class);
-                    toGuide.putExtra("service",mCoachService);
+                    toGuide.putExtra("service", mCoachService);
                     startActivity(toGuide);
 
                     break;

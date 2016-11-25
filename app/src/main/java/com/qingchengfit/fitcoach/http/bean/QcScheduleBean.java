@@ -90,6 +90,7 @@ public class QcScheduleBean {
         public String name;
         @SerializedName("photo")
         public String photo;
+        public boolean is_private;
 
     }
 }

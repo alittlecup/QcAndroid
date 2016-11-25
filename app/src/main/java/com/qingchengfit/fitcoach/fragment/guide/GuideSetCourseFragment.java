@@ -6,7 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.CheckableButton;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -20,14 +24,7 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
-
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.CheckableButton;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -151,8 +148,9 @@ public class GuideSetCourseFragment extends BaseFragment {
                     ((GuideFragment) getParentFragment()).initBean.courses.add(new Course.Builder()
                             .photo(imgUrl)
                             .name(name.getContent())
+                            .capacity(Integer.parseInt(orderCount.getContent()))
                             .is_private(isPrivate)
-                            .length(Float.toString(  Float.parseFloat(timeLong.getContent())*60))
+                            .length((Integer.parseInt(timeLong.getContent())*60)+"")
                             // TODO: 16/11/15 可约人数
                             .build());
 

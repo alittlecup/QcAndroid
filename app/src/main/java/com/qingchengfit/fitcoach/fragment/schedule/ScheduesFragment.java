@@ -397,7 +397,7 @@ public class ScheduesFragment extends Fragment {
     }
 
 
-    //@OnClick(R.id.schedule_calendar)
+    @OnClick({R.id.tv_month,R.id.icon_down})
     public void onCalendarClick() {
         //scheduleCalendar.setClickable(false);
         if (mDatePicker == null) {
@@ -432,7 +432,7 @@ public class ScheduesFragment extends Fragment {
         if (mDatePicker.isShowing())
             mDatePicker.hide();
         else {
-            mDatePicker.show();
+            mDatePicker.show(1f);
             updateCalendar();
         }
     }
