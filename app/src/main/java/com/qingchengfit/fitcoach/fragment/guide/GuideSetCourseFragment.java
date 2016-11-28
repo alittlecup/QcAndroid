@@ -150,7 +150,7 @@ public class GuideSetCourseFragment extends BaseFragment {
                             .name(name.getContent())
                             .capacity(Integer.parseInt(orderCount.getContent()))
                             .is_private(isPrivate)
-                            .length((Integer.parseInt(timeLong.getContent())*60)+"")
+                            .length((Integer.parseInt(timeLong.getContent())*60))
                             // TODO: 16/11/15 可约人数
                             .build());
 

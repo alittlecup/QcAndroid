@@ -157,7 +157,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
                             .name(courseDetail.getName())
                             .capacity(courseDetail.getCapacity())
                             .is_private(getArguments().getBoolean("p") ? 1 : 0)
-                            .length(courseDetail.getLength())
+                            .length(courseDetail.getLength()+"")
                             .min_users(getArguments().getBoolean("p") ? null : courseDetail.getMin_users())
                             .photo(courseDetail.getPhoto())
                             .plan_id(Planid)

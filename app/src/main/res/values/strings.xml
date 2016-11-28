@@ -190,7 +190,7 @@
     <string name="err_write_course_time_long">请填写课程时长</string>
     <string name="err_write_course_order_num">请填写单节可约人数</string>
     <string name="add_course_circle">+课程周期</string>
-    <string name="time_long_d_min">时长%f分钟</string>
+    <string name="time_long_d_min">时长%d分钟</string>
     <string name="change_gym">切换健身房</string>
     <string name="write_gym_info">填写健身房信息</string>
     <string name="err_please_input_start_end">请填写开始日期和结束日期</string>

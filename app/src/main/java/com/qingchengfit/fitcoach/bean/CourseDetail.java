@@ -45,7 +45,6 @@ public class CourseDetail extends Course implements Cloneable {
     private String edit_url;
     private boolean random_show_photos;
 
-
     public boolean isRandom_show_photos() {
         return random_show_photos;
     }
@@ -54,36 +53,34 @@ public class CourseDetail extends Course implements Cloneable {
         this.random_show_photos = random_show_photos;
     }
 
-    public String getShopStr(){
+    public String getShopStr() {
         String ret = "";
-        if (shops!= null && shops.size()>0){
+        if (shops != null && shops.size() > 0) {
             for (int i = 0; i < shops.size(); i++) {
-                ret = ret.concat(shops.get(i).name).concat(i == shops.size()-1?"": Configs.SEPARATOR);
+                ret = ret.concat(shops.get(i).name).concat(i == shops.size() - 1 ? "" : Configs.SEPARATOR);
             }
             return ret;
-        }else return "";
+        } else return "";
     }
 
-
-  public String getShopId(){
+    public String getShopId() {
         String ret = "";
-        if (shops!= null && shops.size()>0){
+        if (shops != null && shops.size() > 0) {
             for (int i = 0; i < shops.size(); i++) {
-                ret = ret.concat(shops.get(i).id).concat(i == shops.size()-1?"":",");
+                ret = ret.concat(shops.get(i).id).concat(i == shops.size() - 1 ? "" : ",");
             }
             return ret;
-        }else return "";
-
+        } else return "";
     }
 
-    public List<String> getShopIdList(){
+    public List<String> getShopIdList() {
         List<String> ret = new ArrayList<>();
-        if (shops!= null && shops.size()>0){
+        if (shops != null && shops.size() > 0) {
             for (int i = 0; i < shops.size(); i++) {
                 ret.add(shops.get(i).id);
             }
         }
-        return  ret;
+        return ret;
     }
 
     public String getEdit_url() {
@@ -191,16 +188,12 @@ public class CourseDetail extends Course implements Cloneable {
     }
 
     public List<QcScheduleBean.Shop> getShops() {
-        if (shops == null)
-            return new ArrayList<>();
+        if (shops == null) return new ArrayList<>();
         return shops;
     }
 
     public void setShops(List<QcScheduleBean.Shop> shops) {
         this.shops = shops;
-    }
-
-    public CourseDetail() {
     }
 
     @Override public int describeContents() {
@@ -224,6 +217,7 @@ public class CourseDetail extends Course implements Cloneable {
         dest.writeString(this.edit_url);
         dest.writeByte(this.random_show_photos ? (byte) 1 : (byte) 0);
     }
+
 
     protected CourseDetail(Parcel in) {
         super(in);
@@ -252,4 +246,7 @@ public class CourseDetail extends Course implements Cloneable {
             return new CourseDetail[size];
         }
     };
+
+    public CourseDetail() {
+    }
 }

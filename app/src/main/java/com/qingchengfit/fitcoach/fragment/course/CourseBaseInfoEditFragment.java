@@ -94,8 +94,8 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         if (mCourse != null) {
             Glide.with(getContext()).load(mCourse.getPhoto()).placeholder(R.drawable.ic_default_header).into(headerImg);
             courseName.setContent(mCourse.getName());
-            if (Float.parseFloat(mCourse.getLength()) != 0)
-                courseLength.setContent(Float.toString(Float.parseFloat(mCourse.getLength()) / 60));
+            if (mCourse.getLength() != 0)
+                courseLength.setContent(Integer.toString(mCourse.getLength() / 60));
             if (mCourse.getMin_users() != 0)
                 courseMinCount.setContent(Integer.toString(mCourse.getMin_users()));
             if (mCourse.getCapacity() != 0)
@@ -141,7 +141,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             ToastUtils.show("请填写课程时长");
             return null;
         }
-        mCourse.setLength(Float.toString(Float.parseFloat(courseLength.getContent())*60) );
+        mCourse.setLength(Float.parseFloat(courseLength.getContent())*60) ;
 
         if (courseMinCount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(courseMinCount.getContent())) {
             ToastUtils.show("请填写课程最小上课人数");

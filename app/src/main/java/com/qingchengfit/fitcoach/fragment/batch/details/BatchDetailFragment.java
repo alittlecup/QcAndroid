@@ -170,7 +170,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         if (Configs.TYPE_GROUP == mType) {
             Glide.with(getContext()).load(PhotoUtils.getSmall(course.getPhoto())).placeholder(R.drawable.ic_default_header).into(img);
             text1.setText(course.getName());
-            text3.setText("时长" + (Float.parseFloat(course.getLength()) / 60) + "分钟");
+            text3.setText("时长" + (course.getLength() / 60) + "分钟");
         } else {
             coach.setLabel("课程");
             coach.setContent(course.getName());

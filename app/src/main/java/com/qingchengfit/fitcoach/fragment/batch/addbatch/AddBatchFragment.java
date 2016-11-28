@@ -168,7 +168,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
             coach.setLabel("教练");
             Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);
             text1.setText(mCourse.name);
-            text3.setText(String.format(Locale.CHINA, "时长%f分钟", Float.parseFloat(mCourse.getLength())));
+            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength()));
         } else if (mTeacher != null) {
             mType = Configs.TYPE_PRIVATE;
             coach.setLabel("课程");

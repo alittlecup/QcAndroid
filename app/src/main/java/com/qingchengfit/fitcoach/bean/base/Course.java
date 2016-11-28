@@ -27,20 +27,23 @@ import android.os.Parcelable;
 public class Course implements Parcelable {
     public String id;
     public String name;
-    public String length;
+    public int length;
     public boolean is_private;
     public String photo;
     public int capacity;
 
-    public static final Creator<Course> CREATOR = new Creator<Course>() {
-        @Override public Course createFromParcel(Parcel in) {
-            return new Course(in);
-        }
+    public Course() {
+    }
 
-        @Override public Course[] newArray(int size) {
-            return new Course[size];
-        }
-    };
+    private Course(Builder builder) {
+        setId(builder.id);
+        setName(builder.name);
+        setLength(builder.length);
+        setIs_private(builder.is_private);
+        setPhoto(builder.photo);
+        setCapacity(builder.capacity);
+    }
+
 
     public int getCapacity() {
         return capacity;
@@ -50,12 +53,16 @@ public class Course implements Parcelable {
         this.capacity = capacity;
     }
 
-    public String getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(String length) {
+    public void setLength(int length) {
         this.length = length;
+    }
+
+    public void setLength(float length) {
+        this.length = (int) length;
     }
 
     public String getId() {
@@ -74,7 +81,6 @@ public class Course implements Parcelable {
         this.name = name;
     }
 
-
     public boolean is_private() {
         return is_private;
     }
@@ -91,28 +97,20 @@ public class Course implements Parcelable {
         this.photo = photo;
     }
 
-    private Course(Builder builder) {
-        setId(builder.id);
-        setName(builder.name);
-        setLength(builder.length);
-        setIs_private(builder.is_private);
-        setPhoto(builder.photo);
-        setCapacity(builder.capacity);
-    }
-
-
-    public Course() {
-    }
-
     public static final class Builder {
+        private String id;
         private String name;
-        private String length;
+        private int length;
         private boolean is_private;
         private String photo;
         private int capacity;
-        private String id;
 
         public Builder() {
+        }
+
+        public Builder id(String val) {
+            id = val;
+            return this;
         }
 
         public Builder name(String val) {
@@ -120,8 +118,13 @@ public class Course implements Parcelable {
             return this;
         }
 
-        public Builder length(String val) {
+        public Builder length(int val) {
             length = val;
+            return this;
+        }
+
+        public Builder length(float val) {
+            length = (int) val;
             return this;
         }
 
@@ -143,11 +146,6 @@ public class Course implements Parcelable {
         public Course build() {
             return new Course(this);
         }
-
-        public Builder id(String val) {
-            id = val;
-            return this;
-        }
     }
 
     @Override public int describeContents() {
@@ -157,16 +155,28 @@ public class Course implements Parcelable {
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeString(this.length);
+        dest.writeInt(this.length);
         dest.writeByte(this.is_private ? (byte) 1 : (byte) 0);
         dest.writeString(this.photo);
+        dest.writeInt(this.capacity);
     }
 
     protected Course(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
-        this.length = in.readString();
+        this.length = in.readInt();
         this.is_private = in.readByte() != 0;
         this.photo = in.readString();
+        this.capacity = in.readInt();
     }
+
+    public static final Creator<Course> CREATOR = new Creator<Course>() {
+        @Override public Course createFromParcel(Parcel source) {
+            return new Course(source);
+        }
+
+        @Override public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
 }

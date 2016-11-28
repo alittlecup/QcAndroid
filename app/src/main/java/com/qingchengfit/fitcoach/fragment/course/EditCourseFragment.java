@@ -122,7 +122,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
 //                    }
 
                     CourseBody body = new CourseBody.Builder()
-                            .length(courseDetail.getLength())
+                            .length(courseDetail.getLength()+"")
                             .is_private(courseDetail.is_private() ? 1 : 0)
                             .capacity(courseDetail.getCapacity())
                             .min_users(courseDetail.getMin_users())
