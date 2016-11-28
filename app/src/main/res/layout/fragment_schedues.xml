@@ -23,6 +23,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:gravity="center_vertical"
+            android:background="@color/white"
             >
             <TextView
                 android:id="@+id/tv_month"
@@ -73,10 +74,11 @@
         <com.qingchengfit.fitcoach.component.PagerSlidingTabStrip
             android:id="@+id/schedule_tab"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="46dp"
             android:background="@color/white"
             app:pst_text_color="@color/text_black"
             app:pst_text_highlight_color="@color/primary"
+            app:pst_text_size="14sp"
 
             />
         <android.support.v4.view.ViewPager

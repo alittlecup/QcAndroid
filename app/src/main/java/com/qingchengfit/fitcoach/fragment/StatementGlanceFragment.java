@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +25,6 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 import java.util.HashMap;
-import java.util.List;
 import rx.schedulers.Schedulers;
 
 /**
@@ -35,7 +35,7 @@ public class StatementGlanceFragment extends Fragment {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     //@BindView(R.id.spinner_nav)
-    //Spinner spinnerNav;
+    Spinner spinnerNav;
     @BindView(R.id.statment_glance_month_title)
     TextView statmentGlanceMonthTitle;
     @BindView(R.id.statment_glance_month_data)
@@ -118,49 +118,49 @@ public class StatementGlanceFragment extends Fragment {
     public void handleReponse(QcReportGlanceResponse qcReportGlanceResponse) {
         if (qcReportGlanceResponse == null)
             return;
-        List<QcReportGlanceResponse.glanceservice> systems = qcReportGlanceResponse.data.services;
+        //List<QcReportGlanceResponse.glanceservice> systems = qcReportGlanceResponse.data.services;
         StringBuffer monthTitle = new StringBuffer();
         StringBuffer weekTitle = new StringBuffer();
         StringBuffer dayTitle = new StringBuffer();
         monthTitle.append("本月");
         weekTitle.append("本周");
         dayTitle.append("今日");
-        int monthClassNum = 0, weekClassNum = 0, dayClassNum = 0,
-                monthOrderNum = 0, weekOrderNum = 0, dayOrderNum = 0,
-                monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
-
-        for (int i = 0; i < systems.size(); i++) {
-            QcReportGlanceResponse.glanceservice system = systems.get(i);
-            if (system.service == null)
-                continue;
-            if (i == 0) {
-                monthTitle.append("(").append(system.stat.month.from_date).append("至").append(system.stat.month.to_date).append(")");
-                weekTitle.append("(").append(system.stat.week.from_date).append("至").append(system.stat.week.to_date).append(")");
-                dayTitle.append("(").append(system.stat.today.from_date).append("至").append(system.stat.today.to_date).append(")");
-            }
-
-            if (curSystemId != 0 && (curSystemId != system.service.id || !system.service.model.equals(curModel)))
-                continue;
-            if (system.stat!= null && system.stat.month != null) {
-
-                monthClassNum += system.stat.month.course_count;
-                monthOrderNum += system.stat.month.order_count;
-                monthServerNum += system.stat.month.user_count;
-                weekClassNum += system.stat.week.course_count;
-                weekOrderNum += system.stat.week.order_count;
-                weekServerNum += system.stat.week.user_count;
-                dayClassNum += system.stat.today.course_count;
-                dayOrderNum = +system.stat.today.order_count;
-                dayServerNum += system.stat.today.user_count;
-            }
-        }
+        //int monthClassNum = 0, weekClassNum = 0, dayClassNum = 0,
+        //        monthOrderNum = 0, weekOrderNum = 0, dayOrderNum = 0,
+        //        monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
+        //
+        //for (int i = 0; i < systems.size(); i++) {
+        //    QcReportGlanceResponse.glanceservice system = systems.get(i);
+        //    if (system.service == null)
+        //        continue;
+        //    if (i == 0) {
+                monthTitle.append("(").append(qcReportGlanceResponse.data.month.from_date).append("至").append(qcReportGlanceResponse.data.month.to_date).append(")");
+                weekTitle.append("(").append(qcReportGlanceResponse.data.week.from_date).append("至").append(qcReportGlanceResponse.data.week.to_date).append(")");
+                dayTitle.append("(").append(qcReportGlanceResponse.data.today.from_date).append("至").append(qcReportGlanceResponse.data.today.to_date).append(")");
+        //    }
+        //
+        //    if (curSystemId != 0 && (curSystemId != system.service.id || !system.service.model.equals(curModel)))
+        //        continue;
+        //    if (system.stat!= null && system.stat.month != null) {
+        //
+        //        monthClassNum += system.stat.month.course_count;
+        //        monthOrderNum += system.stat.month.order_count;
+        //        monthServerNum += system.stat.month.user_count;
+        //        weekClassNum += system.stat.week.course_count;
+        //        weekOrderNum += system.stat.week.order_count;
+        //        weekServerNum += system.stat.week.user_count;
+        //        dayClassNum += system.stat.today.course_count;
+        //        dayOrderNum = +system.stat.today.order_count;
+        //        dayServerNum += system.stat.today.user_count;
+        //    }
+        //}
 
         StringBuffer monthContent = new StringBuffer();
         StringBuffer weekContent = new StringBuffer();
         StringBuffer dayContent = new StringBuffer();
-        monthContent.append(monthClassNum).append("节课程,服务").append(monthServerNum).append("人次");
-        weekContent.append(weekClassNum).append("节课程,服务").append(weekServerNum).append("人次");
-        dayContent.append(dayClassNum).append("节课程,服务").append(dayServerNum).append("人次");
+        monthContent.append(qcReportGlanceResponse.data.month.course_count).append("节课程,服务").append(qcReportGlanceResponse.data.month.user_count).append("人次");
+        weekContent.append(qcReportGlanceResponse.data.week.course_count).append("节课程,服务").append(qcReportGlanceResponse.data.week.user_count).append("人次");
+        dayContent.append(qcReportGlanceResponse.data.today.course_count).append("节课程,服务").append(qcReportGlanceResponse.data.today.user_count).append("人次");
 
         getActivity().runOnUiThread(() -> {
             statmentGlanceMonthTitle.setText(monthTitle.toString());
@@ -172,6 +172,63 @@ public class StatementGlanceFragment extends Fragment {
             refresh.setRefreshing(false);
         });
     }
+   //public void handleReponse(QcReportGlanceResponse qcReportGlanceResponse) {
+   //     if (qcReportGlanceResponse == null)
+   //         return;
+   //     List<QcReportGlanceResponse.glanceservice> systems = qcReportGlanceResponse.data.services;
+   //     StringBuffer monthTitle = new StringBuffer();
+   //     StringBuffer weekTitle = new StringBuffer();
+   //     StringBuffer dayTitle = new StringBuffer();
+   //     monthTitle.append("本月");
+   //     weekTitle.append("本周");
+   //     dayTitle.append("今日");
+   //     int monthClassNum = 0, weekClassNum = 0, dayClassNum = 0,
+   //             monthOrderNum = 0, weekOrderNum = 0, dayOrderNum = 0,
+   //             monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
+   //
+   //     for (int i = 0; i < systems.size(); i++) {
+   //         QcReportGlanceResponse.glanceservice system = systems.get(i);
+   //         if (system.service == null)
+   //             continue;
+   //         if (i == 0) {
+   //             monthTitle.append("(").append(system.stat.month.from_date).append("至").append(system.stat.month.to_date).append(")");
+   //             weekTitle.append("(").append(system.stat.week.from_date).append("至").append(system.stat.week.to_date).append(")");
+   //             dayTitle.append("(").append(system.stat.today.from_date).append("至").append(system.stat.today.to_date).append(")");
+   //         }
+   //
+   //         if (curSystemId != 0 && (curSystemId != system.service.id || !system.service.model.equals(curModel)))
+   //             continue;
+   //         if (system.stat!= null && system.stat.month != null) {
+   //
+   //             monthClassNum += system.stat.month.course_count;
+   //             monthOrderNum += system.stat.month.order_count;
+   //             monthServerNum += system.stat.month.user_count;
+   //             weekClassNum += system.stat.week.course_count;
+   //             weekOrderNum += system.stat.week.order_count;
+   //             weekServerNum += system.stat.week.user_count;
+   //             dayClassNum += system.stat.today.course_count;
+   //             dayOrderNum = +system.stat.today.order_count;
+   //             dayServerNum += system.stat.today.user_count;
+   //         }
+   //     }
+   //
+   //     StringBuffer monthContent = new StringBuffer();
+   //     StringBuffer weekContent = new StringBuffer();
+   //     StringBuffer dayContent = new StringBuffer();
+   //     monthContent.append(monthClassNum).append("节课程,服务").append(monthServerNum).append("人次");
+   //     weekContent.append(weekClassNum).append("节课程,服务").append(weekServerNum).append("人次");
+   //     dayContent.append(dayClassNum).append("节课程,服务").append(dayServerNum).append("人次");
+   //
+   //     getActivity().runOnUiThread(() -> {
+   //         statmentGlanceMonthTitle.setText(monthTitle.toString());
+   //         statmentGlanceWeekTitle.setText(weekTitle.toString());
+   //         statmentGlanceTodayTitle.setText(dayTitle.toString());
+   //         statmentGlanceMonthData.setText(monthContent.toString());
+   //         statmentGlanceWeekData.setText(weekContent.toString());
+   //         statmentGlanceTodayData.setText(dayContent.toString());
+   //         refresh.setRefreshing(false);
+   //     });
+   // }
 
 
     @OnClick(R.id.statement_glance_month)

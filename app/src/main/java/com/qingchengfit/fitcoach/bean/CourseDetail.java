@@ -1,12 +1,9 @@
 package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +37,6 @@ public class CourseDetail extends Course implements Cloneable {
     private Float course_score;
     private Float service_score;
     private Float teacher_score;
-    private int capacity;
     private String description;
     private List<TeacherImpression> impressions;
     private CoursePlan plan;
@@ -207,13 +203,11 @@ public class CourseDetail extends Course implements Cloneable {
     public CourseDetail() {
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeStringList(this.photos);
         dest.writeInt(this.min_users);
@@ -222,13 +216,13 @@ public class CourseDetail extends Course implements Cloneable {
         dest.writeValue(this.course_score);
         dest.writeValue(this.service_score);
         dest.writeValue(this.teacher_score);
-        dest.writeInt(this.capacity);
         dest.writeString(this.description);
         dest.writeTypedList(this.impressions);
         dest.writeParcelable(this.plan, flags);
         dest.writeInt(this.permission);
         dest.writeInt(this.schedule_count);
         dest.writeString(this.edit_url);
+        dest.writeByte(this.random_show_photos ? (byte) 1 : (byte) 0);
     }
 
     protected CourseDetail(Parcel in) {
@@ -240,23 +234,21 @@ public class CourseDetail extends Course implements Cloneable {
         this.course_score = (Float) in.readValue(Float.class.getClassLoader());
         this.service_score = (Float) in.readValue(Float.class.getClassLoader());
         this.teacher_score = (Float) in.readValue(Float.class.getClassLoader());
-        this.capacity = in.readInt();
         this.description = in.readString();
         this.impressions = in.createTypedArrayList(TeacherImpression.CREATOR);
         this.plan = in.readParcelable(CoursePlan.class.getClassLoader());
         this.permission = in.readInt();
         this.schedule_count = in.readInt();
         this.edit_url = in.readString();
+        this.random_show_photos = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<CourseDetail> CREATOR = new Parcelable.Creator<CourseDetail>() {
-        @Override
-        public CourseDetail createFromParcel(Parcel source) {
+    public static final Creator<CourseDetail> CREATOR = new Creator<CourseDetail>() {
+        @Override public CourseDetail createFromParcel(Parcel source) {
             return new CourseDetail(source);
         }
 
-        @Override
-        public CourseDetail[] newArray(int size) {
+        @Override public CourseDetail[] newArray(int size) {
             return new CourseDetail[size];
         }
     };

@@ -32,6 +32,16 @@ public class Course implements Parcelable {
     public String photo;
     public int capacity;
 
+    public static final Creator<Course> CREATOR = new Creator<Course>() {
+        @Override public Course createFromParcel(Parcel in) {
+            return new Course(in);
+        }
+
+        @Override public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
+
     public int getCapacity() {
         return capacity;
     }
@@ -159,14 +169,4 @@ public class Course implements Parcelable {
         this.is_private = in.readByte() != 0;
         this.photo = in.readString();
     }
-
-    public static final Creator<Course> CREATOR = new Creator<Course>() {
-        @Override public Course createFromParcel(Parcel source) {
-            return new Course(source);
-        }
-
-        @Override public Course[] newArray(int size) {
-            return new Course[size];
-        }
-    };
 }

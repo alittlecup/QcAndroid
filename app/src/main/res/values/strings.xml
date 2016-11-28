@@ -277,4 +277,5 @@
     <string name="hint_no_group_course">目前还未排团课，将无法约课\n快添加新排期吧</string>
     <string name="private_course_preview">私教约课页预览</string>
     <string name="group_course_preview">团课约课页预览</string>
+    <string name="common_wait">请稍后...</string>
 </resources>

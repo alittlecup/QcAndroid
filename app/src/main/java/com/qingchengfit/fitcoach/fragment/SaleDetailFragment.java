@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,20 +15,23 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.SaleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.SaleBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -35,12 +39,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -55,8 +53,6 @@ public class SaleDetailFragment extends Fragment {
     public static final int TYPE_MONTH = 2;
     public static final int TYPE_WEEK = 1;
     public static final int TYPE_DAY = 0;
-    @BindView(R.id.spinner_nav)
-    Spinner spinnerNav;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recyclerview)
@@ -107,6 +103,7 @@ public class SaleDetailFragment extends Fragment {
     private MaterialDialog loadingDialog;
     private String card_name;
     private Unbinder unbinder;
+    private String curModel;
 
     public SaleDetailFragment() {
 
@@ -193,6 +190,15 @@ public class SaleDetailFragment extends Fragment {
         });
         unbinder=ButterKnife.bind(this, view);
         setupToolbar();
+        if (getActivity() instanceof FragActivity){
+            if (((FragActivity) getActivity()).getCoachService() != null){
+                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+
+                curModel = coachService.model;
+                curSystemId = (int) coachService.getId();
+            }
+        }
+
         mStatementDetailAdapter = new StatementDetailAdapter(statementBeans);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview.setAdapter(mStatementDetailAdapter);
@@ -246,8 +252,8 @@ public class SaleDetailFragment extends Fragment {
     public void setupToolbar() {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        toolbar.setTitle("销售报表");
-        toolbarTitle.setVisibility(View.GONE);
+        toolbarTitle.setText("销售报表");
+        //toolbarTitle.setVisibility(View.GONE);
     }
 
 //    public void setUpNaviSpinner() {
@@ -301,22 +307,23 @@ public class SaleDetailFragment extends Fragment {
 
     public void freshData() {
         //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
-                .subscribe(qcCoachSystemResponse -> {
-                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-                    mSystemsId.clear();
-                    for (int i = 0; i < systems.size(); i++) {
-                        QcCoachSystem system = systems.get(i);
-                        mSystemsId.add(system.id);
-                    }
-                    queryStatement();
-                }, throwable -> {
-                }, () -> {
-                });
-//        queryStatement();
+        //QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
+        //        .subscribe(qcCoachSystemResponse -> {
+        //            List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+        //            mSystemsId.clear();
+        //            for (int i = 0; i < systems.size(); i++) {
+        //                QcCoachSystem system = systems.get(i);
+        //                mSystemsId.add(system.id);
+        //            }
+        //            queryStatement();
+        //        }, throwable -> {
+        //        }, () -> {
+        //        });
+        queryStatement();
     }
 
     private void queryStatement() {
+        mSystemsId.add(curSystemId);
         if (mSystemsId.size() == 0)
             return;
         mTotalAccount.clear();
@@ -344,11 +351,16 @@ public class SaleDetailFragment extends Fragment {
                                         QcSaleDetailRespone.History b = beans.get(i);
                                         SaleBean bean = new SaleBean();
                                         bean.date = DateUtils.formatDateFromServer(b.created_at);
-                                        bean.card = b.card;
+                                        bean.card = b.card == null ? "":b.card.card_name;
                                         bean.price = b.account;
 
                                         StringBuffer sb = new StringBuffer();
-                                        sb.append(b.username).append(b.remarks);
+                                        for (int j = 0; j < b.users.size(); j++) {
+                                            if (!TextUtils.isEmpty(sb.toString())){
+                                                sb.append("、");
+                                            }
+                                            sb.append(b.users.get(j).username);
+                                        }
                                         bean.title = sb.toString();
                                         statementBeans.add(bean);
                                     }
@@ -429,7 +441,8 @@ public class SaleDetailFragment extends Fragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("start", start);
         params.put("end", end);
-        params.put("system_id", Integer.toString(system_id));
+        params.put("id", curSystemId+"");
+        params.put("model",curModel);
         if (card_id != 0)
             params.put("card_tpl_id", Integer.toString(card_id));
         return params;

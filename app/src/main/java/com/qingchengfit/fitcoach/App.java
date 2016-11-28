@@ -11,6 +11,7 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
@@ -124,7 +125,7 @@ public class App extends Application {
             App.coachid = Integer.parseInt(coach.id);
         }
 
-
+        ToastUtils.init(this);
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
             @Override
             public void handleError(Throwable e) {

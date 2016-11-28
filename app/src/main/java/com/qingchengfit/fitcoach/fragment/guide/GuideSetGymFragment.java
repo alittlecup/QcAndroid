@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -124,7 +126,7 @@ public class GuideSetGymFragment extends BaseFragment {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
+                                        Glide.with(getContext()).load(s).into(gymImg);
                                         imgUrl = s;
                                     }
                                 });
@@ -156,8 +158,19 @@ public class GuideSetGymFragment extends BaseFragment {
                 ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
                 break;
             case R.id.gym_address:
-                Intent toAddress = new Intent(getActivity(), ChooseActivity.class);
-                startActivity(toAddress);
+                RxPermissions.getInstance(getContext())
+                    .request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean){
+                                Intent toAddress = new Intent(getActivity(), ChooseActivity.class);
+                                startActivity(toAddress);
+                            }
+                            else ToastUtils.showDefaultStyle("请开启定位权限");
+                        }
+                    });
+
                 break;
 //            case R.id.next_step:
 //

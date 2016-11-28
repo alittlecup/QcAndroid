@@ -14,9 +14,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
+import com.qingchengfit.fitcoach.activity.NotificationActivity;
+import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -52,7 +61,47 @@ public class MainScheduleFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
         getFragmentManager().beginTransaction().replace(R.id.schedule_frag, new ScheduesFragment()).commitAllowingStateLoss();
         ButterKnife.bind(this, view);
+        RxBusAdd(NewPushMsg.class)
+            .subscribe(new Action1<NewPushMsg>() {
+                @Override public void call(NewPushMsg newPushMsg) {
+                    queryNotify();
+                }
+            });
         return view;
+    }
+
+    @Override public void onStart() {
+        super.onStart();
+        queryNotify();
+
+    }
+
+    public void queryNotify() {
+        RxRegiste(QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<QcNotificationResponse>() {
+                @Override public void onCompleted() {
+
+                }
+
+                @Override public void onError(Throwable e) {
+
+                }
+
+                @Override public void onNext(QcNotificationResponse qcNotificationResponse) {
+                    if (getActivity() != null) {
+                        if (qcNotificationResponse.getData().getUnread_count() > 0) {
+                            if (qcNotificationResponse.getData().getUnread_count() < 100)
+                                scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
+                            else scheduleNotificationCount.setText("99");
+                            scheduleNotificationCount.setVisibility(View.VISIBLE);
+                        } else {
+                            scheduleNotificationCount.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }));
     }
 
     @Override public String getFragmentName() {
@@ -63,23 +112,25 @@ public class MainScheduleFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.layout_title://选择场馆
                 Intent toChooseGym = new Intent(getContext(), ChooseActivity.class);
-                toChooseGym.putExtra("to",ChooseActivity.TO_CHOSSE_GYM);
-                startActivityForResult(toChooseGym,1);
+                toChooseGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM);
+                startActivityForResult(toChooseGym, 1);
                 break;
             case R.id.student_order://会员预约
                 break;
             case R.id.schedule_notification_layout:
-
+                Intent toNotification  = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(toNotification);
                 break;
         }
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == 1){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
 
             }
         }
     }
+
 }

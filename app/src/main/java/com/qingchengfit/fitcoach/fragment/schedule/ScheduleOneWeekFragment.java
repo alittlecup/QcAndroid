@@ -21,6 +21,7 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.component.CalenderPopWindow;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -70,6 +71,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    private CalenderPopWindow mCalenderPopWindow;
 
     private CoachService mCoachService;
 
@@ -122,8 +125,17 @@ public class ScheduleOneWeekFragment extends BaseFragment {
             }
         });
         weekView.setEmptyViewClickListener(new WeekView.EmptyViewClickListener() {
-            @Override public void onEmptyViewClicked(Calendar calendar) {
 
+            @Override public void onEmptyViewClicked(Calendar calendar, float v, float v1) {
+                if (mCalenderPopWindow == null)
+                    mCalenderPopWindow = new CalenderPopWindow.Builder(getContext())
+                        .rest(v2 -> {})
+                        .group(v2 -> {})
+                        .privat(v2 -> {})
+                        .build();
+                mCalenderPopWindow.show(weekView,(int)v,(int)v1);
+                //GuideWindow window = new GuideWindow(getContext(),"xxxx",GuideWindow.DOWN);
+                //window.show(weekView);
             }
         });
         weekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
@@ -182,8 +194,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     startTime.setTime(DateUtils.formatDateFromServer(schedule.start));
                     endTime = Calendar.getInstance();
                     endTime.setTime(DateUtils.formatDateFromServer(schedule.end));
-                    event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name, "人数", startTime, endTime, false);
-                    event.setColor(endTime.getTime().getTime() < new Date().getTime() ?ContextCompat.getColor(getContext(),R.color.grey):
+                    event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name, 7+"", startTime, endTime, false);
+                    event.setColor(endTime.getTime().getTime() < new Date().getTime() ?ContextCompat.getColor(getContext(),R.color.warm_grey):
                         ContextCompat.getColor(getContext(), schedule.course.is_private ? R.color.private_color : R.color.group_color));
                     HashMap<String,Object> tag = new HashMap<>();
                     tag.put("url",schedule.url);

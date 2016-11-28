@@ -1,7 +1,9 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
+import com.qingchengfit.fitcoach.bean.Card;
 import java.util.List;
 
 /**
@@ -33,16 +35,17 @@ public class QcSaleDetailRespone extends QcResponse {
     }
 
     public static class History {
-        @SerializedName("username")
-        public String username;
+        @SerializedName("users")
+        public List<User> users;
         @SerializedName("seller_name")
         public String seller_name;
         @SerializedName("created_at")
         public String created_at;
         @SerializedName("remarks")
         public String remarks;
+        @Nullable
         @SerializedName("card")
-        public String card;
+        public Card card;
         @SerializedName("account")
         public int account;
         @SerializedName("cost")

@@ -81,7 +81,7 @@
       app:dayBackgroundColor="#05000000"
       app:todayBackgroundColor="#1848adff"
       app:headerColumnBackground="#ffffffff"
-      app:horizontalFlingEnabled="true"
+      app:horizontalFlingEnabled="false"
       app:showNowLine="true"
       app:todayHeaderTextColor="@color/primary"
       app:firstDayOfWeek="sunday"

@@ -90,6 +90,8 @@ public class StaffAppFragmentFragment extends DialogFragment {
 //                    ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "cn.qingchengfit.staffkit.MainActivity");
 //                    intent.setComponent(cn);
 //                    startActivity(intent);
+
+                    dismiss();
                 }catch (Exception e){
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("http://fir.im/qcfit"));

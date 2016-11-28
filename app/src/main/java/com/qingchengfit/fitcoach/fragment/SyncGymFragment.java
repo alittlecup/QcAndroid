@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -88,6 +89,13 @@ public class SyncGymFragment extends BaseFragment {
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcCoachServiceResponse -> {
                     if (qcCoachServiceResponse.status == 200) {
+                        if (qcCoachServiceResponse.data.services == null || qcCoachServiceResponse.data.services.size() ==0 ){
+                            Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+                            startActivity(toGuide);
+                            getActivity().finish();
+                            return;
+                        }
+
                         mData.clear();
                         for (int i = 0; i < qcCoachServiceResponse.data.services.size(); i++) {
                             mData.add(new GymItem(qcCoachServiceResponse.data.services.get(i)));

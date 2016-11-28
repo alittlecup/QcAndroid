@@ -33,6 +33,7 @@ import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
 import com.qingchengfit.fitcoach.fragment.batch.details.BatchDetailFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.items.BatchItem;
@@ -71,6 +72,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     private QcResponsePrivateDetail.PrivateCoach mTeacher;
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     CommonFlexAdapter mCommonFlexAdapter;
+    @Inject CoachService mCoachService;
 
     public static CourseBatchDetailFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -96,7 +98,8 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             ((BatchActivity) getActivity()).getComponent().inject(this);
         }
         presenter.attachView(this);
-        preview.setText(mType == Configs.TYPE_PRIVATE?getString(R.string.private_course_preview):getString(R.string.group_course_preview));
+        preview.setText(
+            mType == Configs.TYPE_PRIVATE ? getString(R.string.private_course_preview) : getString(R.string.group_course_preview));
         presenter.queryGroup(App.coachid + "", mType == Configs.TYPE_PRIVATE);
         mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -160,9 +163,11 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             showAlert(R.string.alert_permission_forbid);
             return;
         }
+
         Intent toChooseCourse = new Intent(getActivity(), CourseActivity.class);
         toChooseCourse.putExtra("to", CourseActivity.TO_CHOOSE);
         toChooseCourse.putExtra("type", mType);
+        toChooseCourse.putExtra("service", mCoachService);
         startActivityForResult(toChooseCourse, RESULT_COURSE);
 
         //getParentFragment().getFragmentManager()
@@ -190,6 +195,9 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             }
             mDatas.add(new BatchItem(batch.get(i)));
         }
+        if (mDatas.size() == 0)
+            mDatas.add(new HintItem.Builder().text(mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
+                : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
         mCommonFlexAdapter.notifyDataSetChanged();
     }
 

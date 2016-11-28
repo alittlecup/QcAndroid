@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -8,8 +7,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -28,12 +31,6 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.tbruyelle.rxpermissions.RxPermissions;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -100,39 +97,36 @@ public class ChooseAddressFragment extends BaseFragment {
                 return true;
             }
         });
+        toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                CompatUtils.removeGlobalLayout(toolbar.getViewTreeObserver(),this);
+                mLocationClient = new AMapLocationClient(getContext());
+                mLocationOption = new AMapLocationClientOption();
+                mLocationClient.setLocationOption(mLocationOption);
 
-
-        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        mLocationOption = new AMapLocationClientOption();
-//        mLocationOption.setOnceLocationLatest(true);
-        mLocationClient.setLocationOption(mLocationOption);
-        RxPermissions.getInstance(getContext())
-                .request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                .subscribe(new Action1<Boolean>() {
+                mLocationClient.startLocation();
+                mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+                mLocationClient.setLocationListener(new AMapLocationListener() {
                     @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) mLocationClient.startLocation();
-                        else ToastUtils.showDefaultStyle("请开启定位权限");
+                    public void onLocationChanged(AMapLocation aMapLocation) {
+
+                        mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                            new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
+
+                        //设置城市
+                        cityName.setText(aMapLocation.getCity());
+                        mCityCode = aMapLocation.getAdCode();
+
+                        //设置地理位置
+                        address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
+                        mLocationClient.stopLocation();
+
                     }
                 });
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationClient.setLocationListener(new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
-
-                mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
-                        new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
-
-                //设置城市
-                cityName.setText(aMapLocation.getCity());
-                mCityCode = aMapLocation.getAdCode();
-
-                //设置地理位置
-                address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
-                mLocationClient.stopLocation();
-
             }
         });
+
+
         showLoading();
         return view;
     }

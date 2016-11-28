@@ -134,6 +134,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             startActivity(toWeb);
         }
 
+
     }
 
     private void setupVp() {
@@ -173,7 +174,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {
-                return WebFragment.newInstance("http://www.baidu.com");
+                return WebFragment.newInstance("http://cloudtest.qingchengfit.cn/mobile/coach/discover/");
             } else
                 return new MineFragmentFragment();
         }
@@ -427,8 +428,16 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             toWeb.putExtra("url", contetn);
             startActivity(toWeb);
         } else if (intent.getIntExtra(ACTION ,-1) == INIT){
-            viewpager.setCurrentItem(1);
+
             mCoachService = intent.getParcelableExtra("service");
+            if (viewpager != null &&viewpager.getAdapter() != null && viewpager.getAdapter().getCount() > 2){
+                viewpager.setCurrentItem(1);
+                if (viewpager.getAdapter() instanceof MainPagerAdapter){
+                    if (((MainPagerAdapter) viewpager.getAdapter()).getItem(1) instanceof ManageFragment){
+                        ((ManageFragment) ((MainPagerAdapter) viewpager.getAdapter()).getItem(1)).getServer();
+                    }
+                }
+            }
         }
     }
 

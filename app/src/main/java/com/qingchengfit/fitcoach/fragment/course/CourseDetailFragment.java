@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -102,6 +103,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
+    @BindView(R.id.edit_jacket) TextView editJacket;
     private CourseDetail mCourseDetail;
     private ViewPaperEndlessAdapter viewpageradapter;
 
@@ -130,6 +132,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             }
         });
         toolbarTitle.setText("课程种类详情");
+        editJacket.setCompoundDrawables(ContextCompat.getDrawable(getContext(),R.drawable.ic_mode_edit_white_24dp),null,null,null);
         toolbar.inflateMenu(R.menu.menu_flow);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
@@ -340,7 +343,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
     @Override public void onDelfailed(String content) {
         srl.setRefreshing(false);
         hideLoading();
-        ToastUtils.show(content);
+        ToastUtils.showDefaultStyle(content);
     }
 
     /**

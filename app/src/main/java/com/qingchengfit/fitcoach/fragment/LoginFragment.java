@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -99,6 +100,7 @@ public class LoginFragment extends Fragment {
                                 PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
                                 PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
                                 PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
+                                App.coachid = Integer.parseInt(qcResponLogin.data.coach.id);
                                 PreferenceUtils.setPrefBoolean(getActivity(), "first", false);
                                 PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
 

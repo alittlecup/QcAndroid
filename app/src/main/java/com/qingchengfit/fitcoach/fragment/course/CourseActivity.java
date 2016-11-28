@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
+import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -12,9 +12,6 @@ import com.qingchengfit.fitcoach.di.CourseModule;
 import com.qingchengfit.fitcoach.di.DaggerCourseComponent;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
-
-import butterknife.ButterKnife;
 
 
 public class CourseActivity extends BaseAcitivity {
@@ -27,8 +24,8 @@ public class CourseActivity extends BaseAcitivity {
         setContentView(R.layout.activity_course);
         ButterKnife.bind(this);
         mComponent = DaggerCourseComponent.builder().courseModule(new CourseModule.Builder()
-                .brand(new Brand("2"))
-                .coachService(new CoachService())
+                .brand(new Brand())
+                .coachService(getIntent().getParcelableExtra("service"))
                 .restRepository(new RestRepository(QcCloudClient.getApi()))
                 .build()).build();
         mComponent.inject(this);

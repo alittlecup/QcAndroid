@@ -1,14 +1,13 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -16,9 +15,7 @@ import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-
 import java.util.HashMap;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -38,7 +35,8 @@ public class AddGymFragment extends GuideSetGymFragment {
         view.findViewById(R.id.hint).setVisibility(View.GONE);
         ((Button) view.findViewById(R.id.next_step)).setText(R.string.login_comfirm);
         if (view instanceof ViewGroup) {
-            Toolbar tb = (Toolbar) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
+            RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
+            Toolbar tb = (Toolbar)v.findViewById(R.id.toolbar);
             ((ViewGroup) view).addView(tb, 0);
             ((TextView) tb.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
             tb.setNavigationIcon(R.drawable.ic_arrow_left);

@@ -1,11 +1,18 @@
 package com.qingchengfit.fitcoach.component;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
-import android.widget.ImageView;
-
+import android.content.DialogInterface;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.LoadingPointerView;
+import cn.qingchengfit.widgets.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
+
 
 /**
  * power by
@@ -21,38 +28,45 @@ import com.qingchengfit.fitcoach.R;
  * Created by Paper on 15/10/16 2015.
  */
 public class LoadingDialog extends Dialog {
-    AnimationDrawable animationDrawable;
 
-    public LoadingDialog(Context context) {
-        super(context, R.style.LoadingDialog_Style);
-        initView();
-    }
+    LoadingPointerView pointer;
+    Animation rotate;
 
-    public LoadingDialog(Context context, int themeResId) {
-        super(context, themeResId);
-    }
-
-    protected LoadingDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-    }
-
-    void initView() {
-        setContentView(R.layout.loading_view);
-        ImageView img = (ImageView) findViewById(R.id.loading_img);
-        animationDrawable = (AnimationDrawable) img.getDrawable();
-//        Glide.with(App.AppContex).load(R.drawable.ic_loading_gif).into(img);
+    public LoadingDialog(final Context context) {
+        super(context, R.style.Translucent_NoTitle);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.setContentView(R.layout.dialog_loading);
+        this.setCanceledOnTouchOutside(false);
+        this.setCancelable(true);
+        this.setOnCancelListener(new OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if (context instanceof android.app.Activity){
+                    ((Activity) context).onBackPressed();
+                }
+            }
+        });
+        pointer = ButterKnife.findById(this, R.id.pointer);
+        rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
 
     }
 
     @Override
     public void show() {
-        animationDrawable.start();
+        Window window = this.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.width = MeasureUtils.dpToPx(150f, getContext().getResources());
+        lp.height = MeasureUtils.dpToPx(130f, getContext().getResources());
+        window.setAttributes(lp);
+        pointer.startAnimation(rotate);
         super.show();
     }
 
     @Override
-    public void hide() {
-        animationDrawable.stop();
-        super.hide();
+    public void dismiss() {
+        rotate.cancel();
+        super.dismiss();
     }
 }
+

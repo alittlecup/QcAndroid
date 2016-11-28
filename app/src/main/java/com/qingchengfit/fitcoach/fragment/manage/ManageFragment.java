@@ -22,6 +22,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
@@ -146,18 +147,35 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 }
             }
         });
+
+        getServer();
+        return view;
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+
+    }
+
+    public void getServer(){
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcCoachServiceResponse>() {
                 @Override public void call(QcCoachServiceResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                        if (qcResponse.data.services == null || qcResponse.data.services.size() ==0 ){
+                            Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+                            startActivity(toGuide);
+                            getActivity().finish();
+                            return;
+                        }
                         if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
                             if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null){
                                 CoachService coachService = ((Main2Activity) getActivity()).getCoachService();
                                 for (int i = 0; i < qcResponse.data.services.size(); i++) {
                                     if (coachService.id == qcResponse.data.services.get(i).id &&
-                                         coachService.model.equalsIgnoreCase(qcResponse.data.services.get(i).model)
+                                        coachService.model.equalsIgnoreCase(qcResponse.data.services.get(i).model)
                                         ){
                                         mCoachService = qcResponse.data.services.get(i);
                                         break;
@@ -179,8 +197,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     ToastUtils.show("服务器错误");
                 }
             }));
-
-        return view;
     }
 
     @OnClick({ R.id.title, R.id.angle_show }) public void onTilteClick() {
@@ -216,6 +232,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     break;
                 case R.drawable.ic_category_course://课程种类
                     Intent toCourse = new Intent(getActivity(), CourseActivity.class);
+                    toCourse.putExtra("service", mCoachService);
                     startActivity(toCourse);
 
                     break;

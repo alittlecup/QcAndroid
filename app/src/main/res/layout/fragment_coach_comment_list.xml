@@ -107,13 +107,13 @@
             android:orientation="vertical"
             >
 
-            <cn.qingchengfit.staffkit.views.custom.PagerSlidingTabImageStrip
-                android:id="@+id/strip"
-                android:layout_width="match_parent"
-                android:layout_height="96dp"
-                android:background="@color/white"
+            <!--<cn.qingchengfit.staffkit.views.custom.PagerSlidingTabImageStrip-->
+                <!--android:id="@+id/strip"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="96dp"-->
+                <!--android:background="@color/white"-->
 
-                />
+                <!--/>-->
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"

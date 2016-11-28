@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -16,26 +19,17 @@ import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.adapter.CoachCommentAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CourseTeacher;
-import com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.StringUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
 
 /**
  * power by
@@ -61,8 +55,8 @@ public class CoachCommentListFragment extends BaseFragment {
 
     @BindView(R.id.viewpager)
     ViewPager viewpager;
-    @BindView(R.id.strip)
-    PagerSlidingTabImageStrip strip;
+    //@BindView(R.id.strip)
+    //PagerSlidingTabImageStrip strip;
     List<CourseTeacher> coaches = new ArrayList<>();
 
     @Inject
@@ -138,7 +132,7 @@ public class CoachCommentListFragment extends BaseFragment {
                             noDataLayout.setVisibility(View.GONE);
                             adapter = new CoachCommentAdapter(getFragmentManager(), coaches);
                             viewpager.setAdapter(adapter);
-                            strip.setViewPager(viewpager);
+                            //strip.setViewPager(viewpager);
                         } else {
                             noDataLayout.setVisibility(View.VISIBLE);
                             img.setImageResource(R.drawable.no_teacher);

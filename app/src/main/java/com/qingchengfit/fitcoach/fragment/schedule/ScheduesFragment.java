@@ -45,7 +45,6 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
-import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
@@ -168,20 +167,20 @@ public class ScheduesFragment extends BaseFragment {
         //scheduleFloatbg.setOnClickListener(v -> {
         //    webFloatbtn.collapse();
         //});
-        mObservable = RxBus.getBus().register(NewPushMsg.class);
-        mObservable.subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<NewPushMsg>() {
-            @Override public void onCompleted() {
-
-            }
-
-            @Override public void onError(Throwable e) {
-
-            }
-
-            @Override public void onNext(NewPushMsg newPushMsg) {
-                queryNotify();
-            }
-        });
+        //mObservable = RxBus.getBus().register(NewPushMsg.class);
+        //mObservable.subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<NewPushMsg>() {
+        //    @Override public void onCompleted() {
+        //
+        //    }
+        //
+        //    @Override public void onError(Throwable e) {
+        //
+        //    }
+        //
+        //    @Override public void onNext(NewPushMsg newPushMsg) {
+        //        //queryNotify();
+        //    }
+        //});
 
         mObservableReresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
         mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<String>() {
@@ -326,36 +325,10 @@ public class ScheduesFragment extends BaseFragment {
 
     @Override public void onStart() {
         super.onStart();
-        queryNotify();
+
     }
 
-    public void queryNotify() {
-        QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcNotificationResponse>() {
-                @Override public void onCompleted() {
 
-                }
-
-                @Override public void onError(Throwable e) {
-
-                }
-
-                @Override public void onNext(QcNotificationResponse qcNotificationResponse) {
-                    if (getActivity() != null) {
-                        //if (qcNotificationResponse.getData().getUnread_count() > 0) {
-                        //    if (qcNotificationResponse.getData().getUnread_count() < 100)
-                        //        scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
-                        //    else scheduleNotificationCount.setText("99");
-                        //    scheduleNotificationCount.setVisibility(View.VISIBLE);
-                        //} else {
-                        //    scheduleNotificationCount.setVisibility(View.GONE);
-                        //}
-                    }
-                }
-            });
-    }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

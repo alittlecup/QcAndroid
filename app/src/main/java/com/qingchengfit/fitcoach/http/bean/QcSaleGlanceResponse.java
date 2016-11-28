@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ import java.util.List;
  */
 public class QcSaleGlanceResponse extends QcResponse {
     @SerializedName("data")
-    public ReportData data;
+    public System data;
 
     public static class ReportData {
         @SerializedName("systems")

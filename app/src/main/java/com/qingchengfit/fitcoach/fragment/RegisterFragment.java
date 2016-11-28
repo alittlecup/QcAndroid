@@ -187,6 +187,7 @@ public class RegisterFragment extends Fragment {
                                                 PreferenceUtils.setPrefString(getActivity(), "session_id", qcResponLogin.data.session_id);
                                                 PreferenceUtils.setPrefString(getActivity(), "user_info", gson.toJson(qcResponLogin.data.user));
                                                 PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
+                                                App.coachid = Integer.parseInt(qcResponLogin.data.coach.id);
                                                 Intent toMain = new Intent(getActivity(), FragActivity.class);
                                                 toMain.putExtra("type",10);
                                                 startActivity(toMain);
