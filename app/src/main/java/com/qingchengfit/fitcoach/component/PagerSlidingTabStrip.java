@@ -57,7 +57,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
     private int mScrollOffset = 52;
     private int mLastScrollX = 0;
     private int mNumPadding = 8;
-    private int mTabPadding = 25;
+    private int mTabPadding = 50;
     private int mTabTextSize = 14;
     private int mNumTextSize = 10;
     private int mTabTextColor = 0xaaffffff;
@@ -238,9 +238,12 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
      */
     private void addTextTab(final int position, String title) {
         TextView tab = new TextView(getContext());
+        tab.setGravity(Gravity.TOP);
+
+        tab.setTextSize(14);
         tab.setText(title);
         tab.setGravity(Gravity.CENTER);
-
+        tab.setLineSpacing(4,1);
 //        tab.setSingleLine();
 
         addTab(position, tab);

@@ -106,11 +106,16 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
 //                mCallbackActivity.setToolbar(getArguments().getBoolean("p") ? "新增私教种类" : "新增团课种类", false, null, R.menu.menu_compelete, listener);
             }
         });
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         toolbarTitle.setText(getArguments().getBoolean("p") ? "新增私教种类" : "新增团课种类");
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_complete);
         toolbar.setOnMenuItemClickListener(listener);
-//        mCallbackActivity.setToolbar(getArguments().getBoolean("p") ? "新增私教种类" : "新增团课种类", false, null, R.menu.menu_compelete, listener);
         CourseDetail courseDetail = new CourseDetail();
         courseDetail.setIs_private(getArguments().getBoolean("p"));
         if (mEditBaseInfo == null) {
@@ -164,7 +169,6 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
                             .shop_ids(support_gym)
                             .build();
                     showLoading();
-                    // TODO: 16/11/18
                     mPresenter.addCourse(App.coachid+"", body);
                 }
             }

@@ -25,14 +25,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.StudentCompare;
-import com.qingchengfit.fitcoach.activity.ChooseGymActivity;
 import com.qingchengfit.fitcoach.activity.ChooseStudentActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
@@ -47,18 +51,10 @@ import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Observer;
 import rx.schedulers.Schedulers;
@@ -257,7 +253,12 @@ public class MyStudentFragment extends BaseFragment {
 //        setUpNaviSpinner();
         refresh.setRefreshing(true);
         //获取原始数据
-        QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid).subscribeOn(Schedulers.io())
+        if (getActivity() instanceof FragActivity){
+            CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+            HashMap<String,Object> prams = new HashMap<>();
+            prams.put("id",coachService.getId()+"");
+            prams.put("model",coachService.getModel());
+            QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid,prams).subscribeOn(Schedulers.io())
                 .subscribe(new Observer<QcAllStudentResponse>() {
                     @Override
                     public void onCompleted() {
@@ -275,6 +276,9 @@ public class MyStudentFragment extends BaseFragment {
                         handleResponse(qcAllStudentResponse);
                     }
                 });
+        }
+
+
 //        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Subscriber<QcCoachServiceResponse>() {
@@ -380,11 +384,13 @@ public class MyStudentFragment extends BaseFragment {
 
                 adapterData.clear();
 
-                List<QcAllStudentResponse.Ship> ships = qcAllStudentResponse.data.ships;
-                for (int i = 0; i < ships.size(); i++) {
-                    QcAllStudentResponse.Ship ship = ships.get(i);
-                    if (curSystemId != 0 && (curSystemId != ship.service.id || !curModel.equals(ship.service.model)))
-                        continue;
+                //List<QcAllStudentResponse.Ship> ships = qcAllStudentResponse.data.ships;
+                //for (int i = 0; i < ships.size(); i++) {
+                    QcAllStudentResponse.Ship ship = qcAllStudentResponse.data;
+                    //if (curSystemId != 0 && (curSystemId != ship.service.id || !curModel.equals(ship.service.model)))
+                    //    continue;
+                if (ship != null){
+
                     List<StudentBean> tmp = new ArrayList<>();
                     for (QcStudentBean student : ship.users) {
                         StudentBean bean = new StudentBean();

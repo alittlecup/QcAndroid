@@ -344,7 +344,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
             case R.id.account_type:
                 Intent toAccount = new Intent(getActivity(),FragActivity.class);
                 toAccount.putExtra("type",12);
-                toAccount.putExtra("count",Integer.parseInt(accountType.getContent()));
+                toAccount.putExtra("count",body.max_users);
                 startActivityForResult(toAccount,RESULT_ACCOUNT);
 
                 break;

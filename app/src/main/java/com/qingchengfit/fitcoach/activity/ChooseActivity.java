@@ -2,13 +2,13 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
 
-public class ChooseActivity extends AppCompatActivity {
+public class ChooseActivity extends BaseAcitivity {
 
     public static final int TO_CHOSSE_ADDRESS = 0;
     public static final int TO_CHOSSE_CIRCLE = 1;

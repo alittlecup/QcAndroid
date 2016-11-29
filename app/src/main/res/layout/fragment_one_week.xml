@@ -83,8 +83,10 @@
       app:headerColumnBackground="#ffffffff"
       app:horizontalFlingEnabled="false"
       app:showNowLine="true"
+      app:nowLineColor="@color/text_orange"
       app:todayHeaderTextColor="@color/primary"
       app:firstDayOfWeek="sunday"
-
+      app:eventTextSize="10sp"
+      app:eventPadding="1px"
       />
 </LinearLayout>

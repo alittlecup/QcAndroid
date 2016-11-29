@@ -65,8 +65,18 @@ public class CourseFragment extends BaseFragment {
                 getActivity().onBackPressed();
             }
         });
-        toolbar.setTitle("课程种类");
-
+        toolbarTitle
+        .setText("课程种类");
+        toolbar.inflateMenu(R.menu.add);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                getFragmentManager().beginTransaction()
+                    .replace(R.id.frag,AddCourseFragment.newInstance(viewpager.getCurrentItem() == 1))
+                    .addToBackStack(null)
+                    .commit();
+                return true;
+            }
+        });
         if (fragments.size() == 0) {
             fragments.add(CourseListFragment.newInstance(false));
             fragments.add(CourseListFragment.newInstance(true));

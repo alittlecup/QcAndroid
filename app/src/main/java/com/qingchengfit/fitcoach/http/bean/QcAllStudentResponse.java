@@ -20,7 +20,7 @@ import java.util.List;
 public class QcAllStudentResponse extends QcResponse {
 
     @SerializedName("data")
-    public ShipData data;
+    public Ship data;
 
     public static class ShipData {
         @SerializedName("services")

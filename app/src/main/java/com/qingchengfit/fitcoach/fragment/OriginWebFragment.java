@@ -308,7 +308,7 @@ public class OriginWebFragment extends WebFragment {
         webview.getSettings().setJavaScriptEnabled(true);
 //        webview.setInitialScale(getScale());
         String s = webview.getSettings().getUserAgentString();
-        webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android");
+        webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  "+"QingchengApp/Trainer  "+"OEM:"+getString(R.string.oem_tag));
         webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
         // 开启DOM storage API 功能
         webview.getSettings().setDomStorageEnabled(true);

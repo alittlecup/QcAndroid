@@ -5,6 +5,7 @@
     <color name="primary">#0db14b</color>// 32 191 189
     <color name="primary_dark">#0c9020</color>
     <color name="primary_light">#1ED982</color>
+    <color name="colorPrimarytrans">#110db14b</color>
 
 
 
@@ -12,6 +13,7 @@
     <!--<color username="backgroud_grey">#aaaaaa</color>-->
     <color name="text_red">#f1693c</color>
     <color name="text_orange">#f9944e</color>
+    <color name="text_link">#6EB8F1</color>
 
 
 

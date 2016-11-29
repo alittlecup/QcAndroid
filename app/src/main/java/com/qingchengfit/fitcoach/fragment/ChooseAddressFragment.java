@@ -109,7 +109,8 @@ public class ChooseAddressFragment extends BaseFragment {
                 mLocationClient.setLocationListener(new AMapLocationListener() {
                     @Override
                     public void onLocationChanged(AMapLocation aMapLocation) {
-
+                        mLocationClient.stopLocation();
+                        hideLoading();
                         mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
                             new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
 
@@ -119,7 +120,7 @@ public class ChooseAddressFragment extends BaseFragment {
 
                         //设置地理位置
                         address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
-                        mLocationClient.stopLocation();
+
 
                     }
                 });

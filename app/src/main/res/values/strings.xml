@@ -120,7 +120,7 @@
     <string name="label_city">城市</string>
     <string name="personal_homepage">个人主页</string>
     <string name="edit_mine_info">编辑我的基本信息</string>
-    <string name="brand_id_creator" formatted="false">品牌ID: %s    创建人: %s </string>
+    <string formatted="false" name="brand_id_creator">品牌ID: %s    创建人: %s </string>
     <string name="no_permission_brand">只能由品牌创建人%s添加场馆</string>
     <string name="gym_brand_name">健身房品牌名</string>
     <string name="coach_function_hint">教练后台功能</string>
@@ -197,8 +197,6 @@
     <string name="err_at_least_one_circle">请至少选择一个课程周期</string>
 
 
-
-
     <!-- 课程 -->
     <string name="edit_course_jacket">编辑课程封面照片</string>
     <string name="jacket_hint">最多可以添加5张封面照片，通过长按以后拖动来调整封面图片顺序。</string>
@@ -236,7 +234,6 @@
     <string name="common_del">删除</string>
     <string name="course_type_private">私教</string>
     <string name="course_type_group">团课</string>
-
 
 
     <!--排课-->
@@ -278,4 +275,7 @@
     <string name="private_course_preview">私教约课页预览</string>
     <string name="group_course_preview">团课约课页预览</string>
     <string name="common_wait">请稍后...</string>
+    <string name="webview_student_guide_1">复制会员端页面链接</string>
+    <string name="explore">发现</string>
+
 </resources>

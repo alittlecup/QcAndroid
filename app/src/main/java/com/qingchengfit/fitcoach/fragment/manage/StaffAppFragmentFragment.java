@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.manage;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,9 +55,15 @@ public class StaffAppFragmentFragment extends DialogFragment {
         return fragment;
     }
 
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(STYLE_NORMAL,R.style.AppTheme);
+    }
 
     @BindView(R.id.title)
     TextView title;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

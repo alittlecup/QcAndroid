@@ -57,7 +57,7 @@ public class MeetingFragment extends BaseFragment {
         mRecyclerviewRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mRefreshSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         mToolbar.setTitle("会议培训");
 

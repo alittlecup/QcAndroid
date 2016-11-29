@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,7 +113,26 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
             }
         }
 
+        Calendar c = Calendar.getInstance();
+        startdate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
 
+
+        c.add(Calendar.MONTH,2);
+        c.set(Calendar.DAY_OF_MONTH,1);
+        c.add(Calendar.DATE,-1);
+        enddate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
+
+        ArrayList<Integer> defautxxx = new ArrayList<>();
+        defautxxx.add(1);
+        defautxxx.add(3);
+        defautxxx.add(5);
+        defautxxx.add(7);
+        mData.add(new BatchCircleItem(new CmBean(defautxxx,DateUtils.getDateFromHHmm("9:00"),DateUtils.getDateFromHHmm("12:00"))));
+        defautxxx.clear();
+        defautxxx.add(2);
+        defautxxx.add(4);
+        defautxxx.add(5);
+        mData.add(new BatchCircleItem(new CmBean(defautxxx,DateUtils.getDateFromHHmm("12:00"),DateUtils.getDateFromHHmm("20:00"))));
         mData.add(0, new AddBatchCircleItem(getString(R.string.add_course_circle)));
         mAdapter = new CommonFlexAdapter(mData, this);
         batchDate.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -168,6 +188,14 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
                         startdate.setContent(DateUtils.Date2YYYYMMDD(date));
 
                         pwTime.dismiss();
+                        if (TextUtils.isEmpty(enddate.getContent())){
+                            Calendar c = Calendar.getInstance();
+                            c.add(Calendar.MONTH,2);
+                            c.set(Calendar.DAY_OF_MONTH,1);
+                            c.add(Calendar.DATE,-1);
+                            enddate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
+                        }
+
                     }
                 });
                 pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());

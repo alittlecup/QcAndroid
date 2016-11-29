@@ -102,7 +102,7 @@ public class GuideSetGymFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
         unbinder = ButterKnife.bind(GuideSetGymFragment.this, view);
-        Glide.with(getContext()).load(brandImgUrl).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
+        Glide.with(getContext()).load(brandImgUrl).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(brandImg, getContext()));
         brandName.setText(brandNameStr);
         RxBus.getBus().post(new EventStep.Builder().step(0).build());
         RxBusAdd(EventAddress.class)
@@ -155,7 +155,7 @@ public class GuideSetGymFragment extends BaseFragment {
                 startActivityForResult(toChooseBrand, 1);
                 break;
             case R.id.layout_gym_img:
-                ChoosePictureFragmentDialog.newInstance().show(getFragmentManager(), "");
+                ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
                 break;
             case R.id.gym_address:
                 RxPermissions.getInstance(getContext())

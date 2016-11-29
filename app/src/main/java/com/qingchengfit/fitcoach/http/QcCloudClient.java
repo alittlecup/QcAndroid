@@ -371,7 +371,7 @@ public class QcCloudClient {
             @QueryMap Map<String, String> params);
 
         //获取教练所有学员
-        @GET("/api/v1/coaches/{id}/students/") rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id);
+        @GET("/api/v2/coaches/{id}/students/") rx.Observable<QcAllStudentResponse> qcGetAllStudent(@Path("id") int id,@QueryMap HashMap<String,Object> params);
 
         //获取所有课程计划
         @GET("/api/coaches/{id}/plans/") rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id);
@@ -510,6 +510,9 @@ public class QcCloudClient {
         //获取场地列表
         @GET("/api/v1/coaches/{coach_id}/spaces/")
         rx.Observable<QcResponseSpaces> qcGetSpace(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
+        //拉去卡列表
+        @GET("/api/v2/coaches/{coach_id}/cardtpls/")
+        rx.Observable<QcResponse> qcGetCard(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
 
     }
 

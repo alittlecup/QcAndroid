@@ -32,6 +32,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
+import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
@@ -174,7 +175,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {
-                return WebFragment.newInstance("http://cloudtest.qingchengfit.cn/mobile/coach/discover/");
+                return MainWebFragment.newInstance("http://cloudtest.qingchengfit.cn/mobile/coach/discover/");
             } else
                 return new MineFragmentFragment();
         }

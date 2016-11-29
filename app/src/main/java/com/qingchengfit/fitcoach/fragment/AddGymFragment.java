@@ -37,8 +37,8 @@ public class AddGymFragment extends GuideSetGymFragment {
         if (view instanceof ViewGroup) {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar)v.findViewById(R.id.toolbar);
-            ((ViewGroup) view).addView(tb, 0);
-            ((TextView) tb.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
+            ((ViewGroup) view).addView(v, 0);
+            ((TextView) v.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
             tb.setNavigationIcon(R.drawable.ic_arrow_left);
             tb.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

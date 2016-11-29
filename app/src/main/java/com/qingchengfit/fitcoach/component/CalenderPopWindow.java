@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import cn.qingchengfit.widgets.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -58,10 +59,18 @@ public class CalenderPopWindow {
     }
 
     public void show(View view, int x, int y) {
-        int vh = view.getMeasuredHeight();
+        int vw = view.getMeasuredWidth();
         if (mPopupWindow != null){
             viewContent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY,x, y+255);
+            int xoffset = 0;
+            if (x-150 < vw/2)
+                viewContent.setBackgroundResource(R.drawable.bg_timeline_card);
+            else {
+                viewContent.setBackgroundResource(R.drawable.bg_timeline_card_right);
+                xoffset = MeasureUtils.dpToPx(150f,mContext.getResources());
+            }
+
+            mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY,x-xoffset, y+ MeasureUtils.dpToPx(52f,mContext.getResources()));
 
         }
     }
