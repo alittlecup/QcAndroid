@@ -4,5 +4,4 @@
       android:layout_height="@dimen/qc_divider_height"
       android:background="@color/divider_grey"
     >
-
 </View>

@@ -126,7 +126,7 @@ public class GuideSetGymFragment extends BaseFragment {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        Glide.with(getContext()).load(s).into(gymImg);
+                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(gymImg,getContext()));
                                         imgUrl = s;
                                     }
                                 });

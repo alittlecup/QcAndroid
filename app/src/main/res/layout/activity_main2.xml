@@ -22,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@color/white"
+        android:gravity="center_vertical"
         app:text_size="12sp"
+        app:text_select_color="@color/primary"
         />
 </LinearLayout>

@@ -73,7 +73,7 @@
             android:id="@+id/gym_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            tools:src="@drawable/ic_default_header" />
+            app:srcCompat="@drawable/ic_default_header" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -89,7 +89,8 @@
         android:layout_height="wrap_content"
         app:civ_hint="@string/please_input_gym_name"
         app:civ_lable="@string/gym_name"
-        app:civ_nonnull="true" />
+        app:civ_nonnull="true"
+        />
 
     <include layout="@layout/divider_grey_left_right" />
 
@@ -102,6 +103,7 @@
         app:civ_nonnull="true"
         app:civ_showright="true"
         app:civ_clickable="true"
+        app:civ_showdivier="false"
         />
     <include layout="@layout/divider_grey"/>
 

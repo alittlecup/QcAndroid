@@ -57,8 +57,8 @@ public class MyCoursePlanFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbar.setTitle(getString(R.string.my_course_template));
-        toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
+        toolbarTitle.setText(getString(R.string.my_course_template));
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {

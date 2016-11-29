@@ -77,7 +77,7 @@ public class DatePicker extends DialogFragment {
         super.onResume();
     }
 
-    @OnClick(R.id.bg)
+    @OnClick({R.id.bg,R.id.bg_up})
     public void onBg(){
         this.dismiss();
     }

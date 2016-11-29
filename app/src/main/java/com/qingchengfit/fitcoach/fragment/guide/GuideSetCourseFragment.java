@@ -19,7 +19,6 @@ import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.bean.base.Course;
-import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
@@ -88,7 +87,7 @@ public class GuideSetCourseFragment extends BaseFragment {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(courseImg,getContext()));
+                                        Glide.with(getContext()).load(s).into(courseImg);
                                         imgUrl = s;
                                     }
                                 });

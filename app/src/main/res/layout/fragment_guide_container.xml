@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            app:stpi_lineColor="@color/text_grey"
+            app:stpi_lineColor="#DDDDDD"
+            app:stpi_circleColor="#DDDDDD"
             app:stpi_showStepNumberInstead="true"
             app:stpi_stepCount="3"
             app:stpi_circleStrokeWidth="2dp"
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:paddingRight="14dp"
                 android:text="安排课程"
                 />
 
