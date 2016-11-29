@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="38dp">
+              android:layout_height="50dp">
     <ImageView
         android:visibility="gone"
         android:id="@+id/background"

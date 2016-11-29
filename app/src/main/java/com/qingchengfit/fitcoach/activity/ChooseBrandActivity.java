@@ -8,7 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
@@ -20,14 +23,9 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.http.bean.User;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -41,6 +39,7 @@ public class ChooseBrandActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recycleview) RecyclerView recycleview;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     private Subscription sp;
     List<Brand> datas = new ArrayList<>();
@@ -50,7 +49,7 @@ public class ChooseBrandActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recyleview_toolbar);
         ButterKnife.bind(this);
-        toolbar.setTitle(R.string.choose_brand);
+        toolbarTitle.setText(R.string.choose_brand);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -62,8 +61,7 @@ public class ChooseBrandActivity extends AppCompatActivity {
         datas = new ArrayList<>();
         adapter = new BrandManageAdapterAdapter(datas);
         recycleview.setLayoutManager(new LinearLayoutManager(this));
-        recycleview.addItemDecoration(
-            new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recycleview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recycleview.setAdapter(adapter);
 
         queryData();
@@ -92,25 +90,18 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                 @Override public void onItemClick(View v, int pos) {
                                     if (pos < datas.size() - 1) {
                                         if (datas.get(pos).isHas_add_permission()) {
-                                            setResult(RESULT_OK, IntentUtils.instancePacecle(
-                                                qcResponseBrands.data.brands.get(pos)));
+                                            setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
                                             ChooseBrandActivity.this.finish();
-                                            overridePendingTransition(R.anim.slide_hold,
-                                                R.anim.slide_top_out);
+                                            overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
                                         } else {
-                                            ToastUtils.show(String.format(Locale.CHINA,
-                                                getString(R.string.no_permission_brand),
+                                            ToastUtils.show(String.format(Locale.CHINA, getString(R.string.no_permission_brand),
                                                 datas.get(pos).getCreated_by() == null
-                                                    || datas.get(pos).getCreated_by().getUsername()
-                                                    == null ? "" : datas.get(pos)
-                                                    .getCreated_by()
-                                                    .getUsername()));
+                                                    || datas.get(pos).getCreated_by().getUsername() == null ? ""
+                                                    : datas.get(pos).getCreated_by().getUsername()));
                                         }
                                     } else {
                                         if (Long.parseLong(datas.get(pos).getId()) < 0) {
-                                            startActivityForResult(
-                                                new Intent(ChooseBrandActivity.this,
-                                                    AddBrandActivity.class), 1);
+                                            startActivityForResult(new Intent(ChooseBrandActivity.this, AddBrandActivity.class), 1);
                                         }
                                     }
                                 }

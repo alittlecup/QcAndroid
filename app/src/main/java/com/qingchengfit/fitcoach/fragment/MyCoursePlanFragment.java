@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -24,14 +27,8 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -41,16 +38,13 @@ import rx.schedulers.Schedulers;
  */
 public class MyCoursePlanFragment extends BaseFragment {
     public static final String TAG = MyCoursePlanFragment.class.getName();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.course_add)
-    Button courseAdd;
-    @BindView(R.id.no_data)
-    LinearLayout noData;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    @BindView(R.id.course_add) Button courseAdd;
+    @BindView(R.id.no_data) LinearLayout noData;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     private GymsAdapter mGymAdapter;
     private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
     private Unbinder unbinder;
@@ -59,13 +53,10 @@ public class MyCoursePlanFragment extends BaseFragment {
 
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setTitle(getString(R.string.my_course_template));
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
@@ -81,139 +72,126 @@ public class MyCoursePlanFragment extends BaseFragment {
         mGymAdapter = new GymsAdapter(adapterData);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
+            @Override public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
                 toWeb.putExtra("url", adapterData.get(pos).url);
                 startActivityForResult(toWeb, pos);
             }
         });
         recyclerview.setAdapter(mGymAdapter);
-//        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(qcAllCoursePlanResponse -> {
-//                    adapterData.clear();
-//                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-//                    if (adapterData.size() == 0) {
-//                        noData.setVisibility(View.VISIBLE);
-//                    } else {
-//                        noData.setVisibility(View.GONE);
-//                        mGymAdapter.notifyDataSetChanged();
-//                    }
-//
-//
-//                });
+        //        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
+        //                .observeOn(AndroidSchedulers.mainThread())
+        //                .subscribe(qcAllCoursePlanResponse -> {
+        //                    adapterData.clear();
+        //                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+        //                    if (adapterData.size() == 0) {
+        //                        noData.setVisibility(View.VISIBLE);
+        //                    } else {
+        //                        noData.setVisibility(View.GONE);
+        //                        mGymAdapter.notifyDataSetChanged();
+        //                    }
+        //
+        //
+        //                });
         freshData();
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 freshData();
             }
         });
         return view;
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
+    @Override public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             freshData();
         }
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         freshData();
     }
 
     public void freshData() {
-        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<QcAllCoursePlanResponse>() {
-                    @Override
-                    public void onCompleted() {
+        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<QcAllCoursePlanResponse>() {
+                @Override public void onCompleted() {
 
+                }
+
+                @Override public void onError(Throwable e) {
+
+                }
+
+                @Override public void onNext(QcAllCoursePlanResponse qcAllCoursePlanResponse) {
+                    adapterData.clear();
+                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                    if (adapterData.size() == 0) {
+                        refresh.setVisibility(View.GONE);
+                        noData.setVisibility(View.VISIBLE);
+                    } else {
+                        noData.setVisibility(View.GONE);
+                        refresh.setVisibility(View.VISIBLE);
+                        mGymAdapter.notifyDataSetChanged();
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(QcAllCoursePlanResponse qcAllCoursePlanResponse) {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        if (adapterData.size() == 0) {
-                            refresh.setVisibility(View.GONE);
-                            noData.setVisibility(View.VISIBLE);
-                        } else {
-                            noData.setVisibility(View.GONE);
-                            refresh.setVisibility(View.VISIBLE);
-                            mGymAdapter.notifyDataSetChanged();
-                        }
-                        refresh.setRefreshing(false);
-                    }
-                });
+                    refresh.setRefreshing(false);
+                }
+            });
     }
 
-
-    @OnClick(R.id.course_add)
-    public void onAddCourse() {
+    @OnClick(R.id.course_add) public void onAddCourse() {
         Intent toWeb = new Intent(getContext(), WebActivity.class);
         toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
         startActivityForResult(toWeb, 10001);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == Activity.RESULT_OK){
+        //        if (resultCode == Activity.RESULT_OK){
 
         if (resultCode > 1000) {
             QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(qcAllCoursePlanResponse -> {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        mGymAdapter.notifyDataSetChanged();
-                        recyclerview.scrollToPosition(adapterData.size() - 1);
-                    }, throwable -> {
-                    }, () -> {
-                    });
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcAllCoursePlanResponse -> {
+                    adapterData.clear();
+                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                    mGymAdapter.notifyDataSetChanged();
+                    recyclerview.scrollToPosition(adapterData.size() - 1);
+                }, throwable -> {
+                }, () -> {
+                });
         } else if (requestCode >= 0 && requestCode < 10000) {
-            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(qcAllCoursePlanResponse -> {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        mGymAdapter.notifyItemChanged(requestCode);
-                    }, throwable -> {
-                    }, () -> {
-                    });
+            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcAllCoursePlanResponse -> {
+                    adapterData.clear();
+                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                    mGymAdapter.notifyItemChanged(requestCode);
+                }, throwable -> {
+                }, () -> {
+                });
         }
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
     public static class GymsVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_gym_header)
-        ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name)
-        TextView itemGymName;
-        @BindView(R.id.item_gym_phonenum)
-        TextView itemGymPhonenum;
-        @BindView(R.id.qc_identify)
-        ImageView itemIsPersonal;
-        @BindView(R.id.item_gym_brand)
-        TextView itemItemBrand;
+        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
+        @BindView(R.id.item_gym_name) TextView itemGymName;
+        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
+        @BindView(R.id.qc_identify) ImageView itemIsPersonal;
+        @BindView(R.id.item_gym_brand) TextView itemItemBrand;
+
         public GymsVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -223,7 +201,6 @@ public class MyCoursePlanFragment extends BaseFragment {
     class GymsAdapter extends RecyclerView.Adapter<GymsVH> implements View.OnClickListener {
         private List<QcAllCoursePlanResponse.Plan> datas;
         private OnRecycleItemClickListener listener;
-
 
         public GymsAdapter(List datas) {
             this.datas = datas;
@@ -237,15 +214,13 @@ public class MyCoursePlanFragment extends BaseFragment {
             this.listener = listener;
         }
 
-        @Override
-        public GymsVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override public GymsVH onCreateViewHolder(ViewGroup parent, int viewType) {
             GymsVH holder = new GymsVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(GymsVH holder, int position) {
+        @Override public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
             QcAllCoursePlanResponse.Plan detail = datas.get(position);
             holder.itemItemBrand.setVisibility(View.GONE);
@@ -266,16 +241,12 @@ public class MyCoursePlanFragment extends BaseFragment {
             holder.itemGymHeader.setVisibility(View.GONE);
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
-            if (listener != null && (int) v.getTag() < datas.size())
-                listener.onItemClick(v, (int) v.getTag());
+        @Override public void onClick(View v) {
+            if (listener != null && (int) v.getTag() < datas.size()) listener.onItemClick(v, (int) v.getTag());
         }
     }
 }

@@ -170,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/divider_grey"
                 />
+            <include layout="@layout/divider_grey"/>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

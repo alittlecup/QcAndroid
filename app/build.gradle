@@ -225,7 +225,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.2'
     compile 'com.github.badoualy:stepper-indicator:1.0.6'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     compile 'com.hkm.taglib:tag:1.6.0'
 
 

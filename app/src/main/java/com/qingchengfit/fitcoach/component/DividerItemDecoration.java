@@ -133,10 +133,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        //if (mOrientation == LinearLayoutManager.VERTICAL) {
-        //    outRect.set(0, 0, 0, MeasureUtils.dpToPx((float) mItemSize, context.getResources()));
-        //} else {
-        //    outRect.set(0, 0, MeasureUtils.dpToPx((float) mItemSize, context.getResources()), 0);
-        //}
+        if (mOrientation == LinearLayoutManager.VERTICAL) {
+            //outRect.set(0, 0, 0, MeasureUtils.dpToPx((float) mItemSize, context.getResources()));
+            outRect.set(0, 0, 0, mItemSize);
+        } else {
+            outRect.set(0, 0, mItemSize, 0);
+        }
     }
 }
