@@ -174,7 +174,6 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @Override
     public void editBaseInfo(CourseDetail courseDetail) {
 
-//        mCallbackActivity.setToolbar("编辑基本信息", false, null, R.menu.menu_compelete, menuItemClickListener);
         mCourseInfoFragment = CourseBaseInfoEditFragment.newInstance(courseDetail);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.course_layout, mCourseInfoFragment)

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -8,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
@@ -18,16 +23,9 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
+import javax.inject.Inject;
 import rx.functions.Action1;
-
-
-
 
 /**
  * power by
@@ -51,24 +49,18 @@ import rx.functions.Action1;
  */
 public class CourseBaseInfoEditFragment extends BaseFragment {
 
-    @BindView(R.id.header_img)
-    ImageView headerImg;
-    @BindView(R.id.header_layout)
-    RelativeLayout headerLayout;
-    @BindView(R.id.course_name)
-    CommonInputView courseName;
-    @BindView(R.id.course_length)
-    CommonInputView courseLength;
-    @BindView(R.id.course_min_count)
-    CommonInputView courseMinCount;
-    @BindView(R.id.default_course_plan)
-    CommonInputView defaultCoursePlan;
-    @BindView(R.id.single_count)
-    CommonInputView singleCount;
+    @BindView(R.id.header_img) ImageView headerImg;
+    @BindView(R.id.header_layout) RelativeLayout headerLayout;
+    @BindView(R.id.course_name) CommonInputView courseName;
+    @BindView(R.id.course_length) CommonInputView courseLength;
+    @BindView(R.id.course_min_count) CommonInputView courseMinCount;
+    @BindView(R.id.default_course_plan) CommonInputView defaultCoursePlan;
+    @BindView(R.id.single_count) CommonInputView singleCount;
 
     private CourseDetail mCourse;
     private Unbinder unbinder;
-
+    @Inject
+    CoachService mCoachService;
 
     public static CourseBaseInfoEditFragment newInstance(CourseDetail course) {
         Bundle args = new Bundle();
@@ -78,46 +70,39 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         return fragment;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCourse = getArguments().getParcelable("course");
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_base_info_edit, container, false);
         unbinder = ButterKnife.bind(this, view);
+        if (getActivity() instanceof CourseActivity){
+            ((CourseActivity) getActivity()).getComponent().inject(this);
+        }
         if (mCourse != null) {
             Glide.with(getContext()).load(mCourse.getPhoto()).placeholder(R.drawable.ic_default_header).into(headerImg);
             courseName.setContent(mCourse.getName());
-            if (mCourse.getLength() != 0)
-                courseLength.setContent(Integer.toString(mCourse.getLength() / 60));
-            if (mCourse.getMin_users() != 0)
-                courseMinCount.setContent(Integer.toString(mCourse.getMin_users()));
-            if (mCourse.getCapacity() != 0)
-                singleCount.setContent(Integer.toString(mCourse.getCapacity()));
-
+            if (mCourse.getLength() != 0) courseLength.setContent(Integer.toString(mCourse.getLength() / 60));
+            if (mCourse.getMin_users() != 0) courseMinCount.setContent(Integer.toString(mCourse.getMin_users()));
+            if (mCourse.getCapacity() != 0) singleCount.setContent(Integer.toString(mCourse.getCapacity()));
 
             if (!mCourse.is_private()) {//团课
                 defaultCoursePlan.setVisibility(View.VISIBLE);
-                if (mCourse.getPlan() != null)
-                    defaultCoursePlan.setContent(mCourse.getPlan().getName());
+                if (mCourse.getPlan() != null) defaultCoursePlan.setContent(mCourse.getPlan().getName());
                 courseMinCount.setVisibility(View.VISIBLE);
             } else {//私教
                 courseMinCount.setVisibility(View.GONE);
                 defaultCoursePlan.setVisibility(View.GONE);
             }
-//                defaultCoursePlan.setContent();课程计划
-        }else {
+        } else {
             mCourse = new CourseDetail();
         }
         RxBusAdd(CoursePlan.class).subscribe(new Action1<CoursePlan>() {
-            @Override
-            public void call(CoursePlan coursePlan) {
+            @Override public void call(CoursePlan coursePlan) {
                 if (coursePlan.getId() > 0) {
                     defaultCoursePlan.setContent(coursePlan.getName());
                     mCourse.setPlan(coursePlan);
@@ -130,8 +115,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         return view;
     }
 
-    @Nullable
-    public CourseDetail getCourse() {
+    @Nullable public CourseDetail getCourse() {
         if (TextUtils.isEmpty(courseName.getContent())) {
             ToastUtils.show("请填写课程名称");
             return null;
@@ -141,15 +125,14 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             ToastUtils.show("请填写课程时长");
             return null;
         }
-        mCourse.setLength(Float.parseFloat(courseLength.getContent())*60) ;
+        mCourse.setLength(Float.parseFloat(courseLength.getContent()) * 60);
 
         if (courseMinCount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(courseMinCount.getContent())) {
             ToastUtils.show("请填写课程最小上课人数");
             return null;
         }
-        if (courseMinCount.getVisibility() == View.VISIBLE)
-            mCourse.setMin_users(Integer.parseInt(courseMinCount.getContent()));
-        if (TextUtils.isEmpty(singleCount.getContent())){
+        if (courseMinCount.getVisibility() == View.VISIBLE) mCourse.setMin_users(Integer.parseInt(courseMinCount.getContent()));
+        if (TextUtils.isEmpty(singleCount.getContent())) {
             ToastUtils.show("请填写单节可约人数");
             return null;
         }
@@ -157,54 +140,47 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
         return mCourse;
     }
 
-
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return CourseBaseInfoEditFragment.class.getName();
     }
 
-    @Override
-    public void onDetach() {
+    @Override public void onDetach() {
         super.onDetach();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick(R.id.default_course_plan)
-    public void onCoursePlan() {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.frag, ChooseCoursePlanFragment.newInstance((mCourse.getPlan() == null || mCourse.getPlan().getId()==null)?0L:mCourse.getPlan().getId()))
-                .addToBackStack("")
-                .commit();
-    }
+    @OnClick(R.id.default_course_plan) public void onCoursePlan() {
+        //getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frag, x).addToBackStack("").show(x).commit();
+        Intent toPlan = new Intent(getActivity(),CourseActivity.class);
+        toPlan.putExtra("service",mCoachService);
+        toPlan.putExtra("id",(mCourse.getPlan() == null || mCourse.getPlan().getId() == null) ? 0L : mCourse.getPlan().getId());
+        toPlan.putExtra("to",CourseActivity.TO_CHOOSE_PLAN);
+        startActivity(toPlan);
 
+    }
 
     /**
      * 选择头像
      */
-    @OnClick(R.id.header_layout)
-    public void onClick() {
+    @OnClick(R.id.header_layout) public void onClick() {
         ChoosePictureFragmentDialog choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
 
-            @Override
-            public void onChoosePicResult(boolean isSuccess, String filePath) {
+            @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                 if (isSuccess) {
                     showLoading();
                     RxRegiste(UpYunClient.rxUpLoad("course/", filePath).subscribe(new Action1<String>() {
-                        @Override
-                        public void call(String s) {
+                        @Override public void call(String s) {
                             Glide.with(getContext()).load(PhotoUtils.getSmall(s)).into(headerImg);
                             mCourse.setPhoto(s);
                             hideLoading();
                         }
                     }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
+                        @Override public void call(Throwable throwable) {
                             hideLoading();
                         }
                     }));
@@ -212,6 +188,5 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             }
         });
         choosePictureFragmentDialog.show(getFragmentManager(), "");
-
     }
 }

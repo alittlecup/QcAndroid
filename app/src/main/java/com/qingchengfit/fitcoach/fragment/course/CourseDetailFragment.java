@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.BusinessUtils;
-import com.qingchengfit.fitcoach.Utils.GymUtils;
+import com.qingchengfit.fitcoach.activity.QRActivity;
 import com.qingchengfit.fitcoach.adapter.CourseTeacherAdapter;
 import com.qingchengfit.fitcoach.adapter.ViewPaperEndlessAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
@@ -49,10 +50,13 @@ import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.component.TouchyWebView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import rx.functions.Action1;
 
 /**
  * power by
@@ -321,6 +325,10 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     showLoading();
+                    if (mCourseDetail.getShops().size() > 0){
+                        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+                        return;
+                    }
                     mPresenter.delCourse(App.coachid + "", mCourseDetail.getId());
                 }
             })
@@ -346,38 +354,23 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         ToastUtils.showDefaultStyle(content);
     }
 
+    @Override public void onStaff() {
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+    }
+
     /**
      * 封面管理
      */
     @OnClick(R.id.edit_jacket) public void onJacketVp() {
-        if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
-        //        if (GymUtils.isInBrand(gymBase)) {
-        //            if ((!mCourseDetail.is_private() && !SerPermisAction.checkAll(PermissionServerUtils.TEAMSETTING_CAN_CHANGE))
-        //                    || (mCourseDetail.is_private() && !SerPermisAction.checkAll(PermissionServerUtils.PRISETTING_CAN_CHANGE))) {
-        //                showAlert(R.string.alert_permission_forbid);
-        //                return;
-        //            }
-        //            if (mCourseDetail.getPermission() == 1) {//全权限
-        //                getFragmentManager().beginTransaction()
-        //                        .replace(mCallbackActivity.getFragId(), JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId()))
-        //                        .addToBackStack(getFragmentName())
-        //                        .commit();
-        //            } else {
-        //                showAlert("需要具有全部适用场馆管理员权限的用户才可以编辑封面照片。");
-        //            }
-        //        } else {
-        //
-        //
-        //            if (mCourseDetail.getShops().size() > 1) {
-        //                showAlert("此课程种类适用于多个场馆，请在【连锁运营】里对封面照片进行编辑");
-        //            } else {
-        getFragmentManager().beginTransaction()
-            .replace(R.id.frag,
-                JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
-            .addToBackStack(getFragmentName())
-            .commit();
-        //            }
-        //        }
+        if (mCourseDetail.getShops().size() > 0){
+            StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+            return;
+        }else {
+            getFragmentManager().beginTransaction()
+                .replace(R.id.frag, JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
+                .addToBackStack(getFragmentName())
+                .commit();
+        }
 
     }
 
@@ -385,39 +378,37 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
      * 查看评价详情
      */
     @OnClick(R.id.comments_detail) public void checkComments() {
-        if (GymUtils.isInBrand(coachService)) {
-            getFragmentManager().beginTransaction()
-                .replace(R.id.frag, ShopCommentsFragment.newInstance(mCourseDetail.getId()))
-                .addToBackStack(getFragmentName())
-                .commit();
-        } else {
+        //if (GymUtils.isInBrand(coachService)) {
+        //    getFragmentManager().beginTransaction()
+        //        .replace(R.id.frag, ShopCommentsFragment.newInstance(mCourseDetail.getId()))
+        //        .addToBackStack(getFragmentName())
+        //        .commit();
+        //} else {
             getFragmentManager().beginTransaction()
                 .replace(R.id.frag, CoachCommentListFragment.newInstance(mCourseDetail.getId()))
                 .addToBackStack(getFragmentName())
                 .commit();
-        }
+        //}
     }
 
     /**
      * 编辑简介 跳转二维码扫码
      */
     @OnClick(R.id.go_to_scan) public void gotoScan() {
-        if (!mPresenter.hasAllEditPermission(mCourseDetail)) return;
-        //        RxPermissions.getInstance(getContext())
-        //                .request(Manifest.permission.CAMERA)
-        //                .subscribe(new Action1<Boolean>() {
-        //                    @Override
-        //                    public void call(Boolean aBoolean) {
-        //                        if (aBoolean) {
-        //                            Intent toScan = new Intent(getActivity(), QRActivity.class);
-        //                            toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
-        //                            startActivity(toScan);
-        //                        } else {
-        //                            ToastUtils.show(getString(R.string.please_open_camera));
-        //                        }
-        //                    }
-        //                });
-        //
+                RxPermissions.getInstance(getContext())
+                        .request(Manifest.permission.CAMERA)
+                        .subscribe(new Action1<Boolean>() {
+                            @Override
+                            public void call(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    Intent toScan = new Intent(getActivity(), QRActivity.class);
+                                    toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
+                                    startActivity(toScan);
+                                } else {
+                                    ToastUtils.show(getString(R.string.please_open_camera));
+                                }
+                            }
+                        });
 
     }
 

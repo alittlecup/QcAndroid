@@ -27,8 +27,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
+import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.bean.base.Course;
@@ -132,9 +132,9 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         righticon.setVisibility(View.VISIBLE);
         accountType.setContent("已设置");
 
-        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (
+        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (
             mType == Configs.TYPE_PRIVATE
-                && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+                && !CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
             permissionView.setVisibility(View.VISIBLE);
         } else {
             permissionView.setVisibility(View.GONE);
@@ -294,6 +294,14 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         //    coachService.getShop_id(), PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
         //    showAlert(R.string.alert_permission_forbid);
         //} else {
+
+        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance().queryPermission(
+            com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE) )||
+            (mType == Configs.TYPE_PRIVATE && !CurentPermissions.newInstance().queryPermission(
+                com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))){
+            showAlert(R.string.sorry_no_permission);
+            return;
+        }
             new MaterialDialog.Builder(getContext()).content("是否删除该排期")
                 .autoDismiss(true)
                 .canceledOnTouchOutside(true)

@@ -11,6 +11,7 @@ import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
 import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
+import com.qingchengfit.fitcoach.bean.ScanBody;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -86,6 +87,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseJacket;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateBatchDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
@@ -277,6 +279,10 @@ public class QcCloudClient {
 
         //获取用户详情
         @GET("/api/coaches/{id}/detail/") rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
+
+
+        @GET("/api/v2/coaches/{coach_id}/permissions/")
+        rx.Observable<QcResponsePermission> qcGetPermission(@Path("coach_id") String coach_id,@QueryMap HashMap<String,Object> params);
 
         //
         //        //获取通知 分页和不分页接口 ,后者只为拿 未读
@@ -696,6 +702,14 @@ public class QcCloudClient {
         //    @Path("batchid") String batchid, @Query("id") String gymid, @Query("model") String model);
         @DELETE("/api/v1/coaches/{coach_id}/batches/{batch_id}/") rx.Observable<QcResponse> qcDelBatch(@Path("coach_id") String coach_id,
             @Path("batch_id") String batch_id, @QueryMap HashMap<String, String> params);
+
+
+
+        /**
+         *  扫码
+         */
+        @PUT("/api/scans/{uuid}/")
+        rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body ScanBody body);
 
     }
 

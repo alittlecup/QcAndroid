@@ -25,7 +25,9 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
+import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
+import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
@@ -34,12 +36,14 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -144,6 +148,29 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     mCoachService = coachService;
                     title.setText(coachService.name);
                     Glide.with(getContext()).load(coachService.photo).into(shopImg);
+                    HashMap<String, Object> params = new HashMap<String, Object>();
+                    params.put("id", mCoachService.getId());
+                    params.put("model", mCoachService.getModel());
+                    RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<QcResponsePermission>() {
+                            @Override public void call(QcResponsePermission qcResponsePermission) {
+                                if (ResponseConstant.checkSuccess(qcResponsePermission)) {
+                                    CurentPermissions.newInstance().permissionList.clear();
+                                    for (int i = 0; i < qcResponsePermission.data.permissions.size(); i++) {
+                                        CurentPermissions.newInstance().permissionList.put(qcResponsePermission.data.permissions.get(i).key,
+                                            qcResponsePermission.data.permissions.get(i).value);
+                                    }
+                                } else {
+                                    cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                                }
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override public void call(Throwable throwable) {
+                                cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
+                            }
+                        }));
                 }
             }
         });
@@ -154,35 +181,34 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @Override public void onResume() {
         super.onResume();
-
     }
 
-    public void getServer(){
+    public void getServer() {
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcCoachServiceResponse>() {
                 @Override public void call(QcCoachServiceResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data.services == null || qcResponse.data.services.size() ==0 ){
+                        if (qcResponse.data.services == null || qcResponse.data.services.size() == 0) {
                             Intent toGuide = new Intent(getActivity(), GuideActivity.class);
                             startActivity(toGuide);
                             getActivity().finish();
                             return;
                         }
                         if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
-                            if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null){
+                            if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null) {
                                 CoachService coachService = ((Main2Activity) getActivity()).getCoachService();
                                 for (int i = 0; i < qcResponse.data.services.size(); i++) {
-                                    if (coachService.id == qcResponse.data.services.get(i).id &&
-                                        coachService.model.equalsIgnoreCase(qcResponse.data.services.get(i).model)
-                                        ){
+                                    if (coachService.id == qcResponse.data.services.get(i).id && coachService.model.equalsIgnoreCase(
+                                        qcResponse.data.services.get(i).model)) {
                                         mCoachService = qcResponse.data.services.get(i);
                                         break;
                                     }
                                 }
-                            }else
+                            } else {
                                 mCoachService = qcResponse.data.services.get(0);
+                            }
                             title.setText(mCoachService.name);
                             Glide.with(getContext()).load(mCoachService.photo).into(shopImg);
                         } else {
@@ -225,30 +251,55 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             int res = ((DailyWorkItem) mAdapter.getItem(position)).bean.resImg;
             switch (res) {
                 case R.drawable.ic_weight://排课
-                    Intent toGuide = new Intent(getActivity(), BatchActivity.class);
-                    toGuide.putExtra("service", mCoachService);
-                    startActivity(toGuide);
+                    if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR)
+                        || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)) {
+
+                        Intent toGuide = new Intent(getActivity(), BatchActivity.class);
+                        toGuide.putExtra("service", mCoachService);
+                        startActivity(toGuide);
+                    } else {
+                        showAlert(getString(R.string.sorry_no_permission));
+                    }
 
                     break;
                 case R.drawable.ic_category_course://课程种类
-                    Intent toCourse = new Intent(getActivity(), CourseActivity.class);
-                    toCourse.putExtra("service", mCoachService);
-                    startActivity(toCourse);
+                    if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMSETTING)
+                        || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRISETTING)) {
 
+                        Intent toCourse = new Intent(getActivity(), CourseActivity.class);
+                        toCourse.putExtra("service", mCoachService);
+                        startActivity(toCourse);
+                    } else {
+                        showAlert(getString(R.string.sorry_no_permission));
+                    }
                     break;
                 case R.drawable.ic_users_student:
-                    Intent toStudent = new Intent(getActivity(), FragActivity.class);
-                    toStudent.putExtra("type", 9);
-                    toStudent.putExtra("service", mCoachService);
-                    startActivity(toStudent);
+                    if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.MANAGE_MEMBERS)
+                        || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS)) {
+                        Intent toStudent = new Intent(getActivity(), FragActivity.class);
+                        toStudent.putExtra("type", 9);
+                        toStudent.putExtra("service", mCoachService);
+                        startActivity(toStudent);
+                    } else {
+                        showAlert(getString(R.string.sorry_no_permission));
+                    }
                     break;
                 case R.drawable.ic_img_statement_signin:
+                    if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.COST_REPORT)) {
+                        showAlert(R.string.alert_permission_forbid);
+                        return true;
+                    }
                     Intent toCourseStatement = new Intent(getActivity(), FragActivity.class);
                     toCourseStatement.putExtra("type", 0);
                     toCourseStatement.putExtra("service", mCoachService);
                     startActivity(toCourseStatement);
                     break;
                 case R.drawable.ic_sale_statement:
+                    if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.SALES_REPORT)
+                        && CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
+                        showAlert(R.string.alert_permission_forbid);
+                        return true;
+                    }
                     Intent tosale = new Intent(getActivity(), FragActivity.class);
                     tosale.putExtra("type", 1);
                     tosale.putExtra("service", mCoachService);
@@ -256,6 +307,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
                     break;
                 case R.drawable.ic_template_coursepaln:
+                    if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PLANSSETTING)) {
+                        showAlert(R.string.alert_permission_forbid);
+                        return true;
+                    }
                     Intent toPlan = new Intent(getActivity(), FragActivity.class);
                     toPlan.putExtra("type", 8);
                     startActivity(toPlan);

@@ -72,7 +72,7 @@ public class CourseFragment extends BaseFragment {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 getFragmentManager().beginTransaction()
                     .replace(R.id.frag,AddCourseFragment.newInstance(viewpager.getCurrentItem() == 1))
-                    .addToBackStack(null)
+                    .addToBackStack(getFragmentName())
                     .commit();
                 return true;
             }

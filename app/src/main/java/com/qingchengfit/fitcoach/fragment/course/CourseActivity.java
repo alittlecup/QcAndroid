@@ -16,6 +16,7 @@ import com.qingchengfit.fitcoach.http.RestRepository;
 
 public class CourseActivity extends BaseAcitivity {
     public static final int TO_CHOOSE = 1;
+    public static final int TO_CHOOSE_PLAN = 2;
 
     private CourseComponent mComponent;
     @Override
@@ -34,6 +35,9 @@ public class CourseActivity extends BaseAcitivity {
         switch (to){
             case TO_CHOOSE:
                 f = new ChooseCourseFragmentBuilder(getIntent().getIntExtra("type", Configs.TYPE_GROUP)).build();
+                break;
+            case TO_CHOOSE_PLAN:
+                f = ChooseCoursePlanFragment.newInstance(getIntent().getLongExtra("id",0));
                 break;
         }
         getSupportFragmentManager().beginTransaction()

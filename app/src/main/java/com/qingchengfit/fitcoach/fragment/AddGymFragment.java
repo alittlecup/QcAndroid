@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -25,18 +26,19 @@ import rx.schedulers.Schedulers;
  * <p>
  * 与引导公用  ！！！！！！！！！！！
  */
-
 @FragmentWithArgs
 public class AddGymFragment extends GuideSetGymFragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.findViewById(R.id.hint).setVisibility(View.GONE);
         ((Button) view.findViewById(R.id.next_step)).setText(R.string.login_comfirm);
-        if (view instanceof ViewGroup) {
+        if (view instanceof LinearLayout) {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar)v.findViewById(R.id.toolbar);
+            ((TextView)v.findViewById(R.id.toolbar_title)).setText("新建健身房");
             ((ViewGroup) view).addView(v, 0);
             ((TextView) v.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
             tb.setNavigationIcon(R.drawable.ic_arrow_left);

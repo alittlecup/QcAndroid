@@ -159,7 +159,7 @@ public class ChooseCoursePlanFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
 
     @OnClick(R.id.copy_link)

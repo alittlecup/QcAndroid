@@ -114,10 +114,6 @@ public class CourseDetailPresenter extends BasePresenter {
                     return false;
                 }
             }
-            //            else if (gymStatus.getSingle()) {
-            //                view.showDelFailed(R.string.alert_edit_course_all_permission);
-
-            //            }
             else {
                 view.showDelFailed("此课程种类适用于多个场馆，请在【连锁运营】里进行编辑");
                 return false;
@@ -201,5 +197,7 @@ public class CourseDetailPresenter extends BasePresenter {
         void onDelSuccess();
 
         void onDelfailed(String content);
+
+        void onStaff();
     }
 }

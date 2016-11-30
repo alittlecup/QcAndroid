@@ -229,6 +229,7 @@ dependencies {
     compile 'com.hkm.taglib:tag:1.6.0'
 
 
+    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
 
     apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'

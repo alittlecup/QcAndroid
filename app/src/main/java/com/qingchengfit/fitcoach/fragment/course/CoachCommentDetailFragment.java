@@ -5,19 +5,19 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.BusinessUtils;
-import com.qingchengfit.fitcoach.bean.CourseTeacher;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.StringUtils;
 import co.hkm.soltag.TagContainerLayout;
-
+import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.BusinessUtils;
+import com.qingchengfit.fitcoach.bean.CourseTeacher;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 /**
  * power by
@@ -41,18 +41,15 @@ import co.hkm.soltag.TagContainerLayout;
  */
 public class CoachCommentDetailFragment extends BaseFragment {
 
-    @BindView(R.id.coach_score)
-    TextView coachScore;
-    @BindView(R.id.course_score)
-    TextView courseScore;
-    @BindView(R.id.server_score)
-    TextView serverScore;
-    @BindView(R.id.comments)
-    TagContainerLayout comments;
+    @BindView(R.id.coach_score) TextView coachScore;
+    @BindView(R.id.course_score) TextView courseScore;
+    @BindView(R.id.server_score) TextView serverScore;
+    @BindView(R.id.comments) TagContainerLayout comments;
+    @BindView(R.id.coach_img) ImageView coachImg;
+    @BindView(R.id.coach_name) TextView coachName;
 
     private CourseTeacher mCourseTeacher;
     private Unbinder unbinder;
-
 
     public static CoachCommentDetailFragment newInstance(CourseTeacher courseTeacher) {
 
@@ -63,25 +60,24 @@ public class CoachCommentDetailFragment extends BaseFragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
+        if (getArguments() != null) {
             mCourseTeacher = getArguments().getParcelable("c");
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_coach_comment, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        if (mCourseTeacher == null || mCourseTeacher.getImpressions() == null
-                || mCourseTeacher.getImpressions().size() == 0){
+        if (mCourseTeacher == null || mCourseTeacher.getImpressions() == null || mCourseTeacher.getImpressions().size() == 0) {
             comments.setVisibility(View.GONE);
-        }else {
+        } else {
             comments.setVisibility(View.VISIBLE);
             comments.setTags(BusinessUtils.impress2Str(mCourseTeacher.getImpressions()));
+            coachName.setText(mCourseTeacher.getUser().name);
+            Glide.with(getContext()).load(mCourseTeacher.getUser().header).asBitmap().into(new CircleImgWrapper(coachImg,getContext()));
         }
         coachScore.setText(StringUtils.getFloatDot1(mCourseTeacher.getTeacher_score()));
         courseScore.setText(StringUtils.getFloatDot1(mCourseTeacher.getCourse_score()));
@@ -90,13 +86,11 @@ public class CoachCommentDetailFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return CoachCommentDetailFragment.class.getName();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }

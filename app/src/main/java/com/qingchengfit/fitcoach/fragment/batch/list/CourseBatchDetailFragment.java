@@ -22,9 +22,9 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
-import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
+import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -157,9 +157,9 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
      * 添加课程排期
      */
     @OnClick(R.id.add_batch_btn) public void onAddCouseManage() {
-        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) || (
-            mType == Configs.TYPE_PRIVATE
-                && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE))) {
+        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance()
+            .queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_WRITE)) || (mType == Configs.TYPE_PRIVATE
+            && !CurentPermissions.newInstance().queryPermission((PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_WRITE)))) {
             showAlert(R.string.alert_permission_forbid);
             return;
         }
@@ -195,9 +195,12 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             }
             mDatas.add(new BatchItem(batch.get(i)));
         }
-        if (mDatas.size() == 0)
-            mDatas.add(new HintItem.Builder().text(mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
-                : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
+        if (mDatas.size() == 0) {
+            mDatas.add(new HintItem.Builder().text(
+                mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course) : getString(R.string.hint_no_group_course))
+                .resBg(R.color.white)
+                .build());
+        }
         mCommonFlexAdapter.notifyDataSetChanged();
     }
 

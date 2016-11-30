@@ -1,7 +1,6 @@
-package com.qingchengfit.fitcoach.action;
+package com.qingchengfit.fitcoach.bean;
 
-import com.qingchengfit.fitcoach.bean.CurentPermissions;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * power by
@@ -21,20 +20,28 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 16/11/17.
+ * Created by Paper on 2016/11/30.
  */
 
-public class SerPermisAction {
-    public static boolean checkAtLeastOne(String s){
-        return CurentPermissions.newInstance().queryPermission(s);
+public class CurentPermissions {
+
+    public static CurentPermissions cur;
+
+    public static CurentPermissions newInstance() {
+        if (cur == null)
+            cur = new CurentPermissions();
+        return cur;
     }
 
-    public static boolean checkMuti(String prisettingCanChange, List<String> shopIdList) {
-        return CurentPermissions.newInstance().queryPermission(prisettingCanChange);
+    public HashMap<String,Boolean> permissionList = new HashMap<>();
+
+    public boolean queryPermission(String key){
+        //if (permissionList.keySet().contains(key))
+            //return permissionList.get(key);
+        //else return false;
+        return true;
     }
 
-    public static boolean check(String id, String prisettingCanChange) {
 
-       return CurentPermissions.newInstance().queryPermission(prisettingCanChange);
-    }
+
 }

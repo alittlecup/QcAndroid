@@ -363,6 +363,9 @@
         android:screenOrientation="portrait"/>
     <activity
         android:name=".activity.MeetActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".activity.QRActivity"
         android:screenOrientation="portrait">
     </activity>
     <activity android:name=".fragment.schedule.StudentOrderPreviewActivity">

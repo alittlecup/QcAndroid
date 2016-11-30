@@ -27,6 +27,7 @@ import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.event.DelCourseEvent;
 import com.qingchengfit.fitcoach.fragment.VpFragment;
+import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
@@ -194,20 +195,21 @@ public class CourseListFragment extends VpFragment implements
     public void delCourse(int pos) {
         CourseDetail courseDetail = ((CourseItem) mAdatper.getItem(pos)).courseDetail;
 
-        if (GymUtils.isInBrand(coachService)){
-            if (courseDetail.getPermission() == 1){
-                showDelDialog(String.format(Locale.CHINA, getString(R.string.alert_del_course), courseDetail.getShops().size()) ,pos);
-            }else {
-                showDelFailed(String.format(Locale.CHINA, getString(R.string.alert_del_course_forbid), courseDetail.getShops().size()));
-            }
-        }else {
+        //if (GymUtils.isInBrand(coachService)){
+        //    if (courseDetail.getPermission() == 1){
+        //        showDelDialog(String.format(Locale.CHINA, getString(R.string.alert_del_course), courseDetail.getShops().size()) ,pos);
+        //    }else {
+        //        showDelFailed(String.format(Locale.CHINA, getString(R.string.alert_del_course_forbid), courseDetail.getShops().size()));
+        //    }
+        //}else {
             if (courseDetail.getShops().size() >1){
-                showDelFailed("该课程适用于多家场馆,请到【连锁运营】里进行删除");
+                //showDelFailed("该课程适用于多家场馆,请到【连锁运营】里进行删除");
+                StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
             }else {
                 showDelDialog("删除后，已有的排期和课程预约都不会受到影响。",pos);
             }
 
-        }
+        //}
     }
 
     public void showDelDialog(String content, final int pos) {

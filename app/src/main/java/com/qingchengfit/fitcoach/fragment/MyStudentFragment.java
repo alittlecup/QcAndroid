@@ -389,7 +389,7 @@ public class MyStudentFragment extends BaseFragment {
                     QcAllStudentResponse.Ship ship = qcAllStudentResponse.data;
                     //if (curSystemId != 0 && (curSystemId != ship.service.id || !curModel.equals(ship.service.model)))
                     //    continue;
-                if (ship != null){
+                if (ship != null && ship.users != null){
 
                     List<StudentBean> tmp = new ArrayList<>();
                     for (QcStudentBean student : ship.users) {
