@@ -29,7 +29,7 @@ public class Configs {
      */
 //    public static boolean isDebug = true;
     public static boolean isDebug = false;
-    public static String ServerIp = BuildConfig.DEBUG ? "http://dev.qingchengfit.cn:7777/" : "http://cloud.qingchengfit.cn/";
+    public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 //        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = ServerIp + ServerPort;
@@ -37,6 +37,10 @@ public class Configs {
     public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
+    /**
+     * 会员预览页面
+     */
+    public static String HOST_STUDENT_PREVIEW = "http://www.qingchengfit.cn";
     //app名称
     public static String APPNAME = "QingChengCoach";
     //私有外部路径

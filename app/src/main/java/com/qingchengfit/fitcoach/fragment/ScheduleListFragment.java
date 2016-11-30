@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -36,6 +37,7 @@ import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -55,7 +57,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduleListFragment extends Fragment {
+public class ScheduleListFragment extends BaseFragment {
     public static final String TAG = ScheduleListFragment.class.getName();
     @BindView(R.id.schedule_rv)
     RecyclerView scheduleRv;
@@ -73,7 +75,7 @@ public class ScheduleListFragment extends Fragment {
     private Date mCurDate;                              //当前日期
     private ArrayList<ScheduleBean> scheduleBeans = new ArrayList<>();      //列表数据
     private ScheduesAdapter scheduesAdapter;
-    private int curentGym = 0;
+    private long curentGym = 0;
     private String currentModel;
     private long mCurCalId;
     private QcSchedulesResponse mQcSchedulesResponse;
@@ -109,11 +111,11 @@ public class ScheduleListFragment extends Fragment {
     public ScheduleListFragment() {
     }
 
-    public static ScheduleListFragment newInstance(Long date, int curentGym, String model) {
+    public static ScheduleListFragment newInstance(Long date, long curentGym, String model) {
 
         Bundle args = new Bundle();
         args.putLong("date", date);
-        args.putInt("gym", curentGym);
+        args.putLong("gym", curentGym);
         args.putString("model", model);
         ScheduleListFragment fragment = new ScheduleListFragment();
         fragment.setArguments(args);
@@ -125,7 +127,7 @@ public class ScheduleListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCurDate = new Date(getArguments().getLong("date"));
-            curentGym = getArguments().getInt("gym");
+            curentGym = getArguments().getLong("gym");
             currentModel = getArguments().getString("model");
         } else mCurDate = new Date();
     }
@@ -176,12 +178,25 @@ public class ScheduleListFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
                 if (refresh != null) {
-                    refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
                     refresh.setRefreshing(true);
                 }
             }
         });
+        RxBusAdd(EventScheduleService.class)
+            .subscribe(new Action1<EventScheduleService>() {
+                @Override public void call(EventScheduleService eventScheduleService) {
+                    if (eventScheduleService.mCoachService != null){
+                        curentGym = eventScheduleService.mCoachService.id;
+                        currentModel = eventScheduleService.mCoachService.model;
 
+                    }else {
+                        currentModel = null;
+                        curentGym = 0;
+                    }
+                    handleResponse(mQcSchedulesResponse);
+                }
+            });
         App.gCanReload = true;
         return view;
     }

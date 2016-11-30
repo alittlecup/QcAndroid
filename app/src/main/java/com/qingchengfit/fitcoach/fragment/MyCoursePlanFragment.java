@@ -22,12 +22,15 @@ import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -116,10 +119,12 @@ public class MyCoursePlanFragment extends BaseFragment {
     }
 
     public void freshData() {
-        QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<QcAllCoursePlanResponse>() {
+        if (getActivity() instanceof FragActivity) {
+            CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+            HashMap<String,Object> params = new HashMap<>();
+            params.put("id",coachService.getId());
+            params.put("model",coachService.getModel());
+            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcAllCoursePlanResponse>() {
                 @Override public void onCompleted() {
 
                 }
@@ -142,6 +147,7 @@ public class MyCoursePlanFragment extends BaseFragment {
                     refresh.setRefreshing(false);
                 }
             });
+        }
     }
 
     @OnClick(R.id.course_add) public void onAddCourse() {
@@ -153,30 +159,35 @@ public class MyCoursePlanFragment extends BaseFragment {
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //        if (resultCode == Activity.RESULT_OK){
-
-        if (resultCode > 1000) {
-            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcAllCoursePlanResponse -> {
-                    adapterData.clear();
-                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                    mGymAdapter.notifyDataSetChanged();
-                    recyclerview.scrollToPosition(adapterData.size() - 1);
-                }, throwable -> {
-                }, () -> {
-                });
-        } else if (requestCode >= 0 && requestCode < 10000) {
-            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcAllCoursePlanResponse -> {
-                    adapterData.clear();
-                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                    mGymAdapter.notifyItemChanged(requestCode);
-                }, throwable -> {
-                }, () -> {
-                });
+        if (getActivity() instanceof FragActivity) {
+            CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("id", coachService.getId());
+            params.put("model", coachService.getModel());
+            if (resultCode > 1000) {
+                QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(qcAllCoursePlanResponse -> {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        mGymAdapter.notifyDataSetChanged();
+                        recyclerview.scrollToPosition(adapterData.size() - 1);
+                    }, throwable -> {
+                    }, () -> {
+                    });
+            } else if (requestCode >= 0 && requestCode < 10000) {
+                QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(qcAllCoursePlanResponse -> {
+                        adapterData.clear();
+                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+                        mGymAdapter.notifyItemChanged(requestCode);
+                    }, throwable -> {
+                    }, () -> {
+                    });
+            }
         }
     }
 

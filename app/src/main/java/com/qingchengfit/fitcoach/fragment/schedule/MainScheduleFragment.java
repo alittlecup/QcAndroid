@@ -15,12 +15,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
+import com.qingchengfit.fitcoach.event.EventGoPreview;
+import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -57,6 +62,13 @@ public class MainScheduleFragment extends BaseFragment {
     @BindView(R.id.schedule_notification_layout) RelativeLayout scheduleNotificationLayout;
     @BindView(R.id.schedule_frag) FrameLayout scheduleFrag;
 
+    private CoachService mCoachService;
+
+
+    public CoachService getCoachService() {
+        return mCoachService;
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
         getFragmentManager().beginTransaction().replace(R.id.schedule_frag, new ScheduesFragment()).commitAllowingStateLoss();
@@ -67,7 +79,27 @@ public class MainScheduleFragment extends BaseFragment {
                     queryNotify();
                 }
             });
+        RxBusAdd(EventGoPreview.class)
+            .subscribe(new Action1<EventGoPreview>() {
+                @Override public void call(EventGoPreview eventGoPreview) {
+                    goStudentPreview(eventGoPreview.mCoachService);
+                }
+            });
+        RxBusAdd(EventScheduleService.class)
+            .subscribe(new Action1<EventScheduleService>() {
+                @Override public void call(EventScheduleService eventScheduleService) {
+                    mCoachService = eventScheduleService.mCoachService;
+                }
+            });
         return view;
+    }
+
+    private void goStudentPreview(CoachService coachService){
+        Intent toStudnet = new Intent(getActivity(),StudentOrderPreviewActivity.class);
+        toStudnet.putExtra("service",coachService);
+        toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW);
+        startActivity(toStudnet);
+
     }
 
     @Override public void onStart() {
@@ -75,6 +107,15 @@ public class MainScheduleFragment extends BaseFragment {
         queryNotify();
 
     }
+
+    @OnClick(R.id.student_order)
+    public void onStuOrder(){
+        if (mCoachService == null) {
+            new ChooseGymDialogFragment().show(getFragmentManager(), "");
+        }else goStudentPreview(mCoachService);
+    }
+
+
 
     public void queryNotify() {
         RxRegiste(QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
@@ -112,7 +153,7 @@ public class MainScheduleFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.layout_title://选择场馆
                 Intent toChooseGym = new Intent(getContext(), ChooseActivity.class);
-                toChooseGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM);
+                toChooseGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM_SCHEDULE);
                 startActivityForResult(toChooseGym, 1);
                 break;
             case R.id.student_order://会员预约

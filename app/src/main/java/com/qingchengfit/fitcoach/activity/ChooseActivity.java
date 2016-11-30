@@ -7,12 +7,14 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
+import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragment;
 
 public class ChooseActivity extends BaseAcitivity {
 
     public static final int TO_CHOSSE_ADDRESS = 0;
     public static final int TO_CHOSSE_CIRCLE = 1;
     public static final int TO_CHOSSE_GYM = 2;
+    public static final int TO_CHOSSE_GYM_SCHEDULE = 3;
 
 
     @Override
@@ -26,6 +28,9 @@ public class ChooseActivity extends BaseAcitivity {
                 break;
             case TO_CHOSSE_GYM:
                 fragment = new ChooseGymFragment();
+                break;
+            case TO_CHOSSE_GYM_SCHEDULE:
+                fragment = new ChooseScheduleGymFragment();
                 break;
             default:
                 fragment = new ChooseAddressFragment();

@@ -20,6 +20,7 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import java.util.Calendar;
 import java.util.Date;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -69,6 +70,7 @@ public class ScheduleWeekFragment extends BaseFragment {
             }
         });
         RxBusAdd(Date.class)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<Date>() {
                 @Override public void call(Date date) {
                     int num = DateUtils.dayNumFromToday(date);

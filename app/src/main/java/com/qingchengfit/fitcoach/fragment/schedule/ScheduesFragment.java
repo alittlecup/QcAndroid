@@ -36,17 +36,14 @@ import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
-import com.qingchengfit.fitcoach.component.LoopView;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
-import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,7 +53,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public class ScheduesFragment extends BaseFragment {
     public static final String TAG = ScheduesFragment.class.getName();
@@ -73,7 +69,7 @@ public class ScheduesFragment extends BaseFragment {
     private ArrayList<ScheduleBean> scheduleBeans;
     private ScheduesAdapter scheduesAdapter;
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
-    private int curSystemId = 0;
+    private long curSystemId = 0;
     private int curPostion = 0;
 
     private QcSchedulesResponse mQcSchedulesResponse;
@@ -88,6 +84,7 @@ public class ScheduesFragment extends BaseFragment {
     private String curModel;
     private String mTitle;
     private Unbinder unbinder;
+
 
     public ScheduesFragment() {
     }
@@ -164,6 +161,13 @@ public class ScheduesFragment extends BaseFragment {
                 bgShow.setVisibility(View.GONE);
             }
         });
+        if (getParentFragment() instanceof MainScheduleFragment){
+            if (((MainScheduleFragment) getParentFragment()).getCoachService() != null){
+                curSystemId = ((MainScheduleFragment) getParentFragment()).getCoachService().id;
+                curModel = ((MainScheduleFragment) getParentFragment()).getCoachService().model;
+            }
+        }
+
         //scheduleFloatbg.setOnClickListener(v -> {
         //    webFloatbtn.collapse();
         //});
@@ -233,71 +237,71 @@ public class ScheduesFragment extends BaseFragment {
 
         }
         //获取用户拥有的系统
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcCoachSystemResponse>() {
-                @Override public void onCompleted() {
+        //QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+        //    .subscribeOn(Schedulers.io())
+        //    .observeOn(AndroidSchedulers.mainThread())
+        //    .subscribe(new Subscriber<QcCoachSystemResponse>() {
+        //        @Override public void onCompleted() {
+        //
+        //        }
+        //
+        //        @Override public void onError(Throwable e) {
+        //
+        //        }
+        //
+        //        @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+        //            if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+        //                if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+        //                    qcCoachSystemResponse.date.systems.size() == 0) {
+        //                } else {
+        //                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
+        //                    mSystemsId.clear();
+        //                    spinnerBeans.clear();
+        //                    spinnerBeans.add(new SpinnerBean("", "全部日程", true));
+        //                    for (int i = 0; i < systems.size(); i++) {
+        //                        QcCoachSystem system = systems.get(i);
+        //                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
+        //                        mSystemsId.add(system.id);
+        //                        if (spinnerBeanArrayAdapter != null) {
+        //                            spinnerBeanArrayAdapter.notifyDataSetChanged();
+        //                        }
+        //                    }
+        //
+        //                    PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
+        //                }
+        //            } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+        //
+        //            }
+        //        }
+        //    });
 
-                }
-
-                @Override public void onError(Throwable e) {
-
-                }
-
-                @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                        if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                            qcCoachSystemResponse.date.systems.size() == 0) {
-                        } else {
-                            List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-                            mSystemsId.clear();
-                            spinnerBeans.clear();
-                            spinnerBeans.add(new SpinnerBean("", "全部日程", true));
-                            for (int i = 0; i < systems.size(); i++) {
-                                QcCoachSystem system = systems.get(i);
-                                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
-                                mSystemsId.add(system.id);
-                                if (spinnerBeanArrayAdapter != null) {
-                                    spinnerBeanArrayAdapter.notifyDataSetChanged();
-                                }
-                            }
-
-                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
-                        }
-                    } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-
-                    }
-                }
-            });
-
-        spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
-            @Override public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-                }
-                ((TextView) convertView).setText(spinnerBeans.get(position).text);
-                return convertView;
-            }
-
-            @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-                }
-                SpinnerBean bean = getItem(position);
-                ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-                if (bean.isTitle) {
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-                } else {
-                    ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-                    ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-                }
-                return convertView;
-            }
-        };
-        spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        //spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
+        //    @Override public View getView(int position, View convertView, ViewGroup parent) {
+        //        if (convertView == null) {
+        //            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
+        //        }
+        //        ((TextView) convertView).setText(spinnerBeans.get(position).text);
+        //        return convertView;
+        //    }
+        //
+        //    @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        //        if (convertView == null) {
+        //            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+        //        }
+        //        SpinnerBean bean = getItem(position);
+        //        ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
+        //        if (bean.isTitle) {
+        //            ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
+        //            ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
+        //        } else {
+        //            ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
+        //            ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
+        //            ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
+        //        }
+        //        return convertView;
+        //    }
+        //};
+        //spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
     }
 
     public void onAction(int v) {
