@@ -137,8 +137,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         });
 
         GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
-        recyclerview2.setLayoutManager(manager2);
         recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
+        recyclerview2.setLayoutManager(manager2);
         recyclerview2.setAdapter(adapter2);
 
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {

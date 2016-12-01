@@ -54,8 +54,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static java.security.AccessController.getContext;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -203,7 +201,7 @@ public class ScheduleListFragment extends BaseFragment {
         CalendarIntentService.startActionDay(getContext(), mCurDate.getTime(), new Gson().toJson(qcSchedulesResponse));
 
         scheduleBeans.clear();
-
+        int showPrivate = 0;
         for (int i = 0; i < systems.size(); i++) {
             QcSchedulesResponse.Service system = systems.get(i);
 
@@ -212,7 +210,8 @@ public class ScheduleListFragment extends BaseFragment {
             if (system.system == null) continue;
             String syscolor = system.system.name;
             if (curentGym != 0 && (curentGym != system.system.id || !system.system.model.equals(currentModel))) continue;
-
+            if (!system.private_schedules_exists)
+                showPrivate++;
             for (int j = 0; j < rests.size(); j++) {
                 QcSchedulesResponse.Rest rest = rests.get(j);
                 ScheduleBean bean = new ScheduleBean();
@@ -270,8 +269,15 @@ public class ScheduleListFragment extends BaseFragment {
                 scheduleBeans.add(bean);
             }
         }
-        Collections.sort(scheduleBeans, new ScheduleCompare());
 
+        Collections.sort(scheduleBeans, new ScheduleCompare());
+        if (mCurCalId != 0 && TextUtils.isEmpty(currentModel)){
+            if (showPrivate > 0)
+                scheduleBeans.add(0,new ScheduleBean(100));
+        }else {
+            if (showPrivate >= systems.size())
+                scheduleBeans.add(0,new ScheduleBean(100));
+        }
         if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             if (scheduleNoSchedule != null) {
@@ -353,6 +359,7 @@ public class ScheduleListFragment extends BaseFragment {
         @Override public void onBindViewHolder(SchedulesVH holder, int position) {
             holder.itemView.setTag(position);
             ScheduleBean bean = datas.get(position);
+
             if (bean.type == 0) { //休息
                 holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
                 StringBuffer sb = new StringBuffer();
@@ -373,6 +380,8 @@ public class ScheduleListFragment extends BaseFragment {
                 Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
 
                 holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
+            }else {
+                return ;
             }
             holder.indicator.setVisibility(bean.type == 0 ? View.GONE : View.VISIBLE);
             if (bean.conflict == null) {
@@ -416,7 +425,7 @@ public class ScheduleListFragment extends BaseFragment {
         }
 
         @Override public int getItemViewType(int position) {
-            return (position == 0 && hasPrivate)?1:0;
+            return (position == 0 && datas.get(0).type == 100)?1:0;
         }
 
         @Override public int getItemCount() {

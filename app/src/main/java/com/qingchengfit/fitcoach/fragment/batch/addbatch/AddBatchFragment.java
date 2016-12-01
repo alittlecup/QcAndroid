@@ -78,45 +78,35 @@ import rx.functions.Action1;
  * <p/>
  * Created by Paper on 16/5/4 2016.
  */
-public class AddBatchFragment extends BaseFragment implements AddBatchView,FlexibleAdapter.OnItemClickListener {
+public class AddBatchFragment extends BaseFragment implements AddBatchView, FlexibleAdapter.OnItemClickListener {
 
     public static final int RESULT_ACCOUNT = 5;
 
-
-    @BindView(R.id.course_img)
-    ImageView img;
-    @BindView(R.id.img_private)
-    ImageView imgFoot;
-    @BindView(R.id.course_name)
-    TextView text1;
+    @BindView(R.id.course_img) ImageView img;
+    @BindView(R.id.img_private) ImageView imgFoot;
+    @BindView(R.id.course_name) TextView text1;
     //@BindView(R.id.texticon)
     //ImageView texticon;
     @BindView(R.id.course_time_long)
     //TextView text2;
-    //@BindView(R.id.text3)
-    TextView text3;
+        //@BindView(R.id.text3)
+        TextView text3;
     //@BindView(R.id.righticon)
     //ImageView righticon;
     //@BindView(R.id.course_layout)
     //RelativeLayout courseLayout;
-    @BindView(R.id.coach)
-    CommonInputView coach;
-    @BindView(R.id.space)
-    CommonInputView space;
-    @BindView(R.id.account_type)
-    CommonInputView accountType;
-    @BindView(R.id.startdate)
-    CommonInputView starttime;
-    @BindView(R.id.enddate)
-    CommonInputView endtime;
-    @BindView(R.id.batch_date)
-    RecyclerView recyclerview;
+    @BindView(R.id.coach) CommonInputView coach;
+    @BindView(R.id.space) CommonInputView space;
+    @BindView(R.id.account_type) CommonInputView accountType;
+    @BindView(R.id.startdate) CommonInputView starttime;
+    @BindView(R.id.enddate) CommonInputView endtime;
+    @BindView(R.id.batch_date) RecyclerView recyclerview;
     //@BindView(R.id.add)
     //TextView add;
 
-
-    @Inject
-    AddBatchPresenter presenter;
+    @Inject AddBatchPresenter presenter;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     private ArrangeBatchBody body = new ArrangeBatchBody();
     private QcSchedulesResponse.Teacher mTeacher;
@@ -140,44 +130,54 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             //mTeacher = getArguments().getParcelable("teacher");
             mCourse = getArguments().getParcelable("course");
         }
-
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_batch, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (getActivity() instanceof BatchActivity){
+        if (getActivity() instanceof BatchActivity) {
             ((BatchActivity) getActivity()).getComponent().inject(this);
         }
 
+
         presenter.attachView(this);
         //mCallbackActivity.setToolbar("添加排期", false, null, R.menu.menu_compelete, listener);
-
+        toolbar.inflateMenu(R.menu.menu_complete);
+        toolbar.setOnMenuItemClickListener(listener);
+        toolbarTitle.setText("添加排期");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         if (mCourse != null) {
             mType = Configs.TYPE_GROUP;
             body.course_id = mCourse.id;
             coach.setLabel("教练");
             Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);
             text1.setText(mCourse.name);
-            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength()));
+            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength()/60));
         } else if (mTeacher != null) {
             mType = Configs.TYPE_PRIVATE;
             coach.setLabel("课程");
-            Glide.with(getContext()).load(PhotoUtils.getSmall(mTeacher.avatar)).asBitmap().placeholder(R.drawable.ic_default_head_nogender).into(new CircleImgWrapper(img, getContext()));
+            Glide.with(getContext())
+                .load(PhotoUtils.getSmall(mTeacher.avatar))
+                .asBitmap()
+                .placeholder(R.drawable.ic_default_head_nogender)
+                .into(new CircleImgWrapper(img, getContext()));
             text1.setText(mTeacher.username);
             body.teacher_id = mTeacher.id;
         }
-        if (App.gUser != null){
-            body.teacher_id = App.coachid+"";
+        if (App.gUser != null) {
+            body.teacher_id = App.coachid + "";
             coach.setContent(App.gUser.username);
         }
 
@@ -186,37 +186,40 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
-        RxBusAdd(CmBean.class)
-            .subscribe(new Action1<CmBean>() {
-                @Override
-                public void call(CmBean cmBean) {
-                    List<CmBean> cmBeens = new ArrayList<CmBean>();
-                    for (int i = 0; i < mData.size(); i++) {
-                        if (mData.get(i) instanceof BatchCircleItem) {
-                            cmBeens.add(((BatchCircleItem) mData.get(i)).cmBean);
-                        }
-                    }
-                    if (CmBean.checkCmBean(cmBeens, cmBean)) {
-                        mData.add(new BatchCircleItem(cmBean));
-                        mAdapter.notifyDataSetChanged();
-                        RxBus.getBus().post(new RxbusBatchLooperConfictEvent(false));
-                    } else {
-                        RxBus.getBus().post(new RxbusBatchLooperConfictEvent(true));
-                    }
 
-
+        RxBusAdd(CmBean.class).subscribe(new Action1<CmBean>() {
+            @Override public void call(CmBean cmBean) {
+                List<CmBean> cmBeens = new ArrayList<CmBean>();
+                for (int i = 0; i < mData.size(); i++) {
+                    if (mData.get(i) instanceof BatchCircleItem) {
+                        cmBeens.add(((BatchCircleItem) mData.get(i)).cmBean);
+                    }
                 }
-            });
+                if (CmBean.checkCmBean(cmBeens, cmBean)) {
+                    mData.add(mData.size()-1,new BatchCircleItem(cmBean));
+                    cmBeens.add(cmBean);
+                    body.time_repeats = CmBean.geTimeRepFromBean(cmBeens);
+                    mAdapter.notifyDataSetChanged();
+                    RxBus.getBus().post(new RxbusBatchLooperConfictEvent(false));
+                } else {
+                    RxBus.getBus().post(new RxbusBatchLooperConfictEvent(true));
+                }
+            }
+        });
         return view;
     }
 
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if (body.rules == null || body.rules.size() == 0) {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+            if (!body.is_free && (body.rules == null || body.rules.size() == 0 )) {
                 ToastUtils.show("请设置结算方式");
                 return true;
             }
+            if (body.max_users == 0){
+                ToastUtils.show("请设置");
+                return true;
+            }
+
             if (body.spaces == null || body.spaces.size() == 0) {
                 ToastUtils.show("请选择场地");
                 return true;
@@ -247,57 +250,47 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
         }
     };
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return null;
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         RxBus.getBus().unregister(CmBean.class.getName(), RxObCmBean);
         presenter.unattachView();
         super.onDestroyView();
-
     }
 
-    @Override
-    public void onSuccess() {
+    @Override public void onSuccess() {
         hideLoading();
         getActivity().onBackPressed();
     }
 
-    @Override
-    public void onFailed() {
+    @Override public void onFailed() {
         hideLoading();
     }
 
-
     //通过检查
-    @Override
-    public void checkOk() {
+    @Override public void checkOk() {
         showLoading();
         presenter.arrangeBatch(body);
     }
 
-    @Override
-    public void checkFailed(String s) {
-        if (failDialog == null){
-            failDialog = new MaterialDialog.Builder(getContext())
-                .positiveText(R.string.comfirm)
+    @Override public void checkFailed(String s) {
+        if (failDialog == null) {
+            failDialog = new MaterialDialog.Builder(getContext()).positiveText(R.string.comfirm)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
                     }
-                }).build();
+                })
+                .build();
         }
-        if (failDialog.isShowing())
-            failDialog.dismiss();
+        if (failDialog.isShowing()) failDialog.dismiss();
         failDialog.setContent(s);
         failDialog.show();
     }
 
-    @Override
-    public void onTemplete(ArrayList<Rule> rules, ArrayList<TimeRepeat> time_repeats, int maxuer) {
+    @Override public void onTemplete(ArrayList<Rule> rules, ArrayList<TimeRepeat> time_repeats, int maxuer) {
         //TODO 可以选择不自动填充
         if (rules.size() > 0) {
             body.rules = rules;
@@ -329,30 +322,28 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
         }
     }
 
-    @OnClick({R.id.coach, R.id.space, R.id.account_type})
-    public void onClick(View view) {
+    @OnClick({ R.id.coach, R.id.space, R.id.account_type }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.coach:
                 break;
             case R.id.space:
                 Intent toChooseSpace = new Intent(getActivity(), FragActivity.class);
-                toChooseSpace.putExtra("type",11);
-                toChooseSpace.putExtra("course_type",mType);
-                toChooseSpace.putExtra("service",mCoachService);
-                startActivityForResult(toChooseSpace,3);
+                toChooseSpace.putExtra("type", 11);
+                toChooseSpace.putExtra("course_type", mType);
+                toChooseSpace.putExtra("service", mCoachService);
+                startActivityForResult(toChooseSpace, 3);
                 break;
             case R.id.account_type:
-                Intent toAccount = new Intent(getActivity(),FragActivity.class);
-                toAccount.putExtra("type",12);
-                toAccount.putExtra("count",body.max_users);
-                startActivityForResult(toAccount,RESULT_ACCOUNT);
+                Intent toAccount = new Intent(getActivity(), FragActivity.class);
+                toAccount.putExtra("type", 12);
+                toAccount.putExtra("count", body.max_users == 0 ?8:body.max_users);
+                startActivityForResult(toAccount, RESULT_ACCOUNT);
 
                 break;
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1) {//选择教练
@@ -362,8 +353,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
                 coach.setContent(name);
                 body.teacher_id = id;
 
-                if (TextUtils.isEmpty(starttime.getContent()) && TextUtils.isEmpty(endtime.getContent()))
+                if (TextUtils.isEmpty(starttime.getContent()) && TextUtils.isEmpty(endtime.getContent())) {
                     presenter.getBatchTemplete(mType, body.teacher_id, body.course_id);//拉取模板
+                }
             } else if (requestCode == 2) {//选择课程
                 //Course course = data.getParcelableExtra("course");
                 //coach.setContent(course.getName());
@@ -373,22 +365,24 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
 
             } else if (requestCode == 3) {//选择场地
                 ArrayList<Space> spaces = data.getParcelableArrayListExtra("spaces");
-                if (spaces != null){
+                if (spaces != null) {
                     String spaceStr = "";
                     List<String> ids = new ArrayList<>();
                     for (int i = 0; i < spaces.size(); i++) {
                         ids.add(spaces.get(i).id);
-                        if (TextUtils.isEmpty(spaceStr)){
-                           spaceStr = spaceStr.concat(spaces.get(i).name);
-                        }else spaceStr = spaceStr.concat("、").concat(spaces.get(i).name);
+                        if (TextUtils.isEmpty(spaceStr)) {
+                            spaceStr = spaceStr.concat(spaces.get(i).name);
+                        } else {
+                            spaceStr = spaceStr.concat("、").concat(spaces.get(i).name);
+                        }
                     }
 
                     space.setContent(spaceStr);
                     body.spaces = ids;
                 }
-            }else if (requestCode == RESULT_ACCOUNT){
-                int count = data.getIntExtra("count",1);
-                body.max_users= count;
+            } else if (requestCode == RESULT_ACCOUNT) {
+                int count = data.getIntExtra("count", 1);
+                body.max_users = count;
                 accountType.setContent(getString(R.string.has_set));
             }
         }
@@ -397,17 +391,14 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
     /**
      * 选择开始时间
      */
-    @OnClick(R.id.startdate)
-    public void onStartTime() {
-        if (pwTime == null)
-            pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
-        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+    @OnClick(R.id.startdate) public void onStartTime() {
+        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
+            Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date) {
+            @Override public void onTimeSelect(Date date) {
                 starttime.setContent(DateUtils.Date2YYYYMMDD(date));
-                if (endtime.isEmpty())
-                    endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
+                if (endtime.isEmpty()) endtime.setContent(DateUtils.getEndDayOfMonthNew(date));
                 pwTime.dismiss();
             }
         });
@@ -417,14 +408,12 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
     /**
      * 选择结束时间
      */
-    @OnClick(R.id.enddate)
-    public void onEndTime() {
-        if (pwTime == null)
-            pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
-        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
+    @OnClick(R.id.enddate) public void onEndTime() {
+        if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+        pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
+            Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
         pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date) {
+            @Override public void onTimeSelect(Date date) {
                 if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(starttime.getContent()).getTime()) {
                     Toast.makeText(getContext(), R.string.alert_endtime_greater_starttime, Toast.LENGTH_SHORT).show();
                     return;
@@ -438,7 +427,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView,Flexi
             }
         });
         pwTime.showAtLocation(getView(), Gravity.BOTTOM, 0, 0, new Date());
-
     }
 
     @Override public boolean onItemClick(int position) {

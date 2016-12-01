@@ -167,7 +167,7 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
             }.getType());
         }
 
-        if (getIntent() != null) {
+        if (getIntent() != null && getIntent().getStringExtra("url") != null) {
             String url = getIntent().getStringExtra("url");
             if (!url.startsWith("http"))
                 url = "http://"+url;

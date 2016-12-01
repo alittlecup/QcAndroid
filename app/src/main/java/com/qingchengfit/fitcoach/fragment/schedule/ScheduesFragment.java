@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -82,7 +81,6 @@ public class ScheduesFragment extends BaseFragment {
     private String mTitle;
     private Unbinder unbinder;
 
-
     public ScheduesFragment() {
     }
 
@@ -149,17 +147,17 @@ public class ScheduesFragment extends BaseFragment {
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
                 bgShow.setVisibility(View.VISIBLE);
-                ViewCompat.setAlpha(bgShow,0);
-                ViewCompat.animate(bgShow).alpha(1).setDuration(R.integer.anim_time).start();
+                //ViewCompat.setAlpha(bgShow,0);
+                //ViewCompat.animate(bgShow).alpha(1).setDuration(R.integer.anim_time).start();
             }
 
             @Override public void onMenuCollapsed() {
-                ViewCompat.animate(bgShow).alpha(0).setDuration(R.integer.anim_time).start();
+                //ViewCompat.animate(bgShow).alpha(0).setDuration(R.integer.anim_time).start();
                 bgShow.setVisibility(View.GONE);
             }
         });
-        if (getParentFragment() instanceof MainScheduleFragment){
-            if (((MainScheduleFragment) getParentFragment()).getCoachService() != null){
+        if (getParentFragment() instanceof MainScheduleFragment) {
+            if (((MainScheduleFragment) getParentFragment()).getCoachService() != null) {
                 curSystemId = ((MainScheduleFragment) getParentFragment()).getCoachService().id;
                 curModel = ((MainScheduleFragment) getParentFragment()).getCoachService().model;
             }
@@ -326,10 +324,7 @@ public class ScheduesFragment extends BaseFragment {
 
     @Override public void onStart() {
         super.onStart();
-
     }
-
-
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -358,7 +353,7 @@ public class ScheduesFragment extends BaseFragment {
         mDatePicker.show(getFragmentManager(), "");
         mDatePicker.setListener(new DatePicker.DatePickerChange() {
             @Override public void onMonthChange(int year, int month) {
-                tvMonth.setText(year+"年"+month+"月");
+                tvMonth.setText(year + "年" + month + "月");
             }
         });
         //updateCalendar();
@@ -380,6 +375,10 @@ public class ScheduesFragment extends BaseFragment {
             .setCustomAnimations(R.anim.slide_fade_in, R.anim.slide_fade_out)
             .replace(R.id.schedule_frag, new ScheduleWeekFragment())
             .commitAllowingStateLoss();
+    }
+
+    @OnClick(R.id.bg_show) public void onClick() {
+        webFloatbtn.collapse();
     }
 
     /***

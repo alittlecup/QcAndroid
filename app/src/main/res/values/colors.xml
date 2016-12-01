@@ -24,7 +24,7 @@
     <color name="divider_grey">#dddddd</color>
     <color name="bg_grey">#f4f4f4</color>
     <color name="disable">#99ffffff</color>
-    <color name="halftransparent_white">#99ffffff</color>
+    <color name="halftransparent_white">#ccffffff</color>
 
     <color name="wheel_timebtn_nor">#54a3fa</color>
     <color name="wheel_timebtn_pre">#CCCCCC</color>

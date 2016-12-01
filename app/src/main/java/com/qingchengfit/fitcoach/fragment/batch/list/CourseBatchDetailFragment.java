@@ -22,6 +22,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
@@ -100,6 +101,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         presenter.attachView(this);
         preview.setText(
             mType == Configs.TYPE_PRIVATE ? getString(R.string.private_course_preview) : getString(R.string.group_course_preview));
+
         presenter.queryGroup(App.coachid + "", mType == Configs.TYPE_PRIVATE);
         mCommonFlexAdapter = new CommonFlexAdapter(mDatas, this);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -250,5 +252,6 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     }
 
     @OnClick(R.id.preview) public void onClick() {
+        WebActivity.startWeb((mType == Configs.TYPE_PRIVATE ?Configs.PRIVATE_PRIVEIW:Configs.GROUP_PRIVEIW)+"?id="+mCoachService.getId()+"&model="+mCoachService.getModel(),getContext());
     }
 }

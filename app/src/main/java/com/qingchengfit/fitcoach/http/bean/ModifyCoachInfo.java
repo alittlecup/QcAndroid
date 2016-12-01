@@ -20,7 +20,7 @@ public class ModifyCoachInfo {
     String avatar;
     String short_description;
     String weixin;
-    String district_id;
+    String gd_district_id;
     int gender;
 
     public ModifyCoachInfo(String username, String phone, String city, String short_description, String weixin, String district_id) {
@@ -29,7 +29,7 @@ public class ModifyCoachInfo {
         this.city = city;
         this.short_description = short_description;
         this.weixin = weixin;
-        this.district_id = district_id;
+        this.gd_district_id = district_id;
     }
 
     public ModifyCoachInfo() {
@@ -93,10 +93,10 @@ public class ModifyCoachInfo {
     }
 
     public String getDistrict_id() {
-        return district_id;
+        return gd_district_id;
     }
 
     public void setDistrict_id(String district_id) {
-        this.district_id = district_id;
+        this.gd_district_id = district_id;
     }
 }

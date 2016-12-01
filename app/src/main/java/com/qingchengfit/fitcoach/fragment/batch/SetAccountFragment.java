@@ -68,6 +68,7 @@ public class SetAccountFragment extends BaseFragment {
                 getActivity().onBackPressed();
             }
         });
+        toolbarTitle.setText("设置结算方式");
         toolbar.inflateMenu(R.menu.menu_complete);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
@@ -79,7 +80,7 @@ public class SetAccountFragment extends BaseFragment {
             }
         });
         if (getArguments() != null){
-            count.setContent(getArguments().getInt("o",1)+"");
+            count.setContent(getArguments().getInt("o",8)+"");
         }
         return view;
     }

@@ -1,64 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical"
-        android:background="@color/white"
         >
-        <TextView
-            android:id="@+id/tv_month"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="2016年11月"
-            />
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:padding="4dp"
-            app:srcCompat="@drawable/ic_arrow_down"
-            />
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
-        <TextView
-            android:id="@+id/day_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="4dp"
-            android:text="日视图"
-            android:textSize="13sp"
-            android:drawableBottom="@drawable/trans_under_line"
-            />
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            />
-        <TextView
+      <TextView
+          android:id="@+id/tv_month"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:text="2016年11月"
+          style="@style/Qc.TextCommonBlack"
+          />
+      <ImageView
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          android:padding="4dp"
+          app:srcCompat="@drawable/ic_arrow_down"
+          />
+      <Space
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          />
+      <TextView
+          android:id="@+id/day_view"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableBottom="@drawable/trans_under_line"
+          android:drawablePadding="4dp"
+          android:text="日视图"
+          android:textSize="13sp"
+          />
+      <Space
+          android:layout_width="10dp"
+          android:layout_height="match_parent"
+          />
+      <TextView
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="周视图"
-            android:textSize="13sp"
-            android:textColor="@color/primary"
-            android:drawablePadding="4dp"
-            android:drawableBottom="@drawable/primary_under_line"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableBottom="@drawable/primary_under_line"
+          android:drawablePadding="4dp"
+          android:text="周视图"
+          android:textColor="@color/primary"
+          android:textSize="13sp"
 
-            />
+          />
     </LinearLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-</LinearLayout>
+
+  </LinearLayout>
+
+  <View
+      android:id="@+id/bg_show"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/halftransparent_white"
+      android:visibility="gone"
+      />
+  <com.getbase.floatingactionbutton.FloatingActionsMenu
+      android:id="@+id/web_floatbtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:layout_gravity="bottom|right"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:fab_addButtonColorNormal="@color/red"
+      app:fab_addButtonColorPressed="@color/text_red"
+      app:fab_labelStyle="@style/floataction_style"
+      app:fab_labelsPosition="left"
+      />
+  >
+</RelativeLayout>

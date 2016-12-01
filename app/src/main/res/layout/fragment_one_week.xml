@@ -1,67 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="56dp"
-      android:orientation="horizontal"
-      android:visibility="gone"
-      >
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week7"
-          />
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week1"
-          />
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week2"
-          />
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week3"
-          />
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week4"
-          />
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week5"
-          />
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:text="@string/simple_week6"
-          />
-  </LinearLayout>
-
   <com.alamkanak.weekview.WeekView
       android:id="@+id/weekView"
       android:layout_width="match_parent"
@@ -88,5 +31,6 @@
       app:firstDayOfWeek="sunday"
       app:eventTextSize="10sp"
       app:eventPadding="1dp"
+      app:eventMarginVertical="1dp"
       />
-</LinearLayout>
+</RelativeLayout>

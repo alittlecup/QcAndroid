@@ -59,7 +59,7 @@ public class CitiesChooser {
         }
         pwOptions.setPicker(options1Items, options2Items, options3Items, true);
         pwOptions.setLabels("", "", "");
-        pwOptions.setSelectOptions(2, 3, 3);
+        pwOptions.setSelectOptions(1, 1, 1);
         pwOptions.setOnoptionsSelectListener(new OptionsDialog.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int i, int i1, int i2) {

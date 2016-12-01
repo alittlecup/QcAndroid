@@ -67,25 +67,25 @@ public class QcCoachRespone extends QcResponse {
             private String phone;
             private String weixin;
             private String description;
-            private DistrictEntity district;
+            private DistrictEntity gd_district;
             private String short_description;
             private int gender;
             private int id;
             private String avatar;
 
             public DistrictEntity getDistrict() {
-                return district;
+                return gd_district;
             }
 
             public void setDistrict(DistrictEntity district) {
-                this.district = district;
+                this.gd_district = district;
             }
 
             public String getDistrictStr() {
-                if (district != null && district.province != null && district.city != null) {
-                    if (district.province.name.equalsIgnoreCase(district.city.name)) {
-                        return district.city.name;
-                    } else return district.province.name + district.city.name;
+                if (gd_district != null && gd_district.province != null && gd_district.city != null) {
+                    if (gd_district.city.name.startsWith(gd_district.province.name)) {
+                        return gd_district.city.name;
+                    } else return gd_district.province.name + gd_district.city.name;
                 } else return "";
             }
 
@@ -161,7 +161,7 @@ public class QcCoachRespone extends QcResponse {
                 public ProvinceBean province;
                 @SerializedName("city")
                 public CityBean city;
-                @SerializedName("id")
+                @SerializedName("code")
                 public String id;
                 @SerializedName("name")
                 public String name;

@@ -129,13 +129,13 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         weekView.setEmptyViewClickListener(new WeekView.EmptyViewClickListener() {
 
             @Override public void onEmptyViewClicked(Calendar calendar, float v, float v1) {
-                if (mCalenderPopWindow == null)
-                    mCalenderPopWindow = new CalenderPopWindow.Builder(getContext())
-                        .rest(v2 ->onAction(1,calendar.getTime()))
-                        .group(v2 -> onAction(3,calendar.getTime()))
-                        .privat(v2 -> onAction(2,calendar.getTime()))
+                if (mCalenderPopWindow == null) {
+                    mCalenderPopWindow = new CalenderPopWindow.Builder(getContext()).rest(v2 -> onAction(1, calendar.getTime()))
+                        .group(v2 -> onAction(3, calendar.getTime()))
+                        .privat(v2 -> onAction(2, calendar.getTime()))
                         .build();
-                mCalenderPopWindow.show(weekView,(int)v,(int)v1);
+                }
+                mCalenderPopWindow.show(weekView, (int) v, (int) v1);
                 //GuideWindow window = new GuideWindow(getContext(),"xxxx",GuideWindow.DOWN);
                 //window.show(weekView);
             }
@@ -168,19 +168,19 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                 return mEvents;
             }
         });
-        RxBusAdd(EventScheduleService.class)
-            .subscribe(new Action1<EventScheduleService>() {
-                @Override public void call(EventScheduleService eventScheduleService) {
-                    mCoachService = eventScheduleService.mCoachService;
-                    inflateData();
-                }
-            });
+
+
+        RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
+            @Override public void call(EventScheduleService eventScheduleService) {
+                mCoachService = eventScheduleService.mCoachService;
+                inflateData();
+            }
+        });
         weekView.setPostion(getArguments().getInt("pos"));
         return view;
     }
 
-
-    public void onAction(int v ,Date date) {
+    public void onAction(int v, Date date) {
         StringBuffer sb = new StringBuffer(Configs.Server);
         switch (v) {
             case 1:
@@ -202,7 +202,6 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         //webFloatbtn.collapse();
     }
 
-
     void inflateData() {
         mEvents.clear();
         for (int i = 0; i < mQcSchedulesResponse.data.services.size(); i++) {
@@ -216,8 +215,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     endTime.setTime(DateUtils.formatDateFromServer(rest.end));
                     event = new WeekViewEvent(startTime.getTime().getTime(), "休息", null, startTime, endTime, false);
                     event.setColor(ContextCompat.getColor(getContext(), R.color.rest_color));
-                    HashMap<String,Object> tag = new HashMap<>();
-                    tag.put("url",rest.url);
+                    HashMap<String, Object> tag = new HashMap<>();
+                    tag.put("url", rest.url);
                     event.setTag(tag);
                     mEvents.add(event);
                 }
@@ -227,11 +226,13 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     startTime.setTime(DateUtils.formatDateFromServer(schedule.start));
                     endTime = Calendar.getInstance();
                     endTime.setTime(DateUtils.formatDateFromServer(schedule.end));
-                    event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name, 7+"", startTime, endTime, false);
-                    event.setColor(endTime.getTime().getTime() < new Date().getTime() ?ContextCompat.getColor(getContext(),R.color.warm_grey):
-                        ContextCompat.getColor(getContext(), schedule.course.is_private ? R.color.private_color : R.color.group_color));
-                    HashMap<String,Object> tag = new HashMap<>();
-                    tag.put("url",schedule.url);
+                    event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name, 7 + "", startTime, endTime, false);
+                    event.setColor(
+                        endTime.getTime().getTime() < new Date().getTime() ? ContextCompat.getColor(getContext(), R.color.warm_grey)
+                            : ContextCompat.getColor(getContext(),
+                                schedule.course.is_private ? R.color.private_color : R.color.group_color));
+                    HashMap<String, Object> tag = new HashMap<>();
+                    tag.put("url", schedule.url);
                     event.setTag(tag);
                     mEvents.add(event);
                 }
@@ -243,4 +244,5 @@ public class ScheduleOneWeekFragment extends BaseFragment {
     @Override public String getFragmentName() {
         return ScheduleOneWeekFragment.class.getName();
     }
+
 }

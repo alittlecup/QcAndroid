@@ -43,8 +43,6 @@ public class QcSchedulesResponse extends QcResponse {
     public static class Data {
         @SerializedName("services")
         public List<Service> services;
-//        @SerializedName("services")
-//        public List<Schedule> schedules;
     }
 
     public static class Service {
@@ -54,6 +52,8 @@ public class QcSchedulesResponse extends QcResponse {
         public CoachService system;
         @SerializedName("schedules")
         public List<QcScheduleBean> schedules;
+        @SerializedName("private_schedules_exists")
+        public boolean private_schedules_exists;
 
     }
 

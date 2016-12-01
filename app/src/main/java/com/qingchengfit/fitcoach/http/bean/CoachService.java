@@ -39,6 +39,8 @@ public class CoachService implements Parcelable {
     public int courses_count;
     @SerializedName("users_count")
     public int users_count;
+    @SerializedName("gd_district")
+    public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity gd_district;
 
     private CoachService(Builder builder) {
         setModel(builder.model);
@@ -51,8 +53,16 @@ public class CoachService implements Parcelable {
         setBrand_name(builder.brand_name);
         setCourses_count(builder.courses_count);
         setUsers_count(builder.users_count);
+        gd_district = builder.gd_district;
     }
 
+    public String getDistrictStr() {
+        if (gd_district != null && gd_district.province != null && gd_district.city != null) {
+            if (gd_district.city.name.startsWith(gd_district.province.name)) {
+                return gd_district.city.name;
+            } else return gd_district.province.name + gd_district.city.name;
+        } else return "";
+    }
 
     public String getModel() {
         return model;
@@ -134,52 +144,8 @@ public class CoachService implements Parcelable {
         this.users_count = users_count;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.model);
-        dest.writeInt(this.type);
-        dest.writeLong(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.color);
-        dest.writeString(this.photo);
-        dest.writeString(this.host);
-        dest.writeString(this.brand_name);
-        dest.writeInt(this.courses_count);
-        dest.writeInt(this.users_count);
-    }
-
     public CoachService() {
     }
-
-    protected CoachService(Parcel in) {
-        this.model = in.readString();
-        this.type = in.readInt();
-        this.id = in.readLong();
-        this.name = in.readString();
-        this.color = in.readString();
-        this.photo = in.readString();
-        this.host = in.readString();
-        this.brand_name = in.readString();
-        this.courses_count = in.readInt();
-        this.users_count = in.readInt();
-    }
-
-    public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {
-        @Override
-        public CoachService createFromParcel(Parcel source) {
-            return new CoachService(source);
-        }
-
-        @Override
-        public CoachService[] newArray(int size) {
-            return new CoachService[size];
-        }
-    };
 
     public static final class Builder {
         private String model;
@@ -192,6 +158,7 @@ public class CoachService implements Parcelable {
         private String brand_name;
         private int courses_count;
         private int users_count;
+        private QcCoachRespone.DataEntity.CoachEntity.DistrictEntity gd_district;
 
         public Builder() {
         }
@@ -246,8 +213,55 @@ public class CoachService implements Parcelable {
             return this;
         }
 
+        public Builder gd_district(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity val) {
+            gd_district = val;
+            return this;
+        }
+
         public CoachService build() {
             return new CoachService(this);
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.model);
+        dest.writeInt(this.type);
+        dest.writeLong(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.color);
+        dest.writeString(this.photo);
+        dest.writeString(this.host);
+        dest.writeString(this.brand_name);
+        dest.writeInt(this.courses_count);
+        dest.writeInt(this.users_count);
+        dest.writeParcelable(this.gd_district, flags);
+    }
+
+    protected CoachService(Parcel in) {
+        this.model = in.readString();
+        this.type = in.readInt();
+        this.id = in.readLong();
+        this.name = in.readString();
+        this.color = in.readString();
+        this.photo = in.readString();
+        this.host = in.readString();
+        this.brand_name = in.readString();
+        this.courses_count = in.readInt();
+        this.users_count = in.readInt();
+        this.gd_district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
+    }
+
+    public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {
+        @Override public CoachService createFromParcel(Parcel source) {
+            return new CoachService(source);
+        }
+
+        @Override public CoachService[] newArray(int size) {
+            return new CoachService[size];
+        }
+    };
 }

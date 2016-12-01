@@ -360,6 +360,7 @@ public class QcCloudClient {
         @GET("/api/v1/coaches/{id}/reports/schedules/") rx.Observable<QcStatementDetailRespone> qcGetStatementDatail(@Path("id") int id,
             @QueryMap Map<String, String> params);
 
+        @Deprecated
         @GET("/api/v1/services/detail/") rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(@QueryMap Map<String, String> params);
 
         //获取教练销售详情

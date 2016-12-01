@@ -14,6 +14,13 @@ package com.qingchengfit.fitcoach.http.bean;
  * Created by Paper on 15/10/3 2015.
  */
 public class ScheduleBean {
+    public ScheduleBean(int type) {
+        this.type = type;
+    }
+
+    public ScheduleBean() {
+    }
+
     public long time;       //时间
     public String color;    //颜色
     public String title;  //课程名称

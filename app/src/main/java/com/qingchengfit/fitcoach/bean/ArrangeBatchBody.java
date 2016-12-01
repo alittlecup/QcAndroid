@@ -29,6 +29,6 @@ public class ArrangeBatchBody {
     public ArrayList<Rule> rules;
     public ArrayList<TimeRepeat> time_repeats;
     public String batch_id;
-
+    public Boolean is_free = true;
 
 }

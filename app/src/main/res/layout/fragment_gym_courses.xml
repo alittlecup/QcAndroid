@@ -79,8 +79,6 @@
             android:id="@+id/myhome_tab"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:background="@color/white"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/primary"

@@ -211,7 +211,7 @@ public class MyCoursePlanFragment extends BaseFragment {
     }
 
     class GymsAdapter extends RecyclerView.Adapter<GymsVH> implements View.OnClickListener {
-        private List<QcAllCoursePlanResponse.Plan> datas;
+        private List<CoursePlan> datas;
         private OnRecycleItemClickListener listener;
 
         public GymsAdapter(List datas) {
@@ -234,11 +234,11 @@ public class MyCoursePlanFragment extends BaseFragment {
 
         @Override public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
-            QcAllCoursePlanResponse.Plan detail = datas.get(position);
+            CoursePlan detail = datas.get(position);
             holder.itemItemBrand.setVisibility(View.GONE);
-            holder.itemGymName.setText(detail.name);
+            holder.itemGymName.setText(detail.getName());
             StringBuffer sb = new StringBuffer();
-            for (String s : detail.tags) {
+            for (String s : detail.getTags()) {
                 sb.append(s);
                 sb.append(",");
             }
