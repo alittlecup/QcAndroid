@@ -31,6 +31,7 @@
             android:id="@+id/brand_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_default_header" />
 
         <TextView
@@ -73,6 +74,7 @@
             android:id="@+id/gym_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_default_header" />
 
         <ImageView

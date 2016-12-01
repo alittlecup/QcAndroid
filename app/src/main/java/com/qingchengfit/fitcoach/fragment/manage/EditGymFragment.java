@@ -59,8 +59,6 @@ import rx.schedulers.Schedulers;
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar) v.findViewById(R.id.toolbar);
             ((TextView) v.findViewById(R.id.toolbar_title)).setText("新建健身房");
-            ((ViewGroup) view).addView(v, 0);
-            ((TextView) v.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
             tb.setNavigationIcon(R.drawable.ic_arrow_left);
             tb.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -74,6 +72,8 @@ import rx.schedulers.Schedulers;
                     return false;
                 }
             });
+            ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)getResources().getDimension(R.dimen.qc_actionbar_height)));
+
         }
         return view;
     }
@@ -92,7 +92,7 @@ import rx.schedulers.Schedulers;
                             .load(qcResponse.data.gym.getPhoto())
                             .asBitmap()
                             .into(new CircleImgWrapper(gymImg, getContext()));
-                        gymName.setTag(qcResponse.data.gym.getName());
+                        gymName.setContent(qcResponse.data.gym.getName());
                         gymAddress.setContent(qcResponse.data.gym.getDistrictStr());
                     } else {
                         ToastUtils.show(qcResponse.getMsg());

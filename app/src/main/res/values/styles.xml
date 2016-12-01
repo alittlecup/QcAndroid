@@ -42,8 +42,8 @@
 
     <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:actionBarSize">44dp</item>
-        <item name="actionBarSize">44dp</item>
+        <item name="android:actionBarSize">@dimen/qc_actionbar_height</item>
+        <item name="actionBarSize">@dimen/qc_actionbar_height</item>
     </style>
 
     <style name="Qc.ScrollviewStyle" parent="android:Widget.ScrollView">
@@ -205,9 +205,10 @@
         <item name="android:background">#00000000</item>
         <item name="android:backgroundDimEnabled">false</item>
         <!-- 设置自定义布局的背景透明 -->
-        <item name="android:windowBackground">@color/halftransparent</item>
+        <item name="android:windowBackground">@drawable/bg_loading_dialog</item>
         <!-- 设置window背景透明，也就是去边框 -->
     </style>
+
 
     <style name="NavPage">
         <item name="android:layout_width">fill_parent</item>

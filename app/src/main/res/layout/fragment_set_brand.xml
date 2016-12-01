@@ -35,6 +35,7 @@
             android:id="@+id/brand_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_default_header"
             />
         <ImageView

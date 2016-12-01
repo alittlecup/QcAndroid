@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
+import cn.qingchengfit.widgets.utils.AppUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -17,10 +17,9 @@ import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.SaleGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
-
-import cn.qingchengfit.widgets.utils.AppUtils;
 import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
 import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
+import com.qingchengfit.fitcoach.fragment.manage.EditGymFragmentBuilder;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 
 /**
@@ -94,6 +93,9 @@ public class FragActivity extends BaseAcitivity {
                 break;
             case 12:
                 fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count",1));
+                break;
+           case 13:
+                fragment = new EditGymFragmentBuilder("",mCoachService.getBrand_name(),"",mCoachService.id,mCoachService.model).build();
                 break;
             default:
                 break;

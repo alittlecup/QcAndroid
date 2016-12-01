@@ -81,6 +81,7 @@
             app:pst_text_size="14sp"
 
             />
+        <include layout="@layout/divider_grey"/>
         <android.support.v4.view.ViewPager
             android:id="@+id/schedule_vp"
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,12 @@ import android.widget.TextView;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-import java.util.HashMap;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -39,8 +41,6 @@ public class AddGymFragment extends GuideSetGymFragment {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar)v.findViewById(R.id.toolbar);
             ((TextView)v.findViewById(R.id.toolbar_title)).setText("新建健身房");
-            ((ViewGroup) view).addView(v, 0);
-            ((TextView) v.findViewById(R.id.toolbar_title)).setText(R.string.write_gym_info);
             tb.setNavigationIcon(R.drawable.ic_arrow_left);
             tb.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -48,6 +48,7 @@ public class AddGymFragment extends GuideSetGymFragment {
                     getActivity().onBackPressed();
                 }
             });
+            ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)getResources().getDimension(R.dimen.qc_actionbar_height)));
         }
         return view;
     }
@@ -57,7 +58,16 @@ public class AddGymFragment extends GuideSetGymFragment {
     public void onNextStep() {
         showLoading();
         //// TODO: 16/11/16 新建健身房
-        RxRegiste(QcCloudClient.getApi().postApi.qcCreateGym(1, new HashMap<>())
+        if (TextUtils.isEmpty(gymName.getContent()) || lat == 0 || lng == 0){
+            cn.qingchengfit.widgets.utils.ToastUtils.show("请填写完整");
+            return;
+        }
+
+        CoachInitBean bean = new CoachInitBean();
+        bean.brand_id = brandid;
+        bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").build();
+
+        RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponse>() {
                     @Override
@@ -65,6 +75,7 @@ public class AddGymFragment extends GuideSetGymFragment {
                         hideLoading();
                         if (ResponseConstant.checkSuccess(qcResponse)) {
                             // TODO: 16/11/16 新建成功
+                            getActivity().onBackPressed();
 
                         } else ToastUtils.showDefaultStyle(qcResponse.msg);
                     }

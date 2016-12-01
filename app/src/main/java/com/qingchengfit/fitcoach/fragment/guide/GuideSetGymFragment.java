@@ -76,9 +76,9 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.hint) protected TextView hint;
     @BindView(R.id.layout_brand) protected LinearLayout layoutBrand;
 
-    private double lat;
-    private double lng;
-    private int city_code;
+    protected double lat;
+    protected double lng;
+    protected int city_code;
     private String imgUrl;
     private Unbinder unbinder;
 

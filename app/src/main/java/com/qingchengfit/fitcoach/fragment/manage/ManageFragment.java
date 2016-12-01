@@ -141,6 +141,13 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview2.setLayoutManager(manager2);
         recyclerview2.setAdapter(adapter2);
 
+        getServer();
+        return view;
+    }
+
+
+
+    public void freshData(){
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
             @Override public void call(CoachService coachService) {
                 if (coachService != null) {
@@ -178,12 +185,11 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             }
         });
 
-        getServer();
-        return view;
     }
 
     @Override public void onResume() {
         super.onResume();
+        freshData();
     }
 
     public void getServer() {
@@ -340,5 +346,9 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     @OnClick(R.id.renewal) public void onClick() {
+        Intent toEdit = new Intent(getContext(),FragActivity.class);
+        toEdit.putExtra("service",mCoachService);
+        toEdit.putExtra("type",13);
+        startActivity(toEdit);
     }
 }
