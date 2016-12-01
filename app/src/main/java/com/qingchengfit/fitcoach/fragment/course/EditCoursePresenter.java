@@ -72,7 +72,7 @@ public class EditCoursePresenter extends BasePresenter {
         //            ) { //连锁运营下 全权限
         if (courseDetail.getShopIdList().size() > 1){
             view.showbaseInfo(courseDetail);
-
+            view.editSuitGym(courseDetail);
         }else {
             view.showBaseInfoHint(null);
             view.editBaseInfo(courseDetail);

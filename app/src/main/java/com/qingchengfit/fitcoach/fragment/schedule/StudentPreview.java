@@ -1,7 +1,12 @@
 package com.qingchengfit.fitcoach.fragment.schedule;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.ToastUtils;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.WebFragment;
 
@@ -27,6 +32,8 @@ import com.qingchengfit.fitcoach.component.WebFragment;
  */
 
 public class StudentPreview extends WebFragment {
+    private String mCopyUrl;
+
     public static StudentPreview newInstance(String url) {
         Bundle args = new Bundle();
         args.putString("url", url);
@@ -38,6 +45,8 @@ public class StudentPreview extends WebFragment {
 
 
     @Override public void initToolbar() {
+
+
         mToobarActionTextView.setText("发送给会员");
         mTitle.setText("会员约课");
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -53,6 +62,23 @@ public class StudentPreview extends WebFragment {
                 //ShareDialogFragment.newInstance()
             }
         });
+    }
+    @OnClick({R.id.close_guide, R.id.copy_link_to_wechat, R.id.go_to_how})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.close_guide:
+                guideToWechatLayout.setVisibility(View.GONE);
+                break;
+            case R.id.copy_link_to_wechat:
+                ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                cmb.setText(mCopyUrl);
+                ToastUtils.showS("链接已复制");
+                break;
+            case R.id.go_to_how:
+                guideToWechatLayout.setVisibility(View.GONE);
+                mWebviewWebView.loadUrl(Configs.Server + Configs.WECHAT_GUIDE);
+                break;
+        }
     }
 
 }

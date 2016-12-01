@@ -95,7 +95,7 @@ public class SyncGymFragment extends BaseFragment {
                             getActivity().finish();
                             return;
                         }
-
+                        syncGymHint.setText(getString(R.string.hint_sync_gyms,qcCoachServiceResponse.data.services.size()));
                         mData.clear();
                         for (int i = 0; i < qcCoachServiceResponse.data.services.size(); i++) {
                             mData.add(new GymItem(qcCoachServiceResponse.data.services.get(i)));

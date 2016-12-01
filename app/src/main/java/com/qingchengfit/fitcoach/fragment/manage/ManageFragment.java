@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +27,7 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
+import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
@@ -40,7 +40,6 @@ import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
-import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,10 +77,9 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @BindView(R.id.angle_show) ImageView angleShow;
     @BindView(R.id.name_brand) TextView nameBrand;
     @BindView(R.id.address_phone) TextView addressPhone;
-    @BindView(R.id.dataoff) TextView dataoff;
     @BindView(R.id.gym_info_layout) LinearLayout gymInfoLayout;
     @BindView(R.id.shop_img) ImageView shopImg;
-    @BindView(R.id.gym_layout) RelativeLayout gymLayout;
+    @BindView(R.id.gym_layout) LinearLayout gymLayout;
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
     private CoachService mCoachService;
@@ -102,14 +100,14 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         mData.add(new DailyWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.ic_template_coursepaln).text(getString(R.string.course_plan)).build()));
         mAdapter = new CommonFlexAdapter(mData, this);
-        recyclerview.addItemDecoration(new ItemDecorationAlbumColumns(1, 3));
-        SmoothScrollGridLayoutManager manager1 = new SmoothScrollGridLayoutManager(getContext(), 3);
+        GridLayoutManager manager1 = new GridLayoutManager(getContext(), 3);
         manager1.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override public int getSpanSize(int position) {
                 return 1;
             }
         });
         recyclerview.setLayoutManager(manager1);
+        recyclerview.addItemDecoration(new ItemDecorationAlbumColumns(1, 3));
         recyclerview.setAdapter(mAdapter);
 
         List<AbstractFlexibleItem> data2 = new ArrayList<>();
@@ -137,9 +135,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 return true;
             }
         });
-        recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
-        SmoothScrollGridLayoutManager manager2 = new SmoothScrollGridLayoutManager(getContext(), 2);
+
+        GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
         recyclerview2.setLayoutManager(manager2);
+        recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
         recyclerview2.setAdapter(adapter2);
 
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
@@ -147,7 +146,11 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 if (coachService != null) {
                     mCoachService = coachService;
                     title.setText(coachService.name);
-                    Glide.with(getContext()).load(coachService.photo).into(shopImg);
+                    Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg,getContext()));
+                    nameBrand.setText(coachService.brand_name);
+                    addressPhone.setText(coachService.getName());
+
+
                     HashMap<String, Object> params = new HashMap<String, Object>();
                     params.put("id", mCoachService.getId());
                     params.put("model", mCoachService.getModel());
@@ -229,10 +232,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         gymLayout.setPivotY(0);
         if (gymLayout.getVisibility() == View.VISIBLE) {
             gymLayout.setVisibility(View.GONE);
-            ViewCompat.setRotation(angleShow, 0);
+            ViewCompat.setRotation(angleShow, 180);
         } else {
             gymLayout.setVisibility(View.VISIBLE);
-            ViewCompat.setRotation(angleShow, 180);
+            ViewCompat.setRotation(angleShow, 0);
         }
         ViewCompat.animate(angleShow).rotationBy(180).setDuration(300).start();
     }
@@ -313,6 +316,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     }
                     Intent toPlan = new Intent(getActivity(), FragActivity.class);
                     toPlan.putExtra("type", 8);
+                    toPlan.putExtra("service", mCoachService);
                     startActivity(toPlan);
                     break;
                 default:

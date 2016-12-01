@@ -29,7 +29,7 @@ public class Configs {
      */
 //    public static boolean isDebug = true;
     public static boolean isDebug = false;
-    public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
+    public static String ServerIp = BuildConfig.DEBUG ? "http://dev.qingchengfit.cn:7777/" : "http://cloud.qingchengfit.cn/";
 //        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = ServerIp + ServerPort;
@@ -41,6 +41,8 @@ public class Configs {
      * 会员预览页面
      */
     public static String HOST_STUDENT_PREVIEW = "http://www.qingchengfit.cn";
+    public static final String WECHAT_GUIDE = "mobile/weixin/guide/";
+
     //app名称
     public static String APPNAME = "QingChengCoach";
     //私有外部路径

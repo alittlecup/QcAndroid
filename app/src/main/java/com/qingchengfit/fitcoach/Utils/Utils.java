@@ -1,5 +1,9 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,33 +32,54 @@ public class Utils {
     public static String checkNull(String t) {
         if (t == null) {
             return "";
-        } else return t;
+        } else {
+            return t;
+        }
     }
 
     public static List checkNull(List t) {
         if (t == null) {
             return new ArrayList();
-        } else return t;
+        } else {
+            return t;
+        }
     }
 
-    public static Long permissNoNull(Long l){
-        if (l == null)
+    public static Long permissNoNull(Long l) {
+        if (l == null) {
             return 0L;
-        else return l;
-
+        } else {
+            return l;
+        }
     }
-    public static float permissNoNull(Float l){
-        if (l == null)
+
+    public static float permissNoNull(Float l) {
+        if (l == null) {
             return 0f;
-        else return l;
-
+        } else {
+            return l;
+        }
     }
 
-    public static int[] toIntArray(List<Integer> list){
+    public static int[] toIntArray(List<Integer> list) {
         int[] ret = new int[list.size()];
-        for(int i = 0;i < ret.length;i++)
+        for (int i = 0; i < ret.length; i++)
             ret[i] = list.get(i);
         return ret;
     }
 
+    public static void openApp(Context context) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "cn.qingchengfit.staffkit.MainActivity");
+            intent.setComponent(cn);
+            context.startActivity(intent);
+
+        } catch (Exception e) {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("http://fir.im/qcfit"));
+            context.startActivity(i);
+        }
+    }
 }

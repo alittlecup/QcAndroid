@@ -106,6 +106,8 @@ android {
 //        }
         common {
 //            dimension 'oem'
+            minSdkVersion 21
+
         }
 
         internal {

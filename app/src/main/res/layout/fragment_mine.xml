@@ -50,7 +50,6 @@
     <include layout="@layout/divider_grey_margin"/>
     <LinearLayout
         android:id="@+id/layout_baseinfo"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@color/white"
@@ -82,7 +81,6 @@
     <include layout="@layout/divider_grey_margin"/>
     <LinearLayout
         android:id="@+id/layout_my_meeting"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@color/white"

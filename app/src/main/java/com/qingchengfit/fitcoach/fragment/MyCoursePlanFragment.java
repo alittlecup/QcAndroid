@@ -24,6 +24,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
+import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -49,7 +50,7 @@ public class MyCoursePlanFragment extends BaseFragment {
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     private GymsAdapter mGymAdapter;
-    private List<QcAllCoursePlanResponse.Plan> adapterData = new ArrayList<>();
+    private List<CoursePlan> adapterData = new ArrayList<>();
     private Unbinder unbinder;
 
     public MyCoursePlanFragment() {

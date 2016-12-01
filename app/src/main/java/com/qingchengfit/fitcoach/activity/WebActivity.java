@@ -490,8 +490,8 @@ public class WebActivity extends BaseAcitivity implements WebActivityInterface, 
         if (sessionid != null) {
             try {
                 URI uri = new URI(url);
-                if (uri.getHost() != null && !hostArray.contains(uri.getHost())) {
-                    hostArray.add(uri.getHost());
+                if (uri.getHost() != null ) {
+                    //hostArray.add(uri.getHost());
                     if (cookieManager != null) {
                         LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                         LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));

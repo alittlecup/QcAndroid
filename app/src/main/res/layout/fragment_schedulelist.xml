@@ -76,7 +76,9 @@
                     android:layout_below="@id/schedule_no_img"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="暂无日程安排"
+                    android:gravity="center"
+                    android:maxWidth="270dp"
+                    android:text="@string/hint_no_schedule"
                     />
             </LinearLayout>
         </ScrollView>

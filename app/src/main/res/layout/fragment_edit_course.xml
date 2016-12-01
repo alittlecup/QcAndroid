@@ -65,6 +65,32 @@
             civ:civ_lable="@string/suit_gyms"
             civ:civ_showright="true"
             />
+        <LinearLayout
+            android:id="@+id/layout_open_app"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="请在健身房管理App中管理适用场馆"
+                />
+            <TextView
+                android:id="@+id/open_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="打开APP"
+                android:textColor="@color/primary"
+                android:drawableBottom="@drawable/primary_under_line"
+                android:drawablePadding="4dp"
+                />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/suit_gyms_rv"

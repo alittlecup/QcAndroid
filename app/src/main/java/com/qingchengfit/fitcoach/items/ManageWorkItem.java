@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,10 +48,7 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
             holder.subTitle.setVisibility(View.VISIBLE);
             holder.subTitle.setText(bean.subname);
         }else holder.subTitle.setVisibility(View.GONE);
-        Drawable drawable;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-           drawable = holder.image.getContext().getResources().getDrawable(bean.resImg,null);
-        }else drawable = holder.image.getContext().getResources().getDrawable(bean.resImg);
+        Drawable drawable = ContextCompat.getDrawable(holder.image.getContext(),bean.resImg);
         DrawableCompat.setTint(drawable, CompatUtils.getColor(holder.itemView.getContext(),R.color.text_grey));
         holder.image.setImageDrawable(drawable);
     }

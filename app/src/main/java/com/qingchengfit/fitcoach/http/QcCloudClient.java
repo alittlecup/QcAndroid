@@ -91,6 +91,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateBatchDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
+import com.qingchengfit.fitcoach.http.bean.QcResponseServiceDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
@@ -520,6 +521,9 @@ public class QcCloudClient {
         @GET("/api/v2/coaches/{coach_id}/cardtpls/")
         rx.Observable<QcResponse> qcGetCard(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
 
+
+        @GET("/api/v1/coaches/{coach_id}/gyms/welcome/")
+        rx.Observable<QcResponseServiceDetail> qcGetCoachServer(@Path("coach_id") String id,@QueryMap HashMap<String,Object> params);
     }
 
     public interface PostApi {

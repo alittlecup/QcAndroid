@@ -16,6 +16,7 @@ import cn.qingchengfit.widgets.utils.DateUtils;
 import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.DatePicker;
+import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import java.util.Calendar;
@@ -53,6 +54,11 @@ public class ScheduleWeekFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        if (getParentFragment() instanceof MainScheduleFragment){
+            mCoachService = ((MainScheduleFragment) getParentFragment()).getCoachService();
+        }
+
         viewpager.setAdapter(new ScheduleWeekAdapter(getChildFragmentManager()));
         viewpager.setCurrentItem(1000);
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -83,7 +89,12 @@ public class ScheduleWeekFragment extends BaseFragment {
                 viewpager.setCurrentItem(eventMonthChange.pos);
             }
         });
-
+        RxBusAdd(EventScheduleService.class)
+            .subscribe(new Action1<EventScheduleService>() {
+                @Override public void call(EventScheduleService eventScheduleService) {
+                    mCoachService = eventScheduleService.mCoachService;
+                }
+            });
         return view;
     }
 
@@ -96,6 +107,11 @@ public class ScheduleWeekFragment extends BaseFragment {
             case R.id.tv_month:
                 dataPicker = new DatePicker();
                 dataPicker.show(getFragmentManager(),"");
+                dataPicker.setListener(new DatePicker.DatePickerChange() {
+                    @Override public void onMonthChange(int year, int month) {
+                        tvMonth.setText(year+"年"+month+"月");
+                    }
+                });
                 break;
             case R.id.day_view:
                 getFragmentManager().beginTransaction()

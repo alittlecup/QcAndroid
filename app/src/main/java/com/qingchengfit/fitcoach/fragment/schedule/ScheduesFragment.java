@@ -22,7 +22,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
@@ -36,7 +35,6 @@ import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
-import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
@@ -67,7 +65,6 @@ public class ScheduesFragment extends BaseFragment {
     private FloatingActionButton btn2;
     private FloatingActionButton btn3;
     private ArrayList<ScheduleBean> scheduleBeans;
-    private ScheduesAdapter scheduesAdapter;
     private ArrayAdapter<SpinnerBean> spinnerBeanArrayAdapter;
     private long curSystemId = 0;
     private int curPostion = 0;
@@ -359,6 +356,11 @@ public class ScheduesFragment extends BaseFragment {
         //scheduleCalendar.setClickable(false);
         mDatePicker = new DatePicker();
         mDatePicker.show(getFragmentManager(), "");
+        mDatePicker.setListener(new DatePicker.DatePickerChange() {
+            @Override public void onMonthChange(int year, int month) {
+                tvMonth.setText(year+"年"+month+"月");
+            }
+        });
         //updateCalendar();
     }
 
@@ -447,75 +449,76 @@ public class ScheduesFragment extends BaseFragment {
         }
     }
 
-    class ScheduesAdapter extends RecyclerView.Adapter<SchedulesVH> implements View.OnClickListener {
-        private List<ScheduleBean> datas;
-        private OnRecycleItemClickListener listener;
-
-        public ScheduesAdapter(List datas) {
-            this.datas = datas;
-        }
-
-        public OnRecycleItemClickListener getListener() {
-            return listener;
-        }
-
-        public void setListener(OnRecycleItemClickListener listener) {
-            this.listener = listener;
-        }
-
-        @Override public SchedulesVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            SchedulesVH holder = new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedules, parent, false));
-            holder.itemView.setOnClickListener(this);
-            return holder;
-        }
-
-        @Override public void onBindViewHolder(SchedulesVH holder, int position) {
-            holder.itemView.setTag(position);
-            ScheduleBean bean = datas.get(position);
-            if (bean.type == 0) {
-                holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
-                StringBuffer sb = new StringBuffer();
-                sb.append(DateUtils.getTimeHHMM(new Date(bean.time)));
-                sb.append("-");
-                sb.append(DateUtils.getTimeHHMM(new Date(bean.timeEnd)));
-                sb.append(" 休息");
-                holder.itemScheduleClassname.setText(sb.toString());
-                holder.itemScheduleGymname.setText(bean.gymname);
-                holder.itemScheduleNum.setVisibility(View.GONE);
-                holder.itemScheduleClasspic.setVisibility(View.GONE);
-                holder.itemScheduleStatus.setVisibility(View.GONE);
-                holder.indicator.setVisibility(View.GONE);
-            } else if (bean.type == 1) {
-                holder.indicator.setVisibility(View.VISIBLE);
-                holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
-                holder.itemScheduleClassname.setText(bean.title);
-                holder.itemScheduleGymname.setText(bean.gymname);
-                Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
-                holder.itemScheduleNum.setVisibility(View.VISIBLE);
-                holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
-                holder.itemScheduleNum.setText(bean.count + "人已预约");
-            }
-
-            if (bean.timeEnd < new Date().getTime()) {
-                holder.itemScheduleClassname.setTextColor(ContextCompat.getColor(getContext(), R.color.text_grey));
-                holder.itemScheduleTime.setTextColor(ContextCompat.getColor(getContext(), R.color.text_grey));
-                holder.itemScheduleStatus.setVisibility(View.GONE);
-                holder.indicator.setBackgroundResource(R.color.warm_grey);
-            } else {
-                holder.itemScheduleStatus.setVisibility(bean.type == 1 ? View.VISIBLE : View.GONE);
-                holder.itemScheduleClassname.setTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
-                holder.itemScheduleTime.setTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
-                holder.itemScheduleStatus.setImageResource(R.drawable.ic_schedule_orderd);
-                holder.indicator.setBackgroundResource(bean.count > 0 ? R.color.primary : R.color.grey);
-            }
-        }
-
-        @Override public int getItemCount() {
-            return datas.size();
-        }
-
-        @Override public void onClick(View v) {
-            if (listener != null) listener.onItemClick(v, (int) v.getTag());
-        }
-    }
+    //class ScheduesAdapter extends RecyclerView.Adapter<SchedulesVH> implements View.OnClickListener {
+    //    private List<ScheduleBean> datas;
+    //    private OnRecycleItemClickListener listener;
+    //
+    //    public ScheduesAdapter(List datas) {
+    //        this.datas = datas;
+    //    }
+    //
+    //    public OnRecycleItemClickListener getListener() {
+    //        return listener;
+    //    }
+    //
+    //    public void setListener(OnRecycleItemClickListener listener) {
+    //        this.listener = listener;
+    //    }
+    //
+    //    @Override public SchedulesVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    //
+    //        SchedulesVH holder = new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedules, parent, false));
+    //        holder.itemView.setOnClickListener(this);
+    //        return holder;
+    //    }
+    //
+    //    @Override public void onBindViewHolder(SchedulesVH holder, int position) {
+    //        holder.itemView.setTag(position);
+    //        ScheduleBean bean = datas.get(position);
+    //        if (bean.type == 0) {
+    //            holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
+    //            StringBuffer sb = new StringBuffer();
+    //            sb.append(DateUtils.getTimeHHMM(new Date(bean.time)));
+    //            sb.append("-");
+    //            sb.append(DateUtils.getTimeHHMM(new Date(bean.timeEnd)));
+    //            sb.append(" 休息");
+    //            holder.itemScheduleClassname.setText(sb.toString());
+    //            holder.itemScheduleGymname.setText(bean.gymname);
+    //            holder.itemScheduleNum.setVisibility(View.GONE);
+    //            holder.itemScheduleClasspic.setVisibility(View.GONE);
+    //            holder.itemScheduleStatus.setVisibility(View.GONE);
+    //            holder.indicator.setVisibility(View.GONE);
+    //        } else if (bean.type == 1) {
+    //            holder.indicator.setVisibility(View.VISIBLE);
+    //            holder.itemScheduleTime.setText(DateUtils.getTimeHHMM(new Date(bean.time)));
+    //            holder.itemScheduleClassname.setText(bean.title);
+    //            holder.itemScheduleGymname.setText(bean.gymname);
+    //            Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
+    //            holder.itemScheduleNum.setVisibility(View.VISIBLE);
+    //            holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
+    //            holder.itemScheduleNum.setText(bean.count + "人已预约");
+    //        }
+    //
+    //        if (bean.timeEnd < new Date().getTime()) {
+    //            holder.itemScheduleClassname.setTextColor(ContextCompat.getColor(getContext(), R.color.text_grey));
+    //            holder.itemScheduleTime.setTextColor(ContextCompat.getColor(getContext(), R.color.text_grey));
+    //            holder.itemScheduleStatus.setVisibility(View.GONE);
+    //            holder.indicator.setBackgroundResource(R.color.warm_grey);
+    //        } else {
+    //            holder.itemScheduleStatus.setVisibility(bean.type == 1 ? View.VISIBLE : View.GONE);
+    //            holder.itemScheduleClassname.setTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
+    //            holder.itemScheduleTime.setTextColor(ContextCompat.getColor(getContext(), R.color.text_black));
+    //            holder.itemScheduleStatus.setImageResource(R.drawable.ic_schedule_orderd);
+    //            holder.indicator.setBackgroundResource(bean.count > 0 ? R.color.primary : R.color.grey);
+    //        }
+    //    }
+    //
+    //    @Override public int getItemCount() {
+    //        return datas.size();
+    //    }
+    //
+    //    @Override public void onClick(View v) {
+    //        if (listener != null) listener.onItemClick(v, (int) v.getTag());
+    //    }
+    //}
 }

@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.marcohc.robotocalendar.CalendarFragment;
 import com.qingchengfit.fitcoach.R;
-
+import java.util.Calendar;
 
 /**
  * power by
@@ -49,20 +49,34 @@ public class DatePicker extends DialogFragment {
         unbinder = ButterKnife.bind(this,view);
         vp.setAdapter(new CalendarAdapter(getChildFragmentManager()));
         vp.setCurrentItem(500);
-        //vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-        //    @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        //
-        //    }
-        //
-        //    @Override public void onPageSelected(int position) {
-        //        RxBus.getBus().post(new EventMonthChange(position-500));
-        //    }
-        //
-        //    @Override public void onPageScrollStateChanged(int state) {
-        //
-        //    }
-        //});
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+                //RxBus.getBus().post(new EventMonthChange(position-500));
+                if (listener != null){
+                    Calendar c = Calendar.getInstance();
+                    c.add(Calendar.MONTH,position-500);
+                    listener.onMonthChange(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
+                }
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return view;
+    }
+    public  interface DatePickerChange{
+        void onMonthChange(int year,int month);
+    }
+
+    private DatePickerChange listener;
+
+    public void setListener(DatePickerChange listener) {
+        this.listener = listener;
     }
 
     @Override

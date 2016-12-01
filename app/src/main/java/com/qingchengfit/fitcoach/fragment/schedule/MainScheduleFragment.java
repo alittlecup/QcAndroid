@@ -89,6 +89,7 @@ public class MainScheduleFragment extends BaseFragment {
             .subscribe(new Action1<EventScheduleService>() {
                 @Override public void call(EventScheduleService eventScheduleService) {
                     mCoachService = eventScheduleService.mCoachService;
+                    title.setText(mCoachService.getName());
                 }
             });
         return view;

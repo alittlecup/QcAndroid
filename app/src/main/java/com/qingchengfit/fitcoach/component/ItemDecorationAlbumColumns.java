@@ -20,6 +20,7 @@ package com.qingchengfit.fitcoach.component;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/15.
  */
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -34,6 +35,11 @@ public class ItemDecorationAlbumColumns extends RecyclerView.ItemDecoration {
     public ItemDecorationAlbumColumns(int gridSpacingPx, int gridSize) {
         mSizeGridSpacingPx = gridSpacingPx;
         mGridSize = gridSize;
+    }
+
+    @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        super.onDraw(c, parent, state);
+
     }
 
     @Override

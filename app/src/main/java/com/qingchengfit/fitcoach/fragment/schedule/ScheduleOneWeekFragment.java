@@ -19,9 +19,11 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CalenderPopWindow;
+import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -129,9 +131,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
             @Override public void onEmptyViewClicked(Calendar calendar, float v, float v1) {
                 if (mCalenderPopWindow == null)
                     mCalenderPopWindow = new CalenderPopWindow.Builder(getContext())
-                        .rest(v2 -> {})
-                        .group(v2 -> {})
-                        .privat(v2 -> {})
+                        .rest(v2 ->onAction(1,calendar.getTime()))
+                        .group(v2 -> onAction(3,calendar.getTime()))
+                        .privat(v2 -> onAction(2,calendar.getTime()))
                         .build();
                 mCalenderPopWindow.show(weekView,(int)v,(int)v1);
                 //GuideWindow window = new GuideWindow(getContext(),"xxxx",GuideWindow.DOWN);
@@ -166,9 +168,40 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                 return mEvents;
             }
         });
+        RxBusAdd(EventScheduleService.class)
+            .subscribe(new Action1<EventScheduleService>() {
+                @Override public void call(EventScheduleService eventScheduleService) {
+                    mCoachService = eventScheduleService.mCoachService;
+                    inflateData();
+                }
+            });
         weekView.setPostion(getArguments().getInt("pos"));
         return view;
     }
+
+
+    public void onAction(int v ,Date date) {
+        StringBuffer sb = new StringBuffer(Configs.Server);
+        switch (v) {
+            case 1:
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
+                break;
+            case 2:
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
+                break;
+            case 3:
+                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
+                break;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+        Intent toWeb = new Intent(getActivity(), WebActivity.class);
+        toWeb.putExtra("url", sb.toString());
+        startActivityForResult(toWeb, 404);
+        //webFloatbtn.collapse();
+    }
+
 
     void inflateData() {
         mEvents.clear();

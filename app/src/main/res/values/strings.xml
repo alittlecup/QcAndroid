@@ -283,5 +283,7 @@
     <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
     <string name="please_open_camera">请打开摄像头权限</string>
     <string name="sorry_no_permission">抱歉，您无该功能权限</string>
+    <string name="hint_today_no_private_order">本日暂无会员预约私教课</string>
+    <string name="hint_no_schedule">本日没有任何课程安排，你可以在「管理」模块中使用「课程排期」来添加</string>
 
 </resources>

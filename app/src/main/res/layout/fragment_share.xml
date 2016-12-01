@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     >
 
     <TextView
@@ -19,47 +20,79 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         >
-
-        <TextView
+        <LinearLayout
             android:id="@+id/wechat_friend"
 
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/ic_share_wechat"
+            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="微信好友"
-            />
-
-        <TextView
+            >
+            <ImageView
+                android:layout_margin="6dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_share_wechat"
+                />
+            <TextView
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="@dimen/little"
+                android:text="微信好友"
+                android:layout_width="wrap_content"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/wechat_circle"
 
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/ic_share_moment"
+            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="朋友圈"
-            />
-
-        <TextView
+            >
+            <ImageView
+                android:layout_margin="6dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_share_moment"
+                />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/little"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="朋友圈"
+                android:layout_width="wrap_content"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/copy_link"
+
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/ic_share_copylink"
+            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="复制链接"
-            />
+            >
+            <ImageView
+                android:layout_margin="6dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_share_copylink"
+                />
+            <TextView
+                android:layout_marginTop="@dimen/little"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="复制链接"
+                android:layout_width="wrap_content"
+                />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

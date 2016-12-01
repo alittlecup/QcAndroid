@@ -10,11 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
@@ -23,21 +26,14 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
-import com.qingchengfit.fitcoach.http.bean.QcResponseCoursePlan;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -113,17 +109,19 @@ public class ChooseCoursePlanFragment extends BaseFragment implements
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
-//        mCallbackActivity.setToolbar("选择默认课程计划", false, null, 0, null);
         mAdapter = new CommonFlexAdapter(mDatas, this);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recyclerview.setHasFixedSize(true);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
         recyclerview.setAdapter(mAdapter);
-        RxRegiste(restRepository.getGet_api().qcGetCoursePlan(App.coachid+"", GymUtils.getParams(coachService, brand))
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("id",coachService.getId());
+        params.put("model",coachService.getModel());
+        RxRegiste(restRepository.getGet_api().qcGetAllPlans(App.coachid, params)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseCoursePlan>() {
+                .subscribe(new Action1<QcAllCoursePlanResponse>() {
                     @Override
-                    public void call(QcResponseCoursePlan qcResponseCoursePlan) {
+                    public void call(QcAllCoursePlanResponse qcResponseCoursePlan) {
                         if (ResponseConstant.checkSuccess(qcResponseCoursePlan)) {
                             mDatas.clear();
                             mDatas.add(new ChooseCoursePlanItem(false, new CoursePlan.Builder().id(0L).name("不使用任何课程计划模板").build()));
