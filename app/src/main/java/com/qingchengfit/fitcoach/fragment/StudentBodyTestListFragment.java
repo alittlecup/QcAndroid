@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.activity.StudentHomeActivity;
@@ -16,12 +18,8 @@ import com.qingchengfit.fitcoach.adapter.SimpleAdapter;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * power by
@@ -95,14 +93,14 @@ public class StudentBodyTestListFragment extends VpFragment {
 
     }
 
-//    @OnClick(R.id.add1)
-//    public void addTest(){
-//        Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
-//        toAdd.putExtra("type",1);
-//        toAdd.putExtra("model",model);
-//        toAdd.putExtra("modelid",modelid);
-//        startActivity(toAdd);
-//    }
+    @OnClick(R.id.add1)
+    public void addTest(){
+        Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
+        toAdd.putExtra("type",1);
+        toAdd.putExtra("model",model);
+        toAdd.putExtra("modelid",modelid);
+        startActivity(toAdd);
+    }
 
 
     public void setData(List<BodyTestBean> strings) {

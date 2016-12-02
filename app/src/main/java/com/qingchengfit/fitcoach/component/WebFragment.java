@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.component;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
+import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.bean.Contact;
 import com.qingchengfit.fitcoach.bean.PayEvent;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
@@ -506,5 +508,29 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         public void shareTimeline(String title, String link, String imgurl, String successCallback, String failedCallback) {
 
         }
+
+        @JavascriptInterface
+        public void setArea() {// 跳转去设置
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), SettingActivity.class);
+            intent.putExtra("to", 1);
+            startActivity(intent);
+        }
+
+        @JavascriptInterface
+        public void goNativePath(String s) {
+
+            if ("activities".equals(s)) {//跳到青橙专享活动列表页
+                getActivity().finish();
+            } else if ("area".equals(s)) {// 跳转去设置
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SettingActivity.class);
+                intent.putExtra("to", 1);
+                startActivity(intent);
+            }
+
+        }
+
+
     }
 }

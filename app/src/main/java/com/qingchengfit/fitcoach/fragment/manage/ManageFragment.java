@@ -140,14 +140,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
         recyclerview2.setLayoutManager(manager2);
         recyclerview2.setAdapter(adapter2);
-
-        getServer();
-        return view;
-    }
-
-
-
-    public void freshData(){
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
             @Override public void call(CoachService coachService) {
                 if (coachService != null) {
@@ -185,11 +177,15 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             }
         });
 
+        return view;
     }
+
+
+
 
     @Override public void onResume() {
         super.onResume();
-        freshData();
+        getServer();
     }
 
     public void getServer() {
@@ -219,6 +215,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                 mCoachService = qcResponse.data.services.get(0);
                             }
                             title.setText(mCoachService.name);
+                            addressPhone.setText(mCoachService.getName());
+                            nameBrand.setText(mCoachService.getBrand_name());
                             Glide.with(getContext()).load(mCoachService.photo).into(shopImg);
                         } else {
                             ToastUtils.show("服务器错误");
