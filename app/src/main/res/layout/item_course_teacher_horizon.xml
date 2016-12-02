@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="65dp"
-              android:layout_height="wrap_content"
-              android:gravity="center_horizontal"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="65dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
     >
     <ImageView
         android:id="@+id/header"
@@ -24,7 +25,10 @@
         style="@style/Qc.RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:isIndicator="true"
+        android:numStars="5"
+        android:stepSize="0.1"
+        tools:rating="4.7"
         />
 
 </LinearLayout>

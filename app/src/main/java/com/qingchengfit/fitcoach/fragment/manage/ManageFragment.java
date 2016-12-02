@@ -217,7 +217,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                             title.setText(mCoachService.name);
                             addressPhone.setText(mCoachService.getName());
                             nameBrand.setText(mCoachService.getBrand_name());
-                            Glide.with(getContext()).load(mCoachService.photo).into(shopImg);
+                            Glide.with(getContext()).load(mCoachService.photo).asBitmap().into(new CircleImgWrapper(shopImg,getContext()));
                         } else {
                             ToastUtils.show("服务器错误");
                         }

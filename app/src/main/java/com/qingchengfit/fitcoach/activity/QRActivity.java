@@ -52,7 +52,7 @@ public class QRActivity extends BaseAcitivity implements QRCodeReaderView.OnQRCo
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.toolbar_titile)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitile;
     @BindView(R.id.done)
     LinearLayout done;

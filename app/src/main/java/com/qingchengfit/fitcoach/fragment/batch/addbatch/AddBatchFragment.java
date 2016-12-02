@@ -337,6 +337,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 Intent toAccount = new Intent(getActivity(), FragActivity.class);
                 toAccount.putExtra("type", 12);
                 toAccount.putExtra("count", body.max_users == 0 ?8:body.max_users);
+                toAccount.putExtra("service",mCoachService);
                 startActivityForResult(toAccount, RESULT_ACCOUNT);
 
                 break;

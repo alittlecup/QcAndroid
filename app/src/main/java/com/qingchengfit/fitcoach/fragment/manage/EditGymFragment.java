@@ -2,6 +2,8 @@ package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +18,13 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseServiceDetail;
 import java.util.HashMap;
 import rx.android.schedulers.AndroidSchedulers;
@@ -58,7 +63,7 @@ import rx.schedulers.Schedulers;
         if (view instanceof LinearLayout) {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar) v.findViewById(R.id.toolbar);
-            ((TextView) v.findViewById(R.id.toolbar_title)).setText("新建健身房");
+            ((TextView) v.findViewById(R.id.toolbar_title)).setText("编辑健身房");
             tb.setNavigationIcon(R.drawable.ic_arrow_left);
             tb.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
@@ -69,10 +74,49 @@ import rx.schedulers.Schedulers;
             tb.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     //修改会员
+                    if (TextUtils.isEmpty(gymName.getContent())){
+                        ToastUtils.show("健身房名称不能为空");
+                        return true;
+                    }
+                    if (lat == 0 || lng == 0) {
+                        ToastUtils.show("请重新选择健身房地址");
+                        return true;
+                    }
+                    if (getActivity() instanceof FragActivity){
+                        HashMap<String,Object> params = new HashMap<String, Object>();
+                        params.put("id",((FragActivity) getActivity()).getCoachService().getId());
+                        params.put("model",((FragActivity) getActivity()).getCoachService().getModel());
+                        Shop shop = new Shop.Builder()
+                            .gd_district_id(city_code+"").gd_lat(lat).gd_lng(lng).name(gymName.getContent())
+                            .build();
+                        RxRegiste(QcCloudClient.getApi().postApi.qcUpdateGym(App.coachid+"",params,shop)
+                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                             .subscribe(new Action1<QcResponse>() {
+                                                 @Override
+                                                 public void call(QcResponse qcResponse) {
+                                                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                                                         getActivity().onBackPressed();
+                                                     } else ToastUtils.show(qcResponse.getMsg());
+                                                 }
+                                             }, new Action1<Throwable>() {
+                                                 @Override
+                                                 public void call(Throwable throwable) {
+                                                     ToastUtils.show(throwable.getMessage());
+                                                 }
+                                             })
+                        );
+                    }
+
+
                     return false;
                 }
             });
-            ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)getResources().getDimension(R.dimen.qc_actionbar_height)));
+            TypedValue tv = new TypedValue();
+            if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+            {
+                int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+                ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,actionBarHeight));
+            }
 
         }
         return view;

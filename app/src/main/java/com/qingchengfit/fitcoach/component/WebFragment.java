@@ -346,8 +346,10 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                mRefreshSwipeRefreshLayout.setRefreshing(false);
-                mTitle.setText(title);
+                if (mRefreshSwipeRefreshLayout != null && mTitle != null) {
+                    mRefreshSwipeRefreshLayout.setRefreshing(false);
+                    mTitle.setText(title);
+                }
             }
         });
     }
@@ -398,7 +400,8 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             return mWebviewWebView.getWebScrollY() > 0;
         } catch (Exception e) {
             return true;
-        }    }
+        }
+    }
 
     public class JsInterface {
 

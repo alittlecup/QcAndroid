@@ -72,11 +72,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     public static final int NOTIFICATION = 1;
     public static final int INIT = 3;
 
-
-    @BindView(R.id.viewpager)
-    ViewPager viewpager;
-    @BindView(R.id.tabview)
-    TabView tabview;
+    @BindView(R.id.viewpager) ViewPager viewpager;
+    @BindView(R.id.tabview) TabView tabview;
 
     /**
      * 退出弹窗提示
@@ -112,29 +109,26 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private File newAkp;
     AsyncDownloader mDownloadThread;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
         setupVp();
         gson = new Gson();
-        logoutDialog = new MaterialDialog.Builder(this)
-                .autoDismiss(true)
-                .content("退出应用？")
-                .positiveText("退出")
-                .negativeText("取消")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Main2Activity.this.finish();
-                    }
-                })
-                .build();
+        logoutDialog = new MaterialDialog.Builder(this).autoDismiss(true)
+            .content("退出应用？")
+            .positiveText("退出")
+            .negativeText("取消")
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    Main2Activity.this.finish();
+                }
+            })
+            .build();
         initUser();
 
         initBDPush();
-        initVersion();
+
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = getIntent().getStringExtra("url");
@@ -142,8 +136,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             toWeb.putExtra("url", contetn);
             startActivity(toWeb);
         }
-
-
     }
 
     private void setupVp() {
@@ -152,22 +144,18 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         tabview.setViewPager(viewpager);
     }
 
-    @Override
-    public void onfinish() {
+    @Override public void onfinish() {
 
     }
 
-
     public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
-        private int[] mIconSelect = {R.drawable.ic_tabbar_schedule_active
-                , R.drawable.ic_tabbar_manage_active
-                , R.drawable.ic_tabbar_discover_active
-                , R.drawable.ic_tabbar_account_active
+        private int[] mIconSelect = {
+            R.drawable.ic_tabbar_schedule_active, R.drawable.ic_tabbar_manage_active, R.drawable.ic_tabbar_discover_active,
+            R.drawable.ic_tabbar_account_active
         };
-        private int[] mIconNormal = {R.drawable.ic_tabbar_schedule_normal
-                , R.drawable.ic_tabbar_manage_normal
-                , R.drawable.ic_tabbar_discover_normal
-                , R.drawable.ic_tabbar_account_normal
+        private int[] mIconNormal = {
+            R.drawable.ic_tabbar_schedule_normal, R.drawable.ic_tabbar_manage_normal, R.drawable.ic_tabbar_discover_normal,
+            R.drawable.ic_tabbar_account_normal
         };
         private Context context;
 
@@ -176,41 +164,36 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             this.context = context;
         }
 
-        @Override
-        public Fragment getItem(int position) {
+        @Override public Fragment getItem(int position) {
             if (position == 0) {
                 return new MainScheduleFragment();
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {
                 return MainWebFragment.newInstance("http://cloudtest.qingchengfit.cn/mobile/coach/discover/");
-            } else
+            } else {
                 return new MineFragmentFragment();
+            }
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
+        @Override public CharSequence getPageTitle(int position) {
             return "";
         }
 
-        @Override
-        public int getCount() {
+        @Override public int getCount() {
             return 4;
         }
 
-        @Override
-        public int[] onIconSelect(int position) {
+        @Override public int[] onIconSelect(int position) {
             int icon[] = new int[2];
             icon[0] = mIconSelect[position];
             icon[1] = mIconNormal[position];
             return icon;
         }
 
-        @Override
-        public String onTextSelect(int position) {
+        @Override public String onTextSelect(int position) {
             return context.getResources().getStringArray(R.array.home_tab)[position];
         }
-
     }
 
     public void logout() {
@@ -224,24 +207,24 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         this.finish();
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override protected void onResume() {
+        super.onResume();
+        initVersion();
+    }
+
+    @Override public void onBackPressed() {
         if (!logoutDialog.isShowing()) {
             logoutDialog.show();
         }
-
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         App.gMainAlive = false;
         super.onDestroy();
-        if (mDownloadThread != null)
-            mDownloadThread.cancel(true);
+        if (mDownloadThread != null) mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
         RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
     }
-
 
     private void initBDPush() {
         String userid = PreferenceUtils.getPrefString(this, PushReciever.BD_USERLID, null);
@@ -253,25 +236,22 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             pushBody.device_type = "android";
             pushBody.distribute = getString(R.string.oem_tag);
             QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Subscriber<QcResponse>() {
-                        @Override
-                        public void onCompleted() {
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<QcResponse>() {
+                    @Override public void onCompleted() {
 
+                    }
+
+                    @Override public void onError(Throwable e) {
+
+                    }
+
+                    @Override public void onNext(QcResponse qcResponse) {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            PreferenceUtils.setPrefBoolean(Main2Activity.this, "hasPushId", true);
                         }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(QcResponse qcResponse) {
-                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                                PreferenceUtils.setPrefBoolean(Main2Activity.this, "hasPushId", true);
-                            }
-                        }
-                    });
+                    }
+                });
         } else {
             LogUtil.e("bdpush:empty");
         }
@@ -284,91 +264,70 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             NonetworkSnack.show();
         }
 
-
         FIR.checkForUpdateInFIR(getString(BuildConfig.DEBUG ? R.string.fir_token_debug : R.string.fir_token), new VersionCheckCallback() {
-            @Override
-            public void onSuccess(String s) {
+            @Override public void onSuccess(String s) {
                 super.onSuccess(s);
                 UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
-                if (BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG && BuildConfig.FLAVOR.startsWith("internal")) {
                     long oldupdate = PreferenceUtils.getPrefLong(Main2Activity.this, "update", 0);
                     if (updateVersion.updated_at <= oldupdate) {
                         return;
                     }
                     PreferenceUtils.setPrefLong(Main2Activity.this, "update", updateVersion.updated_at);
-
                 } else {
-                    if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex))
-                        return;
+                    if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex)) return;
                 }
 
                 url = updateVersion.direct_install_url;
                 newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
-                updateDialog = new MaterialDialog.Builder(Main2Activity.this)
-                        .title("前方发现新版本!!")
-                        .content(updateVersion.changelog)
-                        .positiveText("更新")
-                        .negativeText("下次再说")
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                updateDialog.dismiss();
-                                if (url != null) {
-                                    //TODO download app
-                                    downloadDialog.show();
-                                    mDownloadThread = new Main2Activity.AsyncDownloader();
-                                    mDownloadThread.execute(url);
-                                }
+                MaterialDialog.Builder builder = new MaterialDialog.Builder(Main2Activity.this).title("前方发现新版本!!")
+                    .content(updateVersion.changelog)
+                    .positiveText("更新")
+                    .autoDismiss(true)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if (url != null) {
+                                downloadDialog.show();
+                                mDownloadThread = new Main2Activity.AsyncDownloader();
+                                mDownloadThread.execute(url);
                             }
+                        }
+                    });
+                if (updateVersion.version % 10 != 0) builder.negativeText("下次再说");
 
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                updateDialog.dismiss();
-                            }
-                        })
-                        .build();
-                downloadDialog = new MaterialDialog.Builder(Main2Activity.this)
-                        .content("正在飞速为您下载")
-                        .progress(false, 100)
-                        .cancelable(false)
-                        .positiveText("后台更新")
-                        .negativeText("取消更新")
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                            }
+                updateDialog = builder.build();
+                downloadDialog = new MaterialDialog.Builder(Main2Activity.this).content("正在飞速为您下载")
+                    .progress(false, 100)
+                    .cancelable(false)
+                    .positiveText("后台更新")
+                    .negativeText("取消更新")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                        }
 
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                mDownloadThread.cancel(true);
-                            }
-                        })
-                        .build();
+                        @Override public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            mDownloadThread.cancel(true);
+                        }
+                    })
+                    .build();
                 updateDialog.show();
             }
 
-
-            @Override
-            public void onFail(Exception e) {
+            @Override public void onFail(Exception e) {
                 super.onFail(e);
             }
 
-            @Override
-            public void onStart() {
+            @Override public void onStart() {
                 super.onStart();
             }
 
-            @Override
-            public void onFinish() {
+            @Override public void onFinish() {
                 super.onFinish();
             }
         });
     }
-
 
     private void initUser() {
 
@@ -388,61 +347,54 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         App.coachid = Integer.parseInt(coach.id);
 
         //获取用户拥有的系统
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<QcCoachSystemResponse>() {
-                    @Override
-                    public void onCompleted() {
+        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<QcCoachSystemResponse>() {
+                @Override public void onCompleted() {
 
-                    }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
+                @Override public void onError(Throwable e) {
 
-                    }
+                }
 
-                    @Override
-                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                                    qcCoachSystemResponse.date.systems.size() == 0) {
-                                Intent intent = new Intent(Main2Activity.this, FragActivity.class);
-                                intent.putExtra("type", 3);
-                                intent.putExtra("isNew", true);
-                                startActivity(intent);
-                            } else {
-                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
-
-                            }
-                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-                            logout();
+                @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                        if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
+                            qcCoachSystemResponse.date.systems.size() == 0) {
+                            Intent intent = new Intent(Main2Activity.this, FragActivity.class);
+                            intent.putExtra("type", 3);
+                            intent.putExtra("isNew", true);
+                            startActivity(intent);
+                        } else {
+                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
                         }
+                    } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                        logout();
                     }
-                });
-
+                }
+            });
     }
 
-
-    @Override
-    protected void onNewIntent(Intent intent) {
+    @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
             logout();
         } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
             Main2Activity.this.finish();
-
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = intent.getStringExtra("url");
             Intent toWeb = new Intent(this, WebActivity.class);
             toWeb.putExtra("url", contetn);
             startActivity(toWeb);
-        } else if (intent.getIntExtra(ACTION ,-1) == INIT){
+        } else if (intent.getIntExtra(ACTION, -1) == INIT) {
 
             mCoachService = intent.getParcelableExtra("service");
-            if (viewpager != null &&viewpager.getAdapter() != null && viewpager.getAdapter().getCount() > 2){
+            if (viewpager != null && viewpager.getAdapter() != null && viewpager.getAdapter().getCount() > 2) {
                 viewpager.setCurrentItem(1);
-                if (viewpager.getAdapter() instanceof MainPagerAdapter){
-                    if (((MainPagerAdapter) viewpager.getAdapter()).getItem(1) instanceof ManageFragment){
+                if (viewpager.getAdapter() instanceof MainPagerAdapter) {
+                    if (((MainPagerAdapter) viewpager.getAdapter()).getItem(1) instanceof ManageFragment) {
                         ((ManageFragment) ((MainPagerAdapter) viewpager.getAdapter()).getItem(1)).getServer();
                     }
                 }
@@ -450,15 +402,13 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         }
     }
 
-
     /**
      * 新版本下载
      */
 
     private class AsyncDownloader extends AsyncTask<String, Long, Boolean> {
 
-        @Override
-        protected Boolean doInBackground(String... params) {
+        @Override protected Boolean doInBackground(String... params) {
             OkHttpClient httpClient = new OkHttpClient();
             Call call = httpClient.newCall(new Request.Builder().url(params[0]).get().build());
             try {
@@ -487,7 +437,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                                 return false;
                             }
                         }
-//                        FileUtils.getFileFromBytes(response.body().bytes(), newAkp.getAbsolutePath());
+                        //                        FileUtils.getFileFromBytes(response.body().bytes(), newAkp.getAbsolutePath());
                         return downloaded == target;
                     } catch (IOException ignore) {
                         return false;
@@ -508,14 +458,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             }
         }
 
-        @Override
-        protected void onProgressUpdate(Long... values) {
+        @Override protected void onProgressUpdate(Long... values) {
             downloadDialog.setProgress((int) (values[0] * 100 / values[1]));
-
         }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
+        @Override protected void onPostExecute(Boolean result) {
             if (result) {
                 downloadDialog.dismiss();
                 AppUtils.install(Main2Activity.this, newAkp.getAbsolutePath());
@@ -523,10 +470,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 downloadDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
-
-
-
 }

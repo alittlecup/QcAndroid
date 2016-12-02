@@ -150,6 +150,7 @@ android {
         debug {
             signingConfig signingConfigs.release
             debuggable true
+            applicationIdSuffix ".debug"
         }
     }
 

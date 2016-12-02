@@ -362,7 +362,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
      * 封面管理
      */
     @OnClick(R.id.edit_jacket) public void onJacketVp() {
-        if (mCourseDetail.getShops().size() > 0){
+        if (mCourseDetail.getShops().size() > 1){
             StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
             return;
         }else {

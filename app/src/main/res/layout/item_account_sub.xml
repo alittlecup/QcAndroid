@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qingchengfit.fitcoach.component.CommonInputView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/civ"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:civ_inputnum="true"
+    app:civ_showdivier="true"
+    app:civ_nonnull="true"
+    />

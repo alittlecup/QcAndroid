@@ -48,7 +48,7 @@ public class DatePicker extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_datepicker, container, false);
         unbinder = ButterKnife.bind(this,view);
         vp.setAdapter(new CalendarAdapter(getChildFragmentManager()));
-        vp.setCurrentItem(500);
+        vp.setCurrentItem(50);
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -69,6 +69,7 @@ public class DatePicker extends DialogFragment {
     }
     public  interface DatePickerChange{
         void onMonthChange(int year,int month);
+        void onDismiss(int year,int month);
     }
 
     private DatePickerChange listener;
@@ -92,6 +93,15 @@ public class DatePicker extends DialogFragment {
     @OnClick({R.id.bg,R.id.bg_up})
     public void onBg(){
         this.dismiss();
+    }
+
+    @Override public void dismiss() {
+        if (listener != null){
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.MONTH,vp.getCurrentItem()-50);
+            listener.onDismiss(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
+        }
+        super.dismiss();
     }
 
     @Override public void onDestroyView() {

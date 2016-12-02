@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.CompatUtils;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -24,6 +25,7 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
+import java.util.Date;
 import java.util.HashMap;
 import rx.schedulers.Schedulers;
 
@@ -125,35 +127,9 @@ public class StatementGlanceFragment extends Fragment {
         monthTitle.append("本月");
         weekTitle.append("本周");
         dayTitle.append("今日");
-        //int monthClassNum = 0, weekClassNum = 0, dayClassNum = 0,
-        //        monthOrderNum = 0, weekOrderNum = 0, dayOrderNum = 0,
-        //        monthServerNum = 0, weekServerNum = 0, dayServerNum = 0;
-        //
-        //for (int i = 0; i < systems.size(); i++) {
-        //    QcReportGlanceResponse.glanceservice system = systems.get(i);
-        //    if (system.service == null)
-        //        continue;
-        //    if (i == 0) {
-                monthTitle.append("(").append(qcReportGlanceResponse.data.month.from_date).append("至").append(qcReportGlanceResponse.data.month.to_date).append(")");
-                weekTitle.append("(").append(qcReportGlanceResponse.data.week.from_date).append("至").append(qcReportGlanceResponse.data.week.to_date).append(")");
-                dayTitle.append("(").append(qcReportGlanceResponse.data.today.from_date).append("至").append(qcReportGlanceResponse.data.today.to_date).append(")");
-        //    }
-        //
-        //    if (curSystemId != 0 && (curSystemId != system.service.id || !system.service.model.equals(curModel)))
-        //        continue;
-        //    if (system.stat!= null && system.stat.month != null) {
-        //
-        //        monthClassNum += system.stat.month.course_count;
-        //        monthOrderNum += system.stat.month.order_count;
-        //        monthServerNum += system.stat.month.user_count;
-        //        weekClassNum += system.stat.week.course_count;
-        //        weekOrderNum += system.stat.week.order_count;
-        //        weekServerNum += system.stat.week.user_count;
-        //        dayClassNum += system.stat.today.course_count;
-        //        dayOrderNum = +system.stat.today.order_count;
-        //        dayServerNum += system.stat.today.user_count;
-        //    }
-        //}
+                monthTitle.append("(").append(DateUtils.getStartDayOfMonth(new Date())).append("至").append(DateUtils.getEndDayOfMonth(new Date())).append(")");
+                weekTitle.append("(").append(DateUtils.getMondayOfThisWeek(new Date())).append("至").append(DateUtils.getSundayOfThisWeek(new Date())).append(")");
+                dayTitle.append("(").append(DateUtils.formatToServer(new Date())).append(")");
 
         StringBuffer monthContent = new StringBuffer();
         StringBuffer weekContent = new StringBuffer();

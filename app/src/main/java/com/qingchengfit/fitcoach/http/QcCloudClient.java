@@ -12,6 +12,7 @@ import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
 import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.ScanBody;
+import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -477,7 +478,7 @@ public class QcCloudClient {
         @GET("/api/v1/coaches/{coach_id}/courses/shops/score/") rx.Observable<QcResponseShopComment> qcGetShopComment(
             @Path("coach_id") String coach_id, @Query("course_id") String id, @QueryMap HashMap<String, String> params);
 
-        @GET("/api/v1/coaches/{coach_id}/courses/photos/") rx.Observable<QcResponseJacket> qcGetJacket(@Path("coach_id") String id,
+        @GET("/api/v2/coaches/{coach_id}/courses/photos/") rx.Observable<QcResponseJacket> qcGetJacket(@Path("coach_id") String id,
             @Query("course_id") String course_id, @QueryMap HashMap<String, String> params);
 
         /**
@@ -520,14 +521,18 @@ public class QcCloudClient {
         rx.Observable<QcResponseSpaces> qcGetSpace(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
         //拉去卡列表
         @GET("/api/v2/coaches/{coach_id}/cardtpls/")
-        rx.Observable<QcResponse> qcGetCard(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
+        rx.Observable<QcResponseCardTpls> qcGetCardTpls(@Path("coach_id") String id, @Query("id") String gymid, @Query("model") String gymmodel);
 
 
         @GET("/api/v1/coaches/{coach_id}/gyms/welcome/")
         rx.Observable<QcResponseServiceDetail> qcGetCoachServer(@Path("coach_id") String id,@QueryMap HashMap<String,Object> params);
+
     }
 
     public interface PostApi {
+
+        @PUT("/api/v2/coaches/{coach_id}/gyms/update/")
+        rx.Observable<QcResponse> qcUpdateGym(@Path("coach_id") String id,@QueryMap HashMap<String,Object> params,@Body Shop shop);
 
         //登录
         @POST("/api/coaches/login/") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
@@ -684,7 +689,7 @@ public class QcCloudClient {
             @Path("course_id") String course_id, @QueryMap HashMap<String, String> params);
 
         //修改封面
-        @POST("/api/v1/coaches/{id}/courses/photos/") rx.Observable<QcResponse> qcEditJacket(@Path("id") String coachid,
+        @POST("/api/v2/coaches/{id}/courses/photos/") rx.Observable<QcResponse> qcEditJacket(@Path("id") String coachid,
             @Query("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body EditJacketBody body);
 
         //修改课程适用场馆

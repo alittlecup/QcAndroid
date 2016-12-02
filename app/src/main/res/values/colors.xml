@@ -13,6 +13,7 @@
     <!--<color username="backgroud_grey">#aaaaaa</color>-->
     <color name="text_red">#f1693c</color>
     <color name="text_orange">#f9944e</color>
+    <color name="bg_orange">#33f9944e</color>
     <color name="text_link">#6EB8F1</color>
 
 

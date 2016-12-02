@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,12 @@ public class AddGymFragment extends GuideSetGymFragment {
                     getActivity().onBackPressed();
                 }
             });
-            ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)getResources().getDimension(R.dimen.qc_actionbar_height)));
+            TypedValue tv = new TypedValue();
+            if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+            {
+                int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+                ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,actionBarHeight));
+            }
         }
         return view;
     }

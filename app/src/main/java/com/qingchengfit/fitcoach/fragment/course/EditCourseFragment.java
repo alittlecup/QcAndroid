@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +68,9 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @BindView(R.id.suit_gyms_rv) RecyclerView suitGymsRv;
     @BindView(R.id.open_app) TextView openApp;
     @BindView(R.id.layout_open_app) LinearLayout layoutOpenApp;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     private Fragment mCourseInfoFragment;
 
     @Inject EditCoursePresenter mPresenter;
@@ -86,6 +90,15 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
         View view = inflater.inflate(R.layout.fragment_edit_course, container, false);
         unbinding = ButterKnife.bind(this, view);
         //        mCallbackActivity.setToolbar("编辑基本信息", false, null, 0, null);
+        toolbarTitle.setText("编辑基本信息");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.inflateMenu(R.menu.menu_complete);
+        toolbar.setOnMenuItemClickListener(menuItemClickListener);
         if (getActivity() instanceof CourseActivity) ((CourseActivity) getActivity()).getComponent().inject(this);
         delegatePresenter(mPresenter, this);
         mPresenter.judgePermission((CourseDetail) getArguments().getParcelable("c"));
@@ -172,8 +185,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
         layoutOpenApp.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.open_app)
-    public void OpenApp(){
+    @OnClick(R.id.open_app) public void OpenApp() {
         Utils.openApp(getContext());
     }
     //@OnClick(R.id.suit_gyms_edit) public void editSuitGyms() {

@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.Utils;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -70,10 +69,8 @@ public class Utils {
 
     public static void openApp(Context context) {
         try {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-            ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "cn.qingchengfit.staffkit.MainActivity");
-            intent.setComponent(cn);
+            Intent intent = new Intent();
+            intent = context.getPackageManager().getLaunchIntentForPackage( "cn.qingchengfit.staffkit");
             context.startActivity(intent);
 
         } catch (Exception e) {

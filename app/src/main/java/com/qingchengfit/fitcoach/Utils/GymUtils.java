@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.Utils;
 
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
-
 import java.util.HashMap;
-
 
 /**
  * power by
@@ -23,38 +21,42 @@ public class GymUtils {
     public static boolean isInBrand(CoachService gymBase) {
         return gymBase == null || gymBase.id == 0 || gymBase.model == null;
     }
-    public static String getBrandId(CoachService coachService, Brand brand){
-        if (isInBrand(coachService)){
+
+    public static String getBrandId(CoachService coachService, Brand brand) {
+        if (isInBrand(coachService)) {
             return brand.getId();
-        }else {
+        } else {
             return coachService.brand_name;
         }
     }
-    public static HashMap<String,String> getParams(CoachService gymBase, Brand brand){
-        HashMap<String,String> params = new HashMap<>();
-        if (isInBrand(gymBase)){
-            params.put("brand_id",brand.getId());
-        }
-        else {
-            params.put("id",gymBase.getId()+"");
-            params.put("model",gymBase.getModel());
+
+    public static HashMap<String, String> getParams(CoachService gymBase, Brand brand) {
+        HashMap<String, String> params = new HashMap<>();
+        if (isInBrand(gymBase)) {
+            params.put("brand_id", brand.getId());
+        } else {
+            params.put("id", gymBase.getId() + "");
+            params.put("model", gymBase.getModel());
         }
         return params;
     }
 
-    public static HashMap<String,String> getParams(CoachService gymBase, Brand brand , String shopid){
-        HashMap<String,String> params = new HashMap<>();
-        if (isInBrand(gymBase)){
-            params.put("brand_id",brand.getId());
-            if (shopid != null)
-                params.put("shop_id",shopid);
-        }
-        else {
-            params.put("id",gymBase.getId()+"");
-            params.put("model",gymBase.getModel());
-        }
+    public static HashMap<String, Object> getParams(CoachService gymBase) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", gymBase.getId() + "");
+        params.put("model", gymBase.getModel());
         return params;
     }
 
-
+    public static HashMap<String, String> getParams(CoachService gymBase, Brand brand, String shopid) {
+        HashMap<String, String> params = new HashMap<>();
+        if (isInBrand(gymBase)) {
+            params.put("brand_id", brand.getId());
+            if (shopid != null) params.put("shop_id", shopid);
+        } else {
+            params.put("id", gymBase.getId() + "");
+            params.put("model", gymBase.getModel());
+        }
+        return params;
+    }
 }

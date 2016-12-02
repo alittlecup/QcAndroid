@@ -132,7 +132,8 @@ public class CoachCommentListFragment extends BaseFragment {
                         //adapter = new CoachCommentAdapter(getFragmentManager(), coaches);
                         //viewpager.setAdapter(adapter);
                         //strip.setViewPager(viewpager);
-                        getChildFragmentManager().beginTransaction().replace(R.id.layout_comment_detail,CoachCommentDetailFragment.newInstance(null)).commit();
+                        if (coaches.size() >0)
+                            getChildFragmentManager().beginTransaction().replace(R.id.layout_comment_detail,CoachCommentDetailFragment.newInstance(coaches.get(0))).commit();
 
                     } else {
                         noDataLayout.setVisibility(View.VISIBLE);

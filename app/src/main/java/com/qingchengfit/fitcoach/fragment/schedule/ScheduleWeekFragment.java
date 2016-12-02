@@ -21,6 +21,7 @@ import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
@@ -28,7 +29,6 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import java.util.Calendar;
 import java.util.Date;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 /**
@@ -60,6 +60,7 @@ public class ScheduleWeekFragment extends BaseFragment {
     @BindView(R.id.tv_month) TextView tvMonth;
     private CoachService mCoachService;
     private DatePicker dataPicker;
+    private ScheduleWeekAdapter adapter;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
@@ -68,16 +69,17 @@ public class ScheduleWeekFragment extends BaseFragment {
         if (getParentFragment() instanceof MainScheduleFragment){
             mCoachService = ((MainScheduleFragment) getParentFragment()).getCoachService();
         }
+        adapter = new ScheduleWeekAdapter(getChildFragmentManager());
 
-        viewpager.setAdapter(new ScheduleWeekAdapter(getChildFragmentManager()));
-        viewpager.setCurrentItem(1000);
+        viewpager.setAdapter(adapter);
+        viewpager.setCurrentItem(1000+adapter.getPostion());
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
             @Override public void onPageSelected(int position) {
-                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-1000).first);
+                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-1000+adapter.getPostion()).first);
                 tvMonth.setText(DateUtils.getChineseMonth(d));
             }
 
@@ -120,15 +122,7 @@ public class ScheduleWeekFragment extends BaseFragment {
         });
 
 
-        RxBusAdd(Date.class)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<Date>() {
-                @Override public void call(Date date) {
-                    int num = DateUtils.dayNumFromToday(date);
-                    int todayCount = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-                    viewpager.setCurrentItem((num-todayCount+1)/7);
-                }
-            });
+
         RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {
             @Override public void call(EventMonthChange eventMonthChange) {
                 viewpager.setCurrentItem(eventMonthChange.pos);
@@ -180,9 +174,41 @@ public class ScheduleWeekFragment extends BaseFragment {
             case R.id.tv_month:
                 dataPicker = new DatePicker();
                 dataPicker.show(getFragmentManager(),"");
+                if (getActivity() instanceof Main2Activity){
+                    Calendar today = Calendar.getInstance();
+                    today.set(Calendar.DAY_OF_WEEK,1);
+                    today.add(Calendar.WEEK_OF_YEAR,viewpager.getCurrentItem()-1000);
+                    ((Main2Activity) getActivity()).setChooseDate(today.getTime());
+                }
+
                 dataPicker.setListener(new DatePicker.DatePickerChange() {
                     @Override public void onMonthChange(int year, int month) {
                         tvMonth.setText(year+"年"+month+"月");
+                    }
+
+                    @Override public void onDismiss(int year, int month) {
+                        if (getActivity() instanceof Main2Activity){
+
+                            Calendar today = Calendar.getInstance();
+                            today.set(Calendar.DAY_OF_WEEK,1);
+                            today.set(Calendar.HOUR,0);
+                            today.set(Calendar.MINUTE,0);
+                            today.set(Calendar.SECOND,0);
+                            today.set(Calendar.MILLISECOND,0);
+                            Date d = ((Main2Activity) getActivity()).getChooseDate();
+                            Calendar chooseday = Calendar.getInstance();
+                            chooseday.setTime(d);
+                            chooseday.set(Calendar.DAY_OF_WEEK,1);
+                            chooseday.set(Calendar.HOUR,0);
+                            chooseday.set(Calendar.MINUTE,0);
+                            chooseday.set(Calendar.SECOND,0);
+                            chooseday.set(Calendar.MILLISECOND,0);
+                            chooseday.setTime(d);
+                            adapter.setPostion(DateUtils.interval(today.getTime(),chooseday.getTime())/7);
+                            viewpager.setCurrentItem(1000);
+                            adapter.notifyDataSetChanged();
+                            tvMonth.setText(chooseday.get(Calendar.YEAR)+"年"+(chooseday.get(Calendar.MONTH)+1)+"月");
+                        }
                     }
                 });
                 break;
@@ -197,16 +223,31 @@ public class ScheduleWeekFragment extends BaseFragment {
 
     public class ScheduleWeekAdapter extends FragmentStatePagerAdapter {
 
+        private int p = 0;
+
+        public int getPostion() {
+            return p;
+        }
+
+        public void setPostion(int postion) {
+            this.p = postion;
+        }
+
         public ScheduleWeekAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override public Fragment getItem(int position) {
-            return ScheduleOneWeekFragment.newInstance(position - 1000, mCoachService);
+            return ScheduleOneWeekFragment.newInstance(position - 1000 +p, mCoachService);
         }
 
         @Override public int getCount() {
             return Integer.MAX_VALUE;
         }
+
+        @Override public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
     }
 }

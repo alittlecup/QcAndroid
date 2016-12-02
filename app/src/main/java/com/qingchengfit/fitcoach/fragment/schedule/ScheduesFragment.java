@@ -29,6 +29,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
@@ -181,6 +182,22 @@ public class ScheduesFragment extends BaseFragment {
         scheduleVp.setOffscreenPageLimit(1);
         scheduleVp.setCurrentItem(30, false);
         scheduleTab.setViewPager(scheduleVp);
+        scheduleVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(mFragmentAdapter.getCurDay());
+                c.add(Calendar.DATE,position-30);
+                tvMonth.setText(c.get(Calendar.YEAR)+"年"+(c.get(Calendar.MONTH)+1)+"月");
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public void setUpNaviSpinner() {
@@ -324,9 +341,23 @@ public class ScheduesFragment extends BaseFragment {
         //scheduleCalendar.setClickable(false);
         mDatePicker = new DatePicker();
         mDatePicker.show(getFragmentManager(), "");
+        if (getActivity() instanceof Main2Activity){
+            Calendar c = Calendar.getInstance();
+            c.setTime(mFragmentAdapter.getCurDay());
+            c.add(Calendar.DATE,scheduleVp.getCurrentItem()-30);
+            ((Main2Activity) getActivity()).setChooseDate(c.getTime());
+        }
+
         mDatePicker.setListener(new DatePicker.DatePickerChange() {
             @Override public void onMonthChange(int year, int month) {
                 tvMonth.setText(year + "年" + month + "月");
+            }
+
+            @Override public void onDismiss(int year, int month) {
+                if (getActivity() instanceof Main2Activity){
+                    goDateSchedule(((Main2Activity) getActivity()).getChooseDate());
+                }
+
             }
         });
 

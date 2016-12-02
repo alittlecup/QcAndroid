@@ -115,6 +115,13 @@ public class JacketManagerFragment extends BaseFragment
             }
         });
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.inflateMenu(R.menu.menu_complete);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                mPresenter.completeJacket(courseid, item2Str(), customSwitch.isExpanded());
+                return true;
+            }
+        });
         mAdapter = new JacketManageAdapter(mDatas, this);
         mAdapter.addItem(0, new JackTitleItem());
         mAdapter.addItem(1, new JacketAddItem());
