@@ -9,6 +9,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -63,6 +64,9 @@ public class CalendarFragment extends BaseFragment {
         calendarView.setRobotoCalendarListener(new RobotoCalendarView.RobotoCalendarListener() {
             @Override public void onDateSelected(Date date) {
                 //RxBus.getBus().post(date);
+                if (getActivity() instanceof Main2Activity){
+                    ((Main2Activity) getActivity()).setChooseDate(date);
+                }
                 if (getParentFragment() instanceof DatePicker){
                     ((DatePicker) getParentFragment()).dismiss();
                 }

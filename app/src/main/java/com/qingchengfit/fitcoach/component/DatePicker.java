@@ -51,14 +51,12 @@ public class DatePicker extends DialogFragment {
         vp.setCurrentItem(500);
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
-
             @Override public void onPageSelected(int position) {
                 //RxBus.getBus().post(new EventMonthChange(position-500));
                 if (listener != null){
                     Calendar c = Calendar.getInstance();
-                    c.add(Calendar.MONTH,position-500);
+                    c.add(Calendar.MONTH,position-50);
                     listener.onMonthChange(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
                 }
             }
@@ -109,11 +107,11 @@ public class DatePicker extends DialogFragment {
         }
 
         @Override public Fragment getItem(int position) {
-            return CalendarFragment.newInstance(position -500);
+            return CalendarFragment.newInstance(position -50);
         }
 
         @Override public int getCount() {
-            return 1000;
+            return 100;
         }
 
     }

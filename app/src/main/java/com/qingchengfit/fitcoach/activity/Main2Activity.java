@@ -31,7 +31,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
-import com.qingchengfit.fitcoach.fragment.WebFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
@@ -56,6 +55,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -84,7 +84,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     MaterialDialog logoutDialog;
     private Gson gson;
     private User user;
-
+    private Date mChooseDate;
     private CoachService mCoachService;
 
     public CoachService getCoachService() {
@@ -93,6 +93,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
     public void setCoachService(CoachService coachService) {
         mCoachService = coachService;
+    }
+
+    public Date getChooseDate() {
+        return mChooseDate;
+    }
+
+    public void setChooseDate(Date chooseDate) {
+        mChooseDate = chooseDate;
     }
 
     private Snackbar NonetworkSnack;

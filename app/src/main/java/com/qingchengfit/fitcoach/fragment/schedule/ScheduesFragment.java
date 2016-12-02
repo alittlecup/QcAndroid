@@ -134,16 +134,6 @@ public class ScheduesFragment extends BaseFragment {
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
-        //firstGuide.setOnTouchListener(new View.OnTouchListener() {
-        //    @Override
-        //    public boolean onTouch(View v, MotionEvent event) {
-        //        return true;
-        //    }
-        //});
-        //if (!PreferenceUtils.getPrefBoolean(App.AppContex, App.coachid + "first_guide", false)) {
-        //    firstGuide.setVisibility(View.VISIBLE);
-        //}
-        //
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
                 bgShow.setVisibility(View.VISIBLE);
@@ -163,24 +153,6 @@ public class ScheduesFragment extends BaseFragment {
             }
         }
 
-        //scheduleFloatbg.setOnClickListener(v -> {
-        //    webFloatbtn.collapse();
-        //});
-        //mObservable = RxBus.getBus().register(NewPushMsg.class);
-        //mObservable.subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<NewPushMsg>() {
-        //    @Override public void onCompleted() {
-        //
-        //    }
-        //
-        //    @Override public void onError(Throwable e) {
-        //
-        //    }
-        //
-        //    @Override public void onNext(NewPushMsg newPushMsg) {
-        //        //queryNotify();
-        //    }
-        //});
-
         mObservableReresh = RxBus.getBus().register(RxBus.BUS_REFRESH);
         mObservableReresh.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<String>() {
             @Override public void onCompleted() {
@@ -195,6 +167,7 @@ public class ScheduesFragment extends BaseFragment {
                 mFragmentAdapter.notifyDataSetChanged();
             }
         });
+
         return view;
     }
 
@@ -356,6 +329,7 @@ public class ScheduesFragment extends BaseFragment {
                 tvMonth.setText(year + "年" + month + "月");
             }
         });
+
         //updateCalendar();
     }
 
