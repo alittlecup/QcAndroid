@@ -72,6 +72,8 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_courses, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+
         if (getActivity() instanceof BatchActivity) ((BatchActivity) getActivity()).getComponent().inject(this);
         presenter.attachView(this);
 

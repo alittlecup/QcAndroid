@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +23,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
@@ -95,6 +97,16 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_batch, container, false);
         unbinder = ButterKnife.bind(this, view);
+        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR))
+            || (mType == Configs.TYPE_PRIVATE && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR))) {
+            View v = inflater.inflate(R.layout.item_common_no_data, container, false);
+            ImageView img = (ImageView) v.findViewById(R.id.img);
+            img.setImageResource(R.drawable.ic_no_permission);
+            TextView hint = (TextView) v.findViewById(R.id.hint);
+            hint.setText(R.string.sorry_for_no_permission);
+            return v;
+        }
+
         if (getActivity() instanceof BatchActivity) {
             ((BatchActivity) getActivity()).getComponent().inject(this);
         }
