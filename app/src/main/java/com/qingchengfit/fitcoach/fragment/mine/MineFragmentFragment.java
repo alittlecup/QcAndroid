@@ -73,7 +73,9 @@ public class MineFragmentFragment extends Fragment {
         });
         if (App.gUser != null) {
             tvName.setText(App.gUser.username);
-            Glide.with(getContext()).load(App.gUser.avatar).asBitmap().into(new CircleImgWrapper(imgHeader, getContext()));
+            Glide.with(getContext()).load(App.gUser.avatar).asBitmap()
+                .error(App.gUser.gender == 0?R.drawable.default_manage_male:R.drawable.default_manager_female)
+                .into(new CircleImgWrapper(imgHeader, getContext()));
         }
         return view;
     }

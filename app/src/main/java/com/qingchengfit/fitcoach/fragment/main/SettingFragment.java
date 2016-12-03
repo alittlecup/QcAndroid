@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
@@ -157,8 +158,10 @@ public class SettingFragment extends BaseSettingFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.setting_share:
+                ShareDialogFragment.newInstance(getString(R.string.app_name),getString(R.string.app_slogan),getString(R.string.app_icon_net),getString(R.string.app_download_link));
                 break;
             case R.id.setting_update:
+
                 break;
             case R.id.setting_logout:
                 Intent it = new Intent(getActivity(), Main2Activity.class);

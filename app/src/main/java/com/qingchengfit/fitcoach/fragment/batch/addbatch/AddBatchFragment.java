@@ -101,8 +101,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
     @BindView(R.id.startdate) CommonInputView starttime;
     @BindView(R.id.enddate) CommonInputView endtime;
     @BindView(R.id.batch_date) RecyclerView recyclerview;
-    //@BindView(R.id.add)
-    //TextView add;
 
     @Inject AddBatchPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -133,7 +131,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mTeacher = getArguments().getParcelable("teacher");
             mCourse = getArguments().getParcelable("course");
         }
     }
@@ -165,6 +162,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);
             text1.setText(mCourse.name);
             text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength()/60));
+
+            presenter.getBatchTemplete(mType, null, body.course_id);//拉取模板
+
         } else if (mTeacher != null) {
             mType = Configs.TYPE_PRIVATE;
             coach.setLabel("课程");
@@ -174,10 +174,10 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 .placeholder(R.drawable.ic_default_head_nogender)
                 .into(new CircleImgWrapper(img, getContext()));
             text1.setText(mTeacher.username);
-            body.teacher_id = mTeacher.id;
+            //body.teacher_id = mTeacher.id;
         }
         if (App.gUser != null) {
-            body.teacher_id = App.coachid + "";
+            //body.teacher_id = App.coachid + "";
             coach.setContent(App.gUser.username);
         }
 
@@ -228,10 +228,10 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 ToastUtils.show("请选择课程");
                 return true;
             }
-            if (TextUtils.isEmpty(body.teacher_id)) {
-                ToastUtils.show("请选择教练");
-                return true;
-            }
+            //if (TextUtils.isEmpty(body.teacher_id)) {
+            //    ToastUtils.show("请选择教练");
+            //    return true;
+            //}
 
             if (TextUtils.isEmpty(starttime.getContent()) || TextUtils.isEmpty(endtime.getContent())) {
                 ToastUtils.show("请选择排期时间");
@@ -337,6 +337,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 Intent toAccount = new Intent(getActivity(), FragActivity.class);
                 toAccount.putExtra("type", 12);
                 toAccount.putExtra("count", body.max_users == 0 ?8:body.max_users);
+                toAccount.putExtra("isfree", body.is_free);
                 toAccount.putExtra("service",mCoachService);
                 startActivityForResult(toAccount, RESULT_ACCOUNT);
 
@@ -352,10 +353,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 String id = IntentUtils.getIntentString(data, 1);
                 String imgUrl = IntentUtils.getIntentString(data, 2);
                 coach.setContent(name);
-                body.teacher_id = id;
+                //body.teacher_id = id;
 
                 if (TextUtils.isEmpty(starttime.getContent()) && TextUtils.isEmpty(endtime.getContent())) {
-                    presenter.getBatchTemplete(mType, body.teacher_id, body.course_id);//拉取模板
                 }
             } else if (requestCode == 2) {//选择课程
                 //Course course = data.getParcelableExtra("course");

@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.app.AppCompatDelegate;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -28,7 +29,7 @@ public class BaseAcitivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
     private LoadingDialog loadingDialog;
-
+    private MaterialDialog mAlert;
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -60,5 +61,25 @@ public class BaseAcitivity extends AppCompatActivity {
         if (loadingDialog != null)
             loadingDialog.dismiss();
     }
+    public void showAlert(int res) {
+        showAlert(getString(res));
+    }
+
+    public void showAlert(String res) {
+        if (mAlert == null) ;
+        mAlert = new MaterialDialog.Builder(this).positiveText(R.string.common_i_konw)
+            .autoDismiss(true)
+            .canceledOnTouchOutside(true)
+            .build();
+        if (mAlert.isShowing()) mAlert.dismiss();
+        //if (StringUtils.isEmpty(title)) {
+        //    mAlert.setTitle(title);
+        //} else {
+        //    mAlert.setTitle("");
+        //}
+        mAlert.setContent(res);
+        mAlert.show();
+    }
+
 
 }

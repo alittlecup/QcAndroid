@@ -34,16 +34,29 @@
             android:text="@string/need_pay"
             />
       <android.support.v7.widget.SwitchCompat
-          android:enabled="false"
+          android:id="@+id/sw_need_pay"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
+          android:clickable="false"
           />
     </LinearLayout>
     <include layout="@layout/divider_grey_margin"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleview"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <View
+            android:id="@+id/bg_can_not_do"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/halftransparent_white"
+            />
 
-        />
+    </RelativeLayout>
+
 </LinearLayout>

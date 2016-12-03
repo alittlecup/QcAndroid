@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
+import android.support.annotation.Nullable;
 import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
@@ -509,7 +510,7 @@ public class QcCloudClient {
         //排课填充
         @GET("/api/v1/coaches/{id}/{type}/arrange/template/")
         rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(@Path("id") String id,
-            @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel, @Query("teacher_id") String teacher_id,
+            @Path("type") String type, @Query("id") String gymid, @Query("model") String gymmodel,@Nullable @Query("teacher_id") String teacher_id,
             @Query("course_id") String course_id);
         //获取某个排期的详情
         @GET("/api/v1/coaches/{id}/batches/{batch_id}/")
@@ -645,7 +646,7 @@ public class QcCloudClient {
             @Body AddStudentBean StudentBean);
 
         @POST("/api/v1/coaches/{id}/students/add/") rx.Observable<QcResponse> qcAddStudents(@Path("id") int id,
-            @Body PostStudents addStudentBeans);
+            @Body PostStudents addStudentBeans,@QueryMap HashMap<String,Object> params);
 
         //批量排课
         @POST("/api/v1/coaches/{id}/schedules/batches/") rx.Observable<QcResponse> qcAddCourseManage(@Path("id") int id,

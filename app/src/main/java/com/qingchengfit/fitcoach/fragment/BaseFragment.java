@@ -3,18 +3,15 @@ package com.qingchengfit.fitcoach.fragment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
-
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.AppUtils;
 import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
 import com.anbillon.qcmvplib.PresenterDelegate;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.RxBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
 import rx.Observable;
 import rx.Subscription;
 
@@ -38,6 +35,7 @@ public abstract class BaseFragment extends Fragment {
     boolean isPrepared;
     private PresenterDelegate delegate;
     public Unbinder unbinder;
+
 
     protected void delegatePresenter(Presenter presenter, PView pView) {
         delegate = new PresenterDelegate(presenter);
@@ -79,11 +77,13 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showAlert(int res) {
-
+        showAlert(getString(res));
     }
 
     public void showAlert(String res) {
-
+       if (getActivity() instanceof BaseAcitivity){
+           ((BaseAcitivity) getActivity()).showAlert(res);
+       }
     }
 
     protected void onInVisible() {

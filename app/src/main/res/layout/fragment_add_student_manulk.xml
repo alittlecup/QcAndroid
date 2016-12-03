@@ -8,6 +8,7 @@
     <include layout="@layout/common_toolbar"/>
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/choose_gym"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_clickable="true"
@@ -40,14 +41,7 @@
             android:text="性别"
             />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/divider_white"
-            >
-
-        </View>
+        <include layout="@layout/divider_grey_left_right"/>
 
         <RadioGroup
             android:id="@+id/comple_gender"
@@ -89,6 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_lable="手机 :"
+        app:civ_inputnum="true"
         >
     </com.qingchengfit.fitcoach.component.CommonInputView>
 
@@ -108,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:visibility="gone"
         android:gravity="center"
         android:text="您没有权限在该健身房添加学员\n请联系健身房管理员"
         />

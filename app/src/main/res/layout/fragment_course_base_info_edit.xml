@@ -34,7 +34,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_default_header"
+            android:src="@drawable/ic_camera_alt_black_24dp"
             />
 
         <ImageView

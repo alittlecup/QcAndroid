@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ArrangeBatchBody {
 
-    public String teacher_id;
+    //public String teacher_id;
     public String course_id;
     public String shop_id;
     public String from_date;

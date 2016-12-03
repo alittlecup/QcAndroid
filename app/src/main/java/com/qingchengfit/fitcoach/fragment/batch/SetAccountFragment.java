@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -67,13 +68,15 @@ public class SetAccountFragment extends BaseFragment {
     @BindView(R.id.count) CommonInputView count;
     @BindView(R.id.layout_need_pay) LinearLayout layoutNeedPay;
     @BindView(R.id.recycleview) RecyclerView recycleview;
+    @BindView(R.id.sw_need_pay) SwitchCompat swNeedPay;
     private DialogList stucount;
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
     private CommonFlexAdapter mFlexAdapter;
 
-    public static SetAccountFragment newInstance(int s) {
+    public static SetAccountFragment newInstance(int s, boolean isfree) {
         Bundle args = new Bundle();
         args.putInt("o", s);
+        args.putBoolean("isfree", isfree);
         SetAccountFragment fragment = new SetAccountFragment();
         fragment.setArguments(args);
         return fragment;
@@ -101,12 +104,12 @@ public class SetAccountFragment extends BaseFragment {
         });
         if (getArguments() != null) {
             count.setContent(getArguments().getInt("o", 8) + "");
+            swNeedPay.setChecked(!getArguments().getBoolean("isfree",true));
         }
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recycleview.setHasFixedSize(true);
         mFlexAdapter = new CommonFlexAdapter(datas, this);
-        mFlexAdapter.setAutoCollapseOnExpand(false)
-            .setAutoScrollOnExpand(true);
+        mFlexAdapter.setAutoCollapseOnExpand(false).setAutoScrollOnExpand(true);
         recycleview.setAdapter(mFlexAdapter);
         if (getActivity() instanceof FragActivity) {
             CoachService coachService = ((FragActivity) getActivity()).getCoachService();
@@ -120,7 +123,7 @@ public class SetAccountFragment extends BaseFragment {
                             if (qcResponse.data.card_tpls != null) {
                                 datas.clear();
                                 for (int i = 0; i < qcResponse.data.card_tpls.size(); i++) {
-                                    datas.add(new AccountExpendItemItem(qcResponse.data.card_tpls.get(i),i+2));
+                                    datas.add(new AccountExpendItemItem(qcResponse.data.card_tpls.get(i), i + 2));
                                 }
                                 mFlexAdapter.notifyDataSetChanged();
                             }
@@ -156,5 +159,9 @@ public class SetAccountFragment extends BaseFragment {
                 StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
                 break;
         }
+    }
+
+    @OnClick(R.id.bg_can_not_do) public void goStaff() {
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
     }
 }

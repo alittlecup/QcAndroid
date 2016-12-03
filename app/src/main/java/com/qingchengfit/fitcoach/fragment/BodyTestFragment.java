@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +20,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
 import com.qingchengfit.fitcoach.adapter.ImageGridAdapter;
+import com.qingchengfit.fitcoach.bean.CurentPermissions;
+import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.FullyGridLayoutManager;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
@@ -57,52 +58,29 @@ public class BodyTestFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.img_model)
-    ImageView imgModel;
-    @BindView(R.id.hipline)
-    TextView hipline;
-    @BindView(R.id.chest)
-    TextView chest;
-    @BindView(R.id.waistline)
-    TextView waistline;
-    @BindView(R.id.height)
-    TextView height;
-    @BindView(R.id.height_layout)
-    LinearLayout heightLayout;
-    @BindView(R.id.weight)
-    TextView weight;
-    @BindView(R.id.weight_layout)
-    LinearLayout weightLayout;
-    @BindView(R.id.bmi)
-    TextView bmi;
-    @BindView(R.id.bmi_layout)
-    LinearLayout bmiLayout;
-    @BindView(R.id.body_fat_rate)
-    TextView bodyFatRate;
-    @BindView(R.id.body_fat_rate_layout)
-    LinearLayout bodyFatRateLayout;
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.other_data)
-    InterupteLinearLayout otherData;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.test_pic_title)
-    TextView testPicTitle;
-    @BindView(R.id.left_upper)
-    TextView leftUpper;
-    @BindView(R.id.right_upper)
-    TextView rightUpper;
-    @BindView(R.id.left_thigh)
-    TextView leftThigh;
-    @BindView(R.id.right_thigh)
-    TextView rightThigh;
-    @BindView(R.id.right_calf)
-    TextView rightCalf;
-    @BindView(R.id.left_calf)
-    TextView leftCalf;
+    @BindView(R.id.img_model) ImageView imgModel;
+    @BindView(R.id.hipline) TextView hipline;
+    @BindView(R.id.chest) TextView chest;
+    @BindView(R.id.waistline) TextView waistline;
+    @BindView(R.id.height) TextView height;
+    @BindView(R.id.height_layout) LinearLayout heightLayout;
+    @BindView(R.id.weight) TextView weight;
+    @BindView(R.id.weight_layout) LinearLayout weightLayout;
+    @BindView(R.id.bmi) TextView bmi;
+    @BindView(R.id.bmi_layout) LinearLayout bmiLayout;
+    @BindView(R.id.body_fat_rate) TextView bodyFatRate;
+    @BindView(R.id.body_fat_rate_layout) LinearLayout bodyFatRateLayout;
+    @BindView(R.id.title) TextView title;
+    @BindView(R.id.other_data) InterupteLinearLayout otherData;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.test_pic_title) TextView testPicTitle;
+    @BindView(R.id.left_upper) TextView leftUpper;
+    @BindView(R.id.right_upper) TextView rightUpper;
+    @BindView(R.id.left_thigh) TextView leftThigh;
+    @BindView(R.id.right_thigh) TextView rightThigh;
+    @BindView(R.id.right_calf) TextView rightCalf;
+    @BindView(R.id.left_calf) TextView leftCalf;
     private int mGender;
 
     private ImageGridAdapter imageGridAdapter;
@@ -111,8 +89,7 @@ public class BodyTestFragment extends Fragment {
     private List<AddBodyTestBean.Photo> datas = new ArrayList<>();
     private Unbinder unbinder;
     // TODO: Rename and change types of parameters
-//    private QcBodyTestTemplateRespone.Base mBase;
-
+    //    private QcBodyTestTemplateRespone.Base mBase;
 
     public BodyTestFragment() {
         // Required empty public constructor
@@ -134,33 +111,31 @@ public class BodyTestFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mMeasureId = getArguments().getString(ARG_PARAM1);
-//            mMeasure = getArguments().getParcelable(ARG_PARAM2);
+            //            mMeasure = getArguments().getParcelable(ARG_PARAM2);
             mGender = getArguments().getInt(ARG_PARAM2);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_body_test, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 getActivity().onBackPressed();
             }
         });
         toolbar.setTitle("体测数据");
-        toolbar.inflateMenu(R.menu.menu_text_edit);
+        if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS_CAN_CHANGE)) {
+            toolbar.inflateMenu(R.menu.menu_text_edit);
+        }
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            @Override public boolean onMenuItemClick(MenuItem item) {
                 //跳到编辑页面
                 ((BodyTestActivity) getActivity()).goModify();
                 return true;
@@ -178,8 +153,7 @@ public class BodyTestFragment extends Fragment {
         recyclerview.setLayoutManager(gridLayoutManager);
         recyclerview.setAdapter(imageGridAdapter);
         imageGridAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
+            @Override public void onItemClick(View v, int pos) {
                 if (v.getId() == R.id.delete) {
                     datas.remove(pos);
                     imageGridAdapter.notifyDataSetChanged();
@@ -193,45 +167,39 @@ public class BodyTestFragment extends Fragment {
                         ChoosePictureFragmentDialog choosePictureFragmentDialog = new ChoosePictureFragmentDialog();
                         choosePictureFragmentDialog.show(getFragmentManager(), "choose");
                         choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
-                            @Override
-                            public void onChoosePicResult(boolean isSuccess, String filePath) {
+                            @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                                 choosePictureFragmentDialog.dismiss();
                                 if (isSuccess) {
                                     Observable.create(new Observable.OnSubscribe<String>() {
-                                        @Override
-                                        public void call(Subscriber<? super String> subscriber) {
+                                        @Override public void call(Subscriber<? super String> subscriber) {
                                             String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
                                             subscriber.onNext(upImg);
                                         }
-                                    }).observeOn(AndroidSchedulers.mainThread())
-                                            .subscribeOn(Schedulers.io())
-                                            .subscribe(new Subscriber<String>() {
-                                                @Override
-                                                public void onCompleted() {
+                                    })
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribeOn(Schedulers.io())
+                                        .subscribe(new Subscriber<String>() {
+                                            @Override public void onCompleted() {
+
+                                            }
+
+                                            @Override public void onError(Throwable e) {
+
+                                            }
+
+                                            @Override public void onNext(String upImg) {
+                                                if (TextUtils.isEmpty(upImg)) {
+                                                    ToastUtils.showDefaultStyle("图片上传失败");
+                                                } else {
+                                                    AddBodyTestBean.Photo photo = new AddBodyTestBean.Photo();
+                                                    photo.photo = upImg;
+                                                    datas.add(photo);
+                                                    imageGridAdapter.refresh(datas);
+                                                    //                                                        imageGridAdapter.notifyDataSetChanged();
 
                                                 }
-
-                                                @Override
-                                                public void onError(Throwable e) {
-
-                                                }
-
-                                                @Override
-                                                public void onNext(String upImg) {
-                                                    if (TextUtils.isEmpty(upImg)) {
-                                                        ToastUtils.showDefaultStyle("图片上传失败");
-                                                    } else {
-                                                        AddBodyTestBean.Photo photo = new AddBodyTestBean.Photo();
-                                                        photo.photo = upImg;
-                                                        datas.add(photo);
-                                                        imageGridAdapter.refresh(datas);
-//                                                        imageGridAdapter.notifyDataSetChanged();
-
-                                                    }
-                                                }
-                                            });
-
-
+                                            }
+                                        });
                                 } else {
                                     LogUtil.e("选择图片失败");
                                 }
@@ -247,47 +215,44 @@ public class BodyTestFragment extends Fragment {
 
     public void initInfo() {
         QcCloudClient.getApi().getApi.qcGetBodyTest(mMeasureId, ((BodyTestActivity) getActivity()).getParams())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<QcGetBodyTestResponse>() {
-                    @Override
-                    public void onCompleted() {
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<QcGetBodyTestResponse>() {
+                @Override public void onCompleted() {
 
+                }
+
+                @Override public void onError(Throwable e) {
+
+                }
+
+                @Override public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
+                    initView(qcGetBodyTestResponse.data.measure);
+                    datas.clear();
+                    if (qcGetBodyTestResponse.data.measure.photos != null && qcGetBodyTestResponse.data.measure.photos.size() > 0) {
+                        datas.addAll(qcGetBodyTestResponse.data.measure.photos);
+                    } else {
+                        testPicTitle.setVisibility(View.GONE);
                     }
 
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(QcGetBodyTestResponse qcGetBodyTestResponse) {
-                        initView(qcGetBodyTestResponse.data.measure);
-                        datas.clear();
-                        if (qcGetBodyTestResponse.data.measure.photos != null && qcGetBodyTestResponse.data.measure.photos.size() > 0)
-                            datas.addAll(qcGetBodyTestResponse.data.measure.photos);
-                        else
-                            testPicTitle.setVisibility(View.GONE);
-
-                        imageGridAdapter.refresh(datas);
-                        if (qcGetBodyTestResponse.data.measure.extra != null) {
-                            for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
-                                CommonInputView commonInputView = new CommonInputView(getContext());
-                                commonInputView.setTag(R.id.tag_0, extra.name);
-                                commonInputView.setTag(R.id.tag_1, extra.id);
-                                commonInputView.setTag(R.id.tag_2, extra.unit);
-                                otherData.addView(commonInputView);
-                                commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
-                                commonInputView.setContent(extra.value);
-                            }
+                    imageGridAdapter.refresh(datas);
+                    if (qcGetBodyTestResponse.data.measure.extra != null) {
+                        for (QcBodyTestTemplateRespone.Extra extra : qcGetBodyTestResponse.data.measure.extra) {
+                            CommonInputView commonInputView = new CommonInputView(getContext());
+                            commonInputView.setTag(R.id.tag_0, extra.name);
+                            commonInputView.setTag(R.id.tag_1, extra.id);
+                            commonInputView.setTag(R.id.tag_2, extra.unit);
+                            otherData.addView(commonInputView);
+                            commonInputView.setLabel(extra.name + "(" + extra.unit + ")");
+                            commonInputView.setContent(extra.value);
                         }
-//                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
-//                            datas.add(new ImageGridBean(photo.photo));
-//                        }
-
-
                     }
-                });
+                    //                        for (AddBodyTestBean.Photo photo :qcGetBodyTestResponse.data.measure.photos){
+                    //                            datas.add(new ImageGridBean(photo.photo));
+                    //                        }
+
+                }
+            });
     }
 
     public void initView(Measure mMeasure) {
@@ -332,7 +297,7 @@ public class BodyTestFragment extends Fragment {
             leftUpper.setVisibility(View.VISIBLE);
             leftUpper.setText(String.format("上臂围(左): %s cm", mMeasure.circumference_of_left_upper));
         }
-         if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
+        if (!TextUtils.isEmpty(mMeasure.circumference_of_right_upper)) {
             rightUpper.setVisibility(View.VISIBLE);
             rightUpper.setText(String.format("上臂围(右): %s cm", mMeasure.circumference_of_right_upper));
         }
@@ -344,7 +309,6 @@ public class BodyTestFragment extends Fragment {
             waistline.setVisibility(View.VISIBLE);
             waistline.setText(String.format("腰围: %s cm", mMeasure.waistline));
         }
-
     }
 
     public List<String> getImages() {
@@ -355,10 +319,8 @@ public class BodyTestFragment extends Fragment {
         return images;
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-
     }
 }

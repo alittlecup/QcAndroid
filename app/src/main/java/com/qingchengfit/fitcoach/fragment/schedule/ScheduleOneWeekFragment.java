@@ -226,7 +226,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     startTime.setTime(DateUtils.formatDateFromServer(schedule.start));
                     endTime = Calendar.getInstance();
                     endTime.setTime(DateUtils.formatDateFromServer(schedule.end));
-                    event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name, 7 + "", startTime, endTime, false);
+                    int count = 0;
+
+                    event = new WeekViewEvent(startTime.getTime().getTime(), schedule.course.name,  schedule.count+ "", startTime, endTime, false);
                     event.setColor(
                         endTime.getTime().getTime() < new Date().getTime() ? ContextCompat.getColor(getContext(), R.color.warm_grey)
                             : ContextCompat.getColor(getContext(),

@@ -36,10 +36,10 @@ public class CurentPermissions {
     public HashMap<String,Boolean> permissionList = new HashMap<>();
 
     public boolean queryPermission(String key){
-        //if (permissionList.keySet().contains(key))
-            //return permissionList.get(key);
-        //else return false;
-        return true;
+        if (permissionList.keySet().contains(key))
+            return permissionList.get(key);
+        else return false;
+        //return true;
     }
 
 

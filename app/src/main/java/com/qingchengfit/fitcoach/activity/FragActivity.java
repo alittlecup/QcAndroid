@@ -92,7 +92,7 @@ public class FragActivity extends BaseAcitivity {
                 fragment = SpaceListFragment.newInstance(getIntent().getIntExtra("course_type", Configs.TYPE_GROUP));
                 break;
             case 12:
-                fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count",1));
+                fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count",1),getIntent().getBooleanExtra("isfree",true));
                 break;
            case 13:
                 fragment = new EditGymFragmentBuilder("",mCoachService.getBrand_name(),"",mCoachService.id,mCoachService.model).build();

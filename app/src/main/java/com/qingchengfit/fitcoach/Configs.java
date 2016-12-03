@@ -29,7 +29,7 @@ public class Configs {
      */
 //    public static boolean isDebug = true;
     public static boolean isDebug = false;
-    public static String ServerIp = BuildConfig.DEBUG ? "http://dev.qingchengfit.cn:7777/" : "http://cloud.qingchengfit.cn/";
+    public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 //        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = ServerIp + ServerPort;
@@ -39,6 +39,15 @@ public class Configs {
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
     public static String PRIVATE_PRIVEIW = Configs.ServerIp + "fitness/redirect/user/private/";
     public static String GROUP_PRIVEIW = Configs.ServerIp+"fitness/redirect/user/group/";
+
+    /**
+     * 默认头像
+     *
+     */
+    public static final String HEADER_STUDENT_MALE = "http://zoneke-img.b0.upaiyun.com/977ad17699c4e4212b52000ed670091a.png";
+    public static final String HEADER_STUDENT_FEMALE = "http://zoneke-img.b0.upaiyun.com/f1ac90184acb746e4fbdef4b61dcd6f6.png";
+    public static final String HEADER_COACH_MALE = "http://zoneke-img.b0.upaiyun.com/75656eb980b79e7748041f830332cc62.png";
+    public static final String HEADER_COACH_FEMALE = "http://zoneke-img.b0.upaiyun.com/7f362320fb3c82270f6c9c623e39ba92.png";
 
     /**
      * 会员预览页面

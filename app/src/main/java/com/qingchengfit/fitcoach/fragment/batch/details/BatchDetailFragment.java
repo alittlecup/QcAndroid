@@ -163,7 +163,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
             coach.setLabel("教练");
             coach.setContent(teacher.username);
         }
-        body.teacher_id = teacher.id;
+        //body.teacher_id = teacher.id;
     }
 
     @Override public void onCourse(Course course) {
@@ -256,13 +256,13 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
                 String imgUrl = IntentUtils.getIntentString(data, 2);
                 Glide.with(getActivity()).load(PhotoUtils.getSmall(imgUrl)).asBitmap().into(new CircleImgWrapper(img, getActivity()));
                 text1.setText(name);
-                body.teacher_id = id;
+                //body.teacher_id = id;
             } else if (requestCode == 3) { //团课 教练
                 String name = IntentUtils.getIntentString(data, 0);
                 String id = IntentUtils.getIntentString(data, 1);
                 String imgUrl = IntentUtils.getIntentString(data, 2);
                 coach.setContent(name);
-                body.teacher_id = id;
+                //body.teacher_id = id;
             } else if (requestCode == 4) { //私教课程
                 Course course = data.getParcelableExtra("course");
                 coach.setContent(course.getName());

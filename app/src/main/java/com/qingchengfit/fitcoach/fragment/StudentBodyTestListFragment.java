@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.BodyTestActivity;
@@ -93,14 +92,14 @@ public class StudentBodyTestListFragment extends VpFragment {
 
     }
 
-    @OnClick(R.id.add1)
-    public void addTest(){
-        Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
-        toAdd.putExtra("type",1);
-        toAdd.putExtra("model",model);
-        toAdd.putExtra("modelid",modelid);
-        startActivity(toAdd);
-    }
+    //@OnClick(R.id.add1)
+    //public void addTest(){
+    //    Intent toAdd = new Intent(getActivity(), BodyTestActivity.class);
+    //    toAdd.putExtra("type",1);
+    //    toAdd.putExtra("model",model);
+    //    toAdd.putExtra("modelid",modelid);
+    //    startActivity(toAdd);
+    //}
 
 
     public void setData(List<BodyTestBean> strings) {

@@ -162,7 +162,7 @@ public class BatchDetailPresenter extends BasePresenter {
         upBody.from_date = body.from_date;
         upBody.time_repeats = body.time_repeats;
         upBody.shop_id = body.shop_id;
-        upBody.teacher_id = body.teacher_id;
+        //upBody.teacher_id = body.teacher_id;
         upBody.to_date = body.to_date;
 
         //spUpdate = gymUseCase.updateBatch(coachService.getId(), coachService.getModel(), id, upBody, new Action1<QcResponse>() {

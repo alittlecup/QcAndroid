@@ -363,10 +363,27 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
                         if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
                             qcCoachSystemResponse.date.systems.size() == 0) {
-                            Intent intent = new Intent(Main2Activity.this, FragActivity.class);
-                            intent.putExtra("type", 3);
-                            intent.putExtra("isNew", true);
-                            startActivity(intent);
+                            new MaterialDialog.Builder(Main2Activity.this)
+                                .canceledOnTouchOutside(false)
+                                .title("您没有场馆")
+                                .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
+                                .positiveText("创建场馆")
+                                .negativeText("重新登录")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Intent toGym = new Intent(Main2Activity.this, GuideActivity.class);
+                                        startActivity(toGym);
+                                        Main2Activity.this.finish();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        logout();
+                                    }
+                                })
+                                .show();
                         } else {
                             PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
                         }

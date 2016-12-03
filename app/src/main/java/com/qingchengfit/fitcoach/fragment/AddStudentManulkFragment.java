@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -105,34 +107,34 @@ public class AddStudentManulkFragment extends Fragment {
         });
 
         //获取用户拥有系统信息
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcCoachSystemResponse -> {
-                    systems = qcCoachSystemResponse.data.services;
-                    boolean hasPrivate = false;
-                    int pos = 0;
-                    for (int i = 0; i < systems.size(); i++) {
-                        CoachService system = systems.get(i);
-                        if (system.model.equalsIgnoreCase("service") && system.type ==1){
-                            hasPrivate = true;
-                            pos = i;
-                        }
-                        gymStrings.add(system.name);
-                    }
-                    if (hasPrivate){
-                        btn.setVisibility(View.VISIBLE);
-                        hint.setVisibility(View.GONE);
-                        chooseGym.setContent(systems.get(pos).name);
-                    }else {
-                        btn.setVisibility(View.GONE);
-                        hint.setVisibility(View.VISIBLE);
-                    }
+        //QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.newThread())
+        //        .observeOn(AndroidSchedulers.mainThread())
+        //        .subscribe(qcCoachSystemResponse -> {
+        //            systems = qcCoachSystemResponse.data.services;
+        //            boolean hasPrivate = false;
+        //            int pos = 0;
+        //            for (int i = 0; i < systems.size(); i++) {
+        //                CoachService system = systems.get(i);
+        //                if (system.model.equalsIgnoreCase("service") && system.type ==1){
+        //                    hasPrivate = true;
+        //                    pos = i;
+        //                }
+        //                gymStrings.add(system.name);
+        //            }
+                    //if (hasPrivate){
+                    //    btn.setVisibility(View.VISIBLE);
+                    //    hint.setVisibility(View.GONE);
+                    //    chooseGym.setContent(systems.get(pos).name);
+                    //}else {
+                    //    btn.setVisibility(View.GONE);
+                    //    hint.setVisibility(View.VISIBLE);
+                    //}
 
-
-
-                }, throwable -> {
-                }, () -> {
-                });
+                //
+                //
+                //}, throwable -> {
+                //}, () -> {
+                //});
 
         return view;
     }
@@ -150,29 +152,27 @@ public class AddStudentManulkFragment extends Fragment {
         List<AddStudentBean> sss = new ArrayList<>();
         sss.add(new AddStudentBean(chooseName.getContent(),choosePhone.getContent(),compleGenderMale.isChecked()?0:1));
         PostStudents students = new PostStudents(sss);
-        QcCloudClient.getApi().postApi.qcAddStudents(App.coachid
-                ,students)
+        if (getActivity() instanceof FragActivity) {
+            QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, students, GymUtils.getParams(((FragActivity) getActivity()).getCoachService()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
-                    @Override
-                    public void onCompleted() {
+                    @Override public void onCompleted() {
 
                     }
 
-                    @Override
-                    public void onError(Throwable e) {
+                    @Override public void onError(Throwable e) {
 
                     }
 
-                    @Override
-                    public void onNext(QcResponse qcResponse) {
-                        if (qcResponse.status == ResponseResult.SUCCESS){
+                    @Override public void onNext(QcResponse qcResponse) {
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
                             getActivity().setResult(1001);
                             getActivity().finish();
                         }
                     }
                 });
+        }
     }
 
 

@@ -25,6 +25,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
+import com.qingchengfit.fitcoach.bean.CurentPermissions;
+import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -66,6 +68,11 @@ public class MyCoursePlanFragment extends BaseFragment {
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
+            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PLANSSETTING_CAN_WRITE)){
+                showAlert(R.string.alert_permission_forbid);
+                return true;
+            }
+
             Intent toWeb = new Intent(getContext(), WebActivity.class);
             toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
             startActivityForResult(toWeb, 10001);

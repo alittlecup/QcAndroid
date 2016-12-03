@@ -17,12 +17,17 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class AddBrandActivity extends BaseAcitivity {
 
@@ -72,9 +77,21 @@ public class AddBrandActivity extends BaseAcitivity {
     }
 
     @OnClick(R.id.btn) public void onComfirm() {
-        // TODO: 16/11/10 创建品牌
-        //        if (!TextUtils.isEmpty(content.getContent().trim()))
-        //            presenter.createBrand(content.getContent().trim(),uploadImg);
+        QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder()
+            .name(content.getContent())
+            .photo(uploadImg)
+            .build())
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcResponsCreatBrand -> {
+                hideLoading();
+                if (qcResponsCreatBrand.status == 200) {
+                   AddBrandActivity.this.finish();
+                } else ToastUtils.showDefaultStyle(qcResponsCreatBrand.msg);
+            }, throwable -> {
+                hideLoading();
+            });
+
+
     }
 
     @OnClick(R.id.photo_layout) public void addPhoto() {

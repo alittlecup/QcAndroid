@@ -37,7 +37,7 @@
                 android:textSize="30sp"
                 />
 
-            <RatingBar
+            <cn.qingchengfit.widgets.RatingBarVectorFix
                 android:id="@+id/student_judge_coach_star"
                 style="@style/Qc.RatingBar"
                 android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                 android:textSize="30sp"
                 />
 
-            <RatingBar
+            <cn.qingchengfit.widgets.RatingBarVectorFix
                 android:id="@+id/student_judge_course_star"
                 style="@style/Qc.RatingBar"
                 android:layout_width="wrap_content"

@@ -64,6 +64,11 @@ public class ChooseBrandActivity extends AppCompatActivity {
         recycleview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recycleview.setAdapter(adapter);
 
+
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
         queryData();
     }
 

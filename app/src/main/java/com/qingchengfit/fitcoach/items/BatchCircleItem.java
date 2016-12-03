@@ -43,8 +43,8 @@ public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchC
         String workday = "每周";
         for (int i = 0; i < cmBean.week.size(); i++) {
             if (i < cmBean.week.size() -1){
-               workday= workday.concat(holder.itemView.getContext().getResources().getStringArray(R.array.week_simple)[i]).concat(Configs.SIGN_PAUSE);
-            }else workday= workday.concat(holder.itemView.getContext().getResources().getStringArray(R.array.week_simple)[i]);
+               workday= workday.concat(holder.itemView.getContext().getResources().getStringArray(R.array.week_simple)[cmBean.week.get(i)-1]).concat(Configs.SIGN_PAUSE);
+            }else workday= workday.concat(holder.itemView.getContext().getResources().getStringArray(R.array.week_simple)[cmBean.week.get(i)-1]);
         }
         holder.workWeekday.setText(workday);
     }

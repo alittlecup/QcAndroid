@@ -302,8 +302,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     startActivity(toCourseStatement);
                     break;
                 case R.drawable.ic_sale_statement:
-                    if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.SALES_REPORT)
-                        && CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
+                    if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_SALES_REPORT)) {
                         showAlert(R.string.alert_permission_forbid);
                         return true;
                     }
