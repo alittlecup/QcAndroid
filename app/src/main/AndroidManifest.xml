@@ -244,7 +244,7 @@
     <!-- 适配Android N系统必需的ContentProvider声明，写权限包含应用包名 -->
     <provider
         android:name="com.baidu.android.pushservice.PushInfoProvider"
-        android:authorities="com.qingchengfit.fitcoach.bdpush"
+        android:authorities="@string/baidu_provider"
         android:exported="true"
         android:protectionLevel="signature"
         android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"/>

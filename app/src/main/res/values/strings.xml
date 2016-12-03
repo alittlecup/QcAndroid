@@ -7,6 +7,7 @@
     <string name="fir_token">f60e7b4d8b237b271ef3a7741372f220</string>
     <string name="fir_token_debug">2fb1f62c690904ef83159704c84e8310</string>
     <string name="baidu_api_release">Rth3x24pVQTIa3aX9BcmP8OW</string>
+    <string name="baidu_provider">com.qingchengfit.fitcoach.bdpush</string>
     <!--<string name="baidu_api_release">RqFugIxBdvAn7H8h5GsampTw</string>-->
 
     <string name="pickerview_cancel">取消</string>
