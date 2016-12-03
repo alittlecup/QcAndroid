@@ -214,6 +214,30 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                             } else {
                                 mCoachService = qcResponse.data.services.get(0);
                             }
+                            HashMap<String, Object> params = new HashMap<String, Object>();
+                            params.put("id", mCoachService.getId());
+                            params.put("model", mCoachService.getModel());
+                            RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Action1<QcResponsePermission>() {
+                                    @Override public void call(QcResponsePermission qcResponsePermission) {
+                                        if (ResponseConstant.checkSuccess(qcResponsePermission)) {
+                                            CurentPermissions.newInstance().permissionList.clear();
+                                            for (int i = 0; i < qcResponsePermission.data.permissions.size(); i++) {
+                                                CurentPermissions.newInstance().permissionList.put(qcResponsePermission.data.permissions.get(i).key,
+                                                    qcResponsePermission.data.permissions.get(i).value);
+                                            }
+                                        } else {
+                                            cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                                        }
+                                    }
+                                }, new Action1<Throwable>() {
+                                    @Override public void call(Throwable throwable) {
+                                        cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
+                                    }
+                                }));
+
                             title.setText(mCoachService.name);
                             addressPhone.setText(mCoachService.getName());
                             nameBrand.setText(mCoachService.getBrand_name());

@@ -67,8 +67,8 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
     //@BindView(R.id.toolbar) Toolbar toolbar;
     //@BindView(R.id.toolbar_title) TextView toolbarTitle;
 
-    private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
-    private CommonFlexAdapter mAdapter;
+    protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
+    protected CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
     private Subscription sp;
 
@@ -141,7 +141,7 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
 
 
     @Override public void onDestroyView() {
-        if (sp != null && sp.isUnsubscribed())
+        if (sp != null && !sp.isUnsubscribed())
             sp.unsubscribe();
         super.onDestroyView();
         unbinder.unbind();

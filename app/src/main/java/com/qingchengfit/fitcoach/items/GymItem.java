@@ -22,9 +22,14 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class GymItem extends AbstractFlexibleItem<GymItem.GymVH> {
 
     public CoachService coachService;
-
+    public boolean mForbid = false;
     public GymItem(CoachService coachService) {
         this.coachService = coachService;
+    }
+
+    public GymItem(CoachService coachService, boolean forbid) {
+        this.coachService = coachService;
+        mForbid = forbid;
     }
 
     @Override
@@ -43,7 +48,7 @@ public class GymItem extends AbstractFlexibleItem<GymItem.GymVH> {
         holder.itemGymName.setText(coachService.name );
         holder.itemGymBrand.setText(coachService.brand_name);
         holder.itemGymPhonenum.setVisibility(View.GONE);
-
+        holder.forbid.setVisibility(mForbid?View.VISIBLE:View.GONE);
     }
 
     @Override
@@ -67,6 +72,8 @@ public class GymItem extends AbstractFlexibleItem<GymItem.GymVH> {
         TextView itemGymPhonenum;
         @BindView(R.id.item_right)
         ImageView itemRight;
+        @BindView(R.id.forbid)
+        View forbid;
 
         public GymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

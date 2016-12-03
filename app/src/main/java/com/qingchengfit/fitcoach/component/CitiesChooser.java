@@ -1,19 +1,15 @@
 package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
-
+import cn.qingchengfit.widgets.utils.FileUtils;
 import com.bigkoo.pickerview.OptionsDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.http.bean.CitiesData;
 import com.qingchengfit.fitcoach.http.bean.CityBean;
 import com.qingchengfit.fitcoach.http.bean.DistrictBean;
 import com.qingchengfit.fitcoach.http.bean.ProvinceBean;
-
 import java.util.ArrayList;
-
-import cn.qingchengfit.widgets.utils.FileUtils;
 
 /**
  * power by
@@ -59,12 +55,12 @@ public class CitiesChooser {
         }
         pwOptions.setPicker(options1Items, options2Items, options3Items, true);
         pwOptions.setLabels("", "", "");
-        pwOptions.setSelectOptions(1, 1, 1);
+        pwOptions.setSelectOptions(0, 0, 0);
         pwOptions.setOnoptionsSelectListener(new OptionsDialog.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int i, int i1, int i2) {
                 if (onCityChoosenListener != null) {
-                    if (TextUtils.equals(options1Items.get(i), options2Items.get(i).get(i1))) {
+                    if (options2Items.get(i).get(i1).startsWith(options1Items.get(i))) {
                         onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
                     } else
                         onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
@@ -80,6 +76,9 @@ public class CitiesChooser {
     }
 
     public void show(View v) {
+        pwOptions.show();
+    }
+    public void show(int distrcitid) {
         pwOptions.show();
     }
 

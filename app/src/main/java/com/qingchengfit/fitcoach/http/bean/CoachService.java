@@ -39,6 +39,9 @@ public class CoachService implements Parcelable {
     public int courses_count;
     @SerializedName("users_count")
     public int users_count;
+
+    @SerializedName("has_permission")
+    public boolean has_permission = true;
     @SerializedName("gd_district")
     public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity gd_district;
 

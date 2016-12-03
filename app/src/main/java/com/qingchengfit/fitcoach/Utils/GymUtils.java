@@ -43,6 +43,8 @@ public class GymUtils {
 
     public static HashMap<String, Object> getParams(CoachService gymBase) {
         HashMap<String, Object> params = new HashMap<>();
+        if (gymBase == null)
+            return null;
         params.put("id", gymBase.getId() + "");
         params.put("model", gymBase.getModel());
         return params;

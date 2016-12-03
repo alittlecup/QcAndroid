@@ -151,30 +151,30 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @Override public void onCoach(QcSchedulesResponse.Teacher teacher) {
-        if (Configs.TYPE_PRIVATE == mType) {
-            Glide.with(getContext())
-                .load(PhotoUtils.getSmall(teacher.avatar))
-                .asBitmap()
-                .placeholder(R.drawable.ic_default_head_nogender)
-                .into(new CircleImgWrapper(img, getContext()));
-            text1.setText(teacher.username);
-        } else {
+        //if (Configs.TYPE_PRIVATE == mType) {
+        //    Glide.with(getContext())
+        //        .load(PhotoUtils.getSmall(teacher.avatar))
+        //        .asBitmap()
+        //        .placeholder(R.drawable.ic_default_head_nogender)
+        //        .into(new CircleImgWrapper(img, getContext()));
+        //    text1.setText(teacher.username);
+        //} else {
 
             coach.setLabel("教练");
             coach.setContent(teacher.username);
-        }
+        //}
         //body.teacher_id = teacher.id;
     }
 
     @Override public void onCourse(Course course) {
-        if (Configs.TYPE_GROUP == mType) {
+        //if (Configs.TYPE_GROUP == mType) {
             Glide.with(getContext()).load(PhotoUtils.getSmall(course.getPhoto())).placeholder(R.drawable.ic_default_header).into(img);
             text1.setText(course.getName());
             text3.setText("时长" + (course.getLength() / 60) + "分钟");
-        } else {
-            coach.setLabel("课程");
-            coach.setContent(course.getName());
-        }
+        //} else {
+        //    coach.setLabel("课程");
+        //    coach.setContent(course.getName());
+        //}
         body.course_id = course.getId();
     }
 

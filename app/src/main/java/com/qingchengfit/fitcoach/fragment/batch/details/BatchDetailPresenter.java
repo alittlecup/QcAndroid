@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.batch.details;
 
 import android.content.Intent;
 import com.anbillon.qcmvplib.PView;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
@@ -162,18 +163,23 @@ public class BatchDetailPresenter extends BasePresenter {
         upBody.from_date = body.from_date;
         upBody.time_repeats = body.time_repeats;
         upBody.shop_id = body.shop_id;
-        //upBody.teacher_id = body.teacher_id;
         upBody.to_date = body.to_date;
 
-        //spUpdate = gymUseCase.updateBatch(coachService.getId(), coachService.getModel(), id, upBody, new Action1<QcResponse>() {
-        //    @Override
-        //    public void call(QcResponse qcResponse) {
-        //        if (qcResponse.getStatus() == ResponseConstant.SUCCESS) {
-        //            view.onSuccess();
-        //        } else {
-        //view.onFailed(qcResponse.getMsg());
-        //}
-        //}
-        //});
+        spUpdate = restRepository.getPost_api().qcUpdateBatch(App.coachid+"",id,coachService.getId()+"", coachService.getModel(),  upBody)
+             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                             .subscribe(new Action1<QcResponse>() {
+                                 @Override
+                                 public void call(QcResponse qcResponse) {
+                                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                                         view.onSuccess();
+                                     } view.onFailed(qcResponse.getMsg());
+                                 }
+                             }, new Action1<Throwable>() {
+                                 @Override
+                                 public void call(Throwable throwable) {
+                                     view.onFailed(throwable.getMessage());
+                                 }
+                             });
+
     }
 }

@@ -36,6 +36,7 @@ import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
+import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.bean.Coach;
@@ -135,6 +136,41 @@ public class ScheduesFragment extends BaseFragment {
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
+        RxBusAdd(EventScheduleAction.class)
+            .subscribe(new Action1<EventScheduleAction>() {
+                @Override public void call(EventScheduleAction eventScheduleAction) {
+                    StringBuffer sb = new StringBuffer(Configs.Server);
+                    switch (eventScheduleAction.action) {
+                        case 1:
+                            sb.append(Configs.SCHEDULE_REST);
+                            break;
+                        case 2:
+                            sb.append(Configs.SCHEDULE_PRIVATE);
+                            break;
+                        case 3:
+                            sb.append(Configs.SCHEDULE_GROUP);
+                            break;
+                    }
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(mFragmentAdapter.getCurDay());
+                    calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
+                    sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+                    if (eventScheduleAction.mCoachService != null){
+                        if (!eventScheduleAction.mCoachService.has_permission && eventScheduleAction.action != 1){
+                            showAlert(R.string.alert_permission_forbid);
+                            return;
+                        }else {
+                            sb.append("&id=").append(eventScheduleAction.mCoachService.getId())
+                                .append("&model=").append(eventScheduleAction.mCoachService.getModel());
+                        }
+                    }
+
+                    Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                    toWeb.putExtra("url", sb.toString());
+                    startActivityForResult(toWeb, 404);
+                }
+            });
+
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
                 bgShow.setVisibility(View.VISIBLE);
@@ -151,6 +187,10 @@ public class ScheduesFragment extends BaseFragment {
             if (((MainScheduleFragment) getParentFragment()).getCoachService() != null) {
                 curSystemId = ((MainScheduleFragment) getParentFragment()).getCoachService().id;
                 curModel = ((MainScheduleFragment) getParentFragment()).getCoachService().model;
+            }else {
+
+
+
             }
         }
 
@@ -290,25 +330,10 @@ public class ScheduesFragment extends BaseFragment {
     }
 
     public void onAction(int v) {
-        StringBuffer sb = new StringBuffer(Configs.Server);
-        switch (v) {
-            case 1:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
-                break;
-            case 2:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
-                break;
-            case 3:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
-                break;
+        webFloatbtn.collapse();
+        if (getParentFragment() instanceof MainScheduleFragment) {
+            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");
         }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(mFragmentAdapter.getCurDay());
-        calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
-        sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
-        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-        toWeb.putExtra("url", sb.toString());
-        startActivityForResult(toWeb, 404);
         //webFloatbtn.collapse();
     }
 

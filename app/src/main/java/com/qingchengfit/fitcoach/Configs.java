@@ -52,8 +52,11 @@ public class Configs {
     /**
      * 会员预览页面
      */
-    public static String HOST_STUDENT_PREVIEW = "http://www.qingchengfit.cn";
+    public static final String HOST_STUDENT_PREVIEW = ServerIp+"fitness/redirect/gym/welcome/";
     public static final String WECHAT_GUIDE = "mobile/weixin/guide/";
+    public static final String SCHEDULE_REST = "fitness/redirect/coach/rest/";
+    public static final String SCHEDULE_GROUP = "fitness/redirect/coach/group/";
+    public static final String SCHEDULE_PRIVATE = "fitness/redirect/coach/private/";
 
     //app名称
     public static String APPNAME = "QingChengCoach";

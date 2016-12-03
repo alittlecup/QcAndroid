@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:text="APP端暂时不支持添加课程计划模板"
+        android:visibility="gone"
         />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"

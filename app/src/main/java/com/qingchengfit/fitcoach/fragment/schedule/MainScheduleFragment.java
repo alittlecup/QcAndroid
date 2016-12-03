@@ -71,7 +71,7 @@ public class MainScheduleFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
-        getFragmentManager().beginTransaction().replace(R.id.schedule_frag, new ScheduesFragment()).commitAllowingStateLoss();
+        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag, new ScheduesFragment()).commitAllowingStateLoss();
         ButterKnife.bind(this, view);
         RxBusAdd(NewPushMsg.class)
             .subscribe(new Action1<NewPushMsg>() {
@@ -97,8 +97,11 @@ public class MainScheduleFragment extends BaseFragment {
 
     private void goStudentPreview(CoachService coachService){
         Intent toStudnet = new Intent(getActivity(),StudentOrderPreviewActivity.class);
-        toStudnet.putExtra("service",coachService);
-        toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW);
+        String s = "";
+        if (coachService != null){
+            s = s.concat("?id=").concat(coachService.getId()+"").concat("&model=").concat(coachService.getModel());
+        }
+        toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW+s);
         startActivity(toStudnet);
 
     }

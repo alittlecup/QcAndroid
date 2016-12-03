@@ -18,12 +18,12 @@ import cn.qingchengfit.widgets.utils.DateUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.marcohc.robotocalendar.EventMonthChange;
-import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DatePicker;
+import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
@@ -121,6 +121,38 @@ public class ScheduleWeekFragment extends BaseFragment {
             }
         });
 
+        RxBusAdd(EventScheduleAction.class)
+            .subscribe(new Action1<EventScheduleAction>() {
+                @Override public void call(EventScheduleAction eventScheduleAction) {
+                    StringBuffer sb = new StringBuffer(Configs.Server);
+                    switch (eventScheduleAction.action) {
+                        case 1:
+                            sb.append(Configs.SCHEDULE_REST);
+                            break;
+                        case 2:
+                            sb.append(Configs.SCHEDULE_PRIVATE);
+                            break;
+                        case 3:
+                            sb.append(Configs.SCHEDULE_GROUP);
+                            break;
+                    }
+                    Calendar calendar = Calendar.getInstance();
+                    sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+                    if (eventScheduleAction.mCoachService != null){
+                        if (!eventScheduleAction.mCoachService.has_permission){
+                            showAlert(R.string.alert_permission_forbid);
+                            return;
+                        }else {
+                            sb.append("&id=").append(eventScheduleAction.mCoachService.getId())
+                                .append("&model=").append(eventScheduleAction.mCoachService.getModel());
+                        }
+                    }
+
+                    Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                    toWeb.putExtra("url", sb.toString());
+                    startActivityForResult(toWeb, 404);
+                }
+            });
 
 
         RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {
@@ -143,24 +175,28 @@ public class ScheduleWeekFragment extends BaseFragment {
 
 
     public void onAction(int v, Date date) {
-        StringBuffer sb = new StringBuffer(Configs.Server);
-        switch (v) {
-            case 1:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
-                break;
-            case 2:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
-                break;
-            case 3:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
-                break;
+        webFloatbtn.collapse();
+        if (getParentFragment() instanceof MainScheduleFragment) {
+            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");
         }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
-        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-        toWeb.putExtra("url", sb.toString());
-        startActivityForResult(toWeb, 404);
+        //StringBuffer sb = new StringBuffer(Configs.Server);
+        //switch (v) {
+        //    case 1:
+        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
+        //        break;
+        //    case 2:
+        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
+        //        break;
+        //    case 3:
+        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
+        //        break;
+        //}
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.setTime(date);
+        //sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+        //Intent toWeb = new Intent(getActivity(), WebActivity.class);
+        //toWeb.putExtra("url", sb.toString());
+        //startActivityForResult(toWeb, 404);
         //webFloatbtn.collapse();
     }
 

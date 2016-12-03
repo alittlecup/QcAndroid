@@ -11,20 +11,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-
 import java.net.URL;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -145,9 +142,9 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
                 break;
             case R.id.copy_link:
                 ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-//                ClipData clipData = new ClipData(mTitle+mUrl,"text",)
-//                cmb.setPrimaryClip();
-                cmb.setText(mTitle + mUrl);
+                //ClipData clipData = new ClipData(mTitle+mUrl,"text",)
+                //cmb.setPrimaryClip();
+                cmb.setText( mUrl);
                 ToastUtils.showDefaultStyle("已复制");
 //                ToastUtils.showS(getString(R.string.copy_download_link));
                 break;

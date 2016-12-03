@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -66,9 +65,9 @@ public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleA
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
-    private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
-    private CommonFlexAdapter mAdapter;
-    private Unbinder unbinder;
+    protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
+    protected CommonFlexAdapter mAdapter;
+
 
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,7 +133,6 @@ public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleA
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override public boolean onItemClick(int position) {
