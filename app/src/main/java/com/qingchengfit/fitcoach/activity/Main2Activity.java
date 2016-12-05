@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
@@ -48,6 +50,7 @@ import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
 import java.io.File;
@@ -59,6 +62,7 @@ import java.util.Date;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class Main2Activity extends BaseAcitivity implements WebActivityInterface {
@@ -128,6 +132,22 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         initUser();
 
         initBDPush();
+        RxPermissions.getInstance(this).request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.READ_EXTERNAL_STORAGE
+            , Manifest.permission.READ_CALENDAR
+            , Manifest.permission.WRITE_CALENDAR
+        )
+            .subscribe(new Action1<Boolean>() {
+                @Override
+                public void call(Boolean aBoolean) {
+                    if (aBoolean) {
+
+                    } else {
+                        ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
+                    }
+                }
+            });
+
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {

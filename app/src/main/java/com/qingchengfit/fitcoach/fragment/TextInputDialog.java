@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -38,9 +40,10 @@ public class TextInputDialog extends Dialog {
 
         view = getLayoutInflater().inflate(R.layout.activity_text_input, null);
         this.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        RelativeLayout toolbarLayout = (RelativeLayout) view.findViewById(R.id.toolbar_layout);
+        toolbar = (Toolbar) toolbarLayout.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_cross_white);
-        toolbar.setTitle("插入一段文字");
+        ((TextView)toolbarLayout.findViewById(R.id.toolbar_title)).setText("插入一段文字");
         toolbar.setNavigationOnClickListener(v -> this.dismiss());
         mOkbtn = (Button) view.findViewById(R.id.textinput_btn);
         mInputEt = (EditText) view.findViewById(R.id.textinput_et);

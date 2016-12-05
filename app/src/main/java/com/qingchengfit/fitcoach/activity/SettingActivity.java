@@ -12,6 +12,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
+import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.RecordFragment;
 import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
@@ -25,15 +26,12 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
 
     public static String TAG = SettingActivity.class.getName();
     FragmentManager fragmentManager;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private MaterialDialog loadingDialog;
     private int result = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
@@ -51,103 +49,85 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
             case 4:
                 onFragmentChange(new WorkExepSettingFragment(), false);
                 break;
+            case 5:
+                onFragmentChange(ModifyBrifeFragment.newInstance(getIntent().getStringExtra("desc")), false);
+                break;
             default:
                 onFragmentChange(SettingFragment.newInstance(), false);
                 break;
         }
-
-
     }
 
-
-    @Override
-    public void onFragmentChange(Fragment fragment) {
+    @Override public void onFragmentChange(Fragment fragment) {
         AppUtils.hideKeyboard(this);
         fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_right_out, R.anim.slide_left_in)
-                .replace(R.id.settting_fraglayout, fragment)
-                .addToBackStack(null)
-                .commit();
-
+            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_right_out, R.anim.slide_left_in)
+            .replace(R.id.settting_fraglayout, fragment)
+            .addToBackStack(null)
+            .commit();
     }
 
     public void onFragmentChange(Fragment fragment, boolean addtoStack) {
-        fragmentManager.beginTransaction()
-                .replace(R.id.settting_fraglayout, fragment)
-                .commit();
+        fragmentManager.beginTransaction().replace(R.id.settting_fraglayout, fragment).commit();
     }
 
-    @Override
-    public void onToolbarMenu(@MenuRes int menu, int icon, String title) {
+    @Override public void onToolbarMenu(@MenuRes int menu, int icon, String title) {
         toolbarTitle.setText(title);
         toolbar.getMenu().clear();
-        if (menu != 0)
+        if (menu != 0) {
             toolbar.inflateMenu(menu);
-        else toolbar.inflateMenu(R.menu.menu_blank);
-        if (icon != 0)
-            toolbar.setNavigationIcon(icon);
+        } else {
+            toolbar.inflateMenu(R.menu.menu_blank);
+        }
+        if (icon != 0) toolbar.setNavigationIcon(icon);
     }
 
-    @Override
-    public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener) {
+    @Override public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener) {
         toolbar.setOnMenuItemClickListener(listener);
     }
 
-    @Override
-    public void hindToolbar() {
+    @Override public void hindToolbar() {
         toolbar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void showToolbar() {
+    @Override public void showToolbar() {
         toolbar.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void ShowLoading(String content) {
-        if (loadingDialog == null)
-            loadingDialog = new MaterialDialog.Builder(this)
-                    .content("请稍后")
-                    .progress(true, 0)
-                    .cancelable(false)
-                    .build();
-        if (content != null)
-            loadingDialog.setContent(content);
+    @Override public void ShowLoading(String content) {
+        if (loadingDialog == null) {
+            loadingDialog = new MaterialDialog.Builder(this).content("请稍后").progress(true, 0).cancelable(false).build();
+        }
+        if (content != null) loadingDialog.setContent(content);
         loadingDialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         AppUtils.hideKeyboard(this);
         toolbar.getMenu().clear();
         super.onBackPressed();
     }
 
-    @Override
-    public void hideLoading() {
-        if (loadingDialog != null && loadingDialog.isShowing())
-            loadingDialog.dismiss();
+    @Override public void hideLoading() {
+        if (loadingDialog != null && loadingDialog.isShowing()) loadingDialog.dismiss();
     }
 
-    @Override
-    public void fixCount() {
+    @Override public void fixCount() {
         result++;
     }
 
-    @Override
-    public void onfinish() {
+    @Override public void onfinish() {
 
     }
 
-    @Override
-    public void finish() {
+    @Override public void finish() {
         setResult(result);
         super.finish();
     }
     //    @Override
-//    public void onBackPressed() {
-//        if (fragmentManager.getBackStackEntryCount() == 1) {
-//            super.onBackPressed();
-//        } else fragmentManager.popBackStack();
-//    }
+    //    public void onBackPressed() {
+    //        if (fragmentManager.getBackStackEntryCount() == 1) {
+    //            super.onBackPressed();
+    //        } else fragmentManager.popBackStack();
+    //    }
 }

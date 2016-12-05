@@ -123,18 +123,6 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                             mListData.get(pos).setText(mTextInputDialog.getContent());
                         mTextInputDialog.dismiss();
                         adapter.notifyDataSetChanged();
-//                        QcCloudClient.getApi().postApi.qcModifyDes(App.coachid,new ModifyDes(HTMLUtils.toHTML(mListData)))
-//                            .subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
-//                            if (qcResponse.status == ResponseResult.SUCCESS){
-//
-//                                getActivity().runOnUiThread(() -> {
-//
-//                                });
-//
-//                            }else {
-//                                Toast.makeText(App.AppContex,"修改失败,请稍后重试",Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
                     });
                     mTextInputDialog.show(mListData.get(pos).getText());
                 }
@@ -187,11 +175,6 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                         if (type == -100)
                             startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
                         else startActivityForResult(intent, 300 + type);
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-//                        } else {
-//                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-//                        }
                     }
                 }
 
