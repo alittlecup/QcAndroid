@@ -33,8 +33,8 @@ public class Configs {
 //        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = ServerIp + ServerPort;
-    public static final String ORDER_PRIVATE_URL = Server + "mobile/coach/privatelesson/list/";
-    public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
+    //public static final String ORDER_PRIVATE_URL = Server + "mobile/coach/privatelesson/list/";
+    //public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
     public static String PRIVATE_PRIVEIW = Configs.ServerIp + "fitness/redirect/user/private/";

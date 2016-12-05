@@ -5,15 +5,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.BuildConfig;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -22,16 +31,8 @@ import com.qingchengfit.fitcoach.http.bean.LoginBean;
 import com.qingchengfit.fitcoach.http.bean.MutiSysSession;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -69,6 +70,14 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void doLogin(String account, String code) {
+                if (BuildConfig.DEBUG) {
+                    EditText et = (EditText) getView().findViewById(R.id.et_ip);
+                    if (!TextUtils.isEmpty(et.getText())) {
+                        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
+                        Configs.Server = "http://" + et.getText().toString().trim() + "/";
+                        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+                    }
+                }
 //                toWeixin.setData(uri);
 //                getActivity().startActivity(toWeixin);
 //                return;
@@ -185,6 +194,14 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void getCode(String account) {
+                if (BuildConfig.DEBUG) {
+                    EditText et = (EditText) getView().findViewById(R.id.et_ip);
+                    if (!TextUtils.isEmpty(et.getText())) {
+                        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
+                        Configs.Server = "http://" + et.getText().toString().trim() + "/";
+                        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+                    }
+                }
 //                QcCloudClient.getApi().getRestAdapter()
 //                        .setErrorHandler(cause -> {
 //                                    LogUtil.e(cause.toString());
@@ -230,6 +247,14 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         unbinder=ButterKnife.bind(this, view);
+        if (BuildConfig.DEBUG){
+            EditText et = (EditText)view.findViewById(R.id.et_ip);
+            view.findViewById(R.id.test).setOnClickListener(v->et.setText("cloudtest.qingchengfit.cn"));
+            view.findViewById(R.id.dev).setOnClickListener(v->et.setText("dev.qingchengfit.cn"));
+            view.findViewById(R.id.clear).setOnClickListener(v->et.setText(""));
+
+
+        }
         loginview.setLoginPresenter(loginPresenter);
         loginview.setOnTouchListener(new View.OnTouchListener() {
             @Override

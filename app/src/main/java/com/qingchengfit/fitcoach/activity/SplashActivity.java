@@ -7,25 +7,25 @@ import android.support.annotation.UiThread;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import com.qingchengfit.fitcoach.BaseAcitivity;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
-import com.qingchengfit.fitcoach.component.CircleIndicator;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.BuildConfig;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
+import com.qingchengfit.fitcoach.component.CircleIndicator;
+import java.util.ArrayList;
+import java.util.List;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -75,6 +75,11 @@ public class SplashActivity extends BaseAcitivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, getString(R.string.baidu_api_release));
+        if (BuildConfig.DEBUG){
+            String ip = PreferenceUtils.getPrefString(this,"debug_ip", "");
+            if (!TextUtils.isEmpty(ip))
+                Configs.Server = Configs.ServerIp = ip;
+        }
         Observable.just("")
                 .subscribeOn(Schedulers.newThread())
                 .flatMap(s -> {
