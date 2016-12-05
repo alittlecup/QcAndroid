@@ -60,7 +60,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_account_edit"
+            app:srcCompat="@drawable/ic_account_homepage"
             />
         <TextView
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -91,7 +91,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_account_meeting"
+            app:srcCompat="@drawable/ic_account_introduction"
 
             />
         <TextView

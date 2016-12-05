@@ -2,25 +2,20 @@ package com.qingchengfit.fitcoach.items;
 
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.TextpaperUtils;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.CompatUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWorkVH> {
 
@@ -49,7 +44,7 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
             holder.subTitle.setText(bean.subname);
         }else holder.subTitle.setVisibility(View.GONE);
         Drawable drawable = ContextCompat.getDrawable(holder.image.getContext(),bean.resImg);
-        DrawableCompat.setTint(drawable, CompatUtils.getColor(holder.itemView.getContext(),R.color.text_grey));
+        //DrawableCompat.setTint(drawable, CompatUtils.getColor(holder.itemView.getContext(),R.color.text_grey));
         holder.image.setImageDrawable(drawable);
     }
 

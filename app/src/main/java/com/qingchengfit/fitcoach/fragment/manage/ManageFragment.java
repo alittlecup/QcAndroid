@@ -111,21 +111,21 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview.setAdapter(mAdapter);
 
         List<AbstractFlexibleItem> data2 = new ArrayList<>();
-        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_all_card)
+        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_card_grey)
             .text(getString(R.string.student_card_manage))
             .subname("全面管理会员卡")
             .build()));
         data2.add(new ManageWorkItem(
-            new FunctionBean.Builder().resImg(R.drawable.ic_coach).text(getString(R.string.manage_salers)).subname("分配销售名下会员").build()));
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_staff_grey).text(getString(R.string.manage_salers)).subname("分配销售名下会员").build()));
         data2.add(new ManageWorkItem(
-            new FunctionBean.Builder().resImg(R.drawable.ic_coach).text(getString(R.string.manage_staffs)).subname("不同员工不同角色").build()));
-        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_authority)
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_sales_grey).text(getString(R.string.manage_staffs)).subname("不同员工不同角色").build()));
+        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_authority_grey)
             .text(getString(R.string.manage_cards))
             .subname("不同角色不同权限")
             .build()));
         data2.add(new ManageWorkItem(
-            new FunctionBean.Builder().resImg(R.drawable.ic_scan).text(getString(R.string.manage_signin)).subname("不同角色不同权限").build()));
-        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_marketing_activity)
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_checkin_grey).text(getString(R.string.manage_signin)).subname("不同角色不同权限").build()));
+        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_activity_grey)
             .text(getString(R.string.manage_acitivity))
             .subname("健身房营销活动")
             .build()));

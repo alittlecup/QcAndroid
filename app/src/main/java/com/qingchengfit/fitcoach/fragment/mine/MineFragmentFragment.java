@@ -134,8 +134,6 @@ public class MineFragmentFragment extends Fragment {
                 startActivity(toBaseInfo);
                 break;
             case R.id.layout_baseinfo:
-
-
                 Intent toHome = new Intent(getActivity(), MyHomeActivity.class);
                 startActivity(toHome);
                 break;
