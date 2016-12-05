@@ -201,6 +201,9 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case RESULT_DEL://删除课程
+                    if (mCourseDetail.getShops().size() >1)
+                        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+
                     mPresenter.judgeDel(mCourseDetail, mCourseDetail.getShops() == null ? 1 : mCourseDetail.getShops().size());
                     break;
                 default:
@@ -325,10 +328,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     showLoading();
-                    if (mCourseDetail.getShops().size() > 0){
-                        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
-                        return;
-                    }
+
                     mPresenter.delCourse(App.coachid + "", mCourseDetail.getId());
                 }
             })
