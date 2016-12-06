@@ -90,7 +90,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
 //    flavorDimensions 'oem','dev'
 
     productFlavors {

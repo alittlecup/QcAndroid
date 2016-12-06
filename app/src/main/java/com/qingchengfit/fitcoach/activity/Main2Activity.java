@@ -12,11 +12,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.GuideWindow;
 import cn.qingchengfit.widgets.TabView;
 import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.NetWorkUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
@@ -33,6 +37,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
+import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
@@ -41,7 +46,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
+import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
@@ -83,10 +88,15 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
      * 退出弹窗提示
      */
     MaterialDialog logoutDialog;
+    @BindView(R.id.order_studnet) View orderStudnet;
+    @BindView(R.id.web_position) View webPosition;
     private Gson gson;
     private User user;
     private Date mChooseDate;
     private CoachService mCoachService;
+    private GuideWindow gw;
+    private GuideWindow gd1;
+    private GuideWindow gd2;
 
     public CoachService getCoachService() {
         return mCoachService;
@@ -112,6 +122,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private String url;
     private File newAkp;
     AsyncDownloader mDownloadThread;
+    private int mGwShowNum = 0;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,14 +143,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         initUser();
 
         initBDPush();
-        RxPermissions.getInstance(this).request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-            , Manifest.permission.READ_EXTERNAL_STORAGE
-            , Manifest.permission.READ_CALENDAR
-            , Manifest.permission.WRITE_CALENDAR
-        )
+        RxPermissions.getInstance(this)
+            .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
             .subscribe(new Action1<Boolean>() {
-                @Override
-                public void call(Boolean aBoolean) {
+                @Override public void call(Boolean aBoolean) {
                     if (aBoolean) {
 
                     } else {
@@ -148,7 +156,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 }
             });
 
-
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = getIntent().getStringExtra("url");
@@ -156,6 +163,83 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             toWeb.putExtra("url", contetn);
             startActivity(toWeb);
         }
+        RxBus.getBus().register(EventInit.class).subscribe(eventInit -> {
+            if (eventInit.show) {
+                switch (eventInit.pos) {
+                    case 1:
+                        if (!PreferenceUtils.getPrefBoolean(this, "guide_1", false)) {
+                            gd1 = new GuideWindow(this, getString(R.string.hint_order_self), GuideWindow.DOWN);
+                            gd1.show(orderStudnet);
+                            //PreferenceUtils.setPrefBoolean(getContext(), "guide_1", true);
+                        }
+                        break;
+                    case 2:
+                        if (!PreferenceUtils.getPrefBoolean(this, "guide_2", false)) {
+                            gd2 = new GuideWindow(this, getString(R.string.hint_help_order), GuideWindow.UP);
+                            gd2.show(webPosition);
+                            //PreferenceUtils.setPrefBoolean(this,"guide_2",true);
+                        }
+                        break;
+                    case 3:
+                        Boolean isInit = PreferenceUtils.getPrefBoolean(this, "guide_3", false);
+                        if (!isInit) {
+                            gw = new GuideWindow(this, "使用「课程排期」安排课程", GuideWindow.UP);
+                            if (tabview.getChildCount() > 1) {
+                                gw.show(tabview.getChildAt(1));
+                            }
+                            //PreferenceUtils.setPrefBoolean(this,"guide_3",true);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (eventInit.pos) {
+
+                    case 1:
+                        if (gd1 != null && gd1.isShowing()) gd1.dismiss();
+
+                        break;
+                    case 2:
+                        if (gd2 != null && gd2.isShowing()) gd2.dismiss();
+                        break;
+                    case 3:
+                        if (gw != null && gw.isShowing()) gw.dismiss();
+                        break;
+                    default:
+                }
+            }
+        });
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+                if (position == 1 && gw != null && gw.isShowing()) {
+                    gw.dismiss();
+                }
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        viewpager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                CompatUtils.removeGlobalLayout(viewpager.getViewTreeObserver(),this);
+                if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false)) {
+                    gd1 = new GuideWindow(Main2Activity.this, getString(R.string.hint_order_self), GuideWindow.DOWN);
+                    gd1.show(orderStudnet);
+                    //PreferenceUtils.setPrefBoolean(getContext(), "guide_1", true);
+                }
+                if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                    gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
+                    gd2.show(webPosition);
+                    //PreferenceUtils.setPrefBoolean(this,"guide_2",true);
+                }
+            }
+        });
     }
 
     private void setupVp() {
@@ -308,7 +392,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             if (url != null) {
                                 downloadDialog.show();
-                                mDownloadThread = new Main2Activity.AsyncDownloader();
+                                mDownloadThread = new AsyncDownloader();
                                 mDownloadThread.execute(url);
                             }
                         }
@@ -367,10 +451,10 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         App.coachid = Integer.parseInt(coach.id);
 
         //获取用户拥有的系统
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<QcCoachSystemResponse>() {
+            .subscribe(new Subscriber<QcCoachServiceResponse>() {
                 @Override public void onCompleted() {
 
                 }
@@ -379,35 +463,32 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
                 }
 
-                @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                    if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                        if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                            qcCoachSystemResponse.date.systems.size() == 0) {
-                            new MaterialDialog.Builder(Main2Activity.this)
-                                .canceledOnTouchOutside(false)
+                @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
+                    if (qcCoachServiceResponse.status == ResponseResult.SUCCESS) {
+                        if (qcCoachServiceResponse.data == null || qcCoachServiceResponse.data.services == null ||
+                            qcCoachServiceResponse.data.services.size() == 0) {
+                            new MaterialDialog.Builder(Main2Activity.this).canceledOnTouchOutside(false)
                                 .title("您没有场馆")
                                 .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
                                 .positiveText("创建场馆")
                                 .negativeText("重新登录")
                                 .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent toGym = new Intent(Main2Activity.this, GuideActivity.class);
                                         startActivity(toGym);
                                         Main2Activity.this.finish();
                                     }
                                 })
                                 .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         logout();
                                     }
                                 })
                                 .show();
                         } else {
-                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
+                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachServiceResponse));
                         }
-                    } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                    } else if (qcCoachServiceResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
                         logout();
                     }
                 }

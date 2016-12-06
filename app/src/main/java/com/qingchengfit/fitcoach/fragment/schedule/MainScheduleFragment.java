@@ -17,10 +17,12 @@ import butterknife.OnClick;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.event.EventGoPreview;
+import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;
@@ -31,6 +33,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
 
 /**
  * power by
@@ -64,7 +67,6 @@ public class MainScheduleFragment extends BaseFragment {
 
     private CoachService mCoachService;
 
-
     public CoachService getCoachService() {
         return mCoachService;
     }
@@ -73,53 +75,49 @@ public class MainScheduleFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
         getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag, new ScheduesFragment()).commitAllowingStateLoss();
         ButterKnife.bind(this, view);
-        RxBusAdd(NewPushMsg.class)
-            .subscribe(new Action1<NewPushMsg>() {
-                @Override public void call(NewPushMsg newPushMsg) {
-                    queryNotify();
-                }
-            });
-        RxBusAdd(EventGoPreview.class)
-            .subscribe(new Action1<EventGoPreview>() {
-                @Override public void call(EventGoPreview eventGoPreview) {
-                    goStudentPreview(eventGoPreview.mCoachService);
-                }
-            });
-        RxBusAdd(EventScheduleService.class)
-            .subscribe(new Action1<EventScheduleService>() {
-                @Override public void call(EventScheduleService eventScheduleService) {
-                    mCoachService = eventScheduleService.mCoachService;
-                    title.setText(mCoachService.getName());
-                }
-            });
+        RxBusAdd(NewPushMsg.class).subscribe(new Action1<NewPushMsg>() {
+            @Override public void call(NewPushMsg newPushMsg) {
+                queryNotify();
+            }
+        });
+        RxBusAdd(EventGoPreview.class).subscribe(new Action1<EventGoPreview>() {
+            @Override public void call(EventGoPreview eventGoPreview) {
+                goStudentPreview(eventGoPreview.mCoachService);
+            }
+        });
+        RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
+            @Override public void call(EventScheduleService eventScheduleService) {
+                mCoachService = eventScheduleService.mCoachService;
+                title.setText(mCoachService.getName());
+            }
+        });
+
         return view;
     }
 
-    private void goStudentPreview(CoachService coachService){
-        Intent toStudnet = new Intent(getActivity(),StudentOrderPreviewActivity.class);
+    private void goStudentPreview(CoachService coachService) {
+        Intent toStudnet = new Intent(getActivity(), StudentOrderPreviewActivity.class);
         String s = "";
-        if (coachService != null){
-            s = s.concat("?id=").concat(coachService.getId()+"").concat("&model=").concat(coachService.getModel());
+        if (coachService != null) {
+            s = s.concat("?id=").concat(coachService.getId() + "").concat("&model=").concat(coachService.getModel());
         }
-        toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW+s);
+        toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW + s);
         startActivity(toStudnet);
-
     }
 
     @Override public void onStart() {
         super.onStart();
         queryNotify();
-
     }
 
-    @OnClick(R.id.student_order)
-    public void onStuOrder(){
+    @OnClick(R.id.student_order) public void onStuOrder() {
+        RxBus.getBus().post(new EventInit(false,1));
         if (mCoachService == null) {
             new ChooseGymDialogFragment().show(getFragmentManager(), "");
-        }else goStudentPreview(mCoachService);
+        } else {
+            goStudentPreview(mCoachService);
+        }
     }
-
-
 
     public void queryNotify() {
         RxRegiste(QcCloudClient.getApi().getApi.qcGetMessages(App.coachid)
@@ -137,9 +135,11 @@ public class MainScheduleFragment extends BaseFragment {
                 @Override public void onNext(QcNotificationResponse qcNotificationResponse) {
                     if (getActivity() != null) {
                         if (qcNotificationResponse.getData().getUnread_count() > 0) {
-                            if (qcNotificationResponse.getData().getUnread_count() < 100)
+                            if (qcNotificationResponse.getData().getUnread_count() < 100) {
                                 scheduleNotificationCount.setText(Integer.toString(qcNotificationResponse.getData().getUnread_count()));
-                            else scheduleNotificationCount.setText("99");
+                            } else {
+                                scheduleNotificationCount.setText("99");
+                            }
                             scheduleNotificationCount.setVisibility(View.VISIBLE);
                         } else {
                             scheduleNotificationCount.setVisibility(View.GONE);
@@ -163,7 +163,7 @@ public class MainScheduleFragment extends BaseFragment {
             case R.id.student_order://会员预约
                 break;
             case R.id.schedule_notification_layout:
-                Intent toNotification  = new Intent(getActivity(), NotificationActivity.class);
+                Intent toNotification = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(toNotification);
                 break;
         }
@@ -177,5 +177,4 @@ public class MainScheduleFragment extends BaseFragment {
             }
         }
     }
-
 }

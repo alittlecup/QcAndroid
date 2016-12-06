@@ -36,6 +36,7 @@ import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
+import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
@@ -136,43 +137,45 @@ public class ScheduesFragment extends BaseFragment {
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
-        RxBusAdd(EventScheduleAction.class)
-            .subscribe(new Action1<EventScheduleAction>() {
-                @Override public void call(EventScheduleAction eventScheduleAction) {
-                    StringBuffer sb = new StringBuffer(Configs.Server);
-                    switch (eventScheduleAction.action) {
-                        case 1:
-                            sb.append(Configs.SCHEDULE_REST);
-                            break;
-                        case 2:
-                            sb.append(Configs.SCHEDULE_PRIVATE);
-                            break;
-                        case 3:
-                            sb.append(Configs.SCHEDULE_GROUP);
-                            break;
-                    }
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(mFragmentAdapter.getCurDay());
-                    calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
-                    sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
-                    if (eventScheduleAction.mCoachService != null){
-                        if (!eventScheduleAction.mCoachService.has_permission && eventScheduleAction.action != 1){
-                            showAlert(R.string.alert_permission_forbid);
-                            return;
-                        }else {
-                            sb.append("&id=").append(eventScheduleAction.mCoachService.getId())
-                                .append("&model=").append(eventScheduleAction.mCoachService.getModel());
-                        }
-                    }
-
-                    Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                    toWeb.putExtra("url", sb.toString());
-                    startActivityForResult(toWeb, 404);
+        RxBusAdd(EventScheduleAction.class).subscribe(new Action1<EventScheduleAction>() {
+            @Override public void call(EventScheduleAction eventScheduleAction) {
+                StringBuffer sb = new StringBuffer(Configs.Server);
+                switch (eventScheduleAction.action) {
+                    case 1:
+                        sb.append(Configs.SCHEDULE_REST);
+                        break;
+                    case 2:
+                        sb.append(Configs.SCHEDULE_PRIVATE);
+                        break;
+                    case 3:
+                        sb.append(Configs.SCHEDULE_GROUP);
+                        break;
                 }
-            });
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(mFragmentAdapter.getCurDay());
+                calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
+                sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+                if (eventScheduleAction.mCoachService != null) {
+                    if (!eventScheduleAction.mCoachService.has_permission && eventScheduleAction.action != 1) {
+                        showAlert(R.string.alert_permission_forbid);
+                        return;
+                    } else {
+                        sb.append("&id=")
+                            .append(eventScheduleAction.mCoachService.getId())
+                            .append("&model=")
+                            .append(eventScheduleAction.mCoachService.getModel());
+                    }
+                }
+
+                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                toWeb.putExtra("url", sb.toString());
+                startActivityForResult(toWeb, 404);
+            }
+        });
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
+                RxBus.getBus().post(new EventInit(false,2));
                 bgShow.setVisibility(View.VISIBLE);
                 //ViewCompat.setAlpha(bgShow,0);
                 //ViewCompat.animate(bgShow).alpha(1).setDuration(R.integer.anim_time).start();
@@ -187,9 +190,7 @@ public class ScheduesFragment extends BaseFragment {
             if (((MainScheduleFragment) getParentFragment()).getCoachService() != null) {
                 curSystemId = ((MainScheduleFragment) getParentFragment()).getCoachService().id;
                 curModel = ((MainScheduleFragment) getParentFragment()).getCoachService().model;
-            }else {
-
-
+            } else {
 
             }
         }
@@ -230,8 +231,8 @@ public class ScheduesFragment extends BaseFragment {
             @Override public void onPageSelected(int position) {
                 Calendar c = Calendar.getInstance();
                 c.setTime(mFragmentAdapter.getCurDay());
-                c.add(Calendar.DATE,position-30);
-                tvMonth.setText(c.get(Calendar.YEAR)+"年"+(c.get(Calendar.MONTH)+1)+"月");
+                c.add(Calendar.DATE, position - 30);
+                tvMonth.setText(c.get(Calendar.YEAR) + "年" + (c.get(Calendar.MONTH) + 1) + "月");
             }
 
             @Override public void onPageScrollStateChanged(int state) {
@@ -332,7 +333,8 @@ public class ScheduesFragment extends BaseFragment {
     public void onAction(int v) {
         webFloatbtn.collapse();
         if (getParentFragment() instanceof MainScheduleFragment) {
-            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");
+            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()
+                .show(getFragmentManager(), "");
         }
         //webFloatbtn.collapse();
     }
@@ -366,10 +368,10 @@ public class ScheduesFragment extends BaseFragment {
         //scheduleCalendar.setClickable(false);
         mDatePicker = new DatePicker();
         mDatePicker.show(getFragmentManager(), "");
-        if (getActivity() instanceof Main2Activity){
+        if (getActivity() instanceof Main2Activity) {
             Calendar c = Calendar.getInstance();
             c.setTime(mFragmentAdapter.getCurDay());
-            c.add(Calendar.DATE,scheduleVp.getCurrentItem()-30);
+            c.add(Calendar.DATE, scheduleVp.getCurrentItem() - 30);
             ((Main2Activity) getActivity()).setChooseDate(c.getTime());
         }
 
@@ -379,10 +381,9 @@ public class ScheduesFragment extends BaseFragment {
             }
 
             @Override public void onDismiss(int year, int month) {
-                if (getActivity() instanceof Main2Activity){
+                if (getActivity() instanceof Main2Activity) {
                     goDateSchedule(((Main2Activity) getActivity()).getChooseDate());
                 }
-
             }
         });
 

@@ -290,5 +290,7 @@
     <string name="app_slogan">专为健身教练量身定制</string>
     <string name="app_download_link">http://fir.im/qingchengfit</string>
     <string name="app_icon_net">http://qcresource.b0.upaiyun.com/ic_launcher_trainer.png</string>
+    <string name="hint_help_order">点击这里帮会员约课</string>
+    <string name="hint_order_self">点击这里让会员自主约课</string>
 
 </resources>

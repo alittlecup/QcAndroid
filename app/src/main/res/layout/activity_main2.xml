@@ -8,14 +8,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.qingchengfit.fitcoach.activity.Main2Activity">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        >
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <View
+            android:id="@+id/order_studnet"
+            android:layout_width="100dp"
+            android:layout_height="60dp"/>
+        <View
+            android:id="@+id/web_position"
+            android:layout_width="90dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            />
+    </FrameLayout>
 
-        />
     <include layout="@layout/divider_grey"/>
     <cn.qingchengfit.widgets.TabView
         android:id="@+id/tabview"

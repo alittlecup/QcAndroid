@@ -37,6 +37,7 @@ import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
@@ -73,7 +74,7 @@ public class ScheduleListFragment extends BaseFragment {
     private String currentModel;
     private long mCurCalId;
     private QcSchedulesResponse mQcSchedulesResponse;
-    private boolean hasPrivate = false;
+    private boolean hasLoad = false;
     Observer<QcSchedulesResponse> mHttpCallBack = new Observer<QcSchedulesResponse>() {
 
         @Override public void onCompleted() {
@@ -95,6 +96,7 @@ public class ScheduleListFragment extends BaseFragment {
         @Override public void onNext(QcSchedulesResponse qcSchedulesResponse) {
             mQcSchedulesResponse = qcSchedulesResponse;
             handleResponse(qcSchedulesResponse);
+            hasLoad = true;
         }
     };
     private Unbinder unbinder;
@@ -185,6 +187,14 @@ public class ScheduleListFragment extends BaseFragment {
         return view;
     }
 
+    @Override protected void lazyLoad() {
+        super.lazyLoad();
+
+        if (hasLoad && scheduleBeans.size() == 0 ){
+            RxBus.getBus().post(new EventInit(true,3));
+        }
+    }
+
     private void goDateSchedule(Date date) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", DateUtils.Date2YYYYMMDD(date));
@@ -259,12 +269,6 @@ public class ScheduleListFragment extends BaseFragment {
                                 }
                             }
                         });
-                    //                    if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                    //                        String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
-                    //                        bean.conflict = thing;
-                    //                        return;
-                    //                    }
-
                 }
                 scheduleBeans.add(bean);
             }
