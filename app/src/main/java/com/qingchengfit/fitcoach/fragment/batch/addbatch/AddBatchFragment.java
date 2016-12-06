@@ -436,7 +436,8 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             Intent to = new Intent(getActivity(), ChooseActivity.class);
             to.putExtra("to", ChooseActivity.TO_CHOSSE_CIRCLE);
             //to.putExtra("cmbean", ChooseActivity.TO_CHOSSE_CIRCLE);
-            to.putExtra("len", ((Integer)mCourse.getLength()).longValue());
+            if (!mCourse.is_private)
+                to.putExtra("len", ((Integer)mCourse.getLength()).longValue());
             startActivity(to);
         }
         return true;
