@@ -144,6 +144,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             @Override public void call(CoachService coachService) {
                 if (coachService != null) {
                     mCoachService = coachService;
+                    ((Main2Activity) getActivity()).setCoachService(mCoachService);
                     title.setText(coachService.name);
                     Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg,getContext()));
                     nameBrand.setText(coachService.brand_name);
@@ -367,9 +368,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     @OnClick(R.id.renewal) public void onClick() {
-        Intent toEdit = new Intent(getContext(),FragActivity.class);
-        toEdit.putExtra("service",mCoachService);
-        toEdit.putExtra("type",13);
-        startActivity(toEdit);
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+        //Intent toEdit = new Intent(getContext(),FragActivity.class);
+        //toEdit.putExtra("service",mCoachService);
+        //toEdit.putExtra("type",13);
+        //startActivity(toEdit);
     }
 }

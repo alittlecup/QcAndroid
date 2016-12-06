@@ -61,6 +61,9 @@ public class ScheduleWeekFragment extends BaseFragment {
     private CoachService mCoachService;
     private DatePicker dataPicker;
     private ScheduleWeekAdapter adapter;
+    private FloatingActionButton btn3;
+    private FloatingActionButton btn2;
+    private FloatingActionButton btn1;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
@@ -88,17 +91,17 @@ public class ScheduleWeekFragment extends BaseFragment {
             }
         });
 
-        FloatingActionButton btn1 = new FloatingActionButton(getActivity());
+         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
         btn1.setColorNormal(ContextCompat.getColor(getContext(), R.color.rest_color));
         btn1.setTitle("设置休息");
         //
-        FloatingActionButton btn2 = new FloatingActionButton(getActivity());
+         btn2 = new FloatingActionButton(getActivity());
         btn2.setIcon(R.drawable.ic_action_group);
         btn2.setColorNormal(ContextCompat.getColor(getContext(), R.color.group_color));
         btn2.setTitle("代约团课");
 
-        FloatingActionButton btn3 = new FloatingActionButton(getActivity());
+         btn3 = new FloatingActionButton(getActivity());
         btn3.setIcon(R.drawable.ic_action_private);
         btn3.setColorNormal(ContextCompat.getColor(getContext(), R.color.private_color));
         btn3.setTitle("代约私教");
@@ -110,6 +113,9 @@ public class ScheduleWeekFragment extends BaseFragment {
         webFloatbtn.addButton(btn3);
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
+                btn1.setEnabled(true);
+                btn2.setEnabled(true);
+                btn3.setEnabled(true);
                 bgShow.setVisibility(View.VISIBLE);
                 //ViewCompat.setAlpha(bgShow,0);
                 //ViewCompat.animate(bgShow).alpha(255).setDuration(R.integer.anim_time).start();
@@ -175,6 +181,9 @@ public class ScheduleWeekFragment extends BaseFragment {
 
 
     public void onAction(int v, Date date) {
+        btn1.setEnabled(false);
+        btn2.setEnabled(false);
+        btn3.setEnabled(false);
         webFloatbtn.collapse();
         if (getParentFragment() instanceof MainScheduleFragment) {
             new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");

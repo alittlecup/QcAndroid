@@ -48,6 +48,7 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
+import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
@@ -143,7 +144,6 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             ((BatchActivity) getActivity()).getComponent().inject(this);
         }
 
-
         presenter.attachView(this);
         //mCallbackActivity.setToolbar("添加排期", false, null, R.menu.menu_compelete, listener);
         toolbar.inflateMenu(R.menu.menu_complete);
@@ -161,10 +161,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             coach.setLabel("教练");
             Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);
             text1.setText(mCourse.name);
-            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength()/60));
+            text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength() / 60));
 
             presenter.getBatchTemplete(mType, null, body.course_id);//拉取模板
-
         } else if (mTeacher != null) {
             mType = Configs.TYPE_PRIVATE;
             coach.setLabel("课程");
@@ -196,7 +195,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                     }
                 }
                 if (CmBean.checkCmBean(cmBeens, cmBean)) {
-                    mData.add(mData.size()-1,new BatchCircleItem(cmBean));
+                    mData.add(mData.size() - 1, new BatchCircleItem(cmBean));
                     cmBeens.add(cmBean);
                     body.time_repeats = CmBean.geTimeRepFromBean(cmBeens);
                     mAdapter.notifyDataSetChanged();
@@ -211,11 +210,11 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
 
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
-            if (!body.is_free && (body.rules == null || body.rules.size() == 0 )) {
+            if (!body.is_free && (body.rules == null || body.rules.size() == 0)) {
                 ToastUtils.show("请设置结算方式");
                 return true;
             }
-            if (body.max_users == 0){
+            if (body.max_users == 0) {
                 ToastUtils.show("请设置");
                 return true;
             }
@@ -336,9 +335,9 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             case R.id.account_type:
                 Intent toAccount = new Intent(getActivity(), FragActivity.class);
                 toAccount.putExtra("type", 12);
-                toAccount.putExtra("count", body.max_users == 0 ?8:body.max_users);
+                toAccount.putExtra("count", body.max_users == 0 ? 8 : body.max_users);
                 toAccount.putExtra("isfree", body.is_free);
-                toAccount.putExtra("service",mCoachService);
+                toAccount.putExtra("service", mCoachService);
                 startActivityForResult(toAccount, RESULT_ACCOUNT);
 
                 break;
@@ -436,8 +435,20 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
         } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
             Intent to = new Intent(getActivity(), ChooseActivity.class);
             to.putExtra("to", ChooseActivity.TO_CHOSSE_CIRCLE);
+            //to.putExtra("cmbean", ChooseActivity.TO_CHOSSE_CIRCLE);
+            to.putExtra("len", ((Integer)mCourse.getLength()).longValue());
             startActivity(to);
         }
         return true;
+    }
+
+    @OnClick({ R.id.coach, R.id.space })
+    public void onClickCoach(View view) {
+        switch (view.getId()) {
+            case R.id.coach:
+            case R.id.space:
+                StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+                break;
+        }
     }
 }

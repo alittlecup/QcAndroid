@@ -99,8 +99,14 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
 
         mPopupWindow = new PopupWindow(getContext());
-
-        weekView.goToHour(7);
+        if (getArguments().getInt("pos") == 0){
+            Calendar now = Calendar.getInstance();
+            int hour = now.get(Calendar.HOUR_OF_DAY);
+            if (hour > 3)
+                weekView.goToHour(hour-3);
+            else weekView.goToHour(hour);
+        }else
+            weekView.goToHour(7);
         weekView.setDateTimeInterpreter(new DateTimeInterpreter() {
             @Override public String interpretDate(Calendar calendar) {
                 String ret = getResources().getStringArray(R.array.week_simple_sunday_first)[calendar.get(Calendar.DAY_OF_WEEK) - 1];
@@ -143,27 +149,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         weekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
             @Override public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
                 if (!calledNetwork) {
-                    HashMap<String, String> params = new HashMap<>();
-                    Pair<String, String> dates = DateUtils.getWeek(getArguments().getInt("pos"));
-                    params.put("from_date", dates.first);
-                    params.put("to_date", dates.second);
-
-                    RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<QcSchedulesResponse>() {
-                            @Override public void call(QcSchedulesResponse qcSchedulesResponse) {
-                                if (ResponseConstant.checkSuccess(qcSchedulesResponse)) {
-                                    mQcSchedulesResponse = qcSchedulesResponse;
-                                    inflateData();
-                                }
-                            }
-                        }, new Action1<Throwable>() {
-                            @Override public void call(Throwable throwable) {
-
-                            }
-                        }));
-                    calledNetwork = true;
+                    refresh();calledNetwork = true;
                 }
                 return mEvents;
             }
@@ -180,7 +166,38 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         return view;
     }
 
+    public void refresh(){
+        HashMap<String, String> params = new HashMap<>();
+        Pair<String, String> dates = DateUtils.getWeek(getArguments().getInt("pos"));
+        params.put("from_date", dates.first);
+        params.put("to_date", dates.second);
+
+        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachScheduleV1(App.coachid, params)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcSchedulesResponse>() {
+                @Override public void call(QcSchedulesResponse qcSchedulesResponse) {
+                    if (ResponseConstant.checkSuccess(qcSchedulesResponse)) {
+                        mQcSchedulesResponse = qcSchedulesResponse;
+                        inflateData();
+                    }
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+
+                }
+            }));
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        refresh();
+
+    }
+
     public void onAction(int v, Date date) {
+
+
         StringBuffer sb = new StringBuffer(Configs.Server);
         switch (v) {
             case 1:
@@ -213,10 +230,11 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     startTime.setTime(DateUtils.formatDateFromServer(rest.start));
                     endTime = Calendar.getInstance();
                     endTime.setTime(DateUtils.formatDateFromServer(rest.end));
-                    event = new WeekViewEvent(startTime.getTime().getTime(), "休息", null, startTime, endTime, false);
+                    event = new WeekViewEvent(startTime.getTime().getTime(), "休\n息", null, startTime, endTime, false);
                     event.setColor(ContextCompat.getColor(getContext(), R.color.rest_color));
                     HashMap<String, Object> tag = new HashMap<>();
                     tag.put("url", rest.url);
+                    tag.put("rest", true);
                     event.setTag(tag);
                     mEvents.add(event);
                 }

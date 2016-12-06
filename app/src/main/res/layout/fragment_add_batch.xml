@@ -119,7 +119,7 @@
           android:layout_height="wrap_content"
           app:civ_clickable="true"
           app:civ_hint="@string/common_please_choose"
-          app:civ_lable="@string/course_account_type"
+          app:civ_lable="@string/need_account"
           app:civ_showright="true"
 
           />

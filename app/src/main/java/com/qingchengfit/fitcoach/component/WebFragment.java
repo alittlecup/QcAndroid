@@ -165,7 +165,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                     CookieSyncManager.createInstance(getActivity());
                     cookieManager = CookieManager.getInstance();
                     cookieManager.setAcceptCookie(true);
-                    mWebviewWebView.loadUrl("");
+
                     initCookie(url);
                     mWebviewWebView.loadUrl(url);
                 }

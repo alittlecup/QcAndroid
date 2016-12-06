@@ -106,7 +106,7 @@
           "province_code": "110000",
           "gd_province_id": "110000",
           "code": "110100",
-          "name": "\u5317\u4eac\u5e02\u5e02\u8f96\u533a"
+          "name": "\u5e02\u8f96\u533a"
         }
       ]
     },
@@ -216,7 +216,7 @@
           "province_code": "120000",
           "gd_province_id": "120000",
           "code": "120100",
-          "name": "\u5929\u6d25\u5e02\u5e02\u8f96\u533a"
+          "name": "\u5e02\u8f96\u533a"
         },
         {
           "districts": [],
@@ -492,7 +492,7 @@
             {
               "gd_city_id": "130300",
               "code": "130321",
-              "name": "\u9752\u9f99\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u9752\u9f99\u6ee1\u65cf\u53bf",
               "city_code": "130300"
             },
             {
@@ -1066,19 +1066,19 @@
             {
               "gd_city_id": "130800",
               "code": "130826",
-              "name": "\u4e30\u5b81\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u4e30\u5b81\u6ee1\u65cf\u53bf",
               "city_code": "130800"
             },
             {
               "gd_city_id": "130800",
               "code": "130827",
-              "name": "\u5bbd\u57ce\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5bbd\u57ce\u6ee1\u65cf\u53bf",
               "city_code": "130800"
             },
             {
               "gd_city_id": "130800",
               "code": "130828",
-              "name": "\u56f4\u573a\u6ee1\u65cf\u8499\u53e4\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u56f4\u573a\u81ea\u6cbb\u53bf",
               "city_code": "130800"
             }
           ],
@@ -1158,7 +1158,7 @@
             {
               "gd_city_id": "130900",
               "code": "130930",
-              "name": "\u5b5f\u6751\u56de\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5b5f\u6751\u56de\u65cf\u53bf",
               "city_code": "130900"
             },
             {
@@ -1238,7 +1238,7 @@
             {
               "gd_city_id": "131000",
               "code": "131028",
-              "name": "\u5927\u5382\u56de\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5927\u5382\u56de\u65cf\u53bf",
               "city_code": "131000"
             },
             {
@@ -2145,7 +2145,7 @@
     },
     {
       "code": "150000",
-      "name": "\u5185\u8499\u53e4\u81ea\u6cbb\u533a",
+      "name": "\u5185\u8499\u53e4",
       "cities": [
         {
           "districts": [
@@ -3050,7 +3050,7 @@
             {
               "gd_city_id": "210300",
               "code": "210323",
-              "name": "\u5cab\u5ca9\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5cab\u5ca9\u6ee1\u65cf\u53bf",
               "city_code": "210300"
             },
             {
@@ -3100,13 +3100,13 @@
             {
               "gd_city_id": "210400",
               "code": "210422",
-              "name": "\u65b0\u5bbe\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u65b0\u5bbe\u6ee1\u65cf\u53bf",
               "city_code": "210400"
             },
             {
               "gd_city_id": "210400",
               "code": "210423",
-              "name": "\u6e05\u539f\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u6e05\u539f\u6ee1\u65cf\u53bf",
               "city_code": "210400"
             }
           ],
@@ -3144,13 +3144,13 @@
             {
               "gd_city_id": "210500",
               "code": "210521",
-              "name": "\u672c\u6eaa\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u672c\u6eaa\u6ee1\u65cf\u53bf",
               "city_code": "210500"
             },
             {
               "gd_city_id": "210500",
               "code": "210522",
-              "name": "\u6853\u4ec1\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u6853\u4ec1\u6ee1\u65cf\u53bf",
               "city_code": "210500"
             }
           ],
@@ -3182,7 +3182,7 @@
             {
               "gd_city_id": "210600",
               "code": "210624",
-              "name": "\u5bbd\u7538\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5bbd\u7538\u6ee1\u65cf\u53bf",
               "city_code": "210600"
             },
             {
@@ -3332,7 +3332,7 @@
             {
               "gd_city_id": "210900",
               "code": "210921",
-              "name": "\u961c\u65b0\u8499\u53e4\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u961c\u65b0\u8499\u53e4\u65cf",
               "city_code": "210900"
             },
             {
@@ -3508,7 +3508,7 @@
             {
               "gd_city_id": "211300",
               "code": "211324",
-              "name": "\u5580\u5587\u6c81\u5de6\u7ffc\u8499\u53e4\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5580\u5587\u6c81\u5de6\u7ffc\u53bf",
               "city_code": "211300"
             },
             {
@@ -3732,7 +3732,7 @@
             {
               "gd_city_id": "220300",
               "code": "220323",
-              "name": "\u4f0a\u901a\u6ee1\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u4f0a\u901a\u6ee1\u65cf\u53bf",
               "city_code": "220300"
             },
             {
@@ -3864,7 +3864,7 @@
             {
               "gd_city_id": "220600",
               "code": "220623",
-              "name": "\u957f\u767d\u671d\u9c9c\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u957f\u767d\u671d\u9c9c\u53bf",
               "city_code": "220600"
             },
             {
@@ -3890,7 +3890,7 @@
             {
               "gd_city_id": "220700",
               "code": "220721",
-              "name": "\u524d\u90ed\u5c14\u7f57\u65af\u8499\u53e4\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u524d\u90ed\u5c14\u7f57\u65af",
               "city_code": "220700"
             },
             {
@@ -4464,7 +4464,7 @@
             {
               "gd_city_id": "230600",
               "code": "230624",
-              "name": "\u675c\u5c14\u4f2f\u7279\u8499\u53e4\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u675c\u5c14\u4f2f\u7279\u53bf",
               "city_code": "230600"
             }
           ],
@@ -5003,7 +5003,7 @@
           "province_code": "310000",
           "gd_province_id": "310000",
           "code": "310100",
-          "name": "\u4e0a\u6d77\u5e02\u5e02\u8f96\u533a"
+          "name": "\u5e02\u8f96\u533a"
         },
         {
           "districts": [],
@@ -6323,7 +6323,7 @@
             {
               "gd_city_id": "331100",
               "code": "331127",
-              "name": "\u666f\u5b81\u7572\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u666f\u5b81\u7572\u65cf\u53bf",
               "city_code": "331100"
             },
             {
@@ -10684,13 +10684,13 @@
             {
               "gd_city_id": "420500",
               "code": "420528",
-              "name": "\u957f\u9633\u571f\u5bb6\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u957f\u9633\u53bf",
               "city_code": "420500"
             },
             {
               "gd_city_id": "420500",
               "code": "420529",
-              "name": "\u4e94\u5cf0\u571f\u5bb6\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u4e94\u5cf0\u53bf",
               "city_code": "420500"
             },
             {
@@ -11484,7 +11484,7 @@
             {
               "gd_city_id": "430500",
               "code": "430529",
-              "name": "\u57ce\u6b65\u82d7\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u57ce\u6b65\u82d7\u65cf\u53bf",
               "city_code": "430500"
             },
             {
@@ -11838,7 +11838,7 @@
             {
               "gd_city_id": "431100",
               "code": "431129",
-              "name": "\u6c5f\u534e\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u6c5f\u534e\u7476\u65cf\u53bf",
               "city_code": "431100"
             }
           ],
@@ -11888,31 +11888,31 @@
             {
               "gd_city_id": "431200",
               "code": "431226",
-              "name": "\u9ebb\u9633\u82d7\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u9ebb\u9633\u82d7\u65cf\u53bf",
               "city_code": "431200"
             },
             {
               "gd_city_id": "431200",
               "code": "431227",
-              "name": "\u65b0\u6643\u4f97\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u65b0\u6643\u4f97\u65cf\u53bf",
               "city_code": "431200"
             },
             {
               "gd_city_id": "431200",
               "code": "431228",
-              "name": "\u82b7\u6c5f\u4f97\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u82b7\u6c5f\u4f97\u65cf\u53bf",
               "city_code": "431200"
             },
             {
               "gd_city_id": "431200",
               "code": "431229",
-              "name": "\u9756\u5dde\u82d7\u65cf\u4f97\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u9756\u5dde\u81ea\u6cbb\u53bf",
               "city_code": "431200"
             },
             {
               "gd_city_id": "431200",
               "code": "431230",
-              "name": "\u901a\u9053\u4f97\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u901a\u9053\u4f97\u65cf\u53bf",
               "city_code": "431200"
             },
             {
@@ -12019,7 +12019,7 @@
           "province_code": "430000",
           "gd_province_id": "430000",
           "code": "433100",
-          "name": "\u6e58\u897f\u571f\u5bb6\u65cf\u82d7\u65cf\u81ea\u6cbb\u5dde"
+          "name": "\u6e58\u897f\u81ea\u6cbb\u5dde"
         }
       ]
     },
@@ -12142,7 +12142,7 @@
             {
               "gd_city_id": "440200",
               "code": "440232",
-              "name": "\u4e73\u6e90\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u4e73\u6e90\u7476\u65cf\u53bf",
               "city_code": "440200"
             },
             {
@@ -12764,13 +12764,13 @@
             {
               "gd_city_id": "441800",
               "code": "441825",
-              "name": "\u8fde\u5c71\u58ee\u65cf\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u8fde\u5c71\u81ea\u6cbb\u53bf",
               "city_code": "441800"
             },
             {
               "gd_city_id": "441800",
               "code": "441826",
-              "name": "\u8fde\u5357\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u8fde\u5357\u81ea\u6cbb\u53bf",
               "city_code": "441800"
             },
             {
@@ -13060,13 +13060,13 @@
             {
               "gd_city_id": "450200",
               "code": "450225",
-              "name": "\u878d\u6c34\u82d7\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u878d\u6c34\u82d7\u65cf\u53bf",
               "city_code": "450200"
             },
             {
               "gd_city_id": "450200",
               "code": "450226",
-              "name": "\u4e09\u6c5f\u4f97\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u4e09\u6c5f\u4f97\u65cf\u53bf",
               "city_code": "450200"
             }
           ],
@@ -13152,7 +13152,7 @@
             {
               "gd_city_id": "450300",
               "code": "450328",
-              "name": "\u9f99\u80dc\u5404\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u9f99\u80dc\u5404\u65cf\u53bf",
               "city_code": "450300"
             },
             {
@@ -13176,7 +13176,7 @@
             {
               "gd_city_id": "450300",
               "code": "450332",
-              "name": "\u606d\u57ce\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u606d\u57ce\u7476\u65cf\u53bf",
               "city_code": "450300"
             }
           ],
@@ -13484,7 +13484,7 @@
             {
               "gd_city_id": "451000",
               "code": "451031",
-              "name": "\u9686\u6797\u5404\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u9686\u6797\u5404\u65cf\u53bf",
               "city_code": "451000"
             },
             {
@@ -13522,7 +13522,7 @@
             {
               "gd_city_id": "451100",
               "code": "451123",
-              "name": "\u5bcc\u5ddd\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5bcc\u5ddd\u7476\u65cf\u53bf",
               "city_code": "451100"
             }
           ],
@@ -13566,31 +13566,31 @@
             {
               "gd_city_id": "451200",
               "code": "451225",
-              "name": "\u7f57\u57ce\u4eeb\u4f6c\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u7f57\u57ce\u81ea\u6cbb\u53bf",
               "city_code": "451200"
             },
             {
               "gd_city_id": "451200",
               "code": "451226",
-              "name": "\u73af\u6c5f\u6bdb\u5357\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u73af\u6c5f\u53bf",
               "city_code": "451200"
             },
             {
               "gd_city_id": "451200",
               "code": "451227",
-              "name": "\u5df4\u9a6c\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5df4\u9a6c\u7476\u65cf\u53bf",
               "city_code": "451200"
             },
             {
               "gd_city_id": "451200",
               "code": "451228",
-              "name": "\u90fd\u5b89\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u90fd\u5b89\u7476\u65cf\u53bf",
               "city_code": "451200"
             },
             {
               "gd_city_id": "451200",
               "code": "451229",
-              "name": "\u5927\u5316\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u5927\u5316\u7476\u65cf\u53bf",
               "city_code": "451200"
             },
             {
@@ -13634,7 +13634,7 @@
             {
               "gd_city_id": "451300",
               "code": "451324",
-              "name": "\u91d1\u79c0\u7476\u65cf\u81ea\u6cbb\u53bf",
+              "name": "\u91d1\u79c0\u7476\u65cf\u53bf",
               "city_code": "451300"
             },
             {

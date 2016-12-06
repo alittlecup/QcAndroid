@@ -104,6 +104,15 @@ public class AddCycleFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public static AddCycleFragment newInstance(CmBean cmBean,long length) {
+
+        Bundle args = new Bundle();
+        args.putLong("length", length);
+        args.putParcelable("cm", cmBean);
+        AddCycleFragment fragment = new AddCycleFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Override

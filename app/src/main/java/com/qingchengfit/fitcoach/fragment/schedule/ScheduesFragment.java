@@ -175,6 +175,9 @@ public class ScheduesFragment extends BaseFragment {
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
+                btn1.setEnabled(true);
+                btn2.setEnabled(true);
+                btn3.setEnabled(true);
                 RxBus.getBus().post(new EventInit(false,2));
                 bgShow.setVisibility(View.VISIBLE);
                 //ViewCompat.setAlpha(bgShow,0);
@@ -331,6 +334,9 @@ public class ScheduesFragment extends BaseFragment {
     }
 
     public void onAction(int v) {
+        btn1.setEnabled(false);
+        btn2.setEnabled(false);
+        btn3.setEnabled(false);
         webFloatbtn.collapse();
         if (getParentFragment() instanceof MainScheduleFragment) {
             new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()

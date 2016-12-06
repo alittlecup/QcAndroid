@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.fragment.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
@@ -24,7 +25,8 @@ public class ChooseActivity extends BaseAcitivity {
         Fragment fragment = new ChooseAddressFragment();
         switch (getIntent().getIntExtra("to",0)){
             case 1:
-                fragment = new AddCycleFragment();
+
+                fragment = AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"),getIntent().getLongExtra("len",0));
                 break;
             case TO_CHOSSE_GYM:
                 fragment = new ChooseGymFragment();

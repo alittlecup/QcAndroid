@@ -187,6 +187,11 @@ public class ScheduleListFragment extends BaseFragment {
         return view;
     }
 
+    @Override public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     @Override protected void lazyLoad() {
         super.lazyLoad();
 
