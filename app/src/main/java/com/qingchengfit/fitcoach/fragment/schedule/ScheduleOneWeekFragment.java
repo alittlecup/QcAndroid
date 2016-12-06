@@ -231,7 +231,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                     endTime = Calendar.getInstance();
                     endTime.setTime(DateUtils.formatDateFromServer(rest.end));
                     event = new WeekViewEvent(startTime.getTime().getTime(), "休\n息", null, startTime, endTime, false);
-                    event.setColor(ContextCompat.getColor(getContext(), R.color.rest_color));
+                    event.setColor( endTime.getTime().getTime() < new Date().getTime() ? ContextCompat.getColor(getContext(), R.color.warm_grey)
+                        :ContextCompat.getColor(getContext(), R.color.rest_color));
                     HashMap<String, Object> tag = new HashMap<>();
                     tag.put("url", rest.url);
                     tag.put("rest", true);

@@ -442,11 +442,10 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
         return true;
     }
 
-    @OnClick({ R.id.coach, R.id.space })
+    @OnClick({ R.id.coach })
     public void onClickCoach(View view) {
         switch (view.getId()) {
             case R.id.coach:
-            case R.id.space:
                 StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
                 break;
         }

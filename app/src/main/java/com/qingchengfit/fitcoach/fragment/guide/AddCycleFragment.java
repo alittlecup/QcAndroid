@@ -140,7 +140,7 @@ public class AddCycleFragment extends BaseFragment {
 
 
         starttime.setContent("8:00");
-        endtime.setContent("21:00");
+
         mStart = DateUtils.getDateFromHHmm(starttime.getContent());
         mEnd = DateUtils.getDateFromHHmm(endtime.getContent());
         obConflict = RxBus.getBus().register(RxbusBatchLooperConfictEvent.class);
@@ -155,8 +155,14 @@ public class AddCycleFragment extends BaseFragment {
                 }
             }
         });
-        if (mCourselength != 0)
+        if (mCourselength != 0) {
             endtime.setVisibility(View.GONE);
+            mStart = DateUtils.getDateFromHHmm(starttime.getContent());
+            mEnd = new Date(mStart.getTime() + mCourselength * 1000);
+        }else {
+            endtime.setVisibility(View.VISIBLE);
+            endtime.setContent("21:00");
+        }
         setDesc();
         return view;
     }
