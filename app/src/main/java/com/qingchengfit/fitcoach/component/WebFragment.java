@@ -185,7 +185,8 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
                     @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                         if (isSuccess) {
-                            if (mValueCallback != null) mValueCallback.onReceiveValue(Uri.fromFile(new File(filePath)));
+                            if (mValueCallback != null)
+                                mValueCallback.onReceiveValue(Uri.fromFile(new File(filePath)));
                             if (mValueCallbackNew != null) {
                                 Uri[] uris = new Uri[1];
                                 uris[0] = Uri.fromFile(new File(filePath));
@@ -297,7 +298,6 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         mWebviewWebView.setWebChromeClient(new WebChromeClient() {
 
             public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
-                //                super.openFileChooser(valueCallback, s, s1);
                 mValueCallback = valueCallback;
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
             }

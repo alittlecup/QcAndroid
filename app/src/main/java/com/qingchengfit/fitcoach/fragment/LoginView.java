@@ -17,14 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.SendSmsCode;
-
 import java.lang.ref.WeakReference;
-
 import rx.Observable;
+
+import static android.text.InputType.TYPE_CLASS_PHONE;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 
 /**
  * ,==.              |~~~
@@ -126,12 +126,15 @@ public class LoginView extends RelativeLayout {
 
                         mGetCodeBtn.setVisibility(VISIBLE);
                         mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_checkcode_hint));
-
+                        mCheckCodeInputLaout.getEditText().setInputType(TYPE_CLASS_PHONE);
                         mCheckCodeInputLaout.getEditText().setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
                     } else {
                         mGetCodeBtn.setVisibility(GONE);
                         mCheckCodeInputLaout.setHint(getResources().getString(R.string.login_password_hint));
+                        mCheckCodeInputLaout.getEditText().setInputType(TYPE_TEXT_VARIATION_PASSWORD);
                         mCheckCodeInputLaout.getEditText().setTransformationMethod(PasswordTransformationMethod.getInstance());
+
                     }
                     mCheckCodeInputLaout.getEditText().setText("");
                 }
