@@ -38,6 +38,8 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.BusinessUtils;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.activity.QRActivity;
 import com.qingchengfit.fitcoach.adapter.CourseTeacherAdapter;
 import com.qingchengfit.fitcoach.adapter.ViewPaperEndlessAdapter;
@@ -366,10 +368,16 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
             return;
         }else {
-            getFragmentManager().beginTransaction()
+            if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
+                || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
+                PermissionServerUtils.PRISETTING_CAN_CHANGE)) {
+
+                getFragmentManager().beginTransaction()
                 .replace(R.id.frag, JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
                 .addToBackStack(getFragmentName())
                 .commit();
+            }else showAlert(R.string.sorry_no_permission);
+
         }
 
     }
@@ -416,10 +424,21 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
      * 编辑基本信息
      */
     @OnClick(R.id.edit_base_info) public void editBaseInfo() {
-        getFragmentManager().beginTransaction()
-            .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
-            .addToBackStack(getFragmentName())
-            .commit();
+        if (mCourseDetail.getShops().size() > 1){
+            StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+            return;
+        }
+
+
+        if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
+            || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
+            PermissionServerUtils.PRISETTING_CAN_CHANGE)) {
+
+            getFragmentManager().beginTransaction()
+                .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
+                .addToBackStack(getFragmentName())
+                .commit();
+        }else showAlert(R.string.sorry_no_permission);
     }
 
     @Override public String getFragmentName() {

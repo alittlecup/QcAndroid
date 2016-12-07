@@ -76,9 +76,10 @@ public class CoachCommentDetailFragment extends BaseFragment {
         } else {
             comments.setVisibility(View.VISIBLE);
             comments.setTags(BusinessUtils.impress2Str(mCourseTeacher.getImpressions()));
-            coachName.setText(mCourseTeacher.getUser().name);
-            Glide.with(getContext()).load(mCourseTeacher.getUser().header).asBitmap().into(new CircleImgWrapper(coachImg,getContext()));
+
         }
+        coachName.setText(mCourseTeacher.getUser().name);
+        Glide.with(getContext()).load(mCourseTeacher.getUser().header).asBitmap().into(new CircleImgWrapper(coachImg,getContext()));
         coachScore.setText(StringUtils.getFloatDot1(mCourseTeacher.getTeacher_score()));
         courseScore.setText(StringUtils.getFloatDot1(mCourseTeacher.getCourse_score()));
         serverScore.setText(StringUtils.getFloatDot1(mCourseTeacher.getService_score()));

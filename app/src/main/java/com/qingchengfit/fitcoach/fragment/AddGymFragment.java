@@ -70,7 +70,7 @@ public class AddGymFragment extends GuideSetGymFragment {
 
         CoachInitBean bean = new CoachInitBean();
         bean.brand_id = brandid;
-        bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").phone(imgUrl).build();
+        bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").photo(imgUrl).build();
 
         RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
