@@ -94,6 +94,7 @@ public class CourseListFragment extends VpFragment implements
     @Inject
     CoachService coachService;
     private boolean mIsPrivate;
+    private boolean mIsload = false;
     private Unbinder unbinding;
 
     public static CourseListFragment newInstance(boolean isPrivate) {
@@ -152,7 +153,10 @@ public class CourseListFragment extends VpFragment implements
                         }
                     }
                 });
-
+        if (mIsload) {
+            rv.stopLoading();
+        }
+        mIsload = true;
         return view;
     }
 

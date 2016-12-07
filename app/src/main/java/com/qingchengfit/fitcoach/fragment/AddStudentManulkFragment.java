@@ -149,6 +149,10 @@ public class AddStudentManulkFragment extends Fragment {
             ToastUtils.showDefaultStyle("请填写学员手机");
             return;
         }
+        if (choosePhone.getContent().length() != 11 || !choosePhone.getContent().startsWith("1")){
+            ToastUtils.showDefaultStyle("请填写正确的手机号");
+            return;
+        }
         List<AddStudentBean> sss = new ArrayList<>();
         sss.add(new AddStudentBean(chooseName.getContent(),choosePhone.getContent(),compleGenderMale.isChecked()?0:1));
         PostStudents students = new PostStudents(sss);

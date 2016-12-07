@@ -3,6 +3,8 @@ package com.qingchengfit.fitcoach.fragment.course;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.items.CourseItem;
 
 /**
@@ -44,5 +46,17 @@ public class CourseListWrapForChooseFragment extends CourseListFragment {
             getActivity().finish();
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.add_course_btn){
+            if (getActivity() instanceof CourseActivity){
+                getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frag, AddCourseFragment.newInstance(getArguments().getBoolean("isPrivate",false)))
+                    .addToBackStack(getFragmentName())
+                    .commit();
+            }
+        }
     }
 }

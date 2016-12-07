@@ -685,11 +685,11 @@ public class QcCloudClient {
             @Body CourseBody courseBody, @QueryMap HashMap<String, String> params);
 
         //修改课程
-        @PUT("/api/v1/coaches/{id}/courses/{course_id}/") rx.Observable<QcResponse> qcUpdateCourse(@Path("id") String coachid,
+        @PUT("/api/v2/coaches/{id}/courses/{course_id}/") rx.Observable<QcResponse> qcUpdateCourse(@Path("id") String coachid,
             @Path("course_id") String course_id, @QueryMap HashMap<String, String> params, @Body CourseBody courseBody);
 
         //删除课程
-        @DELETE("/api/v1/coaches/{id}/courses/{course_id}/") rx.Observable<QcResponse> qcDelCourse(@Path("id") String coachid,
+        @DELETE("/api/v2/coaches/{id}/courses/{course_id}/") rx.Observable<QcResponse> qcDelCourse(@Path("id") String coachid,
             @Path("course_id") String course_id, @QueryMap HashMap<String, String> params);
 
         //修改封面

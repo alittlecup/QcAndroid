@@ -63,7 +63,6 @@ public class AddGymFragment extends GuideSetGymFragment {
     @Override
     public void onNextStep() {
         showLoading();
-        //// TODO: 16/11/16 新建健身房
         if (TextUtils.isEmpty(gymName.getContent()) || lat == 0 || lng == 0){
             cn.qingchengfit.widgets.utils.ToastUtils.show("请填写完整");
             return;
@@ -71,7 +70,7 @@ public class AddGymFragment extends GuideSetGymFragment {
 
         CoachInitBean bean = new CoachInitBean();
         bean.brand_id = brandid;
-        bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").build();
+        bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").phone(imgUrl).build();
 
         RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

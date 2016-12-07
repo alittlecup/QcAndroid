@@ -72,10 +72,12 @@ public class MyCoursePlanFragment extends BaseFragment {
                 showAlert(R.string.alert_permission_forbid);
                 return true;
             }
-
-            Intent toWeb = new Intent(getContext(), WebActivity.class);
-            toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
-            startActivityForResult(toWeb, 10001);
+            if (getActivity() instanceof FragActivity && ((FragActivity) getActivity()).getCoachService() != null) {
+                Intent toWeb = new Intent(getContext(), WebActivity.class);
+                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+                toWeb.putExtra("url", Configs.Server + "/fitness/redirect/plantpl/create/?id="+coachService.getId() +"&model="+coachService.getModel());
+                startActivityForResult(toWeb, 10001);
+            }
             return true;
         });
 

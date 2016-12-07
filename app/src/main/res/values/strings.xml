@@ -270,7 +270,7 @@
     <string name="space_content">可以容纳%d人、支持</string>
     <string name="space_support_private">和私教</string>
     <string name="err_at_least_one_space">至少选择一个场地</string>
-    <string name="need_pay">需要支付</string>
+    <string name="need_pay">需要结算</string>
     <string name="has_set">已设置</string>
     <string name="hint_no_private_course">目前还未排私教课，将无法约课\n快添加新排期吧</string>
     <string name="hint_no_group_course">目前还未排团课，将无法约课\n快添加新排期吧</string>
@@ -294,5 +294,6 @@
     <string name="hint_order_self">点击这里让会员自主约课</string>
     <string name="need_account">需要结算</string>
     <string name="back_today">回到\n今天</string>
+    <string name="d_spaces">%d块场地</string>
 
 </resources>

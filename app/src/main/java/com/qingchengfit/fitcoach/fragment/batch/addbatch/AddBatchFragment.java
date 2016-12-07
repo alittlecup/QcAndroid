@@ -48,6 +48,7 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
+import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -82,6 +83,7 @@ import rx.functions.Action1;
 public class AddBatchFragment extends BaseFragment implements AddBatchView, FlexibleAdapter.OnItemClickListener {
 
     public static final int RESULT_ACCOUNT = 5;
+    private static final int RESULT_COURSE = 6;
 
     @BindView(R.id.course_img) ImageView img;
     @BindView(R.id.img_private) ImageView imgFoot;
@@ -321,7 +323,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
         }
     }
 
-    @OnClick({ R.id.coach, R.id.space, R.id.account_type }) public void onClick(View view) {
+    @OnClick({ R.id.coach, R.id.space, R.id.account_type ,R.id.layout_course}) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.coach:
                 break;
@@ -340,6 +342,13 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 toAccount.putExtra("service", mCoachService);
                 startActivityForResult(toAccount, RESULT_ACCOUNT);
 
+                break;
+            case R.id.layout_course:
+                Intent toChooseCourse = new Intent(getActivity(), CourseActivity.class);
+                toChooseCourse.putExtra("to", CourseActivity.TO_CHOOSE);
+                toChooseCourse.putExtra("type", mType);
+                toChooseCourse.putExtra("service", mCoachService);
+                startActivityForResult(toChooseCourse, RESULT_COURSE);
                 break;
         }
     }
@@ -376,14 +385,25 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                             spaceStr = spaceStr.concat("、").concat(spaces.get(i).name);
                         }
                     }
-
-                    space.setContent(spaceStr);
+                    if (ids.size() > 1)
+                        space.setContent(getString(R.string.d_spaces,ids.size()));
+                    else
+                        space.setContent(spaceStr);
                     body.spaces = ids;
                 }
             } else if (requestCode == RESULT_ACCOUNT) {
                 int count = data.getIntExtra("count", 1);
                 body.max_users = count;
                 accountType.setContent(getString(R.string.has_set));
+            } else if (requestCode == RESULT_COURSE){
+                CourseDetail course = data.getParcelableExtra("course");
+                if (course != null)
+                    mCourse = course;
+                body.course_id = mCourse.id;
+                Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);
+                text1.setText(mCourse.name);
+                text3.setText(String.format(Locale.CHINA, "时长%d分钟", mCourse.getLength() / 60));
+                presenter.getBatchTemplete(mType, null, body.course_id);//拉取模板
             }
         }
     }

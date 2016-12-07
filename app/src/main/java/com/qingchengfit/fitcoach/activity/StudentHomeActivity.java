@@ -111,7 +111,7 @@ public class StudentHomeActivity extends BaseAcitivity {
         mStudentId = getIntent().getStringExtra("student_id");
         mModelType = getIntent().getIntExtra("modeltype", 1);
         setSupportActionBar(mToolbar);
-        //getSupportActionBar().setTitle("学员详情");
+        getSupportActionBar().setTitle("");
         toolbarTitle.setText("学员详情");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

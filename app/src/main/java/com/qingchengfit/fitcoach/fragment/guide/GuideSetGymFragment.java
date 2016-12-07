@@ -79,7 +79,7 @@ import rx.schedulers.Schedulers;
     protected double lat;
     protected double lng;
     protected int city_code;
-    private String imgUrl;
+    public String imgUrl;
     private Unbinder unbinder;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {

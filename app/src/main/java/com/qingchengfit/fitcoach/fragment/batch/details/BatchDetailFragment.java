@@ -24,19 +24,21 @@ import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.bean.base.Course;
-import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.CourseManageFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
+import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
+import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.ArrayList;
@@ -57,6 +59,9 @@ import javax.inject.Inject;
  * Created by Paper on 16/4/30 2016.
  */
 public class BatchDetailFragment extends BaseFragment implements BatchDetailView {
+
+    public static final int RESULT_COURSE = 11;
+    public static final int RESULT_ACCOUNT = 12;
 
     @BindView(R.id.img) ImageView img;
     //@BindView(R.id.img_foot) ImageView imgFoot;
@@ -151,19 +156,17 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @Override public void onCoach(QcSchedulesResponse.Teacher teacher) {
-        //if (Configs.TYPE_PRIVATE == mType) {
-        //    Glide.with(getContext())
-        //        .load(PhotoUtils.getSmall(teacher.avatar))
-        //        .asBitmap()
-        //        .placeholder(R.drawable.ic_default_head_nogender)
-        //        .into(new CircleImgWrapper(img, getContext()));
-        //    text1.setText(teacher.username);
-        //} else {
-
             coach.setLabel("教练");
             coach.setContent(teacher.username);
-        //}
-        //body.teacher_id = teacher.id;
+    }
+
+    @OnClick(R.id.layout_course)
+    public void onLayoutCourse(){
+        Intent toChooseCourse = new Intent(getActivity(), CourseActivity.class);
+        toChooseCourse.putExtra("to", CourseActivity.TO_CHOOSE);
+        toChooseCourse.putExtra("type", mType);
+        toChooseCourse.putExtra("service", coachService);
+        startActivityForResult(toChooseCourse, RESULT_COURSE);
     }
 
     @Override public void onCourse(Course course) {
@@ -238,10 +241,22 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
                 //
                 //break;
             case R.id.coach:
+                StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
                 break;
             case R.id.space:
+                Intent toChooseSpace = new Intent(getActivity(), FragActivity.class);
+                toChooseSpace.putExtra("type", 11);
+                toChooseSpace.putExtra("course_type", mType);
+                toChooseSpace.putExtra("service", coachService);
+                startActivityForResult(toChooseSpace, 5);
                 break;
             case R.id.account_type:
+                Intent toAccount = new Intent(getActivity(), FragActivity.class);
+                toAccount.putExtra("type", 12);
+                toAccount.putExtra("count", body.max_users == 0 ? 8 : body.max_users);
+                toAccount.putExtra("isfree", body.is_free);
+                toAccount.putExtra("service", coachService);
+                startActivityForResult(toAccount, RESULT_ACCOUNT);
                 break;
         }
     }
@@ -250,36 +265,32 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {       //私教 教练
-                String name = IntentUtils.getIntentString(data, 0);
-                String id = IntentUtils.getIntentString(data, 1);
-                String imgUrl = IntentUtils.getIntentString(data, 2);
-                Glide.with(getActivity()).load(PhotoUtils.getSmall(imgUrl)).asBitmap().into(new CircleImgWrapper(img, getActivity()));
-                text1.setText(name);
-                //body.teacher_id = id;
-            } else if (requestCode == 3) { //团课 教练
-                String name = IntentUtils.getIntentString(data, 0);
-                String id = IntentUtils.getIntentString(data, 1);
-                String imgUrl = IntentUtils.getIntentString(data, 2);
-                coach.setContent(name);
-                //body.teacher_id = id;
-            } else if (requestCode == 4) { //私教课程
-                Course course = data.getParcelableExtra("course");
-                coach.setContent(course.getName());
-                body.course_id = course.getId();
-            } else if (requestCode == 2) { //团课教程
-                Course course = data.getParcelableExtra("course");
-                Glide.with(getActivity())
-                    .load(PhotoUtils.getSmall(course.getPhoto()))
-                    .asBitmap()
-                    .into(new CircleImgWrapper(img, getActivity()));
-                text1.setText(course.getName());
-                body.course_id = course.getId();
-            } else if (requestCode == 5) { //选择场地
-                List<String> ids = data.getStringArrayListExtra("ids");
-                String names = data.getStringExtra("string");
-                space.setContent(names);
-                body.spaces = ids;
+            if (requestCode == 5) { //选择场地
+                ArrayList<Space> spaces = data.getParcelableArrayListExtra("spaces");
+                if (spaces != null) {
+                    String spaceStr = "";
+                    List<String> ids = new ArrayList<>();
+                    for (int i = 0; i < spaces.size(); i++) {
+                        ids.add(spaces.get(i).id);
+                        if (TextUtils.isEmpty(spaceStr)) {
+                            spaceStr = spaceStr.concat(spaces.get(i).name);
+                        } else {
+                            spaceStr = spaceStr.concat("、").concat(spaces.get(i).name);
+                        }
+                    }
+                    if (ids.size() > 1)
+                        space.setContent(getString(R.string.d_spaces,ids.size()));
+                    else
+                        space.setContent(spaceStr);
+                    body.spaces = ids;
+                }
+            }else if (requestCode == RESULT_COURSE){
+                CourseDetail course = data.getParcelableExtra("course");
+                onCourse(course);
+            }else if (requestCode == RESULT_ACCOUNT) {
+                int count = data.getIntExtra("count", 1);
+                body.max_users = count;
+                accountType.setContent(getString(R.string.has_set));
             }
         }
     }
@@ -289,12 +300,6 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @OnClick(R.id.del_batch) public void delBatch() {
-        //if ((mType == Configs.TYPE_GROUP && !SerPermisAction.check(coachService.getShop_id(),
-        //    PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mType == Configs.TYPE_PRIVATE && !SerPermisAction.check(
-        //    coachService.getShop_id(), PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
-        //    showAlert(R.string.alert_permission_forbid);
-        //} else {
-
         if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance().queryPermission(
             com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE) )||
             (mType == Configs.TYPE_PRIVATE && !CurentPermissions.newInstance().queryPermission(
