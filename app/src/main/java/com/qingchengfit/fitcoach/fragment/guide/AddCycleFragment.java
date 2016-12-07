@@ -162,6 +162,8 @@ public class AddCycleFragment extends BaseFragment {
         }else {
             endtime.setVisibility(View.VISIBLE);
             endtime.setContent("21:00");
+            mStart = DateUtils.getDateFromHHmm(starttime.getContent());
+            mEnd = DateUtils.getDateFromHHmm(endtime.getContent());
         }
         setDesc();
         return view;

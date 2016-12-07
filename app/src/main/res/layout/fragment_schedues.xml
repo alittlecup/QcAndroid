@@ -152,8 +152,8 @@
 
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        app:fab_addButtonColorNormal="@color/red"
-        app:fab_addButtonColorPressed="@color/text_red"
+        app:fab_addButtonColorNormal="@color/primary"
+        app:fab_addButtonColorPressed="@color/primary_light"
         app:fab_labelStyle="@style/floataction_style"
         app:fab_labelsPosition="left"
         />
