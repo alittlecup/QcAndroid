@@ -115,8 +115,6 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
 
         Calendar c = Calendar.getInstance();
         startdate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
-
-
         c.add(Calendar.MONTH,2);
         c.set(Calendar.DAY_OF_MONTH,1);
         c.add(Calendar.DATE,-1);

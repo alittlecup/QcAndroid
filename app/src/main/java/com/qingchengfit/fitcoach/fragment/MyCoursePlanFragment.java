@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -54,7 +55,7 @@ public class MyCoursePlanFragment extends BaseFragment {
     private GymsAdapter mGymAdapter;
     private List<CoursePlan> adapterData = new ArrayList<>();
     private Unbinder unbinder;
-
+    private CoachService mCoachService;
     public MyCoursePlanFragment() {
 
     }
@@ -81,13 +82,27 @@ public class MyCoursePlanFragment extends BaseFragment {
             return true;
         });
 
+        if (getActivity() instanceof FragActivity && ((FragActivity) getActivity()).getCoachService() != null) {
+            mCoachService = ((FragActivity) getActivity()).getCoachService();
+            if (mCoachService.getModel() == null || mCoachService.getId() ==0){
+                ToastUtils.show("无场馆信息");
+                getActivity().onBackPressed();
+                return view;
+            }
+        }else {
+            ToastUtils.show("无场馆信息");
+            getActivity().onBackPressed();
+            return view;
+        }
+
+
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mGymAdapter = new GymsAdapter(adapterData);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url", adapterData.get(pos).url);
+                toWeb.putExtra("url",Configs.ServerIp + "/fitness/redirect/plantpl/detail/?model="+mCoachService.getModel() +"&id="+mCoachService.getId()+"&plan_id="+ adapterData.get(pos).getId());
                 startActivityForResult(toWeb, pos);
             }
         });
