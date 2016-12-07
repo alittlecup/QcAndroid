@@ -75,14 +75,14 @@ public class ScheduleWeekFragment extends BaseFragment {
         adapter = new ScheduleWeekAdapter(getChildFragmentManager());
 
         viewpager.setAdapter(adapter);
-        viewpager.setCurrentItem(1000+adapter.getPostion());
+        viewpager.setCurrentItem(250+adapter.getPostion());
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
             @Override public void onPageSelected(int position) {
-                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-1000+adapter.getPostion()).first);
+                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-250+adapter.getPostion()).first);
                 tvMonth.setText(DateUtils.getChineseMonth(d));
             }
 
@@ -179,7 +179,13 @@ public class ScheduleWeekFragment extends BaseFragment {
         webFloatbtn.collapse();
     }
 
-
+    @OnClick(R.id.btn_back_today) public void backTody(){
+        //adapter.setPostion(0);
+        //viewpager.setCurrentItem(1000);
+        //adapter.notifyDataSetChanged();
+        //tvMonth.setText(DateUtils.getChineseMonth(new Date()));
+        viewpager.setCurrentItem(250,true);
+    }
     public void onAction(int v, Date date) {
         btn1.setEnabled(false);
         btn2.setEnabled(false);
@@ -222,7 +228,7 @@ public class ScheduleWeekFragment extends BaseFragment {
                 if (getActivity() instanceof Main2Activity){
                     Calendar today = Calendar.getInstance();
                     today.set(Calendar.DAY_OF_WEEK,1);
-                    today.add(Calendar.WEEK_OF_YEAR,viewpager.getCurrentItem()-1000);
+                    today.add(Calendar.WEEK_OF_YEAR,viewpager.getCurrentItem()-250);
                     ((Main2Activity) getActivity()).setChooseDate(today.getTime());
                 }
 
@@ -250,9 +256,9 @@ public class ScheduleWeekFragment extends BaseFragment {
                             chooseday.set(Calendar.MILLISECOND,0);
                             chooseday.setTime(d);
                             adapter.setPostion(DateUtils.interval(today.getTime(),chooseday.getTime())/7);
-                            viewpager.setCurrentItem(1000);
+                            viewpager.setCurrentItem(250);
                             adapter.notifyDataSetChanged();
-                            tvMonth.setText(chooseday.get(Calendar.YEAR)+"年"+(chooseday.get(Calendar.MONTH)+1)+"月");
+                            tvMonth.setText(DateUtils.getChineseMonth(chooseday.getTime()));
                         }
                     }
                 });
@@ -283,11 +289,11 @@ public class ScheduleWeekFragment extends BaseFragment {
         }
 
         @Override public Fragment getItem(int position) {
-            return ScheduleOneWeekFragment.newInstance(position - 1000 +p, mCoachService);
+            return ScheduleOneWeekFragment.newInstance(position - 250 +p, mCoachService);
         }
 
         @Override public int getCount() {
-            return Integer.MAX_VALUE;
+            return 500;
         }
 
         @Override public int getItemPosition(Object object) {

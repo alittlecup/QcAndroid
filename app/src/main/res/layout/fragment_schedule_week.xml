@@ -100,5 +100,13 @@
       app:fab_labelStyle="@style/floataction_style"
       app:fab_labelsPosition="left"
       />
-  >
+  <TextView
+      android:id="@+id/btn_back_today"
+      style="@style/Qc.TextCommonBlack"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_marginTop="48dp"
+      android:text="@string/back_today"
+      android:gravity="center"
+      />
 </RelativeLayout>
