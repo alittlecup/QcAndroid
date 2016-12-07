@@ -205,8 +205,13 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
                 case RESULT_DEL://删除课程
                     if (mCourseDetail.getShops().size() >1)
                         StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+                    if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_DELETE)
+                        || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
+                        PermissionServerUtils.PRISETTING_CAN_DELETE)) {
 
-                    mPresenter.judgeDel(mCourseDetail, mCourseDetail.getShops() == null ? 1 : mCourseDetail.getShops().size());
+                        mPresenter.judgeDel(mCourseDetail, mCourseDetail.getShops() == null ? 1 : mCourseDetail.getShops().size());
+                    }else showAlert(R.string.sorry_no_permission);
+
                     break;
                 default:
                     break;
@@ -282,6 +287,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         CourseTeacherAdapter adapter = new CourseTeacherAdapter(teachers);
         courseTeacherRv.setAdapter(adapter);
     }
+
 
     /**
      * 课程映像
