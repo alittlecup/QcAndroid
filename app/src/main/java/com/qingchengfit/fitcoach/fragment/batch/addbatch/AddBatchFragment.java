@@ -217,7 +217,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 return true;
             }
             if (body.max_users == 0) {
-                ToastUtils.show("请设置");
+                ToastUtils.show("请设置结算方式");
                 return true;
             }
 
