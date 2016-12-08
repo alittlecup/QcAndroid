@@ -19,7 +19,6 @@ import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CalenderPopWindow;
@@ -140,8 +139,14 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                         .group(v2 -> onAction(3, calendar.getTime()))
                         .privat(v2 -> onAction(2, calendar.getTime()))
                         .build();
+                    mCalenderPopWindow.setDismiss(new PopupWindow.OnDismissListener() {
+                        @Override public void onDismiss() {
+                            weekView.cancelClick();
+                        }
+                    });
                 }
                 mCalenderPopWindow.show(weekView, (int) v, (int) v1);
+                weekView.clickOneRect(calendar);
                 //GuideWindow window = new GuideWindow(getContext(),"xxxx",GuideWindow.DOWN);
                 //window.show(weekView);
             }
@@ -196,26 +201,27 @@ public class ScheduleOneWeekFragment extends BaseFragment {
     }
 
     public void onAction(int v, Date date) {
-
-
-        StringBuffer sb = new StringBuffer(Configs.Server);
-        switch (v) {
-            case 1:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
-                break;
-            case 2:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
-                break;
-            case 3:
-                sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
-                break;
+        if (getParentFragment() instanceof ScheduleWeekFragment){
+            ((ScheduleWeekFragment) getParentFragment()).onAction(v,date);
         }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
-        Intent toWeb = new Intent(getActivity(), WebActivity.class);
-        toWeb.putExtra("url", sb.toString());
-        startActivityForResult(toWeb, 404);
+        //StringBuffer sb = new StringBuffer(Configs.Server);
+        //switch (v) {
+        //    case 1:
+        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
+        //        break;
+        //    case 2:
+        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
+        //        break;
+        //    case 3:
+        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
+        //        break;
+        //}
+        //Calendar calendar = Calendar.getInstance();
+        //calendar.setTime(date);
+        //sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+        //Intent toWeb = new Intent(getActivity(), WebActivity.class);
+        //toWeb.putExtra("url", sb.toString());
+        //startActivityForResult(toWeb, 404);
         //webFloatbtn.collapse();
     }
 

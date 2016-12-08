@@ -103,6 +103,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="75dp"
             android:background="@color/white"
+            android:scaleType="centerCrop"
             />
 
         <LinearLayout

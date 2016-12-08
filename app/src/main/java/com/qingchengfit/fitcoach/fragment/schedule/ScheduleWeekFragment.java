@@ -64,6 +64,7 @@ public class ScheduleWeekFragment extends BaseFragment {
     private FloatingActionButton btn3;
     private FloatingActionButton btn2;
     private FloatingActionButton btn1;
+    private Date mClickDate;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
@@ -117,6 +118,7 @@ public class ScheduleWeekFragment extends BaseFragment {
                 btn2.setEnabled(true);
                 btn3.setEnabled(true);
                 bgShow.setVisibility(View.VISIBLE);
+                mClickDate = null;
                 //ViewCompat.setAlpha(bgShow,0);
                 //ViewCompat.animate(bgShow).alpha(255).setDuration(R.integer.anim_time).start();
             }
@@ -143,7 +145,7 @@ public class ScheduleWeekFragment extends BaseFragment {
                             break;
                     }
                     Calendar calendar = Calendar.getInstance();
-                    sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
+                    sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(mClickDate == null?new Date():mClickDate));
                     if (eventScheduleAction.mCoachService != null){
                         if (!eventScheduleAction.mCoachService.has_permission){
                             showAlert(R.string.alert_permission_forbid);
@@ -191,6 +193,7 @@ public class ScheduleWeekFragment extends BaseFragment {
         btn2.setEnabled(false);
         btn3.setEnabled(false);
         webFloatbtn.collapse();
+        mClickDate = date;
         if (getParentFragment() instanceof MainScheduleFragment) {
             new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");
         }

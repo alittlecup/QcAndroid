@@ -74,6 +74,11 @@ public class CalenderPopWindow {
 
         }
     }
+    public void setDismiss(PopupWindow.OnDismissListener dismiss){
+        if (mPopupWindow != null){
+            mPopupWindow.setOnDismissListener(dismiss);
+        }
+    }
 
     public static final class Builder {
         private Context mContext;
