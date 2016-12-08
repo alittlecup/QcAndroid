@@ -41,11 +41,11 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.BodyTestReponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
-import com.qingchengfit.fitcoach.http.bean.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,6 +84,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     private String mModel;
     private String mModelId;
     private String mStudentId;
+    private String mStudentShipId;
     private StudentBaseInfoFragment studentBaseInfoFragment;
     private StudentClassRecordFragment studentClassRecordFragment;
     private StudentCardFragment studentCardFragment;
@@ -93,6 +94,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     private String privateUrl;
     private Observable<Object> mObserveRefresh;
     private int mGender = 0;
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +112,7 @@ public class StudentHomeActivity extends BaseAcitivity {
         mModelId = getIntent().getStringExtra("id");
         mStudentId = getIntent().getStringExtra("student_id");
         mModelType = getIntent().getIntExtra("modeltype", 1);
+        mStudentShipId = getIntent().getStringExtra("ship_id");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         toolbarTitle.setText("学员详情");
@@ -195,7 +198,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     }
 
     public void initBaseInfo() {
-        QcCloudClient.getApi().getApi.qcGetStudentInfo(mStudentId, getParams())
+        QcCloudClient.getApi().getApi.qcGetStudentInfo(App.coachid+"",mStudentShipId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<StudentInfoResponse>() {
@@ -208,21 +211,22 @@ public class StudentHomeActivity extends BaseAcitivity {
                 }
 
                 @Override public void onNext(StudentInfoResponse studentInfoResponse) {
-                    User user = studentInfoResponse.data.user;
+                    QcStudentBean user = studentInfoResponse.data.ship;
+
                     Glide.with(App.AppContex)
-                        .load(studentInfoResponse.data.user.avatar)
+                        .load(studentInfoResponse.data.ship.user.avatar)
                         .asBitmap()
-                        .error(user.gender == 0 ? R.drawable.default_student_male : R.drawable.default_student_female)
+                        .error(user.user.gender == 0 ? R.drawable.default_student_male : R.drawable.default_student_female)
                         .into(new CircleImgWrapper(mHeaderImageView, StudentHomeActivity.this));
                     mNameTextView.setText(user.username);
-                    if (user.gender == 0) {
+                    if (user.user.gender == 0) {
                         Glide.with(App.AppContex).load(R.drawable.ic_gender_signal_male).into(mGenderImageView);
                     } else {
                         Glide.with(App.AppContex).load(R.drawable.ic_gender_signal_female).into(mGenderImageView);
                     }
                     List<BaseInfoBean> beans = new ArrayList<BaseInfoBean>();
                     BaseInfoBean phone = new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机",
-                        (mModel.equalsIgnoreCase("service") && mModelType == 1) ? user.phone : user.hidden_phone);
+                         user.phone );
                     String birthDay;
                     if (TextUtils.isEmpty(user.date_of_birth)) {
                         birthDay = "暂无";
@@ -237,7 +241,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                     beans.add(birth);
                     beans.add(address);
                     beans.add(registe);
-                    mGender = user.gender;
+                    mGender = user.user.gender;
                     gourpUrl = studentInfoResponse.data.group_url;
                     privateUrl = studentInfoResponse.data.private_url;
                     if (studentBaseInfoFragment != null) studentBaseInfoFragment.setDatas(beans);

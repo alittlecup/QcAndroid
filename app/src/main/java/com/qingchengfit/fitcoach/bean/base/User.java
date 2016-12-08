@@ -31,6 +31,8 @@ public class User implements Parcelable {
     public int gender;
     public String area_code;
     public String avatar;
+    public String id;
+
 
     private User(Builder builder) {
         username = builder.username;
@@ -38,45 +40,11 @@ public class User implements Parcelable {
         gender = builder.gender;
         area_code = builder.area_code;
         avatar = builder.avatar;
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.phone);
-        dest.writeInt(this.gender);
-        dest.writeString(this.area_code);
-        dest.writeString(this.avatar);
+        id = builder.id;
     }
 
     public User() {
     }
-
-    protected User(Parcel in) {
-        this.username = in.readString();
-        this.phone = in.readString();
-        this.gender = in.readInt();
-        this.area_code = in.readString();
-        this.avatar = in.readString();
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 
     public static final class Builder {
         private String username;
@@ -84,6 +52,7 @@ public class User implements Parcelable {
         private int gender;
         private String area_code;
         private String avatar;
+        private String id;
 
         public Builder() {
         }
@@ -113,8 +82,45 @@ public class User implements Parcelable {
             return this;
         }
 
+        public Builder id(String val) {
+            id = val;
+            return this;
+        }
+
         public User build() {
             return new User(this);
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.phone);
+        dest.writeInt(this.gender);
+        dest.writeString(this.area_code);
+        dest.writeString(this.avatar);
+        dest.writeString(this.id);
+    }
+
+    protected User(Parcel in) {
+        this.username = in.readString();
+        this.phone = in.readString();
+        this.gender = in.readInt();
+        this.area_code = in.readString();
+        this.avatar = in.readString();
+        this.id = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

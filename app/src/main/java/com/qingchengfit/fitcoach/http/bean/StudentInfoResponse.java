@@ -20,8 +20,8 @@ public class StudentInfoResponse extends QcResponse {
     public Data data;
 
     public class Data {
-        @SerializedName("user")
-        public User user;
+        @SerializedName("ship")
+        public QcStudentBean ship;
         @SerializedName("private_url")
         public String private_url;
         @SerializedName("group_url")

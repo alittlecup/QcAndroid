@@ -424,7 +424,7 @@ public class QcCloudClient {
             @Path("coach_id") int coach_id, @Path("course_id") String course_id, @QueryMap Map<String, String> params);
 
         //学员基础信息
-        @GET("/api/students/{id}/") rx.Observable<StudentInfoResponse> qcGetStudentInfo(@Path("id") String student_id,
+        @GET("/api/v2/coaches/{coach_id}/students/{id}/") rx.Observable<StudentInfoResponse> qcGetStudentInfo(@Path("coach_id") String coach_id,@Path("id") String student_id,
             @QueryMap Map<String, String> params);
 
         //学员课程列表

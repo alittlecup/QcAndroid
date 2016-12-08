@@ -155,6 +155,7 @@ public class MyStudentFragment extends BaseFragment {
                 it.putExtra("id", adapterData.get(pos).modelid);
                 it.putExtra("model", adapterData.get(pos).model);
                 it.putExtra("student_id", adapterData.get(pos).id);
+                it.putExtra("ship_id", adapterData.get(pos).ship_id);
                 it.putExtra("modeltype", adapterData.get(pos).modeltype);
                 MyStudentFragment.this.startActivityForResult(it, 404);
             }
@@ -365,7 +366,8 @@ public class MyStudentFragment extends BaseFragment {
                         bean.headerPic = student.avatar;
                         bean.username = student.username;
                         bean.systemUrl = ship.service.host;
-                        bean.id = student.id;
+                        bean.id = student.user.id;
+                        bean.ship_id = student.id;
                         bean.color = ship.service.color;
                         bean.modelid = ship.service.id + "";
                         bean.model = ship.service.model;

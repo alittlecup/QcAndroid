@@ -29,7 +29,7 @@ public class QcAllStudentResponse extends QcResponse {
 
     public static class Ship {
 
-        @SerializedName("users")
+        @SerializedName("ships")
         public List<QcStudentBean> users;
         @SerializedName("service")
         public CoachService service;

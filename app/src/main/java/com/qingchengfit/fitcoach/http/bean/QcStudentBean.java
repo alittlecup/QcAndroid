@@ -28,6 +28,11 @@ public class QcStudentBean {
     public String gender;
     @SerializedName("head")
     public String head;
+    @SerializedName("user")
+    public com.qingchengfit.fitcoach.bean.base.User user;
+    public String date_of_birth;
+    public String address;
+    public String joined_at;
     public String tag;
 
 }

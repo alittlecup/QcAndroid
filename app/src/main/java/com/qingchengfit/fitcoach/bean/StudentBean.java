@@ -28,5 +28,6 @@ public class StudentBean {
     public String modelid;
     public String model;
     public int modeltype;
+    public String ship_id;
 
 }
