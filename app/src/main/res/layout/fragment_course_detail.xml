@@ -52,18 +52,20 @@
                         android:background="@color/bg_grey"
                         android:gravity="center"
                         android:text="暂无封面照片"
+                        android:textSize="26sp"
                         android:visibility="gone"
                         />
                     <TextView
                         android:id="@+id/edit_jacket"
                         android:layout_width="168dp"
                         android:layout_height="26dp"
-                        android:background="@color/halftrans_background"
+                        android:background="@drawable/left_black_right_white_halftrans"
                         android:drawablePadding="8dp"
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:text="@string/edit_course_jacket"
                         android:textColor="@color/white"
+
                         />
                     <com.qingchengfit.fitcoach.component.CircleIndicator
                         android:id="@+id/splash_indicator"
