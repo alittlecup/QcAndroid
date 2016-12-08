@@ -675,7 +675,7 @@ public class QcCloudClient {
             @QueryMap Map<String, String> params);
 
         //删除学员
-        @DELETE("/api/students/{id}/") rx.Observable<QcResponse> qcDelStudent(@Path("id") String studentid,
+        @DELETE("/api/v1/coaches/{coach_id}/students/{id}/") rx.Observable<QcResponse> qcDelStudent(@Path("coach_id") String coach_id,@Path("id") String studentid,
             @QueryMap Map<String, String> params);
 
         /**

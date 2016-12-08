@@ -23,6 +23,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -145,9 +146,9 @@ public class StudentHomeActivity extends BaseAcitivity {
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
-        if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
+        //if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
             getMenuInflater().inflate(R.menu.menu_delete, menu);
-        }
+        //}
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -169,7 +170,7 @@ public class StudentHomeActivity extends BaseAcitivity {
             .callback(new MaterialDialog.ButtonCallback() {
                 @Override public void onPositive(MaterialDialog dialog) {
                     super.onPositive(dialog);
-                    QcCloudClient.getApi().postApi.qcDelStudent(mStudentId, getParams())
+                    QcCloudClient.getApi().postApi.qcDelStudent(App.coachid+"",mStudentShipId, getParams())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
@@ -430,17 +431,18 @@ public class StudentHomeActivity extends BaseAcitivity {
     }
 
     public void goPrivate() {
-        LogUtil.e("privateurl:" + privateUrl);
-        if (!TextUtils.isEmpty(privateUrl)) {
-            goWeb(privateUrl);
-        }
+        //LogUtil.e("privateurl:" + privateUrl);
+        //if (!TextUtils.isEmpty(privateUrl)) {
+
+            goWeb(Configs.ServerIp + Configs.PRIVATE_PRIVEIW +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId);
+        //}
     }
 
     public void goGroup() {
-        LogUtil.e("gourpUrl:" + gourpUrl);
-        if (!TextUtils.isEmpty(gourpUrl)) {
-            goWeb(gourpUrl);
-        }
+        //LogUtil.e("gourpUrl:" + gourpUrl);
+        //if (!TextUtils.isEmpty(gourpUrl)) {
+            goWeb(Configs.ServerIp + Configs.GROUP_PRIVEIW +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId );
+        //}
     }
 
     public void goWeb(String url) {
