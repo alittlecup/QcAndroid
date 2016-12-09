@@ -74,7 +74,7 @@ public class ScheduleWeekFragment extends BaseFragment {
             mCoachService = ((MainScheduleFragment) getParentFragment()).getCoachService();
         }
         adapter = new ScheduleWeekAdapter(getChildFragmentManager());
-
+        tvMonth.setText(DateUtils.getChineseMonth(new Date()));
         viewpager.setAdapter(adapter);
         viewpager.setCurrentItem(250+adapter.getPostion());
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -119,12 +119,9 @@ public class ScheduleWeekFragment extends BaseFragment {
                 btn3.setEnabled(true);
                 bgShow.setVisibility(View.VISIBLE);
                 mClickDate = null;
-                //ViewCompat.setAlpha(bgShow,0);
-                //ViewCompat.animate(bgShow).alpha(255).setDuration(R.integer.anim_time).start();
             }
 
             @Override public void onMenuCollapsed() {
-                //ViewCompat.animate(bgShow).alpha(0).setDuration(R.integer.anim_time).start();
                 bgShow.setVisibility(View.GONE);
             }
         });
@@ -182,10 +179,6 @@ public class ScheduleWeekFragment extends BaseFragment {
     }
 
     @OnClick(R.id.btn_back_today) public void backTody(){
-        //adapter.setPostion(0);
-        //viewpager.setCurrentItem(1000);
-        //adapter.notifyDataSetChanged();
-        //tvMonth.setText(DateUtils.getChineseMonth(new Date()));
         viewpager.setCurrentItem(250,true);
     }
     public void onAction(int v, Date date) {
@@ -197,25 +190,6 @@ public class ScheduleWeekFragment extends BaseFragment {
         if (getParentFragment() instanceof MainScheduleFragment) {
             new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");
         }
-        //StringBuffer sb = new StringBuffer(Configs.Server);
-        //switch (v) {
-        //    case 1:
-        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=rest");
-        //        break;
-        //    case 2:
-        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=privatelesson");
-        //        break;
-        //    case 3:
-        //        sb.append("mobile/coaches/" + App.coachid + "/systems/?action=grouplesson");
-        //        break;
-        //}
-        //Calendar calendar = Calendar.getInstance();
-        //calendar.setTime(date);
-        //sb.append("&").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
-        //Intent toWeb = new Intent(getActivity(), WebActivity.class);
-        //toWeb.putExtra("url", sb.toString());
-        //startActivityForResult(toWeb, 404);
-        //webFloatbtn.collapse();
     }
 
 

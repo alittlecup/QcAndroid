@@ -1,0 +1,55 @@
+package com.qingchengfit.fitcoach.event;
+
+/**
+ * power by
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MM.:  .:'   `:::  .:`MMMMMMMMMMM|`MMM'|MMMMMMMMMMM':  .:'   `:::  .:'.MM
+ * MMMM.     :          `MMMMMMMMMM  :*'  MMMMMMMMMM'        :        .MMMM
+ * MMMMM.    ::    .     `MMMMMMMM'  ::   `MMMMMMMM'   .     ::   .  .MMMMM
+ * MMMMMM. :   :: ::'  :   :: ::'  :   :: ::'      :: ::'  :   :: ::.MMMMMM
+ * MMMMMMM    ;::         ;::         ;::         ;::         ;::   MMMMMMM
+ * MMMMMMM .:'   `:::  .:'   `:::  .:'   `:::  .:'   `:::  .:'   `::MMMMMMM
+ * MMMMMM'     :           :           :           :           :    `MMMMMM
+ * MMMMM'______::____      ::    .     ::    .     ::     ___._::____`MMMMM
+ * MMMMMMMMMMMMMMMMMMM`---._ :: ::'  :   :: ::'  _.--::MMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMM::.         ::  .--MMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-.     ;::-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM. .:' .M:F_P:MMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+ * Created by Paper on 2016/12/9.
+ */
+
+public class EventChooseStudent {
+
+    public String chooseStudentid;
+    public String StudentName;
+
+    private EventChooseStudent(Builder builder) {
+        chooseStudentid = builder.chooseStudentid;
+        StudentName = builder.StudentName;
+    }
+
+    public static final class Builder {
+        private String chooseStudentid;
+        private String StudentName;
+
+        public Builder() {
+        }
+
+        public Builder chooseStudentid(String val) {
+            chooseStudentid = val;
+            return this;
+        }
+
+        public Builder StudentName(String val) {
+            StudentName = val;
+            return this;
+        }
+
+        public EventChooseStudent build() {
+            return new EventChooseStudent(this);
+        }
+    }
+}

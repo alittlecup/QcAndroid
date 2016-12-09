@@ -96,7 +96,7 @@ public class SaleDetailFragment extends Fragment {
 
     private String start;
     private String end;
-    private int card_id = 0;
+    private String card_id = "";
     private int mDividerType = 0;
     private Calendar curCalendar;
 
@@ -118,13 +118,13 @@ public class SaleDetailFragment extends Fragment {
         return fragment;
     }
 
-    public static SaleDetailFragment newInstance(int type, String starttime, String endtime, int sysId, int cardId, String cardname) {
+    public static SaleDetailFragment newInstance(int type, String starttime, String endtime, int sysId, String cardId, String cardname) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putString("start", starttime);
         args.putString("end", endtime);
         args.putInt("system", sysId);
-        args.putInt("card", cardId);
+        args.putString("card", cardId);
         args.putString("cardname", cardname);
 
         SaleDetailFragment fragment = new SaleDetailFragment();
@@ -173,7 +173,7 @@ public class SaleDetailFragment extends Fragment {
                 start = getArguments().getString("start");
                 end = getArguments().getString("end");
                 curSystemId = getArguments().getInt("system");
-                card_id = getArguments().getInt("card");
+                card_id = getArguments().getString("card");
                 card_name = getArguments().getString("cardname");
             default:
                 break;
@@ -443,8 +443,8 @@ public class SaleDetailFragment extends Fragment {
         params.put("end", end);
         params.put("id", curSystemId+"");
         params.put("model",curModel);
-        if (card_id != 0)
-            params.put("card_tpl_id", Integer.toString(card_id));
+        if (!TextUtils.isEmpty(card_id) && !card_id.equalsIgnoreCase("0"))
+            params.put("card_tpl_id", card_id);
         return params;
     }
 

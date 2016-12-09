@@ -101,7 +101,7 @@ public class ScheduesFragment extends BaseFragment {
         }
         coach = gson.fromJson(id, Coach.class);
         //初始化title下拉
-
+        tvMonth.setText(DateUtils.getChineseMonth(new Date()));
         setUpViewPager();
 
         RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {

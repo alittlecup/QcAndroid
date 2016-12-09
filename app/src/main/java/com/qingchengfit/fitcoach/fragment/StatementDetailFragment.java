@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -118,8 +119,8 @@ public class StatementDetailFragment extends Fragment {
 
     private String start;
     private String end;
-    private int course_id = 0;
-    private int user_id = 0;
+    private String course_id = "";
+    private String user_id = "";
     private int mDividerType = 0;
     private Calendar curCalendar;
     private MaterialDialog loadingDialog;
@@ -142,14 +143,14 @@ public class StatementDetailFragment extends Fragment {
         return fragment;
     }
 
-    public static StatementDetailFragment newInstance(int type, String starttime, String endtime,String model, int sysId, int userId, int courseId, String userName, String courseName) {
+    public static StatementDetailFragment newInstance(int type, String starttime, String endtime,String model, int sysId, String userId, String courseId, String userName, String courseName) {
         Bundle args = new Bundle();
         args.putInt("type", type);
         args.putString("start", starttime);
         args.putString("end", endtime);
         args.putInt("system", sysId);
-        args.putInt("course", courseId);
-        args.putInt("user", userId);
+        args.putString("course", courseId);
+        args.putString("user", userId);
         args.putString("userName", userName);
         args.putString("courseName", courseName);
         args.putString("model", model);
@@ -199,8 +200,8 @@ public class StatementDetailFragment extends Fragment {
                 start = getArguments().getString("start");
                 end = getArguments().getString("end");
                 curSystemId = getArguments().getInt("system");
-                course_id = getArguments().getInt("course");
-                user_id = getArguments().getInt("user");
+                course_id = getArguments().getString("course");
+                user_id = getArguments().getString("user");
                 user_name = getArguments().getString("userName");
                 course_name = getArguments().getString("courseName");
                 curModel = getArguments().getString("model");
@@ -525,10 +526,10 @@ public class StatementDetailFragment extends Fragment {
         params.put("id", Integer.toString(system_id.first));
         params.put("model", system_id.second);
 
-        if (course_id != 0)
-            params.put("course_id", Integer.toString(course_id));
-        if (user_id != 0)
-            params.put("user_id", Integer.toString(user_id));
+        if (!TextUtils.isEmpty(course_id) && !course_id.equalsIgnoreCase("0"))
+            params.put("course_id", course_id);
+        if (!TextUtils.isEmpty(user_id) && !user_id.equalsIgnoreCase("0") )
+            params.put("user_id", user_id);
         return params;
     }
 

@@ -453,6 +453,8 @@ public class QcCloudClient {
         //获取健身房课程列表
         @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCourses(@Path("id") String coach_id,
             @QueryMap HashMap<String, String> params, @Query("is_private") int is_private);
+        @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCoursesAll(@Path("id") String coach_id,
+            @QueryMap HashMap<String, String> params);
 
         /**
          * 获取课程计划
@@ -528,6 +530,7 @@ public class QcCloudClient {
         //拉去卡列表
         @GET("/api/v2/coaches/{coach_id}/cardtpls/") rx.Observable<QcResponseCardTpls> qcGetCardTpls(@Path("coach_id") String id,
             @Query("id") String gymid, @Query("model") String gymmodel);
+
 
         @GET("/api/v1/coaches/{coach_id}/gyms/welcome/") rx.Observable<QcResponseServiceDetail> qcGetCoachServer(
             @Path("coach_id") String id, @QueryMap HashMap<String, Object> params);
