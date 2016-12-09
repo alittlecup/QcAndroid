@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
@@ -47,6 +49,7 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
 
 /**
  * power by
@@ -136,9 +139,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             }
         });
 
-        GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
-        recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
-        recyclerview2.setLayoutManager(manager2);
+        //GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
+        //recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
+        recyclerview2.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayout.VERTICAL));
+        recyclerview2.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview2.setAdapter(adapter2);
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
             @Override public void call(CoachService coachService) {
