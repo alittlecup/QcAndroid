@@ -114,6 +114,7 @@ public class StudentHomeActivity extends BaseAcitivity {
         mStudentId = getIntent().getStringExtra("student_id");
         mModelType = getIntent().getIntExtra("modeltype", 1);
         mStudentShipId = getIntent().getStringExtra("ship_id");
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         toolbarTitle.setText("学员详情");

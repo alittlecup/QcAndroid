@@ -1,12 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,8 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.CompatUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -30,7 +30,6 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
@@ -43,16 +42,7 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.service.UpyunService;
-
 import java.io.File;
-import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -60,16 +50,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ModifyInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePictureFragmentDialog.ChoosePicResult {
     public static final String TAG = ModifyInfoFragment.class.getName();
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     public static int SELECT_PIC_KITKAT = 10;
     public static int SELECT_PIC = 11;
     public static int SELECT_CAM = 12;
@@ -93,38 +77,21 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     @BindView(R.id.modifyinfo_desc) EditText modifyinfoDesc;
     @BindView(R.id.modifyinfo_inputpan) LinearLayout modifyinfoInputpan;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
+
     private QcCoachRespone.DataEntity.CoachEntity user;
     private ModifyCoachInfo mModifyCoachInfo;
 
-    private FragmentManager mFragmentManager;
     private Coach coach;
     private CitiesChooser citiesChooser;
-    private Bundle saveState;
-    private boolean isLoading = false;
-    private Uri mAvatarResult;
     private Unbinder unbinder;
 
     public ModifyInfoFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ModifyInfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ModifyInfoFragment newInstance(String param1, String param2) {
         ModifyInfoFragment fragment = new ModifyInfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -133,14 +100,8 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        mFragmentManager = getChildFragmentManager();
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
-        isLoading = true;
         uppicObserver = RxBus.getBus().register(UpyunService.UpYunResult.class.getName());
         uppicObserver.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<UpyunService.UpYunResult>() {
             @Override public void onCompleted() {
@@ -265,39 +226,6 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         choosePictureFragmentDialog.show(getFragmentManager(), "choose pic");
     }
 
-    public void goGalley() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/jpeg");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            startActivityForResult(intent, SELECT_PIC_KITKAT);
-        } else {
-            startActivityForResult(intent, SELECT_PIC);
-        }
-    }
-
-    public void goCamera() {
-        Intent intent = new Intent();
-        // 指定开启系统相机的Action
-        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        //         根据文件地址创建文件
-        File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                //e.printStackTrace();
-                RevenUtils.sendException("goCamera", TAG, e);
-            }
-        }
-        //         把文件地址转换成Uri格式
-        Uri uri = Uri.fromFile(file);
-        //         设置系统相机拍摄照片完成后图片文件的存放地址
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, SELECT_CAM);
-    }
 
     /**
      * 修改简介
@@ -310,7 +238,6 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
             .show(fragment)
             .addToBackStack("")
             .commit();
-        //        fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(user.getDescription()));
     }
 
     /**
@@ -351,109 +278,8 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
             });
     }
 
-    //
-    //    @Override
-    //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //        String filepath = "";
-    //        if (mModifyCoachInfo == null)
-    //            return;
-    //        if (resultCode == Activity.RESULT_OK) {
-    //
-    ////            if (requestCode == ChoosePicUtils.CHOOSE_CAMERA || requestCode == ChoosePicUtils.CHOOSE_GALLERY ) {
-    ////                Intent intent = new Intent("com.android.camera.action.CROP");
-    ////                intent.setType("image/*");
-    ////
-    ////                intent.setData(data.getData());
-    ////                intent.putExtra("outputX", 300);
-    ////                intent.putExtra("outputY", 300);
-    ////                intent.putExtra("aspectX", 1);
-    ////                intent.putExtra("aspectY", 1);
-    ////                intent.putExtra("scale", false);
-    ////                intent.putExtra("return-data", true);
-    ////                intent.putExtra("return-data", false);
-    ////
-    ////                intent.putExtra("output", );
-    ////            }
-    //
-    //
-    //            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == SELECT_PIC_KITKAT)
-    //                filepath = FileUtils.getPath(getActivity(), data.getData());
-    //            else filepath = Configs.CameraPic;
-    //            LogUtil.d(filepath);
-    //            fragmentCallBack.ShowLoading("正在上传");
-    //            Observable.just(filepath)
-    //                    .subscribeOn(Schedulers.io())
-    //                    .subscribe(s -> {
-    //                        String filename = UUID.randomUUID().toString();
-    //                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
-    //                        File upFile = new File(Configs.ExternalCache + filename);
-    //
-    //                        boolean reslut = UpYunClient.upLoadImg("/header/" + coach.id + "/", filename, upFile);
-    //                        getActivity().runOnUiThread(() -> {
-    //                            fragmentCallBack.hideLoading();
-    //                            if (reslut) {
-    //                                LogUtil.d("success");
-    //                                String pppurl = UpYunClient.UPYUNPATH + "header/" + coach.id + "/" + filename + ".png";
-    //                                Glide.with(App.AppContex).load(pppurl)
-    //                                        .transform(new GlideCircleTransform(App.AppContex))
-    //                                        .into(modifyinfoHeaderPic);
-    //                                mModifyCoachInfo.setAvatar(pppurl);
-    //                                user.setAvatar(pppurl);
-    //
-    //                            } else {
-    //                                //upload failed TODO
-    //                                LogUtil.d("update img false");
-    //                            }
-    //                        });
-    //
-    //                    });
-    //
-    //        }
-    //
-    //
-    //    }
-
-    //    @Override
-    //    public void onSaveInstanceState(Bundle outState) {
-    //
-    //        Bundle state = new Bundle();
-    //        state.putString("city",mofifyinfoCity.getContent());
-    //        state.putString("desc",modifyinfoDesc.getText().toString());
-    //        state.putString("username",mofifyinfoName.getContent());
-    //        state.putString("wechat", mofifyinfoWechat.getContent());
-    //        outState.putBundle(this.getClass().getName(),state);
-    //        super.onSaveInstanceState(outState);
-    //    }
-    //
-    //    private boolean restoreStateFromArguments() {
-    //        Bundle b = getArguments();
-    //        saveState = b.getBundle(this.getClass().getName());
-    //        if (saveState != null) {
-    //            restoreSave();
-    //            return true;
-    //        } else return false;
-    //    }
-    //
-    //    @UiThread
-    //    private void restoreSave() {
-    //        if (saveState != null) {
-    //
-    //            mofifyinfoCity.setContent(saveState.getString("city"));
-    //            mofifyinfoWechat.setContent(saveState.getString("wechat"));
-    //            mofifyinfoName.setContent(saveState.getString("username"));
-    //            modifyinfoDesc.setText(saveState.getString("desc"));
-    //            initHead(saveState.getString("avatar"));
-    //        }
-    //    }
 
     @Override public void onDestroyView() {
-        //        Bundle state = new Bundle();
-        //        state.putString("city", mofifyinfoCity.getContent());
-        //        state.putString("desc", modifyinfoDesc.getText().toString());
-        //        state.putString("username", mofifyinfoName.getContent());
-        //        state.putString("wechat", mofifyinfoWechat.getContent());
-        //        state.putString("avatar", user.getAvatar());
-        //        getArguments().putBundle(this.getClass().getName(), state);
         RxBus.getBus().unregister(UpyunService.UpYunResult.class.getName(), uppicObserver);
         unbinder.unbind();
         super.onDestroyView();

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -63,7 +64,6 @@ public class RecordFragment extends BaseSettingFragment {
         unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add_certification, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
-//            fragmentCallBack.onFragmentChange(RecordEditFragment.newInstance(false, null));
             int requestCode = 10011;
             switch (item.getItemId()) {
                 case R.id.action_add_meeting:
@@ -96,7 +96,7 @@ public class RecordFragment extends BaseSettingFragment {
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
                 refresh.setRefreshing(false);
             }
         });
@@ -113,7 +113,6 @@ public class RecordFragment extends BaseSettingFragment {
                     adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
                     adapter.setListener((v, pos) -> {
                         int type = qcCertificatesReponse.getData().getCertificates().get(pos).getType();
-//                        RecordEditFragment fragment = RecordEditFragment.newInstance(true, gson.toJson(qcCertificatesReponse.getData().getCertificates().get(pos)), type);
                         fragmentCallBack.onFragmentChange(ComfirmDetailFragment.newInstance(adapter.datas.get(pos)));
                     });
                     recyclerview.setAdapter(adapter);
@@ -133,7 +132,6 @@ public class RecordFragment extends BaseSettingFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.e("onActivityReslut:" + requestCode + "  " + requestCode);
         if (requestCode == 10011 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
