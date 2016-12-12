@@ -25,6 +25,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -59,6 +60,7 @@ public class MineFragmentFragment extends Fragment {
     Toolbar toolbar;
     private Unbinder unbinder;
     private QcCoachRespone.DataEntity.CoachEntity user;
+    private Subscription sp1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,8 +92,9 @@ public class MineFragmentFragment extends Fragment {
     }
 
     public void queryData() {
-
-        QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+        if (sp1 != null && sp1.isUnsubscribed())
+            sp1.unsubscribe();
+        sp1 = QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcCoachRespone>() {
                 @Override public void onCompleted() {
@@ -116,6 +119,7 @@ public class MineFragmentFragment extends Fragment {
                     }
                 }
             });
+
     }
 
 

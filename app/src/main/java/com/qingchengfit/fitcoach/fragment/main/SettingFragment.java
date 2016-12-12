@@ -158,7 +158,7 @@ public class SettingFragment extends BaseSettingFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.setting_share:
-                ShareDialogFragment.newInstance(getString(R.string.app_name),getString(R.string.app_slogan),getString(R.string.app_icon_net),getString(R.string.app_download_link));
+                ShareDialogFragment.newInstance(getString(R.string.app_name),getString(R.string.app_slogan),getString(R.string.app_icon_net),getString(R.string.app_download_link)).show(getFragmentManager(),"");
                 break;
             case R.id.setting_update:
 

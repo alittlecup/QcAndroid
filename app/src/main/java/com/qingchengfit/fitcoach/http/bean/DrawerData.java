@@ -22,4 +22,5 @@ public class DrawerData {
     public List<DrawerModule> modules;
     @SerializedName("guide")
     public List<DrawerGuide> guide;
+    public String qingcheng_activity_count;
 }

@@ -359,6 +359,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             case R.id.change_gym:
                 Intent toGym = new Intent(getActivity(), ChooseActivity.class);
                 toGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM);
+                toGym.putExtra("service",mCoachService);
                 startActivity(toGym);
                 break;
             case R.id.title:

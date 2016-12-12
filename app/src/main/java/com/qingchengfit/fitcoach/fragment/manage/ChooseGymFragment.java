@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.manage;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -59,7 +63,9 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/16.
  */
-public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
+@FragmentWithArgs public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
+
+    @Arg CoachService mCoachService;
 
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -69,6 +75,10 @@ public class ChooseGymFragment extends BaseFragment implements FlexibleAdapter.O
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
 
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
+    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
