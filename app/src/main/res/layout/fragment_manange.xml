@@ -48,6 +48,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     app:srcCompat="@drawable/ic_play_arrow_black_24dp"
+                    android:visibility="gone"
                     />
             </LinearLayout>
 
@@ -68,7 +69,6 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:visibility="gone"
                 tools:visibility="visible"
                 android:id="@+id/gym_layout"
                 android:orientation="horizontal"
@@ -150,12 +150,6 @@
 
             </LinearLayout>
 
-            <TextView
-                style="@style/TextTitleHint"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="@string/coach_function_hint"
-                />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
