@@ -542,7 +542,7 @@ public class QcCloudClient {
             @QueryMap HashMap<String, Object> params, @Body Shop shop);
 
         //登录
-        @POST("/api/coaches/login/") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
+        @POST("/api/v1/coaches/login/") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
 
         //注册
         @POST("/api/coaches/register/") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);

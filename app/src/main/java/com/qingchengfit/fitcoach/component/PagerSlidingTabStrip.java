@@ -23,6 +23,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import com.qingchengfit.fitcoach.R;
 
 /*
@@ -423,7 +424,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
 
-        mViewPager.setOnPageChangeListener(this);
+        mViewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
     }
 
@@ -478,7 +479,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void removeLayoutListenerJelly(ViewTreeObserver.OnGlobalLayoutListener l) {
-        getViewTreeObserver().removeGlobalOnLayoutListener(l);
+        //getViewTreeObserver().removeGlobalOnLayoutListener(l);
+        CompatUtils.removeGlobalLayout(getViewTreeObserver(),l);
     }
 
     @SuppressWarnings("deprecation")
