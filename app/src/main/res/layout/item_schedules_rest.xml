@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:background="@color/white"
+      >
+
+      <View
+          android:id="@+id/indicator"
+          android:layout_width="4dp"
+          android:layout_height="match_parent"
+          android:background="@color/primary"
+          android:visibility="gone"
+          />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:orientation="horizontal"
+          android:gravity="center_vertical"
+          >
+        <ImageView
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/item_schedule_classpic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+            android:scaleType="fitXY"
+            />
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+          <TextView
+
+              android:id="@+id/item_schedule_time"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="13dp"
+              android:paddingTop="0dp"
+              android:textColor="@color/most_black"
+              android:textSize="18sp"
+              android:textStyle="bold"
+              tools:text="9:00"
+              style="@style/Qc.TextCommonBlack"
+              />
+          <TextView
+              android:id="@+id/item_schedule_done"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="2.5dp"
+              android:background="@drawable/bg_rect"
+              android:padding="2dp"
+              android:text="@string/have_done"
+              android:textColor="#bbbbbb"
+              android:textSize="11sp"
+              />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            >
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="10dp"
+              android:layout_marginStart="10dp"
+              android:orientation="vertical"
+              android:layout_centerVertical="true"
+              >
+
+            <TextView
+                android:id="@+id/item_schedule_classname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="@color/most_black"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="Gravity"
+                style="@style/Qc.TextCommonBlack"
+                />
+
+            <TextView
+                android:id="@+id/item_schedule_gymname"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                tools:text="中美引力工作室"
+                style="@style/Qc.TextCommonGrey"
+                />
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+              <ImageView
+                  android:id="@+id/item_schedule_status"
+                  android:layout_width="12dp"
+                  android:layout_height="12dp"
+                  tools:src="@drawable/ic_schedule_hook"
+                  android:layout_marginRight="8dp"
+                  android:layout_marginEnd="8dp"
+                  />
+              <TextView
+                  android:id="@+id/item_schedule_num"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:drawablePadding="5dp"
+                  android:ellipsize="end"
+                  android:lines="1"
+                  android:maxLength="20"
+                  tools:text="共报名5人"
+                  style="@style/Qc.TextCommonGrey"
+                  />
+            </LinearLayout>
+
+
+
+
+          </LinearLayout>
+
+
+        </RelativeLayout>
+      </LinearLayout>
+      <TextView
+          android:visibility="gone"
+          android:id="@+id/item_schedule_conflict"
+          android:layout_width="match_parent"
+          android:layout_height="22dp"
+          android:drawablePadding="5dp"
+          android:maxLength="20"
+          android:textColor="@color/red"
+          android:textSize="10sp"
+          tools:text="事件冲突:xxxxxx"
+          android:paddingLeft="@dimen/little"
+          android:background="@color/half_red"
+          style="@style/Qc.TextCommonGrey"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/divider_grey"
+      android:layout_gravity="bottom"
+      />
+
+</FrameLayout>

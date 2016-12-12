@@ -355,9 +355,12 @@ public class ScheduleListFragment extends BaseFragment {
 
         @Override public SchedulesVH onCreateViewHolder(ViewGroup parent, int viewType) {
             SchedulesVH holder = null;
-            if (viewType == 1) {
+            if (viewType == 100) {
                 holder =
                     new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule_no_private, parent, false));
+            }else if(viewType == 0){
+                holder = new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedules_rest, parent, false));
+                holder.itemView.setOnClickListener(this);
             } else {
                 holder = new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedules, parent, false));
                 holder.itemView.setOnClickListener(this);
@@ -434,7 +437,7 @@ public class ScheduleListFragment extends BaseFragment {
         }
 
         @Override public int getItemViewType(int position) {
-            return (position == 0 && datas.get(0).type == 100)?1:0;
+            return datas.get(position).type;
         }
 
         @Override public int getItemCount() {
