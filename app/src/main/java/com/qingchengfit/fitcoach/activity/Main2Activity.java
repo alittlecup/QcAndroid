@@ -240,6 +240,19 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 }
             }
         });
+
+        if (getIntent() != null && getIntent().getScheme() != null&&getIntent().getScheme().equals("qccoach")) {
+            try {
+                String path = getIntent().getData().toString();
+                url = path.split("openurl/")[1];
+                viewpager.setCurrentItem(2);
+                WebActivity.startWeb("http://"+url,this);
+            }catch (Exception e){
+
+            }
+        }
+
+
     }
 
     private void setupVp() {
@@ -440,12 +453,13 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             user = gson.fromJson(u, User.class);
             App.setgUser(user);
         } else {
+            logout();
         }
 
         //初始化initCoach
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {
-            //TODO error
+            logout();
         }
         Coach coach = gson.fromJson(id, Coach.class);
         App.coachid = Integer.parseInt(coach.id);
@@ -497,6 +511,18 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
+        if (getIntent() != null && getIntent().getScheme() != null&&getIntent().getScheme().equals("qccoach")) {
+            try {
+                String path = getIntent().getData().toString();
+                url = path.split("openurl/")[1];
+                viewpager.setCurrentItem(2);
+                WebActivity.startWeb("http://"+url,this);
+            }catch (Exception e){
+
+            }
+        }
+
         if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
             logout();
         } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
@@ -507,7 +533,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             toWeb.putExtra("url", contetn);
             startActivity(toWeb);
         } else if (intent.getIntExtra(ACTION, -1) == INIT) {
-
             mCoachService = intent.getParcelableExtra("service");
             if (viewpager != null && viewpager.getAdapter() != null && viewpager.getAdapter().getCount() > 2) {
                 viewpager.setCurrentItem(1);

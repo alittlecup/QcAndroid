@@ -135,9 +135,9 @@
         android:theme="@style/Qc.SplashTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
-
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+
     </activity>
     //sharesdk 分享
     <activity
@@ -351,7 +351,19 @@
         android:hardwareAccelerated="true"
         android:launchMode="singleTask"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustNothing|stateUnchanged"/>
+        android:windowSoftInputMode="adjustNothing|stateUnchanged">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+
+        <data
+            android:host="openurl"
+            android:scheme="qccoach"/>
+      </intent-filter>
+
+    </activity>
     <activity
         android:name=".activity.AddBrandActivity"
         android:screenOrientation="portrait"/>

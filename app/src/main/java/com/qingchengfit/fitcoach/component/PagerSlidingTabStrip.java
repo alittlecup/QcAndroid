@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
@@ -212,6 +213,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
         }
     }
 
+    @Override public boolean onTouchEvent(MotionEvent ev) {
+        return super.onTouchEvent(ev);
+    }
+
     @Override
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
@@ -290,6 +295,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
 
         addTab(position, tab);
     }
+
+
 
     /**
      * add one tab into tab container
