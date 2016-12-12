@@ -11,13 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.marcohc.robotocalendar.CalendarFragment;
 import com.qingchengfit.fitcoach.R;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * power by
@@ -36,6 +39,7 @@ public class DatePicker extends DialogFragment {
 
     @BindView(R.id.vp) ViewPager vp;
     @BindView(R.id.bg) View bg;
+    @BindView(R.id.tv_month) TextView tvMonth;
     private Unbinder unbinder;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,19 +50,22 @@ public class DatePicker extends DialogFragment {
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_datepicker, container, false);
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
+        tvMonth.setText(DateUtils.getChineseMonth(new Date()));
         vp.setAdapter(new CalendarAdapter(getChildFragmentManager()));
         vp.setCurrentItem(50);
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
+
             @Override public void onPageSelected(int position) {
-                //RxBus.getBus().post(new EventMonthChange(position-500));
-                if (listener != null){
+
+                //if (listener != null){
                     Calendar c = Calendar.getInstance();
                     c.add(Calendar.MONTH,position-50);
-                    listener.onMonthChange(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
-                }
+                    tvMonth.setText(DateUtils.getChineseMonth(c.getTime()));
+                //    listener.onMonthChange(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
+                //}
             }
 
             @Override public void onPageScrollStateChanged(int state) {
@@ -67,9 +74,11 @@ public class DatePicker extends DialogFragment {
         });
         return view;
     }
-    public  interface DatePickerChange{
-        void onMonthChange(int year,int month);
-        void onDismiss(int year,int month);
+
+    public interface DatePickerChange {
+        void onMonthChange(int year, int month);
+
+        void onDismiss(int year, int month);
     }
 
     private DatePickerChange listener;
@@ -78,28 +87,26 @@ public class DatePicker extends DialogFragment {
         this.listener = listener;
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         // Get existing layout params for the window
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         // Assign window properties to fill the parent
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        getDialog().getWindow().setAttributes((WindowManager.LayoutParams) params);
         // Call super onResume after sizing
         super.onResume();
     }
 
-    @OnClick({R.id.bg,R.id.bg_up})
-    public void onBg(){
+    @OnClick({ R.id.bg, R.id.bg_up }) public void onBg() {
         this.dismiss();
     }
 
     @Override public void dismiss() {
-        if (listener != null){
+        if (listener != null) {
             Calendar c = Calendar.getInstance();
-            c.add(Calendar.MONTH,vp.getCurrentItem()-50);
-            listener.onDismiss(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
+            c.add(Calendar.MONTH, vp.getCurrentItem() - 50);
+            listener.onDismiss(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1);
         }
         super.dismiss();
     }
@@ -109,24 +116,18 @@ public class DatePicker extends DialogFragment {
         unbinder.unbind();
     }
 
-
-    public class CalendarAdapter extends FragmentStatePagerAdapter{
+    public class CalendarAdapter extends FragmentStatePagerAdapter {
 
         public CalendarAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override public Fragment getItem(int position) {
-            return CalendarFragment.newInstance(position -50);
+            return CalendarFragment.newInstance(position - 50);
         }
 
         @Override public int getCount() {
             return 100;
         }
-
     }
-
-
-
-
 }

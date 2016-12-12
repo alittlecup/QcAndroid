@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,13 +20,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
 import com.marcohc.robotocalendar.EventMonthChange;
-import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -41,8 +42,6 @@ import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.bean.Coach;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
-import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import java.util.ArrayList;
@@ -222,10 +221,18 @@ public class ScheduesFragment extends BaseFragment {
 
     private void setUpViewPager() {
         mFragmentAdapter = new FragmentAdapter(getChildFragmentManager());
+        mFragmentAdapter.setCurCenterDay(new Date());
         scheduleVp.setAdapter(mFragmentAdapter);
         scheduleVp.setOffscreenPageLimit(1);
-        scheduleVp.setCurrentItem(30, false);
+
         scheduleTab.setViewPager(scheduleVp);
+        scheduleTab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                CompatUtils.removeGlobalLayout(scheduleTab.getViewTreeObserver(),this);
+                scheduleTab.notifyDataSetChanged();
+                goDateSchedule(new Date());
+            }
+        });
         scheduleVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -234,7 +241,7 @@ public class ScheduesFragment extends BaseFragment {
             @Override public void onPageSelected(int position) {
                 Calendar c = Calendar.getInstance();
                 c.setTime(mFragmentAdapter.getCurDay());
-                c.add(Calendar.DATE, position - 30);
+                c.add(Calendar.DATE, position - mFragmentAdapter.getCurMidPos());
                 tvMonth.setText(c.get(Calendar.YEAR) + "年" + (c.get(Calendar.MONTH) + 1) + "月");
             }
 
@@ -244,93 +251,9 @@ public class ScheduesFragment extends BaseFragment {
         });
     }
 
-    public void setUpNaviSpinner() {
-
-        spinnerBeans = new ArrayList<>();
-        spinnerBeans.clear();
-        spinnerBeans.add(new SpinnerBean("", "全部日程", true));
-
-        String systemStr = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "systems", "");
-        if (!TextUtils.isEmpty(systemStr)) {
-            QcCoachSystemResponse qcCoachSystemResponse = new Gson().fromJson(systemStr, QcCoachSystemResponse.class);
-            List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-            mSystemsId.clear();
-            spinnerBeans.clear();
-            spinnerBeans.add(new SpinnerBean("", "全部日程", true));
-            for (int i = 0; i < systems.size(); i++) {
-                QcCoachSystem system = systems.get(i);
-                spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
-                mSystemsId.add(system.id);
-            }
-        } else {
-
-        }
-        //获取用户拥有的系统
-        //QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
-        //    .subscribeOn(Schedulers.io())
-        //    .observeOn(AndroidSchedulers.mainThread())
-        //    .subscribe(new Subscriber<QcCoachSystemResponse>() {
-        //        @Override public void onCompleted() {
-        //
-        //        }
-        //
-        //        @Override public void onError(Throwable e) {
-        //
-        //        }
-        //
-        //        @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-        //            if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-        //                if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-        //                    qcCoachSystemResponse.date.systems.size() == 0) {
-        //                } else {
-        //                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-        //                    mSystemsId.clear();
-        //                    spinnerBeans.clear();
-        //                    spinnerBeans.add(new SpinnerBean("", "全部日程", true));
-        //                    for (int i = 0; i < systems.size(); i++) {
-        //                        QcCoachSystem system = systems.get(i);
-        //                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id, ""));
-        //                        mSystemsId.add(system.id);
-        //                        if (spinnerBeanArrayAdapter != null) {
-        //                            spinnerBeanArrayAdapter.notifyDataSetChanged();
-        //                        }
-        //                    }
-        //
-        //                    PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachSystemResponse));
-        //                }
-        //            } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-        //
-        //            }
-        //        }
-        //    });
-
-        //spinnerBeanArrayAdapter = new ArrayAdapter<SpinnerBean>(getContext(), R.layout.spinner_checkview, spinnerBeans) {
-        //    @Override public View getView(int position, View convertView, ViewGroup parent) {
-        //        if (convertView == null) {
-        //            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_checkview, parent, false);
-        //        }
-        //        ((TextView) convertView).setText(spinnerBeans.get(position).text);
-        //        return convertView;
-        //    }
-        //
-        //    @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        //        if (convertView == null) {
-        //            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
-        //        }
-        //        SpinnerBean bean = getItem(position);
-        //        ((TextView) convertView.findViewById(R.id.spinner_tv)).setText(bean.text);
-        //        if (bean.isTitle) {
-        //            ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.GONE);
-        //            ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.VISIBLE);
-        //        } else {
-        //            ((ImageView) convertView.findViewById(R.id.spinner_up)).setVisibility(View.GONE);
-        //            ((ImageView) convertView.findViewById(R.id.spinner_icon)).setVisibility(View.VISIBLE);
-        //            ((ImageView) convertView.findViewById(R.id.spinner_icon)).setImageDrawable(new LoopView(bean.color));
-        //        }
-        //        return convertView;
-        //    }
-        //};
-        //spinnerBeanArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+    @OnClick(R.id.back_today)
+    public void backToady(){
+        goDateSchedule(new Date());
     }
 
     public void onAction(int v) {
@@ -367,23 +290,23 @@ public class ScheduesFragment extends BaseFragment {
         mFragmentAdapter.setCurCenterDay(date);
         mFragmentAdapter.notifyDataSetChanged();
         scheduleTab.notifyDataSetChanged();
-        scheduleVp.setCurrentItem(30, false);
+        scheduleVp.setCurrentItem(mFragmentAdapter.getCurMidPos(), false);
+
+        //scheduleTab.selectChild(mFragmentAdapter.getCurMidPos(),0);
     }
 
     @OnClick({ R.id.tv_month, R.id.icon_down }) public void onCalendarClick() {
-        //scheduleCalendar.setClickable(false);
         mDatePicker = new DatePicker();
         mDatePicker.show(getFragmentManager(), "");
         if (getActivity() instanceof Main2Activity) {
             Calendar c = Calendar.getInstance();
             c.setTime(mFragmentAdapter.getCurDay());
-            c.add(Calendar.DATE, scheduleVp.getCurrentItem() - 30);
+            c.add(Calendar.DATE, scheduleVp.getCurrentItem() - mFragmentAdapter.getCurMidPos());
             ((Main2Activity) getActivity()).setChooseDate(c.getTime());
         }
 
         mDatePicker.setListener(new DatePicker.DatePickerChange() {
             @Override public void onMonthChange(int year, int month) {
-                tvMonth.setText(year + "年" + month + "月");
             }
 
             @Override public void onDismiss(int year, int month) {
@@ -393,12 +316,9 @@ public class ScheduesFragment extends BaseFragment {
             }
         });
 
-        //updateCalendar();
     }
 
-    public void updateCalendar() {
 
-    }
 
     @Override public void onDestroyView() {
         RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
@@ -455,22 +375,29 @@ public class ScheduesFragment extends BaseFragment {
         public Date getCurDay() {
             return curDate;
         }
-
+        public int getCurMidPos(){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(curDate);
+            int weekNo = calendar.get(Calendar.DAY_OF_WEEK);
+            return (70+weekNo-1);
+        }
         @Override public Fragment getItem(int position) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
-            calendar.add(Calendar.DAY_OF_MONTH, position - 30);
+            int weekNo = calendar.get(Calendar.DAY_OF_WEEK);
+            calendar.add(Calendar.DAY_OF_MONTH, position - 70-weekNo+1);
             return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId, curModel);
         }
 
         @Override public int getCount() {
-            return 60;
+            return 147;
         }
 
         @Override public CharSequence getPageTitle(int position) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
-            calendar.add(Calendar.DAY_OF_MONTH, position - 30);
+            int weekNo = calendar.get(Calendar.DAY_OF_WEEK);
+            calendar.add(Calendar.DAY_OF_MONTH, position - 70-weekNo+1);
             StringBuffer sb = new StringBuffer();
             sb.append(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
             sb.append("\n");

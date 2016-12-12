@@ -295,7 +295,7 @@
     <string name="hint_help_order">点击这里帮会员约课</string>
     <string name="hint_order_self">点击这里让会员自主约课</string>
     <string name="need_account">需要结算</string>
-    <string name="back_today">回到\n今天</string>
+    <string name="back_today">今</string>
     <string name="d_spaces">%d块场地</string>
     <string name="alipay_grey">支付宝支付（暂不支持）</string>
     <string name="online_pay_client">在线支付平台:</string>
