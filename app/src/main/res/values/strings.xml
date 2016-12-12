@@ -179,12 +179,12 @@
     <string name="my_comfirms">我的资质认证</string>
     <string name="my_experience">我的工作经历</string>
     <string name="mine">我</string>
-    <string name="student_card_manage">会员卡管理</string>
-    <string name="manage_salers">销售管理</string>
-    <string name="manage_staffs">员工管理</string>
-    <string name="manage_cards">会员卡管理</string>
-    <string name="manage_signin">入场签到</string>
-    <string name="manage_acitivity">活动营销</string>
+    <string name="student_card_manage">发放和管理会员卡</string>
+    <string name="manage_salers">对会员跟进和维护</string>
+    <string name="manage_staffs">管理员工和教练</string>
+    <string name="manage_permission">创建管理营销活动</string>
+    <string name="manage_signin">管理会员签到签出</string>
+    <string name="manage_acitivity">创建管理营销活动</string>
     <string name="staff_manage_app">健身房管理</string>
     <string name="open_staff_app">打开健身房管理App</string>
     <string name="hint_function_in_staff_app">请在青橙健身房管理App中使用该功能</string>
@@ -288,7 +288,7 @@
     <string name="please_open_camera">请打开摄像头权限</string>
     <string name="sorry_no_permission">抱歉，您无该功能权限</string>
     <string name="hint_today_no_private_order">本日暂无会员预约私教课</string>
-    <string name="hint_no_schedule">本日没有任何课程安排，你可以在「管理」模块中使用「课程排期」来添加</string>
+    <string name="hint_no_schedule">本日没有任何课程安排，你可以在「健身房」模块中使用「课程排期」来添加</string>
     <string name="app_slogan">专为健身教练量身定制</string>
     <string name="app_download_link">http://fir.im/qingchengfit</string>
     <string name="app_icon_net">http://qcresource.b0.upaiyun.com/ic_launcher_trainer.png</string>
