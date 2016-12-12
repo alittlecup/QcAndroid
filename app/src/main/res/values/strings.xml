@@ -165,6 +165,8 @@
     <string name="permission_request_camara">请打开拍照权限</string>
     <string name="alert_write_brand_name">请填写健身房品牌名</string>
     <string name="guide_set_course_hint">-- 设置课程信息 --</string>
+    <string name="guide_set_group_course_hint">-- 设置团课信息 --</string>
+    <string name="guide_set_private_course_hint">-- 设置私教信息 --</string>
     <string name="name_call">名称</string>
     <string name="please_input_course_name">填写课程名称</string>
     <string name="single_ordre_count">单节可约人数</string>
@@ -300,5 +302,6 @@
     <string name="wechat_pay">微信支付</string>
     <string name="pay_online">在线支付</string>
     <string name="card_pay">会员卡支付</string>
+    <string name="choose_course_type">--选择课程种类--</string>
 
 </resources>

@@ -7,6 +7,7 @@
               android:orientation="vertical">
 
     <TextView
+        android:id="@+id/guide_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -18,6 +19,7 @@
         android:layout_height="56dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         >
 
         <cn.qingchengfit.widgets.CheckableButton

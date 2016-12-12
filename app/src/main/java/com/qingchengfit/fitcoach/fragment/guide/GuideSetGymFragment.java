@@ -187,7 +187,7 @@ import rx.schedulers.Schedulers;
             RxBus.getBus().post(new CoachInitBean());
             getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-                .replace(R.id.guide_frag, new GuideSetCourseFragment())
+                .replace(R.id.guide_frag, new GuideCourseTypeFragment())
                 .addToBackStack(null)
                 .commit();
         }
