@@ -60,7 +60,7 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/3/29 2016.
  */
-public class CourseBatchDetailFragment extends VpFragment implements CourseBatchDetailView, FlexibleAdapter.OnItemClickListener {
+public class CourseBatchDetailFragment extends VpFragment implements CourseBatchDetailView, FlexibleAdapter.OnItemClickListener,FlexibleAdapter.EndlessScrollListener  {
     public static final int RESULT_COURSE = 1;
 
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
@@ -121,6 +121,8 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         recyclerview.setAdapter(mCommonFlexAdapter);
         return view;
     }
+
+
 
     @Override public void onDestroyView() {
         presenter.unattachView();
@@ -218,6 +220,11 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         mCommonFlexAdapter.notifyDataSetChanged();
     }
 
+    @Override public void onLoadMore() {
+
+    }
+
+
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
@@ -266,4 +273,6 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     @OnClick(R.id.preview) public void onClick() {
         WebActivity.startWeb((mType == Configs.TYPE_PRIVATE ?Configs.PRIVATE_PRIVEIW:Configs.GROUP_PRIVEIW)+"?id="+mCoachService.getId()+"&model="+mCoachService.getModel(),getContext());
     }
+
+
 }
