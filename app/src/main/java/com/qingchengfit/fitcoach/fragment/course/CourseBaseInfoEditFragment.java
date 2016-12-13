@@ -94,9 +94,11 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
                 defaultCoursePlan.setVisibility(View.VISIBLE);
                 if (mCourse.getPlan() != null) defaultCoursePlan.setContent(mCourse.getPlan().getName());
                 courseMinCount.setVisibility(View.VISIBLE);
+                singleCount.setVisibility(View.VISIBLE);
             } else {//私教
                 courseMinCount.setVisibility(View.GONE);
                 defaultCoursePlan.setVisibility(View.GONE);
+                singleCount.setVisibility(View.GONE);
             }
         } else {
             mCourse = new CourseDetail();

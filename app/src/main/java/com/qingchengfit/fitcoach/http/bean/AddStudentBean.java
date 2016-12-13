@@ -17,10 +17,12 @@ public class AddStudentBean {
     public String username;
     public String phone;
     public int gender;
+    public String area_code;
 
-    public AddStudentBean(String username, String phone, int gender) {
+    public AddStudentBean(String username, String phone, int gender, String area_code) {
         this.username = username;
         this.phone = phone;
         this.gender = gender;
+        this.area_code = area_code;
     }
 }

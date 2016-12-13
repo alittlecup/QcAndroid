@@ -84,14 +84,16 @@
             >
         </View>
     </RelativeLayout>
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.PhoneEditText
         android:id="@+id/choose_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:civ_lable="手机 :"
-        app:civ_inputnum="true"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+        android:background="@color/white"
+        app:phone_show_icon="false"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        />
+    <include layout="@layout/divider_grey"/>
 
     <Button
         android:id="@+id/btn"
