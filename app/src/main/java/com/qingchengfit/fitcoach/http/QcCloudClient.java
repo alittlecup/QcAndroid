@@ -641,6 +641,8 @@ public class QcCloudClient {
 
         //清除notification
         @PUT("/api/notifications/clear/?tab=COACH_0") rx.Observable<QcResponse> qcClearAllNotification(@Query("coach_id") int id);
+        //@PUT("/api/notifications/clear/?tab=COACH_0")
+        //rx.Observable<QcResponse> qcClearAllNotification(@Query("coach_id") int id);
 
         //清除某条notification
         @PUT("/api/notifications/clear/") rx.Observable<QcResponse> qcClearOneNotification(@Query("coach_id") int id,

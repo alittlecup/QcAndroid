@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,27 +13,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.PasswordView;
+import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.TextpaperUtils;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.bean.SendSmsCode;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.ModifyPhoneNum;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-
 import java.lang.ref.WeakReference;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,19 +41,16 @@ import rx.schedulers.Schedulers;
 public class ModifyPhoneFragment extends BaseSettingFragment {
     public static final String TAG = ModifyPhoneFragment.class.getName();
 
-    @BindView(R.id.modifyphone_pw)
-    EditText modifyphonePw;
-    @BindView(R.id.modifyphone_phone)
-    EditText modifyphonePhone;
-    @BindView(R.id.modifyphone_getcode_btn)
-    TextView modifyphoneGetcodeBtn;
-    @BindView(R.id.modifyphone_code)
-    EditText modifyphoneCode;
+
+    //private  PostMsgHandler handler;
+    private Unbinder unbinder;
     @BindView(R.id.modifyphone_comfirm_btn)
     Button modifyphoneComfirmBtn;
-    //    MaterialDialog materialDialog;
-    private  PostMsgHandler handler;
-    private Unbinder unbinder;
+    @BindView(R.id.password) PasswordView password;
+    @BindView(R.id.checkcode)
+    PasswordView checkcode;
+    @BindView(R.id.phone_num) PhoneEditText phoneNum;
+    private PostMsgHandler handler;
 
     public ModifyPhoneFragment() {
     }
@@ -63,11 +59,6 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new PostMsgHandler(getContext());
-//        materialDialog = new MaterialDialog.Builder(getActivity())
-//                .content("修改中请稍后")
-//                .progress(true, 0)
-//
-//                .build();
     }
 
     @Override
@@ -76,47 +67,56 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_modify_phone, container, false);
         unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "更改手机号码");
+        checkcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (phoneNum.checkPhoneNum()){
+                    getCode();
+                    RxBus.getBus().post(new SendSmsCode());
+
+                }
+            }
+        });
         return view;
     }
 
     /**
      * 获取验证码
      */
-    @OnClick(R.id.modifyphone_getcode_btn)
     public void getCode() {
-        String phone = modifyphonePhone.getText().toString().trim();
-        if (phone.length() < 11) {
-            Toast.makeText(App.AppContex, getString(R.string.err_login_phonenum), Toast.LENGTH_SHORT).show();
-            return;
+        if (phoneNum.checkPhoneNum()){
+            QcCloudClient.getApi()
+                    .postApi
+                    .qcGetCode(new GetCodeBean.Builder()
+                            .area_code(phoneNum.getDistrictInt())
+                            .phone(phoneNum.getPhoneNum())
+                            .build())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<QcResponse>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(QcResponse qcResponse) {
+
+                            if (qcResponse.status == ResponseResult.SUCCESS) {
+                                handler.sendEmptyMessage(0);
+                            } else {
+                                //LogUtil.d(":" + qcResponse.msg);
+                            }
+                        }
+                    });
         }
 
-        QcCloudClient.getApi()
-                .postApi
-                .qcGetCode(new GetCodeBean(phone))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<QcResponse>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(QcResponse qcResponse) {
-
-                        if (qcResponse.status == ResponseResult.SUCCESS) {
-                            LogUtil.d("succ");
-                            handler.sendEmptyMessage(0);
-                        } else {
-                            LogUtil.d(":" + qcResponse.msg);
-                        }
-                    }
-                });
 
     }
 
@@ -125,48 +125,47 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
      */
     @OnClick(R.id.modifyphone_comfirm_btn)
     public void onConfirm() {
-        if (TextpaperUtils.isEmpty(modifyphonePw.getText().toString(), modifyphonePhone.getText().toString(), modifyphoneCode.getText().toString())) {
-            Toast.makeText(App.AppContex, "请填写正确的信息", Toast.LENGTH_SHORT).show();
-            return;
-        }
+       if (phoneNum.checkPhoneNum() && password.checkValid() && checkcode.checkValid()) {
 
-        ModifyPhoneNum modifyPhoneNum = new ModifyPhoneNum(modifyphonePhone.getText().toString()
-                , modifyphonePw.getText().toString(), modifyphoneCode.getText().toString()
-        );
+           fragmentCallBack.ShowLoading("请稍后");
+           QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, new ModifyPhoneNum.Builder()
+                    .phone(phoneNum.getPhoneNum())
+                   .area_code(phoneNum.getDistrictInt())
+                   .code(checkcode.getCode())
+                   .password(password.getCode())
+                   .build())
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .subscribe(new Observer<QcResponse>() {
+                       @Override
+                       public void onCompleted() {
 
-        fragmentCallBack.ShowLoading("请稍后");
-        QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, modifyPhoneNum)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<QcResponse>() {
-                    @Override
-                    public void onCompleted() {
+                       }
 
-                    }
+                       @Override
+                       public void onError(Throwable e) {
+                           fragmentCallBack.hideLoading();
+                           Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                       }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        fragmentCallBack.hideLoading();
-                        Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
-                    }
+                       @Override
+                       public void onNext(QcResponse qcResponse) {
+                           fragmentCallBack.hideLoading();
+                           if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                    @Override
-                    public void onNext(QcResponse qcResponse) {
-                        fragmentCallBack.hideLoading();
-                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                               Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
+                               handler.removeMessages(0);
+                               Intent it = new Intent(getActivity(), MainActivity.class);
+                               it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
+                               startActivity(it);
 
-                            Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
-                            handler.removeMessages(0);
-                            Intent it = new Intent(getActivity(), MainActivity.class);
-                            it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
-                            startActivity(it);
+                           } else {
 
-                        } else {
-
-                            Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                               Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                           }
+                       }
+                   });
+       }
 
     }
 
@@ -188,21 +187,21 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (modifyphoneGetcodeBtn != null) {
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(Integer.toString(count));
+            if (checkcode != null) {
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append(Integer.toString(count));
                 stringBuffer.append(getString(R.string.login_resend_msg));
 
-                modifyphoneGetcodeBtn.setText(stringBuffer.toString());
+                checkcode.setRightText(stringBuffer.toString());
                 if (count == 60)
-                    modifyphoneGetcodeBtn.setEnabled(false);
+                    checkcode.blockRightClick(true);
                 if (count > 0) {
                     count--;
                     handler.sendEmptyMessageDelayed(0, 1000);
                 } else {
                     count = 60;
-                    modifyphoneGetcodeBtn.setEnabled(true);
-                    modifyphoneGetcodeBtn.setText(getResources().getString(R.string.login_getcode));
+                    checkcode.blockRightClick(false);
+                    checkcode.setRightText(getResources().getString(R.string.login_getcode));
                 }
             }
         }

@@ -57,8 +57,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         multiDexEnabled true
-        versionCode 127
-        versionName "1.2.7"
+        versionCode 128
+        versionName "1.2.8"
         jackOptions {
             enabled false
         }
@@ -166,6 +166,15 @@ repositories {
 
 }
 
+repositories {
+    jcenter()
+    mavenCentral()
+    maven(){
+        url uri('../repo')
+    }
+
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
@@ -236,6 +245,16 @@ dependencies {
     apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+
+    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
+
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+    compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
+    //android support
+    //    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:multidex:1.0.1'
+    compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
+    compile files('libs/pushservice-5.2.0.12.jar')
 }
 
 //buildscript {

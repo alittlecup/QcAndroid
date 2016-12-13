@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 
 
 /**
@@ -24,9 +25,9 @@ public abstract class LoginPresenter  {
      * @param account
      * @param code
      */
-    public abstract void doLogin(String account,String code);
+    public abstract void doLogin(String arCode,String account,String code);
 
-    public abstract void getCode(String account);
+    public abstract void getCode(GetCodeBean getCodeBean);
     public abstract void goRegister();
 
 }

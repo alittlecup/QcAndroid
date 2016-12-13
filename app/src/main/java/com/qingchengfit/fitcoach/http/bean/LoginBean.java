@@ -21,7 +21,7 @@ public class LoginBean {
     public String push_channel_id;
     public String code;
     public String device_type;
-
+    public String area_code;
 
     public LoginBean() {
     }
@@ -30,6 +30,15 @@ public class LoginBean {
         this.phone = phone;
         this.password = password;
         this.code = password;
+    }
+
+
+    public String getArea_code() {
+        return area_code;
+    }
+
+    public void setArea_code(String area_code) {
+        this.area_code = area_code;
     }
 
     public String getPhone() {

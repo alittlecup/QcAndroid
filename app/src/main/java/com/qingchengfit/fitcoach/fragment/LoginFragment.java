@@ -69,26 +69,20 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void doLogin(String account, String code) {
-                if (BuildConfig.DEBUG) {
-                    EditText et = (EditText) getView().findViewById(R.id.et_ip);
-                    if (!TextUtils.isEmpty(et.getText())) {
-                        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
-                        Configs.Server = "http://" + et.getText().toString().trim() + "/";
-                        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+            public void doLogin(String arCode,String account, String code) {
+                    if (BuildConfig.DEBUG) {
+                        EditText et = (EditText) getView().findViewById(R.id.et_ip);
+                        if (!TextUtils.isEmpty(et.getText())) {
+                            Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
+                            Configs.Server = "http://" + et.getText().toString().trim() + "/";
+                            PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+                        }
                     }
-                }
-//                toWeixin.setData(uri);
-//                getActivity().startActivity(toWeixin);
-//                return;
-//
-// Intent toMain = new Intent(getActivity(), MainActivity.class);
-//                startActivity(toMain);
-//                getActivity().finish();
                 List<MutiSysSession> systems = new ArrayList<>();
                 LoginBean bean = new LoginBean();
                 bean.setPhone(account);
-                if (loginview.mGetCodeBtn.getVisibility() == View.VISIBLE)
+                bean.setArea_code(arCode);
+                if (!loginview.isPassword())
                     bean.setCode(code);
                 else
                     bean.setPassword(code);
@@ -124,55 +118,6 @@ public class LoginFragment extends Fragment {
                                 return rx.Observable.just(false);
                             }
                         })
-//                        .flatMap(qcResponLogin -> {
-//                            if (qcResponLogin != null) {
-//                                return QcCloudClient.getApi().getApi.qcGetSystem(qcResponLogin.data.coach.id, "session_id=" + qcResponLogin.data.session_id);
-//                            } else return null;
-//                        })
-//                        .flatMap(qcResponCoachSys -> {
-//                            if (qcResponCoachSys != null && qcResponCoachSys.getData() != null && qcResponCoachSys.getData().getSystems() != null && qcResponCoachSys.getData().getSystems().size() > 0) {
-//                                return Observable.just(qcResponCoachSys.getData().getSystems())
-//                                        .subscribeOn(Schedulers.newThread())
-//                                        .flatMapIterable(systemsEntities -> systemsEntities)
-//                                        .flatMap(systemsEntity -> {
-//                                            String url = systemsEntity.getUrl();
-//                                            return Observable.just(url);
-//                                        })
-//                                        .flatMap(s -> new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.FULL)
-//                                                        .setEndpoint(s)
-//                                                        .setRequestInterceptor(request ->
-//                                                                {
-//                                                                    QcResponToken responToken = null;
-//                                                                    try {
-//                                                                        responToken = QcCloudClient.getApi().getApi.qcGetToken();
-//                                                                    } catch (Exception e) {
-//                                                                    }
-//                                                                    if (responToken != null) {
-//                                                                        request.addHeader("X-CSRFToken", responToken.data.token);
-//                                                                        request.addHeader("Cookie", "csrftoken=" + responToken.data.token);
-//                                                                        request.addHeader("Cache-Control", "max-age=0");
-//                                                                    }
-//                                                                }
-//                                                        )
-//                                                        .build()
-//                                                        .create(QcCloudClient.MutiSystemApi.class)
-//                                                        .qcGetSession(new GetSysSessionBean(account, PreferenceUtils.getPrefString(getActivity(), "session_id", "")))
-//                                        )
-//                                        .flatMap(qcResponSystem -> {
-//                                            MutiSysSession sysSession = new MutiSysSession();
-//                                            sysSession.session_id = qcResponSystem.getData().getSession_id();
-//                                            sysSession.url = qcResponSystem.getData().getHost();
-//                                            systems.add(sysSession);
-//                                            return Observable.just(sysSession);
-//                                        })
-//                                        .last()
-//                                        .flatMap(sysSession -> {
-//                                            PreferenceUtils.setPrefString(getActivity(), "sessions", gson.toJson(systems));
-//                                            return Observable.just(true);
-//                                        });
-//                            } else return Observable.just(false);
-//
-//                        })
                         .subscribe(aBoolean -> {
                             if (aBoolean) {
                                 Intent toMain = new Intent(getActivity(), FragActivity.class);
@@ -192,26 +137,18 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void getCode(String account) {
-                if (BuildConfig.DEBUG) {
-                    EditText et = (EditText) getView().findViewById(R.id.et_ip);
-                    if (!TextUtils.isEmpty(et.getText())) {
-                        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
-                        Configs.Server = "http://" + et.getText().toString().trim() + "/";
-                        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+            public void getCode(GetCodeBean account) {
+                    if (BuildConfig.DEBUG) {
+                        EditText et = (EditText) getView().findViewById(R.id.et_ip);
+                        if (!TextUtils.isEmpty(et.getText())) {
+                            Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
+                            Configs.Server = "http://" + et.getText().toString().trim() + "/";
+                            PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+                        }
                     }
-                }
-//                QcCloudClient.getApi().getRestAdapter()
-//                        .setErrorHandler(cause -> {
-//                                    LogUtil.e(cause.toString());
-//                                    return null;
-//                                }
-//                        )
-//                        .build().create(QcCloudClient.PostApi.class)
-//                        .qcGetCode(new GetCodeBean(account))
                 QcCloudClient.getApi()
                         .postApi
-                        .qcGetCode(new GetCodeBean(account))
+                        .qcGetCode(account)
                         .subscribeOn(Schedulers.newThread())
                         .subscribe(qcResponse -> {
                             if (qcResponse.status == ResponseResult.SUCCESS) {

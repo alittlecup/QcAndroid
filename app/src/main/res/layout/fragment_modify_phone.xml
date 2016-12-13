@@ -2,88 +2,49 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/backgroud_grey"
               android:orientation="vertical"
               tools:context="com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment">
-
-    <LinearLayout
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        app:pw_show_left="false"
+        app:pw_mode="true"
         android:background="@color/white"
-        android:orientation="vertical"
-        >
-        <EditText
-            android:id="@+id/modifyphone_pw"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@color/transparent"
-            android:hint="请输入密码"
-            android:inputType="textPassword"
-            />
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+    />
+    <include
+        layout="@layout/divider_white"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+    >
+    </include>
+    <cn.qingchengfit.widgets.PhoneEditText
+        android:id="@+id/phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:phone_show_icon="false"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:background="@color/white"
 
-        <include
-            layout="@layout/divider_white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            >
-        </include>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
-
-            <EditText
-                android:id="@+id/modifyphone_phone"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:background="@color/transparent"
-                android:hint="请输入新手机号"
-                android:inputType="number"
-                />
-
-            <TextView
-                android:id="@+id/modifyphone_getcode_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/checkcode_line"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/login_getcode"
-
-                />
-
-        </RelativeLayout>
-
-        <include
-            layout="@layout/divider_white"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            >
-        </include>
-
-        <EditText
-            android:id="@+id/modifyphone_code"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@color/transparent"
-            android:hint="请输入验证码"
-            android:inputType="number"
-            />
-    </LinearLayout>
-
-    <include layout="@layout/divider_grey"></include>
+    />
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/checkcode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:pw_mode="false"
+        app:pw_show_left="false"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:background="@color/white"
+    />
+    <include layout="@layout/divider_grey"/>
 
     <Button
         android:id="@+id/modifyphone_comfirm_btn"
@@ -94,7 +55,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/login_comfirm"
-        />
+    />
 
     <TextView
         style="@style/Qc.TextCommonBlack"
@@ -106,5 +67,5 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="注：请同步修改您在“所属健身房”的手机号，否则将无法同步数据"
         android:textColor="@color/red"
-        />
+    />
 </LinearLayout>

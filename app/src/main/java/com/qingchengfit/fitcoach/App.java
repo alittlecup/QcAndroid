@@ -10,26 +10,25 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
-
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.utils.StringUtils;
 import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
-
+import im.fir.sdk.FIR;
 import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import cn.qingchengfit.widgets.utils.StringUtils;
-import im.fir.sdk.FIR;
+import retrofit.http.HEAD;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
+
 
 //import com.qingchengfit.fitcoach.di.ApplicationComponet;
 
@@ -117,6 +116,7 @@ public class App extends Application {
 //        refWatcher = LeakCanary.install(this);
         if (!BuildConfig.DEBUG)
             CrashHandler.getInstance().init(this);
+        ToastUtils.init(this);
         Configs.APP_ID = getString(R.string.wechat_code);
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {
