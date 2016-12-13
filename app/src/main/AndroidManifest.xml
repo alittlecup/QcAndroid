@@ -301,7 +301,9 @@
         android:name=".activity.WebActivity"
         android:label="@string/title_activity_notification"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustPan"/>
+        android:windowSoftInputMode="adjustResize"
+        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        />
     <activity
         android:name=".activity.WebActivityWithShare"
         android:screenOrientation="portrait"
