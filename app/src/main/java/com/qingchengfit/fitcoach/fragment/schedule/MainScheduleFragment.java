@@ -31,6 +31,7 @@ import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
+import java.util.Date;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -77,7 +78,7 @@ public class MainScheduleFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
 
         boolean isWeekView = PreferenceUtils.getPrefBoolean(getContext(),"is_week_view",false);
-        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag,isWeekView?new ScheduleWeekFragment() : new ScheduesFragment()).commitAllowingStateLoss();
+        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag,isWeekView?new ScheduleWeekFragment() : new ScheduesFragmentBuilder(new Date().getTime()).build()).commitAllowingStateLoss();
         ButterKnife.bind(this, view);
         RxBusAdd(NewPushMsg.class).subscribe(new Action1<NewPushMsg>() {
             @Override public void call(NewPushMsg newPushMsg) {

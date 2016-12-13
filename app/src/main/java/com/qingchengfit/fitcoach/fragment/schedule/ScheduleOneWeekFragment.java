@@ -126,7 +126,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
             @Override public void onEventClick(WeekViewEvent weekViewEvent, RectF rectF) {
                 HashMap<String, Object> tags = weekViewEvent.getTag();
                 //同一时段多于3个事件
-                boolean isLess = (boolean) tags.get("less");
+                boolean isLess = tags.get("less") != null;
                 if (isLess){
                     RxBus.getBus().post(new EventScheduleView.Builder().isWeekView(false).mDate(weekViewEvent.getStartTime().getTime()).build());
                 }else {

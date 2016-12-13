@@ -244,7 +244,7 @@ public class ScheduleWeekFragment extends BaseFragment {
             case R.id.day_view:
                 getFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_fade_in,R.anim.slide_fade_out)
-                    .replace(R.id.schedule_frag,new ScheduesFragment())
+                    .replace(R.id.schedule_frag,new ScheduesFragmentBuilder(new Date().getTime()).build())
                     .commitAllowingStateLoss();
                 break;
         }
