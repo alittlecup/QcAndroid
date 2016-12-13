@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
@@ -18,16 +19,12 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.event.EventSyncDone;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.items.GymItem;
+import com.qingchengfit.fitcoach.items.SyncGymItem;
 import com.qingchengfit.fitcoach.items.SyncWaitingItemItem;
-
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -98,7 +95,7 @@ public class SyncGymFragment extends BaseFragment {
                         syncGymHint.setText(getString(R.string.hint_sync_gyms,qcCoachServiceResponse.data.services.size()));
                         mData.clear();
                         for (int i = 0; i < qcCoachServiceResponse.data.services.size(); i++) {
-                            mData.add(new GymItem(qcCoachServiceResponse.data.services.get(i)));
+                            mData.add(new SyncGymItem(qcCoachServiceResponse.data.services.get(i)));
                         }
                         mData.add(syncItem);
                         commonFlexAdapter.notifyDataSetChanged();

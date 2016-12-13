@@ -3,4 +3,6 @@
   <string name="app_name">教练测试</string>
   <string name="gd_key">1ef657fc0369f070227b6a7c1d80d38c</string>
   <string name="baidu_provider">com.qingchengfit.fitcoach.debug.bdpush</string>
+  <string name="oem_tag">coach-test</string>
+
 </resources>

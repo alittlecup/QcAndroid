@@ -100,14 +100,11 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
 
         mPopupWindow = new PopupWindow(getContext());
-        if (getArguments().getInt("pos") == 0){
             Calendar now = Calendar.getInstance();
             int hour = now.get(Calendar.HOUR_OF_DAY);
             if (hour > 3)
                 weekView.goToHour(hour-3);
             else weekView.goToHour(hour);
-        }else
-            weekView.goToHour(7);
         weekView.setDateTimeInterpreter(new DateTimeInterpreter() {
             @Override public String interpretDate(Calendar calendar) {
                 String ret = getResources().getStringArray(R.array.week_simple_sunday_first)[calendar.get(Calendar.DAY_OF_WEEK) - 1];
@@ -177,6 +174,16 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         });
         weekView.setPostion(getArguments().getInt("pos"));
         return view;
+    }
+
+    @Override protected void onVisible() {
+        super.onVisible();
+        if (weekView != null) {
+            Calendar now = Calendar.getInstance();
+            int hour = now.get(Calendar.HOUR_OF_DAY);
+            if (hour > 3) weekView.goToHour(hour - 3);
+            else weekView.goToHour(hour);
+        }
     }
 
     public void refresh(){
