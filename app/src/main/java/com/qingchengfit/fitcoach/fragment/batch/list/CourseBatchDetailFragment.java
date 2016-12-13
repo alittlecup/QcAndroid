@@ -40,6 +40,7 @@ import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.items.BatchItem;
+import com.qingchengfit.fitcoach.items.HideBatchItem;
 import com.qingchengfit.fitcoach.items.HintItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -74,6 +75,8 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     private Course mCourese;
     private QcResponsePrivateDetail.PrivateCoach mTeacher;
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
+    List<AbstractFlexibleItem> mOutdateDatas = new ArrayList<>();
+
     CommonFlexAdapter mCommonFlexAdapter;
     @Inject CoachService mCoachService;
 
@@ -199,17 +202,26 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
 
     @Override public void onGoup(Course course, final List<QcResponseGroupDetail.GroupBatch> batch) {
         mDatas.clear();
+        mOutdateDatas.clear();
         boolean isOutofDate = false;
         for (int i = 0; i < batch.size(); i++) {
-            if (!isOutofDate && DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))) {
-                if (mDatas.size() == 0) {
-                    mDatas.add(new HintItem.Builder().text(mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
-                        : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
+            if (!isOutofDate) {
+                if (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))){
+                    if (mDatas.size() == 0) {
+                        mDatas.add(new HintItem.Builder().text(mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
+                            : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
+                    }
+                    mDatas.add(new HideBatchItem());
+                    isOutofDate = true;
+                    mOutdateDatas.add(new BatchItem(batch.get(i)));
+                }else {
+                    mDatas.add(new BatchItem(batch.get(i)));
                 }
-                mDatas.add(new HintItem.Builder().text("--已过期排期--").resBg(R.color.bg_grey).build());
-                isOutofDate = true;
+
+            }else{
+                mOutdateDatas.add(new BatchItem(batch.get(i)));
             }
-            mDatas.add(new BatchItem(batch.get(i)));
+
         }
         if (mDatas.size() == 0) {
             mDatas.add(new HintItem.Builder().text(
@@ -266,6 +278,14 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
                 .replace(R.id.frag, BatchDetailFragment.newInstance(mType, batch.id))
                 .addToBackStack(null)
                 .commit();
+        }else if (mCommonFlexAdapter.getItem(position) instanceof HideBatchItem){
+            mCommonFlexAdapter.toggleSelection(position);
+            if (mCommonFlexAdapter.isSelected(position)){
+                mDatas.addAll(mOutdateDatas);
+            }else {
+                mDatas.removeAll(mOutdateDatas);
+            }
+            mCommonFlexAdapter.notifyDataSetChanged();
         }
         return true;
     }

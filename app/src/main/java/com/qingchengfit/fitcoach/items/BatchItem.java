@@ -49,7 +49,16 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
     }
 
     @Override public boolean equals(Object o) {
-        return false;
+
+        if (o instanceof BatchItem){
+            try {
+                return ((BatchItem) o).batch.id.equals(batch.id);
+            }catch (Exception e){
+                return false;
+            }
+
+        }else return false;
+
     }
 
     public class BatchVH extends FlexibleViewHolder {
