@@ -20,12 +20,15 @@ import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
 import im.fir.sdk.FIR;
 import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-import retrofit.http.HEAD;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
@@ -57,6 +60,18 @@ import rx.plugins.RxJavaPlugins;
  * Created by Paper on 15/7/29 2015.
  */
 public class App extends Application {
+
+    // 数据接收的 URL
+    final String SA_SERVER_URL = "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
+    // 配置分发的 URL
+    final String SA_CONFIGURE_URL = "http://qingchengfit.cloud.sensorsdata.cn:8006/config?project=default";
+    // Debug 模式选项
+    //   SensorsDataAPI.DebugMode.DEBUG_OFF - 关闭 Debug 模式
+    //   SensorsDataAPI.DebugMode.DEBUG_ONLY - 打开 Debug 模式，校验数据，但不进行数据导入
+    //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
+    // 注意！请不要在正式发布的 App 中使用 Debug 模式！
+    final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_OFF;
+
     public static Context AppContex;
     public static boolean canXwalk;
     public static boolean gMainAlive = false;
@@ -117,6 +132,29 @@ public class App extends Application {
         if (!BuildConfig.DEBUG)
             CrashHandler.getInstance().init(this);
         ToastUtils.init(this);
+
+        //初始化神策
+        SensorsDataAPI.sharedInstance(
+            this,                               // 传入 Context
+            SA_SERVER_URL,                      // 数据接收的 URL
+            SA_CONFIGURE_URL,                   // 配置分发的 URL
+            SA_DEBUG_MODE);
+        try {
+            JSONObject properties = new JSONObject();
+            properties.put("os", "Android");
+            properties.put("version", AppUtils.getAppVer(this));
+            
+            SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+        }
+
+
+
+
         Configs.APP_ID = getString(R.string.wechat_code);
         String id = PreferenceUtils.getPrefString(this, "coach", "");
         if (TextUtils.isEmpty(id)) {

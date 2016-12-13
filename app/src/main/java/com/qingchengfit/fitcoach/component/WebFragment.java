@@ -501,6 +501,10 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                     getActivity().onBackPressed();
                 }
             });
+       }
+
+        @JavascriptInterface public void sensorsTrack(String json){
+
         }
 
         @JavascriptInterface public String getSessionId() {
