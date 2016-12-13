@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -26,6 +27,9 @@ import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.gson.Gson;
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -53,7 +57,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class ScheduesFragment extends BaseFragment {
+@FragmentWithArgs public class ScheduesFragment extends BaseFragment {
+    @Arg @Nullable Long mDateTime;
     public static final String TAG = ScheduesFragment.class.getName();
     @BindView(R.id.schedule_tab) PagerSlidingTabStrip scheduleTab;
     @BindView(R.id.schedule_vp) ViewPager scheduleVp;
@@ -71,7 +76,7 @@ public class ScheduesFragment extends BaseFragment {
     private int curPostion = 0;
 
     private QcSchedulesResponse mQcSchedulesResponse;
-    private Date mCurDate = new Date();
+
     private DatePicker mDatePicker;
     private Coach coach;
     private ArrayList<SpinnerBean> spinnerBeans;
@@ -83,11 +88,13 @@ public class ScheduesFragment extends BaseFragment {
     private String mTitle;
     private Unbinder unbinder;
 
+
     public ScheduesFragment() {
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -231,7 +238,7 @@ public class ScheduesFragment extends BaseFragment {
             @Override public void onGlobalLayout() {
                 CompatUtils.removeGlobalLayout(scheduleTab.getViewTreeObserver(),this);
                 scheduleTab.notifyDataSetChanged();
-                goDateSchedule(new Date());
+                goDateSchedule(mDateTime == null ?new Date():new Date(mDateTime));
             }
         });
         scheduleVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

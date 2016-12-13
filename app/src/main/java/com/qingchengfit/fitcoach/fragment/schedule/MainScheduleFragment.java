@@ -25,6 +25,7 @@ import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
+import com.qingchengfit.fitcoach.event.EventScheduleView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -94,7 +95,17 @@ public class MainScheduleFragment extends BaseFragment {
                 title.setText(mCoachService.getName());
             }
         });
+        //跳转到日视图或者周视图的某天
+        RxBusAdd(EventScheduleView.class)
+            .subscribe(new Action1<EventScheduleView>() {
+                @Override public void call(EventScheduleView eventScheduleView) {
+                    if (eventScheduleView.isWeekView){
 
+                    }else
+                        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag,new ScheduesFragmentBuilder(eventScheduleView.mDate.getTime()).build()).commitAllowingStateLoss();
+
+                }
+            });
         return view;
     }
 

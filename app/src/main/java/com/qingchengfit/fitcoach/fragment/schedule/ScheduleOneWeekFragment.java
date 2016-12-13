@@ -20,9 +20,11 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CalenderPopWindow;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
+import com.qingchengfit.fitcoach.event.EventScheduleView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -123,11 +125,17 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         weekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override public void onEventClick(WeekViewEvent weekViewEvent, RectF rectF) {
                 HashMap<String, Object> tags = weekViewEvent.getTag();
-                String url = (String) tags.get("url");
-                if (!TextUtils.isEmpty(url)) {
-                    Intent it = new Intent(getActivity(), WebActivity.class);
-                    it.putExtra("url", url);
-                    getParentFragment().startActivityForResult(it, 404);
+                //同一时段多于3个事件
+                boolean isLess = (boolean) tags.get("less");
+                if (isLess){
+                    RxBus.getBus().post(new EventScheduleView.Builder().isWeekView(false).mDate(weekViewEvent.getStartTime().getTime()).build());
+                }else {
+                    String url = (String) tags.get("url");
+                    if (!TextUtils.isEmpty(url)) {
+                        Intent it = new Intent(getActivity(), WebActivity.class);
+                        it.putExtra("url", url);
+                        getParentFragment().startActivityForResult(it, 404);
+                    }
                 }
             }
         });
