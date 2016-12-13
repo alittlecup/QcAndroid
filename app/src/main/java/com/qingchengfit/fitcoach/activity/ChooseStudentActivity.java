@@ -204,7 +204,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
         List<AddStudentBean> choosenstudentBeans = new ArrayList<>();
         for (StudentBean s : studentBeans) {
             if (s.isChosen) {
-                choosenstudentBeans.add(new AddStudentBean(s.username, s.phone, s.gender ? 1 : 0));
+                choosenstudentBeans.add(new AddStudentBean(s.username, s.phone, s.gender ? 1 : 0, null));
             }
         }
         if (choosenstudentBeans.size() == 0) {
