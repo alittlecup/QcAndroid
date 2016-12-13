@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,6 +70,7 @@ public class SetAccountFragment extends BaseFragment {
     @BindView(R.id.layout_need_pay) LinearLayout layoutNeedPay;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @BindView(R.id.sw_need_pay) SwitchCompat swNeedPay;
+    @BindView(R.id.layout_pay_detail) FrameLayout layoutPayDetail;
     private DialogList stucount;
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
     private CommonFlexAdapter mFlexAdapter;
@@ -104,8 +106,10 @@ public class SetAccountFragment extends BaseFragment {
         });
         if (getArguments() != null) {
             count.setContent(getArguments().getInt("o", 8) + "");
-            swNeedPay.setChecked(!getArguments().getBoolean("isfree",true));
+            swNeedPay.setChecked(!getArguments().getBoolean("isfree", true));
+            layoutPayDetail.setVisibility(swNeedPay.isChecked()?View.VISIBLE:View.GONE);
         }
+
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         recycleview.setHasFixedSize(true);
         mFlexAdapter = new CommonFlexAdapter(datas, this);

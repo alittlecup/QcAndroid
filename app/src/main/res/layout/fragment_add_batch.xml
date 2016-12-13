@@ -94,13 +94,14 @@
             />
 
       </LinearLayout>
+      <include layout="@layout/divider_grey"/>
       <com.qingchengfit.fitcoach.component.CommonInputView
           android:id="@+id/coach"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_showdivier="true"
-          app:civ_showright="true"
+          app:civ_showright="false"
 
           />
 
@@ -119,10 +120,10 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:civ_clickable="true"
-          app:civ_hint="@string/common_please_choose"
+          app:civ_hint="@string/unset"
           app:civ_lable="@string/need_account"
           app:civ_showright="true"
-
+          app:civ_showdivier="false"
           />
 
 
