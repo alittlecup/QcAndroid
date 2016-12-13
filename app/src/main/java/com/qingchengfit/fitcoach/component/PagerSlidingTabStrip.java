@@ -46,6 +46,7 @@ import com.qingchengfit.fitcoach.R;
  * 只用在schedules页面
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
+//public class PagerSlidingTabStrip extends CustomVpScrollView implements ViewPager.OnPageChangeListener {
     /**
      * system arrtributes
      */
