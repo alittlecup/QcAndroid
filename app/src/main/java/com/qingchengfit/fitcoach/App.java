@@ -143,7 +143,7 @@ public class App extends Application {
             JSONObject properties = new JSONObject();
             properties.put("os", "Android");
             properties.put("version", AppUtils.getAppVer(this));
-            
+
             SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
         } catch (JSONException e) {
             e.printStackTrace();

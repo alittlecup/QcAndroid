@@ -76,9 +76,13 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     private QcResponsePrivateDetail.PrivateCoach mTeacher;
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     List<AbstractFlexibleItem> mOutdateDatas = new ArrayList<>();
-
+    private Bundle saveState = new Bundle();
     CommonFlexAdapter mCommonFlexAdapter;
     @Inject CoachService mCoachService;
+    /**
+     * 记录是否展示已过期排期
+     */
+    private boolean isShow;
 
     public static CourseBatchDetailFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -204,6 +208,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         mDatas.clear();
         mOutdateDatas.clear();
         boolean isOutofDate = false;
+        int pos = -1;
         for (int i = 0; i < batch.size(); i++) {
             if (!isOutofDate) {
                 if (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))){
@@ -213,6 +218,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
                     }
                     mDatas.add(new HideBatchItem());
                     isOutofDate = true;
+                    pos = mDatas.size() -1;
                     mOutdateDatas.add(new BatchItem(batch.get(i)));
                 }else {
                     mDatas.add(new BatchItem(batch.get(i)));
@@ -229,7 +235,14 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
                 .resBg(R.color.white)
                 .build());
         }
+
         mCommonFlexAdapter.notifyDataSetChanged();
+        if (pos >=0 && isShow){
+            mCommonFlexAdapter.toggleSelection(pos);
+            mDatas.addAll(mOutdateDatas);
+        }
+        mCommonFlexAdapter.notifyDataSetChanged();
+
     }
 
     @Override public void onLoadMore() {
@@ -281,8 +294,10 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         }else if (mCommonFlexAdapter.getItem(position) instanceof HideBatchItem){
             mCommonFlexAdapter.toggleSelection(position);
             if (mCommonFlexAdapter.isSelected(position)){
+                isShow = true;
                 mDatas.addAll(mOutdateDatas);
             }else {
+                isShow = false;
                 mDatas.removeAll(mOutdateDatas);
             }
             mCommonFlexAdapter.notifyDataSetChanged();
