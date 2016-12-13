@@ -32,6 +32,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
+import com.qingchengfit.fitcoach.items.ChosenGymItem;
 import com.qingchengfit.fitcoach.items.GymItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
@@ -121,14 +122,22 @@ import rx.schedulers.Schedulers;
                 @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
                     if (qcCoachServiceResponse.status == 200) {
                         mDatas.clear();
+                        int selectPos = -1;
                         List<CoachService> services = qcCoachServiceResponse.data.services;
                         if (services != null) {
                             for (int i = 0; i < services.size(); i++) {
-                                mDatas.add(new GymItem(services.get(i)));
+                                if (services.get(i).getId() == mCoachService.getId() && services.get(i).getModel().equals(mCoachService.getModel())){
+                                    selectPos = i;
+                                }
+                                mDatas.add(new ChosenGymItem(services.get(i)));
                             }
                         }
                         mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
+
                         mAdapter.notifyDataSetChanged();
+                        if (selectPos >= 0)
+                            mAdapter.toggleSelection(selectPos);
+
                     } else {
                         ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
                     }

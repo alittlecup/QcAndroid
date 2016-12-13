@@ -322,7 +322,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
 
     @Override
     public void onDestroyView() {
-        if (!httpsub.isUnsubscribed())
+        if (httpsub != null && !httpsub.isUnsubscribed())
             httpsub.unsubscribe();
         super.onDestroyView();
         unbinder.unbind();

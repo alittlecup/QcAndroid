@@ -173,7 +173,7 @@ public class ChooseGymActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (!mHttpsub.isUnsubscribed())
+        if (mHttpsub != null && !mHttpsub.isUnsubscribed())
             mHttpsub.unsubscribe();
         super.onDestroy();
     }

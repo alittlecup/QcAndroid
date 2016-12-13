@@ -81,6 +81,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
 import com.qingchengfit.fitcoach.http.bean.QcResponsCreatBrand;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseActivities;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
@@ -274,6 +275,10 @@ public class QcCloudClient {
         @POST("/api/users/{id}/") rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
 
         @GET("/api/android/coaches/{id}/welcome/") rx.Observable<QcResponDrawer> getDrawerInfo(@Path("id") String id);
+
+        @GET("/api/qingcheng/activities/notify/") rx.Observable<QcResponseActivities> getActivitiesCount();
+
+
 
         @GET("/api/coaches/{id}/systems/") rx.Observable<QcResponCoachSys> qcGetSystem(@Path("id") String id,
             @Header("Cookie") String session_id);

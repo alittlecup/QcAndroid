@@ -92,7 +92,7 @@ public class MineFragmentFragment extends Fragment {
     }
 
     public void queryData() {
-        if (sp1 != null && sp1.isUnsubscribed())
+        if (sp1 != null && !sp1.isUnsubscribed())
             sp1.unsubscribe();
         sp1 = QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
             .observeOn(AndroidSchedulers.mainThread())

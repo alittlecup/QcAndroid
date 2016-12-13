@@ -43,11 +43,13 @@ import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseActivities;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
@@ -66,6 +68,7 @@ import java.io.OutputStream;
 import java.util.Date;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -97,6 +100,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private GuideWindow gw;
     private GuideWindow gd1;
     private GuideWindow gd2;
+    private Subscription spQCZX;
 
     public CoachService getCoachService() {
         return mCoachService;
@@ -170,14 +174,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         if (!PreferenceUtils.getPrefBoolean(this, "guide_1", false)) {
                             gd1 = new GuideWindow(this, getString(R.string.hint_order_self), GuideWindow.DOWN);
                             gd1.show(orderStudnet);
-                            PreferenceUtils.setPrefBoolean(this, "guide_1", true);
+                            //PreferenceUtils.setPrefBoolean(this, "guide_1", true);
                         }
                         break;
                     case 2:
                         if (!PreferenceUtils.getPrefBoolean(this, "guide_2", false)) {
                             gd2 = new GuideWindow(this, getString(R.string.hint_help_order), GuideWindow.UP);
                             gd2.show(webPosition);
-                            PreferenceUtils.setPrefBoolean(this,"guide_2",true);
+                            //
                         }
                         break;
                     case 3:
@@ -187,7 +191,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                             if (tabview.getChildCount() > 1) {
                                 gw.show(tabview.getChildAt(1));
                             }
-                            PreferenceUtils.setPrefBoolean(this,"guide_3",true);
+                            //
                         }
                         break;
                     default:
@@ -198,13 +202,16 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
                     case 1:
                         if (gd1 != null && gd1.isShowing()) gd1.dismiss();
+                        PreferenceUtils.setPrefBoolean(this, "guide_1", true);
 
                         break;
                     case 2:
                         if (gd2 != null && gd2.isShowing()) gd2.dismiss();
+                        PreferenceUtils.setPrefBoolean(this,"guide_2",true);
                         break;
                     case 3:
                         if (gw != null && gw.isShowing()) gw.dismiss();
+                        PreferenceUtils.setPrefBoolean(this,"guide_3",true);
                         break;
                     default:
                 }
@@ -216,9 +223,25 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             }
 
             @Override public void onPageSelected(int position) {
-                if (position == 1 && gw != null && gw.isShowing()) {
+                if (position == 1 && gw != null) {
                     gw.dismiss();
+                    PreferenceUtils.setPrefBoolean(Main2Activity.this,"guide_3",true);
                 }
+                if (position !=0 ){
+                    if (gd2 != null) gd2.dismiss();
+                    if (gd1 != null ) gd1.dismiss();
+
+                }else {
+                    if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false)) {
+                        gd1 = new GuideWindow(Main2Activity.this, getString(R.string.hint_order_self), GuideWindow.DOWN);
+                        gd1.show(orderStudnet);
+                    }
+                    if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                        gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
+                        gd2.show(webPosition);
+                    }
+                }
+
             }
 
             @Override public void onPageScrollStateChanged(int state) {
@@ -231,12 +254,12 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false)) {
                     gd1 = new GuideWindow(Main2Activity.this, getString(R.string.hint_order_self), GuideWindow.DOWN);
                     gd1.show(orderStudnet);
-                    PreferenceUtils.setPrefBoolean(Main2Activity.this, "guide_1", true);
+
                 }
                 if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
                     gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
                     gd2.show(webPosition);
-                    PreferenceUtils.setPrefBoolean(Main2Activity.this,"guide_2",true);
+
                 }
             }
         });
@@ -327,6 +350,23 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     @Override protected void onResume() {
         super.onResume();
         initVersion();
+        if (spQCZX != null && !spQCZX.isUnsubscribed())
+            spQCZX.unsubscribe();
+        spQCZX = QcCloudClient.getApi().getApi.getActivitiesCount()
+             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                             .subscribe(new Action1<QcResponseActivities>() {
+                                 @Override
+                                 public void call(QcResponseActivities qcResponse) {
+                                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                                         tabview.setPointStatu(2,qcResponse.data.count > 0);
+                                     }
+                                 }
+                             }, new Action1<Throwable>() {
+                                 @Override
+                                 public void call(Throwable throwable) {
+
+                                 }
+                             });
     }
 
     @Override public void onBackPressed() {
@@ -341,6 +381,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         if (mDownloadThread != null) mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
         RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
+        if (spQCZX != null)
+            spQCZX.unsubscribe();
     }
 
     private void initBDPush() {

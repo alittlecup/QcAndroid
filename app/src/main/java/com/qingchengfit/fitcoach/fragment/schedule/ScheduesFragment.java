@@ -93,6 +93,7 @@ public class ScheduesFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
         unbinder = ButterKnife.bind(this, view);
+        PreferenceUtils.setPrefBoolean(getContext(),"is_week_view",false);
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
         if (TextUtils.isEmpty(id)) {

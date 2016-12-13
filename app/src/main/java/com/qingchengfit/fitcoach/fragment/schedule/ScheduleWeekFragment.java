@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.marcohc.robotocalendar.EventMonthChange;
@@ -69,7 +70,7 @@ public class ScheduleWeekFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        PreferenceUtils.setPrefBoolean(getContext(),"is_week_view",true);
         if (getParentFragment() instanceof MainScheduleFragment){
             mCoachService = ((MainScheduleFragment) getParentFragment()).getCoachService();
         }

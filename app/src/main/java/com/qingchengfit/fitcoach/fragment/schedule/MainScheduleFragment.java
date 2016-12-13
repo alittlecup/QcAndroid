@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -73,7 +74,9 @@ public class MainScheduleFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
-        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag, new ScheduesFragment()).commitAllowingStateLoss();
+
+        boolean isWeekView = PreferenceUtils.getPrefBoolean(getContext(),"is_week_view",false);
+        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag,isWeekView?new ScheduleWeekFragment() : new ScheduesFragment()).commitAllowingStateLoss();
         ButterKnife.bind(this, view);
         RxBusAdd(NewPushMsg.class).subscribe(new Action1<NewPushMsg>() {
             @Override public void call(NewPushMsg newPushMsg) {
@@ -158,6 +161,7 @@ public class MainScheduleFragment extends BaseFragment {
             case R.id.layout_title://选择场馆
                 Intent toChooseGym = new Intent(getContext(), ChooseActivity.class);
                 toChooseGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM_SCHEDULE);
+                toChooseGym.putExtra("service",mCoachService);
                 startActivityForResult(toChooseGym, 1);
                 break;
             case R.id.student_order://会员预约

@@ -7,8 +7,8 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.fragment.ChooseAddressFragment;
 import com.qingchengfit.fitcoach.fragment.guide.AddCycleFragment;
-import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
-import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragment;
+import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
+import com.qingchengfit.fitcoach.fragment.schedule.ChooseScheduleGymFragmentBuilder;
 
 public class ChooseActivity extends BaseAcitivity {
 
@@ -29,10 +29,10 @@ public class ChooseActivity extends BaseAcitivity {
                 fragment = AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"),getIntent().getLongExtra("len",0));
                 break;
             case TO_CHOSSE_GYM:
-                fragment = new ChooseGymFragment();
+                fragment = new ChooseGymFragmentBuilder(getIntent().getParcelableExtra("service")).build();
                 break;
             case TO_CHOSSE_GYM_SCHEDULE:
-                fragment = new ChooseScheduleGymFragment();
+                fragment = new ChooseScheduleGymFragmentBuilder(getIntent().getParcelableExtra("service")).build();
                 break;
             default:
                 fragment = new ChooseAddressFragment();

@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -28,6 +32,8 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
+import com.qingchengfit.fitcoach.items.ChosenAllGymItem;
+import com.qingchengfit.fitcoach.items.ChosenGymItem;
 import com.qingchengfit.fitcoach.items.GymItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
@@ -59,8 +65,8 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/16.
  */
-public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
-
+@FragmentWithArgs public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
+    @Arg @Nullable CoachService mCoachService;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
@@ -68,7 +74,10 @@ public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleA
     protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     protected CommonFlexAdapter mAdapter;
 
-
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
+    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
@@ -112,14 +121,20 @@ public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleA
                     if (qcCoachServiceResponse.status == 200) {
                         mDatas.clear();
                         List<CoachService> services = qcCoachServiceResponse.data.services;
-                        mDatas.add(new GymItem(new CoachService.Builder().name("全部场馆").id(0).build()));
+                        mDatas.add(new ChosenAllGymItem());
+                        int selectpos = 0;
                         if (services != null) {
                             for (int i = 0; i < services.size(); i++) {
-                                mDatas.add(new GymItem(services.get(i)));
+                                if (mCoachService != null && mCoachService.getId() == services.get(i).getId()
+                                    && mCoachService.getModel().equals(services.get(i).getModel()))
+                                    selectpos = i+1;
+                                mDatas.add(new ChosenGymItem(services.get(i)));
                             }
                         }
                         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
                         mAdapter.notifyDataSetChanged();
+                        mAdapter.toggleSelection(selectpos);
+
                     } else {
                         ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
                     }
@@ -142,6 +157,8 @@ public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleA
         } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
             Intent goBrands = new Intent(getActivity(), ChooseBrandActivity.class);
             startActivityForResult(goBrands, 1);
+        }else if (mAdapter.getItem(position) instanceof ChosenAllGymItem){
+            RxBus.getBus().post(new EventScheduleService(new CoachService.Builder().id(0).build()));
         }
         return true;
     }

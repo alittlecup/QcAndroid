@@ -303,5 +303,6 @@
     <string name="pay_online">在线支付</string>
     <string name="card_pay">会员卡支付</string>
     <string name="choose_course_type">--选择课程种类--</string>
+    <string name="all_schedules">全部日程</string>
 
 </resources>
