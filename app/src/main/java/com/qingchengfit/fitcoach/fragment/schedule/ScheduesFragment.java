@@ -160,7 +160,7 @@ import rx.functions.Action1;
                 }
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(mFragmentAdapter.getCurDay());
-                calendar.add(Calendar.DAY_OF_MONTH, scheduleVp.getCurrentItem() - 30);
+                calendar.add(Calendar.DATE, scheduleVp.getCurrentItem() - mFragmentAdapter.getCurMidPos());
                 sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(calendar.getTime()));
                 if (eventScheduleAction.mCoachService != null) {
                     if (!eventScheduleAction.mCoachService.has_permission && eventScheduleAction.action != 1) {

@@ -186,7 +186,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         break;
                     case 3:
                         Boolean isInit = PreferenceUtils.getPrefBoolean(this, "guide_3", false);
-                        if (!isInit && gw != null && !gw.isShowing()) {
+                        if (!isInit && (gw == null || !gw.isShowing())) {
                             gw = new GuideWindow(this, "使用「课程排期」安排课程", GuideWindow.UP);
                             if (tabview.getChildCount() > 1) {
                                 gw.show(tabview.getChildAt(1));
@@ -202,7 +202,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     case 1:
                         if (gd1 != null && gd1.isShowing()) gd1.dismiss();
                         PreferenceUtils.setPrefBoolean(this, "guide_1", true);
-
+                        if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
+                            !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                            gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
+                            gd2.show(webPosition);
+                        }
                         break;
                     case 2:
                         if (gd2 != null && gd2.isShowing()) gd2.dismiss();
@@ -235,7 +239,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         gd1 = new GuideWindow(Main2Activity.this, getString(R.string.hint_order_self), GuideWindow.DOWN);
                         gd1.show(orderStudnet);
                     }
-                    if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                    if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
+                        !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
                         gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
                         gd2.show(webPosition);
                     }
@@ -255,7 +260,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     gd1.show(orderStudnet);
 
                 }
-                if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
+                    !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
                     gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
                     gd2.show(webPosition);
 
