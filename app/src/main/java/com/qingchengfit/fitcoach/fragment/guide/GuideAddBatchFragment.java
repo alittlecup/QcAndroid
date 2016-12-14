@@ -120,17 +120,18 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
         c.add(Calendar.DATE,-1);
         enddate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
 
-        ArrayList<Integer> defautxxx = new ArrayList<>();
-        defautxxx.add(1);
-        defautxxx.add(3);
-        defautxxx.add(5);
-        defautxxx.add(7);
-        mData.add(new BatchCircleItem(new CmBean(defautxxx,DateUtils.getDateFromHHmm("9:00"),DateUtils.getDateFromHHmm("12:00"))));
-        defautxxx.clear();
-        defautxxx.add(2);
-        defautxxx.add(4);
-        defautxxx.add(5);
-        mData.add(new BatchCircleItem(new CmBean(defautxxx,DateUtils.getDateFromHHmm("12:00"),DateUtils.getDateFromHHmm("20:00"))));
+        ArrayList<Integer> defautxxx1 = new ArrayList<>();
+        defautxxx1.add(1);
+        defautxxx1.add(3);
+        defautxxx1.add(5);
+        defautxxx1.add(7);
+        mData.add(new BatchCircleItem(new CmBean(defautxxx1,DateUtils.getDateFromHHmm("9:00"),DateUtils.getDateFromHHmm("12:00"))));
+        ArrayList<Integer> defautxxx2 = new ArrayList<>();
+        defautxxx2.clear();
+        defautxxx2.add(2);
+        defautxxx2.add(4);
+        defautxxx2.add(6);
+        mData.add(new BatchCircleItem(new CmBean(defautxxx2,DateUtils.getDateFromHHmm("12:00"),DateUtils.getDateFromHHmm("20:00"))));
         mData.add(0, new AddBatchCircleItem(getString(R.string.add_course_circle)));
         mAdapter = new CommonFlexAdapter(mData, this);
         batchDate.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -249,7 +250,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
             List<InitBatch> initBatches1 = new ArrayList<>();
             initBatches1.add(new InitBatch.Builder()
                     .from_date(startdate.getContent())
-                    .to_date(startdate.getContent())
+                    .to_date(enddate.getContent())
                     .course_name(courseName.getText().toString().trim())
                     .time_repeats(CmBean.geTimeRepFromBean(initBatches))
                     .build());
