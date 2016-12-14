@@ -186,12 +186,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         break;
                     case 3:
                         Boolean isInit = PreferenceUtils.getPrefBoolean(this, "guide_3", false);
-                        if (!isInit) {
+                        if (!isInit && gw != null && !gw.isShowing()) {
                             gw = new GuideWindow(this, "使用「课程排期」安排课程", GuideWindow.UP);
                             if (tabview.getChildCount() > 1) {
                                 gw.show(tabview.getChildAt(1));
                             }
-                            //
                         }
                         break;
                     default:
@@ -223,7 +222,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             }
 
             @Override public void onPageSelected(int position) {
-                if (position == 1 && gw != null) {
+                if (position !=0 && gw != null) {
                     gw.dismiss();
                     PreferenceUtils.setPrefBoolean(Main2Activity.this,"guide_3",true);
                 }
@@ -286,6 +285,19 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
     @Override public void onfinish() {
 
+    }
+
+    /**
+     * 设置tab角标
+     * @param pos
+     * @param show
+     */
+    public void showIcon(int pos,boolean show){
+        if (tabview != null){
+            if (tabview.getChildCount() > pos){
+                tabview.setPointStatu(pos,show);
+            }
+        }
     }
 
     public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
