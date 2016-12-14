@@ -175,7 +175,12 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         weekView.setPostion(getArguments().getInt("pos"));
         return view;
     }
-
+    public void setPause(boolean pause){
+        if (weekView != null){
+            weekView.setPause(pause);
+            weekView.notifyDatasetChanged();
+        }
+    }
     @Override protected void onVisible() {
         super.onVisible();
         if (weekView != null) {

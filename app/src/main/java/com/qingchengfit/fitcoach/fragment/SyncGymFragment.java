@@ -99,6 +99,7 @@ public class SyncGymFragment extends BaseFragment {
                         }
                         mData.add(syncItem);
                         commonFlexAdapter.notifyDataSetChanged();
+                        recyclerview.scrollToPosition(mData.size());
                         RxRegiste(rx.Observable.just("")
                                 .delay(2, TimeUnit.SECONDS)
                                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

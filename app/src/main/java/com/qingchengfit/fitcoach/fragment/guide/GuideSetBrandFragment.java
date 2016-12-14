@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
@@ -76,7 +77,8 @@ public class GuideSetBrandFragment extends BaseFragment {
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
-                                        Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
+                                        Glide.with(getContext()).load(
+                                            PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
                                         imgUrl = s;
                                     }
                                 });

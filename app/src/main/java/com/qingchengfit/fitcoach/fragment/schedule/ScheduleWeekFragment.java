@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,11 +55,11 @@ import rx.functions.Action1;
  */
 public class ScheduleWeekFragment extends BaseFragment {
 
-
     @BindView(R.id.bg_show) View bgShow;
     @BindView(R.id.web_floatbtn) FloatingActionsMenu webFloatbtn;
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.tv_month) TextView tvMonth;
+    @BindView(R.id.btn_back_today) FrameLayout btnBackToday;
     private CoachService mCoachService;
     private DatePicker dataPicker;
     private ScheduleWeekAdapter adapter;
@@ -70,21 +71,21 @@ public class ScheduleWeekFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_week, container, false);
         unbinder = ButterKnife.bind(this, view);
-        PreferenceUtils.setPrefBoolean(getContext(),"is_week_view",true);
-        if (getParentFragment() instanceof MainScheduleFragment){
+        PreferenceUtils.setPrefBoolean(getContext(), "is_week_view", true);
+        if (getParentFragment() instanceof MainScheduleFragment) {
             mCoachService = ((MainScheduleFragment) getParentFragment()).getCoachService();
         }
         adapter = new ScheduleWeekAdapter(getChildFragmentManager());
         tvMonth.setText(DateUtils.getChineseMonth(new Date()));
         viewpager.setAdapter(adapter);
-        viewpager.setCurrentItem(250+adapter.getPostion());
+        viewpager.setCurrentItem(250 + adapter.getPostion());
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
             @Override public void onPageSelected(int position) {
-                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position-250+adapter.getPostion()).first);
+                Date d = DateUtils.formatDateFromYYYYMMDD(DateUtils.getWeek(position - 250 + adapter.getPostion()).first);
                 tvMonth.setText(DateUtils.getChineseMonth(d));
             }
 
@@ -93,23 +94,23 @@ public class ScheduleWeekFragment extends BaseFragment {
             }
         });
 
-         btn1 = new FloatingActionButton(getActivity());
+        btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
         btn1.setColorNormal(ContextCompat.getColor(getContext(), R.color.rest_color));
         btn1.setTitle("设置休息");
         //
-         btn2 = new FloatingActionButton(getActivity());
+        btn2 = new FloatingActionButton(getActivity());
         btn2.setIcon(R.drawable.ic_action_group);
         btn2.setColorNormal(ContextCompat.getColor(getContext(), R.color.group_color));
         btn2.setTitle("代约团课");
 
-         btn3 = new FloatingActionButton(getActivity());
+        btn3 = new FloatingActionButton(getActivity());
         btn3.setIcon(R.drawable.ic_action_private);
         btn3.setColorNormal(ContextCompat.getColor(getContext(), R.color.private_color));
         btn3.setTitle("代约私教");
-        btn1.setOnClickListener(v1 -> onAction(1,new Date()));
-        btn2.setOnClickListener(v1 -> onAction(3,new Date()));
-        btn3.setOnClickListener(v1 -> onAction(2,new Date()));
+        btn1.setOnClickListener(v1 -> onAction(1, new Date()));
+        btn2.setOnClickListener(v1 -> onAction(3, new Date()));
+        btn3.setOnClickListener(v1 -> onAction(2, new Date()));
         webFloatbtn.addButton(btn1);
         webFloatbtn.addButton(btn2);
         webFloatbtn.addButton(btn3);
@@ -118,60 +119,71 @@ public class ScheduleWeekFragment extends BaseFragment {
                 btn1.setEnabled(true);
                 btn2.setEnabled(true);
                 btn3.setEnabled(true);
+                //获取当前fragment
+                Fragment f = (Fragment) adapter.instantiateItem(viewpager,viewpager.getCurrentItem());
+                if (f instanceof ScheduleOneWeekFragment){
+                    ((ScheduleOneWeekFragment) f).setPause(true);
+                }
                 bgShow.setVisibility(View.VISIBLE);
+
                 mClickDate = null;
             }
 
             @Override public void onMenuCollapsed() {
                 bgShow.setVisibility(View.GONE);
+                Fragment f = (Fragment) adapter.instantiateItem(viewpager,viewpager.getCurrentItem());
+                if (f instanceof ScheduleOneWeekFragment){
+                    ((ScheduleOneWeekFragment) f).setPause(false);
+                }
+                btnBackToday.setVisibility(View.VISIBLE);
+                btnBackToday.postInvalidateDelayed(500);
             }
         });
 
-        RxBusAdd(EventScheduleAction.class)
-            .subscribe(new Action1<EventScheduleAction>() {
-                @Override public void call(EventScheduleAction eventScheduleAction) {
-                    StringBuffer sb = new StringBuffer(Configs.Server);
-                    switch (eventScheduleAction.action) {
-                        case 1:
-                            sb.append(Configs.SCHEDULE_REST);
-                            break;
-                        case 2:
-                            sb.append(Configs.SCHEDULE_PRIVATE);
-                            break;
-                        case 3:
-                            sb.append(Configs.SCHEDULE_GROUP);
-                            break;
-                    }
-                    Calendar calendar = Calendar.getInstance();
-                    sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(mClickDate == null?new Date():mClickDate));
-                    if (eventScheduleAction.mCoachService != null){
-                        if (!eventScheduleAction.mCoachService.has_permission){
-                            showAlert(R.string.alert_permission_forbid);
-                            return;
-                        }else {
-                            sb.append("&id=").append(eventScheduleAction.mCoachService.getId())
-                                .append("&model=").append(eventScheduleAction.mCoachService.getModel());
-                        }
-                    }
-
-                    Intent toWeb = new Intent(getActivity(), WebActivity.class);
-                    toWeb.putExtra("url", sb.toString());
-                    startActivityForResult(toWeb, 404);
+        RxBusAdd(EventScheduleAction.class).subscribe(new Action1<EventScheduleAction>() {
+            @Override public void call(EventScheduleAction eventScheduleAction) {
+                StringBuffer sb = new StringBuffer(Configs.Server);
+                switch (eventScheduleAction.action) {
+                    case 1:
+                        sb.append(Configs.SCHEDULE_REST);
+                        break;
+                    case 2:
+                        sb.append(Configs.SCHEDULE_PRIVATE);
+                        break;
+                    case 3:
+                        sb.append(Configs.SCHEDULE_GROUP);
+                        break;
                 }
-            });
+                Calendar calendar = Calendar.getInstance();
+                sb.append("?").append("date=").append(DateUtils.Date2YYYYMMDD(mClickDate == null ? new Date() : mClickDate));
+                if (eventScheduleAction.mCoachService != null) {
+                    if (!eventScheduleAction.mCoachService.has_permission) {
+                        showAlert(R.string.alert_permission_forbid);
+                        return;
+                    } else {
+                        sb.append("&id=")
+                            .append(eventScheduleAction.mCoachService.getId())
+                            .append("&model=")
+                            .append(eventScheduleAction.mCoachService.getModel());
+                    }
+                }
 
+                Intent toWeb = new Intent(getActivity(), WebActivity.class);
+                toWeb.putExtra("url", sb.toString());
+                startActivityForResult(toWeb, 404);
+            }
+        });
 
         RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {
             @Override public void call(EventMonthChange eventMonthChange) {
                 viewpager.setCurrentItem(eventMonthChange.pos);
             }
         });
-        RxBusAdd(EventScheduleService.class)
-            .subscribe(new Action1<EventScheduleService>() {
-                @Override public void call(EventScheduleService eventScheduleService) {
-                    mCoachService = eventScheduleService.mCoachService;
-                }
-            });
+        RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
+            @Override public void call(EventScheduleService eventScheduleService) {
+                mCoachService = eventScheduleService.mCoachService;
+            }
+        });
         return view;
     }
 
@@ -179,9 +191,10 @@ public class ScheduleWeekFragment extends BaseFragment {
         webFloatbtn.collapse();
     }
 
-    @OnClick(R.id.btn_back_today) public void backTody(){
-        viewpager.setCurrentItem(250,true);
+    @OnClick(R.id.btn_back_today) public void backTody() {
+        viewpager.setCurrentItem(250, true);
     }
+
     public void onAction(int v, Date date) {
         btn1.setEnabled(false);
         btn2.setEnabled(false);
@@ -189,10 +202,10 @@ public class ScheduleWeekFragment extends BaseFragment {
         webFloatbtn.collapse();
         mClickDate = date;
         if (getParentFragment() instanceof MainScheduleFragment) {
-            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build().show(getFragmentManager(),"");
+            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()
+                .show(getFragmentManager(), "");
         }
     }
-
 
     @Override public String getFragmentName() {
         return ScheduleWeekFragment.class.getName();
@@ -202,38 +215,38 @@ public class ScheduleWeekFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_month:
                 dataPicker = new DatePicker();
-                dataPicker.show(getFragmentManager(),"");
-                if (getActivity() instanceof Main2Activity){
+                dataPicker.show(getFragmentManager(), "");
+                if (getActivity() instanceof Main2Activity) {
                     Calendar today = Calendar.getInstance();
-                    today.set(Calendar.DAY_OF_WEEK,1);
-                    today.add(Calendar.WEEK_OF_YEAR,viewpager.getCurrentItem()-250);
+                    today.set(Calendar.DAY_OF_WEEK, 1);
+                    today.add(Calendar.WEEK_OF_YEAR, viewpager.getCurrentItem() - 250);
                     ((Main2Activity) getActivity()).setChooseDate(today.getTime());
                 }
 
                 dataPicker.setListener(new DatePicker.DatePickerChange() {
                     @Override public void onMonthChange(int year, int month) {
-                        tvMonth.setText(year+"年"+month+"月");
+                        tvMonth.setText(year + "年" + month + "月");
                     }
 
                     @Override public void onDismiss(int year, int month) {
-                        if (getActivity() instanceof Main2Activity){
+                        if (getActivity() instanceof Main2Activity) {
 
                             Calendar today = Calendar.getInstance();
-                            today.set(Calendar.DAY_OF_WEEK,1);
-                            today.set(Calendar.HOUR,0);
-                            today.set(Calendar.MINUTE,0);
-                            today.set(Calendar.SECOND,0);
-                            today.set(Calendar.MILLISECOND,0);
+                            today.set(Calendar.DAY_OF_WEEK, 1);
+                            today.set(Calendar.HOUR, 0);
+                            today.set(Calendar.MINUTE, 0);
+                            today.set(Calendar.SECOND, 0);
+                            today.set(Calendar.MILLISECOND, 0);
                             Date d = ((Main2Activity) getActivity()).getChooseDate();
                             Calendar chooseday = Calendar.getInstance();
                             chooseday.setTime(d);
-                            chooseday.set(Calendar.DAY_OF_WEEK,1);
-                            chooseday.set(Calendar.HOUR,0);
-                            chooseday.set(Calendar.MINUTE,0);
-                            chooseday.set(Calendar.SECOND,0);
-                            chooseday.set(Calendar.MILLISECOND,0);
+                            chooseday.set(Calendar.DAY_OF_WEEK, 1);
+                            chooseday.set(Calendar.HOUR, 0);
+                            chooseday.set(Calendar.MINUTE, 0);
+                            chooseday.set(Calendar.SECOND, 0);
+                            chooseday.set(Calendar.MILLISECOND, 0);
                             chooseday.setTime(d);
-                            adapter.setPostion(DateUtils.interval(today.getTime(),chooseday.getTime())/7);
+                            adapter.setPostion(DateUtils.interval(today.getTime(), chooseday.getTime()) / 7);
                             viewpager.setCurrentItem(250);
                             adapter.notifyDataSetChanged();
                             tvMonth.setText(DateUtils.getChineseMonth(chooseday.getTime()));
@@ -243,8 +256,8 @@ public class ScheduleWeekFragment extends BaseFragment {
                 break;
             case R.id.day_view:
                 getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_fade_in,R.anim.slide_fade_out)
-                    .replace(R.id.schedule_frag,new ScheduesFragmentBuilder(new Date().getTime()).build())
+                    .setCustomAnimations(R.anim.slide_fade_in, R.anim.slide_fade_out)
+                    .replace(R.id.schedule_frag, new ScheduesFragmentBuilder(new Date().getTime()).build())
                     .commitAllowingStateLoss();
                 break;
         }
@@ -267,7 +280,7 @@ public class ScheduleWeekFragment extends BaseFragment {
         }
 
         @Override public Fragment getItem(int position) {
-            return ScheduleOneWeekFragment.newInstance(position - 250 +p, mCoachService);
+            return ScheduleOneWeekFragment.newInstance(position - 250 + p, mCoachService);
         }
 
         @Override public int getCount() {
@@ -277,6 +290,5 @@ public class ScheduleWeekFragment extends BaseFragment {
         @Override public int getItemPosition(Object object) {
             return POSITION_NONE;
         }
-
     }
 }

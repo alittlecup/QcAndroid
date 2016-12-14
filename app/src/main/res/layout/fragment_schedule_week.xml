@@ -79,27 +79,7 @@
 
   </LinearLayout>
 
-  <View
-      android:id="@+id/bg_show"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/halftransparent_white"
-      android:visibility="gone"
-      />
-  <com.getbase.floatingactionbutton.FloatingActionsMenu
-      android:id="@+id/web_floatbtn"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentRight="true"
-      android:layout_gravity="bottom|right"
-      android:layout_marginBottom="@dimen/activity_vertical_margin"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      app:fab_addButtonColorNormal="@color/primary"
-      app:fab_addButtonColorPressed="@color/primary_light"
-      app:fab_labelStyle="@style/floataction_style"
-      app:fab_labelsPosition="left"
-      />
+
   <FrameLayout
       android:id="@+id/btn_back_today"
       android:layout_width="50dp"
@@ -122,5 +102,35 @@
         android:layout_gravity="right"
         />
   </FrameLayout>
+  <LinearLayout
+      android:id="@+id/bg_show"
 
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/halftransparent_white"
+        android:visibility="gone"
+        />
+
+  </LinearLayout>
+
+
+  <com.getbase.floatingactionbutton.FloatingActionsMenu
+      android:id="@+id/web_floatbtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+      android:layout_gravity="bottom|right"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:fab_addButtonColorNormal="@color/primary"
+      app:fab_addButtonColorPressed="@color/primary_light"
+      app:fab_labelStyle="@style/floataction_style"
+      app:fab_labelsPosition="left"
+      />
 </RelativeLayout>

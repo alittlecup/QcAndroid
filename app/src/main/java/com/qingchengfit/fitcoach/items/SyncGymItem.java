@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.items;
 
 import android.view.View;
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -40,7 +41,7 @@ public class SyncGymItem extends GymItem {
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, GymVH holder, int position, List payloads) {
-        Glide.with(holder.itemView.getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader,holder.itemView.getContext()));
+        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(coachService.photo)).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader,holder.itemView.getContext()));
         holder.itemGymName.setText(coachService.name );
         holder.itemGymBrand.setText(coachService.brand_name);
         holder.itemGymPhonenum.setVisibility(View.GONE);
