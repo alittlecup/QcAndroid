@@ -131,10 +131,10 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
 //                    ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
 //                            qcMyhomeResponse.getData().getCoach().getShort_description()
 //                            , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
-                    ShareDialogFragment.newInstance(qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页"
-                            , qcMyhomeResponse.getData().getCoach().getShort_description()
+                    ShareDialogFragment.newInstance(qcMyhomeResponse.getData().getCoach().getUsername() + "教练的主页"
+                            , getString(R.string.share_hint_open_desc,qcMyhomeResponse.getData().getCoach().getUsername())
                             , qcMyhomeResponse.getData().getCoach().getAvatar()
-                            , sb.toString()
+                            , Configs.HOST_STUDENT_PREVIEW
                     ).show(getFragmentManager(), "");
                 }
             }

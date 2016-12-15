@@ -312,5 +312,6 @@
     <string name="label_username">用户名</string>
     <string name="please_input_username">请输入用户名</string>
     <string name="nestscroll_behavor">com.qingchengfit.fitcoach.component.FlingBehavior</string>
+    <string name="share_hint_open_desc">查看%s教练的课程及更多信息</string>
 
 </resources>

@@ -5,6 +5,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 
@@ -20,6 +21,6 @@ public class StudentOrderPreviewActivity extends BaseAcitivity {
     }
 
     @OnClick(R.id.send_friend) public void onClick() {
-        ShareDialogFragment.newInstance("约课","约课", App.gUser.avatar,getIntent().getStringExtra("url"));
+        ShareDialogFragment.newInstance(App.gUser.username+"教练的主页",getString(R.string.share_hint_open_desc,App.gUser.username), App.gUser.avatar, Configs.HOST_STUDENT_PREVIEW );
     }
 }

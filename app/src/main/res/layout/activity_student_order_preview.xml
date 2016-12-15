@@ -2,10 +2,15 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_student_order_preview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <FrameLayout
+        android:id="@+id/activity_student_order_preview"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
     <TextView
         android:id="@+id/send_friend"
         style="@style/ToolbarStyle"
