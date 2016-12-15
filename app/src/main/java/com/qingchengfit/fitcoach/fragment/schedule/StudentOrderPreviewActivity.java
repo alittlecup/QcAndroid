@@ -16,11 +16,11 @@ public class StudentOrderPreviewActivity extends BaseAcitivity {
         setContentView(R.layout.activity_student_order_preview);
         ButterKnife.bind(this);
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.activity_student_order_preview, StudentPreview.newInstance(getIntent().getStringExtra("url")))
+            .replace(R.id.activity_student_order_preview, StudentPreview.newInstance(Configs.Server+ String.format(Configs.HOST_STUDENT_PREVIEW ,App.coachid+"")))
             .commit();
     }
 
     @OnClick(R.id.send_friend) public void onClick() {
-        ShareDialogFragment.newInstance(App.gUser.username+"教练的主页",getString(R.string.share_hint_open_desc,App.gUser.username), App.gUser.avatar, Configs.HOST_STUDENT_PREVIEW ).show(getSupportFragmentManager(),"");
+        ShareDialogFragment.newInstance(App.gUser.username+"教练的主页",getString(R.string.share_hint_open_desc,App.gUser.username), App.gUser.avatar,Configs.Server+ String.format(Configs.HOST_STUDENT_PREVIEW ,App.coachid+"")).show(getSupportFragmentManager(),"");
     }
 }

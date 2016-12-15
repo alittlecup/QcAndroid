@@ -393,10 +393,16 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+                if(mCurUrl != null && url != null && url.equals(mCurUrl)) {
+                    mWebviewWebView.goBack();
+                    return true;
+                }
                 initCookie(url);
+                view.loadUrl(url);
+                mCurUrl = url;
+
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
-                return false;
+                return true;
             }
 
             @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -479,9 +485,16 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
         }
          @JavascriptInterface public void onFinishLoad() {
-            if (mRefreshSwipeRefreshLayout != null){
-                mRefreshSwipeRefreshLayout.setRefreshing(false);
-            }
+             if (getActivity() != null) {
+                 getActivity().runOnUiThread(new Runnable() {
+                     @Override public void run() {
+                         if (mRefreshSwipeRefreshLayout != null) {
+                             mRefreshSwipeRefreshLayout.setRefreshing(false);
+                         }
+                     }
+                 });
+             }
+
         }
 
 
@@ -569,5 +582,16 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         }
 
 
+    }
+
+    public boolean canGoBack(){
+        if (mWebviewWebView != null){
+            if (mWebviewWebView.canGoBack()){
+                mWebviewWebView.goBack();
+                return true;
+            }else {
+                return false;
+            }
+        }else return false;
     }
 }

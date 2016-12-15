@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -46,20 +45,16 @@ import rx.schedulers.Schedulers;
  */
 public class NotificationFragment extends BaseSettingFragment {
     public static final String TAG = NotificationFragment.class.getName();
-    public static final String[] TYPES  = {"COACH_1","COACH_2","COACH_3"};
+    public static final String[] TYPES = { "COACH_1", "COACH_2", "COACH_3" };
 
-
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
     NotifiAdapter adapter;
     //    List<QcNotificationResponse.DataEntity.MsgsEntity> list;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
-    @BindView(R.id.refresh_nodata)
-    SwipeRefreshLayout refreshNodata;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.refresh_nodata) SwipeRefreshLayout refreshNodata;
     List<QcNotificationResponse.DataEntity.MsgsEntity> list = new ArrayList<>();
     //    @BindView(R.id.pulltorefresh)
-//    PtrFrameLayout pulltorefresh;
+    //    PtrFrameLayout pulltorefresh;
     private int totalPage = 1;
     private int curpage = 1;
     private int unReadCount = 0;
@@ -69,7 +64,7 @@ public class NotificationFragment extends BaseSettingFragment {
     public static NotificationFragment newInstance(int type) {
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
-        args.putInt("t",type);
+        args.putInt("t", type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,25 +72,21 @@ public class NotificationFragment extends BaseSettingFragment {
     public NotificationFragment() {
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         adapter = new NotifiAdapter(list);
         adapter.setListener((v, pos) -> {
-//            HashMap<String,String> params = new HashMap<>();
-//            params.put("id",adapter.datas.get(pos).getId()+"");
-//            params.put("type",TYPES[getArguments().getInt("t")]);
-            QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid,adapter.datas.get(pos).getId()+"").subscribeOn(Schedulers.io())
-                    .subscribe();
+            QcCloudClient.getApi().postApi.qcClearOneNotification(App.coachid, adapter.datas.get(pos).getId() + "")
+                .subscribeOn(Schedulers.io())
+                .subscribe();
             adapter.datas.get(pos).setIs_read(true);
             unReadCount--;
-            if (unReadCount < 1){
+            if (unReadCount < 1) {
                 RxBus.getBus().post(new EventNotiFresh());
             }
             if (!TextUtils.isEmpty(adapter.datas.get(pos).getUrl())) {
@@ -105,16 +96,13 @@ public class NotificationFragment extends BaseSettingFragment {
                 startActivity(toWeb);
             }
             adapter.notifyItemChanged(pos);
-//            fragmentCallBack.onFragmentChange(NotiDetailFragment.newInstance(adapter.datas.get(pos).getId()));
-//            fragmentCallBack.onToolbarMenu(0, 0, "通知详情");
         });
         recyclerview.setAdapter(adapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             private boolean isScrollDown = false;
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int last = linearLayoutManager.findLastCompletelyVisibleItemPosition();
@@ -125,60 +113,27 @@ public class NotificationFragment extends BaseSettingFragment {
                 }
             }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dx > 0 || dy > 0)
+                if (dx > 0 || dy > 0) {
                     isScrollDown = true;
-                else
+                } else {
                     isScrollDown = false;
+                }
             }
         });
-//        final StoreHouseHeader header = new StoreHouseHeader(getContext());
-//        header.setPadding(0, MeasureUtils.dpToPx(15f, getResources()), 0, 0);
-//        header.initWithStringArray(R.array.storehouse);
-//        pulltorefresh.setHeaderView(header);
-//        pulltorefresh.addPtrUIHandler(new PtrUIHandler() {
-//            @Override
-//            public void onUIReset(PtrFrameLayout ptrFrameLayout) {
-//
-//            }
-//
-//            @Override
-//            public void onUIRefreshPrepare(PtrFrameLayout ptrFrameLayout) {
-//
-//            }
-//
-//            @Override
-//            public void onUIRefreshBegin(PtrFrameLayout ptrFrameLayout) {
-//                onRefesh();
-//            }
-//
-//            @Override
-//            public void onUIRefreshComplete(PtrFrameLayout ptrFrameLayout) {
-//
-//            }
-//
-//            @Override
-//            public void onUIPositionChange(PtrFrameLayout ptrFrameLayout, boolean b, byte b1, PtrIndicator ptrIndicator) {
-//
-//            }
-//        });
-//        onRefesh();
         refresh.setColorSchemeResources(R.color.primary);
         refreshNodata.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                list.clear();
+            @Override public void onRefresh() {
+
                 unReadCount = 0;
                 curpage = 1;
                 onRefesh();
             }
         });
         refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 list.clear();
                 unReadCount = 0;
                 curpage = 1;
@@ -186,15 +141,14 @@ public class NotificationFragment extends BaseSettingFragment {
             }
         });
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
+            @Override public void onGlobalLayout() {
+                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(), this);
                 refresh.setRefreshing(true);
                 onRefesh();
             }
         });
         list.clear();
-//        onRefesh();
+        //        onRefesh();
         return view;
     }
 
@@ -207,12 +161,11 @@ public class NotificationFragment extends BaseSettingFragment {
         }
     }
 
-
     public int getUnReadCount() {
         return unReadCount;
     }
 
-    public void freshData(){
+    public void freshData() {
         list.clear();
         unReadCount = 0;
         curpage = 1;
@@ -221,71 +174,67 @@ public class NotificationFragment extends BaseSettingFragment {
 
     public synchronized void onRefesh() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("page", curpage+"");
-        params.put("tab",TYPES[getArguments().getInt("t")]);
+        params.put("page", curpage + "");
+        params.put("tab", TYPES[getArguments().getInt("t")]);
         QcCloudClient.getApi().getApi.qcGetMessages(App.coachid, params)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<QcNotificationResponse>() {
-                    @Override
-                    public void onCompleted() {
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<QcNotificationResponse>() {
+                @Override public void onCompleted() {
 
+                }
+
+                @Override public void onError(Throwable e) {
+                    if (refresh != null) {
+                        refresh.setRefreshing(false);
+                        refreshNodata.setRefreshing(false);
+                        ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
                     }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (refresh != null) {
-                            refresh.setRefreshing(false);
-                            refreshNodata.setRefreshing(false);
-                            ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
-                        }
-                    }
-
-                    @Override
-                    public void onNext(QcNotificationResponse qcNotificationResponse) {
-                        if (refresh != null) {
-                            totalPage = qcNotificationResponse.getData().getPages();
-                            list.addAll(qcNotificationResponse.getData().getNotifications());
-                            int fistUnread = -1;
-                            if (list != null && list.size() > 0) {
-                                for (int i = 0; i < list.size(); i++) {
-                                    if (!list.get(i).is_read()) {
-                                        if (fistUnread < 0)
-                                            fistUnread = i;
-                                        unReadCount++;
-                                    }
+                @Override public void onNext(QcNotificationResponse qcNotificationResponse) {
+                    if (refresh != null) {
+                        list.clear();
+                        totalPage = qcNotificationResponse.getData().getPages();
+                        list.addAll(qcNotificationResponse.getData().getNotifications());
+                        int fistUnread = -1;
+                        if (list != null && list.size() > 0) {
+                            for (int i = 0; i < list.size(); i++) {
+                                if (!list.get(i).is_read()) {
+                                    if (fistUnread < 0) fistUnread = i;
+                                    unReadCount++;
                                 }
-                                refresh.setVisibility(View.VISIBLE);
-                                refreshNodata.setVisibility(View.GONE);
-
-                                adapter.notifyDataSetChanged();
-//                                recyclerview.setAdapter(adapter);
-                            } else {
-                                refresh.setVisibility(View.GONE);
-                                refreshNodata.setVisibility(View.VISIBLE);
                             }
-                            refresh.setRefreshing(false);
-                            refreshNodata.setRefreshing(false);
+                            refresh.setVisibility(View.VISIBLE);
+                            refreshNodata.setVisibility(View.GONE);
 
+                            adapter.notifyDataSetChanged();
+                            //                                recyclerview.setAdapter(adapter);
+                        } else {
+                            refresh.setVisibility(View.GONE);
+                            refreshNodata.setVisibility(View.VISIBLE);
+                        }
+                        refresh.setRefreshing(false);
+                        refreshNodata.setRefreshing(false);
 
-                            RxBus.getBus().post(new EventNotiFresh());
-                            if (fistUnread >0)
-                                RxBus.getBus().post(new EventLatestNoti(DateUtils.formatDateFromServer(qcNotificationResponse.getData().getNotifications().get(fistUnread).getCreated_at()).getTime(),getArguments().getInt("t")));
-
+                        RxBus.getBus().post(new EventNotiFresh());
+                        if (fistUnread > 0) {
+                            RxBus.getBus()
+                                .post(new EventLatestNoti(DateUtils.formatDateFromServer(
+                                    qcNotificationResponse.getData().getNotifications().get(fistUnread).getCreated_at()).getTime(),
+                                    getArguments().getInt("t")));
                         }
                     }
-                });
+                }
+            });
     }
 
-
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
 
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -296,20 +245,13 @@ public class NotificationFragment extends BaseSettingFragment {
 
     public static class NotifiVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_noti_unread)
-        ImageView itemNotiUnread;
-        @BindView(R.id.item_noti_icon)
-        ImageView itemNotiIcon;
-        @BindView(R.id.item_noti_title)
-        TextView itemNotiTitle;
-        @BindView(R.id.item_noti_time)
-        TextView itemNotiTime;
-        @BindView(R.id.item_noti_sender)
-        TextView itemNotiSender;
-        @BindView(R.id.item_noti_desc)
-        TextView itemDesc;
-        @BindView(R.id.icon_right)
-        ImageView iconRight;
+        @BindView(R.id.item_noti_unread) ImageView itemNotiUnread;
+        @BindView(R.id.item_noti_icon) ImageView itemNotiIcon;
+        @BindView(R.id.item_noti_title) TextView itemNotiTitle;
+        @BindView(R.id.item_noti_time) TextView itemNotiTime;
+        @BindView(R.id.item_noti_sender) TextView itemNotiSender;
+        @BindView(R.id.item_noti_desc) TextView itemDesc;
+        @BindView(R.id.icon_right) ImageView iconRight;
 
         public NotifiVH(View itemView) {
             super(itemView);
@@ -318,7 +260,6 @@ public class NotificationFragment extends BaseSettingFragment {
     }
 
     class NotifiAdapter extends RecyclerView.Adapter<NotifiVH> implements View.OnClickListener {
-
 
         private List<QcNotificationResponse.DataEntity.MsgsEntity> datas;
         private OnRecycleItemClickListener listener;
@@ -335,20 +276,20 @@ public class NotificationFragment extends BaseSettingFragment {
             this.listener = listener;
         }
 
-        @Override
-        public NotifiVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override public NotifiVH onCreateViewHolder(ViewGroup parent, int viewType) {
             NotifiVH holder = new NotifiVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notifacation, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(NotifiVH holder, int position) {
+        @Override public void onBindViewHolder(NotifiVH holder, int position) {
             holder.itemView.setTag(position);
             QcNotificationResponse.DataEntity.MsgsEntity entity = datas.get(position);
-            if (TextUtils.isEmpty(entity.getUrl()))
+            if (TextUtils.isEmpty(entity.getUrl())) {
                 holder.iconRight.setVisibility(View.GONE);
-            else holder.iconRight.setVisibility(View.VISIBLE);
+            } else {
+                holder.iconRight.setVisibility(View.VISIBLE);
+            }
             holder.itemNotiTitle.setText(entity.getTitle());
             holder.itemNotiTime.setText(entity.getCreated_at().replace("T", " "));
             holder.itemNotiSender.setText(entity.getSender());
@@ -361,16 +302,12 @@ public class NotificationFragment extends BaseSettingFragment {
             }
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
-            if (listener != null)
-                listener.onItemClick(v, (int) v.getTag());
+        @Override public void onClick(View v) {
+            if (listener != null) listener.onItemClick(v, (int) v.getTag());
         }
     }
 }

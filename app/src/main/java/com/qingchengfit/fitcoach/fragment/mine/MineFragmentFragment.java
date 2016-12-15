@@ -108,7 +108,7 @@ public class MineFragmentFragment extends Fragment {
                 @Override public void onNext(QcCoachRespone qcCoachRespone) {
                     if (ResponseConstant.checkSuccess(qcCoachRespone)) {
                         user = qcCoachRespone.getData().getCoach();
-                        if (user!=null){
+                        if (user!=null && tvName != null && imgHeader != null){
                             tvName.setText(user.getUsername());
                             Glide.with(getContext()).load(user.getAvatar()).asBitmap()
                                 .error(App.gUser.gender == 0?R.drawable.default_manage_male:R.drawable.default_manager_female)

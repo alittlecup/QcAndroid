@@ -102,7 +102,8 @@ public class MyCoursePlanFragment extends BaseFragment {
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
             @Override public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url",Configs.ServerIp + "/fitness/redirect/plantpl/detail/?model="+mCoachService.getModel() +"&id="+mCoachService.getId()+"&plan_id="+ adapterData.get(pos).getId());
+                //toWeb.putExtra("url",Configs.ServerIp + "/fitness/redirect/plantpl/detail/?model="+mCoachService.getModel() +"&id="+mCoachService.getId()+"&plan_id="+ adapterData.get(pos).getId());
+                toWeb.putExtra("url",adapterData.get(pos).getUrl());
                 startActivityForResult(toWeb, pos);
             }
         });

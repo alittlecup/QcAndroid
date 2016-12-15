@@ -23,6 +23,8 @@ import com.qingchengfit.fitcoach.component.WebFragment;
  */
 public class WebActivity extends BaseAcitivity {
 
+    private WebFragment webfrag;
+
     public static void startWeb(String url, Context context) {
         Intent intent = new Intent(context, WebActivity.class);
         intent.putExtra("url", url);
@@ -32,9 +34,17 @@ public class WebActivity extends BaseAcitivity {
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
+        webfrag = WebFragment.newInstance(getIntent().getStringExtra("url"));
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.web_frag_layout, WebFragment.newInstance(getIntent().getStringExtra("url")))
+            .replace(R.id.web_frag_layout,webfrag )
             .commit();
+    }
+
+    @Override public void onBackPressed() {
+        if (webfrag != null && webfrag.canGoBack()){
+
+        }else
+            super.onBackPressed();
     }
 
     //

@@ -405,7 +405,7 @@ public class QcCloudClient {
             @QueryMap Map<String, String> params);
 
         //获取预约预览
-        @GET("/api/coaches/{id}/schedules/glance/") rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id,
+        @GET("/api/v1/coaches/{id}/schedules/glance/") rx.Observable<QcScheduleGlanceResponse> qcGetScheduleGlance(@Path("id") int id,
             @QueryMap Map<String, String> params);
 
         //获取个人的健身房
