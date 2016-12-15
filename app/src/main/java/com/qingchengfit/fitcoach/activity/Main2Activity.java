@@ -267,6 +267,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
                 }
             }
+
         });
 
         if (getIntent() != null && getIntent().getScheme() != null&&getIntent().getScheme().equals("qccoach")) {
@@ -388,6 +389,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     }
 
     @Override public void onBackPressed() {
+        if (viewpager != null & viewpager.getCurrentItem() > 0){
+            viewpager.setCurrentItem(0);
+            return;
+        }
+
         if (!logoutDialog.isShowing()) {
             logoutDialog.show();
         }
@@ -675,4 +681,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             }
         }
     }
+
+
 }

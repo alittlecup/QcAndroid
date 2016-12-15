@@ -31,6 +31,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
+import com.qingchengfit.fitcoach.Utils.SensorsUitls;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.bean.Contact;
@@ -90,7 +91,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.toolbar_titile) public TextView mTitle;
     @BindView(webview) public WebView mWebviewWebView;
-    @BindView(R.id.refresh) CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
+    @BindView(R.id.refresh) protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
     @BindView(R.id.refresh_network) Button mRefresh;
     @BindView(R.id.no_newwork) LinearLayout mNoNetwork;
     @BindView(R.id.webview_root) RelativeLayout webviewRoot;
@@ -203,6 +204,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                         }
                     }
                 });
+
+                onLoadedView();
+
             }
         });
 
@@ -230,6 +234,14 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
         return view;
     }
+
+    public void onLoadedView(){
+
+    }
+    public void onWebFinish(){
+
+    }
+
 
     public void initToolbar() {
         mToolbar.setNavigationIcon(R.drawable.md_nav_back);
@@ -353,8 +365,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (mRefreshSwipeRefreshLayout != null && mTitle != null) {
-                    mRefreshSwipeRefreshLayout.setRefreshing(false);
+                if (mTitle != null){
                     mTitle.setText(title);
                 }
             }
@@ -371,6 +382,10 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                if (mRefreshSwipeRefreshLayout != null) {
+                    mRefreshSwipeRefreshLayout.setRefreshing(false);
+                }
+                onWebFinish();
             }
 
             @Override public void onLoadResource(WebView view, String url) {
@@ -463,6 +478,12 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         @JavascriptInterface public void openDrawer() {
 
         }
+         @JavascriptInterface public void onFinishLoad() {
+            if (mRefreshSwipeRefreshLayout != null){
+                mRefreshSwipeRefreshLayout.setRefreshing(false);
+            }
+        }
+
 
         @JavascriptInterface public void setAction(String s) {
             final ToolbarAction toolStr = new Gson().fromJson(s, ToolbarAction.class);
@@ -512,8 +533,8 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             });
        }
 
-        @JavascriptInterface public void sensorsTrack(String json){
-
+        @JavascriptInterface public void sensorsTrack(String key,String json){
+            SensorsUitls.track(key,json);
         }
 
         @JavascriptInterface public String getSessionId() {

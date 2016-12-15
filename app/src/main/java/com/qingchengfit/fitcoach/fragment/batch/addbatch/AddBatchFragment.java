@@ -238,6 +238,12 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                 ToastUtils.show("请选择排期时间");
                 return true;
             }
+            if (!DateUtils.AlessB(starttime.getContent(),endtime.getContent())){
+                ToastUtils.show("开始时间不能大于结束时间");
+                return true;
+            }
+
+
             body.from_date = starttime.getContent();
             body.to_date = endtime.getContent();
             if (body.time_repeats == null || body.time_repeats.size() == 0) {
@@ -337,7 +343,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             case R.id.account_type:
                 Intent toAccount = new Intent(getActivity(), FragActivity.class);
                 toAccount.putExtra("type", 12);
-                toAccount.putExtra("count", body.max_users == 0 ? 8 : body.max_users);
+                toAccount.putExtra("count", body.max_users == 0 ? mCourse.getCapacity() : body.max_users);
                 toAccount.putExtra("isfree", body.is_free);
                 toAccount.putExtra("service", mCoachService);
                 startActivityForResult(toAccount, RESULT_ACCOUNT);

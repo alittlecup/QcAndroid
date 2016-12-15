@@ -43,7 +43,7 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchVH holder, int position, List payloads) {
         holder.courseName.setText(batch.course.getName());
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.course.getPhoto())).into(holder.img);
+        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.course.getPhoto())).error(R.drawable.img_default_course).into(holder.img);
         holder.title.setText(batch.from_date + "至" + batch.to_date);
         holder.outofdate.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date))? View.VISIBLE: View.GONE);
     }

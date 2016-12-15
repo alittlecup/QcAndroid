@@ -93,8 +93,14 @@ public class MainScheduleFragment extends BaseFragment {
         });
         RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
             @Override public void call(EventScheduleService eventScheduleService) {
+                if (eventScheduleService.mCoachService.getId() == 0){
+                    mCoachService = null;
+                    title.setText(getString(R.string.all_schedules));
+
+                }else {
                 mCoachService = eventScheduleService.mCoachService;
                 title.setText(mCoachService.getName());
+                }
             }
         });
         //跳转到日视图或者周视图的某天

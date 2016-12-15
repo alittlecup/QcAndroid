@@ -159,6 +159,7 @@ import rx.schedulers.Schedulers;
             startActivityForResult(goBrands, 1);
         }else if (mAdapter.getItem(position) instanceof ChosenAllGymItem){
             RxBus.getBus().post(new EventScheduleService(new CoachService.Builder().id(0).build()));
+            getActivity().onBackPressed();
         }
         return true;
     }

@@ -22,7 +22,7 @@ package com.qingchengfit.fitcoach.Utils;
  */
 
 public class SensorsUitls {
-    public static void track(){
+    public static void track(String key,String json){
 
     }
 }

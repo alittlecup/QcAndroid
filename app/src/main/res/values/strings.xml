@@ -101,7 +101,7 @@
     <string name="gym_add_course_type_group">团课</string>
     <string name="gym_add_course_name">名称</string>
     <string name="gym_add_course_time">时长(分钟)</string>
-    <string name="schedule_title">全部日程</string>
+    <string name="schedule_title">全部课程</string>
     <string name="statement_course">全部课程报表</string>
     <string name="mystudents_title">我的学员</string>
     <string name="course_private">私教</string>
@@ -127,7 +127,7 @@
     <string name="no_permission_brand">只能由品牌创建人%s添加场馆</string>
     <string name="gym_brand_name">健身房品牌名</string>
     <string name="coach_function_hint">教练后台功能</string>
-    <string name="more_gym_function_hint">更多健身房后台功能</string>
+    <string name="more_gym_function_hint">更多健身房管理功能</string>
     <string name="course_batch">课程排期</string>
     <string name="course_types">课程种类</string>
     <string name="student">学员</string>
@@ -289,7 +289,7 @@
     <string name="please_open_camera">请打开摄像头权限</string>
     <string name="sorry_no_permission">抱歉，您无该功能权限</string>
     <string name="hint_today_no_private_order">本日暂无会员预约私教课</string>
-    <string name="hint_no_schedule">本日没有任何课程安排，你可以在「健身房」模块中使用「课程排期」来添加</string>
+    <string name="hint_no_schedule">本日没有任何课程安排\n请在「健身房」-「课程排期」排课</string>
     <string name="app_slogan">专为健身教练量身定制</string>
     <string name="app_download_link">http://fir.im/qingchengfit</string>
     <string name="app_icon_net">http://qcresource.b0.upaiyun.com/ic_launcher_trainer.png</string>
@@ -308,10 +308,9 @@
     <string name="unset">未设置</string>
     <string name="show_out_batch">显示已过期排期</string>
     <string name="hide_out_batch">隐藏已过期排期</string>
-=======
     <string name="gender">性别</string>
     <string name="label_username">用户名</string>
     <string name="please_input_username">请输入用户名</string>
->>>>>>> f_taiwan
+    <string name="nestscroll_behavor">com.qingchengfit.fitcoach.component.FlingBehavior</string>
 
 </resources>

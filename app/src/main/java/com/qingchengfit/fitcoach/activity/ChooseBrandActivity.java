@@ -97,7 +97,7 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                         if (datas.get(pos).isHas_add_permission()) {
                                             setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
                                             ChooseBrandActivity.this.finish();
-                                            overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
+                                            //overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
                                         } else {
                                             ToastUtils.show(String.format(Locale.CHINA, getString(R.string.no_permission_brand),
                                                 datas.get(pos).getCreated_by() == null
@@ -137,6 +137,6 @@ public class ChooseBrandActivity extends AppCompatActivity {
 
     @Override public void onBackPressed() {
         this.finish();
-        overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
+        //overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
     }
 }

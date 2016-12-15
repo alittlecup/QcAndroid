@@ -165,14 +165,16 @@ public class HalfScrollView extends ScrollView {
         ViewGroup v = (ViewGroup) vg.getChildAt(vg.getChildCount() - 1);
         MyhomeViewPager viewPager = (MyhomeViewPager) v.getChildAt(v.getChildCount() - 1);
         ViewGroup vg2 = (ViewGroup) viewPager.getChildAt(0);
-        return viewPager.canScrollup();
+        //return viewPager.canScrollup();
+        return true;
     }
 
     public boolean canScrollDown() {
         ViewGroup vg = (ViewGroup) getChildAt(0);
         ViewGroup v = (ViewGroup) vg.getChildAt(vg.getChildCount() - 1);
         MyhomeViewPager viewPager = (MyhomeViewPager) v.getChildAt(v.getChildCount() - 1);
-        return viewPager.canScrollDown();
+        //return viewPager.canScrollDown();
+        return true;
     }
 
 

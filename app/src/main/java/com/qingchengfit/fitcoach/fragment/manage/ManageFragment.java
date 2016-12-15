@@ -110,6 +110,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         });
         recyclerview.setLayoutManager(manager1);
         recyclerview.addItemDecoration(new ItemDecorationAlbumColumns(1, 3));
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setNestedScrollingEnabled(false);
         recyclerview.setAdapter(mAdapter);
 
         List<AbstractFlexibleItem> data2 = new ArrayList<>();
@@ -140,6 +142,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         //recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
         recyclerview2.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayout.VERTICAL));
         recyclerview2.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerview2.setHasFixedSize(true);
+        recyclerview2.setNestedScrollingEnabled(false);
         recyclerview2.setAdapter(adapter2);
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
             @Override public void call(CoachService coachService) {

@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 >
 
                 <RelativeLayout
@@ -37,7 +36,6 @@
                     android:background="@color/white"
                     android:minHeight="?attr/actionBarSize"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layout_scrollFlags="scroll|enterAlways"
                     >
 
 
@@ -101,7 +99,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:visibility="invisible"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_collapseMode="pin"
+                    />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

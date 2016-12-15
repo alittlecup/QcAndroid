@@ -132,7 +132,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
         defautxxx2.add(4);
         defautxxx2.add(6);
         mData.add(new BatchCircleItem(new CmBean(defautxxx2,DateUtils.getDateFromHHmm("12:00"),DateUtils.getDateFromHHmm("20:00"))));
-        mData.add(0, new AddBatchCircleItem(getString(R.string.add_course_circle)));
+        mData.add(mData.size()-1, new AddBatchCircleItem(getString(R.string.add_course_circle)));
         mAdapter = new CommonFlexAdapter(mData, this);
         batchDate.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         batchDate.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

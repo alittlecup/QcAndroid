@@ -63,6 +63,20 @@ public class StudentPreview extends WebFragment {
             }
         });
     }
+
+
+    @Override public void onLoadedView() {
+        super.onLoadedView();
+        if (mToobarActionTextView != null)
+            mToobarActionTextView.setText("发送给会员");
+    }
+
+    @Override public void onWebFinish() {
+        super.onWebFinish();
+        if (mToobarActionTextView != null)
+            mToobarActionTextView.setText("发送给会员");
+    }
+
     @OnClick({R.id.close_guide, R.id.copy_link_to_wechat, R.id.go_to_how})
     public void onClick(View view) {
         switch (view.getId()) {

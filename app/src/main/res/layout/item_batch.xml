@@ -50,6 +50,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:padding="0.5dp"
+            android:background="@drawable/bg_rect"
             />
         <ImageView
             android:layout_width="25dp"

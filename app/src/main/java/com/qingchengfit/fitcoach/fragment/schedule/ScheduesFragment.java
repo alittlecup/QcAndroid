@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.schedule;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,6 +50,7 @@ import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -124,7 +126,18 @@ import rx.functions.Action1;
                 goDateSchedule(date);
             }
         });
-
+        if (getContext() != null) {
+            RxPermissions.getInstance(getContext())
+                .request(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+                .subscribe(new Action1<Boolean>() {
+                    @Override public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                        } else {
+                            //ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
+                        }
+                    }
+                });
+        }
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
         btn1.setColorNormal(ContextCompat.getColor(getContext(), R.color.rest_color));

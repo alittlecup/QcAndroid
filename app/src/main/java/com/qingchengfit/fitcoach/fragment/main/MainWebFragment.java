@@ -32,6 +32,8 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 public class MainWebFragment extends WebFragment {
 
+    public boolean isLoaded = false;
+
     public static MainWebFragment newInstance(String url) {
         Bundle args = new Bundle();
 
@@ -41,9 +43,23 @@ public class MainWebFragment extends WebFragment {
         return fragment;
     }
 
+
+
     @Override public void initToolbar() {
         mTitle.setText(R.string.explore);
     }
+
+    @Override public void onLoadedView() {
+        super.onLoadedView();
+
+    }
+
+    @Override protected void onVisible() {
+        if (isLoaded && mRefreshSwipeRefreshLayout!= null){
+            mRefreshSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
     @Override
     public void initWebClient() {
         mWebviewWebView.setWebViewClient(new WebViewClient() {
@@ -55,6 +71,9 @@ public class MainWebFragment extends WebFragment {
 
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                if (mRefreshSwipeRefreshLayout!= null){
+                    mRefreshSwipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override public void onLoadResource(WebView view, String url) {

@@ -40,6 +40,7 @@ import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.items.BatchItem;
+import com.qingchengfit.fitcoach.items.CommonNoDataItem;
 import com.qingchengfit.fitcoach.items.HideBatchItem;
 import com.qingchengfit.fitcoach.items.HintItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -61,7 +62,8 @@ import javax.inject.Inject;
  * <p/>
  * Created by Paper on 16/3/29 2016.
  */
-public class CourseBatchDetailFragment extends VpFragment implements CourseBatchDetailView, FlexibleAdapter.OnItemClickListener,FlexibleAdapter.EndlessScrollListener  {
+public class CourseBatchDetailFragment extends VpFragment
+    implements CourseBatchDetailView, FlexibleAdapter.OnItemClickListener, FlexibleAdapter.EndlessScrollListener {
     public static final int RESULT_COURSE = 1;
 
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
@@ -104,8 +106,13 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_batch, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR))
-            || (mType == Configs.TYPE_PRIVATE && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR))) {
+        if (getActivity() instanceof BatchActivity) {
+            ((BatchActivity) getActivity()).getComponent().inject(this);
+        }
+        delegatePresenter(presenter,this);
+
+        if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR)) || (mType
+            == Configs.TYPE_PRIVATE && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR))) {
             View v = inflater.inflate(R.layout.item_common_no_data, container, false);
             ImageView img = (ImageView) v.findViewById(R.id.img);
             img.setImageResource(R.drawable.ic_no_permission);
@@ -114,9 +121,7 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
             return v;
         }
 
-        if (getActivity() instanceof BatchActivity) {
-            ((BatchActivity) getActivity()).getComponent().inject(this);
-        }
+
         presenter.attachView(this);
         preview.setText(
             mType == Configs.TYPE_PRIVATE ? getString(R.string.private_course_preview) : getString(R.string.group_course_preview));
@@ -129,10 +134,8 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         return view;
     }
 
-
-
     @Override public void onDestroyView() {
-        presenter.unattachView();
+
         super.onDestroyView();
     }
 
@@ -193,11 +196,6 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         toChooseCourse.putExtra("service", mCoachService);
         startActivityForResult(toChooseCourse, RESULT_COURSE);
 
-        //getParentFragment().getFragmentManager()
-        //    .beginTransaction()
-        //    .replace(R.id.frag, AddBatchFragment.newInstance(teacher, groupClass))
-        //    .addToBackStack(null)
-        //    .commit();
     }
 
     @Override public String getFragmentName() {
@@ -211,44 +209,45 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
         int pos = -1;
         for (int i = 0; i < batch.size(); i++) {
             if (!isOutofDate) {
-                if (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))){
+                if (DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.get(i).to_date))) {
                     if (mDatas.size() == 0) {
                         mDatas.add(new HintItem.Builder().text(mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
                             : getString(R.string.hint_no_group_course)).resBg(R.color.white).build());
                     }
                     mDatas.add(new HideBatchItem());
                     isOutofDate = true;
-                    pos = mDatas.size() -1;
+                    pos = mDatas.size() - 1;
                     mOutdateDatas.add(new BatchItem(batch.get(i)));
-                }else {
+                } else {
                     mDatas.add(new BatchItem(batch.get(i)));
                 }
-
-            }else{
+            } else {
                 mOutdateDatas.add(new BatchItem(batch.get(i)));
             }
-
         }
         if (mDatas.size() == 0) {
-            mDatas.add(new HintItem.Builder().text(
-                mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course) : getString(R.string.hint_no_group_course))
-                .resBg(R.color.white)
-                .build());
+            //if (mOutdateDatas == null || mOutdateDatas.size() == 0) {
+            //    mDatas.add(new HintItem.Builder().text(
+            //        mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course) : getString(R.string.hint_no_group_course))
+            //        .resBg(R.color.white)
+            //        .build());
+            //} else {
+                mDatas.add(new CommonNoDataItem(R.drawable.no_batch,mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
+                    : getString(R.string.hint_no_group_course)));
+            //}
         }
 
         mCommonFlexAdapter.notifyDataSetChanged();
-        if (pos >=0 && isShow){
+        if (pos >= 0 && isShow) {
             mCommonFlexAdapter.toggleSelection(pos);
             mDatas.addAll(mOutdateDatas);
         }
         mCommonFlexAdapter.notifyDataSetChanged();
-
     }
 
     @Override public void onLoadMore() {
 
     }
-
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -291,12 +290,12 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
                 .replace(R.id.frag, BatchDetailFragment.newInstance(mType, batch.id))
                 .addToBackStack(null)
                 .commit();
-        }else if (mCommonFlexAdapter.getItem(position) instanceof HideBatchItem){
+        } else if (mCommonFlexAdapter.getItem(position) instanceof HideBatchItem) {
             mCommonFlexAdapter.toggleSelection(position);
-            if (mCommonFlexAdapter.isSelected(position)){
+            if (mCommonFlexAdapter.isSelected(position)) {
                 isShow = true;
                 mDatas.addAll(mOutdateDatas);
-            }else {
+            } else {
                 isShow = false;
                 mDatas.removeAll(mOutdateDatas);
             }
@@ -306,8 +305,10 @@ public class CourseBatchDetailFragment extends VpFragment implements CourseBatch
     }
 
     @OnClick(R.id.preview) public void onClick() {
-        WebActivity.startWeb((mType == Configs.TYPE_PRIVATE ?Configs.PRIVATE_PRIVEIW:Configs.GROUP_PRIVEIW)+"?id="+mCoachService.getId()+"&model="+mCoachService.getModel(),getContext());
+        WebActivity.startWeb((mType == Configs.TYPE_PRIVATE ? Configs.PRIVATE_PRIVEIW : Configs.GROUP_PRIVEIW)
+            + "?id="
+            + mCoachService.getId()
+            + "&model="
+            + mCoachService.getModel(), getContext());
     }
-
-
 }

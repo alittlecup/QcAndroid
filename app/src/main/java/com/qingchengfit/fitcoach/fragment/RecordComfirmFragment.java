@@ -61,16 +61,16 @@ public class RecordComfirmFragment extends VpFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
         unbinder=ButterKnife.bind(this, view);
-//        isPrepared = true;
         lazyLoad();
         return view;
     }
 
-    //    @Override
     protected void lazyLoad() {
 //        if (!isPrepared || isVisible)
 //            return;
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerview.setHasFixedSize(true);
+        recyclerview.setNestedScrollingEnabled(true);
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid)

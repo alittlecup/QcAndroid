@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         >
 
-        <com.qingchengfit.fitcoach.component.HalfScrollView
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/myhome_scroller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
 
             </LinearLayout>
 
-        </com.qingchengfit.fitcoach.component.HalfScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <include
