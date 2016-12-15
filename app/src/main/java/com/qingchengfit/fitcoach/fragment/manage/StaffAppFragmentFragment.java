@@ -9,15 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.GuideActivity;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.Utils;
 
 /**
  * power by
@@ -88,10 +85,10 @@ public class StaffAppFragmentFragment extends DialogFragment {
                 break;
             case R.id.open_app:
                 try {
-                    Intent toGuide= new Intent(getActivity(), GuideActivity.class);
-                    startActivity(toGuide);
-
-
+                    //Intent toGuide= new Intent(getActivity(), GuideActivity.class);
+                    //startActivity(toGuide);
+                    Utils.openApp(getActivity());
+                    dismiss();
 //                    Intent intent = new Intent(Intent.ACTION_MAIN);
 //                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
 //                    ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "cn.qingchengfit.staffkit.MainActivity");

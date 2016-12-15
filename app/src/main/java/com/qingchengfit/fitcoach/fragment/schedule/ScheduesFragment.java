@@ -46,6 +46,7 @@ import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.bean.Coach;
+import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import java.util.ArrayList;
@@ -270,7 +271,11 @@ import rx.functions.Action1;
         btn3.setEnabled(false);
         webFloatbtn.collapse();
         if (getParentFragment() instanceof MainScheduleFragment) {
-            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()
+            CoachService c = ((MainScheduleFragment) getParentFragment()).getCoachService();
+            if (c != null){
+                RxBus.getBus().post(new EventScheduleAction(c, v));
+            }else
+                new ChooseGymForPermissionFragmentBuilder(v, null).build()
                 .show(getFragmentManager(), "");
         }
         //webFloatbtn.collapse();

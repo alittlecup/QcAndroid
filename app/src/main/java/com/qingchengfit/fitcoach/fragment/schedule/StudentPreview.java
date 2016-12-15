@@ -56,7 +56,7 @@ public class StudentPreview extends WebFragment {
             }
         });
 
-        guideToWechatLayout.setVisibility(View.VISIBLE);
+        guideToWechatLayout.setVisibility(View.GONE);
         mToobarActionTextView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 //ShareDialogFragment.newInstance()

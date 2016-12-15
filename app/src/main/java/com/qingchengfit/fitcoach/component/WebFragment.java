@@ -168,6 +168,11 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
                     initCookie(url);
                     mWebviewWebView.loadUrl(url);
+                    try{
+                        LogUtil.e("session:"+cookieManager.getCookie(url));
+                    }catch (Exception e){
+
+                    }
                 }
 
                 mRefreshSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
@@ -275,7 +280,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             try {
                 URI uri = new URI(url);
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
+                setCookie(uri.getHost(), "sessionid", sessionid);
                 setCookie(uri.getHost(), "oem", getString(R.string.oem_tag));
+                LogUtil.e("session:"+sessionid);
             } catch (Exception e) {
                 //e.printStackTrace();
             }
@@ -371,6 +378,8 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                initCookie(url);
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
                 return false;
             }

@@ -188,7 +188,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         Boolean isInit = PreferenceUtils.getPrefBoolean(this, "guide_3", false);
                         if (!isInit && (gw == null || !gw.isShowing())) {
                             gw = new GuideWindow(this, "使用「课程排期」安排课程", GuideWindow.UP);
-                            if (tabview.getChildCount() > 1) {
+                            if (tabview != null && tabview.getChildCount() > 1) {
                                 gw.show(tabview.getChildAt(1));
                             }
                         }

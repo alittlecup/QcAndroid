@@ -22,6 +22,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.marcohc.robotocalendar.EventMonthChange;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DatePicker;
@@ -202,8 +203,14 @@ public class ScheduleWeekFragment extends BaseFragment {
         webFloatbtn.collapse();
         mClickDate = date;
         if (getParentFragment() instanceof MainScheduleFragment) {
-            new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()
-                .show(getFragmentManager(), "");
+            //new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()
+            //    .show(getFragmentManager(), "");
+            CoachService c = ((MainScheduleFragment) getParentFragment()).getCoachService();
+            if (c != null){
+                RxBus.getBus().post(new EventScheduleAction(c, v));
+            }else
+                new ChooseGymForPermissionFragmentBuilder(v, null).build()
+                    .show(getFragmentManager(), "");
         }
     }
 

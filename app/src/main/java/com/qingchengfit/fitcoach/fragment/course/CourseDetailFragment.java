@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,7 +39,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.BusinessUtils;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
-import com.qingchengfit.fitcoach.activity.QRActivity;
 import com.qingchengfit.fitcoach.adapter.CourseTeacherAdapter;
 import com.qingchengfit.fitcoach.adapter.ViewPaperEndlessAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
@@ -54,11 +52,9 @@ import com.qingchengfit.fitcoach.component.TouchyWebView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
-import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.functions.Action1;
 
 /**
  * power by
@@ -409,21 +405,21 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
      * 编辑简介 跳转二维码扫码
      */
     @OnClick(R.id.go_to_scan) public void gotoScan() {
-                RxPermissions.getInstance(getContext())
-                        .request(Manifest.permission.CAMERA)
-                        .subscribe(new Action1<Boolean>() {
-                            @Override
-                            public void call(Boolean aBoolean) {
-                                if (aBoolean) {
-                                    Intent toScan = new Intent(getActivity(), QRActivity.class);
-                                    toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
-                                    startActivity(toScan);
-                                } else {
-                                    ToastUtils.show(getString(R.string.please_open_camera));
-                                }
-                            }
-                        });
-
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+                //RxPermissions.getInstance(getContext())
+                //        .request(Manifest.permission.CAMERA)
+                //        .subscribe(new Action1<Boolean>() {
+                //            @Override
+                //            public void call(Boolean aBoolean) {
+                //                if (aBoolean) {
+                //                    Intent toScan = new Intent(getActivity(), QRActivity.class);
+                //                    toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
+                //                    startActivity(toScan);
+                //                } else {
+                //                    ToastUtils.show(getString(R.string.please_open_camera));
+                //                }
+                //            }
+                //        });
     }
 
     /**
