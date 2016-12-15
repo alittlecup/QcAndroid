@@ -21,6 +21,6 @@ public class StudentOrderPreviewActivity extends BaseAcitivity {
     }
 
     @OnClick(R.id.send_friend) public void onClick() {
-        ShareDialogFragment.newInstance(App.gUser.username+"教练的主页",getString(R.string.share_hint_open_desc,App.gUser.username), App.gUser.avatar, Configs.HOST_STUDENT_PREVIEW );
+        ShareDialogFragment.newInstance(App.gUser.username+"教练的主页",getString(R.string.share_hint_open_desc,App.gUser.username), App.gUser.avatar, Configs.HOST_STUDENT_PREVIEW ).show(getSupportFragmentManager(),"");
     }
 }
