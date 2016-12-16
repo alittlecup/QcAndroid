@@ -121,7 +121,7 @@
     <string name="label_brand_logo">品牌LOGO</string>
     <string name="label_gym_logo">场馆LOGO</string>
     <string name="label_city">城市</string>
-    <string name="personal_homepage">我的个人主页</string>
+    <string name="personal_homepage">我的主页</string>
     <string name="edit_mine_info">基本信息</string>
     <string formatted="false" name="brand_id_creator">品牌ID: %s    创建人: %s </string>
     <string name="no_permission_brand">只能由品牌创建人%s添加场馆</string>

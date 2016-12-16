@@ -476,7 +476,7 @@ public class QcCloudClient {
         /**
          * 课程下照片
          */
-        @GET("/api/v1/coaches/{coach_id}/courses/schedules/photos/") rx.Observable<QcResponseSchedulePhotos> qcGetSchedulePhotos(
+        @GET("/api/v2/coaches/{coach_id}/courses/schedules/photos/") rx.Observable<QcResponseSchedulePhotos> qcGetSchedulePhotos(
             @Path("coach_id") String coach_id, @Query("course_id") String id, @Query("page") int page,
             @QueryMap HashMap<String, String> params);
 

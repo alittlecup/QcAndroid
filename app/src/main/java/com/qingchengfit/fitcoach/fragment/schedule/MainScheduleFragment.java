@@ -28,7 +28,6 @@ import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
-import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
@@ -134,11 +133,11 @@ public class MainScheduleFragment extends BaseFragment {
 
     @OnClick(R.id.student_order) public void onStuOrder() {
         RxBus.getBus().post(new EventInit(false,1));
-        if (mCoachService == null) {
-            new ChooseGymDialogFragment().show(getFragmentManager(), "");
-        } else {
+        //if (mCoachService == null) {
+        //    new ChooseGymDialogFragment().show(getFragmentManager(), "");
+        //} else {
             goStudentPreview(mCoachService);
-        }
+        //}
     }
 
     public void queryNotify() {

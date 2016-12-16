@@ -60,7 +60,7 @@ import rx.schedulers.Schedulers;
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.data != null && qcResponse.data.courses != null){
                             mDatas.clear();
-                            mDatas.add(new SimpleTextItemItem("全部会员卡"));
+                            mDatas.add(new SimpleTextItemItem("全部课程"));
                             for (int i = 0; i < qcResponse.data.courses.size(); i++) {
                                 mDatas.add(new ChooseCourseItem(qcResponse.data.courses.get(i)));
                             }

@@ -17,10 +17,11 @@ import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.MyHomeActivity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.fragment.schedule.StudentOrderPreviewActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
@@ -138,8 +139,12 @@ public class MineFragmentFragment extends Fragment {
                 startActivity(toBaseInfo);
                 break;
             case R.id.layout_baseinfo:
-                Intent toHome = new Intent(getActivity(), MyHomeActivity.class);
-                startActivity(toHome);
+            //    Intent toHome = new Intent(getActivity(), MyHomeActivity.class);
+            //    startActivity(toHome);
+                Intent toStudnet = new Intent(getActivity(), StudentOrderPreviewActivity.class);
+                String s = "";
+                toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW + s);
+                startActivity(toStudnet);
                 break;
             case R.id.layout_my_meeting:
                 //修改个人介绍

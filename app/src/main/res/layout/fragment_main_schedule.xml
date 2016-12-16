@@ -38,7 +38,7 @@
             android:id="@+id/student_order"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="会员约课"
+            android:text="我的主页"
             android:textColor="@color/white"
             android:layout_alignParentLeft="true"
             android:paddingLeft="@dimen/activity_horizontal_margin"
