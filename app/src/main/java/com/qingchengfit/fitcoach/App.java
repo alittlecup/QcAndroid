@@ -123,9 +123,10 @@ public class App extends Application {
     //
     @Override
     public void onCreate() {
-        FIR.init(this);
+
         super.onCreate();
         MultiDex.install(this);
+        FIR.init(this);
 //        LeakCanary.install(this);
         AppContex = getApplicationContext();
 //        refWatcher = LeakCanary.install(this);

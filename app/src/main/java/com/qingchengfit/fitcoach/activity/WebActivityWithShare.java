@@ -300,7 +300,7 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
     private void initChromClient() {
 
         mWebviewWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
+
             public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
 //                super.openFileChooser(valueCallback, s, s1);
                 mValueCallback = valueCallback;
@@ -308,7 +308,7 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                 dialog.show();
             }
 
-            @Override
+
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
                 mValueCallbackNew = valueCallback;
                 dialog.show();

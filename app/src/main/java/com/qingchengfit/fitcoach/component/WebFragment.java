@@ -321,7 +321,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
             }
 
-            @Override public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
                 mValueCallbackNew = valueCallback;
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
                 return true;
