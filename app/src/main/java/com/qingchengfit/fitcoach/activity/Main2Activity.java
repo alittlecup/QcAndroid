@@ -53,6 +53,8 @@ import com.qingchengfit.fitcoach.http.bean.QcResponseActivities;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -66,6 +68,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -518,6 +522,24 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         if (!TextUtils.isEmpty(u)) {
             user = gson.fromJson(u, User.class);
             App.setgUser(user);
+
+            try {
+                JSONObject properties = new JSONObject();
+                properties.put("AppName", "Staff");
+                properties.put("UserId", user.id);
+                properties.put("UserPhone", user.phone);
+                SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
+
+                SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
+            } catch (JSONException e) {
+                e.printStackTrace();
+
+            } catch (InvalidDataException e) {
+                e.printStackTrace();
+            }
+
+
+
         } else {
             logout();
         }

@@ -244,7 +244,6 @@ dependencies {
 
     //    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:multidex:1.0.1'
-    compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
     compile files('libs/pushservice-5.2.0.12.jar')
     compile files('libs/tbs_sdk_thirdapp_v2.4.0.1073_36840_sharewithdownload_obfs_20161011_194834.jar')
 }

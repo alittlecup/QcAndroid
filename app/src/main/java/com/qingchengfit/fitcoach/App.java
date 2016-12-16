@@ -21,14 +21,11 @@ import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
 import im.fir.sdk.FIR;
 import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-import org.json.JSONException;
-import org.json.JSONObject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
@@ -141,16 +138,10 @@ public class App extends Application {
             SA_CONFIGURE_URL,                   // 配置分发的 URL
             SA_DEBUG_MODE);
         try {
-            JSONObject properties = new JSONObject();
-            properties.put("os", "Android");
-            properties.put("version", AppUtils.getAppVer(this));
 
-            SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            SensorsDataAPI.sharedInstance(this).enableAutoTrack();
+        } catch (Exception e) {
 
-        } catch (InvalidDataException e) {
-            e.printStackTrace();
         }
 
 

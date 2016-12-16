@@ -1,5 +1,11 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import com.qingchengfit.fitcoach.App;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -23,6 +29,15 @@ package com.qingchengfit.fitcoach.Utils;
 
 public class SensorsUitls {
     public static void track(String key,String json){
+        try {
+            JSONObject properties = new JSONObject(json);
+            SensorsDataAPI.sharedInstance(App.AppContex).track(key, properties);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+        } catch (Exception e){
 
+        }
     }
 }
