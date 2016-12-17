@@ -139,8 +139,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
         weekView.setEmptyViewClickListener(new WeekView.EmptyViewClickListener() {
 
             @Override public void onEmptyViewClicked(Calendar calendar, float v, float v1) {
-                if (mCalenderPopWindow == null) {
-                    mCalenderPopWindow = new CalenderPopWindow.Builder(getContext()).rest(v2 -> onAction(1, calendar.getTime()))
+                //if (mCalenderPopWindow == null) {
+                    mCalenderPopWindow = new CalenderPopWindow.Builder(getContext())
+                        .rest(v2 -> onAction(1, calendar.getTime()))
                         .group(v2 -> onAction(3, calendar.getTime()))
                         .privat(v2 -> onAction(2, calendar.getTime()))
                         .build();
@@ -148,8 +149,8 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                         @Override public void onDismiss() {
                             weekView.cancelClick();
                         }
-                    });
-                }
+                    }); 
+                //}
                 mCalenderPopWindow.show(weekView, (int) v, (int) v1);
                 weekView.clickOneRect(calendar);
                 //GuideWindow window = new GuideWindow(getContext(),"xxxx",GuideWindow.DOWN);

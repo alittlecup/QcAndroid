@@ -197,7 +197,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
                     }
                 }
                 if (CmBean.checkCmBean(cmBeens, cmBean)) {
-                    mData.add(mData.size() - 1, new BatchCircleItem(cmBean));
+                    mData.add(mData.size() - 1, new BatchCircleItem(cmBean,mCourse.is_private));
                     cmBeens.add(cmBean);
                     body.time_repeats = CmBean.geTimeRepFromBean(cmBeens);
                     mAdapter.notifyDataSetChanged();
@@ -320,7 +320,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             }
             mData.clear();
             for (int i = 0; i < CmBean.getBeansFromTimeRep(mTimeRep).size(); i++) {
-                mData.add(new BatchCircleItem(CmBean.getBeansFromTimeRep(mTimeRep).get(i)));
+                mData.add(new BatchCircleItem(CmBean.getBeansFromTimeRep(mTimeRep).get(i),mCourse.is_private));
             }
             mData.add(new AddBatchCircleItem(getString(R.string.add_course_circle)));
             mAdapter.notifyDataSetChanged();

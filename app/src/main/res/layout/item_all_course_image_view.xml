@@ -20,8 +20,6 @@
         tools:text="毛云涛"
         android:textColor="@color/white"
         android:background="@color/halftrans_background"
-        android:drawableLeft="@drawable/ic_eye_white"
-        android:drawableStart="@drawable/ic_eye_white"
         android:drawablePadding="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"

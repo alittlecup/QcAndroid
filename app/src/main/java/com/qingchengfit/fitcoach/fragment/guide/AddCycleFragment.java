@@ -217,39 +217,32 @@ public class AddCycleFragment extends BaseFragment {
     }
 
     private void setDesc() {
-        x.clear();
-        if (week1.isShowRight())
-            x.add(1);
-        if (week2.isShowRight())
-            x.add(2);
-        if (week3.isShowRight())
-            x.add(3);
-        if (week4.isShowRight())
-            x.add(4);
-        if (week5.isShowRight())
-            x.add(5);
-        if (week6.isShowRight())
-            x.add(6);
-        if (week7.isShowRight())
-            x.add(7);
+        try {
 
-        String weekStr = TextUtils.concat(
-                week1.isShowRight() ? getString(R.string.week1) + "、" : "",
-                week2.isShowRight() ? getString(R.string.week2) + "、" : "",
-                week3.isShowRight() ? getString(R.string.week3) + "、" : "",
-                week4.isShowRight() ? getString(R.string.week4) + "、" : "",
-                week5.isShowRight() ? getString(R.string.week5) + "、" : "",
-                week6.isShowRight() ? getString(R.string.week6) + "、" : "",
-                week7.isShowRight() ? getString(R.string.week7) + "、" : ""
-        ).toString();
-        if (weekStr.length() > 0) {
-            weekStr = weekStr.substring(0, weekStr.length() - 1);
-            String timeStr = TextUtils.concat(starttime.getContent(), "-", endtime.getContent()).toString();
-            desc.setText("每个" + weekStr + timeStr + "有此课程");
-            comfirm.setEnabled(true);
-        } else {
-            comfirm.setEnabled(false);
-            desc.setText("");
+            x.clear();
+            if (week1.isShowRight()) x.add(1);
+            if (week2.isShowRight()) x.add(2);
+            if (week3.isShowRight()) x.add(3);
+            if (week4.isShowRight()) x.add(4);
+            if (week5.isShowRight()) x.add(5);
+            if (week6.isShowRight()) x.add(6);
+            if (week7.isShowRight()) x.add(7);
+
+            String weekStr = TextUtils.concat(week1.isShowRight() ? getString(R.string.week1) + "、" : "",
+                week2.isShowRight() ? getString(R.string.week2) + "、" : "", week3.isShowRight() ? getString(R.string.week3) + "、" : "",
+                week4.isShowRight() ? getString(R.string.week4) + "、" : "", week5.isShowRight() ? getString(R.string.week5) + "、" : "",
+                week6.isShowRight() ? getString(R.string.week6) + "、" : "", week7.isShowRight() ? getString(R.string.week7) + "、" : "").toString();
+            if (weekStr.length() > 0) {
+                weekStr = weekStr.substring(0, weekStr.length() - 1);
+                String timeStr = TextUtils.concat(starttime.getContent(), "-", DateUtils.getTimeHHMM(mEnd)).toString();
+                desc.setText("每个" + weekStr + timeStr + "有此课程");
+                comfirm.setEnabled(true);
+            } else {
+                comfirm.setEnabled(false);
+                desc.setText("");
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -266,7 +259,7 @@ public class AddCycleFragment extends BaseFragment {
                     mStart = DateUtils.getDateFromHHmm(starttime.getContent());
                     if (mCourselength != 0)
                         mEnd = new Date(mStart.getTime() + mCourselength * 1000);
-
+                    setDesc();
                 }
             });
         } else if (view.getId() == R.id.endtime) {
@@ -275,6 +268,7 @@ public class AddCycleFragment extends BaseFragment {
                 public void onTimeSelect(Date date) {
                     endtime.setContent(DateUtils.getTimeHHMM(date));
                     mEnd = DateUtils.getDateFromHHmm(endtime.getContent());
+                    setDesc();
                 }
             });
         }

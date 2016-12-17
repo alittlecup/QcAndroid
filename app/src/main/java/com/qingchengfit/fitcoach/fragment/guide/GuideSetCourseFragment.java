@@ -19,10 +19,10 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
-import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -67,7 +67,7 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.guide_title) TextView guideTitle;
 
     private String imgUrl;
-
+    private Course mCourse;
     private Unbinder unbinder;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,12 +87,13 @@ import rx.schedulers.Schedulers;
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
-                            Glide.with(getContext()).load(s).into(courseImg);
+                            Glide.with(getContext()).load(PhotoUtils.getSmall(s)).into(courseImg);
                             imgUrl = s;
                         }
                     });
             }
         });
+        orderCount.setVisibility(isPrivate?View.GONE:View.VISIBLE);
         btnGroup.setClick(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 btnPrivate.toggle();
@@ -108,6 +109,16 @@ import rx.schedulers.Schedulers;
 
     @Override protected void lazyLoad() {
 
+    }
+
+    @Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (mCourse != null){
+            name.setContent(mCourse.getName());
+            timeLong.setContent(mCourse.getLength()/60+"");
+            if (!mCourse.is_private)
+                orderCount.setContent(mCourse.capacity+"");
+        }
     }
 
     @Override public void onDestroyView() {
@@ -138,13 +149,17 @@ import rx.schedulers.Schedulers;
                 //                }
                 if (getParentFragment() instanceof GuideFragment) {
                     ((GuideFragment) getParentFragment()).initBean.courses = new ArrayList<>();
-                    ((GuideFragment) getParentFragment()).initBean.courses.add(new Course.Builder().photo(imgUrl)
+                    Course.Builder b = new Course.Builder().photo(imgUrl)
                         .name(name.getContent())
-                        .capacity(Integer.parseInt(orderCount.getContent()))
                         .is_private(isPrivate)
-                        .length((Integer.parseInt(timeLong.getContent()) * 60))
-                        .build());
+                        .length((Integer.parseInt(timeLong.getContent()) * 60));
+                    if (!isPrivate)
+                        b.capacity(Integer.parseInt(orderCount.getContent()));
+                    else b.capacity(1);
 
+                    ((GuideFragment) getParentFragment()).initBean.courses.add(
+                        b.build());
+                    mCourse = b.build();
                     RxBus.getBus().post(new CoachInitBean());
                     getFragmentManager().beginTransaction()
                         .replace(R.id.guide_frag, new GuideAddBatchFragment())

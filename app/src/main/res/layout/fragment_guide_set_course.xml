@@ -70,6 +70,7 @@
             android:layout_height="60dp"
             android:padding="0.5dp"
             android:background="@drawable/bg_rect"
+            android:scaleType="centerCrop"
             />
 
         <ImageView
@@ -87,6 +88,7 @@
         app:civ_hint="@string/please_input_course_name"
         app:civ_lable="@string/name_call"
         app:civ_showdivier="false"
+        app:civ_nonnull="true"
         />
 
     <include layout="@layout/divider_grey_left_right"/>
@@ -99,6 +101,8 @@
         app:civ_lable="@string/time_long_min"
         app:civ_showdivier="false"
         app:civ_inputnum="true"
+        app:civ_nonnull="true"
+
         />
 
     <include layout="@layout/divider_grey_left_right"/>
@@ -111,6 +115,8 @@
         app:civ_hint="@string/input_student_count"
         app:civ_lable="@string/single_ordre_count"
         app:civ_showdivier="false"
+        app:civ_nonnull="true"
+
         />
 
     <include layout="@layout/divider_grey"/>

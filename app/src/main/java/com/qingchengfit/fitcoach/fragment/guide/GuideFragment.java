@@ -2,26 +2,31 @@ package com.qingchengfit.fitcoach.fragment.guide;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.badoualy.stepperindicator.StepperIndicator;
-import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.CoachInitBean;
-import com.qingchengfit.fitcoach.bean.EventStep;
-import com.qingchengfit.fitcoach.event.EventToolbar;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import com.badoualy.stepperindicator.StepperIndicator;
+import com.google.gson.Gson;
+import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import com.qingchengfit.fitcoach.bean.EventStep;
+import com.qingchengfit.fitcoach.event.EventToolbar;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -69,17 +74,52 @@ public class GuideFragment extends BaseFragment {
                 getActivity().onBackPressed();
             }
         });
-        toolbarTitle.setText("设置健身房");
+        toolbarTitle.setText("新建健身房");
         RxBusAdd(EventToolbar.class).subscribe(eventToolbar -> toolbarTitle.setText(eventToolbar.title));
 
         String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
-        if (initStr != null || initStr.isEmpty())
+        if (initStr == null || initStr.isEmpty())
             initBean = new CoachInitBean();
         else initBean = gson.fromJson(initStr, CoachInitBean.class);
 
-        getChildFragmentManager().beginTransaction()
+        if (TextUtils.isEmpty(initBean.brand_id)){
+            getChildFragmentManager().beginTransaction()
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
                 .commit();
+        }else {
+            RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id+"")
+                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                 .subscribe(new Action1<QcResponseBrands>() {
+                                     @Override
+                                     public void call(QcResponseBrands qcResponse) {
+                                         if (ResponseConstant.checkSuccess(qcResponse)) {
+                                             if (qcResponse.data != null && qcResponse.data.brands.size() >0){
+                                                 for (int i = 0; i < qcResponse.data.brands.size(); i++) {
+                                                     Brand b = qcResponse.data.brands.get(i);
+                                                     if (b.getId().equalsIgnoreCase(initBean.brand_id)){
+                                                         getChildFragmentManager().beginTransaction()
+                                                             .replace(R.id.guide_frag, new GuideSetGymFragmentBuilder(b.getPhoto(), b.getName(), b.getId()).build())
+                                                             .commit();
+                                                         break;
+                                                     }
+                                                 }
+                                             }else {
+                                                 getChildFragmentManager().beginTransaction()
+                                                     .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                                                     .commit();
+                                             }
+                                         }
+                                     }
+                                 }, new Action1<Throwable>() {
+                                     @Override
+                                     public void call(Throwable throwable) {
+                                     }
+                                 })
+            );
+
+        }
+
+
         RxBusAdd(EventStep.class)
                 .subscribe(new Action1<EventStep>() {
                     @Override

@@ -41,7 +41,7 @@
                 style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设置健身房"
+                android:text="新建健身房"
                 />
 
             <TextView

@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="@string/guide_set_gym_hint" />
+            android:text="-- 课程排期 -- " />
 
         <include layout="@layout/divider_grey" />
 
         <LinearLayout
+            android:id="@+id/layout_course"
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:background="@color/white"
@@ -38,6 +39,7 @@
                     android:id="@+id/course_img"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:scaleType="centerCrop"
                     android:layout_centerInParent="true" />
 
                 <ImageView
@@ -89,10 +91,10 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="15dp"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:text="@string/course_batch" />
+            android:text="" />
 
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/startdate"

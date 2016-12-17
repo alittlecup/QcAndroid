@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.course;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,6 +82,7 @@ public class CourseImageViewFragment extends BaseFragment {
         seer.setText(mPhoto.is_public()?"": String.format(Locale.CHINA, "仅%s可见", mPhoto.getOwner().name));
         uploaderDate.setText(String.format(Locale.CHINA, "由%s上传", mPhoto.getCreated_by().name).concat(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(mPhoto.getCreated_at()))));
         time.setText(DateUtils.getTimeHHMM(DateUtils.formatDateFromServer(mPhoto.getCreated_at())));
+        seer.setCompoundDrawables(ContextCompat.getDrawable(getContext(),R.drawable.ic_eye_white),null,null,null);
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

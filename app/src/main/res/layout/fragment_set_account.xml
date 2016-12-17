@@ -40,6 +40,18 @@
           android:clickable="false"
           />
     </LinearLayout>
+    <TextView
+        android:id="@+id/no_account_hint"
+        style="@style/TextTitleHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/little"
+        android:text="设置需要结算后，会员需使用会员卡、在线支付才可约课"
+        />
+
     <include layout="@layout/divider_grey_margin"/>
     <FrameLayout
         android:id="@+id/layout_pay_detail"

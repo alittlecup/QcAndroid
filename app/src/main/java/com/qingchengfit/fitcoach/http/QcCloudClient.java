@@ -417,7 +417,7 @@ public class QcCloudClient {
         @GET("/api/meetings/") rx.Observable<QcMeetingResponse> qcGetMeetingList(@QueryMap Map<String, String> params);
 
         //所有的团课排期
-        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/") rx.Observable<QcBatchResponse> qcGetGroupManageDetail(
+        @GET("/api/v1/coaches/{coach_id}/batches/{batch_id}/{schedules}/?order_by=start") rx.Observable<QcBatchResponse> qcGetGroupManageDetail(
             @Path("coach_id") int coach_id, @Path("batch_id") String batch_id, @Path("schedules") String schedules,
             @QueryMap Map<String, String> params);
 

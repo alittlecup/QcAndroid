@@ -16,16 +16,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
+import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
-import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventAddress;
@@ -81,6 +83,8 @@ import rx.schedulers.Schedulers;
     protected int city_code;
     public String imgUrl;
     private Unbinder unbinder;
+    private String addressStr;
+    private String gymNameStr;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,17 +94,33 @@ import rx.schedulers.Schedulers;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
         unbinder = ButterKnife.bind(GuideSetGymFragment.this, view);
+
+
         Glide.with(getContext())
-            .load(brandImgUrl)
+            .load(PhotoUtils.getSmall(brandImgUrl))
             .asBitmap()
             .placeholder(R.drawable.ic_default_header)
             .into(new CircleImgWrapper(brandImg, getContext()));
         brandName.setText(brandNameStr);
+        String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
+        CoachInitBean initBean;
+        if (initStr == null || initStr.isEmpty())
+            initBean = new CoachInitBean();
+        else initBean = new Gson().fromJson(initStr, CoachInitBean.class);
+
+        if (initBean.shop != null){
+            gymName.setContent(initBean.shop.name);
+            gymNameStr = initBean.shop.name;
+            gymAddress.setContent(initBean.shop.address);
+            addressStr = initBean.shop.address;
+            Glide.with(getContext()).load(PhotoUtils.getSmall(initBean.shop.photo)).asBitmap().placeholder(R.drawable.ic_default_header).error(R.drawable.ic_default_header).into(new CircleImgWrapper(gymImg, getContext()));
+        }
+
         RxBus.getBus().post(new EventStep.Builder().step(0).build());
         RxBusAdd(EventAddress.class).subscribe(new Action1<EventAddress>() {
             @Override public void call(EventAddress eventAddress) {
                 gymAddress.setContent(eventAddress.address);
-                // TODO: 16/11/14 设置城市和latlng
+                addressStr = eventAddress.address;
                 city_code = eventAddress.city_code;
                 lat = eventAddress.lat;
                 lng = eventAddress.log;
@@ -114,7 +134,7 @@ import rx.schedulers.Schedulers;
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
-                            Glide.with(getContext()).load(s).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
+                            Glide.with(getContext()).load(PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
                             imgUrl = s;
                         }
                     });
@@ -122,6 +142,12 @@ import rx.schedulers.Schedulers;
         });
         initData();
         return view;
+    }
+
+    @Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        gymName.setContent(gymNameStr);
+        gymAddress.setContent(addressStr);
     }
 
     public void initData() {
@@ -140,8 +166,8 @@ import rx.schedulers.Schedulers;
     @OnClick({ R.id.layout_brand, R.id.layout_gym_img, R.id.gym_address }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_brand:
-                Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-                startActivityForResult(toChooseBrand, 1);
+                //Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
+                //startActivityForResult(toChooseBrand, 1);
                 break;
             case R.id.layout_gym_img:
                 ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
@@ -172,7 +198,7 @@ import rx.schedulers.Schedulers;
             ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
             return;
         }
-        if (gymName.isEmpty() || lat == 0 || lng == 0 || city_code == 0) {
+        if (gymName.isEmpty() ) {
             ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
             return;
         }
@@ -184,6 +210,7 @@ import rx.schedulers.Schedulers;
                 .gd_lng(lng)
                 .photo(imgUrl)
                 .build();
+            gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
             getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
@@ -201,7 +228,7 @@ import rx.schedulers.Schedulers;
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
                 brandImgUrl = brand.getPhoto();
                 brandNameStr = brand.getName();
-                Glide.with(getContext()).load(brand.getPhoto()).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
+                Glide.with(getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
                 brandName.setText(brand.getName());
                 if (getParentFragment() instanceof GuideFragment) {
                     ((GuideFragment) getParentFragment()).initBean.brand_id = brand.getId();

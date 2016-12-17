@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.items;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,7 @@ public class AllCourseImageItem extends AbstractFlexibleItem implements ISection
                 ((AllCourseImageItemHolder) holder).uploader.setText(String.format(Locale.CHINA,"由%s上传",schedulePhoto.getCreated_by().name));
             }
             Glide.with(adapter.getRecyclerView().getContext()).load(PhotoUtils.getSmall(schedulePhoto.getPhoto())).fitCenter().into(((AllCourseImageItemHolder) holder).image);
+            ((AllCourseImageItemHolder) holder).reader.setCompoundDrawables(ContextCompat.getDrawable(holder.itemView.getContext(),R.drawable.ic_eye_white),null,null,null);
         }
     }
 

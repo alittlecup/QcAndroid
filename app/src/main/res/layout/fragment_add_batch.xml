@@ -121,7 +121,7 @@
           android:layout_height="wrap_content"
           app:civ_clickable="true"
           app:civ_hint="@string/unset"
-          app:civ_lable="@string/need_account"
+          app:civ_lable="结算方式"
           app:civ_showright="true"
           app:civ_showdivier="false"
           />

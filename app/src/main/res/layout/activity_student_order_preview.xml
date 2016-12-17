@@ -22,5 +22,6 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:text="发送给会员"
+        android:visibility="gone"
         />
 </RelativeLayout>

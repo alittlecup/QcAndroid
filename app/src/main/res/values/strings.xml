@@ -134,7 +134,7 @@
     <string name="course_statement">课程报表</string>
     <string name="sale_statement">销售报表</string>
     <string name="course_plan">课程计划模板</string>
-    <string name="set_gym_brand_hint">-- 设置健身房品牌 --</string>
+    <string name="set_gym_brand_hint">-- 新建健身房品牌 --</string>
     <string name="next_step">下一步</string>
     <string name="guide_set_gym_hint">-- 设置场馆 -- </string>
     <string name="gym_name">场馆名称</string>
@@ -166,8 +166,8 @@
     <string name="permission_request_camara">请打开拍照权限</string>
     <string name="alert_write_brand_name">请填写健身房品牌名</string>
     <string name="guide_set_course_hint">-- 设置课程信息 --</string>
-    <string name="guide_set_group_course_hint">-- 设置团课信息 --</string>
-    <string name="guide_set_private_course_hint">-- 设置私教信息 --</string>
+    <string name="guide_set_group_course_hint">-- 添加团课种类 --</string>
+    <string name="guide_set_private_course_hint">-- 添加私教种类 --</string>
     <string name="name_call">名称</string>
     <string name="please_input_course_name">填写课程名称</string>
     <string name="single_ordre_count">单节可约人数</string>
@@ -262,7 +262,7 @@
     <string name="add_gym_brand">添加健身房品牌</string>
     <string name="hint_sync_gyms">检测到您是以下%d家健身房的教练\n系统会自动同步健身房数据</string>
     <string name="hint_sync_waiting">正在同步数据，请稍后…</string>
-    <string name="go_my_schedule">进入我的日程</string>
+    <string name="go_my_schedule">进入我的课程</string>
     <string name="have_done">已完成</string>
     <string name="choose_brand">选择品牌</string>
     <string name="course_place">场地</string>
@@ -294,7 +294,7 @@
     <string name="app_download_link">http://fir.im/qingchengfit</string>
     <string name="app_icon_net">http://qcresource.b0.upaiyun.com/ic_launcher_trainer.png</string>
     <string name="hint_help_order">点击这里帮会员约课</string>
-    <string name="hint_order_self">点击这里让会员自主约课</string>
+    <string name="hint_order_self">分享您的主页，让会员约课吧</string>
     <string name="need_account">需要结算</string>
     <string name="back_today">今</string>
     <string name="d_spaces">%d块场地</string>
@@ -303,8 +303,8 @@
     <string name="wechat_pay">微信支付</string>
     <string name="pay_online">在线支付</string>
     <string name="card_pay">会员卡支付</string>
-    <string name="choose_course_type">--选择课程种类--</string>
-    <string name="all_schedules">全部日程</string>
+    <string name="choose_course_type">--选择课程类型--</string>
+    <string name="all_schedules">全部课程</string>
     <string name="unset">未设置</string>
     <string name="show_out_batch">显示已过期排期</string>
     <string name="hide_out_batch">隐藏已过期排期</string>

@@ -22,9 +22,11 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchCircleVH> {
 
     public CmBean cmBean;
+    public boolean isPrivate;
 
-    public BatchCircleItem(CmBean cmBean) {
+    public BatchCircleItem(CmBean cmBean, boolean isPrivate) {
         this.cmBean = cmBean;
+        this.isPrivate = isPrivate;
     }
 
     @Override
@@ -39,7 +41,10 @@ public class BatchCircleItem extends AbstractFlexibleItem<BatchCircleItem.BatchC
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, BatchCircleVH holder, int position, List payloads) {
-        holder.workTime.setText(DateUtils.getTimeHHMM(cmBean.dateStart)+"-"+DateUtils.getTimeHHMM(cmBean.dateEnd));
+
+        if (isPrivate)
+            holder.workTime.setText(DateUtils.getTimeHHMM(cmBean.dateStart)+"-"+DateUtils.getTimeHHMM(cmBean.dateEnd));
+          else   holder.workTime.setText(DateUtils.getTimeHHMM(cmBean.dateStart));
         String workday = "每周";
         for (int i = 0; i < cmBean.week.size(); i++) {
             if (i < cmBean.week.size() -1){

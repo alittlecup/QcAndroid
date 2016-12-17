@@ -32,6 +32,7 @@ import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.RxbusBatchLooperConfictEvent;
+import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.bean.base.InitBatch;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -95,6 +96,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
     private CommonFlexAdapter mAdapter;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private Unbinder unbinder;
+    private boolean isPrivate = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,12 +108,13 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
                 getActivity().onBackPressed();
                 return view;
             } else {
-                Glide.with(getContext()).load(bean.courses.get(0).photo).into(courseImg);
+                Glide.with(getContext()).load(bean.courses.get(0).photo).placeholder(R.drawable.img_default_course).error(R.drawable.img_default_course).into(courseImg);
                 imgPrivate.setImageResource(bean.courses.get(0).is_private ? R.drawable.ic_course_type_private : R.drawable.ic_course_type_group);
                 courseName.setText(bean.courses.get(0).name);
                 courseTimeLong.setText(getString(R.string.time_long_d_min, bean.courses.get(0).length / 60));
-            }
-        }
+                isPrivate = bean.courses.get(0).is_private;
+
+                Course course = bean.courses.get(0);
 
         Calendar c = Calendar.getInstance();
         startdate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
@@ -119,24 +122,45 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
         c.set(Calendar.DAY_OF_MONTH,1);
         c.add(Calendar.DATE,-1);
         enddate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
-
-        ArrayList<Integer> defautxxx1 = new ArrayList<>();
-        defautxxx1.add(1);
-        defautxxx1.add(3);
-        defautxxx1.add(5);
-        defautxxx1.add(7);
-        mData.add(new BatchCircleItem(new CmBean(defautxxx1,DateUtils.getDateFromHHmm("9:00"),DateUtils.getDateFromHHmm("12:00"))));
-        ArrayList<Integer> defautxxx2 = new ArrayList<>();
-        defautxxx2.clear();
-        defautxxx2.add(2);
-        defautxxx2.add(4);
-        defautxxx2.add(6);
-        mData.add(new BatchCircleItem(new CmBean(defautxxx2,DateUtils.getDateFromHHmm("12:00"),DateUtils.getDateFromHHmm("20:00"))));
-        mData.add(mData.size()-1, new AddBatchCircleItem(getString(R.string.add_course_circle)));
+        if (!bean.courses.get(0).is_private) {
+            ArrayList<Integer> defautxxx1 = new ArrayList<>();
+            defautxxx1.add(1);
+            defautxxx1.add(3);
+            defautxxx1.add(5);
+            defautxxx1.add(7);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(DateUtils.getDateFromHHmm("9:00"));
+            calendar.add(Calendar.SECOND,course.length);
+            mData.add(new BatchCircleItem(new CmBean(defautxxx1, DateUtils.getDateFromHHmm("9:00"),calendar.getTime() ),
+                bean.courses.get(0).is_private));
+            ArrayList<Integer> defautxxx2 = new ArrayList<>();
+            defautxxx2.clear();
+            defautxxx2.add(2);
+            defautxxx2.add(4);
+            defautxxx2.add(6);
+            calendar.setTime(DateUtils.getDateFromHHmm("14:00"));
+            calendar.add(Calendar.SECOND,course.length);
+            mData.add(new BatchCircleItem(new CmBean(defautxxx2, DateUtils.getDateFromHHmm("14:00"), calendar.getTime()),
+                bean.courses.get(0).is_private));
+        }else {
+            ArrayList<Integer> defautxxx1 = new ArrayList<>();
+            defautxxx1.add(1);
+            defautxxx1.add(2);
+            defautxxx1.add(3);
+            defautxxx1.add(4);
+            defautxxx1.add(5);
+            defautxxx1.add(6);
+            defautxxx1.add(7);
+            mData.add(new BatchCircleItem(new CmBean(defautxxx1, DateUtils.getDateFromHHmm("8:00"), DateUtils.getDateFromHHmm("21:00")),
+                bean.courses.get(0).is_private));
+        }
+        mData.add(mData.size(), new AddBatchCircleItem(getString(R.string.add_course_circle)));
         mAdapter = new CommonFlexAdapter(mData, this);
         batchDate.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         batchDate.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         batchDate.setAdapter(mAdapter);
+        }
+        }
         RxBusAdd(CmBean.class)
                 .subscribe(new Action1<CmBean>() {
                     @Override
@@ -148,7 +172,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
                             }
                         }
                         if (CmBean.checkCmBean(cmBeens, cmBean)) {
-                            mData.add(new BatchCircleItem(cmBean));
+                            mData.add(new BatchCircleItem(cmBean,isPrivate));
                             mAdapter.notifyDataSetChanged();
                             RxBus.getBus().post(new RxbusBatchLooperConfictEvent(false));
                         } else {
@@ -161,7 +185,10 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
 
         return view;
     }
-
+    @OnClick(R.id.layout_course)
+    public void onCourse(){
+        getActivity().onBackPressed();
+    }
 
     @Override
     protected void lazyLoad() {

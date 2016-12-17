@@ -71,6 +71,7 @@ public class SetAccountFragment extends BaseFragment {
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @BindView(R.id.sw_need_pay) SwitchCompat swNeedPay;
     @BindView(R.id.layout_pay_detail) FrameLayout layoutPayDetail;
+    @BindView(R.id.no_account_hint) TextView noAccountHint;
     private DialogList stucount;
     private List<AbstractFlexibleItem> datas = new ArrayList<>();
     private CommonFlexAdapter mFlexAdapter;
@@ -107,7 +108,8 @@ public class SetAccountFragment extends BaseFragment {
         if (getArguments() != null) {
             count.setContent(getArguments().getInt("o", 8) + "");
             swNeedPay.setChecked(!getArguments().getBoolean("isfree", true));
-            layoutPayDetail.setVisibility(swNeedPay.isChecked()?View.VISIBLE:View.GONE);
+            layoutPayDetail.setVisibility(swNeedPay.isChecked() ? View.VISIBLE : View.GONE);
+            noAccountHint.setVisibility(swNeedPay.isChecked() ?  View.GONE:View.VISIBLE );
         }
 
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));

@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -16,17 +17,26 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.google.gson.Gson;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.ImagesAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
+import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -92,26 +102,55 @@ public class SplashActivity extends BaseAcitivity {
             runOnUiThread(() -> {
                 if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
 
-//                    QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribeOn(Schedulers.io())
-//                            .subscribe(new Action1<QcCoachServiceResponse>() {
-//                                @Override
-//                                public void call(QcCoachServiceResponse qcCoachServiceResponse) {
-//
-//
-//                                }
-//                            }, new Action1<Throwable>() {
-//                                @Override
-//                                public void call(Throwable throwable) {
-//
-//                                }
-//                            });
+                    //获取用户拥有的系统
+                    QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<QcCoachServiceResponse>() {
+                            @Override public void onCompleted() {
 
-                    Intent toMain = new Intent(this, Main2Activity.class);
-                    startActivity(toMain);
-                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
-                    this.finish();
+                            }
+
+                            @Override public void onError(Throwable e) {
+
+                            }
+
+                            @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
+                                if (qcCoachServiceResponse.status == ResponseResult.SUCCESS) {
+                                    if (qcCoachServiceResponse.data == null || qcCoachServiceResponse.data.services == null ||
+                                        qcCoachServiceResponse.data.services.size() == 0) {
+                                        new MaterialDialog.Builder(SplashActivity.this).canceledOnTouchOutside(false)
+                                            .title("您没有场馆")
+                                            .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
+                                            .positiveText("创建场馆")
+                                            .negativeText("重新登录")
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
+                                                    startActivity(toGym);
+                                                    SplashActivity.this.finish();
+                                                }
+                                            })
+                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    logout();
+                                                }
+                                            })
+                                            .show();
+                                    } else {
+                                        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachServiceResponse));
+                                        Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
+                                        startActivity(toMain);
+                                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+                                        SplashActivity.this.finish();
+                                    }
+                                } else if (qcCoachServiceResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                                    logout();
+                                }
+                            }
+                        });
+
+
                 } else {
                     goSplashViewpager();
                     ViewCompat.animate(mainLoading).alpha(0.1f).setDuration(1000).withLayer().setListener(new ViewPropertyAnimatorListener() {
@@ -177,5 +216,15 @@ public class SplashActivity extends BaseAcitivity {
             goLogin(1);
         } else goLogin(0);
 
+    }
+    public void logout() {
+        PreferenceUtils.setPrefBoolean(SplashActivity.this, "hasPushId", false);
+        PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
+        PushManager.stopWork(App.AppContex);
+        PreferenceUtils.setPrefBoolean(this, "first", true);
+        Intent logout = new Intent(this, SplashActivity.class);
+        logout.putExtra("isRegiste", 0);
+        startActivity(logout);
+        this.finish();
     }
 }

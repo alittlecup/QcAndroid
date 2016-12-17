@@ -46,7 +46,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrow_right"
             />
     </LinearLayout>
 
@@ -90,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:civ_hint="@string/please_input_gym_name"
-        app:civ_lable="@string/gym_name"
+        app:civ_lable="场馆名称(店名)"
         app:civ_nonnull="true"
         />
 

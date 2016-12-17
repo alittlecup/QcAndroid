@@ -143,7 +143,10 @@ public class App extends Application {
         } catch (Exception e) {
 
         }
-
+        String u = PreferenceUtils.getPrefString(this, "user_info", "");
+        if (!TextUtils.isEmpty(u)) {
+            gUser = new Gson().fromJson(u, User.class);
+        }
 
 
 

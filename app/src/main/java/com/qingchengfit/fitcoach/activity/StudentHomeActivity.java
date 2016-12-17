@@ -435,14 +435,14 @@ public class StudentHomeActivity extends BaseAcitivity {
         //LogUtil.e("privateurl:" + privateUrl);
         //if (!TextUtils.isEmpty(privateUrl)) {
 
-            goWeb(Configs.ServerIp + Configs.PRIVATE_PRIVEIW +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId);
+            goWeb(Configs.PRIVATE_PRIVEIW +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId);
         //}
     }
 
     public void goGroup() {
         //LogUtil.e("gourpUrl:" + gourpUrl);
         //if (!TextUtils.isEmpty(gourpUrl)) {
-            goWeb(Configs.ServerIp + Configs.GROUP_PRIVEIW +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId );
+            goWeb( Configs.GROUP_PRIVEIW +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId );
         //}
     }
 

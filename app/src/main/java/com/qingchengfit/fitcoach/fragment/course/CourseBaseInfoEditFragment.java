@@ -134,11 +134,12 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             return null;
         }
         if (courseMinCount.getVisibility() == View.VISIBLE) mCourse.setMin_users(Integer.parseInt(courseMinCount.getContent()));
-        if (TextUtils.isEmpty(singleCount.getContent())) {
+        if (singleCount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(singleCount.getContent())) {
             ToastUtils.show("请填写单节可约人数");
             return null;
         }
-        mCourse.setCapacity(Integer.parseInt(singleCount.getContent()));
+        if (singleCount.getVisibility() == View.VISIBLE)
+            mCourse.setCapacity(Integer.parseInt(singleCount.getContent()));
         return mCourse;
     }
 

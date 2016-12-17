@@ -27,7 +27,7 @@ import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.event.EventChooseCourse;
-import com.qingchengfit.fitcoach.fragment.statement.GymChooseCourseFragmentBuilder;
+import com.qingchengfit.fitcoach.fragment.statement.GymChooseCardtplFragmentBuilder;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
@@ -175,7 +175,7 @@ public class CustomSaleFragment extends BaseFragment {
     @OnClick(R.id.custom_statment_course) public void onClickCourse() {
         customStatmentCourse.setClickable(false);
         if (getActivity() instanceof FragActivity) {
-            new GymChooseCourseFragmentBuilder(((FragActivity) getActivity()).getCoachService().getId()+""
+            new GymChooseCardtplFragmentBuilder(((FragActivity) getActivity()).getCoachService().getId()+""
                 ,((FragActivity) getActivity()).getCoachService().getModel()
                 ).build().show(getFragmentManager(), "");
         }
