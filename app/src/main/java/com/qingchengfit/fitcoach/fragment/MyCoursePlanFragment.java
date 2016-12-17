@@ -132,12 +132,6 @@ public class MyCoursePlanFragment extends BaseFragment {
         return view;
     }
 
-    @Override public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            freshData();
-        }
-    }
 
     @Override public void onResume() {
         super.onResume();
@@ -150,7 +144,7 @@ public class MyCoursePlanFragment extends BaseFragment {
             HashMap<String,Object> params = new HashMap<>();
             params.put("id",coachService.getId());
             params.put("model",coachService.getModel());
-            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcAllCoursePlanResponse>() {
+            RxRegiste(QcCloudClient.getApi().getApi.qcGetGymAllPlans(App.coachid,params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcAllCoursePlanResponse>() {
                 @Override public void onCompleted() {
 
                 }
@@ -172,7 +166,7 @@ public class MyCoursePlanFragment extends BaseFragment {
                     }
                     refresh.setRefreshing(false);
                 }
-            });
+            }));
         }
     }
 
@@ -182,40 +176,40 @@ public class MyCoursePlanFragment extends BaseFragment {
         startActivityForResult(toWeb, 10001);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //        if (resultCode == Activity.RESULT_OK){
-        if (getActivity() instanceof FragActivity) {
-            CoachService coachService = ((FragActivity) getActivity()).getCoachService();
-            HashMap<String, Object> params = new HashMap<>();
-            params.put("id", coachService.getId());
-            params.put("model", coachService.getModel());
-            if (resultCode > 1000) {
-                QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(qcAllCoursePlanResponse -> {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        mGymAdapter.notifyDataSetChanged();
-                        recyclerview.scrollToPosition(adapterData.size() - 1);
-                    }, throwable -> {
-                    }, () -> {
-                    });
-            } else if (requestCode >= 0 && requestCode < 10000) {
-                QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(qcAllCoursePlanResponse -> {
-                        adapterData.clear();
-                        adapterData.addAll(qcAllCoursePlanResponse.data.plans);
-                        mGymAdapter.notifyItemChanged(requestCode);
-                    }, throwable -> {
-                    }, () -> {
-                    });
-            }
-        }
-    }
+    //@Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //    super.onActivityResult(requestCode, resultCode, data);
+    //    //        if (resultCode == Activity.RESULT_OK){
+    //    if (getActivity() instanceof FragActivity) {
+    //        CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+    //        HashMap<String, Object> params = new HashMap<>();
+    //        params.put("id", coachService.getId());
+    //        params.put("model", coachService.getModel());
+    //        if (resultCode > 1000) {
+    //            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
+    //                .subscribeOn(Schedulers.io())
+    //                .observeOn(AndroidSchedulers.mainThread())
+    //                .subscribe(qcAllCoursePlanResponse -> {
+    //                    adapterData.clear();
+    //                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+    //                    mGymAdapter.notifyDataSetChanged();
+    //                    recyclerview.scrollToPosition(adapterData.size() - 1);
+    //                }, throwable -> {
+    //                }, () -> {
+    //                });
+    //        } else if (requestCode >= 0 && requestCode < 10000) {
+    //            QcCloudClient.getApi().getApi.qcGetAllPlans(App.coachid,params)
+    //                .subscribeOn(Schedulers.io())
+    //                .observeOn(AndroidSchedulers.mainThread())
+    //                .subscribe(qcAllCoursePlanResponse -> {
+    //                    adapterData.clear();
+    //                    adapterData.addAll(qcAllCoursePlanResponse.data.plans);
+    //                    mGymAdapter.notifyItemChanged(requestCode);
+    //                }, throwable -> {
+    //                }, () -> {
+    //                });
+    //        }
+    //    }
+    //}
 
     @Override public void onDestroyView() {
         super.onDestroyView();
