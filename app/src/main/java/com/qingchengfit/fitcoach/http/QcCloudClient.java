@@ -555,7 +555,7 @@ public class QcCloudClient {
         @POST("/api/v1/coaches/login/") rx.Observable<QcResponLogin> qcLogin(@Body LoginBean loginBean);
 
         //注册
-        @POST("/api/coaches/register/") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);
+        @POST("/api/v1/coaches/register/") rx.Observable<QcResponLogin> qcRegister(@Body RegisteBean params);
 
         //创建品牌
         @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);

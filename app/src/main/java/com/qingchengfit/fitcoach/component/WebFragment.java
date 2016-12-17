@@ -270,7 +270,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         webSetting.setDatabaseEnabled(true);
         webSetting.setDomStorageEnabled(true);
         webSetting.setGeolocationEnabled(true);
-        webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
+        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSetting.setAppCacheEnabled(false);
+
         String s = webSetting.getUserAgentString();
         webSetting.setUserAgentString(s
             + " FitnessTrainerAssistant/"
@@ -378,6 +380,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                mCurUrl = url;
                 LogUtil.e(" start url:" + url);
             }
 
@@ -394,6 +397,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
                 if(mCurUrl != null && url != null && url.equals(mCurUrl)) {
                     mWebviewWebView.goBack();
                     return true;
@@ -402,7 +406,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 view.loadUrl(url);
                 mCurUrl = url;
 
-                LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
+
                 return true;
             }
 
