@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:text="全部日程"
+                android:text="@string/all_schedules"
                 />
             <ImageView
                 android:layout_width="16dp"
