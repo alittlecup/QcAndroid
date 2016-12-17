@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,26 +38,17 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
 import com.qingchengfit.fitcoach.items.CourseEmptyItem;
 import com.qingchengfit.fitcoach.items.CourseItem;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-
-
 
 /**
  * power by
@@ -93,8 +87,8 @@ public class CourseListFragment extends VpFragment implements
     Brand brand;
     @Inject
     CoachService coachService;
-    private boolean mIsPrivate;
-    private boolean mIsload = false;
+    protected boolean mIsPrivate;
+    protected boolean mIsload = false;
     private Unbinder unbinding;
 
     public static CourseListFragment newInstance(boolean isPrivate) {
@@ -120,16 +114,10 @@ public class CourseListFragment extends VpFragment implements
         unbinding = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity)
             ((CourseActivity) getActivity()).getComponent().inject(this);
+        View permissionV = judgePermission(inflater,container);
+        if (permissionV != null)
+            return permissionV;
 
-        if ((!mIsPrivate  && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING))
-                || (mIsPrivate&& !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
-            View v = inflater.inflate(R.layout.item_common_no_data, container, false);
-            ImageView img = (ImageView) v.findViewById(R.id.img);
-            img.setImageResource(R.drawable.ic_no_permission);
-            TextView hint = (TextView) v.findViewById(R.id.hint);
-            hint.setText(R.string.sorry_for_no_permission);
-            return v;
-        }
 
         mAdatper = new CommonFlexAdapter(mDatas, this);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -158,6 +146,17 @@ public class CourseListFragment extends VpFragment implements
         }
         mIsload = true;
         return view;
+    }
+    public View judgePermission(LayoutInflater inflater,ViewGroup container){
+        if ((!mIsPrivate  && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING))
+            || (mIsPrivate&& !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING))) {
+            View v = inflater.inflate(R.layout.item_common_no_data, container, false);
+            ImageView img = (ImageView) v.findViewById(R.id.img);
+            img.setImageResource(R.drawable.ic_no_permission);
+            TextView hint = (TextView) v.findViewById(R.id.hint);
+            hint.setText(R.string.sorry_for_no_permission);
+            return v;
+        }else return null;
     }
 
     public void freshData(){
@@ -317,6 +316,12 @@ public class CourseListFragment extends VpFragment implements
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.add_course_btn){
+            if ((!mIsPrivate  && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))
+                || (mIsPrivate&& !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))) {
+                showAlert(R.string.sorry_no_permission);
+                return;
+            }
+
             if (getParentFragment() instanceof CourseFragment){
                 ((CourseFragment) getParentFragment()).addCourse(mIsPrivate);
             }
