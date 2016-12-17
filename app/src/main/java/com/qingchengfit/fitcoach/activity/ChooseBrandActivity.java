@@ -14,10 +14,10 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
+import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -95,7 +95,12 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                 @Override public void onItemClick(View v, int pos) {
                                     if (pos < datas.size() - 1) {
                                         if (datas.get(pos).isHas_add_permission()) {
-                                            setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
+                                            //setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
+                                            Brand brand = datas.get(pos);
+                                            CoachInitBean initBean = new CoachInitBean();
+                                            initBean.brand_id = brand.getId();
+                                            PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", new Gson().toJson(initBean));
+                                            startActivity(new Intent(ChooseBrandActivity.this,GuideActivity.class));
                                             ChooseBrandActivity.this.finish();
                                             //overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
                                         } else {
@@ -106,7 +111,11 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                         }
                                     } else {
                                         if (Long.parseLong(datas.get(pos).getId()) < 0) {
-                                            startActivityForResult(new Intent(ChooseBrandActivity.this, AddBrandActivity.class), 1);
+                                            PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", "");
+
+                                            startActivity(new Intent(ChooseBrandActivity.this,GuideActivity.class));
+                                            ChooseBrandActivity.this.finish();
+                                            //startActivityForResult(new Intent(ChooseBrandActivity.this, AddBrandActivity.class), 1);
                                         }
                                     }
                                 }

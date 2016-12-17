@@ -131,6 +131,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 mWebviewWebView.reload();
             }
         });
+
         mRefreshSwipeRefreshLayout.setCanChildScrollUpCallback(this);
         initWebSetting();
         

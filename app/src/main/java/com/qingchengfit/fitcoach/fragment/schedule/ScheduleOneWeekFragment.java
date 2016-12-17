@@ -149,7 +149,7 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                         @Override public void onDismiss() {
                             weekView.cancelClick();
                         }
-                    }); 
+                    });
                 //}
                 mCalenderPopWindow.show(weekView, (int) v, (int) v1);
                 weekView.clickOneRect(calendar);

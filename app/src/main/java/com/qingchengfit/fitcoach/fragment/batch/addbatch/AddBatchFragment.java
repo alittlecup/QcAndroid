@@ -67,6 +67,9 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
 
+import static com.qingchengfit.fitcoach.R.id.enddate;
+import static com.qingchengfit.fitcoach.R.id.startdate;
+
 /**
  * power by
  * <p/>
@@ -181,6 +184,13 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
             //body.teacher_id = App.coachid + "";
             coach.setContent(App.gUser.username);
         }
+
+        Calendar c = Calendar.getInstance();
+        starttime.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
+        c.add(Calendar.MONTH,2);
+        c.set(Calendar.DAY_OF_MONTH,1);
+        c.add(Calendar.DATE,-1);
+        endtime.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
 
         mData.add(0, new AddBatchCircleItem(getString(R.string.add_course_circle)));
         mAdapter = new CommonFlexAdapter(mData, this);
@@ -417,7 +427,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
     /**
      * 选择开始时间
      */
-    @OnClick(R.id.startdate) public void onStartTime() {
+    @OnClick(startdate) public void onStartTime() {
         if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
@@ -434,7 +444,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
     /**
      * 选择结束时间
      */
-    @OnClick(R.id.enddate) public void onEndTime() {
+    @OnClick(enddate) public void onEndTime() {
         if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) - 10,
             Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR) + 10);
