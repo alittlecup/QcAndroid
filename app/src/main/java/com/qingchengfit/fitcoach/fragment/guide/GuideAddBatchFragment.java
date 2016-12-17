@@ -97,6 +97,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private Unbinder unbinder;
     private boolean isPrivate = false;
+    private Course course;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,7 +115,7 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
                 courseTimeLong.setText(getString(R.string.time_long_d_min, bean.courses.get(0).length / 60));
                 isPrivate = bean.courses.get(0).is_private;
 
-                Course course = bean.courses.get(0);
+                 course = bean.courses.get(0);
 
         Calendar c = Calendar.getInstance();
         startdate.setContent(DateUtils.Date2YYYYMMDD(c.getTime()));
@@ -249,6 +250,9 @@ public class GuideAddBatchFragment extends BaseFragment implements FlexibleAdapt
         } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
             Intent to = new Intent(getActivity(), ChooseActivity.class);
             to.putExtra("to", ChooseActivity.TO_CHOSSE_CIRCLE);
+            if (course != null)
+                to.putExtra("len",(long) course.getLength());
+
             startActivity(to);
         }
         return true;
