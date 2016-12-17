@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
     <include layout="@layout/common_toolbar"/>
     <LinearLayout
+        android:id="@+id/layout_city"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:orientation="horizontal"
@@ -24,11 +25,12 @@
             android:text="@string/label_city"
             />
         <TextView
+            style="@style/Qc.TextCommonBlack"
             android:id="@+id/city_name"
             android:gravity="center_vertical|end"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            tools:text="北京"
+            tools:text="北京市"
             />
         <ImageView
             android:layout_width="16dp"

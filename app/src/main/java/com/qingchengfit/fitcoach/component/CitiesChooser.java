@@ -37,16 +37,30 @@ public class CitiesChooser {
         CitiesData citiesData = gson.fromJson(FileUtils.getJsonFromAssert("cities.json", context), CitiesData.class);
         for (int i = 0; i < citiesData.provinces.size(); i++) {
             ProvinceBean provinceBean = citiesData.provinces.get(i);
-            options1Items.add(provinceBean.name);
+            String provinceName = "";
+            if (provinceBean.name.length() >5){
+                provinceName = provinceBean.name.substring(0, 4).concat("...");
+            }else provinceName = provinceBean.name;
+            options1Items.add(provinceName);
             ArrayList<String> citynames = new ArrayList<>();
             ArrayList<ArrayList<String>> option3 = new ArrayList<ArrayList<String>>();
             for (int j = 0; j < provinceBean.cities.size(); j++) {
                 CityBean cityBean = provinceBean.cities.get(j);
-                citynames.add(cityBean.name);
+                String cityName = "";
+                if (cityBean.name.length() > 5){
+                    cityName = cityBean.name.substring(0,4).concat("...");
+                }else cityName = cityBean.name;
+
+                citynames.add(cityName);
                 ArrayList<String> district = new ArrayList<>();
                 for (int k = 0; k < cityBean.districts.size(); k++) {
                     DistrictBean districtBean = cityBean.districts.get(k);
-                    district.add(districtBean.name);
+                    String dName = "";
+                    if (districtBean.name.length() > 5){
+                        dName = districtBean.name.substring(0,4).concat("...");
+                    }else dName = districtBean.name;
+
+                    district.add(dName);
                 }
                 option3.add(district);
             }

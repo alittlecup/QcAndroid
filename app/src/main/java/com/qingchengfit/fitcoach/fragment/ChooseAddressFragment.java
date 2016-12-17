@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.CompatUtils;
 import com.amap.api.location.AMapLocation;
@@ -30,6 +31,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.EventAddress;
+import com.qingchengfit.fitcoach.component.CitiesChooser;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 
 /**
@@ -71,6 +73,7 @@ public class ChooseAddressFragment extends BaseFragment {
     private LatLng mLatLng;
     private String mCityCode;
     private Unbinder unbinder;
+    private CitiesChooser mCitiesChooser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -167,6 +170,20 @@ public class ChooseAddressFragment extends BaseFragment {
             });
         }
 
+    }
+
+    @OnClick(R.id.layout_city)
+    public void onCity(){
+        if (mCitiesChooser == null){
+            mCitiesChooser = new CitiesChooser(getContext());
+            mCitiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
+                @Override public void onCityChoosen(String provice, String city, String district, int id) {
+                    cityName.setText(city);
+                    mCityCode = id+"";
+                }
+            });
+        }
+        mCitiesChooser.show(getView());
     }
 
     @Override
