@@ -393,7 +393,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     }
 
     @Override public void onBackPressed() {
-        if (viewpager != null & viewpager.getCurrentItem() > 0){
+        if (viewpager != null && viewpager.getCurrentItem() > 0){
             viewpager.setCurrentItem(0);
             return;
         }

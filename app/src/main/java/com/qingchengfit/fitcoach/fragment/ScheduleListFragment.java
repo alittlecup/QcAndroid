@@ -99,6 +99,7 @@ public class ScheduleListFragment extends BaseFragment {
         }
     };
     private Unbinder unbinder;
+    private boolean isInit = true;
 
     public ScheduleListFragment() {
     }
@@ -130,7 +131,7 @@ public class ScheduleListFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_schedulelist, container, false);
         unbinder = ButterKnife.bind(this, view);
         scheduesAdapter = new ScheduesAdapter(scheduleBeans);
-
+        isInit = PreferenceUtils.getPrefBoolean(getContext(), "guide_3", false);
         scheduleRv.setLayoutManager(new LinearLayoutManager(getContext()));
         scheduleRv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL, 5f));
         scheduleRv.setAdapter(scheduesAdapter);
@@ -194,7 +195,7 @@ public class ScheduleListFragment extends BaseFragment {
     @Override protected void lazyLoad() {
         super.lazyLoad();
 
-        if (hasLoad && scheduleBeans.size() == 0 ){
+        if (hasLoad && scheduleBeans.size() == 0  && isInit){
             RxBus.getBus().post(new EventInit(true,3));
         }
     }
