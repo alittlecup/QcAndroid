@@ -380,12 +380,13 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                mCurUrl = url;
+
                 LogUtil.e(" start url:" + url);
             }
 
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                mCurUrl = url;
                 if (mRefreshSwipeRefreshLayout != null) {
                     mRefreshSwipeRefreshLayout.setRefreshing(false);
                 }
