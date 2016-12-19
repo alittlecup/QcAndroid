@@ -279,7 +279,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 String path = getIntent().getData().toString();
                 url = path.split("openurl/")[1];
                 viewpager.setCurrentItem(2);
-                WebActivity.startWeb("http://"+url,this);
+                if (!url.startsWith("http"))
+                    url = "http://"+url;
+                WebActivity.startWeb(url,this);
             }catch (Exception e){
 
             }
@@ -480,7 +482,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                             }
                         }
                     });
-                if (updateVersion.version % 10 != 0) builder.negativeText("下次再说");
+                if (updateVersion.version % 10 != 0) {
+                    builder.negativeText("下次再说");
+                    builder.autoDismiss(false);
+                    builder.canceledOnTouchOutside(false);
+                }
 
                 updateDialog = builder.build();
                 downloadDialog = new MaterialDialog.Builder(Main2Activity.this).content("正在飞速为您下载")
@@ -600,12 +606,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        if (getIntent() != null && getIntent().getScheme() != null&&getIntent().getScheme().equals("qccoach")) {
+        if (intent != null && intent.getScheme() != null&&intent.getScheme().equals("qccoach")) {
             try {
-                String path = getIntent().getData().toString();
+                String path = intent.getData().toString();
                 url = path.split("openurl/")[1];
                 viewpager.setCurrentItem(2);
-                WebActivity.startWeb("http://"+url,this);
+                if (!url.startsWith("http"))
+                    url = "http://"+url;
+                WebActivity.startWeb(url,this);
             }catch (Exception e){
 
             }
