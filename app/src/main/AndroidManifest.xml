@@ -249,6 +249,17 @@
         android:protectionLevel="signature"
         android:writePermission="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"/>
 
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="com.qingchengfit.fitcoach.provider"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/provide_path"/>
+    </provider>
+
+
+
     <!-- 在百度开发者中心查询应用的API Key -->
     <meta-data
         android:name="api_key"

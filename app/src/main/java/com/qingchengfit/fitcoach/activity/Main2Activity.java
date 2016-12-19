@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,6 +39,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
+import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
@@ -76,6 +79,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static com.qingchengfit.fitcoach.App.diskLruCache;
 
 public class Main2Activity extends BaseAcitivity implements WebActivityInterface {
 
@@ -136,6 +141,20 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
+        RxPermissions.getInstance(this)
+            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            .subscribe(new Action1<Boolean>() {
+                @Override
+                public void call(Boolean aBoolean) {
+                    if (aBoolean) {
+                        setupFile();
+                        initVersion();
+                    } else ToastUtils.showDefaultStyle("请开启存储空间权限");
+                }
+            });
+
+
         setupVp();
         gson = new Gson();
         logoutDialog = new MaterialDialog.Builder(this).autoDismiss(true)
@@ -151,18 +170,17 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         initUser();
 
         initBDPush();
-        RxPermissions.getInstance(this)
-            .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
-            .subscribe(new Action1<Boolean>() {
-                @Override public void call(Boolean aBoolean) {
-                    if (aBoolean) {
-
-                    } else {
-                        ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
-                    }
-                }
-            });
+        //RxPermissions.getInstance(this)
+        //    .request(
+        //    .subscribe(new Action1<Boolean>() {
+        //        @Override public void call(Boolean aBoolean) {
+        //            if (aBoolean) {
+        //
+        //            } else {
+        //                ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
+        //            }
+        //        }
+        //    });
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -374,7 +392,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
     @Override protected void onResume() {
         super.onResume();
-        initVersion();
+
         if (spQCZX != null && !spQCZX.isUnsubscribed())
             spQCZX.unsubscribe();
         spQCZX = QcCloudClient.getApi().getApi.getActivitiesCount()
@@ -493,7 +511,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     .progress(false, 100)
                     .cancelable(false)
                     .positiveText("后台更新")
-                    .negativeText("取消更新")
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
@@ -603,6 +620,26 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             });
     }
 
+    /**
+     * create dir in SDcard
+     */
+    private void setupFile() {
+        File file = new File(Configs.ExternalPath);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        File fileCache = new File(Configs.ExternalCache);
+        if (!fileCache.exists()) {
+            fileCache.mkdir();
+        }
+        try {
+            diskLruCache = DiskLruCache.open(fileCache, 1, 2000, 10000000);
+        } catch (IOException e) {
+            //TODO 没有存储的情况
+        }
+
+    }
+
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
@@ -704,12 +741,22 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         @Override protected void onPostExecute(Boolean result) {
             if (result) {
                 downloadDialog.dismiss();
-                AppUtils.install(Main2Activity.this, newAkp.getAbsolutePath());
+                install(Main2Activity.this, newAkp);
             } else {
                 downloadDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public  void install(Context context, File file) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+        grantUriPermission(getApplicationContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        i.setDataAndType(uri, "application/vnd.android.package-archive");
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        context.startActivity(i);
     }
 
 
