@@ -47,7 +47,7 @@ public class StudentPreview extends WebFragment {
     @Override public void initToolbar() {
 
 
-        mTitle.setText("会员约课");
+        mTitle.setText("我的主页");
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

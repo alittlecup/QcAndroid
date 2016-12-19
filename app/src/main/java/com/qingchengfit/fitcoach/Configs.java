@@ -52,7 +52,7 @@ public class Configs {
     /**
      * 会员预览页面
      */
-    public static final String HOST_STUDENT_PREVIEW = "/fitness/redirect/coaches/%s/saas/share/";
+    public static final String HOST_STUDENT_PREVIEW = "fitness/redirect/coaches/%s/saas/share/";
     public static final String WECHAT_GUIDE = "mobile/weixin/guide/";
     public static final String SCHEDULE_REST = "fitness/redirect/coach/rest/";
     public static final String SCHEDULE_GROUP = "fitness/redirect/coach/group/";

@@ -333,7 +333,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {
-                return MainWebFragment.newInstance("http://cloudtest.qingchengfit.cn/mobile/coach/discover/");
+                return MainWebFragment.newInstance(Configs.Server+"mobile/coach/discover/");
             } else {
                 return new MineFragmentFragment();
             }

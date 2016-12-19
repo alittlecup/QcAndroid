@@ -81,7 +81,9 @@ public class GuideFragment extends BaseFragment {
         if (initStr == null || initStr.isEmpty())
             initBean = new CoachInitBean();
         else initBean = gson.fromJson(initStr, CoachInitBean.class);
-
+        getChildFragmentManager().beginTransaction()
+            .replace(R.id.guide_frag, new GuideSetBrandFragment())
+            .commit();
         if (TextUtils.isEmpty(initBean.brand_id)){
             getChildFragmentManager().beginTransaction()
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())

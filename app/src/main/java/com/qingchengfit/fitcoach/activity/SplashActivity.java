@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -17,8 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.google.gson.Gson;
@@ -119,24 +116,26 @@ public class SplashActivity extends BaseAcitivity {
                                 if (qcCoachServiceResponse.status == ResponseResult.SUCCESS) {
                                     if (qcCoachServiceResponse.data == null || qcCoachServiceResponse.data.services == null ||
                                         qcCoachServiceResponse.data.services.size() == 0) {
-                                        new MaterialDialog.Builder(SplashActivity.this).canceledOnTouchOutside(false)
-                                            .title("您没有场馆")
-                                            .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
-                                            .positiveText("创建场馆")
-                                            .negativeText("重新登录")
-                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
-                                                    startActivity(toGym);
-                                                    SplashActivity.this.finish();
-                                                }
-                                            })
-                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                    logout();
-                                                }
-                                            })
-                                            .show();
+                                        Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
+                                        startActivity(toGym);
+                                        SplashActivity.this.finish();
+
+                                        //new MaterialDialog.Builder(SplashActivity.this).canceledOnTouchOutside(false)
+                                        //    .title("您没有场馆")
+                                        //    .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
+                                        //    .positiveText("创建场馆")
+                                        //    .negativeText("重新登录")
+                                        //    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        //        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        //
+                                        //        }
+                                        //    })
+                                        //    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        //        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        //            logout();
+                                        //        }
+                                        //    })
+                                        //    .show();
                                     } else {
                                         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachServiceResponse));
                                         Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);

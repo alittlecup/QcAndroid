@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.SpinnerBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
-import com.qingchengfit.fitcoach.event.EventChooseCourse;
+import com.qingchengfit.fitcoach.event.EventChooseCardtpl;
 import com.qingchengfit.fitcoach.fragment.statement.GymChooseCardtplFragmentBuilder;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
@@ -153,11 +153,11 @@ public class CustomSaleFragment extends BaseFragment {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         initView();
-        RxBusAdd(EventChooseCourse.class)
-            .subscribe(new Action1<EventChooseCourse>() {
-                @Override public void call(EventChooseCourse eventChooseCourse) {
-                    chooseCoursId = eventChooseCourse.courseId;
-                    customStatmentCourse.setContent(eventChooseCourse.courseName);
+        RxBusAdd(EventChooseCardtpl.class)
+            .subscribe(new Action1<EventChooseCardtpl>() {
+                @Override public void call(EventChooseCardtpl eventChooseCourse) {
+                    chooseCoursId = eventChooseCourse.cardtplId;
+                    customStatmentCourse.setContent(eventChooseCourse.cardtplName);
                 }
             });
         return view;
@@ -207,14 +207,14 @@ public class CustomSaleFragment extends BaseFragment {
             try {
                 Date start = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
                 LogUtil.e(date.getTime() + "   " + start.getTime());
-                if (date.getTime() - start.getTime() < 0) {
-                    ToastUtils.show(R.drawable.ic_share_fail, "结束日期不能早于开始日期");
-                } else if ((date.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
-                    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
-                } else {
+                //if (date.getTime() - start.getTime() < 0) {
+                //    ToastUtils.show(R.drawable.ic_share_fail, "结束日期不能早于开始日期");
+                //} else if ((date.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
+                //    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
+                //} else {
                     pwTime.dismiss();
                     customStatmentEnd.setContent(DateUtils.Date2YYYYMMDD(date));
-                }
+                //}
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -242,14 +242,14 @@ public class CustomSaleFragment extends BaseFragment {
             try {
                 Date end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
 
-                if (date.getTime() - end.getTime() > 0) {
-                    ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
-                } else if ((end.getTime() - date.getTime()) > DateUtils.MONTH_TIME) {
-                    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
-                } else {
+                //if (date.getTime() - end.getTime() > 0) {
+                //    ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
+                //} else if ((end.getTime() - date.getTime()) > DateUtils.MONTH_TIME) {
+                //    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
+                //} else {
                     pwTime.dismiss();
                     customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(date));
-                }
+                //}
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -342,6 +342,15 @@ public class CustomSaleFragment extends BaseFragment {
     //    }
 
     @OnClick(R.id.custom_statment_generate) public void onClickGenerate() {
+        Date start = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
+        Date end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
+        if (start.getTime() - end.getTime() > 0) {
+            ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
+            return;
+        } else if ((end.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
+            ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
+            return;
+        }
         getFragmentManager().beginTransaction()
             .add(R.id.web_frag_layout,
                 SaleDetailFragment.newInstance(3, customStatmentStart.getContent(), customStatmentEnd.getContent(), chooseGymId,

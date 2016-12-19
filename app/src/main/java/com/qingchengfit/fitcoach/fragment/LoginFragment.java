@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,8 +18,6 @@ import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.BuildConfig;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -62,14 +58,14 @@ public class LoginFragment extends Fragment {
             }
 
             @Override public void doLogin(String arCode, String account, String code) {
-                if (BuildConfig.DEBUG) {
-                    EditText et = (EditText) getView().findViewById(R.id.et_ip);
-                    if (!TextUtils.isEmpty(et.getText())) {
-                        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
-                        Configs.Server = "http://" + et.getText().toString().trim() + "/";
-                        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
-                    }
-                }
+                //if (BuildConfig.DEBUG) {
+                //    EditText et = (EditText) getView().findViewById(R.id.et_ip);
+                //    if (!TextUtils.isEmpty(et.getText())) {
+                //        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
+                //        Configs.Server = "http://" + et.getText().toString().trim() + "/";
+                //        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+                //    }
+                //}
                 List<MutiSysSession> systems = new ArrayList<>();
                 LoginBean bean = new LoginBean();
                 bean.setPhone(account);
@@ -120,14 +116,14 @@ public class LoginFragment extends Fragment {
             }
 
             @Override public void getCode(GetCodeBean account) {
-                if (BuildConfig.DEBUG) {
-                    EditText et = (EditText) getView().findViewById(R.id.et_ip);
-                    if (!TextUtils.isEmpty(et.getText())) {
-                        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
-                        Configs.Server = "http://" + et.getText().toString().trim() + "/";
-                        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
-                    }
-                }
+                //if (BuildConfig.DEBUG) {
+                //    EditText et = (EditText) getView().findViewById(R.id.et_ip);
+                //    if (!TextUtils.isEmpty(et.getText())) {
+                //        Configs.ServerIp = "http://" + et.getText().toString().trim() + "/";
+                //        Configs.Server = "http://" + et.getText().toString().trim() + "/";
+                //        PreferenceUtils.setPrefString(getContext(), "debug_ip", Configs.ServerIp);
+                //    }
+                //}
                 QcCloudClient.getApi().postApi.qcGetCode(account).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
                     if (qcResponse.status == ResponseResult.SUCCESS) {
                         LogUtil.d("send msg success!");
@@ -151,12 +147,12 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (BuildConfig.DEBUG) {
-            EditText et = (EditText) view.findViewById(R.id.et_ip);
-            view.findViewById(R.id.test).setOnClickListener(v -> et.setText("cloudtest.qingchengfit.cn"));
-            view.findViewById(R.id.dev).setOnClickListener(v -> et.setText("dev.qingchengfit.cn"));
-            view.findViewById(R.id.clear).setOnClickListener(v -> et.setText(""));
-        }
+        //if (BuildConfig.DEBUG) {
+        //    EditText et = (EditText) view.findViewById(R.id.et_ip);
+        //    view.findViewById(R.id.test).setOnClickListener(v -> et.setText("cloudtest.qingchengfit.cn"));
+        //    view.findViewById(R.id.dev).setOnClickListener(v -> et.setText("dev.qingchengfit.cn"));
+        //    view.findViewById(R.id.clear).setOnClickListener(v -> et.setText(""));
+        //}
         loginview.setLoginPresenter(loginPresenter);
         loginview.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
