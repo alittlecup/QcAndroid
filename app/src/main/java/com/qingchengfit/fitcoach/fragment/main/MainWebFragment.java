@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.SensorsUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.WebFragment;
 import com.tencent.smtt.sdk.WebView;
@@ -58,6 +59,7 @@ public class MainWebFragment extends WebFragment {
         if (isLoaded && mRefreshSwipeRefreshLayout!= null){
             mRefreshSwipeRefreshLayout.setRefreshing(false);
         }
+        SensorsUtils.track("discover_tab_click",null);
     }
 
     @Override

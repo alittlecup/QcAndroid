@@ -31,7 +31,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
-import com.qingchengfit.fitcoach.Utils.SensorsUitls;
+import com.qingchengfit.fitcoach.Utils.SensorsUtils;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.bean.Contact;
@@ -552,7 +552,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
        }
 
         @JavascriptInterface public void sensorsTrack(String key,String json){
-            SensorsUitls.track(key,json);
+            SensorsUtils.track(key,json);
         }
 
         @JavascriptInterface public String getSessionId() {

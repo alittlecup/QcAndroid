@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * Created by Paper on 2016/12/13.
  */
 
-public class SensorsUitls {
+public class SensorsUtils {
     public static void track(String key,String json){
         try {
             JSONObject properties = new JSONObject(json);
