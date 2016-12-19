@@ -30,8 +30,12 @@ import org.json.JSONObject;
 public class SensorsUtils {
     public static void track(String key,String json){
         try {
-            JSONObject properties = new JSONObject(json);
-            SensorsDataAPI.sharedInstance(App.AppContex).track(key, properties);
+            if (json == null){
+                SensorsDataAPI.sharedInstance(App.AppContex).track(key);
+            }else{
+                JSONObject properties = new JSONObject(json);
+                SensorsDataAPI.sharedInstance(App.AppContex).track(key, properties);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InvalidDataException e) {

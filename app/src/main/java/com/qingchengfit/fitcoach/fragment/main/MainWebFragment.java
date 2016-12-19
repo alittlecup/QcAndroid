@@ -59,7 +59,7 @@ public class MainWebFragment extends WebFragment {
         if (isLoaded && mRefreshSwipeRefreshLayout!= null){
             mRefreshSwipeRefreshLayout.setRefreshing(false);
         }
-        SensorsUtils.track("discover_tab_click",null);
+        SensorsUtils.track("AND_discover_tab_click",null);
     }
 
     @Override
