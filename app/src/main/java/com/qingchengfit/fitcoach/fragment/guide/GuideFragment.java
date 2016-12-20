@@ -89,6 +89,7 @@ public class GuideFragment extends BaseFragment {
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
                 .commit();
         }else {
+            if (App.gUser != null && App.gUser.id != null){
             RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id+"")
                  .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                  .subscribe(new Action1<QcResponseBrands>() {
@@ -117,7 +118,11 @@ public class GuideFragment extends BaseFragment {
                                      public void call(Throwable throwable) {
                                      }
                                  })
-            );
+            );}else {
+                getChildFragmentManager().beginTransaction()
+                    .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                    .commit();
+            }
 
         }
 
