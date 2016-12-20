@@ -413,14 +413,16 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 LogUtil.e("errorCode:" + errorCode);
-                mTitle.setText("");
+                if (mTitle !=null)
+                    mTitle.setText("");
                 showNoNet();
             }
         });
     }
 
     public void showNoNet() {
-        mNoNetwork.setVisibility(View.VISIBLE);
+        if (mNoNetwork != null)
+            mNoNetwork.setVisibility(View.VISIBLE);
     }
 
     @Override public String getFragmentName() {
