@@ -82,11 +82,13 @@ import rx.schedulers.Schedulers;
         guideTitle.setText(getString(isPrivate?R.string.guide_set_private_course_hint:R.string.guide_set_group_course_hint));
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
+                showLoading();
                 UpYunClient.rxUpLoad("course/", eventChooseImage.filePath)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
+                            hideLoading();
                             Glide.with(getContext()).load(PhotoUtils.getSmall(s)).into(courseImg);
                             imgUrl = s;
                         }

@@ -129,13 +129,18 @@ import rx.schedulers.Schedulers;
 
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
+                showLoading();
                 UpYunClient.rxUpLoad("gym/", eventChooseImage.filePath)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
+                            hideLoading();
                             Glide.with(getContext()).load(PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
                             imgUrl = s;
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override public void call(Throwable throwable) {
                         }
                     });
             }

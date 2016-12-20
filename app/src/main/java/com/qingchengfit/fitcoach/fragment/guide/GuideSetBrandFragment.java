@@ -72,11 +72,13 @@ public class GuideSetBrandFragment extends BaseFragment {
                 .subscribe(new Action1<EventChooseImage>() {
                     @Override
                     public void call(EventChooseImage eventChooseImage) {
+                        showLoading();
                         UpYunClient.rxUpLoad("brand/", eventChooseImage.filePath)
                                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Action1<String>() {
                                     @Override
                                     public void call(String s) {
+                                        hideLoading();
                                         Glide.with(getContext()).load(
                                             PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
                                         imgUrl = s;
