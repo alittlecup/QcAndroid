@@ -57,7 +57,9 @@ import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.FileUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -148,6 +150,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     private MaterialDialog delDialog;
     private DialogSheet mDialogSheet;
     private Unbinder unbinder;
+    private Subscription spUpImg;
 
     public RecordEditFragment() {
     }
@@ -618,30 +621,30 @@ public class RecordEditFragment extends BaseSettingFragment {
             else filepath = FILE_PATH;
             LogUtil.d(filepath);
             fragmentCallBack.ShowLoading("正在上传");
-            Observable.just(filepath)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(s -> {
-                        String filename = UUID.randomUUID().toString();
-                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
-                        File upFile = new File(Configs.ExternalCache + filename);
-                        boolean reslut = UpYunClient.upLoadImg("/certificate/", filename, upFile);
-                        getActivity().runOnUiThread(() -> {
-                            fragmentCallBack.hideLoading();
 
-                            if (reslut) {
+            spUpImg  = UpYunClient.rxUpLoad("certificate/",filepath)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override public void call(String s) {
+                        fragmentCallBack.hideLoading();
+                        if (TextUtils.isEmpty(s)){
+                            Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
 
-                                LogUtil.d("success");
-                                Glide.with(App.AppContex).load(Uri.fromFile(upFile))
-                                        .asBitmap()
-                                        .into(new ScaleWidthWrapper(recordeditImg));
-                                recordeditImg.setVisibility(View.VISIBLE);
-                                addCertificate.setPhoto(UpYunClient.UPYUNPATH + "/certificate/" + filename + ".png");
+                        }else {
+                            Glide.with(App.AppContex).load(s)
+                                .asBitmap()
+                                .into(new ScaleWidthWrapper(recordeditImg));
+                            recordeditImg.setVisibility(View.VISIBLE);
+                            addCertificate.setPhoto(s);
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override public void call(Throwable throwable) {
+                        fragmentCallBack.hideLoading();
+                    }
+                });
 
-                            } else {
-                                Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    });
 
         } else if (requestCode == 10010 && resultCode > 0) {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
@@ -661,6 +664,8 @@ public class RecordEditFragment extends BaseSettingFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (spUpImg != null && spUpImg.isUnsubscribed())
+            spUpImg.unsubscribe();
     }
 
 

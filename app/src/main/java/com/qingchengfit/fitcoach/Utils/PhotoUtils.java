@@ -15,6 +15,14 @@ public class PhotoUtils {
         } else return url;
 
     }
+ public static String getMiddle(String url){
+        if (TextUtils.isEmpty(url))
+            return "";
+        if (!url.contains("!")) {
+            return url + "!middle";
+        } else return url;
+
+    }
 
     public static String getGauss(String photo) {
         if (photo.contains("zoneke-img")){

@@ -15,7 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -36,22 +40,14 @@ import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
 import com.qingchengfit.fitcoach.http.bean.QcGetBodyTestResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -113,6 +109,7 @@ public class ModifyBodyTestFragment extends Fragment {
     private MaterialDialog delBatchComfirmDialog;
     private MaterialDialog loadingDialog;
     private Unbinder unbinder;
+    private Subscription spUpImg;
 
     /**
      * @return
@@ -216,13 +213,17 @@ public class ModifyBodyTestFragment extends Fragment {
                                 choosePictureFragmentDialog.dismiss();
                                 if (isSuccess) {
                                     ShowLoading("正在上传图片...");
-                                    Observable.create(new Observable.OnSubscribe<String>() {
-                                        @Override
-                                        public void call(Subscriber<? super String> subscriber) {
-                                            String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
-                                            subscriber.onNext(upImg);
-                                        }
-                                    }).observeOn(AndroidSchedulers.mainThread())
+                                    //Observable.create(new Observable.OnSubscribe<String>() {
+                                    //    @Override
+                                    //    public void call(Subscriber<? super String> subscriber) {
+                                    //        String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
+                                    //        subscriber.onNext(upImg);
+                                    //    }
+                                    //})
+
+                                    spUpImg = UpYunClient.rxUpLoad("course/", filePath)
+
+                                        .observeOn(AndroidSchedulers.mainThread())
                                             .subscribeOn(Schedulers.io())
                                             .subscribe(new Subscriber<String>() {
                                                 @Override
@@ -451,6 +452,8 @@ public class ModifyBodyTestFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (spUpImg != null && spUpImg.isUnsubscribed())
+            spUpImg.unsubscribe();
     }
 
     public Measure getMeasure() {

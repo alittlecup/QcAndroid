@@ -42,10 +42,10 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.service.UpyunService;
-import java.io.File;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -85,6 +85,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     private Coach coach;
     private CitiesChooser citiesChooser;
     private Unbinder unbinder;
+    private Subscription spUpImg;
 
     public ModifyInfoFragment() {
     }
@@ -283,17 +284,23 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         RxBus.getBus().unregister(UpyunService.UpYunResult.class.getName(), uppicObserver);
         unbinder.unbind();
         super.onDestroyView();
+        if (spUpImg != null && spUpImg.isUnsubscribed()){
+            spUpImg.unsubscribe();
+        }
     }
 
     @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
         if (isSuccess) {
             fragmentCallBack.ShowLoading("正在上传");
-            Observable.create(new Observable.OnSubscribe<String>() {
-                @Override public void call(Subscriber<? super String> subscriber) {
-                    String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
-                    subscriber.onNext(upImg);
-                }
-            }).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+
+            spUpImg = UpYunClient.rxUpLoad("course/",filePath)
+            //Observable.create(new Observable.OnSubscribe<String>() {
+            //    @Override public void call(Subscriber<? super String> subscriber) {
+            //        String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
+            //        subscriber.onNext(upImg);
+            //    }
+            //})
+        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
                 @Override public void onCompleted() {
 
                 }

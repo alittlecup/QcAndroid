@@ -4,9 +4,11 @@ package com.qingchengfit.fitcoach.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,7 +19,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ChoosePicUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -32,21 +39,11 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.BitmapUtils;
-import cn.qingchengfit.widgets.utils.ChoosePicUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -67,7 +64,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     private String mBrifeData;
     private TextInputDialog mTextInputDialog;
     private Unbinder unbinder;
-
+    private Subscription spUpImg;
 
     public ModifyBrifeFragment() {
     }
@@ -159,7 +156,17 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                                    // 指定开启系统相机的Action
                                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                                    intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                                   intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                   Uri uri;
+                                   if (Build.VERSION.SDK_INT >= 24){
+                                       uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider",new File(Configs.CameraPic));
+                                       getContext().grantUriPermission(getContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                                   }else {
+                                       uri = Uri.fromFile(new File(Configs.CameraPic));
+                                   }
+
+                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                                    if (type == -100)
                                        startActivityForResult(intent, INSERT_PIC_CAMERA);
                                    else startActivityForResult(intent, 200 + type);
@@ -210,53 +217,54 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
         if (requestCode == ChoosePicUtils.CHOOSE_GALLERY || requestCode == ChoosePicUtils.CHOOSE_CAMERA) {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
             fragmentCallBack.ShowLoading("正在上传");
-            Observable.just(f)
-                    .observeOn(Schedulers.io())
-                    .subscribe(s -> {
-                        String filename = UUID.randomUUID().toString();
-                        BitmapUtils.compressPic(s.getAbsolutePath(), Configs.ExternalCache + filename);
-                        File upFile = new File(Configs.ExternalCache + filename);
-                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, upFile);
-                        Observable.just(reslut)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(aBoolean -> {
-                                    fragmentCallBack.hideLoading();
-                                    if (aBoolean) {
-                                        BriefInfo briefInfo = new BriefInfo(null, UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
-                                        mListData.add(briefInfo);
-                                        adapter.notifyDataSetChanged();
-                                    } else {
-                                        Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
-                                    }
+            if (spUpImg != null && spUpImg.isUnsubscribed()){
+                spUpImg.unsubscribe();
+            }
+            spUpImg = UpYunClient.rxUpLoad("brief/", f.getAbsolutePath())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    fragmentCallBack.hideLoading();
+                    if (!TextUtils.isEmpty(s)) {
+                        BriefInfo briefInfo = new BriefInfo(null, s);
+                        mListData.add(briefInfo);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
+                    }
 
-                                });
-                    });
+                });
+
+            //Observable.just(f)
+            //        .observeOn(Schedulers.io())
+            //        .subscribe(s -> {
+            //            String filename = UUID.randomUUID().toString();
+            //            BitmapUtils.compressPic(s.getAbsolutePath(), Configs.ExternalCache + filename);
+            //            File upFile = new File(Configs.ExternalCache + filename);
+            //            boolean reslut = UpYunClient.upLoadImg("/brief/", filename, upFile);
+            //            Observable.just(reslut)
+            //
+            //        });
 
         } else {
             File f = ChoosePicUtils.choosePicFileCtl(getActivity(), requestCode, data, Configs.CameraPic);
             fragmentCallBack.ShowLoading("正在上传");
-            Observable.just(f)
-                    .subscribeOn(Schedulers.newThread())
-                    .subscribe(s -> {
-//                        String filename = UUID.randomUUID().toString();
-//                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, s);
-                        String filename = UUID.randomUUID().toString();
-                        BitmapUtils.compressPic(s.getAbsolutePath(), Configs.ExternalCache + filename);
-                        File upFile = new File(Configs.ExternalCache + filename);
-                        boolean reslut = UpYunClient.upLoadImg("/brief/", filename, upFile);
+            if (spUpImg != null && spUpImg.isUnsubscribed()){
+                spUpImg.unsubscribe();
+            }
+            spUpImg = UpYunClient.rxUpLoad("brief/", f.getAbsolutePath())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    fragmentCallBack.hideLoading();
+                    if (!TextUtils.isEmpty(s)) {
+                        mListData.get(requestCode % 100).setImg(s);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
+                    }
 
-                        Observable.just(reslut)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(aBoolean -> {
-                                    if (aBoolean) {
-                                        mListData.get(requestCode % 100).setImg(UpYunClient.UPYUNPATH + "/brief/" + filename + ".png");
-                                        adapter.notifyDataSetChanged();
-                                    } else {
-                                        Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
-                                    }
+                });
 
-                                });
-                    });
+
         }
 
 
@@ -266,6 +274,9 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (spUpImg != null && spUpImg.isUnsubscribed()){
+            spUpImg.unsubscribe();
+        }
     }
 
     public static class ModifyBrifeVH extends RecyclerView.ViewHolder {
@@ -352,7 +363,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             else holder.itemModifybriefDown.setEnabled(true);
 
             if (briefInfo.getImg() != null) {
-                Glide.with(App.AppContex).load(PhotoUtils.getSmall(briefInfo.getImg())).asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
+                Glide.with(App.AppContex).load(PhotoUtils.getMiddle(briefInfo.getImg())).asBitmap().into(new ScaleWidthWrapper(holder.itemModifybriefImg));
                 holder.itemModifybriefImg.setVisibility(View.VISIBLE);
                 holder.itemModifybriefText.setVisibility(View.GONE);
             } else {

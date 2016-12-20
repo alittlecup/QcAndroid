@@ -14,10 +14,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.ChoosePicUtils;
+import cn.qingchengfit.widgets.utils.FileUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.DialogSheet;
@@ -26,21 +31,10 @@ import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.FeedBackBean;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-
-import java.io.File;
-import java.util.UUID;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.BitmapUtils;
-import cn.qingchengfit.widgets.utils.ChoosePicUtils;
-import cn.qingchengfit.widgets.utils.FileUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import rx.Observable;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -61,6 +55,7 @@ public class AdviceFragment extends BaseSettingFragment {
     private DialogSheet dialogSheet;
     private String filepath;
     private Unbinder unbinder;
+    private Subscription spUpImg;
 
     public AdviceFragment() {
     }
@@ -164,32 +159,45 @@ public class AdviceFragment extends BaseSettingFragment {
                 filepath = FileUtils.getPath(getActivity(), data.getData());
             LogUtil.d(filepath);
             fragmentCallBack.ShowLoading("正在上传");
-            Observable.just(filepath)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(s -> {
-                        String filename = UUID.randomUUID().toString();
-                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
-                        File upFile = new File(Configs.ExternalCache + filename);
-
-                        boolean reslut = UpYunClient.upLoadImg("/advice/", filename, upFile);
-                        getActivity().runOnUiThread(() -> {
-                            fragmentCallBack.hideLoading();
-                            if (reslut) {
-                                LogUtil.d("success");
-                                String pppurl = UpYunClient.UPYUNPATH + "advice/" + filename + ".png";
-
-                                Glide.with(App.AppContex).load(PhotoUtils.getSmall(pppurl)).into(adviceUpdateImg);
-                                adviceUpdateImg.setVisibility(View.VISIBLE);
 
 
-                                feedBackBean.setPhoto(pppurl);
+            spUpImg = UpYunClient.rxUpLoad("advice/",filepath)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override public void call(String s) {
+                        fragmentCallBack.hideLoading();
+                        Glide.with(App.AppContex).load(PhotoUtils.getSmall(s)).into(adviceUpdateImg);
+                        adviceUpdateImg.setVisibility(View.VISIBLE);
+                        feedBackBean.setPhoto(s);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override public void call(Throwable throwable) {
 
-                            } else {
-                                //upload failed TODO
-                                LogUtil.d("update img false");
-                            }
-                        });
-                    });
+                    }
+                });
+            //Observable.just(filepath)
+            //        .subscribeOn(Schedulers.io())
+            //        .subscribe(s -> {
+            //            String filename = UUID.randomUUID().toString();
+            //            BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
+            //            File upFile = new File(Configs.ExternalCache + filename);
+            //
+            //            boolean reslut = UpYunClient.upLoadImg("/advice/", filename, upFile);
+            //            getActivity().runOnUiThread(() -> {
+            //
+            //                if (reslut) {
+            //                    LogUtil.d("success");
+            //                    String pppurl = UpYunClient.UPYUNPATH + "advice/" + filename + ".png";
+            //
+            //
+            //
+            //                } else {
+            //                    //upload failed TODO
+            //                    LogUtil.d("update img false");
+            //                }
+            //            });
+            //        });
 
         }
     }
@@ -198,5 +206,8 @@ public class AdviceFragment extends BaseSettingFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (spUpImg != null && spUpImg.isUnsubscribed()){
+            spUpImg.unsubscribe();
+        }
     }
 }

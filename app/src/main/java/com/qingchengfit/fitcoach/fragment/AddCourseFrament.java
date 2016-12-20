@@ -15,7 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
@@ -33,16 +37,7 @@ import com.qingchengfit.fitcoach.http.bean.AddCourse;
 import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-
-import java.io.File;
 import java.util.HashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -333,13 +328,17 @@ public class AddCourseFrament extends Fragment {
                 dialog.dismiss();
                 if (isSuccess) {
                     ShowLoading(null);
-                    upPic = Observable.create(new Observable.OnSubscribe<String>() {
-                        @Override
-                        public void call(Subscriber<? super String> subscriber) {
-                            upImg = UpYunClient.upLoadImg("course/", new File(filePath));
-                            subscriber.onNext(upImg);
-                        }
-                    }).observeOn(AndroidSchedulers.mainThread())
+                    upPic = UpYunClient.rxUpLoad("course/", filePath)
+
+
+                    //upPic = Observable.create(new Observable.OnSubscribe<String>() {
+                    //    @Override
+                    //    public void call(Subscriber<? super String> subscriber) {
+                    //        upImg = UpYunClient.upLoadImg("course/", new File(filePath));
+                    //        subscriber.onNext(upImg);
+                    //    }
+                    //})
+                        .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe(new Subscriber<String>() {
                                 @Override

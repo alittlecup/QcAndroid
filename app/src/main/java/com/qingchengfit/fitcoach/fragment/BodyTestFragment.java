@@ -13,7 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -33,18 +37,10 @@ import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.Measure;
 import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
 import com.qingchengfit.fitcoach.http.bean.QcGetBodyTestResponse;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -88,6 +84,7 @@ public class BodyTestFragment extends Fragment {
     private String mMeasureId;
     private List<AddBodyTestBean.Photo> datas = new ArrayList<>();
     private Unbinder unbinder;
+    private Subscription spUpImg;
     // TODO: Rename and change types of parameters
     //    private QcBodyTestTemplateRespone.Base mBase;
 
@@ -170,12 +167,8 @@ public class BodyTestFragment extends Fragment {
                             @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                                 choosePictureFragmentDialog.dismiss();
                                 if (isSuccess) {
-                                    Observable.create(new Observable.OnSubscribe<String>() {
-                                        @Override public void call(Subscriber<? super String> subscriber) {
-                                            String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
-                                            subscriber.onNext(upImg);
-                                        }
-                                    })
+
+                                    spUpImg = UpYunClient.rxUpLoad("course/", filePath)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribeOn(Schedulers.io())
                                         .subscribe(new Subscriber<String>() {
@@ -322,5 +315,8 @@ public class BodyTestFragment extends Fragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (spUpImg != null && spUpImg.isUnsubscribed()){
+            spUpImg.unsubscribe();
+        }
     }
 }

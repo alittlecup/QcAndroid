@@ -4,16 +4,15 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.http.UpYunClient;
-
-import java.io.File;
-import java.util.UUID;
-
-import cn.qingchengfit.widgets.utils.LogUtil;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -31,6 +30,7 @@ import cn.qingchengfit.widgets.utils.LogUtil;
 public class UpyunService extends IntentService {
     public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com/";
     private static final String FILE_PATH = "upload_filepath";
+    private Subscription spUpImg;
 
     public static void uploadPic(Context context, String filePaht) {
         LogUtil.e("uploadpic");
@@ -43,23 +43,43 @@ public class UpyunService extends IntentService {
         super("upyunservice");
     }
 
+    @Override public void onDestroy() {
+        super.onDestroy();
+        if (spUpImg != null&& spUpImg.isUnsubscribed())
+            spUpImg.unsubscribe();
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         LogUtil.e("handle intent");
         if (intent.getExtras() != null) {
             String filepath = intent.getExtras().getString(FILE_PATH);
             if (!TextUtils.isEmpty(filepath)) {
-                File file = new File(filepath);
-                String filename = UUID.randomUUID().toString();
-                boolean issuccees = UpYunClient.upLoadImg("/header/", filename, file);
-                if (issuccees) {
-                    //图片上传成功
-                    LogUtil.e("chengogn");
-                    RxBus.getBus().post(new UpYunResult(UPYUNPATH + "/header/" + filename + ".png"));
-                } else {
+                //File file = new File(filepath);
+                //String filename = UUID.randomUUID().toString();
+
+                spUpImg = UpYunClient.rxUpLoad("header/",FILE_PATH)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<String>() {
+                        @Override public void call(String s) {
+                            if (TextUtils.isEmpty(s)){
+                                ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
+                            }else {
+                                RxBus.getBus().post(new UpYunResult(s));
+                            }
+                        }
+                    });
+
+                //boolean issuccees = UpYunClient.upLoadImg("/header/", filename, file);
+                //if (issuccees) {
+                //    图片上传成功
+                    //LogUtil.e("chengogn");
+
+                //} else {
                     //图片上传失败
-                    ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
-                }
+                    //ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
+                //}
 
             }
         }

@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,17 +18,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-
+import cn.qingchengfit.widgets.utils.FileUtils;
 import com.jakewharton.rxbinding.view.RxView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.tbruyelle.rxpermissions.RxPermissions;
-
 import java.io.File;
-
-import cn.qingchengfit.widgets.utils.FileUtils;
 import rx.functions.Action1;
 
 /**
@@ -124,7 +123,16 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
                                     // 指定开启系统相机的Action
                                     intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                                     intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                    Uri uri = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
+                                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    Uri uri;
+                                    if (Build.VERSION.SDK_INT >= 24){
+                                        uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", FileUtils.getTmpImageFile(getContext()));
+                                        getContext().grantUriPermission(getContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                                    }else {
+                                        uri = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
+                                    }
+
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 
                                     startActivityForResult(intent, CHOOSE_CAMERA);
@@ -145,6 +153,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
                         if (aBoolean) {
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
                             intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             intent.setType("image/*");
 
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
@@ -219,7 +228,16 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
                 else
                     filepath = FileUtils.getTmpImageFile(getContext()).getAbsolutePath();
                 if (getArguments() != null && getArguments().getBoolean("c") && !TextUtils.isEmpty(filepath)) {
-                    clipPhoto(Uri.fromFile(new File(filepath)));
+                    Uri uri;
+                    if (Build.VERSION.SDK_INT >= 24){
+                        uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", new File(filepath));
+                        getContext().grantUriPermission(getContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                    }else {
+                        uri = Uri.fromFile(new File(filepath));
+                    }
+
+                    clipPhoto(uri);
                 } else {
                     if (mResult != null) {
                         mResult.onChoosePicResult(true, filepath);
@@ -256,7 +274,19 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         // outputX outputY 是裁剪图片宽高
 //        intent.putExtra("outputX", 200);
 //        intent.putExtra("outputY", 200);
-        Uri uriout = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
+
+
+        Uri uriout;
+        if (Build.VERSION.SDK_INT >= 24){
+            uriout = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", FileUtils.getTmpImageFile(getContext()));
+            getContext().grantUriPermission(getContext().getPackageName(), uriout, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        }else {
+            uriout = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
+        }
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        //Uri uriout = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uriout);
         startActivityForResult(intent, CLIP);
     }

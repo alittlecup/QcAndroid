@@ -1,15 +1,15 @@
 package com.qingchengfit.fitcoach.http;
 
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
-
+import com.upyun.library.common.Params;
+import com.upyun.library.common.UploadManager;
+import com.upyun.library.listener.SignatureListener;
+import com.upyun.library.listener.UpCompleteListener;
+import com.upyun.library.listener.UpProgressListener;
+import com.upyun.library.utils.UpYunUtils;
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
-import cn.qingchengfit.widgets.utils.LogUtil;
-import main.java.com.UpYun;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,22 +30,66 @@ import rx.schedulers.Schedulers;
  */
 public class UpYunClient {
 
-    public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com/";
+    public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com";
 
-    public static UpYun init() {
-        UpYun upyun = new UpYun("zoneke-img", "qcandroid", "07279e9e81c661b259f93a457d6491af");
-        upyun.setTimeout(30);
-        upyun.setApiDomain(UpYun.ED_AUTO);
-        return upyun;
+    public static String KEY = "9TRMelXZlcUdrm+lrIluDPR4BFc=";
+    public static String SPACE = "zoneke-img";
+    //public static String SPACE = "qcandroid";
+    public static String savePath = "/uploads/{year}{mon}{day}/{random32}{.suffix}";
+
+
+    //public static UpYun init() {
+    //    UpYun upyun = new UpYun("", "qcandroid", "07279e9e81c661b259f93a457d6491af");
+    //    upyun.setTimeout(30);
+    //    upyun.setApiDomain(UpYun.ED_AUTO);
+    //    return upyun;
+    //}
+
+    public static Map<String, Object> getUpParams(){
+         Map<String, Object> paramsMap = new HashMap<>();
+        //上传空间
+        paramsMap.put(Params.BUCKET, SPACE);
+        //保存路径，任选其中一个
+        paramsMap.put(Params.SAVE_KEY,savePath);
+        //paramsMap.put(Params.RETURN_URL,UPYUNPATH);
+        return paramsMap;
     }
 
     public static Observable<String> rxUpLoad(final String cloudpath, final String filePath) {
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
-                subscriber.onNext(upImg);
-                subscriber.onCompleted();
+                //Map<String, Object> params = getUpParams();
+                //if (cloudpath.startsWith("/"))
+                //else params.put(Params.RETURN_URL,UPYUNPATH+"/"+cloudpath);
+                UploadManager.getInstance().formUpload(new File(filePath), getUpParams(), new SignatureListener() {
+                    @Override public String getSignature(String policy) {
+                         return UpYunUtils.md5(policy + KEY);
+                    }
+                }, new UpCompleteListener() {
+                    @Override public void onComplete(boolean isSuccess, String result) {
+                        if (isSuccess) {
+                            try{
+                                JSONObject jsonObject = new JSONObject(result);
+                                subscriber.onNext(UPYUNPATH+jsonObject.getString("url"));
+
+                            }catch (Exception e){
+                                subscriber.onNext("");
+                            }
+
+
+                        } else {
+                            subscriber.onNext("");
+                        }
+                        subscriber.onCompleted();
+                    }
+                }, new UpProgressListener() {
+                    @Override public void onRequestProgress(long bytesWrite, long contentLength) {
+
+                    }
+                });
+
+
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
@@ -58,71 +102,74 @@ public class UpYunClient {
      * @param file
      * @return
      */
-    public static boolean upLoadImg(String path, String userid, File file) {
-        UpYun upYun = init();
-        boolean ret = false;
-        try {
+    //public static boolean upLoadImg(String path, String userid, File file) {
+        //UpYun upYun = init();
+        //boolean ret = false;
+        //try {
+        //
+        //    upYun.setContentMD5(UpYun.md5(file));
+        //
+        //    ret = upYun.writeFile(path + userid + ".png", file, true);
+        //} catch (IOException e) {
+        //    LogUtil.d("upload headerimg err:" + e.getMessage());
+        //    RevenUtils.sendException("upLoadImg", "UpYunClient", e);
+        //} catch (Exception e) {
+        //    LogUtil.e("upload headerimg eer:" + e.getMessage());
+        //    e.printStackTrace();
+        //}
+        //return ret;
+    //}
 
-            upYun.setContentMD5(UpYun.md5(file));
-
-            ret = upYun.writeFile(path + userid + ".png", file, true);
-        } catch (IOException e) {
-            LogUtil.d("upload headerimg err:" + e.getMessage());
-            RevenUtils.sendException("upLoadImg", "UpYunClient", e);
-        } catch (Exception e) {
-            LogUtil.e("upload headerimg eer:" + e.getMessage());
-            e.printStackTrace();
-        }
-        return ret;
-    }    /**
+    /**
      * @param path   记得带分隔符 eg /header/
      * @param file
      * @return
      */
-    public static String upLoadImg(String path, File file) {
-        UpYun upYun = init();
-        String name = UUID.randomUUID().toString()+".png";
-        boolean ret = false;
-        try {
-
-            upYun.setContentMD5(UpYun.md5(file));
-            LogUtil.e("uploading pic..;");
-            ret = upYun.writeFile(path + name , file, true);
-            LogUtil.e("uploading pic.. done;");
-        } catch (IOException e) {
-            LogUtil.d("upload headerimg err:" + e.getMessage());
-            RevenUtils.sendException("upLoadImg", "UpYunClient", e);
-        } catch (Exception e) {
-            LogUtil.e("upload headerimg eer:" + e.getMessage());
-            e.printStackTrace();
-        }
-        if (ret){
-            LogUtil.e("upyun:"+UPYUNPATH+path+name);
-            return UPYUNPATH+path+name;
-        }
-        else {
-            LogUtil.e("upyun:error");
-
-            return "";
-        }
-    }
+    //public static String upLoadImg(String path, File file) {
 
 
-    public static void readDir(String path) {
-        // 获取目录中文件列表
-        List<UpYun.FolderItem> items = init().readDir(path);
-        for (int i = 0; i < items.size(); i++) {
-            LogUtil.d(items.get(i).name);
-            LogUtil.d(items.get(i).type);
-        }
-    }
 
-    public static void readFile(String path) {
-        // 获取文件信息
-        Map<String, String> info = init().getFileInfo(path);
-        String type = info.get("type");
-        String size = info.get("size");
-        String date = info.get("date");
-    }
+        //boolean ret = false;
+        //try {
+        //
+        //    upYun.setContentMD5(UpYun.md5(file));
+        //    LogUtil.e("uploading pic..;");
+        //    ret = upYun.writeFile(path + name , file, true);
+        //    LogUtil.e("uploading pic.. done;");
+        //} catch (IOException e) {
+        //    LogUtil.d("upload headerimg err:" + e.getMessage());
+        //    RevenUtils.sendException("upLoadImg", "UpYunClient", e);
+        //} catch (Exception e) {
+        //    LogUtil.e("upload headerimg eer:" + e.getMessage());
+        //    e.printStackTrace();
+        //}
+        //if (ret){
+        //    LogUtil.e("upyun:"+UPYUNPATH+path+name);
+        //    return UPYUNPATH+path+name;
+        //}
+        //else {
+        //    LogUtil.e("upyun:error");
+        //
+        //    return "";
+        //}
+    //}
+
+    //
+    //public static void readDir(String path) {
+    //    // 获取目录中文件列表
+    //    List<UpYun.FolderItem> items = init().readDir(path);
+    //    for (int i = 0; i < items.size(); i++) {
+    //        LogUtil.d(items.get(i).name);
+    //        LogUtil.d(items.get(i).type);
+    //    }
+    //}
+    //
+    //public static void readFile(String path) {
+    //    // 获取文件信息
+    //    Map<String, String> info = init().getFileInfo(path);
+    //    String type = info.get("type");
+    //    String size = info.get("size");
+    //    String date = info.get("date");
+    //}
 
 }
