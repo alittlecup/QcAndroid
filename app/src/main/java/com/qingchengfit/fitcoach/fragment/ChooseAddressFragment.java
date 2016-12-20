@@ -89,6 +89,13 @@ public class ChooseAddressFragment extends BaseFragment {
                     ToastUtils.showDefaultStyle("尚未获取gp信息");
                     return true;
                 }
+                try{
+                    int cityCode = Integer.parseInt(mCityCode);
+                }catch (Exception e){
+                    ToastUtils.showDefaultStyle("获取城市信息失败，请重试");
+                    return true;
+                }
+
                 RxBus.getBus().post(new EventAddress.Builder()
                         .city_code(Integer.parseInt(mCityCode))
                         .city(cityName.getText().toString().trim())
