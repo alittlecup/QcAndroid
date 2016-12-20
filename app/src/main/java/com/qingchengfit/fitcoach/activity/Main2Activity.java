@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -141,16 +142,25 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
+
         RxPermissions.getInstance(this)
-            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .subscribe(new Action1<Boolean>() {
-                @Override
-                public void call(Boolean aBoolean) {
+                @Override public void call(Boolean aBoolean) {
                     if (aBoolean) {
                         setupFile();
                         initVersion();
                     } else ToastUtils.showDefaultStyle("请开启存储空间权限");
+                }
+            });
+
+        RxPermissions.getInstance(this)
+            .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            .subscribe(new Action1<Boolean>() {
+                @Override
+                public void call(Boolean aBoolean) {
+
                 }
             });
 
@@ -741,7 +751,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         @Override protected void onPostExecute(Boolean result) {
             if (result) {
                 downloadDialog.dismiss();
-                install(Main2Activity.this, newAkp);
+                if ( Build.VERSION.SDK_INT >=24){
+                    install(Main2Activity.this, newAkp);
+                }else AppUtils.install(Main2Activity.this,newAkp.getAbsolutePath());
             } else {
                 downloadDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();

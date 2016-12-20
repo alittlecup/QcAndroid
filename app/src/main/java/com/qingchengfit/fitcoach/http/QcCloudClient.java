@@ -166,7 +166,7 @@ public class QcCloudClient {
             RevenUtils.sendException("http Cache error!", "http", e);
         }
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Configs.Server)
-            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
+            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
             .setClient(new OkClient(okHttpClient))
             .setRequestInterceptor(request -> {
                 QcResponToken responToken = null;
@@ -211,7 +211,7 @@ public class QcCloudClient {
             //                })
             .build();
         RestAdapter restAdapter2 = new RestAdapter.Builder().setEndpoint(Configs.Server)
-            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.FULL)
+            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
             .setRequestInterceptor(new RequestInterceptor() {
                 @Override public void intercept(RequestFacade request) {
                     request.addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
