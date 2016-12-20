@@ -26,6 +26,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.DatePicker;
+import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -120,6 +121,7 @@ public class ScheduleWeekFragment extends BaseFragment {
                 btn1.setEnabled(true);
                 btn2.setEnabled(true);
                 btn3.setEnabled(true);
+                RxBus.getBus().post(new EventInit(false,2));
                 //获取当前fragment
                 Fragment f = (Fragment) adapter.instantiateItem(viewpager,viewpager.getCurrentItem());
                 if (f instanceof ScheduleOneWeekFragment){
