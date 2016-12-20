@@ -145,7 +145,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
                         if (aBoolean) {
                             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
                             intent.addCategory(Intent.CATEGORY_OPENABLE);
-                            intent.setType("image/jpeg");
+                            intent.setType("image/*");
 
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                                 startActivityForResult(intent, CHOOSE_GALLERY);
