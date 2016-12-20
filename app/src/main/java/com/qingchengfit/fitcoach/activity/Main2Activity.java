@@ -205,14 +205,16 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     case 1:
                         if (!PreferenceUtils.getPrefBoolean(this, "guide_1", false)) {
                             gd1 = new GuideWindow(this, getString(R.string.hint_order_self), GuideWindow.DOWN);
-                            gd1.show(orderStudnet);
+                            if (orderStudnet != null)
+                                gd1.show(orderStudnet);
                             //PreferenceUtils.setPrefBoolean(this, "guide_1", true);
                         }
                         break;
                     case 2:
                         if (!PreferenceUtils.getPrefBoolean(this, "guide_2", false)) {
                             gd2 = new GuideWindow(this, getString(R.string.hint_help_order), GuideWindow.UP);
-                            gd2.show(webPosition);
+                            if (webPosition != null)
+                                gd2.show(webPosition);
                             //
                         }
                         break;
@@ -237,7 +239,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
                             !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
                             gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
-                            gd2.show(webPosition);
+                            if (webPosition != null)
+                                gd2.show(webPosition);
                         }
                         break;
                     case 2:
