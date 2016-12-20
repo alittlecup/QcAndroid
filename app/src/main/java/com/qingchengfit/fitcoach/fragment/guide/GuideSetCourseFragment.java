@@ -140,6 +140,16 @@ import rx.schedulers.Schedulers;
                     ToastUtils.showDefaultStyle(getString(R.string.err_write_course_time_long));
                     return;
                 }
+
+                try{
+                    Integer.parseInt(timeLong.getContent());
+                    Integer.parseInt(orderCount.getContent());
+
+                }catch (Exception e){
+                    cn.qingchengfit.widgets.utils.ToastUtils.show("请填写正确的时间和人数，请勿输入空格或者其他符号");
+                    return;
+                }
+
                 /**
                  * 可约人数限制
                  */
