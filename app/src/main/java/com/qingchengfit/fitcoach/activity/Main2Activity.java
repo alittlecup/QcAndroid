@@ -155,7 +155,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             });
 
         RxPermissions.getInstance(this)
-            .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            .request(Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
             .subscribe(new Action1<Boolean>() {
                 @Override
