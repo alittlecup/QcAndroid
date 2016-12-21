@@ -41,7 +41,7 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
 
 
     @Override
-    public void onSearchResult(int result, int id, String name, String address, String pic, boolean isAuth) {
+    public void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth) {
         Intent it = new Intent();
         it.putExtra("id", id);
         it.putExtra("username", name);

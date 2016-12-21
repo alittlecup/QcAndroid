@@ -41,9 +41,9 @@ public class ChooseBrandActivity extends AppCompatActivity {
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
-    private Subscription sp;
-    List<Brand> datas = new ArrayList<>();
-    private BrandManageAdapterAdapter adapter;
+    protected Subscription sp;
+    protected List<Brand> datas = new ArrayList<>();
+    protected BrandManageAdapterAdapter adapter;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

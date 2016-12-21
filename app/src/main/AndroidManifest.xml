@@ -300,6 +300,10 @@
         android:label="@string/title_activity_my_home"
         android:screenOrientation="portrait"/>
     <activity
+        android:name=".activity.ExpChooseBrandActivity"
+        android:label="@string/title_activity_my_home"
+        android:screenOrientation="portrait"/>
+    <activity
         android:name=".activity.NotificationActivity"
         android:label="@string/title_activity_notification"
         android:launchMode="singleTop"

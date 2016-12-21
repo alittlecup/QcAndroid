@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -149,6 +150,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             @Override public void call(CoachService coachService) {
                 if (coachService != null) {
                     mCoachService = coachService;
+                    PreferenceUtils.setPrefLong(getContext(),"coachservice_id",mCoachService.getId());
                     ((Main2Activity) getActivity()).setCoachService(mCoachService);
                     title.setText(coachService.name);
                     Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg,getContext()));
@@ -218,7 +220,15 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                     }
                                 }
                             } else {
-                                mCoachService = qcResponse.data.services.get(0);
+                                int pos = 0;
+                                long serviceid = PreferenceUtils.getPrefLong(getContext(),"coachservice_id",0);
+                                for (int i = 0; i < qcResponse.data.services.size(); i++) {
+                                    if (serviceid == qcResponse.data.services.get(i).getId()){
+                                        pos = i;
+                                        break;
+                                    }
+                                }
+                                mCoachService = qcResponse.data.services.get(pos);
                             }
                             HashMap<String, Object> params = new HashMap<String, Object>();
                             params.put("id", mCoachService.getId());

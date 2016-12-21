@@ -1,8 +1,9 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,28 +24,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
+import com.qingchengfit.fitcoach.activity.ExpChooseBrandActivity;
+import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.SearchItemBean;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddGymBean;
 import com.qingchengfit.fitcoach.http.bean.QcSearchOrganResponse;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -54,6 +55,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     public static final String TAG = SearchFragment.class.getName();
     public static final int TYPE_GYM = 0;
     public static final int TYPE_ORGANASITON = 1;
+    public static final int RESULT_BRAND = 2;
+
     public String keyword;
     @BindView(R.id.searchview_et)
     EditText searchviewEt;
@@ -245,6 +248,17 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
     }
 
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == RESULT_BRAND){
+                Brand brand = (Brand) IntentUtils.getParcelable(data);
+                getFragmentManager().beginTransaction().add(R.id.search_fraglayout,new  AddGymFragmentBuilder(brand.getPhoto(),brand.getName(),brand.getId()).build())
+                    .addToBackStack(null).commit();
+            }
+        }
+    }
+
     @OnClick(R.id.searchview_clear)
     public void onClear() {
         searchviewEt.setText("");
@@ -252,8 +266,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
     @OnClick(R.id.searchresult_btn)
     public void onAdd() {
-        if (type == TYPE_GYM)
-            getFragmentManager().beginTransaction().add(R.id.search_fraglayout, new AddGymFragment()).addToBackStack(null).commit();
+        if (type == TYPE_GYM){
+            Intent toChooseBrand = new Intent(getActivity(), ExpChooseBrandActivity.class);
+
+            startActivityForResult(toChooseBrand,RESULT_BRAND);
+        }
         else if (type == TYPE_ORGANASITON)
             getFragmentManager().beginTransaction().add(R.id.search_fraglayout, new AddOganasitionFragment())
                     .addToBackStack(null).commit();

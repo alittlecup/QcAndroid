@@ -217,7 +217,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                                             freshData();
 
                                                     }
-                                                });
+                                                 });
                                         return true;
                                     }
                                 });
