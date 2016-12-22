@@ -241,6 +241,7 @@ public class CoachService implements Parcelable {
         dest.writeString(this.brand_name);
         dest.writeInt(this.courses_count);
         dest.writeInt(this.users_count);
+        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.gd_district, flags);
     }
 
@@ -255,6 +256,17 @@ public class CoachService implements Parcelable {
         this.brand_name = in.readString();
         this.courses_count = in.readInt();
         this.users_count = in.readInt();
+        this.has_permission = in.readByte() != 0;
         this.gd_district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
     }
+
+    public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {
+        @Override public CoachService createFromParcel(Parcel source) {
+            return new CoachService(source);
+        }
+
+        @Override public CoachService[] newArray(int size) {
+            return new CoachService[size];
+        }
+    };
 }

@@ -271,18 +271,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 }
             }));
     }
-    //
-    //@OnClick({ R.id.title, R.id.angle_show }) public void onTilteClick() {
-    //    gymLayout.setPivotY(0);
-    //    if (gymLayout.getVisibility() == View.VISIBLE) {
-    //        gymLayout.setVisibility(View.GONE);
-    //        ViewCompat.setRotation(angleShow, 180);
-    //    } else {
-    //        gymLayout.setVisibility(View.VISIBLE);
-    //        ViewCompat.setRotation(angleShow, 0);
-    //    }
-    //    ViewCompat.animate(angleShow).rotationBy(180).setDuration(300).start();
-    //}
+
 
     @Override protected void lazyLoad() {
 
