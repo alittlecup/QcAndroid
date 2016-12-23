@@ -329,6 +329,11 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
                 return true;
             }
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams){
+                mValueCallbackNew = filePathCallback;
+                choosePictureFragmentDialog.show(getFragmentManager(), "");
+                return true;
+            }
 
             @Override public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
                 new MaterialDialog.Builder(getActivity()).content(message)
