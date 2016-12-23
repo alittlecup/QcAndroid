@@ -118,7 +118,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         if (requestCode == 10010 && resultCode > 0) {
             QcExperienceResponse.DataEntity.ExperiencesEntity entity = new QcExperienceResponse.DataEntity.ExperiencesEntity();
             QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
-            gymEntity.setId(data.getIntExtra("id", 0));
+            gymEntity.setId(data.getLongExtra("id", 0));
             gymEntity.setName(data.getStringExtra("username"));
             gymEntity.setAddress(data.getStringExtra("address"));
             gymEntity.setPhoto(data.getStringExtra("pic"));

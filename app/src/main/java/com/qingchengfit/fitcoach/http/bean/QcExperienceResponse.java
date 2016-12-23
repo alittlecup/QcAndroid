@@ -242,7 +242,7 @@ public class QcExperienceResponse extends QcResponse {
             }
 
             public static class GymEntity implements Parcelable {
-                private int id;
+                private long id;
                 private String name;
                 private String photo;
                 private QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
@@ -308,11 +308,11 @@ public class QcExperienceResponse extends QcResponse {
 
 
 
-                public int getId() {
+                public long getId() {
                     return id;
                 }
 
-                public void setId(int id) {
+                public void setId(long id) {
                     this.id = id;
                 }
 
@@ -324,34 +324,36 @@ public class QcExperienceResponse extends QcResponse {
                     this.name = name;
                 }
 
-                @Override
-                public int describeContents() {
+                @Override public int describeContents() {
                     return 0;
                 }
 
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeInt(this.id);
+                @Override public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeLong(this.id);
                     dest.writeString(this.name);
                     dest.writeString(this.photo);
                     dest.writeParcelable(this.district, flags);
-                    dest.writeByte(is_authenticated ? (byte) 1 : (byte) 0);
+                    dest.writeByte(this.is_authenticated ? (byte) 1 : (byte) 0);
+                    dest.writeString(this.address);
+                    dest.writeString(this.brand_name);
                 }
 
                 protected GymEntity(Parcel in) {
-                    this.id = in.readInt();
+                    this.id = in.readLong();
                     this.name = in.readString();
                     this.photo = in.readString();
                     this.district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
                     this.is_authenticated = in.readByte() != 0;
+                    this.address = in.readString();
+                    this.brand_name = in.readString();
                 }
 
                 public static final Creator<GymEntity> CREATOR = new Creator<GymEntity>() {
-                    public GymEntity createFromParcel(Parcel source) {
+                    @Override public GymEntity createFromParcel(Parcel source) {
                         return new GymEntity(source);
                     }
 
-                    public GymEntity[] newArray(int size) {
+                    @Override public GymEntity[] newArray(int size) {
                         return new GymEntity[size];
                     }
                 };

@@ -12,7 +12,13 @@ public class PhotoUtils {
             return "";
         if (!url.contains("!")) {
             return url + "!120x120";
-        } else return url;
+        }else{
+            try{
+                return url.split("!")[0] +"!120x120";
+            }catch (Exception e){
+                return url;
+            }
+        }
 
     }
  public static String getMiddle(String url){

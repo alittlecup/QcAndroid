@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.AppUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
@@ -22,11 +26,6 @@ import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.CalSyncFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPwFragment;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * setting view
@@ -47,7 +46,7 @@ public class SettingFragment extends BaseSettingFragment {
     @BindView(R.id.version_code)
     TextView versionCode;
     private Unbinder unbinder;
-
+    private String versionStr;
     public SettingFragment() {
     }
 
@@ -85,6 +84,7 @@ public class SettingFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0 ,R.drawable.ic_arrow_left,"设置");
+        versionCode.setText(AppUtils.getAppVer(getContext()));
         return view;
     }
 

@@ -561,12 +561,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
             try {
                 JSONObject properties = new JSONObject();
-                properties.put("AND_app_name", "Trainer");
-                properties.put("AND_user_id", user.id);
-                properties.put("AND_user_phone", user.phone);
+                properties.put("qc_app_name", "Trainer");
+                properties.put("qc_user_id", user.id);
+                properties.put("qc_user_phone", user.phone);
                 SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
 
-                SensorsDataAPI.sharedInstance(this).registerSuperProperties(properties);
             } catch (JSONException e) {
                 e.printStackTrace();
 

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -15,11 +16,12 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.base.Shop;
+import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -31,7 +33,7 @@ import rx.schedulers.Schedulers;
  */
 @FragmentWithArgs
 public class AddGymFragment extends GuideSetGymFragment {
-
+    private SearchInterface searchListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +65,12 @@ public class AddGymFragment extends GuideSetGymFragment {
     @Override
     public void onNextStep() {
         showLoading();
-        if (TextUtils.isEmpty(gymName.getContent()) || lat == 0 || lng == 0){
-            cn.qingchengfit.widgets.utils.ToastUtils.show("请填写完整");
+        if (TextUtils.isEmpty(gymName.getContent()) ){
+            cn.qingchengfit.widgets.utils.ToastUtils.show("请填写场馆名称");
+            return;
+        }
+        if ( lat == 0 || lng == 0){
+            cn.qingchengfit.widgets.utils.ToastUtils.show("请重新选择场馆位置");
             return;
         }
 
@@ -74,14 +80,14 @@ public class AddGymFragment extends GuideSetGymFragment {
 
         RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponse>() {
+                .subscribe(new Action1<QcResponseSystenInit>() {
                     @Override
-                    public void call(QcResponse qcResponse) {
+                    public void call(QcResponseSystenInit qcResponse) {
                         hideLoading();
                         if (ResponseConstant.checkSuccess(qcResponse)) {
                             // TODO: 16/11/16 新建成功
-                            getActivity().onBackPressed();
-
+                            //getActivity().onBackPressed();
+                            searchListener.onSearchResult(100, qcResponse.data.gym_id,qcResponse.data.name,qcResponse.data.brand_name,qcResponse.data.photo,false);
                         } else ToastUtils.showDefaultStyle(qcResponse.msg);
                     }
                 }, new Action1<Throwable>() {
@@ -94,6 +100,21 @@ public class AddGymFragment extends GuideSetGymFragment {
         );
 
     }
+
+        @Override
+        public void onAttach(Context context) {
+            super.onAttach(context);
+            if (context instanceof SearchInterface) {
+                searchListener = (SearchInterface) context;
+            }
+        }
+
+        @Override
+        public void onDetach() {
+            super.onDetach();
+            searchListener = null;
+        }
+
 }
 
 //public class AddGymFragment extends Fragment {

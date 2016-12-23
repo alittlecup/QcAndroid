@@ -281,6 +281,9 @@ public class ScheduleOneWeekFragment extends BaseFragment {
                                 schedule.course.is_private ? R.color.private_color : R.color.group_color));
                     HashMap<String, Object> tag = new HashMap<>();
                     tag.put("url", schedule.url);
+                    if (schedule.orders != null && schedule.orders.size() >0) {
+                        tag.put("name", schedule.orders.get(0).username);
+                    }
                     event.setTag(tag);
                     mEvents.add(event);
                 }
