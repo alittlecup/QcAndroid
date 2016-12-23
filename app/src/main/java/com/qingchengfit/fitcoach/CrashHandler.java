@@ -5,10 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
-import com.qingchengfit.fitcoach.activity.MainActivity;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.umeng.analytics.MobclickAgent;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -86,7 +84,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             //退出程序
 //            Looper.prepare();
             if (App.gCanReload) {
-                Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(mContext.getApplicationContext(), Main2Activity.class);
                 PendingIntent restartIntent = PendingIntent.getActivity(
                         mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 //             退出程序
