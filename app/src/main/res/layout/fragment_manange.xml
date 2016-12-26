@@ -51,7 +51,13 @@
                     android:visibility="gone"
                     />
             </LinearLayout>
-
+        <ImageView
+            android:id="@+id/action_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_more_vert_white_24dp"
+            />
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>

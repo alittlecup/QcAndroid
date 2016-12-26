@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.FragActivity;
@@ -29,6 +31,7 @@ import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
 import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
+import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
@@ -38,6 +41,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
@@ -49,7 +53,6 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
 
 /**
  * power by
@@ -71,7 +74,7 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/10.
  */
-public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
+public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener,AdapterView.OnItemClickListener {
 
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     List<AbstractFlexibleItem> mData = new ArrayList<>();
@@ -86,6 +89,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
     private CoachService mCoachService;
+    private DialogList dialogList;
+    private QuitGymFragment quiteGym;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manange, container, false);
@@ -116,22 +121,18 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview.setAdapter(mAdapter);
 
         List<AbstractFlexibleItem> data2 = new ArrayList<>();
-        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_card_grey)
-            .text(getString(R.string.student_card_manage))
-            .build()));
         data2.add(new ManageWorkItem(
-            new FunctionBean.Builder().resImg(R.drawable.ic_module_staff_grey).text(getString(R.string.manage_salers))
-                .build()));
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_card_grey).text(getString(R.string.student_card_manage)).build()));
+        data2.add(new ManageWorkItem(
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_staff_grey).text(getString(R.string.manage_salers)).build()));
         data2.add(new ManageWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.ic_module_sales_grey).text(getString(R.string.manage_staffs)).build()));
-        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_authority_grey)
-            .text(getString(R.string.manage_permission))
-            .build()));
+        data2.add(new ManageWorkItem(
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_authority_grey).text(getString(R.string.manage_permission)).build()));
         data2.add(new ManageWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.ic_module_checkin_grey).text(getString(R.string.manage_signin)).build()));
-        data2.add(new ManageWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_module_activity_grey)
-            .text(getString(R.string.manage_acitivity))
-            .build()));
+        data2.add(new ManageWorkItem(
+            new FunctionBean.Builder().resImg(R.drawable.ic_module_activity_grey).text(getString(R.string.manage_acitivity)).build()));
         CommonFlexAdapter adapter2 = new CommonFlexAdapter(data2, new FlexibleAdapter.OnItemClickListener() {
             @Override public boolean onItemClick(int position) {
                 StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
@@ -141,7 +142,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
         //GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
         //recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
-        recyclerview2.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayout.VERTICAL));
+        recyclerview2.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
         recyclerview2.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerview2.setHasFixedSize(true);
         recyclerview2.setNestedScrollingEnabled(false);
@@ -150,13 +151,12 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             @Override public void call(CoachService coachService) {
                 if (coachService != null) {
                     mCoachService = coachService;
-                    PreferenceUtils.setPrefLong(getContext(),"coachservice_id",mCoachService.getId());
+                    PreferenceUtils.setPrefLong(getContext(), "coachservice_id", mCoachService.getId());
                     ((Main2Activity) getActivity()).setCoachService(mCoachService);
                     title.setText(coachService.name);
-                    Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg,getContext()));
+                    Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
                     nameBrand.setText(coachService.brand_name);
                     addressPhone.setText(coachService.getName());
-
 
                     HashMap<String, Object> params = new HashMap<String, Object>();
                     params.put("id", mCoachService.getId());
@@ -188,9 +188,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         return view;
     }
 
-
-
-
     @Override public void onResume() {
         super.onResume();
         getServer();
@@ -221,9 +218,9 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                 }
                             } else {
                                 int pos = 0;
-                                long serviceid = PreferenceUtils.getPrefLong(getContext(),"coachservice_id",0);
+                                long serviceid = PreferenceUtils.getPrefLong(getContext(), "coachservice_id", 0);
                                 for (int i = 0; i < qcResponse.data.services.size(); i++) {
-                                    if (serviceid == qcResponse.data.services.get(i).getId()){
+                                    if (serviceid == qcResponse.data.services.get(i).getId()) {
                                         pos = i;
                                         break;
                                     }
@@ -241,7 +238,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                         if (ResponseConstant.checkSuccess(qcResponsePermission)) {
                                             CurentPermissions.newInstance().permissionList.clear();
                                             for (int i = 0; i < qcResponsePermission.data.permissions.size(); i++) {
-                                                CurentPermissions.newInstance().permissionList.put(qcResponsePermission.data.permissions.get(i).key,
+                                                CurentPermissions.newInstance().permissionList.put(
+                                                    qcResponsePermission.data.permissions.get(i).key,
                                                     qcResponsePermission.data.permissions.get(i).value);
                                             }
                                         } else {
@@ -257,7 +255,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                             title.setText(mCoachService.name);
                             addressPhone.setText(mCoachService.getName());
                             nameBrand.setText(mCoachService.getBrand_name());
-                            Glide.with(getContext()).load(mCoachService.photo).asBitmap().into(new CircleImgWrapper(shopImg,getContext()));
+                            Glide.with(getContext()).load(mCoachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
                         } else {
                             ToastUtils.show("服务器错误");
                         }
@@ -271,7 +269,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 }
             }));
     }
-
 
     @Override protected void lazyLoad() {
 
@@ -362,7 +359,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             case R.id.change_gym:
                 Intent toGym = new Intent(getActivity(), ChooseActivity.class);
                 toGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM);
-                toGym.putExtra("service",mCoachService);
+                toGym.putExtra("service", mCoachService);
                 startActivity(toGym);
                 break;
             case R.id.title:
@@ -373,10 +370,57 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     @OnClick(R.id.renewal) public void onClick() {
-        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
         //Intent toEdit = new Intent(getContext(),FragActivity.class);
         //toEdit.putExtra("service",mCoachService);
         //toEdit.putExtra("type",13);
         //startActivity(toEdit);
+    }
+
+    @OnClick(R.id.action_flow) public void onClickFlow() {
+        if (dialogList == null) {
+            dialogList = new DialogList(getContext());
+            ArrayList<String> flows = new ArrayList<>();
+            flows.add(getString(R.string.exit_gym));
+            dialogList.list(flows, this);
+        }
+        dialogList.show();
+    }
+
+    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (dialogList != null){
+            dialogList.dismiss();
+            showLoading();
+            if (quiteGym == null){
+                quiteGym = new QuitGymFragmentBuilder(mCoachService)
+                    .build();
+                quiteGym.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid+"", GymUtils.getParams(mCoachService))
+                            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<QcResponse>() {
+                                @Override
+                                public void call(QcResponse qcResponse) {
+                                    hideLoading();
+                                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                                        getServer();
+                                    } else cn.qingchengfit.widgets.utils.ToastUtils.show(qcResponse.getMsg());
+                                }
+                            }, new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    hideLoading();
+                                    cn.qingchengfit.widgets.utils.ToastUtils.show("error!");
+                                }
+                            })
+                        );
+                    }
+                });
+            }
+            quiteGym.show(getFragmentManager(),"");
+
+
+
+        }
     }
 }

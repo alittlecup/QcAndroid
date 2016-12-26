@@ -563,6 +563,12 @@ public class QcCloudClient {
         //初始化系统
         @POST("/api/coach/systems/initial/") rx.Observable<QcResponseSystenInit> qcInit(@Body CoachInitBean body);
 
+        //教练离职
+        @POST("/api/v2/coaches/{coach_id}/dimission/")
+        rx.Observable<QcResponseSystenInit> qcQuitGym(@Path("coach_id") String coachid,@QueryMap HashMap<String, Object> params);
+
+
+
         //获取电话验证码
         @POST("/api/send/verify/") rx.Observable<QcResponse> qcGetCode(@Body GetCodeBean account);
 
