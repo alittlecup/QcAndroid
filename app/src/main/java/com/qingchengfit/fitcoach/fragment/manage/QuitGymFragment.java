@@ -66,7 +66,7 @@ public class QuitGymFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_quit_gym, container, false);
         ButterKnife.bind(this, view);
         Glide.with(getContext()).load(mCoachService.getPhoto()).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(gymAvatar,getContext()));
-        title.setText("确定退出"+mCoachService.getBrand_name()+"|"+mCoachService.getName()+"?");
+        title.setText("确定退出"+mCoachService.getBrand_name()+" · "+mCoachService.getName()+"?");
         content.setText("退出后将无法恢复，需由该健身房工作人员添加");
         return view;
     }
