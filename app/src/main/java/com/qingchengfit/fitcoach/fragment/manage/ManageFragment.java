@@ -381,7 +381,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         if (dialogList == null) {
             dialogList = new DialogList(getContext());
             ArrayList<String> flows = new ArrayList<>();
-            flows.add(getString(R.string.exit_gym));
+            flows.add("退出"+ mCoachService.getBrand_name() + " · "+mCoachService.getName());
             dialogList.list(flows, this);
         }
         dialogList.show();
