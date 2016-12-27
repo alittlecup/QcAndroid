@@ -1,18 +1,24 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import com.bumptech.glide.Glide;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
@@ -20,14 +26,11 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.CreatBrandBody;
+import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.tbruyelle.rxpermissions.RxPermissions;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -86,6 +89,26 @@ public class GuideSetBrandFragment extends BaseFragment {
                                 });
                     }
                 });
+        if (App.gUser != null && App.gUser.id != null) {
+            RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<QcResponseBrands>() {
+                    @Override public void call(QcResponseBrands qcResponse) {
+                        if (ResponseConstant.checkSuccess(qcResponse)) {
+                            if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
+                                Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
+                                startActivity(toChooseBrand);
+                                getActivity().finish();
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override public void call(Throwable throwable) {
+                    }
+                }));
+        }
+
+
         return view;
     }
 

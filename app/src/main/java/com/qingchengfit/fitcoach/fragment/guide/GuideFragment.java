@@ -83,9 +83,9 @@ public class GuideFragment extends BaseFragment {
         if (initStr == null || initStr.isEmpty())
             initBean = new CoachInitBean();
         else initBean = gson.fromJson(initStr, CoachInitBean.class);
-        getChildFragmentManager().beginTransaction()
-            .replace(R.id.guide_frag, new GuideSetBrandFragment())
-            .commit();
+        //getChildFragmentManager().beginTransaction()
+        //    .replace(R.id.guide_frag, new GuideSetBrandFragment())
+        //    .commit();
         if (TextUtils.isEmpty(initBean.brand_id)){
             getChildFragmentManager().beginTransaction()
                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
@@ -99,9 +99,6 @@ public class GuideFragment extends BaseFragment {
                                      public void call(QcResponseBrands qcResponse) {
                                          if (ResponseConstant.checkSuccess(qcResponse)) {
                                              if (qcResponse.data != null && qcResponse.data.brands.size() >0){
-                                                 //Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-                                                 //startActivity(toChooseBrand);
-                                                 //getActivity().finish();
                                                  for (int i = 0; i < qcResponse.data.brands.size(); i++) {
                                                      Brand b = qcResponse.data.brands.get(i);
                                                      if (b.getId().equalsIgnoreCase(initBean.brand_id)){

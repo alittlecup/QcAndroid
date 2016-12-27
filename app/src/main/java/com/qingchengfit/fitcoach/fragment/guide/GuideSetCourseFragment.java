@@ -145,7 +145,8 @@ import rx.schedulers.Schedulers;
 
                 try{
                     Integer.parseInt(timeLong.getContent());
-                    Integer.parseInt(orderCount.getContent());
+                    if (!isPrivate)
+                        Integer.parseInt(orderCount.getContent());
 
                 }catch (Exception e){
                     cn.qingchengfit.widgets.utils.ToastUtils.show("请填写正确的时间和人数，请勿输入空格或者其他符号");
