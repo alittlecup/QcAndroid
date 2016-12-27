@@ -403,6 +403,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                 public void call(QcResponse qcResponse) {
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                                        cn.qingchengfit.widgets.utils.ToastUtils.show("退出健身房成功！");
                                         getServer();
                                     } else cn.qingchengfit.widgets.utils.ToastUtils.show(qcResponse.getMsg());
                                 }
