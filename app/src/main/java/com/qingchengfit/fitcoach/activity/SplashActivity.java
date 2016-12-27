@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.google.gson.Gson;
@@ -109,7 +110,8 @@ public class SplashActivity extends BaseAcitivity {
                             }
 
                             @Override public void onError(Throwable e) {
-
+                                ToastUtils.show("服务器错误，请稍后再试");
+                                SplashActivity.this.finish();
                             }
 
                             @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {

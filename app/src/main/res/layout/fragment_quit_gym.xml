@@ -51,15 +51,26 @@
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/cancel"
-            android:layout_width="0dp" android:layout_height="match_parent"/>
-        <include layout="@layout/divider_grey"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_click"
+
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            />
         <TextView
             style="@style/Qc.TextCommonBlack"
             android:text="@string/comfirm"
             android:layout_weight="1"
             android:gravity="center"
             android:id="@+id/comfirm"
-            android:layout_width="0dp" android:layout_height="match_parent"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_click"
+            />
 
     </LinearLayout>
 

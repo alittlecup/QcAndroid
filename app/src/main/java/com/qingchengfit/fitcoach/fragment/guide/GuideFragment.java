@@ -50,6 +50,8 @@ import rx.schedulers.Schedulers;
  */
 public class GuideFragment extends BaseFragment {
 
+    public static final int RESULT_BRAND = 11;
+
     @BindView(R.id.step_indicator)
     StepperIndicator stepIndicator;
 
@@ -97,6 +99,9 @@ public class GuideFragment extends BaseFragment {
                                      public void call(QcResponseBrands qcResponse) {
                                          if (ResponseConstant.checkSuccess(qcResponse)) {
                                              if (qcResponse.data != null && qcResponse.data.brands.size() >0){
+                                                 //Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
+                                                 //startActivity(toChooseBrand);
+                                                 //getActivity().finish();
                                                  for (int i = 0; i < qcResponse.data.brands.size(); i++) {
                                                      Brand b = qcResponse.data.brands.get(i);
                                                      if (b.getId().equalsIgnoreCase(initBean.brand_id)){
@@ -144,6 +149,8 @@ public class GuideFragment extends BaseFragment {
                 });
         return view;
     }
+
+
 
     public void setSetp(int s) {
         stepIndicator.setCurrentStep(s);
