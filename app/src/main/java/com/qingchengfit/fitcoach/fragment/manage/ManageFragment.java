@@ -390,12 +390,13 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (dialogList != null){
             dialogList.dismiss();
-            showLoading();
+
             if (quiteGym == null){
                 quiteGym = new QuitGymFragmentBuilder(mCoachService)
                     .build();
                 quiteGym.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
+                        showLoading();
                         RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid+"", GymUtils.getParams(mCoachService))
                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Action1<QcResponse>() {
