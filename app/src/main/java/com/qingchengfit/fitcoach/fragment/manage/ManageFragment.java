@@ -269,6 +269,83 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 }
             }));
     }
+    //public void getNewServer() {
+    //    RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+    //        .subscribeOn(Schedulers.io())
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .subscribe(new Action1<QcCoachServiceResponse>() {
+    //            @Override public void call(QcCoachServiceResponse qcResponse) {
+    //                if (ResponseConstant.checkSuccess(qcResponse)) {
+    //
+    //                    if (qcResponse.data.services == null || qcResponse.data.services.size() == 0) {
+    //                        Intent toGuide = new Intent(getActivity(), GuideActivity.class);
+    //                        startActivity(toGuide);
+    //                        getActivity().finish();
+    //                        return;
+    //                    }
+    //                    if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
+    //                        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null) {
+    //                            CoachService coachService = ((Main2Activity) getActivity()).getCoachService();
+    //                            for (int i = 0; i < qcResponse.data.services.size(); i++) {
+    //                                if (coachService.id == qcResponse.data.services.get(i).id && coachService.model.equalsIgnoreCase(
+    //                                    qcResponse.data.services.get(i).model)) {
+    //                                    mCoachService = qcResponse.data.services.get(i);
+    //                                    break;
+    //                                }
+    //                            }
+    //                        } else {
+    //                            int pos = 0;
+    //                            long serviceid = PreferenceUtils.getPrefLong(getContext(), "coachservice_id", 0);
+    //                            for (int i = 0; i < qcResponse.data.services.size(); i++) {
+    //                                if (serviceid == qcResponse.data.services.get(i).getId()) {
+    //                                    pos = i;
+    //                                    break;
+    //                                }
+    //                            }
+    //                            mCoachService = qcResponse.data.services.get(pos);
+    //                        }
+    //                        HashMap<String, Object> params = new HashMap<String, Object>();
+    //                        params.put("id", mCoachService.getId());
+    //                        params.put("model", mCoachService.getModel());
+    //                        RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+    //                            .subscribeOn(Schedulers.io())
+    //                            .observeOn(AndroidSchedulers.mainThread())
+    //                            .subscribe(new Action1<QcResponsePermission>() {
+    //                                @Override public void call(QcResponsePermission qcResponsePermission) {
+    //                                    if (ResponseConstant.checkSuccess(qcResponsePermission)) {
+    //                                        CurentPermissions.newInstance().permissionList.clear();
+    //                                        for (int i = 0; i < qcResponsePermission.data.permissions.size(); i++) {
+    //                                            CurentPermissions.newInstance().permissionList.put(
+    //                                                qcResponsePermission.data.permissions.get(i).key,
+    //                                                qcResponsePermission.data.permissions.get(i).value);
+    //                                        }
+    //                                    } else {
+    //                                        cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+    //                                    }
+    //                                }
+    //                            }, new Action1<Throwable>() {
+    //                                @Override public void call(Throwable throwable) {
+    //                                    cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
+    //                                }
+    //                            }));
+    //
+    //                        title.setText(mCoachService.name);
+    //                        addressPhone.setText(mCoachService.getName());
+    //                        nameBrand.setText(mCoachService.getBrand_name());
+    //                        Glide.with(getContext()).load(mCoachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
+    //                    } else {
+    //                        ToastUtils.show("服务器错误");
+    //                    }
+    //                } else {
+    //                    ToastUtils.show("服务器错误");
+    //                }
+    //            }
+    //        }, new Action1<Throwable>() {
+    //            @Override public void call(Throwable throwable) {
+    //                ToastUtils.show("服务器错误");
+    //            }
+    //        }));
+    //}
 
     @Override protected void lazyLoad() {
 
@@ -399,23 +476,50 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                         showLoading();
                         RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid+"", GymUtils.getParams(mCoachService))
                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<QcResponse>() {
-                                @Override
-                                public void call(QcResponse qcResponse) {
-                                    hideLoading();
-                                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                                        cn.qingchengfit.widgets.utils.ToastUtils.show("退出健身房成功！");
-                                        getServer();
-                                    } else cn.qingchengfit.widgets.utils.ToastUtils.show(qcResponse.getMsg());
-                                }
-                            }, new Action1<Throwable>() {
-                                @Override
-                                public void call(Throwable throwable) {
-                                    hideLoading();
-                                    cn.qingchengfit.widgets.utils.ToastUtils.show("error!");
-                                }
-                            })
-                        );
+                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                             .subscribe(new Action1<QcResponse>() {
+                                                 @Override
+                                                 public void call(QcResponse qcResponse) {
+                                                     hideLoading();
+                                                     if (ResponseConstant.checkSuccess(qcResponse)) {
+                                                         ((Main2Activity) getActivity()).setCoachService(null);
+                                                         cn.qingchengfit.widgets.utils.ToastUtils.show("退出健身房成功！");
+                                                         getServer();
+                                                     } else cn.qingchengfit.widgets.utils.ToastUtils.show(qcResponse.getMsg());
+                                                 }
+                                             }, new Action1<Throwable>() {
+                                                 @Override
+                                                 public void call(Throwable throwable) {
+                                                     hideLoading();
+                                                     cn.qingchengfit.widgets.utils.ToastUtils.show("error!");                                                 }
+                                             }));
+
+                        //    .flatMap(new Func1<QcResponse, Observable<Boolean>>() {
+                        //        @Override public Observable<Boolean> call(QcResponse qcResponse) {
+                        //            if (ResponseConstant.checkSuccess(qcResponse)) {
+                        //                ((Main2Activity) getActivity()).setCoachService(null);
+                        //                return Observable.just(true);
+                        //            }else return Observable.just(false);
+                        //        }
+                        //    })
+                        //    .delay(1, TimeUnit.SECONDS)
+                        //    .subscribe(new Action1<Boolean>() {
+                        //        @Override public void call(Boolean aBoolean) {
+                        //            if (aBoolean){
+                        //                cn.qingchengfit.widgets.utils.ToastUtils.show("退出健身房成功！");
+                        //                getServer();
+                        //            }else {
+                        //                cn.qingchengfit.widgets.utils.ToastUtils.show("退出失败");
+                        //            }
+                        //        }
+                        //    }, new Action1<Throwable>() {
+                        //        @Override public void call(Throwable throwable) {
+                        //            hideLoading();
+                        //            cn.qingchengfit.widgets.utils.ToastUtils.show("error!");
+                        //        }
+                        //    })
+                        //
+                        //);
                     }
                 });
             }

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.badoualy.stepperindicator.StepperIndicator;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
@@ -62,7 +64,11 @@ public class GuideFragment extends BaseFragment {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     private Unbinder unbinder;
+    private boolean isAddBrannd = false;
 
+    public void setAddBrannd(boolean addBrannd) {
+        isAddBrannd = addBrannd;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,13 +89,37 @@ public class GuideFragment extends BaseFragment {
         if (initStr == null || initStr.isEmpty())
             initBean = new CoachInitBean();
         else initBean = gson.fromJson(initStr, CoachInitBean.class);
-        //getChildFragmentManager().beginTransaction()
-        //    .replace(R.id.guide_frag, new GuideSetBrandFragment())
-        //    .commit();
+        if (isAddBrannd) {
+            getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
+            return view;
+        }
         if (TextUtils.isEmpty(initBean.brand_id)){
-            getChildFragmentManager().beginTransaction()
-                .replace(R.id.guide_frag, new GuideSetBrandFragment())
-                .commit();
+            if (App.gUser != null && App.gUser.id != null) {
+                RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<QcResponseBrands>() {
+                        @Override public void call(QcResponseBrands qcResponse) {
+                            if (ResponseConstant.checkSuccess(qcResponse)) {
+                                if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
+                                    Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
+                                    startActivity(toChooseBrand);
+                                    getActivity().finish();
+                                }else {
+                                    getChildFragmentManager().beginTransaction()
+                                        .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                                        .commit();
+                                }
+                            }
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override public void call(Throwable throwable) {
+                        }
+                    }));
+            }else {
+                getChildFragmentManager().beginTransaction()
+                    .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                    .commit();
+            }
         }else {
             if (App.gUser != null && App.gUser.id != null){
             RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id+"")
@@ -113,6 +143,10 @@ public class GuideFragment extends BaseFragment {
                                                      .replace(R.id.guide_frag, new GuideSetBrandFragment())
                                                      .commit();
                                              }
+                                         }else {
+                                             getChildFragmentManager().beginTransaction()
+                                                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                                                 .commit();
                                          }
                                      }
                                  }, new Action1<Throwable>() {

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -97,7 +98,12 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                         if (datas.get(pos).isHas_add_permission()) {
                                             //setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
                                             Brand brand = datas.get(pos);
+                                            String initStr = PreferenceUtils.getPrefString(ChooseBrandActivity.this, "initSystem", "");
                                             CoachInitBean initBean = new CoachInitBean();
+                                            if (!TextUtils.isEmpty(initStr)){
+                                                initBean = new Gson().fromJson(initStr, CoachInitBean.class);
+                                            }
+
                                             initBean.brand_id = brand.getId();
                                             PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", new Gson().toJson(initBean));
                                             startActivity(new Intent(ChooseBrandActivity.this,GuideActivity.class));
@@ -112,8 +118,10 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                     } else {
                                         if (Long.parseLong(datas.get(pos).getId()) < 0) {
                                             PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", "");
+                                            Intent toGuide = new Intent(ChooseBrandActivity.this,GuideActivity.class);
+                                            toGuide.putExtra("add",true);
 
-                                            startActivity(new Intent(ChooseBrandActivity.this,GuideActivity.class));
+                                            startActivity(toGuide);
                                             ChooseBrandActivity.this.finish();
                                             //startActivityForResult(new Intent(ChooseBrandActivity.this, AddBrandActivity.class), 1);
                                         }
