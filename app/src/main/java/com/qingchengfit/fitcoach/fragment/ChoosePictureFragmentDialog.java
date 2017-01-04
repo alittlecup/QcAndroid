@@ -2,7 +2,13 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +32,7 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import java.io.File;
+import java.util.List;
 import rx.functions.Action1;
 
 /**
@@ -264,6 +271,16 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
     * @param uri
     */
     public void clipPhoto(Uri uri) {
+        boolean isReturnData = false;
+        String manufacturer = android.os.Build.MANUFACTURER;
+        if (!TextUtils.isEmpty(manufacturer)) {
+            if (manufacturer.toLowerCase().contains("lenovo")) {//对于联想的手机返回数据
+                isReturnData = true;
+            }
+        }
+
+
+
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // 下面这个crop = true是设置在开启的Intent中设置显示的VIEW可裁剪
@@ -271,23 +288,58 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
         // aspectX aspectY 是宽高的比例，这里设置的是正方形（长宽比为1:1）
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪图片宽高
-//        intent.putExtra("outputX", 200);
-//        intent.putExtra("outputY", 200);
+
 
 
         Uri uriout;
         if (Build.VERSION.SDK_INT >= 24){
-            uriout = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", FileUtils.getTmpImageFile(getContext()));
-            getContext().grantUriPermission(getContext().getPackageName(), uriout, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
+            uriout = FileProvider.getUriForFile(getActivity(), getActivity().getApplicationContext().getPackageName() + ".provider", FileUtils.getTmpImageFile(getActivity()));
+            //uriout = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider", new File(getContext().getCacheDir().getAbsolutePath() + File.separator + "tmp_img2"));
+            //uriout = getImageContentUri(getActivity(), FileUtils.getTmpImageFile(getActivity()));
+            //getActivity().grantUriPermission(getActivity().getPackageName(), uriout, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //getActivity().revokeUriPermission(uriout, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            List<ResolveInfo> resInfoList = getActivity().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                getActivity().grantUriPermission(packageName, uriout, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
         }else {
             uriout = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
         }
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", isReturnData);
+
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
         //Uri uriout = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uriout);
         startActivityForResult(intent, CLIP);
+    }
+
+    public static Uri getImageContentUri(Context context, File imageFile) {
+        try {
+            String filePath = imageFile.getAbsolutePath();
+            Cursor cursor = context.getContentResolver()
+                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.Media._ID },
+                    MediaStore.Images.Media.DATA + "=? ", new String[] { filePath }, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+                Uri baseUri = Uri.parse("content://media/external/images/media");
+                return Uri.withAppendedPath(baseUri, "" + id);
+            } else {
+                if (imageFile.exists()) {
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Images.Media.DATA, filePath);
+                    return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                } else {
+                    return null;
+                }
+            }
+        }catch (Exception e){
+            return null;
+        }
     }
 }
