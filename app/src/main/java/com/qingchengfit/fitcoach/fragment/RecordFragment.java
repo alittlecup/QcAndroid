@@ -135,7 +135,7 @@ public class RecordFragment extends BaseSettingFragment {
         if (requestCode == 10011 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
-            entity.setId(data.getIntExtra("id", 0));
+            entity.setId((int) data.getLongExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
             entity.setContact(data.getStringExtra("address"));
@@ -146,7 +146,7 @@ public class RecordFragment extends BaseSettingFragment {
         } else if (requestCode == 10012 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
-            entity.setId(data.getIntExtra("id", 0));
+            entity.setId((int) data.getLongExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
             entity.setContact(data.getStringExtra("address"));
@@ -157,7 +157,7 @@ public class RecordFragment extends BaseSettingFragment {
         } else if (requestCode == 10013 && resultCode > 0) {
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
             QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
-            entity.setId(data.getIntExtra("id", 0));
+            entity.setId((int) data.getLongExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
             entity.setContact(data.getStringExtra("address"));
