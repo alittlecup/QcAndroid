@@ -161,7 +161,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
         });
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         if (mCourse != null) {
-            mType = Configs.TYPE_GROUP;
+            mType = mCourse.is_private?Configs.TYPE_PRIVATE:Configs.TYPE_GROUP;
             body.course_id = mCourse.id;
             coach.setLabel("教练");
             Glide.with(getContext()).load(PhotoUtils.getSmall(mCourse.photo)).placeholder(R.drawable.img_default_course).into(img);

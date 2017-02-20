@@ -231,7 +231,7 @@ dependencies {
     compile 'com.github.badoualy:stepper-indicator:1.0.6'
     //    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     compile 'com.hkm.taglib:tag:1.6.0'
-    compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration'
+    compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.6.36'
     //神策
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
     apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
