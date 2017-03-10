@@ -251,7 +251,7 @@
 
     <provider
         android:name="android.support.v4.content.FileProvider"
-        android:authorities="com.qingchengfit.fitcoach.provider"
+        android:authorities="@string/file_provider"
         android:grantUriPermissions="true">
       <meta-data
           android:name="android.support.FILE_PROVIDER_PATHS"
@@ -340,6 +340,9 @@
     <activity
         android:name=".activity.StudentHomeActivity"
         android:screenOrientation="portrait"/>
+   <activity
+        android:name=".activity.BrandManageActivity"
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".activity.ChooseBrandActivity"
         android:screenOrientation="portrait"/>
@@ -397,8 +400,11 @@
         android:name=".activity.QRActivity"
         android:screenOrientation="portrait">
     </activity>
-    <activity android:name=".fragment.schedule.StudentOrderPreviewActivity">
+    <activity android:name=".fragment.schedule.SpecialWebActivity">
     </activity>
+  <activity android:name=".activity.PopFromBottomActivity"
+      android:theme="@style/AppThemeLightBottom"
+      />
   </application>
 
 </manifest>

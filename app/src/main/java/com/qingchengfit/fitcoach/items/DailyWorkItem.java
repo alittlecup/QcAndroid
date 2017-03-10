@@ -38,8 +38,10 @@ public class DailyWorkItem extends AbstractFlexibleItem<DailyWorkItem.DailyWorkV
 
     @Override
     public void bindViewHolder(FlexibleAdapter adapter, DailyWorkVH holder, int position, List payloads) {
-        holder.text.setText(bean.text);
-        holder.img.setImageResource(bean.resImg);
+        if (bean != null) {
+            holder.text.setText(bean.text);
+            holder.img.setImageResource(bean.resImg);
+        }
 //        Glide.with(holder.itemView.getContext()).load(bean.resImg).into(holder.img);
     }
 

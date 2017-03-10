@@ -223,7 +223,7 @@ public class WorkExperienceFragment extends VpFragment {
                 holder.workexpDetailPrivateCount.setText(experiencesEntity.getPrivate_course() + "");
                 holder.workexpDetailPrivateServer.setText(experiencesEntity.getPrivate_user() + "");
             } else holder.workexpDetailPrivateLayout.setVisibility(View.GONE);
-            if (experiencesEntity.getSale() != 0) {
+            if (Float.parseFloat(experiencesEntity.getSale()) != 0) {
                 holder.workexpDetailSaleLayout.setVisibility(View.VISIBLE);
                 holder.workexpDetailSale.setText(experiencesEntity.getSale() + "");
             } else holder.workexpDetailSaleLayout.setVisibility(View.GONE);

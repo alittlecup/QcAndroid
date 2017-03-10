@@ -1,0 +1,125 @@
+apply plugin: 'tinkerpatch-support'
+
+def bakPath = file("${buildDir}/bakApk/")
+//def config = rootProject.ext.configuration;
+def appName = "staff"
+def pathPrefix = "${bakPath}/bak/"
+
+tinkerpatchSupport {
+    tinkerEnable = false
+    appKey = "4b33b5b8bdcfe818"
+    reflectApplication = true
+    appVersion = "0.60"
+
+//    pathPrefix = "${bakPath}/bak/"
+    autoBackupApkPath = "${bakPath}"
+//    baseApkFile = "${bakPath}/${app-self-debug.apk}/app-self-debug.apk"
+//    baseProguardMappingFile = "${bakPath}/${appName}/app-self-debug-mapping.txt"
+//    baseResourceRFile = "${bakPath}/${appName}/app-self-debug-R.txt"
+//
+
+
+
+
+    /** 若有编译多flavors需求,可在flavors中覆盖以下参数
+     *  你也可以直接通过tinkerPatchAllFlavorDebug/tinkerPatchAllFlavorRelease, 一次编译所有的flavor补丁包
+     *  注意的是:除非你不同的flavor代码是不一样的,不然建议采用zip comment或者文件方式生成渠道信息
+     **/
+    productFlavors {
+//        flavor {
+//            flavorName = "self"
+//            appVersion = "${tinkerpatchSupport.appVersion}_${flavorName}"
+//
+//            pathPrefix = "${bakPath}/${baseInfo}/${flavorName}${variantName}/"
+//            name = "${project.name}-${flavorName}${variantName}"
+//
+//            baseApkFile = "${pathPrefix}/${name}.apk"
+//            baseProguardMappingFile = "${pathPrefix}/${name}-mapping.txt"
+//            baseResourceRFile = "${pathPrefix}/${name}-R.txt"
+//        }
+//
+//        flavor {
+//            flavorName = "internaltest"
+//            appVersion = "${tinkerpatchSupport.appVersion}_${flavorName}"
+//
+//            pathPrefix = "${bakPath}/${baseInfo}/${flavorName}${variantName}/"
+//            name = "${project.name}-${flavorName}${variantName}"
+//
+//            baseApkFile = "${pathPrefix}/${name}.apk"
+//            baseProguardMappingFile = "${pathPrefix}/${name}-mapping.txt"
+//            baseResourceRFile = "${pathPrefix}/${name}-R.txt"
+//        }
+//        flavor {
+//            flavorName = "self"
+//            appVersion = "${tinkerpatchSupport.appVersion}"
+//            baseApkFile = "${autoBackupApkPath}/bak/app-self-debug.apk"
+//            baseProguardMappingFile = "${pathPrefix}/qingcheng-staff-56-mapping.txt"
+//            baseResourceRFile = "${pathPrefix}/qingcheng-staff-56-R.txt"
+//        }
+        flavor {
+            flavorName = "product"
+            appVersion = "${tinkerpatchSupport.appVersion}"
+            baseApkFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/app-productrelease.apk"
+            baseProguardMappingFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/qingcheng-productrelease-mapping.txt"
+            baseResourceRFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/app-productrelease-R.txt"
+        }
+//        flavor {
+//            flavorName = "less21"
+//            appVersion = "${tinkerpatchSupport.appVersion}_${flavorName}"
+//
+//            pathPrefix = "${bakPath}/${baseInfo}/${flavorName}${variantName}/"
+//            name = "${project.name}-${flavorName}${variantName}"
+//
+//            baseApkFile = "${pathPrefix}/${name}.apk"
+//            baseProguardMappingFile = "${pathPrefix}/${name}-mapping.txt"
+//            baseResourceRFile = "${pathPrefix}/${name}-R.txt"
+//        }
+    }
+}
+
+
+/**
+ * 用于用户在代码中判断tinkerPatch是否被使能
+ */
+android {
+    defaultConfig {
+        buildConfigField "boolean", "TINKER_ENABLE", "${tinkerpatchSupport.tinkerEnable}"
+    }
+}
+
+
+
+/**
+ * 一般来说,我们无需对下面的参数做任何的修改
+ * 对于各参数的详细介绍请参考:
+ * https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97
+ */
+tinkerPatch {
+    ignoreWarning = true
+    useSign = true
+    dex {
+        dexMode = "jar"
+        pattern = ["classes*.dex"]
+        loader = []
+    }
+    lib {
+        pattern = ["lib/*/*.so"]
+    }
+
+    res {
+        pattern = ["res/*", "r/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
+        ignoreChange = ["*.png"]
+        largeModSize = 100
+
+    }
+
+    packageConfig {
+    }
+    sevenZip {
+        zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
+//        path = "/usr/local/bin/7za"
+    }
+    buildConfig {
+        keepDexApply = false
+    }
+}

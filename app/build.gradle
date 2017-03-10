@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 //def buildNumber = "1"
 //apply plugin: 'packer'                     //版本管理 多渠道打包
 
@@ -90,50 +90,39 @@ android {
     lintOptions {
         abortOnError false
     }
-//    flavorDimensions 'oem','dev'
 
     productFlavors {
-//        dev {
-//
-//            minSdkVersion 21
-//            dimension 'dev'
-//        }
+        dev {
+            minSdkVersion 21
+        }
 //        prod {
 //            minSdkVersion 15
 //            dimension 'dev'
 //
 //        }
         common {
-//            dimension 'oem'
 //            minSdkVersion 21
 
         }
 
         internal {
-//            dimension 'oem'
             minSdkVersion 15
         }
         joinfit {
             minSdkVersion 15
-//            dimension 'oem'
         }
         suisheng {
             applicationIdSuffix ".vmsfit"
             minSdkVersion 15
-//            dimension 'oem'
         }
         s567go {
             minSdkVersion 15
-//            dimension 'oem'
         }
         eptc {
             minSdkVersion 15
-//            dimension 'oem'
         }
         gravity {
             minSdkVersion 15
-
-//            dimension 'oem'
         }
     }
 
@@ -141,10 +130,11 @@ android {
         release {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             debuggable false
             proguardFile 'proguard-rules.pro'
             zipAlignEnabled true
+
         }
         debug {
             signingConfig signingConfigs.release
@@ -180,7 +170,7 @@ dependencies {
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
     compile 'com.google.dagger:dagger:2.0.1'
     compile 'org.glassfish:javax.annotation:10.0-b28'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.0.1'
     compile files('libs/libammsdk.jar')
     compile files('libs/java-sdk-3.1.jar')
     //    compile files('libs/ShareSDK-Wechat-2.6.1.jar')
@@ -223,7 +213,7 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'eu.davidea:flexible-adapter:5.0.0-b7'
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
@@ -234,10 +224,10 @@ dependencies {
     compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.6.36'
     //神策
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
-    apt 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
+    annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
-    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
+    compile 'cn.qingchegfit.widgets:widgets:1.1@aar'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     //android support
@@ -272,3 +262,4 @@ dependencies {
 //        compile 'com.afollestad:material-dialogs:0.7.9.1'
 //    }
 //}
+apply from: 'tinkerpatch.gradle'

@@ -35,6 +35,10 @@ public class Shop implements Parcelable {
     public String gd_district_id;
     public double gd_lat;
     public double gd_lng;
+    public String system_end;
+    public String contact;
+    public com.qingchengfit.fitcoach.http.bean.User superuser;
+    public String position;
 
     private Shop(Builder builder) {
         id = builder.id;

@@ -78,64 +78,9 @@
                 />
 
             <include
-                android:id="@+id/batch_loop"
                 layout="@layout/item_batchloop"
 
                 />
-            <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
-            <!--android:id="@+id/starttime"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:civ_clickable="true"-->
-            <!--app:civ_lable="@string/start_day"-->
-            <!--/>-->
-
-            <!--<cn.qingchengfit.staffkit.views.custom.CommonInputView-->
-            <!--android:id="@+id/endtime"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:civ_clickable="true"-->
-            <!--app:civ_lable="@string/end_day"-->
-            <!--app:civ_showdivier="false"-->
-            <!--/>-->
-
-
-
-            <!--
-            <LinearLayout
-                android:id="@+id/add_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <include layout="@layout/divider_grey"/>
-
-                <include layout="@layout/divider_grey_margin"/>
-                <TextView
-                    android:id="@+id/add"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:background="@color/white"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:text="@string/course_add_week_time"
-                    android:textColor="@color/colorPrimary"
-                    />
-
-                <include layout="@layout/divider_grey"/>
-            </LinearLayout>
--->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/recyclerview"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--&gt;-->
-
-            <!--</android.support.v7.widget.RecyclerView>-->
-
-
-
         </LinearLayout>
     </ScrollView>
     <Button

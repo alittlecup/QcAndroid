@@ -30,6 +30,7 @@ public class Brand implements Parcelable {
     private String name;
     private String photo;
     private boolean has_add_permission;
+    public boolean has_permission;
     private List<User_Student> owners;
     private String cname;
     private int gym_count;
@@ -121,49 +122,6 @@ public class Brand implements Parcelable {
         this.name = name;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.photo);
-        dest.writeByte(this.has_add_permission ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.owners);
-        dest.writeString(this.cname);
-        dest.writeInt(this.gym_count);
-        dest.writeString(this.created_at);
-        dest.writeParcelable(this.created_by, flags);
-    }
-
-    protected Brand(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.photo = in.readString();
-        this.has_add_permission = in.readByte() != 0;
-        this.owners = in.createTypedArrayList(User_Student.CREATOR);
-        this.cname = in.readString();
-        this.gym_count = in.readInt();
-        this.created_at = in.readString();
-        this.created_by = in.readParcelable(User_Student.class.getClassLoader());
-    }
-
-    public static final Creator<Brand> CREATOR = new Creator<Brand>() {
-        @Override
-        public Brand createFromParcel(Parcel source) {
-            return new Brand(source);
-        }
-
-        @Override
-        public Brand[] newArray(int size) {
-            return new Brand[size];
-        }
-    };
-
     public static final class Builder {
         private String id;
         private String name;
@@ -227,4 +185,44 @@ public class Brand implements Parcelable {
             return new Brand(this);
         }
     }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.photo);
+        dest.writeByte(this.has_add_permission ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.owners);
+        dest.writeString(this.cname);
+        dest.writeInt(this.gym_count);
+        dest.writeString(this.created_at);
+        dest.writeParcelable(this.created_by, flags);
+    }
+
+    protected Brand(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.photo = in.readString();
+        this.has_add_permission = in.readByte() != 0;
+        this.has_permission = in.readByte() != 0;
+        this.owners = in.createTypedArrayList(User_Student.CREATOR);
+        this.cname = in.readString();
+        this.gym_count = in.readInt();
+        this.created_at = in.readString();
+        this.created_by = in.readParcelable(User_Student.class.getClassLoader());
+    }
+
+    public static final Creator<Brand> CREATOR = new Creator<Brand>() {
+        @Override public Brand createFromParcel(Parcel source) {
+            return new Brand(source);
+        }
+
+        @Override public Brand[] newArray(int size) {
+            return new Brand[size];
+        }
+    };
 }

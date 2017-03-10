@@ -1,9 +1,9 @@
 package com.qingchengfit.fitcoach.fragment.manage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +22,11 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.activity.ChooseActivity;
+import com.qingchengfit.fitcoach.Utils.Utils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
+import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
@@ -35,7 +36,6 @@ import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
-import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -45,6 +45,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
+import com.qingchengfit.fitcoach.items.UseStaffAppItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
@@ -96,17 +97,18 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         View view = inflater.inflate(R.layout.fragment_manange, container, false);
         unbinder = ButterKnife.bind(this, view);
         mData.add(
-            new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_weight).text(getString(R.string.course_batch)).build()));
+            new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.moudule_service_group).text(getString(R.string.course_group)).build()));
         mData.add(new DailyWorkItem(
-            new FunctionBean.Builder().resImg(R.drawable.ic_category_course).text(getString(R.string.course_types)).build()));
+            new FunctionBean.Builder().resImg(R.drawable.moudule_service_private).text(getString(R.string.course_private)).build()));
         mData.add(
             new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_student).text(getString(R.string.student)).build()));
         mData.add(new DailyWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.ic_img_statement_signin).text(getString(R.string.course_statement)).build()));
         mData.add(new DailyWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.ic_sale_statement).text(getString(R.string.sale_statement)).build()));
-        mData.add(new DailyWorkItem(
-            new FunctionBean.Builder().resImg(R.drawable.ic_template_coursepaln).text(getString(R.string.course_plan)).build()));
+        mData.add(new DailyWorkItem(null));
+        //mData.add(new DailyWorkItem(
+        //    new FunctionBean.Builder().resImg(R.drawable.ic_template_coursepaln).text(getString(R.string.course_plan)).build()));
         mAdapter = new CommonFlexAdapter(mData, this);
         GridLayoutManager manager1 = new GridLayoutManager(getContext(), 3);
         manager1.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -133,17 +135,35 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             new FunctionBean.Builder().resImg(R.drawable.ic_module_checkin_grey).text(getString(R.string.manage_signin)).build()));
         data2.add(new ManageWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.ic_module_activity_grey).text(getString(R.string.manage_acitivity)).build()));
+        data2.add(new UseStaffAppItem());
         CommonFlexAdapter adapter2 = new CommonFlexAdapter(data2, new FlexibleAdapter.OnItemClickListener() {
             @Override public boolean onItemClick(int position) {
-                StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
+                if (data2.get(position) instanceof UseStaffAppItem) {
+                    try {
+                        Utils.openApp(getActivity());
+                    } catch (Exception e) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("http://fir.im/qcfit"));
+                        startActivity(i);
+                    }
+                }
                 return true;
             }
         });
 
-        //GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
-        //recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
+        GridLayoutManager manager2 = new GridLayoutManager(getContext(), 2);
+        recyclerview2.addItemDecoration(new ItemDecorationAlbumColumns(1, 2));
         recyclerview2.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
-        recyclerview2.setLayoutManager(new LinearLayoutManager(getContext()));
+        manager2.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override public int getSpanSize(int position) {
+                if (data2.get(position) instanceof ManageWorkItem){
+                    return 1;
+                }else {
+                    return 2;
+                }
+            }
+        });
+        recyclerview2.setLayoutManager(manager2);
         recyclerview2.setHasFixedSize(true);
         recyclerview2.setNestedScrollingEnabled(false);
         recyclerview2.setAdapter(adapter2);
@@ -184,13 +204,14 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 }
             }
         });
-
+        getServer();
         return view;
     }
 
     @Override public void onResume() {
         super.onResume();
-        getServer();
+        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() == 1)
+            getServer();
     }
 
     public void getServer() {
@@ -246,10 +267,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                             cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
                                         }
                                     }
-                                }, new Action1<Throwable>() {
-                                    @Override public void call(Throwable throwable) {
-                                        cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
-                                    }
+                                }, throwable -> {
+                                    cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
                                 }));
 
                             title.setText(mCoachService.name);
@@ -269,83 +288,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 }
             }));
     }
-    //public void getNewServer() {
-    //    RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-    //        .subscribeOn(Schedulers.io())
-    //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribe(new Action1<QcCoachServiceResponse>() {
-    //            @Override public void call(QcCoachServiceResponse qcResponse) {
-    //                if (ResponseConstant.checkSuccess(qcResponse)) {
-    //
-    //                    if (qcResponse.data.services == null || qcResponse.data.services.size() == 0) {
-    //                        Intent toGuide = new Intent(getActivity(), GuideActivity.class);
-    //                        startActivity(toGuide);
-    //                        getActivity().finish();
-    //                        return;
-    //                    }
-    //                    if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
-    //                        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null) {
-    //                            CoachService coachService = ((Main2Activity) getActivity()).getCoachService();
-    //                            for (int i = 0; i < qcResponse.data.services.size(); i++) {
-    //                                if (coachService.id == qcResponse.data.services.get(i).id && coachService.model.equalsIgnoreCase(
-    //                                    qcResponse.data.services.get(i).model)) {
-    //                                    mCoachService = qcResponse.data.services.get(i);
-    //                                    break;
-    //                                }
-    //                            }
-    //                        } else {
-    //                            int pos = 0;
-    //                            long serviceid = PreferenceUtils.getPrefLong(getContext(), "coachservice_id", 0);
-    //                            for (int i = 0; i < qcResponse.data.services.size(); i++) {
-    //                                if (serviceid == qcResponse.data.services.get(i).getId()) {
-    //                                    pos = i;
-    //                                    break;
-    //                                }
-    //                            }
-    //                            mCoachService = qcResponse.data.services.get(pos);
-    //                        }
-    //                        HashMap<String, Object> params = new HashMap<String, Object>();
-    //                        params.put("id", mCoachService.getId());
-    //                        params.put("model", mCoachService.getModel());
-    //                        RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
-    //                            .subscribeOn(Schedulers.io())
-    //                            .observeOn(AndroidSchedulers.mainThread())
-    //                            .subscribe(new Action1<QcResponsePermission>() {
-    //                                @Override public void call(QcResponsePermission qcResponsePermission) {
-    //                                    if (ResponseConstant.checkSuccess(qcResponsePermission)) {
-    //                                        CurentPermissions.newInstance().permissionList.clear();
-    //                                        for (int i = 0; i < qcResponsePermission.data.permissions.size(); i++) {
-    //                                            CurentPermissions.newInstance().permissionList.put(
-    //                                                qcResponsePermission.data.permissions.get(i).key,
-    //                                                qcResponsePermission.data.permissions.get(i).value);
-    //                                        }
-    //                                    } else {
-    //                                        cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
-    //                                    }
-    //                                }
-    //                            }, new Action1<Throwable>() {
-    //                                @Override public void call(Throwable throwable) {
-    //                                    cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
-    //                                }
-    //                            }));
-    //
-    //                        title.setText(mCoachService.name);
-    //                        addressPhone.setText(mCoachService.getName());
-    //                        nameBrand.setText(mCoachService.getBrand_name());
-    //                        Glide.with(getContext()).load(mCoachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
-    //                    } else {
-    //                        ToastUtils.show("服务器错误");
-    //                    }
-    //                } else {
-    //                    ToastUtils.show("服务器错误");
-    //                }
-    //            }
-    //        }, new Action1<Throwable>() {
-    //            @Override public void call(Throwable throwable) {
-    //                ToastUtils.show("服务器错误");
-    //            }
-    //        }));
-    //}
 
     @Override protected void lazyLoad() {
 
@@ -358,13 +300,16 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @Override public boolean onItemClick(int position) {
         if (mAdapter.getItem(position) instanceof DailyWorkItem) {
+            if (((DailyWorkItem) mAdapter.getItem(position)).bean == null)
+                return true;
             int res = ((DailyWorkItem) mAdapter.getItem(position)).bean.resImg;
             switch (res) {
-                case R.drawable.ic_weight://排课
+                case R.drawable.moudule_service_group://排课
                     if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR)
                         || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR)) {
 
-                        Intent toGuide = new Intent(getActivity(), BatchActivity.class);
+                        Intent toGuide = new Intent(getActivity(), CourseActivity.class);
+                        toGuide.putExtra("to", CourseActivity.TO_GROUP_BATCH);
                         toGuide.putExtra("service", mCoachService);
                         startActivity(toGuide);
                     } else {
@@ -372,12 +317,13 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     }
 
                     break;
-                case R.drawable.ic_category_course://课程种类
+                case R.drawable.moudule_service_private://课程种类
                     if (CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMSETTING)
                         || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRISETTING)) {
 
                         Intent toCourse = new Intent(getActivity(), CourseActivity.class);
                         toCourse.putExtra("service", mCoachService);
+                        toCourse.putExtra("to", CourseActivity.TO_PRIVATE_BATCH);
                         startActivity(toCourse);
                     } else {
                         showAlert(getString(R.string.sorry_no_permission));
@@ -434,8 +380,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @OnClick({ R.id.change_gym, R.id.title, R.id.angle_show }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.change_gym:
-                Intent toGym = new Intent(getActivity(), ChooseActivity.class);
-                toGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM);
+                Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
                 toGym.putExtra("service", mCoachService);
                 startActivity(toGym);
                 break;
@@ -447,11 +392,11 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     @OnClick(R.id.renewal) public void onClick() {
-        StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
-        //Intent toEdit = new Intent(getContext(),FragActivity.class);
-        //toEdit.putExtra("service",mCoachService);
-        //toEdit.putExtra("type",13);
-        //startActivity(toEdit);
+        //StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
+        Intent toEdit = new Intent(getContext(),FragActivity.class);
+        toEdit.putExtra("service",mCoachService);
+        toEdit.putExtra("type",13);
+        startActivity(toEdit);
     }
 
     @OnClick(R.id.action_flow) public void onClickFlow() {
@@ -493,33 +438,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                                      hideLoading();
                                                      cn.qingchengfit.widgets.utils.ToastUtils.show("error!");                                                 }
                                              }));
-
-                        //    .flatMap(new Func1<QcResponse, Observable<Boolean>>() {
-                        //        @Override public Observable<Boolean> call(QcResponse qcResponse) {
-                        //            if (ResponseConstant.checkSuccess(qcResponse)) {
-                        //                ((Main2Activity) getActivity()).setCoachService(null);
-                        //                return Observable.just(true);
-                        //            }else return Observable.just(false);
-                        //        }
-                        //    })
-                        //    .delay(1, TimeUnit.SECONDS)
-                        //    .subscribe(new Action1<Boolean>() {
-                        //        @Override public void call(Boolean aBoolean) {
-                        //            if (aBoolean){
-                        //                cn.qingchengfit.widgets.utils.ToastUtils.show("退出健身房成功！");
-                        //                getServer();
-                        //            }else {
-                        //                cn.qingchengfit.widgets.utils.ToastUtils.show("退出失败");
-                        //            }
-                        //        }
-                        //    }, new Action1<Throwable>() {
-                        //        @Override public void call(Throwable throwable) {
-                        //            hideLoading();
-                        //            cn.qingchengfit.widgets.utils.ToastUtils.show("error!");
-                        //        }
-                        //    })
-                        //
-                        //);
                     }
                 });
             }

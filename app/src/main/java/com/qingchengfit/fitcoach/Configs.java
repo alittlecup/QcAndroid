@@ -53,6 +53,9 @@ public class Configs {
      * 会员预览页面
      */
     public static final String HOST_STUDENT_PREVIEW = "fitness/redirect/coaches/%s/saas/share/";
+    public static final String HOST_RESUME = "mobile/coaches/%d/share/index/";
+    public static final String HOST_ORDERS = "mobile/trades/home/";
+    public static final String HOST_EDUCATION = "mobile/educations/";
     public static final String WECHAT_GUIDE = "mobile/weixin/guide/";
     public static final String SCHEDULE_REST = "fitness/redirect/coach/rest/";
     public static final String SCHEDULE_GROUP = "fitness/redirect/coach/group/";
@@ -66,4 +69,10 @@ public class Configs {
     //Camera图片位置
     public static String CameraPic = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/camera_tmp.jpg";
     public static String CameraCrop = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/crop_tmp.jpg";
+
+    /**
+     * 订单中心：http://cloudtest.qingchengfit.cn/mobile/trades/home/
+     * 学习经历：http://cloudtest.qingchengfit.cn/mobile/educations/
+     */
+
 }

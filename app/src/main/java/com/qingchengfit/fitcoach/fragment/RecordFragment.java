@@ -1,58 +1,50 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import cn.qingchengfit.widgets.utils.CompatUtils;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.DateUtils;
 import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
-import com.qingchengfit.fitcoach.component.DividerItemDecoration;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
+import static com.qingchengfit.fitcoach.R.id.record_confirm_none;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RecordFragment extends BaseSettingFragment {
     public static final String TAG = RecordFragment.class.getName();
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    //@BindView(R.id.recyclerview)
+    //RecyclerView recyclerview;
     Gson gson = new Gson();
-    @BindView(R.id.record_comfirm_no_img)
-    ImageView recordComfirmNoImg;
-    @BindView(R.id.record_comfirm_no_txt)
-    TextView recordComfirmNoTxt;
-    @BindView(R.id.record_confirm_none)
-    RelativeLayout recordConfirmNone;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+    //@BindView(R.id.record_comfirm_no_img)
+    //ImageView recordComfirmNoImg;
+    //@BindView(R.id.record_comfirm_no_txt)
+    //TextView recordComfirmNoTxt;
+    //@BindView(record_confirm_none)
+    //RelativeLayout recordConfirmNone;
+    //@BindView(R.id.refresh)
+    //SwipeRefreshLayout refresh;
     private RecordComfirmAdapter adapter;
     private Unbinder unbinder;
 
@@ -61,7 +53,7 @@ public class RecordFragment extends BaseSettingFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        //unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add_certification, 0, getActivity().getString(R.string.record_title));
         fragmentCallBack.onToolbarClickListener(item -> {
             int requestCode = 10011;
@@ -83,50 +75,53 @@ public class RecordFragment extends BaseSettingFragment {
             startActivityForResult(toSearch, requestCode);
             return false;
         });
-        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        freshData();
-        refresh.setColorSchemeResources(R.color.primary);
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                freshData();
-            }
-        });
-        refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
-                refresh.setRefreshing(false);
-            }
-        });
+        getChildFragmentManager().beginTransaction()
+            .replace(R.id.frag_record, WebFragmentNoToolbar.newInstance(Configs.Server+Configs.HOST_EDUCATION))
+            .commit();
+        //recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        //freshData();
+        //refresh.setColorSchemeResources(R.color.primary);
+        //refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //    @Override
+        //    public void onRefresh() {
+        //        freshData();
+        //    }
+        //});
+        //refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        //    @Override
+        //    public void onGlobalLayout() {
+        //        CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
+        //        refresh.setRefreshing(false);
+        //    }
+        //});
         return view;
     }
 
     public void freshData() {
-
-        QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
-            getActivity().runOnUiThread(() -> {
-                if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
-                    recyclerview.setVisibility(View.VISIBLE);
-                    recordConfirmNone.setVisibility(View.GONE);
-                    adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
-                    adapter.setListener((v, pos) -> {
-                        int type = qcCertificatesReponse.getData().getCertificates().get(pos).getType();
-                        fragmentCallBack.onFragmentChange(ComfirmDetailFragment.newInstance(adapter.datas.get(pos)));
-                    });
-                    recyclerview.setAdapter(adapter);
-                } else {
-                    recyclerview.setVisibility(View.GONE);
-                    recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
-                    recordComfirmNoTxt.setText("您还没有添加任何认证信息请点击添加按钮");
-                    recordConfirmNone.setVisibility(View.VISIBLE);
-                }
-                refresh.setRefreshing(false);
-            });
-        }, throwable -> {
-        }, () -> {
-        });
+        //
+        //QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid).subscribe(qcCertificatesReponse -> {
+        //    getActivity().runOnUiThread(() -> {
+        //        if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
+        //            recyclerview.setVisibility(View.VISIBLE);
+        //            recordConfirmNone.setVisibility(View.GONE);
+        //            adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+        //            adapter.setListener((v, pos) -> {
+        //                int type = qcCertificatesReponse.getData().getCertificates().get(pos).getType();
+        //                fragmentCallBack.onFragmentChange(ComfirmDetailFragment.newInstance(adapter.datas.get(pos)));
+        //            });
+        //            recyclerview.setAdapter(adapter);
+        //        } else {
+        //            recyclerview.setVisibility(View.GONE);
+        //            recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
+        //            recordComfirmNoTxt.setText("您还没有添加任何认证信息请点击添加按钮");
+        //            recordConfirmNone.setVisibility(View.VISIBLE);
+        //        }
+        //        refresh.setRefreshing(false);
+        //    });
+        //}, throwable -> {
+        //}, () -> {
+        //});
     }
 
     @Override
@@ -172,7 +167,6 @@ public class RecordFragment extends BaseSettingFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
 

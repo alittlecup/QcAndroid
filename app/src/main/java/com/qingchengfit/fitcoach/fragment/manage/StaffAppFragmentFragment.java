@@ -85,16 +85,7 @@ public class StaffAppFragmentFragment extends DialogFragment {
                 break;
             case R.id.open_app:
                 try {
-                    //Intent toGuide= new Intent(getActivity(), GuideActivity.class);
-                    //startActivity(toGuide);
                     Utils.openApp(getActivity());
-                    dismiss();
-//                    Intent intent = new Intent(Intent.ACTION_MAIN);
-//                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-//                    ComponentName cn = new ComponentName("cn.qingchengfit.staffkit", "cn.qingchengfit.staffkit.MainActivity");
-//                    intent.setComponent(cn);
-//                    startActivity(intent);
-
                     dismiss();
                 }catch (Exception e){
                     Intent i = new Intent(Intent.ACTION_VIEW);

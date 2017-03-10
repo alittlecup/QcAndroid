@@ -117,7 +117,7 @@ public class MainScheduleFragment extends BaseFragment {
     }
 
     private void goStudentPreview(CoachService coachService) {
-        Intent toStudnet = new Intent(getActivity(), StudentOrderPreviewActivity.class);
+        Intent toStudnet = new Intent(getActivity(), SpecialWebActivity.class);
         String s = "";
         if (coachService != null) {
             s = s.concat("?id=").concat(coachService.getId() + "").concat("&model=").concat(coachService.getModel());

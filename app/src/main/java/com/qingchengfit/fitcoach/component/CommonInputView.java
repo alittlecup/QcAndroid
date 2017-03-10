@@ -22,11 +22,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
 import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import cn.qingchengfit.widgets.utils.MeasureUtils;
+import com.qingchengfit.fitcoach.R;
 
 /**
  * power by
@@ -48,8 +47,9 @@ public class CommonInputView extends RelativeLayout {
     private EditText edit;
     private String str_label;
     private ImageView rightview;
-    private int textColor = 0xff999999;
+    private int textColor = 0x9b9b9b;
     private String str_hint;
+    private View disableView;
 
     public boolean isNum() {
         return isNum;
@@ -65,9 +65,9 @@ public class CommonInputView extends RelativeLayout {
 
     private boolean showDivier;
     private boolean showRight;
+    private boolean enable;
     private CharSequence str_content;
-    @DrawableRes
-    private int rightDrawable;
+    @DrawableRes private int rightDrawable;
     int maxLength = 100;
 
     public CommonInputView(Context context) {
@@ -82,6 +82,8 @@ public class CommonInputView extends RelativeLayout {
         str_content = content;
         showDivier = true;
         this.setIsNum(isNum);
+        textColor = cn.qingchengfit.widgets.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
     }
@@ -92,6 +94,8 @@ public class CommonInputView extends RelativeLayout {
         showDivier = true;
         this.canBeNull = canBeNull;
         this.setIsNum(isNum);
+        textColor = cn.qingchengfit.widgets.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
     }
@@ -119,7 +123,7 @@ public class CommonInputView extends RelativeLayout {
         showRight = ta.getBoolean(R.styleable.CommonInputView_civ_showright, false);
         rightDrawable = ta.getResourceId(R.styleable.CommonInputView_civ_right_icon, R.drawable.ic_arrow_right);
         maxLength = ta.getResourceId(R.styleable.CommonInputView_civ_max_length, 100);
-        textColor = ta.getColor(R.styleable.CommonInputView_civ_text_color, textColor);
+        textColor = ta.getColor(R.styleable.CommonInputView_civ_text_color, CompatUtils.getColor(getContext(), R.color.text_grey));
 
         ta.recycle();
     }
@@ -137,34 +141,41 @@ public class CommonInputView extends RelativeLayout {
         setShowRight(!isShowRight());
     }
 
-//    @Override
-//    protected Parcelable onSaveInstanceState() {
-//        Parcelable superState = super.onSaveInstanceState();
-//        SavedState savedState = new SavedState(superState);
-//        if (edit != null)
-//            savedState.content = edit.getText().toString();
-//        return savedState;
-//    }
+    public boolean isEnable() {
+        return enable;
+    }
 
-//    @Override
-//    protected void onRestoreInstanceState(Parcelable state) {
-//        SavedState savedState = (SavedState) state;
-//        super.onRestoreInstanceState(savedState.getSuperState());
-//
-//        if (edit != null)
-//            edit.setText(savedState.content);
-//
-//    }
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+        disableView.setVisibility(enable ? GONE : VISIBLE);
+    }
+    //    @Override
+    //    protected Parcelable onSaveInstanceState() {
+    //        Parcelable superState = super.onSaveInstanceState();
+    //        SavedState savedState = new SavedState(superState);
+    //        if (edit != null)
+    //            savedState.content = edit.getText().toString();
+    //        return savedState;
+    //    }
 
-    @Override
-    protected void onFinishInflate() {
+    //    @Override
+    //    protected void onRestoreInstanceState(Parcelable state) {
+    //        SavedState savedState = (SavedState) state;
+    //        super.onRestoreInstanceState(savedState.getSuperState());
+    //
+    //        if (edit != null)
+    //            edit.setText(savedState.content);
+    //
+    //    }
+
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
         label = (TextView) findViewById(R.id.commoninput_lable);
         edit = (EditText) findViewById(R.id.commoninput_edit);
         View divider = findViewById(R.id.commoninput_divider);
         rightview = (ImageView) findViewById(R.id.commoninput_righticon);
-        if (!canBeNull)
-            label.setText(str_label);
+        disableView = findViewById(R.id.disable);
+        if (!canBeNull) label.setText(str_label);
         else {
             SpannableString s = new SpannableString(str_label + " *");
             int l = s.length();
@@ -174,26 +185,22 @@ public class CommonInputView extends RelativeLayout {
         label.setTextColor(textColor);
 
         if (canClick) {
-//            edit.setClickable(false);
+            //            edit.setClickable(false);
             edit.setFocusable(false);
             edit.setFocusableInTouchMode(false);
-
         } else {
-//            edit.setClickable(true);
+            //            edit.setClickable(true);
             edit.setFocusableInTouchMode(true);
             edit.setFocusable(true);
             setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     edit.setClickable(true);
                     edit.requestFocus();
                     AppUtils.showKeyboard(getContext(), edit);
-//                edit.performClick();
+                    //                edit.performClick();
                 }
             });
-
         }
-
 
         if (showDivier) {
             divider.setVisibility(VISIBLE);
@@ -201,7 +208,7 @@ public class CommonInputView extends RelativeLayout {
             divider.setVisibility(GONE);
         }
         rightview.setImageResource(rightDrawable);
-        edit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+        edit.setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxLength) });
         if (showRight) {
             rightview.setVisibility(VISIBLE);
             edit.setPadding(edit.getPaddingLeft(), edit.getPaddingTop(), MeasureUtils.dpToPx(20f, getResources()), edit.getPaddingBottom());
@@ -211,15 +218,16 @@ public class CommonInputView extends RelativeLayout {
         }
         if (isNum) {
             edit.setInputType(InputType.TYPE_CLASS_PHONE);
+            label.setMaxWidth((int) MeasureUtils.dpToPx(209f, getResources()));
         } else {
             edit.setInputType(InputType.TYPE_CLASS_TEXT);
+            label.setMaxWidth((int) MeasureUtils.dpToPx(109f, getResources()));
         }
         edit.setText(str_content);
         edit.setHint(str_hint);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
+    @Override protected void onRestoreInstanceState(Parcelable state) {
         super.onRestoreInstanceState(state);
     }
 
@@ -228,10 +236,10 @@ public class CommonInputView extends RelativeLayout {
         if (canClick) {
             edit.setClickable(false);
         } else {
+            edit.setEnabled(true);
             edit.setClickable(true);
             setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     edit.setClickable(true);
                     edit.requestFocus();
                     AppUtils.showKeyboard(getContext(), edit);
@@ -245,14 +253,17 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public void setLabel(String s) {
-        if (!canBeNull)
-            label.setText(s);
+        if (!canBeNull) label.setText(s);
         else {
             SpannableString sj = new SpannableString(s + " *");
             int l = sj.length();
             sj.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             label.setText(sj);
         }
+    }
+
+    public void setHint(String s) {
+        if (edit != null) edit.setHint(s);
     }
 
     public EditText getEditText() {
@@ -263,14 +274,21 @@ public class CommonInputView extends RelativeLayout {
         return label.getText().toString();
     }
 
+    public void setMaxLines(int maxLines) {
+        if (edit != null) {
+            edit.setMaxLines(maxLines);
+            edit.setMaxLines(Integer.MAX_VALUE);
+            edit.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
+        }
+    }
 
     public String getContent() {
-//        if (TextUtils.isEmpty(edit.getText())) {
-//            if (TextUtils.isEmpty(edit.getHint()))
-//                return "";
-//            else
-//                return edit.getHint().toString();
-//        } else
+        //        if (TextUtils.isEmpty(edit.getText())) {
+        //            if (TextUtils.isEmpty(edit.getHint()))
+        //                return "";
+        //            else
+        //                return edit.getHint().toString();
+        //        } else
         return edit.getText().toString().trim();
     }
 
@@ -280,32 +298,26 @@ public class CommonInputView extends RelativeLayout {
 
     public void setContent(String c) {
         edit.setText(c);
-        if (c != null)
-            edit.setSelection(c.length() > 20 ? 20 : c.length());
+        if (c != null) edit.setSelection(c.length() > 20 ? 20 : c.length());
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (canClick)
-            return true;
+    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (canClick) return true;
         return super.onInterceptTouchEvent(ev);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
 
     public class SavedState extends BaseSavedState {
         String content;
         public final Creator<CommonInputView.SavedState> CREATOR = new Creator<CommonInputView.SavedState>() {
-            @Override
-            public CommonInputView.SavedState createFromParcel(Parcel in) {
+            @Override public CommonInputView.SavedState createFromParcel(Parcel in) {
                 return new CommonInputView.SavedState(in);
             }
 
-            @Override
-            public CommonInputView.SavedState[] newArray(int size) {
+            @Override public CommonInputView.SavedState[] newArray(int size) {
                 return new CommonInputView.SavedState[size];
             }
         };
@@ -319,12 +331,9 @@ public class CommonInputView extends RelativeLayout {
             content = in.readString();
         }
 
-        @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
+        @Override public void writeToParcel(@NonNull Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeString(content);
         }
-
     }
-
 }

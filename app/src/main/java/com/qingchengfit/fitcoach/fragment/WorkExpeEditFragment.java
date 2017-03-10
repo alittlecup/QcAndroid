@@ -229,7 +229,7 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             workexpeditGroupNum.setContent(Integer.toString(experiencesEntity.getGroup_user()));
             workexpeditPrivateClass.setContent(Integer.toString(experiencesEntity.getPrivate_course()));
             workexpeditPrivateNum.setContent(Integer.toString(experiencesEntity.getPrivate_user()));
-            workexpeditSale.setContent(Integer.toString(experiencesEntity.getSale()));
+            workexpeditSale.setContent(experiencesEntity.getSale());
         } else {
             workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
             workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));

@@ -126,6 +126,19 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
             }
         });
         recyclerview.setAdapter(adapter);
+        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcCoachRespone -> {
+                try {
+                    mListData.addAll(HTMLUtils.fromHTML(qcCoachRespone.getData().getCoach().getDescription()));
+                    adapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                }
+            },throwable -> {})
+        );
+
         return view;
     }
 

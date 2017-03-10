@@ -33,6 +33,7 @@ import com.qingchengfit.fitcoach.Utils.CompatUtils;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.ScheduleCompare;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.RxRefreshList;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -189,7 +190,8 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
-        refresh();
+        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() ==0 )
+            refresh();
     }
 
     @Override protected void lazyLoad() {

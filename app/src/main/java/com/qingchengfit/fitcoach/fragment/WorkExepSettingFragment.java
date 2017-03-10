@@ -72,7 +72,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_record, container, false);
+        View view = inflater.inflate(R.layout.fragment_workexp_list, container, false);
         unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.workexper_title));
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {

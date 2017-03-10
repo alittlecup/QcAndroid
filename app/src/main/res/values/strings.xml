@@ -8,6 +8,7 @@
     <string name="fir_token_debug">194a7a7976904a110a45f5a34a614323</string>
     <!--<string name="baidu_api_debug">Rth3x24pVQTIa3aX9BcmP8OW</string>-->
     <string name="baidu_provider">com.qingchengfit.fitcoach.bdpush</string>
+    <string name="file_provider">com.qingchengfit.fitcoach.provider</string>
     <string name="gd_key">ce6997d5c6f60e84d056394ff961b7b0</string>
     <string name="baidu_api_release">RqFugIxBdvAn7H8h5GsampTw</string>
     <!--<string name="baidu_api_release">RqFugIxBdvAn7H8h5GsampTw</string>-->
@@ -314,5 +315,25 @@
     <string name="nestscroll_behavor">com.qingchengfit.fitcoach.component.FlingBehavior</string>
     <string name="share_hint_open_desc">查看%s教练的课程及更多信息</string>
     <string name="exit_gym">退出健身房</string>
+    <string name="train_grow">学习培训</string>
+    <string name="personal_intro">个人介绍</string>
+    <string name="my_course_plan">我的课件</string>
+    <string name="my_resume">我的简历</string>
+    <string name="coming_soon">敬请期待</string>
 
+    <string name="brand_no_gym">该品牌下暂无场馆</string>
+    <string name="brand_logo">品牌LOGO</string>
+    <string name="name">姓名</string>
+    <string name="exp_group" formatted="false">团课%d节 服务%d人次</string>
+    <string name="exp_private" formatted="false">私教%d节 服务%d人次</string>
+    <string name="exp_sale" formatted="false">销售额达%s元</string>
+    <string name="create_time">"创建时间: "</string>
+    <string name="choose_brand_content" formatted="false">品牌ID: %s    创建人: %s </string>
+    <string name="creator_colon">"创建人: "</string>
+    <string name="contact_gm">请联系青橙客服\n 010-59789319</string>
+    <string name="qingcheng_gm_phone">010-59789319</string>
+    <string name="phone_colon">"手机: "</string>
+    <string name="common_date">日期</string>
+    <string name="course_date">课程日期</string>
+    <string name="course_time">课程时间</string>
 </resources>

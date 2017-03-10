@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 
 /**
  * power by
@@ -16,7 +15,7 @@ import android.support.v4.app.Fragment;
  * <p>
  * Created by Paper on 15/9/8 2015.
  */
-public class BaseSettingFragment extends Fragment {
+public class BaseSettingFragment extends BaseFragment {
 
 
     public FragmentCallBack fragmentCallBack;

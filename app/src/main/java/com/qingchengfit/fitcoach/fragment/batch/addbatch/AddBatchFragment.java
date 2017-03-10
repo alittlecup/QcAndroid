@@ -147,7 +147,10 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
         unbinder = ButterKnife.bind(this, view);
         if (getActivity() instanceof BatchActivity) {
             ((BatchActivity) getActivity()).getComponent().inject(this);
+        }else if (getActivity() instanceof CourseActivity){
+            ((CourseActivity) getActivity()).getComponent().inject(this);
         }
+        delegatePresenter(presenter,this);
 
         presenter.attachView(this);
         //mCallbackActivity.setToolbar("添加排期", false, null, R.menu.menu_compelete, listener);

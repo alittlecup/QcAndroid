@@ -50,10 +50,10 @@
     <include layout="@layout/divider_grey"/>
     <include layout="@layout/divider_grey_margin"/>
     <LinearLayout
-        android:id="@+id/layout_baseinfo"
+        android:id="@+id/layout_my_page"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:background="@color/white"
+        android:background="@drawable/bg_click"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
@@ -61,10 +61,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_account_homepage"
             />
         <TextView
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -78,13 +78,17 @@
             app:srcCompat="@drawable/ic_arrow_right"
             />
     </LinearLayout>
-    <include layout="@layout/divider_grey"/>
-    <include layout="@layout/divider_grey_margin"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_divider_height"
+        android:background="@color/divider_grey"
+        android:layout_marginLeft="50dp"
+        />
     <LinearLayout
-        android:id="@+id/layout_my_meeting"
+        android:id="@+id/layout_my_resume"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:background="@color/white"
+        android:background="@drawable/bg_click"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
@@ -93,14 +97,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_account_introduction"
-
+            android:visibility="gone"
             />
         <TextView
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/my_meetings"
+            android:text="@string/my_resume"
             android:textColor="@color/text_black"
 
             />
@@ -110,32 +113,28 @@
             app:srcCompat="@drawable/ic_arrow_right"
             />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_divider_height"
-        android:background="@color/divider_grey"
-        android:layout_marginLeft="50dp"
-        />
+    <include layout="@layout/divider_grey"/>
+    <include layout="@layout/divider_grey_margin"/>
     <LinearLayout
-        android:id="@+id/layout_my_comfirm"
+        android:id="@+id/layout_my_courseplan"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:background="@color/white"
+        android:background="@drawable/bg_click"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
         >
         <ImageView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_account_certificate"
             />
         <TextView
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/my_comfirms"
+            android:text="@string/my_course_plan"
             android:textColor="@color/text_black"
 
             />
@@ -145,32 +144,29 @@
             app:srcCompat="@drawable/ic_arrow_right"
             />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_divider_height"
-        android:background="@color/divider_grey"
-        android:layout_marginLeft="50dp"
-        />
+
+    <include layout="@layout/divider_grey"/>
+    <include layout="@layout/divider_grey_margin"/>
     <LinearLayout
-        android:id="@+id/layout_my_exp"
+        android:id="@+id/layout_my_orders"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
-        android:background="@color/white"
+        android:background="@drawable/bg_click"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
         >
         <ImageView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_setting_career"
+            app:srcCompat="@drawable/ic_account_certificate"
             />
         <TextView
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/my_experience"
+            android:text="我的订单"
             android:textColor="@color/text_black"
             />
         <ImageView
@@ -180,6 +176,4 @@
             />
     </LinearLayout>
     <include layout="@layout/divider_grey"/>
-
-
 </LinearLayout>

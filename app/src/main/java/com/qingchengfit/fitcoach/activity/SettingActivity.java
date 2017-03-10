@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.utils.AppUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
@@ -17,10 +19,8 @@ import com.qingchengfit.fitcoach.fragment.ModifyInfoFragment;
 import com.qingchengfit.fitcoach.fragment.RecordFragment;
 import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.AppUtils;
+import com.qingchengfit.fitcoach.fragment.personalpage.EditHomeFragment;
+import com.qingchengfit.fitcoach.fragment.personalpage.EditResumeFragmentBuilder;
 
 public class SettingActivity extends BaseAcitivity implements FragmentCallBack, WebActivityInterface {
 
@@ -52,6 +52,13 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
             case 5:
                 onFragmentChange(ModifyBrifeFragment.newInstance(getIntent().getStringExtra("desc")), false);
                 break;
+             case 6:
+                onFragmentChange(new EditHomeFragment(), false);
+                break;
+             case 7:
+                onFragmentChange(new EditResumeFragmentBuilder("").build(), false);
+                break;
+
             default:
                 onFragmentChange(SettingFragment.newInstance(), false);
                 break;

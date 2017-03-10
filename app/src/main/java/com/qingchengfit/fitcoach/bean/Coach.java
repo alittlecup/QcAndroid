@@ -19,6 +19,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/2/2 2016.
  */
 public class Coach implements Parcelable {
+
     @SerializedName("username")
     public String name;
     @SerializedName("gender")
@@ -36,6 +37,14 @@ public class Coach implements Parcelable {
         this.gender = gender;
         this.phone = phone;
         this.header = header;
+    }
+
+    private Coach(Builder builder) {
+        name = builder.name;
+        gender = builder.gender;
+        phone = builder.phone;
+        header = builder.header;
+        id = builder.id;
     }
 
     @Override
@@ -60,7 +69,7 @@ public class Coach implements Parcelable {
         this.id = in.readString();
     }
 
-    public static final Parcelable.Creator<Coach> CREATOR = new Parcelable.Creator<Coach>() {
+    public static final Creator<Coach> CREATOR = new Creator<Coach>() {
         @Override
         public Coach createFromParcel(Parcel source) {
             return new Coach(source);
@@ -71,4 +80,44 @@ public class Coach implements Parcelable {
             return new Coach[size];
         }
     };
+
+    public static final class Builder {
+        private String name;
+        private int gender;
+        private String phone;
+        private String header;
+        private String id;
+
+        public Builder() {
+        }
+
+        public Builder name(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder gender(int val) {
+            gender = val;
+            return this;
+        }
+
+        public Builder phone(String val) {
+            phone = val;
+            return this;
+        }
+
+        public Builder header(String val) {
+            header = val;
+            return this;
+        }
+
+        public Builder id(String val) {
+            id = val;
+            return this;
+        }
+
+        public Coach build() {
+            return new Coach(this);
+        }
+    }
 }

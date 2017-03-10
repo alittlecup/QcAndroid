@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
+import com.qingchengfit.fitcoach.Configs;
 import java.util.List;
 
 /**
@@ -31,6 +31,7 @@ public class CoursePlan implements Parcelable {
     private Long id;
     public String url;
     public int type;//1.个人 2.所属 3.会议
+    public Brand brand;
 
     private CoursePlan(Builder builder) {
         setName(builder.name);
@@ -74,6 +75,18 @@ public class CoursePlan implements Parcelable {
 
     public List<String> getTags() {
         return tags;
+    }
+ public String getTagsStr() {
+     if (tags != null && tags.size() >0){
+         String ret ="";
+         for (int i = 0; i < tags.size(); i++) {
+             if (i < tags.size() -1)
+                 ret = ret.concat(tags.get(i)).concat(Configs.SEPARATOR);
+             else ret = ret.concat(tags.get(i));
+         }
+         return ret;
+     }return "";
+
     }
 
     public void setTags(List<String> tags) {

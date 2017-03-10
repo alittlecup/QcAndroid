@@ -82,6 +82,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static com.qingchengfit.fitcoach.App.diskLruCache;
+import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
 
 public class Main2Activity extends BaseAcitivity implements WebActivityInterface {
 
@@ -111,7 +112,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private GuideWindow gd1;
     private GuideWindow gd2;
     private Subscription spQCZX;
-
+    private Subscription spOrders;
+    public int ordersCount;
     public CoachService getCoachService() {
         return mCoachService;
     }
@@ -143,27 +145,25 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
 
+        RxPermissions.getInstance(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
+            @Override public void call(Boolean aBoolean) {
+                if (aBoolean) {
+                    setupFile();
+                    initVersion();
+                } else {
+                    ToastUtils.showDefaultStyle("请开启存储空间权限");
+                }
+            }
+        });
+
         RxPermissions.getInstance(this)
-            .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR,
+                Manifest.permission.WRITE_CALENDAR)
             .subscribe(new Action1<Boolean>() {
                 @Override public void call(Boolean aBoolean) {
-                    if (aBoolean) {
-                        setupFile();
-                        initVersion();
-                    } else ToastUtils.showDefaultStyle("请开启存储空间权限");
-                }
-            });
-
-        RxPermissions.getInstance(this)
-            .request(Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
-            .subscribe(new Action1<Boolean>() {
-                @Override
-                public void call(Boolean aBoolean) {
 
                 }
             });
-
 
         setupVp();
         gson = new Gson();
@@ -205,16 +205,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     case 1:
                         if (!PreferenceUtils.getPrefBoolean(this, "guide_1", false)) {
                             gd1 = new GuideWindow(this, getString(R.string.hint_order_self), GuideWindow.DOWN);
-                            if (orderStudnet != null)
-                                gd1.show(orderStudnet);
+                            if (orderStudnet != null) gd1.show(orderStudnet);
                             //PreferenceUtils.setPrefBoolean(this, "guide_1", true);
                         }
                         break;
                     case 2:
                         if (!PreferenceUtils.getPrefBoolean(this, "guide_2", false)) {
                             gd2 = new GuideWindow(this, getString(R.string.hint_help_order), GuideWindow.UP);
-                            if (webPosition != null)
-                                gd2.show(webPosition);
+                            if (webPosition != null) gd2.show(webPosition);
                             //
                         }
                         break;
@@ -236,20 +234,19 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     case 1:
                         if (gd1 != null && gd1.isShowing()) gd1.dismiss();
                         PreferenceUtils.setPrefBoolean(this, "guide_1", true);
-                        if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
-                            !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                        if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) && !PreferenceUtils.getPrefBoolean(
+                            Main2Activity.this, "guide_2", false)) {
                             gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
-                            if (webPosition != null)
-                                gd2.show(webPosition);
+                            if (webPosition != null) gd2.show(webPosition);
                         }
                         break;
                     case 2:
                         if (gd2 != null && gd2.isShowing()) gd2.dismiss();
-                        PreferenceUtils.setPrefBoolean(this,"guide_2",true);
+                        PreferenceUtils.setPrefBoolean(this, "guide_2", true);
                         break;
                     case 3:
                         if (gw != null && gw.isShowing()) gw.dismiss();
-                        PreferenceUtils.setPrefBoolean(this,"guide_3",true);
+                        PreferenceUtils.setPrefBoolean(this, "guide_3", true);
                         break;
                     default:
                 }
@@ -261,26 +258,24 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             }
 
             @Override public void onPageSelected(int position) {
-                if (position !=0 && gw != null) {
+                if (position != 0 && gw != null) {
                     gw.dismiss();
-                    PreferenceUtils.setPrefBoolean(Main2Activity.this,"guide_3",true);
+                    PreferenceUtils.setPrefBoolean(Main2Activity.this, "guide_3", true);
                 }
-                if (position !=0 ){
+                if (position != 0) {
                     if (gd2 != null) gd2.dismiss();
-                    if (gd1 != null ) gd1.dismiss();
-
-                }else {
+                    if (gd1 != null) gd1.dismiss();
+                } else {
                     if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false)) {
                         gd1 = new GuideWindow(Main2Activity.this, getString(R.string.hint_order_self), GuideWindow.DOWN);
                         gd1.show(orderStudnet);
                     }
-                    if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
-                        !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                    if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) && !PreferenceUtils.getPrefBoolean(
+                        Main2Activity.this, "guide_2", false)) {
                         gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
                         gd2.show(webPosition);
                     }
                 }
-
             }
 
             @Override public void onPageScrollStateChanged(int state) {
@@ -289,36 +284,30 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         });
         viewpager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(viewpager.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(viewpager.getViewTreeObserver(), this);
                 if (!PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false)) {
                     gd1 = new GuideWindow(Main2Activity.this, getString(R.string.hint_order_self), GuideWindow.DOWN);
                     gd1.show(orderStudnet);
-
                 }
-                if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) &&
-                    !PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_2", false)) {
+                if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) && !PreferenceUtils.getPrefBoolean(
+                    Main2Activity.this, "guide_2", false)) {
                     gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
                     gd2.show(webPosition);
-
                 }
             }
-
         });
 
-        if (getIntent() != null && getIntent().getScheme() != null&&getIntent().getScheme().equals("qccoach")) {
+        if (getIntent() != null && getIntent().getScheme() != null && getIntent().getScheme().equals("qccoach")) {
             try {
                 String path = getIntent().getData().toString();
                 url = path.split("openurl/")[1];
                 viewpager.setCurrentItem(2);
-                if (!url.startsWith("http"))
-                    url = "http://"+url;
-                WebActivity.startWeb(url,this);
-            }catch (Exception e){
+                if (!url.startsWith("http")) url = "http://" + url;
+                WebActivity.startWeb(url, this);
+            } catch (Exception e) {
 
             }
         }
-
-
     }
 
     private void setupVp() {
@@ -331,15 +320,21 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
     }
 
+    public int getCurrrentPage() {
+        if (viewpager != null) {
+            return viewpager.getCurrentItem();
+        } else {
+            return -1;
+        }
+    }
+
     /**
      * 设置tab角标
-     * @param pos
-     * @param show
      */
-    public void showIcon(int pos,boolean show){
-        if (tabview != null){
-            if (tabview.getChildCount() > pos){
-                tabview.setPointStatu(pos,show);
+    public void showIcon(int pos, boolean show) {
+        if (tabview != null) {
+            if (tabview.getChildCount() > pos) {
+                tabview.setPointStatu(pos, show);
             }
         }
     }
@@ -366,7 +361,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             } else if (position == 1) {
                 return new ManageFragment();
             } else if (position == 2) {
-                return MainWebFragment.newInstance(Configs.Server+"mobile/coach/discover/");
+                return MainWebFragment.newInstance(Configs.Server + "mobile/coach/discover/");
             } else {
                 return new MineFragmentFragment();
             }
@@ -406,27 +401,33 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     @Override protected void onResume() {
         super.onResume();
 
-        if (spQCZX != null && !spQCZX.isUnsubscribed())
-            spQCZX.unsubscribe();
-        spQCZX = QcCloudClient.getApi().getApi.getActivitiesCount()
-             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                             .subscribe(new Action1<QcResponseActivities>() {
-                                 @Override
-                                 public void call(QcResponseActivities qcResponse) {
-                                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                                         tabview.setPointStatu(2,qcResponse.data.count > 0);
-                                     }
-                                 }
-                             }, new Action1<Throwable>() {
-                                 @Override
-                                 public void call(Throwable throwable) {
+        if (spQCZX != null && !spQCZX.isUnsubscribed()) spQCZX.unsubscribe();
+        spQCZX = getApi().getApi.getActivitiesCount()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcResponseActivities>() {
+                @Override public void call(QcResponseActivities qcResponse) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        tabview.setPointStatu(2, qcResponse.data.count > 0);
+                    }
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
 
-                                 }
-                             });
+                }
+            });
+        if (spOrders != null && !spOrders.isUnsubscribed()) spOrders.unsubscribe();
+       spOrders =  QcCloudClient.getApi().getApi.qcGetOrderList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(qcResponsePage ->{tabview.setPointStatu(3,
+                (!PreferenceUtils.getPrefBoolean(this, App.coachid + "_has_show_orders", false) && qcResponsePage.data.total_count > 0));
+                ordersCount = qcResponsePage.data.total_count;
+            });
     }
 
     @Override public void onBackPressed() {
-        if (viewpager != null && viewpager.getCurrentItem() > 0){
+        if (viewpager != null && viewpager.getCurrentItem() > 0) {
             viewpager.setCurrentItem(0);
             return;
         }
@@ -442,8 +443,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         if (mDownloadThread != null) mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
         RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
-        if (spQCZX != null)
-            spQCZX.unsubscribe();
+        if (spQCZX != null) spQCZX.unsubscribe();
     }
 
     private void initBDPush() {
@@ -455,7 +455,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             pushBody.push_id = userid;
             pushBody.device_type = "android";
             pushBody.distribute = getString(R.string.oem_tag);
-            QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
+            getApi().postApi.qcPostPushId(App.coachid, pushBody)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<QcResponse>() {
                     @Override public void onCompleted() {
@@ -565,16 +565,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 properties.put("qc_user_id", user.id);
                 properties.put("qc_user_phone", user.phone);
                 SensorsDataAPI.sharedInstance(getApplicationContext()).registerSuperProperties(properties);
-
             } catch (JSONException e) {
                 e.printStackTrace();
-
             } catch (InvalidDataException e) {
                 e.printStackTrace();
             }
-
-
-
         } else {
             logout();
         }
@@ -588,7 +583,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         App.coachid = Integer.parseInt(coach.id);
 
         //获取用户拥有的系统
-        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+        getApi().getApi.qcGetCoachService(App.coachid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcCoachServiceResponse>() {
@@ -602,8 +597,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
                 @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
                     if (qcCoachServiceResponse.status == ResponseResult.SUCCESS) {
-                        if (qcCoachServiceResponse.data == null || qcCoachServiceResponse.data.services == null ||
-                            qcCoachServiceResponse.data.services.size() == 0) {
+                        if (qcCoachServiceResponse.data == null
+                            || qcCoachServiceResponse.data.services == null
+                            || qcCoachServiceResponse.data.services.size() == 0) {
                             new MaterialDialog.Builder(Main2Activity.this).canceledOnTouchOutside(false)
                                 .title("您没有场馆")
                                 .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
@@ -649,21 +645,19 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         } catch (IOException e) {
             //TODO 没有存储的情况
         }
-
     }
 
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        if (intent != null && intent.getScheme() != null&&intent.getScheme().equals("qccoach")) {
+        if (intent != null && intent.getScheme() != null && intent.getScheme().equals("qccoach")) {
             try {
                 String path = intent.getData().toString();
                 url = path.split("openurl/")[1];
                 viewpager.setCurrentItem(2);
-                if (!url.startsWith("http"))
-                    url = "http://"+url;
-                WebActivity.startWeb(url,this);
-            }catch (Exception e){
+                if (!url.startsWith("http")) url = "http://" + url;
+                WebActivity.startWeb(url, this);
+            } catch (Exception e) {
 
             }
         }
@@ -753,9 +747,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         @Override protected void onPostExecute(Boolean result) {
             if (result) {
                 downloadDialog.dismiss();
-                if ( Build.VERSION.SDK_INT >=24){
+                if (Build.VERSION.SDK_INT >= 24) {
                     install(Main2Activity.this, newAkp);
-                }else AppUtils.install(Main2Activity.this,newAkp.getAbsolutePath());
+                } else {
+                    AppUtils.install(Main2Activity.this, newAkp.getAbsolutePath());
+                }
             } else {
                 downloadDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
@@ -763,15 +759,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         }
     }
 
-    public  void install(Context context, File file) {
+    public void install(Context context, File file) {
         Intent i = new Intent(Intent.ACTION_VIEW);
         Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-        grantUriPermission(getApplicationContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission(getApplicationContext().getPackageName(), uri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         i.setDataAndType(uri, "application/vnd.android.package-archive");
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         context.startActivity(i);
     }
-
-
 }

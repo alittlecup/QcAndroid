@@ -9,10 +9,14 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
+import com.qingchengfit.fitcoach.bean.BrandBody;
+import com.qingchengfit.fitcoach.bean.ChangeBrandCreatorBody;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
+import com.qingchengfit.fitcoach.bean.QcResponsePage;
 import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
 import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.ScanBody;
+import com.qingchengfit.fitcoach.bean.SyncExpBody;
 import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
@@ -70,6 +74,7 @@ import com.qingchengfit.fitcoach.http.bean.QcNotiDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import com.qingchengfit.fitcoach.http.bean.QcOneCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
+import com.qingchengfit.fitcoach.http.bean.QcReponseBrandDetailShops;
 import com.qingchengfit.fitcoach.http.bean.QcReportGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponCheckPhone;
 import com.qingchengfit.fitcoach.http.bean.QcResponCoachSys;
@@ -79,6 +84,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponLogin;
 import com.qingchengfit.fitcoach.http.bean.QcResponSystem;
 import com.qingchengfit.fitcoach.http.bean.QcResponToken;
 import com.qingchengfit.fitcoach.http.bean.QcResponUserInfo;
+import com.qingchengfit.fitcoach.http.bean.QcResponeSingleImageWall;
 import com.qingchengfit.fitcoach.http.bean.QcResponsCreatBrand;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseActivities;
@@ -284,6 +290,9 @@ public class QcCloudClient {
             @Header("Cookie") String session_id);
 
         @GET("/api/users/{user_id}/brands/") rx.Observable<QcResponseBrands> qcGetBrands(@Path("user_id") String id);
+        @GET("/api/v1/coaches/{coach_id}/brands/") rx.Observable<QcResponseBrands> qcGetTrainerBrands(@Path("coach_id") String id);
+
+
 
         //获取用户详情
         @GET("/api/coaches/{id}/detail/") rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
@@ -471,6 +480,12 @@ public class QcCloudClient {
         @GET("/api/v1/coaches/{coach_id}/plantpls/?show_all=1") rx.Observable<QcResponseCoursePlan> qcGetCoursePlan(
             @Path("coach_id") String id, @QueryMap HashMap<String, String> params);
 
+        /**
+         * 获取课程计划
+         */
+        @GET("/api/v2/coaches/{coach_id}/plantpls/all/") rx.Observable<QcResponseCoursePlan> qcGetCoursePlanAll(
+            @Path("coach_id") String id);
+
 
         /**
          * 获取课程下教练
@@ -544,6 +559,25 @@ public class QcCloudClient {
 
         @GET("/api/v1/coaches/{coach_id}/gyms/welcome/") rx.Observable<QcResponseServiceDetail> qcGetCoachServer(
             @Path("coach_id") String id, @QueryMap HashMap<String, Object> params);
+
+        /**
+         * 品牌相关
+         */
+        @GET("/api/v2/coaches/{coach_id}/staffs/brands/{brand_id}/shops/")
+        rx.Observable<QcReponseBrandDetailShops> qcGetBrandShops(@Path("coach_id") String coach_id,@Path("brand_id") String brand_id);
+        /**
+         * 照片墙
+         */
+        @GET("/api/coaches/photos/")
+        rx.Observable<QcResponeSingleImageWall> qcGetImageWalls();
+
+        /**
+         * 获取订单
+         */
+        @GET("/api/order-center/")
+        rx.Observable<QcResponsePage> qcGetOrderList();
+
+
     }
 
     public interface PostApi {
@@ -559,6 +593,11 @@ public class QcCloudClient {
 
         //创建品牌
         @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
+
+        //修改品牌
+        @POST("/api/brands/{id}/") rx.Observable<QcResponsCreatBrand> qcEditBrand(@Path("id") String id,@Body BrandBody body);
+
+        @POST("/") rx.Observable<QcResponse> qcChangeBrandUser(@Path("id") String brandid,ChangeBrandCreatorBody body);
 
         //初始化系统
         @POST("/api/coach/systems/initial/") rx.Observable<QcResponseSystenInit> qcInit(@Body CoachInitBean body);
@@ -603,6 +642,9 @@ public class QcCloudClient {
         //修改工作经验
         @PUT("/api/experiences/{id}/") rx.Observable<QcResponse> qcEditExperience(@Path("id") int id,
             @Body AddWorkExperience addWorkExperience);
+        @PUT("/api/experiences/{id}/") rx.Observable<QcResponse> qcEditSyncExperience(@Path("id") int id,
+            @Body SyncExpBody addWorkExperience);
+
 
         @POST("/api/experiences/{id}/hidden/") rx.Observable<QcResponse> qcHidenExperience(@Path("id") int id, @Body HidenBean hidenBean);
 
@@ -745,6 +787,16 @@ public class QcCloudClient {
          * 扫码
          */
         @PUT("/api/scans/{uuid}/") rx.Observable<QcResponse> qcScans(@Path("uuid") String uuid, @Body ScanBody body);
+
+        /**
+         * 照片墙添加个人照片
+         */
+        @POST("/api/coaches/photos/") rx.Observable<QcResponeSingleImageWall> qcUploadWallImage(@Body String body);
+
+        // TODO: 2017/3/7 多条删除照片
+        @DELETE("/api/coaches/photos/") rx.Observable<QcResponeSingleImageWall> qcDeleteWallImage(@Body String body);
+
+
     }
 
     public interface DownLoadApi {

@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:padding="10dp"
+                android:background="@color/transparent"
                 android:visibility="gone"
                 tools:text="测试"
                 />
@@ -50,8 +51,8 @@
             android:id="@+id/refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
         android:fitsSystemWindows="true"
+            android:layout_below="@id/toolbar"
             >
 
         <com.tencent.smtt.sdk.WebView

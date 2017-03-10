@@ -165,27 +165,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                 fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        //取消隐藏
-                                        QcCloudClient.getApi().postApi.qcHidenExperience(mExpId, new HidenBean(false))
-                                                .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
-                                                .subscribe(new Subscriber<QcResponse>() {
-                                                    @Override
-                                                    public void onCompleted() {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Throwable e) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onNext(QcResponse qcResponse) {
-                                                        if (qcResponse.status == ResponseResult.SUCCESS)
-                                                            freshData();
-
-                                                    }
-                                                });
+                                        showDialog();
                                         return true;
                                     }
                                 });
@@ -193,31 +173,30 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                 workexpDetailHiden.setBackgroundResource(R.color.green);
                                 workexpDetailHiden.setText(getString(R.string.workexp_detail_unhiden));
 
-                                fragmentCallBack.onToolbarMenu(R.menu.menu_hide, R.drawable.ic_arrow_left, "工作经历详情");
+                                fragmentCallBack.onToolbarMenu(R.menu.menu_flow, R.drawable.ic_arrow_left, "工作经历详情");
                                 fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        //隐藏
-                                        QcCloudClient.getApi().postApi.qcHidenExperience(mExpId, new HidenBean(true))
-                                                .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
-                                                .subscribe(new Subscriber<QcResponse>() {
+                                        if (dialogSheet == null){
+                                            dialogSheet = new DialogSheet(getContext());
+                                            dialogSheet.addButton("隐藏工作经历", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    dialogSheet.dismiss();
+                                                    hideExp();
+                                                }
+                                            })
+                                                .addButton("编辑", new View.OnClickListener() {
                                                     @Override
-                                                    public void onCompleted() {
+                                                    public void onClick(View v) {
+                                                        dialogSheet.dismiss();
+                                                        fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历",experiencesEntity));
 
                                                     }
-
-                                                    @Override
-                                                    public void onError(Throwable e) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onNext(QcResponse qcResponse) {
-                                                        if (qcResponse.status == ResponseResult.SUCCESS)
-                                                            freshData();
-
-                                                    }
-                                                 });
+                                                })
+                                            ;
+                                        }
+                                        dialogSheet.show();
                                         return true;
                                     }
                                 });
@@ -235,7 +214,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                             @Override
                                             public void onClick(View v) {
                                                 dialogSheet.dismiss();
-                                                fragmentCallBack.onFragmentChange(new WorkExpeEditFragment().newInstance("编辑工作经历",experiencesEntity));
+                                                fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历",experiencesEntity));
                                             }
                                         })
                                         .addButton("删除", new View.OnClickListener() {
@@ -265,7 +244,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                             workexpDetailPrivateCount.setText(experiencesEntity.getPrivate_course() + "");
                             workexpDetailPrivateServer.setText(experiencesEntity.getPrivate_user() + "");
                         } else workexpDetailPrivateLayout.setVisibility(View.GONE);
-                        if (experiencesEntity.getSale() != 0) {
+                        if (Float.parseFloat(experiencesEntity.getSale()) != 0) {
                             workexpDetailSaleLayout.setVisibility(View.VISIBLE);
                             workexpDetailSale.setText(experiencesEntity.getSale() + "");
                         } else workexpDetailSaleLayout.setVisibility(View.GONE);
@@ -318,7 +297,53 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
         delDialog.show();
     }
 
+    private void showExp(){
+        //取消隐藏
+        QcCloudClient.getApi().postApi.qcHidenExperience(mExpId, new HidenBean(false))
+            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<QcResponse>() {
+                @Override
+                public void onCompleted() {
 
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(QcResponse qcResponse) {
+                    if (qcResponse.status == ResponseResult.SUCCESS)
+                        freshData();
+
+                }
+            });
+    }
+
+    private void hideExp(){
+        //隐藏
+        QcCloudClient.getApi().postApi.qcHidenExperience(mExpId, new HidenBean(true))
+            .observeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<QcResponse>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(QcResponse qcResponse) {
+                    if (qcResponse.status == ResponseResult.SUCCESS)
+                        freshData();
+
+                }
+            });
+    }
 
     @Override
     public void onDestroyView() {

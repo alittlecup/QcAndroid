@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -36,7 +37,6 @@ import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.CourseManageFragment;
-import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
@@ -64,25 +64,21 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     public static final int RESULT_ACCOUNT = 12;
 
     @BindView(R.id.img) ImageView img;
-    //@BindView(R.id.img_foot) ImageView imgFoot;
-    @BindView(R.id.text1) TextView text1;
     @BindView(R.id.texticon) ImageView texticon;
     @BindView(R.id.text2) TextView text2;
     @BindView(R.id.text3) TextView text3;
     @BindView(R.id.righticon) ImageView righticon;
     @BindView(R.id.account_type) CommonInputView accountType;
-    //    @BindView(R.id.add)
-    //    TextView add;
-
     @Inject BatchDetailPresenter presenter;
     @BindView(R.id.coach) CommonInputView coach;
     @BindView(R.id.space) CommonInputView space;
     @BindView(R.id.item_date) TextView itemDate;
-    //@BindView(R.id.add_layout) LinearLayout addLayout;
     @BindView(R.id.permission_view) View permissionView;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
+    @BindView(R.id.text1) TextView text1;
+    @BindView(R.id.layout_batch_loop) LinearLayout layoutBatchLoop;
     private int mType;
     private String mId;
     private ArrayList<Rule> mCurRules;
@@ -112,7 +108,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         @Override public boolean onMenuItemClick(MenuItem item) {
             body.batch_id = mId;
             showLoading();
-            presenter.checkBatch(App.coachid+"",mType, body);
+            presenter.checkBatch(App.coachid + "", mType, body);
             return false;
         }
     };
@@ -121,31 +117,30 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_batch_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (getActivity() instanceof BatchActivity) ((BatchActivity) getActivity()).getComponent().inject(this);
+        if (getActivity() instanceof CourseActivity) ((CourseActivity) getActivity()).getComponent().inject(this);
         presenter.attachView(this);
-        toolbarTitle.setText(mType == Configs.TYPE_PRIVATE?"私教排期":"团课排期" );
+        toolbarTitle.setText(mType == Configs.TYPE_PRIVATE ? "私教排期" : "团课排期");
         toolbar.inflateMenu(R.menu.menu_save);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-        presenter.queryData(App.coachid+"",mId);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        presenter.queryData(App.coachid + "", mId);
         //addLayout.setVisibility(View.GONE);
         righticon.setVisibility(View.VISIBLE);
         accountType.setContent("已设置");
-
-        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance().queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (
-            mType == Configs.TYPE_PRIVATE
-                && !CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
+        layoutBatchLoop.setOnClickListener(this::onBatchLoop);
+        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance()
+            .queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_CHANGE)) || (mType == Configs.TYPE_PRIVATE && !CurentPermissions
+            .newInstance()
+            .queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_CHANGE))) {
             permissionView.setVisibility(View.VISIBLE);
         } else {
             permissionView.setVisibility(View.GONE);
         }
         return view;
     }
+
+
 
     @Override public String getFragmentName() {
         return BatchDetailFragment.class.getName();
@@ -156,12 +151,11 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @Override public void onCoach(QcSchedulesResponse.Teacher teacher) {
-            coach.setLabel("教练");
-            coach.setContent(teacher.username);
+        coach.setLabel("教练");
+        coach.setContent(teacher.username);
     }
 
-    @OnClick(R.id.layout_course)
-    public void onLayoutCourse(){
+    @OnClick(R.id.layout_course) public void onLayoutCourse() {
         Intent toChooseCourse = new Intent(getActivity(), CourseActivity.class);
         toChooseCourse.putExtra("to", CourseActivity.TO_CHOOSE);
         toChooseCourse.putExtra("type", mType);
@@ -170,14 +164,9 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @Override public void onCourse(Course course) {
-        //if (Configs.TYPE_GROUP == mType) {
-            Glide.with(getContext()).load(PhotoUtils.getSmall(course.getPhoto())).placeholder(R.drawable.ic_default_header).into(img);
-            text1.setText(course.getName());
-            text3.setText("时长" + (course.getLength() / 60) + "分钟");
-        //} else {
-        //    coach.setLabel("课程");
-        //    coach.setContent(course.getName());
-        //}
+        Glide.with(getContext()).load(PhotoUtils.getSmall(course.getPhoto())).placeholder(R.drawable.ic_default_header).into(img);
+        text1.setText(course.getName());
+        text3.setText("时长" + (course.getLength() / 60) + "分钟");
         body.course_id = course.getId();
     }
 
@@ -209,9 +198,9 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         body.to_date = timeend;
     }
 
-    @OnClick(R.id.batch_loop) public void onBatchLoop() {
+    public void onBatchLoop(View v) {
         getFragmentManager().beginTransaction()
-            .add(R.id.frag, CourseManageFragment.newInstance(coachService.getModel(),coachService.getId()+"",mId, mType))
+            .add(R.id.frag, CourseManageFragment.newInstance(coachService.getModel(), coachService.getId() + "", mId, mType))
             .addToBackStack(null)
             .commit();
     }
@@ -235,13 +224,10 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         getActivity().onBackPressed();
     }
 
-    @OnClick({  R.id.coach, R.id.space, R.id.account_type }) public void onClick(View view) {
+    @OnClick({ R.id.coach, R.id.space, R.id.account_type }) public void onClick(View view) {
         switch (view.getId()) {
-            //case R.id.course_layout:
-                //
-                //break;
             case R.id.coach:
-                StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+                StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
                 break;
             case R.id.space:
                 Intent toChooseSpace = new Intent(getActivity(), FragActivity.class);
@@ -278,16 +264,17 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
                             spaceStr = spaceStr.concat("、").concat(spaces.get(i).name);
                         }
                     }
-                    if (ids.size() > 1)
-                        space.setContent(getString(R.string.d_spaces,ids.size()));
-                    else
+                    if (ids.size() > 1) {
+                        space.setContent(getString(R.string.d_spaces, ids.size()));
+                    } else {
                         space.setContent(spaceStr);
+                    }
                     body.spaces = ids;
                 }
-            }else if (requestCode == RESULT_COURSE){
+            } else if (requestCode == RESULT_COURSE) {
                 CourseDetail course = data.getParcelableExtra("course");
                 onCourse(course);
-            }else if (requestCode == RESULT_ACCOUNT) {
+            } else if (requestCode == RESULT_ACCOUNT) {
                 int count = data.getIntExtra("count", 1);
                 body.max_users = count;
                 accountType.setContent(getString(R.string.has_set));
@@ -300,25 +287,25 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     }
 
     @OnClick(R.id.del_batch) public void delBatch() {
-        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance().queryPermission(
-            com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE) )||
-            (mType == Configs.TYPE_PRIVATE && !CurentPermissions.newInstance().queryPermission(
-                com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))){
+        if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance()
+            .queryPermission(com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mType
+            == Configs.TYPE_PRIVATE && !CurentPermissions.newInstance()
+            .queryPermission(com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
             showAlert(R.string.sorry_no_permission);
             return;
         }
-            new MaterialDialog.Builder(getContext()).content("是否删除该排期")
-                .autoDismiss(true)
-                .canceledOnTouchOutside(true)
-                .positiveText(R.string.comfirm)
-                .negativeText(R.string.pickerview_cancel)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        showLoading();
-                        presenter.delbatch(App.coachid+"", mId);
-                    }
-                })
-                .show();
+        new MaterialDialog.Builder(getContext()).content("是否删除该排期")
+            .autoDismiss(true)
+            .canceledOnTouchOutside(true)
+            .positiveText(R.string.comfirm)
+            .negativeText(R.string.pickerview_cancel)
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    showLoading();
+                    presenter.delbatch(App.coachid + "", mId);
+                }
+            })
+            .show();
         //}
     }
 }

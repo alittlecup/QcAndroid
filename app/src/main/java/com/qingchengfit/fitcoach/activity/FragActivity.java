@@ -19,6 +19,7 @@ import com.qingchengfit.fitcoach.fragment.StatementGlanceFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
 import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
 import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
+import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
 import com.qingchengfit.fitcoach.fragment.manage.EditGymFragmentBuilder;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 
@@ -96,6 +97,9 @@ public class FragActivity extends BaseAcitivity {
                 break;
            case 13:
                 fragment = new EditGymFragmentBuilder("",mCoachService.getBrand_name(),"",mCoachService.id,mCoachService.model).build();
+                break;
+            case 14:
+                fragment = new CoursePlanHomeFragment();
                 break;
             default:
                 break;

@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -24,11 +26,13 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
+import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.base.Course;
+import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.DialogSheet;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.VpFragment;
@@ -36,6 +40,7 @@ import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
 import com.qingchengfit.fitcoach.fragment.batch.details.BatchDetailFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
+import com.qingchengfit.fitcoach.fragment.course.CourseListFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
@@ -69,6 +74,8 @@ public class CourseBatchDetailFragment extends VpFragment
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @Inject CourseBatchDetailPresenter presenter;
     @BindView(R.id.preview) TextView preview;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private DialogSheet delCourseDialog;
     private MaterialDialog delDialog;
 
@@ -85,6 +92,7 @@ public class CourseBatchDetailFragment extends VpFragment
      * 记录是否展示已过期排期
      */
     private boolean isShow;
+    private DialogList dialogList;
 
     public static CourseBatchDetailFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -106,10 +114,42 @@ public class CourseBatchDetailFragment extends VpFragment
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_batch, container, false);
         unbinder = ButterKnife.bind(this, view);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        toolbarTitle.setText(mType == Configs.TYPE_GROUP?"团课":"私教");
+        toolbar.inflateMenu(R.menu.menu_flow);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (dialogList == null) {
+                dialogList = new DialogList(getContext());
+                ArrayList<String> flows = new ArrayList<>();
+                flows.add("课程种类");
+                flows.add("课件");
+                dialogList.list(flows, new AdapterView.OnItemClickListener() {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        dialogList.dismiss();
+                        if (position == 0){
+                            getFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
+                                .replace(R.id.frag, CourseListFragment.newInstance(mType == Configs.TYPE_PRIVATE))
+                                .addToBackStack(null)
+                                .commitAllowingStateLoss();
+                        }else if (position ==1 ){
+                            Intent toPlan = new Intent(getActivity(), FragActivity.class);
+                            toPlan.putExtra("type", 8);
+                            toPlan.putExtra("service", mCoachService);
+                            startActivity(toPlan);
+                        }
+                    }
+                });
+            }
+            dialogList.show();
+            return true;});
         if (getActivity() instanceof BatchActivity) {
             ((BatchActivity) getActivity()).getComponent().inject(this);
+        } else if (getActivity() instanceof CourseActivity) {
+            ((CourseActivity) getActivity()).getComponent().inject(this);
         }
-        delegatePresenter(presenter,this);
+        delegatePresenter(presenter, this);
 
         if ((mType == Configs.TYPE_GROUP && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMARRANGE_CALENDAR)) || (mType
             == Configs.TYPE_PRIVATE && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRIARRANGE_CALENDAR))) {
@@ -120,7 +160,6 @@ public class CourseBatchDetailFragment extends VpFragment
             hint.setText(R.string.sorry_for_no_permission);
             return v;
         }
-
 
         presenter.attachView(this);
         preview.setText(
@@ -195,7 +234,6 @@ public class CourseBatchDetailFragment extends VpFragment
         toChooseCourse.putExtra("type", mType);
         toChooseCourse.putExtra("service", mCoachService);
         startActivityForResult(toChooseCourse, RESULT_COURSE);
-
     }
 
     @Override public String getFragmentName() {
@@ -232,8 +270,8 @@ public class CourseBatchDetailFragment extends VpFragment
             //        .resBg(R.color.white)
             //        .build());
             //} else {
-                mDatas.add(new CommonNoDataItem(R.drawable.no_batch,mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course)
-                    : getString(R.string.hint_no_group_course)));
+            mDatas.add(new CommonNoDataItem(R.drawable.no_batch,
+                mType == Configs.TYPE_PRIVATE ? getString(R.string.hint_no_private_course) : getString(R.string.hint_no_group_course)));
             //}
         }
 
@@ -256,7 +294,7 @@ public class CourseBatchDetailFragment extends VpFragment
 
                 CourseDetail course = data.getParcelableExtra("course");
                 if (course != null) {
-                    getParentFragment().getFragmentManager()
+                    getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.frag, AddBatchFragment.newInstance(course))
                         .addToBackStack(null)
@@ -285,7 +323,7 @@ public class CourseBatchDetailFragment extends VpFragment
     @Override public boolean onItemClick(int position) {
         if (mCommonFlexAdapter.getItem(position) instanceof BatchItem) {
             QcResponseGroupDetail.GroupBatch batch = ((BatchItem) mCommonFlexAdapter.getItem(position)).getBatch();
-            getParentFragment().getFragmentManager()
+            getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frag, BatchDetailFragment.newInstance(mType, batch.id))
                 .addToBackStack(null)

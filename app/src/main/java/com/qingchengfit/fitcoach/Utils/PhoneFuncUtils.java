@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,20 +14,17 @@ import android.provider.ContactsContract;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-
+import cn.qingchengfit.widgets.utils.ChineseCharToEn;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.PermissionUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.Contact;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
-import cn.qingchengfit.widgets.utils.ChineseCharToEn;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PermissionUtils;
 
 /**
  * power by
@@ -424,7 +422,11 @@ public class PhoneFuncUtils {
                 + CalendarContract.Events.DTSTART + ">=" + start + ")AND(" + CalendarContract.Events.DTEND + "<=" + end + ")))", null);
         return true;
     }
-
+    public static void callPhone(Context context,String phone){
+        Uri uri = Uri.parse("tel:"+phone);
+        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+        context.startActivity(intent);
+    }
 
     public static boolean isPhoneNum(String phoneNum) {
 

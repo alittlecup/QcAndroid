@@ -10,6 +10,7 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.di.CourseComponent;
 import com.qingchengfit.fitcoach.di.CourseModule;
 import com.qingchengfit.fitcoach.di.DaggerCourseComponent;
+import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.RestRepository;
 
@@ -17,6 +18,8 @@ import com.qingchengfit.fitcoach.http.RestRepository;
 public class CourseActivity extends BaseAcitivity {
     public static final int TO_CHOOSE = 1;
     public static final int TO_CHOOSE_PLAN = 2;
+    public static final int TO_GROUP_BATCH = 3;
+    public static final int TO_PRIVATE_BATCH = 4;
 
     private CourseComponent mComponent;
     @Override
@@ -39,6 +42,12 @@ public class CourseActivity extends BaseAcitivity {
             case TO_CHOOSE_PLAN:
                 f = ChooseCoursePlanFragment.newInstance(getIntent().getLongExtra("id",0));
                 break;
+            case TO_GROUP_BATCH:
+                f = CourseBatchDetailFragment.newInstance(Configs.TYPE_GROUP);
+                break;
+            case TO_PRIVATE_BATCH:
+                f = CourseBatchDetailFragment.newInstance(Configs.TYPE_PRIVATE);
+                break;
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frag, f)
@@ -48,46 +57,5 @@ public class CourseActivity extends BaseAcitivity {
     public CourseComponent getComponent() {
         return mComponent;
     }
-//
-//    @Override
-//    public int getFragId() {
-//        return R.id.frag;
-//    }
-//
-//    @Override
-//    public void setToolbar(String title, boolean showRight, View.OnClickListener titleClick, @MenuRes int menu, Toolbar.OnMenuItemClickListener listener) {
-//        ToolbarBean bean = new ToolbarBean(title, showRight, titleClick, menu, listener);
-//        setBar(bean);
-//    }
-//
-//
-//
-//    @Override
-//    public void cleanToolbar() {
-//
-//    }
-//
-//    @Override
-//    public void openSeachView(String hint, Action1<CharSequence> action1) {
-//
-//    }
-//
-//    @Override
-//    public void onChangeFragment(BaseFragment fragment) {
-//
-//    }
-//
-//    @Override
-//    public void setBar(ToolbarBean bar) {
-//        toolbarTitile.setText(bar.title);
-//        down.setVisibility(bar.showRight ? View.VISIBLE : View.GONE);
-//        if (bar.onClickListener != null)
-//            titileLayout.setOnClickListener(bar.onClickListener);
-//        else titileLayout.setOnClickListener(null);
-//        toolbar.getMenu().clear();
-//        if (bar.menu != 0) {
-//            toolbar.inflateMenu(bar.menu);
-//            toolbar.setOnMenuItemClickListener(bar.listener);
-//        }
-//    }
+
 }

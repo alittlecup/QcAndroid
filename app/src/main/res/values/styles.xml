@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -24,6 +24,9 @@
         <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
     </style>
+
+
+
 
     <style name="Qc.SplashTheme" parent="@style/AppTheme">
         <item name="android:windowBackground">@color/transparent</item>

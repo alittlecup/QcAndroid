@@ -6,6 +6,7 @@
               android:layout_width="match_parent"
               android:layout_height="68dp"
               android:gravity="center_vertical"
+              android:id="@+id/layout_batch_loop"
               android:background="@color/white"
 
     >

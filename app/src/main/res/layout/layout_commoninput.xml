@@ -57,6 +57,12 @@
             android:background="@color/divider_white"
             >
         </View>
+        <View
+            android:id="@+id/disable"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_width="match_parent"
+            android:background="@color/half_white"
+            />
     </RelativeLayout>
 
 </merge>
