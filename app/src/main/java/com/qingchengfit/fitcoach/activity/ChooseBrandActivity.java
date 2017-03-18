@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -15,10 +14,10 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
-import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -98,15 +97,16 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                         if (datas.get(pos).isHas_add_permission()) {
                                             //setResult(RESULT_OK, IntentUtils.instancePacecle(qcResponseBrands.data.brands.get(pos)));
                                             Brand brand = datas.get(pos);
-                                            String initStr = PreferenceUtils.getPrefString(ChooseBrandActivity.this, "initSystem", "");
-                                            CoachInitBean initBean = new CoachInitBean();
-                                            if (!TextUtils.isEmpty(initStr)){
-                                                initBean = new Gson().fromJson(initStr, CoachInitBean.class);
-                                            }
+                                            //String initStr = PreferenceUtils.getPrefString(ChooseBrandActivity.this, "initSystem", "");
+                                            //CoachInitBean initBean = new CoachInitBean();
+                                            //if (!TextUtils.isEmpty(initStr)){
+                                            //    initBean = new Gson().fromJson(initStr, CoachInitBean.class);
+                                            //}
 
-                                            initBean.brand_id = brand.getId();
-                                            PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", new Gson().toJson(initBean));
-                                            startActivity(new Intent(ChooseBrandActivity.this,GuideActivity.class));
+                                            //initBean.brand_id = brand.getId();
+                                            //PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", new Gson().toJson(initBean));
+                                            //startActivity(new Intent(ChooseBrandActivity.this,GuideActivity.class));
+                                            setResult(Activity.RESULT_OK, IntentUtils.instancePacecle(brand));
                                             ChooseBrandActivity.this.finish();
                                             //overridePendingTransition(R.anim.slide_hold, R.anim.slide_top_out);
                                         } else {

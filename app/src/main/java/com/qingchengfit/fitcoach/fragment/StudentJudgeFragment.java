@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
@@ -11,18 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.TagGroup;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
-
 import java.text.DecimalFormat;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,7 +123,10 @@ public class StudentJudgeFragment extends BaseFragment {
         } else {
             if (!isPrepared || !isVisible)
                 return;
-            QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid).subscribe(qcEvaluateResponse -> {
+            QcCloudClient.getApi().getApi.qcGetEvaluate(App.coachid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcEvaluateResponse -> {
                 getActivity().runOnUiThread(() -> {
                     mTags = qcEvaluateResponse.getData().getTagArray();
                     mEntityls = qcEvaluateResponse.getData().getHomeEvaluate();

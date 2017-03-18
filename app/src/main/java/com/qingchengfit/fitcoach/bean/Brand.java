@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ public class Brand implements Parcelable {
     private String photo;
     private boolean has_add_permission;
     public boolean has_permission;
+    @SerializedName("owner")
     private List<User_Student> owners;
     private String cname;
     private int gym_count;

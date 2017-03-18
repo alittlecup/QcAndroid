@@ -25,7 +25,6 @@
           android:layout_height="40dp"
           android:layout_centerVertical="true"
           android:layout_marginLeft="@dimen/activity_horizontal_margin"
-          tools:src="@drawable/test_pic"
           />
       <ImageView
           android:id="@+id/host_qc_identify"
@@ -166,6 +165,8 @@
           android:gravity="center_vertical"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
           tools:text="@string/test_short"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>
@@ -182,6 +183,8 @@
           android:gravity="center_vertical"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
           tools:text="@string/test_short"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>
@@ -198,6 +201,8 @@
           android:gravity="center_vertical"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
           tools:text="@string/test_short"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>

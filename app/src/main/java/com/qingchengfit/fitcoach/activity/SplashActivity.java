@@ -121,23 +121,6 @@ public class SplashActivity extends BaseAcitivity {
                                         Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
                                         startActivity(toGym);
                                         SplashActivity.this.finish();
-
-                                        //new MaterialDialog.Builder(SplashActivity.this).canceledOnTouchOutside(false)
-                                        //    .title("您没有场馆")
-                                        //    .content("您可以使用拥有场馆的账号的重新登录或者为此账号创建一所场馆. ")
-                                        //    .positiveText("创建场馆")
-                                        //    .negativeText("重新登录")
-                                        //    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        //        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        //
-                                        //        }
-                                        //    })
-                                        //    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                        //        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        //            logout();
-                                        //        }
-                                        //    })
-                                        //    .show();
                                     } else {
                                         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachServiceResponse));
                                         Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);

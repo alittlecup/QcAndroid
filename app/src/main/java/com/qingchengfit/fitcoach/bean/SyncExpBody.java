@@ -22,9 +22,9 @@ package com.qingchengfit.fitcoach.bean;
  */
 
 public class SyncExpBody {
-    public String group_is_hidden;
-    public String private_is_hidden;
-    public String sale_is_hidden;
+    public boolean group_is_hidden;
+    public boolean private_is_hidden;
+    public boolean sale_is_hidden;
     public String description;
 
     private SyncExpBody(Builder builder) {
@@ -35,25 +35,25 @@ public class SyncExpBody {
     }
 
     public static final class Builder {
-        private String group_is_hidden;
-        private String private_is_hidden;
-        private String sale_is_hidden;
+        private boolean group_is_hidden;
+        private boolean private_is_hidden;
+        private boolean sale_is_hidden;
         private String description;
 
         public Builder() {
         }
 
-        public Builder group_is_hidden(String val) {
+        public Builder group_is_hidden(boolean val) {
             group_is_hidden = val;
             return this;
         }
 
-        public Builder private_is_hidden(String val) {
+        public Builder private_is_hidden(boolean val) {
             private_is_hidden = val;
             return this;
         }
 
-        public Builder sale_is_hidden(String val) {
+        public Builder sale_is_hidden(boolean val) {
             sale_is_hidden = val;
             return this;
         }

@@ -32,7 +32,7 @@ public class Configs {
     public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
 //        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
     public static String ServerPort = isDebug ? ":7777/" : "";
-    public static String Server = ServerIp + ServerPort;
+    public static String Server = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
     //public static final String ORDER_PRIVATE_URL = Server + "mobile/coach/privatelesson/list/";
     //public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
@@ -69,6 +69,8 @@ public class Configs {
     //Camera图片位置
     public static String CameraPic = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/camera_tmp.jpg";
     public static String CameraCrop = Environment.getExternalStorageDirectory().getPath() + "/" + APPNAME + "/Cache/crop_tmp.jpg";
+
+    public static String PREFER_SESSION ="session_id";
 
     /**
      * 订单中心：http://cloudtest.qingchengfit.cn/mobile/trades/home/

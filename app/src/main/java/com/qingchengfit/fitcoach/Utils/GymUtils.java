@@ -18,6 +18,12 @@ import java.util.HashMap;
  * Created by Paper on 16/5/13 2016.
  */
 public class GymUtils {
+
+    public static String getCourseTypeStr(boolean isPrivate){
+        return  isPrivate?"timetables" : "schedules";
+    }
+
+
     public static boolean isInBrand(CoachService gymBase) {
         return gymBase == null || gymBase.id == 0 || gymBase.model == null;
     }

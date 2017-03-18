@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -183,8 +184,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         if (type == TYPE_GYM) {
             searchHottable.setText("热门健身房");
             QcCloudClient.getApi().getApi.qcHotGym(params)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                             qcSerachGymRepsonse -> {
                                 if (searchHottable != null) {
                                     strings.clear();
@@ -215,6 +217,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         } else if (type == TYPE_ORGANASITON) {
             searchHottable.setText("热门机构");
             QcCloudClient.getApi().getApi.qcHotOrganization(params)
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             qcSearchOrganResponse -> {
@@ -296,7 +299,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         if (type == TYPE_GYM) {
 
             QcCloudClient.getApi().getApi.qcSearchGym(params)
-                    .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+
+                .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             qcSerachGymRepsonse -> {
                                 if (searchHottable != null) {
@@ -331,7 +336,9 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                             });
         } else if (type == TYPE_ORGANASITON) {
             QcCloudClient.getApi().getApi.qcSearchOrganization(params)
-                    .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+
+                .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             qcSearchOrganResponse ->
                             {

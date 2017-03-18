@@ -341,6 +341,7 @@ public class SaleDetailFragment extends Fragment {
                     @Override
                     public Observable<Boolean> call(Integer integer) {
                         return QcCloudClient.getApi().getApi.qcGetSaleDatail(App.coachid, getParams(integer))
+                            .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(qcSaleDetailRespone -> {
                                     mTotalCost.put(integer, qcSaleDetailRespone.data.total_cost);

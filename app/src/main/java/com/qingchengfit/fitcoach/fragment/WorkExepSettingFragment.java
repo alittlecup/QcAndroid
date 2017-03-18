@@ -39,6 +39,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -133,6 +134,7 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     public void freshData() {
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcExperienceResponse -> {
                             if (recyclerview != null) {

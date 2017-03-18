@@ -68,7 +68,7 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     @Override public void onFragmentChange(Fragment fragment) {
         AppUtils.hideKeyboard(this);
         fragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_right_out, R.anim.slide_left_in)
+            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_hold, R.anim.slide_hold, R.anim.slide_right_out)
             .replace(R.id.settting_fraglayout, fragment)
             .addToBackStack(null)
             .commit();
@@ -102,11 +102,12 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     }
 
     @Override public void ShowLoading(String content) {
-        if (loadingDialog == null) {
-            loadingDialog = new MaterialDialog.Builder(this).content("请稍后").progress(true, 0).cancelable(false).build();
-        }
-        if (content != null) loadingDialog.setContent(content);
-        loadingDialog.show();
+        //if (loadingDialog == null) {
+        //    loadingDialog = new MaterialDialog.Builder(this).content("请稍后").progress(true, 0).cancelable(false).build();
+        //}
+        //if (content != null) loadingDialog.setContent(content);
+        //loadingDialog.show();
+        super.showLoading();
     }
 
     @Override public void onBackPressed() {
@@ -116,7 +117,8 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
     }
 
     @Override public void hideLoading() {
-        if (loadingDialog != null && loadingDialog.isShowing()) loadingDialog.dismiss();
+        //if (loadingDialog != null && loadingDialog.isShowing()) loadingDialog.dismiss();
+        super.hideLoading();
     }
 
     @Override public void fixCount() {

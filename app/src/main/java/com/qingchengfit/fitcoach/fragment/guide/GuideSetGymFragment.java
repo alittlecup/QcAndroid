@@ -28,16 +28,19 @@ import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
+import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.EventStep;
+import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import rx.android.schedulers.AndroidSchedulers;
@@ -217,11 +220,36 @@ import rx.schedulers.Schedulers;
                 .build();
             gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
-            getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-                .replace(R.id.guide_frag, new GuideCourseTypeFragment())
-                .addToBackStack(null)
-                .commit();
+            //getFragmentManager().beginTransaction()
+            //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
+            //    .replace(R.id.guide_frag, new GuideCourseTypeFragment())
+            //    .addToBackStack(null)
+            //    .commit();
+            showLoading();
+            RxRegiste(QcCloudClient.getApi().postApi
+                .qcInit(((GuideFragment) getParentFragment()).getInitBean())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<QcResponseSystenInit>() {
+                    @Override
+                    public void call(QcResponseSystenInit qcResponse) {
+                        hideLoading();
+                        if (qcResponse.status == 200) {
+                            PreferenceUtils.setPrefString(getContext(), "initSystem", "");
+                            Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                            toMain.putExtra(Main2Activity.ACTION, Main2Activity.INIT);
+                            toMain.putExtra("service", qcResponse.data);
+                            startActivity(toMain);
+                            getActivity().finish();
+                        } else ToastUtils.showDefaultStyle(qcResponse.msg);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        hideLoading();
+                        ToastUtils.showDefaultStyle("初始化系统失败!");
+                    }
+                }));
+
         }
     }
 

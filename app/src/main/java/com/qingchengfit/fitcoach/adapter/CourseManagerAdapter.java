@@ -2,20 +2,16 @@ package com.qingchengfit.fitcoach.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * power by
@@ -35,6 +31,19 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
 
     private List<CourseManageBean> datas;
 
+    private boolean isEditable = false;
+
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
+    }
+    public void toggleEditable(){
+        isEditable = !isEditable;
+    }
+
     public CourseManagerAdapter(List<CourseManageBean> datas) {
         this.datas = datas;
     }
@@ -49,13 +58,13 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
     public CourseManagerVH onCreateViewHolder(ViewGroup parent, int viewType) {
         CourseManagerVH vh = new CourseManagerVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_course_manage, parent, false));
         vh.itemView.setOnClickListener(this);
-        vh.time.setOnClickListener(this);
-        vh.view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        //vh.time.setOnClickListener(this);
+        //vh.view.setOnTouchListener(new View.OnTouchListener() {
+        //    @Override
+        //    public boolean onTouch(View v, MotionEvent event) {
+        //        return true;
+        //    }
+        //});
         return vh;
     }
 
@@ -93,6 +102,7 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
             holder.month.setVisibility(View.VISIBLE);
             holder.month.setText(bean.month+"排期");
         }
+        holder.itemCheckbox.setVisibility(isEditable?View.VISIBLE:View.GONE);
 
 
     }

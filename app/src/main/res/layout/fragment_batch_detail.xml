@@ -36,7 +36,7 @@
                         android:layout_height="@dimen/qc_item_height"
                         app:civ_showdivier="true"
                         app:civ_showright="true"
-                        app:civ_clickable="true"
+                        app:civ_clickable="false"
 
                         />
 

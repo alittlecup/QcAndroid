@@ -58,10 +58,10 @@
     <string name="recordedit_certificat_timestart">生效日期</string>
     <string name="recordedit_certificat_timeend">失效日期</string>
     <string name="recordedit_score">学分</string>
-    <string name="recordedit_certificate_date">发证日期</string>
+    <string name="recordedit_certificate_date">参会日期</string>
     <string name="recordedit_host_organization">主办机构</string>
     <string name="recordedit_name">认证名称</string>
-    <string name="record_title">资质认证</string>
+    <string name="record_title">学习培训</string>
     <string name="workexper_title">工作经历</string>
     <string name="title_activity_notification">NotificationActivity</string>
 
@@ -336,4 +336,10 @@
     <string name="common_date">日期</string>
     <string name="course_date">课程日期</string>
     <string name="course_time">课程时间</string>
+  <string name="check_sb_course_and_more">查看%s的课程及更多信息</string>
+  <string name="sb_trainer_home" formatted="false">%s教练的主页</string>
+  <string name="sb_trainer_resume" formatted="false">%s教练的简历</string>
+    <string name="check_sb_resume">查看%s的个人资料、工作经历及更多信息
+</string>
+
 </resources>

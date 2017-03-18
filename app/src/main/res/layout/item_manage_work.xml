@@ -28,11 +28,11 @@
         >
         <TextView
             android:id="@+id/title"
-            style="@style/Qc.TextCommonGrey"
+            style="@style/Qc.TextCommonBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="test"
-
+            android:textColor="@color/cm_black"
             />
         <TextView
             android:id="@+id/subTitle"

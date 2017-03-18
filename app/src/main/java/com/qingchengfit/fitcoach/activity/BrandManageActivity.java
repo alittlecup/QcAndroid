@@ -53,12 +53,9 @@ public class BrandManageActivity extends BaseAcitivity{
             .replace(R.id.frag, BrandDetailFragment.newInstance((Brand)getIntent().getParcelableExtra("brand")))
             .commitAllowingStateLoss();
     }
-
-    //        mCallbackActivity.setToolbar("修改品牌信息", false, null, R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
     public void settoolbar(String title, @MenuRes int menu, Toolbar.OnMenuItemClickListener listener) {
         toolbarTitle.setText(title);
         toolbar.getMenu().clear();
-
         if (menu != 0){
             toolbar.inflateMenu(menu);
             toolbar.setOnMenuItemClickListener(listener);

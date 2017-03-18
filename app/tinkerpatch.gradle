@@ -6,10 +6,10 @@ def appName = "staff"
 def pathPrefix = "${bakPath}/bak/"
 
 tinkerpatchSupport {
-    tinkerEnable = false
-    appKey = "4b33b5b8bdcfe818"
+    tinkerEnable = true
+    appKey = "cb79fbe0febb2b33"
     reflectApplication = true
-    appVersion = "0.60"
+    appVersion = "1.4.6"
 
 //    pathPrefix = "${bakPath}/bak/"
     autoBackupApkPath = "${bakPath}"
@@ -57,11 +57,11 @@ tinkerpatchSupport {
 //            baseResourceRFile = "${pathPrefix}/qingcheng-staff-56-R.txt"
 //        }
         flavor {
-            flavorName = "product"
+            flavorName = "common"
             appVersion = "${tinkerpatchSupport.appVersion}"
-            baseApkFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/app-productrelease.apk"
-            baseProguardMappingFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/qingcheng-productrelease-mapping.txt"
-            baseResourceRFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/app-productrelease-R.txt"
+            baseApkFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/app-commonrelease.apk"
+            baseProguardMappingFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/qingcheng-commonrelease-mapping.txt"
+            baseResourceRFile = "${autoBackupApkPath}/../../app-tinker/${tinkerpatchSupport.appVersion}/app-commontrelease-R.txt"
         }
 //        flavor {
 //            flavorName = "less21"

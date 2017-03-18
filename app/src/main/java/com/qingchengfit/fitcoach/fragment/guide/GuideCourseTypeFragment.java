@@ -44,6 +44,9 @@ public class GuideCourseTypeFragment extends BaseFragment {
         return GuideCourseTypeFragment.class.getName();
     }
 
+    /**
+     * {@link GuideSetCourseFragment}
+     */
     @OnClick({ R.id.go_group, R.id.go_private }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.go_group:

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.brandmanange;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,12 +27,12 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.adapter.BrandGymsAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -128,12 +129,13 @@ public class BrandDetailFragment extends BaseFragment {
                 } else
                     this.createTime.setText(getString(R.string.create_time).concat(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(brand.getCreated_at()))));
                 String creator = "", phone = "";
-                if (brand.getCreated_by() != null) {
-                    creator = brand.getCreated_by().getUsername();
-                    phone = brand.getCreated_by().getPhone();
+                if (brand.getOwners() != null && brand.getOwners().size() > 0) {
+                    creator = brand.getOwners().get(0).getUsername();
+                    phone = brand.getOwners().get(0).getPhone();
                 }
                 this.tvBrand.setText(getString(R.string.choose_brand_content, brand.getCname(), creator));
-
+                if (creator == null) creator="";
+                if (phone == null) phone="";
                 this.contact.setText(getString(R.string.creator_colon).concat(creator).concat("    ").concat(getString(R.string.phone_colon)).concat(phone));
                 adapter = new BrandGymsAdapter(datas);
                 recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -157,11 +159,14 @@ public class BrandDetailFragment extends BaseFragment {
                                     })
                                     .show();
                         } else if (adapter.getItemViewType(pos) == 1) {
-                            getFragmentManager().beginTransaction()
-                                .replace(R.id.frag,
-                                    new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
-                                .addToBackStack(null)
-                                .commit();
+                            //getFragmentManager().beginTransaction()
+                            //    .replace(R.id.frag,
+                            //        new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
+                            //    .addToBackStack(null)
+                            //    .commit();
+                            Intent guide = new Intent(getActivity(), GuideActivity.class);
+                            guide.putExtra("brand",brand);
+                            startActivity(guide);
 
                         }
                     }

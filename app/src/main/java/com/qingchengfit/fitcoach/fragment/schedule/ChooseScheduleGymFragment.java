@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,21 +69,22 @@ import rx.schedulers.Schedulers;
 @FragmentWithArgs public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
     @Arg @Nullable CoachService mCoachService;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     protected CommonFlexAdapter mAdapter;
+    @BindView(R.id.root_view) LinearLayout rootView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_gym, container, false);
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_choose_schedule_gym, container, false);
         unbinder = ButterKnife.bind(this, view);
+
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -97,8 +99,7 @@ import rx.schedulers.Schedulers;
         mAdapter.setMode(SelectableAdapter.MODE_SINGLE);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(
-            new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
         refresh();
         return view;
@@ -125,16 +126,16 @@ import rx.schedulers.Schedulers;
                         int selectpos = 0;
                         if (services != null) {
                             for (int i = 0; i < services.size(); i++) {
-                                if (mCoachService != null && mCoachService.getId() == services.get(i).getId()
-                                    && mCoachService.getModel().equals(services.get(i).getModel()))
-                                    selectpos = i+1;
+                                if (mCoachService != null && mCoachService.getId() == services.get(i).getId() && mCoachService.getModel()
+                                    .equals(services.get(i).getModel())) {
+                                    selectpos = i + 1;
+                                }
                                 mDatas.add(new ChosenGymItem(services.get(i)));
                             }
                         }
                         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
                         mAdapter.notifyDataSetChanged();
                         mAdapter.toggleSelection(selectpos);
-
                     } else {
                         ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
                     }
@@ -157,7 +158,7 @@ import rx.schedulers.Schedulers;
         } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
             Intent goBrands = new Intent(getActivity(), ChooseBrandActivity.class);
             startActivityForResult(goBrands, 1);
-        }else if (mAdapter.getItem(position) instanceof ChosenAllGymItem){
+        } else if (mAdapter.getItem(position) instanceof ChosenAllGymItem) {
             RxBus.getBus().post(new EventScheduleService(new CoachService.Builder().id(0).build()));
             getActivity().onBackPressed();
         }
@@ -172,8 +173,7 @@ import rx.schedulers.Schedulers;
                 if (brand != null) {
                     getFragmentManager().beginTransaction()
                         .replace(R.id.activity_choose_address,
-                            new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(),
-                                brand.getId()).build())
+                            new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
                         .addToBackStack(null)
                         .commit();
                 }

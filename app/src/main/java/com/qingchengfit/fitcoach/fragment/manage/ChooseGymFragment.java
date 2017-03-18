@@ -20,18 +20,17 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
 import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.event.EventClickManageBrand;
-import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
-import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.AddCardStyleItem;
 import com.qingchengfit.fitcoach.items.BrandShopsItem;
 import com.qingchengfit.fitcoach.items.ChosenGymItem;
@@ -87,13 +86,6 @@ import rx.schedulers.Schedulers;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        //toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-        //    @Override public void onClick(View v) {
-        //        getActivity().onBackPressed();
-        //    }
-        //});
-        //toolbarTitle.setText("选择健身房");
         if (getActivity() instanceof PopFromBottomActivity){
             getActivity().setTitle("选择健身房");
         }
@@ -129,12 +121,14 @@ import rx.schedulers.Schedulers;
     }
 
     public void refresh() {
+        showLoading();
         RxRegiste(QcCloudClient.getApi().getApi.qcGetTrainerBrands(App.coachid + "")
             .flatMap(new Func1<QcResponseBrands, Observable<QcCoachServiceResponse>>() {
                 @Override public Observable<QcCoachServiceResponse> call(QcResponseBrands qcResponseBrands) {
+                    hideLoading();
                     brands.clear();
                     brands.addAll(qcResponseBrands.data.brands);
-                    return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid);
+                    return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
                 }
             })
             .map(qcCoachServiceResponse -> {
@@ -156,6 +150,7 @@ import rx.schedulers.Schedulers;
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<List<List<CoachService>>>() {
                 @Override public void call(List<List<CoachService>> lists) {
+
                     mDatas.clear();
                     for (int i = 0; i < brands.size(); i++) {
                         Brand b = brands.get(i);
@@ -171,45 +166,8 @@ import rx.schedulers.Schedulers;
                     mDatas.add(new AddCardStyleItem("新建健身房"));
                     mAdapter.notifyDataSetChanged();
                 }
-            }));
+            },throwable -> hideLoading()));
 
-        //RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-        //    .observeOn(AndroidSchedulers.mainThread())
-        //    .subscribeOn(Schedulers.io())
-        //    .subscribe(new Subscriber<QcCoachServiceResponse>() {
-        //        @Override public void onCompleted() {
-        //
-        //        }
-        //
-        //        @Override public void onError(Throwable e) {
-        //
-        //        }
-        //
-        //        @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
-        //            if (qcCoachServiceResponse.status == 200) {
-        //                mDatas.clear();
-        //                int selectPos = -1;
-        //                List<ChosenGymItem> d = new ArrayList<ChosenGymItem>();
-        //                List<CoachService> services = qcCoachServiceResponse.data.services;
-        //                if (services != null) {
-        //                    for (int i = 0; i < services.size() && i < 3; i++) {
-        //                        if (services.get(i).getId() == mCoachService.getId() && services.get(i)
-        //                            .getModel()
-        //                            .equals(mCoachService.getModel())) {
-        //                            selectPos = i;
-        //                        }
-        //                        d.add(new ChosenGymItem(services.get(i)));
-        //                    }
-        //                }
-        //                mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
-        //
-        //                mAdapter.notifyDataSetChanged();
-        //                if (selectPos >= 0) mAdapter.toggleSelection(selectPos);
-        //            } else {
-        //                ToastUtils.showDefaultStyle(qcCoachServiceResponse.msg);
-        //            }
-        //        }
-        //    }));
     }
 
     @Override protected void lazyLoad() {
@@ -225,9 +183,11 @@ import rx.schedulers.Schedulers;
         if (mAdapter.getItem(position) instanceof GymItem) {
             RxBus.getBus().post(((GymItem) mAdapter.getItem(position)).coachService);
             getActivity().onBackPressed();
-        } else if (mAdapter.getItem(position) instanceof AddBatchCircleItem) {
+        } else if (mAdapter.getItem(position) instanceof AddCardStyleItem) {
             Intent goBrands = new Intent(getActivity(), ChooseBrandActivity.class);
             startActivityForResult(goBrands, 1);
+            //Intent guide = new Intent(getActivity(), GuideActivity.class);
+            //startActivity(guide);
         }
         return true;
     }
@@ -238,11 +198,9 @@ import rx.schedulers.Schedulers;
             if (requestCode == 1) {
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
                 if (brand != null) {
-                    getFragmentManager().beginTransaction()
-                        .replace(R.id.activity_choose_address,
-                            new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
-                        .addToBackStack(null)
-                        .commit();
+                    Intent guide = new Intent(getActivity(), GuideActivity.class);
+                    guide.putExtra("brand",brand);
+                    startActivity(guide);
                 }
             }
         }

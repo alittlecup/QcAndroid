@@ -104,7 +104,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
         uppicObserver = RxBus.getBus().register(UpyunService.UpYunResult.class.getName());
-        uppicObserver.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<UpyunService.UpYunResult>() {
+        uppicObserver.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<UpyunService.UpYunResult>() {
             @Override public void onCompleted() {
 
             }
@@ -145,6 +145,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     public void queryData() {
 
         QcCloudClient.getApi().getApi.qcGetCoach(Integer.parseInt(coach.id))
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcCoachRespone>() {
                 @Override public void onCompleted() {

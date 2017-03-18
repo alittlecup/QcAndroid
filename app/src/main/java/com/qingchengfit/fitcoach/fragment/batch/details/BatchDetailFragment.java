@@ -38,7 +38,6 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.CourseManageFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
-import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.ArrayList;
@@ -200,7 +199,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
 
     public void onBatchLoop(View v) {
         getFragmentManager().beginTransaction()
-            .add(R.id.frag, CourseManageFragment.newInstance(coachService.getModel(), coachService.getId() + "", mId, mType))
+            .replace(R.id.frag, CourseManageFragment.newInstance(coachService.getModel(), coachService.getId() + "", mId, mType))
             .addToBackStack(null)
             .commit();
     }
@@ -227,7 +226,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     @OnClick({ R.id.coach, R.id.space, R.id.account_type }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.coach:
-                StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
+                //StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
                 break;
             case R.id.space:
                 Intent toChooseSpace = new Intent(getActivity(), FragActivity.class);

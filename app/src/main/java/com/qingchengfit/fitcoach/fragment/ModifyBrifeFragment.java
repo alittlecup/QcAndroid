@@ -25,6 +25,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.widgets.utils.ChoosePicUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -39,12 +40,14 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.ModifyDes;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -145,6 +148,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
 
     public void onSave() {
         QcCloudClient.getApi().postApi.qcModifyDes(App.coachid, new ModifyDes(HTMLUtils.toHTML(mListData))).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcResponse -> {
                     getActivity().runOnUiThread(() -> {
                         if (qcResponse.status == ResponseResult.SUCCESS) {
@@ -165,24 +169,36 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                                @Override
                                public void onClick(View v) {
                                    dialog.dismiss();
-                                   Intent intent = new Intent();
-                                   // 指定开启系统相机的Action
-                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                   intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                   Uri uri;
-                                   if (Build.VERSION.SDK_INT >= 24){
-                                       uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider",new File(Configs.CameraPic));
-                                       getContext().grantUriPermission(getContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                                   }else {
-                                       uri = Uri.fromFile(new File(Configs.CameraPic));
-                                   }
+                                   RxPermissions.getInstance(getActivity())
+                                       .request(android.Manifest.permission.CAMERA)
+                                       .subscribe(new Action1<Boolean>() {
+                                           @Override public void call(Boolean aBoolean) {
+                                               if (aBoolean){
+                                                   Intent intent = new Intent();
+                                                   // 指定开启系统相机的Action
+                                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                                   intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                                   Uri uri;
+                                                   if (Build.VERSION.SDK_INT >= 24){
+                                                       uri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".provider",new File(Configs.CameraPic));
+                                                       getContext().grantUriPermission(getContext().getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                                   if (type == -100)
-                                       startActivityForResult(intent, INSERT_PIC_CAMERA);
-                                   else startActivityForResult(intent, 200 + type);
+                                                   }else {
+                                                       uri = Uri.fromFile(new File(Configs.CameraPic));
+                                                   }
+
+                                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                                   if (type == -100)
+                                                       startActivityForResult(intent, INSERT_PIC_CAMERA);
+                                                   else startActivityForResult(intent, 200 + type);
+                                               }else {
+                                                   ToastUtils.show("请打开相机权限");
+                                               }
+                                           }
+                                       });
+
                                }
                            },
                 new View.OnClickListener() {

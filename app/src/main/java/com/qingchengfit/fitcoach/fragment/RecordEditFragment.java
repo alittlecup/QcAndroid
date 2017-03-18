@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -29,6 +30,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.SearchActivity;
+import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogSheet;
@@ -38,6 +40,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
 import com.qingchengfit.fitcoach.http.bean.QcCertificatesReponse;
+import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 
@@ -185,7 +188,7 @@ public class RecordEditFragment extends BaseSettingFragment {
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
                             fragmentCallBack.ShowLoading("请稍后");
-                            QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> onResult(qcResponse), throwable -> {
+                            QcCloudClient.getApi().postApi.qcDelCertificate(certificatesEntity.getId()).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponse -> onResult(qcResponse), throwable -> {
                             }, () -> {
                             });
                             dialog.dismiss();
@@ -226,7 +229,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             case TYPE_MEETING:
                 fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加大会认证");
                 recordEditName.setLabel("大会名称");
-                recordeditDate.setLabel("大会日期");
+                //recordeditDate.setLabel("大会日期");
                 recordeditUpimg.setText("上传参会凭证");
                 comfirmCertificationLayout.setVisibility(View.GONE);
                 recordeditDatestart.setVisibility(View.GONE);
@@ -238,7 +241,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             case TYPE_COMFIRM:
                 fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加培训认证");
                 recordEditName.setLabel("培训名称");
-                recordeditDate.setLabel("培训日期");
+                //recordeditDate.setLabel("培训日期");
                 comfirmHasCertification.setText("有无证书");
                 recordeditCertificatName.setLabel("证书名称");
                 recordeditDatestart.setLabel("证书生效日期");
@@ -250,7 +253,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             case TYPE_COMPETITION:
                 fragmentCallBack.onToolbarMenu(0, 0, mTitle ? "编辑认证信息" : "添加赛事认证");
                 recordEditName.setLabel("赛事名称");
-                recordeditDate.setLabel("赛事日期");
+                //recordeditDate.setLabel("赛事日期");
                 comfirmHasCertification.setText("有无奖项");
                 recordeditCertificatName.setLabel("奖项名称");
                 recordeditDatestart.setLabel("奖项生效日期");
@@ -313,17 +316,7 @@ public class RecordEditFragment extends BaseSettingFragment {
             } else {
                 recordeditDateoff.setContent(DateUtils.Date2YYYYMMDD(d));
             }
-//            switch (certificatesEntity.getType()) {
-//                case TYPE_MEETING:
-//
-//                    break;
-//                case TYPE_COMFIRM:
-//                    recordeditType.check(R.id.recordedit_type_comfirm);
-//                    break;
-//                case TYPE_COMPETITION:
-//                    recordeditType.check(R.id.recordedit_type_competition);
-//                    break;
-//            }
+
             if (!TextUtils.isEmpty(certificatesEntity.getPhoto())) {
                 recordeditImg.setVisibility(View.VISIBLE);
                 Glide.with(App.AppContex).load(certificatesEntity.getPhoto()).into(recordeditImg);
@@ -332,22 +325,6 @@ public class RecordEditFragment extends BaseSettingFragment {
             recordeditDatestart.setContent(DateUtils.Date2YYYYMMDD(new Date()));
             recordeditDateoff.setContent(DateUtils.Date2YYYYMMDD(new Date()));
         }
-//        recordeditType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                switch (checkedId) {
-//                    case R.id.recordedit_type_meeting:
-//                        addCertificate.setType(TYPE_MEETING);
-//                        break;
-//                    case R.id.recordedit_type_comfirm:
-//                        addCertificate.setType(TYPE_COMFIRM);
-//                        break;
-//                    case R.id.recordedit_type_competition:
-//                        addCertificate.setType(TYPE_COMPETITION);
-//                        break;
-//                }
-//            }
-//        });
 
 
         comfirmCertificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -378,6 +355,27 @@ public class RecordEditFragment extends BaseSettingFragment {
                 }
             }
         });
+        RxBusAdd(EventChooseImage.class)
+            .subscribe(eventChooseImage -> {
+                 showLoading();
+                RxRegiste(UpYunClient.rxUpLoad("record/",eventChooseImage.filePath)
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<String>() {
+                        @Override public void call(String s) {
+                            hideLoading();
+                            if (TextUtils.isEmpty(s)){
+                                Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Glide.with(App.AppContex).load(s)
+                                    .asBitmap()
+                                    .into(new ScaleWidthWrapper(recordeditImg));
+                                recordeditImg.setVisibility(View.VISIBLE);
+                                addCertificate.setPhoto(s);
+                            }
+                        }
+                    },throwable -> hideLoading())
+                );
+            });
 
         return view;
     }
@@ -566,47 +564,13 @@ public class RecordEditFragment extends BaseSettingFragment {
         mDialogSheet.show();
 
 
-//        pwTime.setOnTimeSelectListener(date -> {
-//            recordeditDateoff.setContent(DateUtils.getDateDay(date));
-//            addCertificate.setEnd(DateUtils.formatDateToServer(DateUtils.getDateDay(date)));
-//        });
-//        pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
 
     @OnClick({R.id.recordedit_upimg_layout})
     public void onUpdatePic() {
-        PicChooseDialog dialog = new PicChooseDialog(getActivity());
-        dialog.setListener(new View.OnClickListener() {
-                               @Override
-                               public void onClick(View v) {
-                                   dialog.dismiss();
-                                   Intent intent = new Intent();
-                                   // 指定开启系统相机的Action
-                                   intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                                   intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                   intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                                   startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
-                               }
-                           },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("image/jpeg");
+        ChoosePictureFragmentDialog.newInstance(false).show(getFragmentManager(),"");
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        } else {
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                        }
-                    }
-                }
-
-        );
-        dialog.show();
     }
 
     @Override
@@ -615,38 +579,7 @@ public class RecordEditFragment extends BaseSettingFragment {
         if (hostName == null)
             return;
 
-        if (resultCode == -1) {
-            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
-                filepath = FileUtils.getPath(getActivity(), data.getData());
-            else filepath = FILE_PATH;
-            LogUtil.d(filepath);
-            fragmentCallBack.ShowLoading("正在上传");
-
-            spUpImg  = UpYunClient.rxUpLoad("certificate/",filepath)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override public void call(String s) {
-                        fragmentCallBack.hideLoading();
-                        if (TextUtils.isEmpty(s)){
-                            Toast.makeText(App.AppContex, "图片上传失败", Toast.LENGTH_SHORT).show();
-
-                        }else {
-                            Glide.with(App.AppContex).load(s)
-                                .asBitmap()
-                                .into(new ScaleWidthWrapper(recordeditImg));
-                            recordeditImg.setVisibility(View.VISIBLE);
-                            addCertificate.setPhoto(s);
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override public void call(Throwable throwable) {
-                        fragmentCallBack.hideLoading();
-                    }
-                });
-
-
-        } else if (requestCode == 10010 && resultCode > 0) {
+        if (requestCode == 10010 && resultCode > 0) {
             addCertificate.setOrganization_id(Integer.toString(data.getIntExtra("id", 0)));
             hostName.setText(data.getStringExtra("username"));
             Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
@@ -664,7 +597,7 @@ public class RecordEditFragment extends BaseSettingFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (spUpImg != null && spUpImg.isUnsubscribed())
+        if (spUpImg != null && !spUpImg.isUnsubscribed())
             spUpImg.unsubscribe();
     }
 

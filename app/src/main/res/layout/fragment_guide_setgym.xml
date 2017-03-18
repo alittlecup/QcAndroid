@@ -65,6 +65,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin">
 
         <TextView
+            style="@style/Qc.TextCommonBlack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,6 +90,7 @@
         android:id="@+id/gym_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:civ_text_color="@color/text_black"
         app:civ_hint="@string/please_input_gym_name"
         app:civ_lable="场馆名称(店名)"
         app:civ_nonnull="true"
@@ -100,6 +102,7 @@
         android:id="@+id/gym_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:civ_text_color="@color/text_black"
         app:civ_hint="@string/please_input"
         app:civ_lable="@string/address"
         app:civ_nonnull="true"
@@ -114,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="@string/next_step"
+        android:text="创建健身房"
         />
 
 </LinearLayout>

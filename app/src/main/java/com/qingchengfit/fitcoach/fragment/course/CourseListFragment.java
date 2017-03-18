@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -87,7 +88,7 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
     protected boolean mIsload = false;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
+    @BindView(R.id.layout_toolbar) public RelativeLayout layoutToolbar;
     private Unbinder unbinding;
 
     public static CourseListFragment newInstance(boolean isPrivate) {
@@ -116,6 +117,17 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbarTitle.setText(mIsPrivate?"私教种类":"团课种类");
+        toolbar.inflateMenu(R.menu.add);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
+                    .replace(R.id.frag, AddCourseFragment.newInstance(mIsPrivate))
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+                return true;
+            }
+        });
 
         mAdatper = new CommonFlexAdapter(mDatas, this);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
@@ -306,8 +318,11 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
                 return;
             }
 
-            if (getParentFragment() instanceof CourseFragment) {
-                ((CourseFragment) getParentFragment()).addCourse(mIsPrivate);
+            if (getActivity() instanceof CourseActivity){
+                getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frag, AddCourseFragment.newInstance(mIsPrivate))
+                    .addToBackStack(getFragmentName())
+                    .commit();
             }
         }
     }

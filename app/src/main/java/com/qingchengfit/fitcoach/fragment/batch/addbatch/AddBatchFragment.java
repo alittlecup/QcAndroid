@@ -49,7 +49,6 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.BatchActivity;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
-import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
@@ -482,12 +481,5 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView, Flex
         return true;
     }
 
-    @OnClick({ R.id.coach })
-    public void onClickCoach(View view) {
-        switch (view.getId()) {
-            case R.id.coach:
-                StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
-                break;
-        }
-    }
+
 }

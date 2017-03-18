@@ -177,6 +177,7 @@ public class NotificationFragment extends BaseSettingFragment {
         params.put("page", curpage + "");
         params.put("tab", TYPES[getArguments().getInt("t")]);
         QcCloudClient.getApi().getApi.qcGetMessages(App.coachid, params)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<QcNotificationResponse>() {
                 @Override public void onCompleted() {

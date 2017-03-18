@@ -65,10 +65,14 @@ public class GuideFragment extends BaseFragment {
     TextView toolbarTitle;
     private Unbinder unbinder;
     private boolean isAddBrannd = false;
-
+    private Brand brand;
     public void setAddBrannd(boolean addBrannd) {
         isAddBrannd = addBrannd;
     }
+
+    public void setBrand(Brand brand){
+        this.brand = brand;
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,13 +89,17 @@ public class GuideFragment extends BaseFragment {
         toolbarTitle.setText("新建健身房");
         RxBusAdd(EventToolbar.class).subscribe(eventToolbar -> toolbarTitle.setText(eventToolbar.title));
 
-        String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
-        if (initStr == null || initStr.isEmpty())
-            initBean = new CoachInitBean();
-        else initBean = gson.fromJson(initStr, CoachInitBean.class);
+        //String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
+        //if (initStr == null || initStr.isEmpty()) {
+        initBean = new CoachInitBean();
+        //}
+        //else initBean = gson.fromJson(initStr, CoachInitBean.class);
         if (isAddBrannd) {
             getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
             return view;
+        }else {
+            if (brand != null)
+                initBean.brand_id = brand.getId();
         }
         if (TextUtils.isEmpty(initBean.brand_id)){
             if (App.gUser != null && App.gUser.id != null) {

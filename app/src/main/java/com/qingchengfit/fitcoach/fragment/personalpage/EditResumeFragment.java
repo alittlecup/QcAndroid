@@ -52,6 +52,8 @@ public class EditResumeFragment extends BaseSettingFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_resume, container, false);
         unbinder = ButterKnife.bind(this, view);
+        fragmentCallBack.showToolbar();
+        fragmentCallBack.onToolbarMenu(0,0,"编辑我的简历");
         return view;
     }
 

@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment.brandmanange;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,11 +29,10 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
-import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -69,7 +67,6 @@ public class BrandEditFragment extends BaseFragment {
     @BindView(R.id.del)
     TextView del;
 
-    @Inject RestRepository restRepository;
 
 
     BrandBody postBrand = new BrandBody();
@@ -110,7 +107,7 @@ public class BrandEditFragment extends BaseFragment {
                             }
                             showLoading();
 
-                            RxRegiste(restRepository.getPost_api().qcEditBrand(brand.getId(), postBrand)
+                            RxRegiste(QcCloudClient.getApi().postApi.qcEditBrand(brand.getId(), postBrand)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribeOn(Schedulers.io())
                                 .subscribe(new Action1<QcResponse>() {
@@ -119,7 +116,7 @@ public class BrandEditFragment extends BaseFragment {
                                         hideLoading();
                                         if (ResponseConstant.checkSuccess(qcResponse)) {
                                             ToastUtils.show("修改成功");
-                                            getFragmentManager().popBackStack(BrandManageFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                                            getActivity().onBackPressed();
                                         } else {
                                             ToastUtils.show("修改失败");
                                         }

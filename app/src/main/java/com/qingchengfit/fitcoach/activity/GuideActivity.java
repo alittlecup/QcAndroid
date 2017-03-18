@@ -6,6 +6,7 @@ import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.fragment.guide.GuideFragment;
 
@@ -19,6 +20,7 @@ public class GuideActivity extends BaseAcitivity {
         setContentView(R.layout.activity_guide);
         mFragment = new GuideFragment();
         mFragment.setAddBrannd(getIntent().getBooleanExtra("add",false));
+        mFragment.setBrand((Brand)getIntent().getParcelableExtra("brand"));
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frag,mFragment)
                 .commit();

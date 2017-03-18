@@ -2,12 +2,14 @@ package com.qingchengfit.fitcoach.http;
 
 import android.support.annotation.Nullable;
 import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.BrandBody;
 import com.qingchengfit.fitcoach.bean.ChangeBrandCreatorBody;
@@ -16,6 +18,7 @@ import com.qingchengfit.fitcoach.bean.QcResponsePage;
 import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
 import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.ScanBody;
+import com.qingchengfit.fitcoach.bean.SingleBatchBody;
 import com.qingchengfit.fitcoach.bean.SyncExpBody;
 import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
@@ -102,6 +105,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
 import com.qingchengfit.fitcoach.http.bean.QcResponseServiceDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
+import com.qingchengfit.fitcoach.http.bean.QcResponseSingleBatch;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
@@ -117,26 +121,28 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.OkHttpClient;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.Header;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.Query;
-import retrofit.http.QueryMap;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * power by
@@ -161,90 +167,70 @@ public class QcCloudClient {
     private OkHttpClient okHttpClient;
 
     public QcCloudClient() {
-        okHttpClient = new OkHttpClient();
-        okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-        int cacheSize = 10 * 1024 * 1024; // 10 MiB
-        File fileCache = new File(Configs.ExternalCache);
-        try {
-            Cache cache = new Cache(fileCache, cacheSize);
-            okHttpClient.setCache(cache);
-        } catch (IOException e) {
-            RevenUtils.sendException("http Cache error!", "http", e);
-        }
-        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Configs.Server)
-            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-            .setClient(new OkClient(okHttpClient))
-            .setRequestInterceptor(request -> {
-                QcResponToken responToken = null;
-                try {
-                    responToken = getApi.qcGetToken();
-                } catch (Exception e) {
-                }
-                if (responToken != null) {
-                    request.addHeader("X-CSRFToken", responToken.data.token);
-                    request.addHeader("Cookie", "csrftoken=" + responToken.data.token + ";sessionid=" +
-                        PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
-                    request.addHeader("Cache-Control", "max-age=0");
-                    request.addHeader("User-Agent", "FitnessTrainerAssistant/"
-                        + AppUtils.getAppVer(App.AppContex)
-                        + " Android "
-                        + android.os.Build.VERSION.RELEASE
-                        + " "
-                        + android.os.Build.BRAND
-                        + " "
-                        + android.os.Build.MODEL
-                        + " "
-                        + android.os.Build.MANUFACTURER
-                        + "  OEM:"
-                        + App.AppContex.getString(R.string.oem_tag));
-                }
-            })
-            //                .setErrorHandler(new ErrorHandler() {
-            //                    @Override
-            //                    public Throwable handleError(RetrofitError cause) {
-            //                        if (cause.getKind() == RetrofitError.Kind.NETWORK) {
-            //                            ToastUtils.show(R.drawable.ic_share_fail,"网络错误");
-            //                        }
-            //                        return null;
-            //                    }
-            //                })
-            //                .setErrorHandler(cause -> {
-            //                    LogUtil.e(cause.getCause().getMessage());
-            //                    if (cause.getKind() == RetrofitError.Kind.NETWORK) {
-            //
-            //                    }
-            //                    return null;
-            //                })
-            .build();
-        RestAdapter restAdapter2 = new RestAdapter.Builder().setEndpoint(Configs.Server)
-            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-            .setRequestInterceptor(new RequestInterceptor() {
-                @Override public void intercept(RequestFacade request) {
-                    request.addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, "session_id", ""));
-                    request.addHeader("User-Agent", "FitnessTrainerAssistant/"
-                        + AppUtils.getAppVer(App.AppContex)
-                        + " Android "
-                        + android.os.Build.VERSION.RELEASE
-                        + " "
-                        + android.os.Build.BRAND
-                        + " "
-                        + android.os.Build.MODEL
-                        + " "
-                        + android.os.Build.MANUFACTURER
-                        + "  OEM:"
-                        + App.AppContex.getString(R.string.oem_tag));
-                }
-            })
-            .setClient(new OkClient(okHttpClient))
-            .build();
-        //        RestAdapter restAdapter3 = new RestAdapter.Builder()
-        //                .setEndpoint("")
-        //                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-        //                .setRequestInterceptor(request -> request.addHeader("Cookie","csrftoken="+ FileUtils.readCache("token")))
-        //                .build();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
 
-        postApi = restAdapter.create(PostApi.class);
-        getApi = restAdapter2.create(GetApi.class);
+            @Override
+            public void log(String message) {
+                LogUtil.d(message);
+            }
+        });
+        interceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+            .addNetworkInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+
+
+                    Request request = chain.request();
+                    if (!request.method().equalsIgnoreCase("GET")) {
+                        String token = getApi.qcGetToken().execute().body().data.token;
+                        request = request.newBuilder()
+                            .addHeader("X-CSRFToken", token)
+                            .addHeader("Cookie", "csrftoken=" + token + ";sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
+                            .addHeader("User-Agent", " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(R.string.oem_tag) + "  QingchengApp/Trainer")
+                            .build();
+                    } else {
+                        request = request.newBuilder()
+                            .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
+                            .addHeader("User-Agent", " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(R.string.oem_tag) + "  QingchengApp/Trainer")
+                            .build();
+                    }
+                    return chain.proceed(request);
+                }
+            })
+            .addNetworkInterceptor(interceptor)
+            .readTimeout(3, TimeUnit.MINUTES)
+            .build();
+        Gson customGsonInstance = new GsonBuilder()
+            .enableComplexMapKeySerialization()
+            //                .setExclusionStrategies(new ExclusionStrategy() {
+            //                    @Override
+            //                    public boolean shouldSkipField(FieldAttributes f) {
+            //                        return f.getDeclaringClass().equals(RealmObject.class);
+            //                    }
+            //
+            //                    @Override
+            //                    public boolean shouldSkipClass(Class<?> clazz) {
+            //                        return false;
+            //                    }
+            //                })
+            .create();
+        Retrofit getApiAdapter = new Retrofit.Builder()
+            .baseUrl(Configs.Server)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .build();
+
+        Retrofit postApiAdapter = new Retrofit.Builder()
+            .baseUrl(Configs.Server)
+            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .client(client)
+            .build();
+
+        getApi = getApiAdapter.create(GetApi.class);
+        postApi = postApiAdapter.create(PostApi.class);
         //        downLoadApi = restAdapter3.create(DownLoadApi.class);
     }
 
@@ -256,28 +242,28 @@ public class QcCloudClient {
         }
     }
 
-    public RestAdapter.Builder getRestAdapter() {
-        return new RestAdapter.Builder().setClient(new OkClient(okHttpClient))
-            .setEndpoint(Configs.Server)
-            .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
-            .setRequestInterceptor(request -> {
-                QcResponToken responToken = null;
-                try {
-                    responToken = getApi.qcGetToken();
-                } catch (Exception e) {
-                    //TODO handle error
-                }
-                if (responToken != null) {
-                    //                                request.addHeader("X-CSRFToken", responToken.data.token);
-                    //                                request.addHeader("Cache-Control", "max-age=0");
-                }
-            });
-    }
+    //public RestAdapter.Builder getRestAdapter() {
+    //    return new RestAdapter.Builder().setClient(new OkClient(okHttpClient))
+    //        .setEndpoint(Configs.Server)
+    //        .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
+    //        .setRequestInterceptor(request -> {
+    //            QcResponToken responToken = null;
+    //            try {
+    //                responToken = getApi.qcGetToken();
+    //            } catch (Exception e) {
+    //                //TODO handle error
+    //            }
+    //            if (responToken != null) {
+    //                //                                request.addHeader("X-CSRFToken", responToken.data.token);
+    //                //                                request.addHeader("Cache-Control", "max-age=0");
+    //            }
+    //        });
+    //}
 
     public interface GetApi {
         //获取token
-        @GET("/api/csrftoken/") QcResponToken qcGetToken();
-
+        //@GET("/api/csrftoken/") QcResponToken qcGetToken();
+        @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
         @POST("/api/users/{id}/") rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
 
         @GET("/api/android/coaches/{id}/welcome/") rx.Observable<QcResponDrawer> getDrawerInfo(@Path("id") String id);
@@ -292,7 +278,7 @@ public class QcCloudClient {
         @GET("/api/users/{user_id}/brands/") rx.Observable<QcResponseBrands> qcGetBrands(@Path("user_id") String id);
         @GET("/api/v1/coaches/{coach_id}/brands/") rx.Observable<QcResponseBrands> qcGetTrainerBrands(@Path("coach_id") String id);
 
-
+        @GET("/api/brands/{id}") rx.Observable<QcResponse> qcGetBrandDetail(@Path("id") String brand_id);
 
         //获取用户详情
         @GET("/api/coaches/{id}/detail/") rx.Observable<QcMyhomeResponse> qcGetDetail(@Path("id") String id);
@@ -406,7 +392,7 @@ public class QcCloudClient {
         @GET("/api/v2/coaches/{id}/plantpls/") rx.Observable<QcAllCoursePlanResponse> qcGetAllPlans(@Path("id") int id,
             @QueryMap Map<String, Object> params);
          //获取所有课程计划
-        @GET("/api/v2/coaches/{id}/plantpls/all/?show_all=1") rx.Observable<QcAllCoursePlanResponse> qcGetGymAllPlans(@Path("id") int id,
+        @GET("/api/v2/coaches/{id}/plantpls/?show_all=1") rx.Observable<QcAllCoursePlanResponse> qcGetGymAllPlans(@Path("id") int id,
             @QueryMap Map<String, Object> params);
 
 
@@ -483,7 +469,7 @@ public class QcCloudClient {
         /**
          * 获取课程计划
          */
-        @GET("/api/v2/coaches/{coach_id}/plantpls/all/") rx.Observable<QcResponseCoursePlan> qcGetCoursePlanAll(
+        @GET("/api/v2/coaches/{coach_id}/plantpls/all/?show_all=1") rx.Observable<QcResponseCoursePlan> qcGetCoursePlanAll(
             @Path("coach_id") String id);
 
 
@@ -520,9 +506,10 @@ public class QcCloudClient {
          */
 
         /**
-         * 权限
+         * 工作人员权限
          */
-
+        @GET("/api/v2/coaches/{id}/staffs/permissions/")
+        rx.Observable<QcResponsePermission> qcStaffPmission(@Path("id") String coach_id,@QueryMap HashMap<String, Object> params);
         //        @GET("/api/v1/coaches/{id}/permissions/")
         //        rx.Observable<QcResponsePermission> qcPermission(@Path("id") String coach_id, @QueryMap HashMap<String, String> params);
 
@@ -538,6 +525,8 @@ public class QcCloudClient {
         //获取团课排期
         @GET("/api/v1/coaches/{id}/batches/") rx.Observable<QcResponseGroupDetail> qcGetGroupCourses(@Path("id") String coach_id,
             @Query("id") String gym_id, @Query("model") String gym_model, @Query("is_private") int isPrivate);
+
+        @GET("/api/v1/coaches/{id}/{type}/{single_id}/") rx.Observable<QcResponseSingleBatch> qcGetSingleBatch(@Path("id") String coach_id,@Path("type") String type,@Path("single_id") String single_id,@QueryMap HashMap<String,Object> params);
 
         //排课填充
         @GET("/api/v1/coaches/{id}/{type}/arrange/template/") rx.Observable<QcResponseBtachTemplete> qcGetBatchTemplate(
@@ -581,7 +570,7 @@ public class QcCloudClient {
     }
 
     public interface PostApi {
-
+        @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
         @PUT("/api/v2/coaches/{coach_id}/gyms/update/") rx.Observable<QcResponse> qcUpdateGym(@Path("coach_id") String id,
             @QueryMap HashMap<String, Object> params, @Body Shop shop);
 
@@ -595,7 +584,7 @@ public class QcCloudClient {
         @POST("/api/brands/") rx.Observable<QcResponsCreatBrand> qcCreatBrand(@Body CreatBrandBody body);
 
         //修改品牌
-        @POST("/api/brands/{id}/") rx.Observable<QcResponsCreatBrand> qcEditBrand(@Path("id") String id,@Body BrandBody body);
+        @PUT("/api/brands/{id}/") rx.Observable<QcResponsCreatBrand> qcEditBrand(@Path("id") String id,@Body BrandBody body);
 
         @POST("/") rx.Observable<QcResponse> qcChangeBrandUser(@Path("id") String brandid,ChangeBrandCreatorBody body);
 
@@ -726,8 +715,13 @@ public class QcCloudClient {
         /**
          * @param schedules 私教 timetables
          */
-        @PUT("/api/v1/coaches/{coach_id}/{schedules}/{schedule_id}/") rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,
+        @Deprecated
+        @PUT("/api/v0/coaches/{coach_id}/{schedules}/{schedule_id}/") rx.Observable<QcResponse> qcFixBatch(@Path("coach_id") int coach_id,
             @Path("schedule_id") String schedule_id, @Path("schedules") String schedules, @Body FixBatchBean batchBean);
+
+        @PUT("/api/v1/coaches/{id}/{type}/{single_id}/")
+        rx.Observable<QcResponse> qcUpdateSinglebatch(@Path("id") String staff_id, @Path("type") String type, @Path("scheduleid") String scheduleid, @Body
+            SingleBatchBody body);
 
         @POST("/api/measures/") rx.Observable<QcResponse> qcAddBodyTest(@Body AddBodyTestBean addBodyTestBean);
 
@@ -791,10 +785,9 @@ public class QcCloudClient {
         /**
          * 照片墙添加个人照片
          */
-        @POST("/api/coaches/photos/") rx.Observable<QcResponeSingleImageWall> qcUploadWallImage(@Body String body);
+        @POST("/api/coaches/photos/") rx.Observable<QcResponeSingleImageWall> qcUploadWallImage(@Body HashMap<String,Object> body);
 
-        // TODO: 2017/3/7 多条删除照片
-        @DELETE("/api/coaches/photos/") rx.Observable<QcResponeSingleImageWall> qcDeleteWallImage(@Body String body);
+        @DELETE("/api/coaches/photos/") rx.Observable<QcResponse> qcDeleteWallImage(@Query("ids")  String ids);
 
 
     }

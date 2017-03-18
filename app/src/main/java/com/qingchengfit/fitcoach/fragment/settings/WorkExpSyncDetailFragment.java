@@ -1,9 +1,13 @@
 package com.qingchengfit.fitcoach.fragment.settings;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.ExpandedLayout;
+import cn.qingchengfit.widgets.utils.CompatUtils;
 import cn.qingchengfit.widgets.utils.DateUtils;
 import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.bumptech.glide.Glide;
@@ -77,9 +82,33 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
 
 
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
+
+    public static WorkExpSyncDetailFragment newInstance(QcExperienceResponse.DataEntity.ExperiencesEntity e) {
+         Bundle args = new Bundle();
+        args.putParcelable("e",e);
+         WorkExpSyncDetailFragment fragment = new WorkExpSyncDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            experiencesEntity = (QcExperienceResponse.DataEntity.ExperiencesEntity)getArguments().getParcelable("e");
+        }
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workexp_sync, container, false);
         unbinder = ButterKnife.bind(this, view);
+        fragmentCallBack.showToolbar();
+        fragmentCallBack.onToolbarMenu(R.menu.menu_save, 0, "工作经历详情");
+        fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                putWorkExp();
+                return true;
+            }
+        });
         workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
         Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
         Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -97,22 +126,33 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
             Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
             hostAddress.setText(experiencesEntity.getGym().getAddress());
         }
-        swGroup.setExpanded(!experiencesEntity.isGroup_is_hidden());
-        swPrivate.setExpanded(!experiencesEntity.isPrivate_is_hidden());
-        swSale.setExpanded(!experiencesEntity.isSale_is_hidden());
-        tvGroup.setText(getString(R.string.exp_group,experiencesEntity.getGroup_course(),experiencesEntity.getGroup_user()));
-        tvPrivate.setText(getString(R.string.exp_group,experiencesEntity.getPrivate_course(),experiencesEntity.getPrivate_user()));
-        tvSales.setText(getString(R.string.exp_sale,experiencesEntity.getSale()));
+        workexpeditDescripe.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                CompatUtils.removeGlobalLayout(workexpeditDescripe.getViewTreeObserver(),this);
+                swGroup.setExpanded(!experiencesEntity.isGroup_is_hidden());
+                swPrivate.setExpanded(!experiencesEntity.isPrivate_is_hidden());
+                swSale.setExpanded(!experiencesEntity.isSale_is_hidden());
+                tvGroup.setText(getString(R.string.exp_group,experiencesEntity.getGroup_course(),experiencesEntity.getGroup_user()));
+                tvPrivate.setText(getString(R.string.exp_group,experiencesEntity.getPrivate_course(),experiencesEntity.getPrivate_user()));
+                tvSales.setText(getString(R.string.exp_sale,experiencesEntity.getSale()));
+            }
+        });
         return view;
     }
 
     void putWorkExp(){
-        RxRegiste(QcCloudClient.getApi().postApi.qcEditSyncExperience(App.coachid,new SyncExpBody.Builder()
+        fragmentCallBack.ShowLoading("正在保存");
+        RxRegiste(QcCloudClient.getApi().postApi.qcEditSyncExperience(experiencesEntity.getId(),new SyncExpBody.Builder()
+            .description(workexpeditDescripe.getText().toString().trim())
+            .group_is_hidden(!swGroup.isExpanded())
+            .private_is_hidden(!swPrivate.isExpanded())
+            .sale_is_hidden(!swSale.isExpanded())
             .build())
              .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                              .subscribe(new Action1<QcResponse>() {
                                  @Override
                                  public void call(QcResponse qcResponse) {
+                                     fragmentCallBack.hideLoading();
                                      if (ResponseConstant.checkSuccess(qcResponse)) {
                                          ToastUtils.show("保存成功");
                                          getActivity().onBackPressed();
@@ -121,6 +161,7 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
                              }, new Action1<Throwable>() {
                                  @Override
                                  public void call(Throwable throwable) {
+                                    fragmentCallBack.hideLoading();
                                  }
                              }));
     }

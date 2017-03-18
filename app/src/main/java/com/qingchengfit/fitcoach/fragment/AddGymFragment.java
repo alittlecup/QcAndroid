@@ -79,7 +79,9 @@ public class AddGymFragment extends GuideSetGymFragment {
         bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").photo(imgUrl).build();
 
         RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseSystenInit>() {
                     @Override
                     public void call(QcResponseSystenInit qcResponse) {

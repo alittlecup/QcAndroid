@@ -26,8 +26,6 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
-import com.qingchengfit.fitcoach.bean.CurentPermissions;
-import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
@@ -67,20 +65,23 @@ public class MyCoursePlanFragment extends BaseFragment {
         toolbarTitle.setText(getString(R.string.my_course_template));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        toolbar.inflateMenu(R.menu.add);
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PLANSSETTING_CAN_WRITE)){
-                showAlert(R.string.alert_permission_forbid);
-                return true;
-            }
-            if (getActivity() instanceof FragActivity && ((FragActivity) getActivity()).getCoachService() != null) {
-                Intent toWeb = new Intent(getContext(), WebActivity.class);
-                CoachService coachService = ((FragActivity) getActivity()).getCoachService();
-                toWeb.putExtra("url", Configs.Server + "/fitness/redirect/plantpl/create/?id="+coachService.getId() +"&model="+coachService.getModel());
-                startActivityForResult(toWeb, 10001);
-            }
-            return true;
-        });
+        /**
+         * 在此处屏蔽掉 新增课程种类功能
+         */
+        //toolbar.inflateMenu(R.menu.add);
+        //toolbar.setOnMenuItemClickListener(item -> {
+        //    if (!CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PLANSSETTING_CAN_WRITE)){
+        //        showAlert(R.string.alert_permission_forbid);
+        //        return true;
+        //    }
+        //    if (getActivity() instanceof FragActivity && ((FragActivity) getActivity()).getCoachService() != null) {
+        //        Intent toWeb = new Intent(getContext(), WebActivity.class);
+        //        CoachService coachService = ((FragActivity) getActivity()).getCoachService();
+        //        toWeb.putExtra("url", Configs.Server + "/fitness/redirect/plantpl/create/?id="+coachService.getId() +"&model="+coachService.getModel());
+        //        startActivityForResult(toWeb, 10001);
+        //    }
+        //    return true;
+        //});
 
         if (getActivity() instanceof FragActivity && ((FragActivity) getActivity()).getCoachService() != null) {
             mCoachService = ((FragActivity) getActivity()).getCoachService();

@@ -417,6 +417,7 @@ public class StatementDetailFragment extends Fragment {
                     @Override
                     public Observable<Boolean> call(Pair<Integer, String> integerStringPair) {
                         return QcCloudClient.getApi().getApi.qcGetStatementDatail(App.coachid, getParams(integerStringPair))
+                            .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(qcStatementDetailRespone -> {
                                     if (qcStatementDetailRespone.data.schedules != null &&

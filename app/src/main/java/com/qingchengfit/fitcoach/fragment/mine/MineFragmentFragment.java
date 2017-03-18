@@ -35,6 +35,7 @@ import java.util.Locale;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -107,14 +108,24 @@ public class MineFragmentFragment extends BaseFragment {
         }
     }
 
+    @Override protected void onInVisible() {
+        super.onInVisible();
+        hideGuide();
+    }
+
     public void showGuide() {
         if (gd1 == null) gd1 = new GuideWindow(getContext(), "点击此处查看订单和门票", GuideWindow.DOWN);
         gd1.show(layoutMyOrders);
+    }
+    public void hideGuide(){
+        if (gd1 != null)
+            gd1.dismiss();
     }
 
     public void queryData() {
         if (sp1 != null && !sp1.isUnsubscribed()) sp1.unsubscribe();
         sp1 = QcCloudClient.getApi().getApi.qcGetCoach(App.coachid)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<QcCoachRespone>() {
                 @Override public void onCompleted() {

@@ -17,14 +17,24 @@ import java.util.List;
 
 public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
 
-    public ImageItem(String imgPath) {
+    public ImageItem(String imgPath, String id) {
         this.imgPath = imgPath;
+        this.id = id;
     }
 
     String imgPath;
+    String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override public int getLayoutRes() {
-        return R.layout.item_image_chosen;
+        return R.layout.item_image_wall_choose;
     }
 
     @Override public ImageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {

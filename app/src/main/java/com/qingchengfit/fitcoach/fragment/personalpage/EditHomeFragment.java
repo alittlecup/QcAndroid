@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.ToastUtils;
+import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;
@@ -49,7 +51,9 @@ public class EditHomeFragment extends BaseSettingFragment {
         switch (view.getId()) {
             case R.id.btn_personal_intro:
                 //fragmentCallBack.onFragmentChange();
-                fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(""));// TODO: 2017/3/7 设置描述 但是这个时候 我又拿不到  尴尬！
+                if (App.gUser != null)
+                    fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(App.gUser.desc));
+                else ToastUtils.show("用户信息丢失");
                 break;
             case R.id.btn_pics:
                 fragmentCallBack.onFragmentChange(new ImagesFragment());

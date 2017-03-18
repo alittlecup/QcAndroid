@@ -75,8 +75,10 @@ public class RecordFragment extends BaseSettingFragment {
             startActivityForResult(toSearch, requestCode);
             return false;
         });
+        WebFragmentNoToolbar web = WebFragmentNoToolbar.newInstance(Configs.Server+Configs.HOST_EDUCATION);
+        web.setTouchBig(true);
         getChildFragmentManager().beginTransaction()
-            .replace(R.id.frag_record, WebFragmentNoToolbar.newInstance(Configs.Server+Configs.HOST_EDUCATION))
+            .replace(R.id.frag_record, web)
             .commit();
         //recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         //recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));

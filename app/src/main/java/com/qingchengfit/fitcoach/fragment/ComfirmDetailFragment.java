@@ -248,7 +248,10 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
     }
 
     private void freshData() {
-        QcCloudClient.getApi().getApi.qcGetCertificateDetail(id).subscribe(qcCertificateDetailResponse ->
+        QcCloudClient.getApi().getApi.qcGetCertificateDetail(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcCertificateDetailResponse ->
                 {
 
                     if (recorddetailTitle != null) {
@@ -420,6 +423,7 @@ public class ComfirmDetailFragment extends BaseSettingFragment {
                         public void onClick(MaterialDialog dialog, DialogAction which) {
                             fragmentCallBack.ShowLoading("请稍后");
                             QcCloudClient.getApi().postApi.qcDelCertificate(id)
+
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribeOn(Schedulers.newThread()).subscribe(qcResponse -> {
                                 if (qcResponse.status == ResponseResult.SUCCESS) {

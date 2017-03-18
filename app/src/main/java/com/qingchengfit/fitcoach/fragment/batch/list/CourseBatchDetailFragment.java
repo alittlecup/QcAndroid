@@ -116,7 +116,7 @@ public class CourseBatchDetailFragment extends VpFragment
         unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        toolbarTitle.setText(mType == Configs.TYPE_GROUP?"团课":"私教");
+        toolbarTitle.setText(mType == Configs.TYPE_GROUP?"团课排期":"私教排期");
         toolbar.inflateMenu(R.menu.menu_flow);
         toolbar.setOnMenuItemClickListener(item -> {
             if (dialogList == null) {

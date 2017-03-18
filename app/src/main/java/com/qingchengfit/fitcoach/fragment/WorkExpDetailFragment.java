@@ -20,6 +20,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DialogSheet;
+import com.qingchengfit.fitcoach.fragment.settings.WorkExpSyncDetailFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.HidenBean;
 import com.qingchengfit.fitcoach.http.bean.OneExperienceResponse;
@@ -165,7 +166,7 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                 fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        showDialog();
+                                        showExp();
                                         return true;
                                     }
                                 });
@@ -190,7 +191,8 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
                                                     @Override
                                                     public void onClick(View v) {
                                                         dialogSheet.dismiss();
-                                                        fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("编辑工作经历",experiencesEntity));
+                                                        fragmentCallBack.onFragmentChange(
+                                                            WorkExpSyncDetailFragment.newInstance(experiencesEntity));
 
                                                     }
                                                 })
@@ -234,17 +236,17 @@ public class WorkExpDetailFragment extends BaseSettingFragment {
 
                         workexpDetailPosition.setText(experiencesEntity.getPosition());
                         workexpDetailDesc.setText(experiencesEntity.getDescription());
-                        if (experiencesEntity.getGroup_course() != 0) {
+                        if (experiencesEntity.getGroup_course() != 0 && !experiencesEntity.isGroup_is_hidden()) {
                             workexpDetailGroupLayout.setVisibility(View.VISIBLE);
                             workexpDetailGroupCount.setText(experiencesEntity.getGroup_course() + "");
                             workexpDetailGroupServer.setText(experiencesEntity.getGroup_user() + "");
                         } else workexpDetailGroupLayout.setVisibility(View.GONE);
-                        if (experiencesEntity.getPrivate_course() != 0) {
+                        if (experiencesEntity.getPrivate_course() != 0 && !experiencesEntity.isPrivate_is_hidden()) {
                             workexpDetailPrivateLayout.setVisibility(View.VISIBLE);
                             workexpDetailPrivateCount.setText(experiencesEntity.getPrivate_course() + "");
                             workexpDetailPrivateServer.setText(experiencesEntity.getPrivate_user() + "");
                         } else workexpDetailPrivateLayout.setVisibility(View.GONE);
-                        if (Float.parseFloat(experiencesEntity.getSale()) != 0) {
+                        if (Float.parseFloat(experiencesEntity.getSale()) != 0 && !experiencesEntity.isSale_is_hidden()) {
                             workexpDetailSaleLayout.setVisibility(View.VISIBLE);
                             workexpDetailSale.setText(experiencesEntity.getSale() + "");
                         } else workexpDetailSaleLayout.setVisibility(View.GONE);

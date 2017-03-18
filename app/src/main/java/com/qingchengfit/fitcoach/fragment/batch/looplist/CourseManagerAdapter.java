@@ -35,6 +35,15 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
         implements View.OnClickListener {
 
     private List<CourseManageBean> datas;
+    private boolean isEditable = false;
+
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
+    }
 
     public CourseManagerAdapter(List<CourseManageBean> datas) {
         this.datas = datas;
@@ -95,6 +104,7 @@ public class CourseManagerAdapter extends RecyclerView.Adapter<CourseManagerAdap
             holder.month.setText(bean.month + "排期");
         }
 
+        holder.itemCheckbox.setVisibility(isEditable?View.VISIBLE:View.GONE);
 
     }
 

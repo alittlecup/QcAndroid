@@ -57,8 +57,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         multiDexEnabled true
-        versionCode 145
-        versionName "1.4.5"
+        versionCode 146
+        versionName "1.4.6"
         jackOptions {
             enabled false
         }
@@ -101,7 +101,7 @@ android {
 //
 //        }
         common {
-//            minSdkVersion 21
+            minSdkVersion 15
 
         }
 
@@ -128,12 +128,10 @@ android {
 
     buildTypes {
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             minifyEnabled true
             debuggable false
-            proguardFile 'proguard-rules.pro'
-            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
         debug {
@@ -200,11 +198,16 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile("com.squareup.retrofit2:retrofit:2.0.2") {
+        exclude module: 'okhttp'
+    }
+    compile "com.squareup.retrofit2:adapter-rxjava:2.0.2"
+    compile "com.squareup.retrofit2:converter-gson:2.0.2"
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.getbase:floatingactionbutton:1.10.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile "com.squareup.okhttp3:logging-interceptor:3.6.0"
+    compile "com.squareup.okhttp3:okhttp:3.6.0"
+
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
@@ -239,6 +242,10 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile files('libs/pushservice-5.2.0.12.jar')
     compile files('libs/tbs_sdk_thirdapp_v2.4.0.1073_36840_sharewithdownload_obfs_20161011_194834.jar')
+
+    //若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    provided "com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}"
+    compile "com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}"
 }
 
 //buildscript {

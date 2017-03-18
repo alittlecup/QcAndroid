@@ -190,6 +190,11 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
+
+    }
+
+    @Override protected void onVisible() {
+        super.onVisible();
         if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() ==0 )
             refresh();
     }

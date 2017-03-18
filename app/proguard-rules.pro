@@ -38,7 +38,6 @@
 
     #保护注解
     -keepattributes *Annotation*
-
     # 保持哪些类不被混淆
     -keep public class * extends android.app.Fragment
     -keep public class * extends android.app.Activity
@@ -86,6 +85,73 @@
     -keep class android.support.**{*;}
 
     #项目特殊处理代码
+
+
+    -keep class com.qingchengfit.fitcoach.bean.**{*;}
+    -keep class com.qingchengfit.fitcoach.http.**{*;}
+    -keep class com.qingchengfit.fitcoach.http.QcCloudClient.**{*;}
+    -keep class com.qingchengfit.fitcoach.http.QcCloudClient.PostApi.**{*;}
+    -keep class com.qingchengfit.fitcoach.http.QcCloudClient.GetApi.**{*;}
+    -keep class com.qingchengfit.fitcoach.http.QcCloudClient{
+    *;
+    }
+    -keep class com.qingchengfit.fitcoach.di.**{*;}
+
+#realm
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class *
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class * { *; }
+-dontwarn javax.**
+-dontwarn io.realm.**
+-dontwarn okio.**
+
+#retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keep class okhttp3.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+# Platform calls Class.forName on types which do not exist on Android to determine platform.
+-dontnote retrofit2.Platform
+# Platform used when running on Java 8 VMs. Will not be used at runtime.
+-dontwarn retrofit2.Platform$Java8
+# Retain generic type information for use by reflection by converters and adapters.
+-keepattributes Signature
+# Retain declared checked exceptions for use by a Proxy instance.
+-keepattributes Exceptions
+
+-keep class rx.**{*;}
+-keep class cn.qingchengfit.staffkit.model.**{*;}
+-keep class cn.qingchengfit.staffkit.usecase.**{*;}
+-keep class okhttp3.**{*;}
+-keep class cn.qingchengfit.widgets.**{*;}
+-keep class cn.qingchengfit.constant.**{*;}
+-keep class com.tencent.**{*;}
+-keep class com.tinkerpatch.**{*;}
+-keep class com.timehop.**{*;}
+-keep class io.github.**{*;}
+-keep class com.hannesdorfmann.**{*;}
+-keep class se.emilsjolander.**{*;}
+-keep class com.sensorsdata.**{*;}
+-keep class com.h6ah4i.android.**{*;}
+-keep class eu.davidea.**{*;}
+-keep class com.dlazaro66.**{*;}
+-keep class com.github.bumptech.**{*;}
+-keep class com.tbruyelle.rxpermissions.**{*;}
+-keep class com.getbase.**{*;}
+-keep class com.google.**{*;}
+-keep class com.hkm.**{*;}
+-keep class rg.glassfish.**{*;}
+-keep class io.reactivex.**{*;}
+-keep class com.github.afollestad.**{*;}
+-keep class com.umeng.analytics.**{*;}
+-keep class com.jakewharton.**{*;}
+-keep class com.baidu.android.pushservice.**{*;}
+-keep class com.xiaomi.mipush.**{*;}
+
+
+
 
 # --------------------------------------------------------------------------
 # Addidional for x5.sdk classes for apps

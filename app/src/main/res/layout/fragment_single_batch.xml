@@ -14,13 +14,17 @@
 
                   android:layout_height="match_parent"
             >
-        <include layout="@layout/layout_course"/>
+      <include layout="@layout/common_toolbar"/>
+        <include
+            android:id="@+id/layout_course"
+            layout="@layout/layout_course"
+            />
         <com.qingchengfit.fitcoach.component.CommonInputView
             android:id="@+id/coach"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qc_item_height"
             app:civ_showdivier="true"
-            app:civ_showright="true"
+            app:civ_showright="false"
             app:civ_clickable="true"
             app:civ_text_color="@color/text_black"
         />

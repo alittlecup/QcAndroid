@@ -252,7 +252,7 @@ public class AddSelfGymFragment extends Fragment {
 
 
         QcCloudClient.getApi().getApi.qcGetPrivateGym(App.coachid)
-                .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .map(qcPrivateGymReponse -> {
                     reponse = qcPrivateGymReponse;

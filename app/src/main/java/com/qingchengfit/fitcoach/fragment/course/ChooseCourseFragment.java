@@ -11,11 +11,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
+import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 /**
@@ -53,6 +56,7 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_course, container, false);
+
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText("选择课程");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -62,14 +66,28 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
             }
         });
         getChildFragmentManager().beginTransaction()
-            .replace(R.id.choose_cousre_frag,CourseListWrapForChooseFragment.newInstance(mCourseType == Configs.TYPE_PRIVATE))
-            .commit()
-        ;
+            .replace(R.id.choose_cousre_frag, CourseListWrapForChooseFragment.newInstance(mCourseType == Configs.TYPE_PRIVATE))
+            .commit();
 
         return view;
     }
 
     @Override public String getFragmentName() {
         return ChooseCourseFragment.class.getName();
+    }
+
+    @OnClick(R.id.btn_add_course) public void onClickAddCourse() {
+        if ((!(mCourseType == Configs.TYPE_PRIVATE)  && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))
+            || ((mCourseType == Configs.TYPE_PRIVATE)&& !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))) {
+            showAlert(R.string.sorry_no_permission);
+            return;
+        }
+
+        if (getActivity() instanceof CourseActivity){
+            getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frag, AddCourseFragment.newInstance(mCourseType == Configs.TYPE_PRIVATE))
+                .addToBackStack(getFragmentName())
+                .commit();
+        }
     }
 }

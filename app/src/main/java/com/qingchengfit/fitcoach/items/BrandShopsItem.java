@@ -47,8 +47,8 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BrandShopsVH holder, int position, List payloads) {
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getGauss(brand.getPhoto())).into(holder.imgBg);
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().into(new CircleImgWrapper(holder.imgBrand,holder.itemView.getContext()));
+        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getGauss(brand.getPhoto())).placeholder(R.drawable.bg_brand).into(holder.imgBg);
+        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(holder.imgBrand,holder.itemView.getContext()));
         holder.tvBrandName.setText(brand.getName());
         holder.recyclerInsert.setLayoutManager(new SmoothScrollLinearLayoutManager(holder.itemView.getContext()));
         holder.recyclerInsert.addItemDecoration(new DividerItemDecoration(holder.itemView.getContext()));

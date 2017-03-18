@@ -16,6 +16,7 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class CompleteActivity extends AppCompatActivity {
@@ -89,7 +90,7 @@ public class CompleteActivity extends AppCompatActivity {
                 .qcRegister(bean)
 
                 .subscribeOn(Schedulers.newThread())
-
+            .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcResponse ->
                         {
                             if (qcResponse.status == ResponseResult.SUCCESS){

@@ -1,18 +1,25 @@
 package com.qingchengfit.fitcoach.component;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.webkit.JavascriptInterface;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,12 +31,14 @@ import cn.qingchengfit.widgets.utils.AppUtils;
 import cn.qingchengfit.widgets.utils.CompatUtils;
 import cn.qingchengfit.widgets.utils.LogUtil;
 import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.utils.ToastUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import com.qingchengfit.fitcoach.Utils.MD5;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.SensorsUtils;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
@@ -41,12 +50,14 @@ import com.qingchengfit.fitcoach.bean.ShareBean;
 import com.qingchengfit.fitcoach.bean.ToolbarAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
+import com.qingchengfit.fitcoach.fragment.SingleImageShowFragment;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
+import com.tencent.smtt.sdk.DownloadListener;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -85,7 +96,8 @@ import static com.qingchengfit.fitcoach.R.id.webview;
  * Created by Paper on 2016/11/29.
  */
 
-public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
+public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback,
+    GestureDetector.OnGestureListener {
 
     @BindView(R.id.toobar_action) public TextView mToobarActionTextView;
     @BindView(R.id.toolbar) public Toolbar mToolbar;
@@ -106,6 +118,8 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     private ValueCallback<Uri[]> mValueCallbackNew;
     private String sessionid;
     public String mCurUrl;
+    private DialogSheet sheet;
+    GestureDetectorCompat gestureDetectorCompat;
 
     public static WebFragment newInstance(String url) {
 
@@ -119,6 +133,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) mCurUrl = getArguments().getString("url");
+        gestureDetectorCompat = new GestureDetectorCompat(getContext(),this);
     }
 
     @Nullable @Override
@@ -134,26 +149,22 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
         mRefreshSwipeRefreshLayout.setCanChildScrollUpCallback(this);
         initWebSetting();
-        
+
         initToolbar();
 
         mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             @Override public void onGlobalLayout() {
+                if (mRefreshSwipeRefreshLayout == null) return;
+                CompatUtils.removeGlobalLayout(mRefreshSwipeRefreshLayout.getViewTreeObserver(), this);
                 mRefreshSwipeRefreshLayout.setRefreshing(true);
                 //                mRefreshSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                CompatUtils.removeGlobalLayout(mRefreshSwipeRefreshLayout.getViewTreeObserver(), this);
                 /**
                  * init web
                  */
 
                 initWebClient();
                 initChromClient();
-                mWebviewWebView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override public boolean onLongClick(View v) {
-                        return true;
-                    }
-                });
                 mWebviewWebView.addJavascriptInterface(new JsInterface(), "NativeMethod");
                 mToobarActionTextView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
@@ -170,9 +181,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
                     initCookie(url);
                     mWebviewWebView.loadUrl(url);
-                    try{
-                        LogUtil.e("session:"+cookieManager.getCookie(url));
-                    }catch (Exception e){
+                    try {
+                        LogUtil.e("session:" + cookieManager.getCookie(url));
+                    } catch (Exception e) {
 
                     }
                 }
@@ -192,8 +203,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 choosePictureFragmentDialog.setResult(new ChoosePictureFragmentDialog.ChoosePicResult() {
                     @Override public void onChoosePicResult(boolean isSuccess, String filePath) {
                         if (isSuccess) {
-                            if (mValueCallback != null)
-                                mValueCallback.onReceiveValue(Uri.fromFile(new File(filePath)));
+                            if (mValueCallback != null) mValueCallback.onReceiveValue(Uri.fromFile(new File(filePath)));
                             if (mValueCallbackNew != null) {
                                 Uri[] uris = new Uri[1];
                                 uris[0] = Uri.fromFile(new File(filePath));
@@ -207,11 +217,11 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 });
 
                 onLoadedView();
-
             }
         });
 
-        RxRegiste(RxBus.getBus().register(PayEvent.class)
+        RxRegiste(RxBus.getBus()
+            .register(PayEvent.class)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<PayEvent>() {
@@ -227,8 +237,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                     if (payEvent.result == 0) {
                         if (mWebviewWebView != null) mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
                     } else {
-                        if (mWebviewWebView != null)
+                        if (mWebviewWebView != null) {
                             mWebviewWebView.loadUrl("javascript:window.payErrorCallback(" + payEvent.result + ");");
+                        }
                     }
                 }
             }));
@@ -236,13 +247,17 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         return view;
     }
 
-    public void onLoadedView(){
-
-    }
-    public void onWebFinish(){
+    public void onLoadedView() {
 
     }
 
+    public void onWebFinish() {
+
+    }
+
+    public void setToolbarTitle(String s) {
+        if (mTitle != null && !s.contains("qingcheng")) mTitle.setText(s);
+    }
 
     public void initToolbar() {
         mToolbar.setNavigationIcon(R.drawable.md_nav_back);
@@ -253,6 +268,20 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         });
         mTitle.setText("");
     }
+
+    public void setAction(ToolbarAction toolStr) {
+        if (toolStr == null) return;
+        if (TextUtils.isEmpty(toolStr.name)) {
+            mToobarActionTextView.setText("");
+            mToobarActionTextView.setVisibility(View.GONE);
+        } else {
+            mToobarActionTextView.setVisibility(View.VISIBLE);
+            mToobarActionTextView.setText(toolStr.name);
+        }
+    }
+
+
+
 
     private void initWebSetting() {
         WebStorage webStorage = WebStorage.getInstance();
@@ -288,7 +317,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
     }
 
-    private void initCookie(String url) {
+    public void initCookie(String url) {
+        if (getContext() == null)
+            return;
         sessionid = PreferenceUtils.getPrefString(getContext(), "session_id", "");
 
         if (sessionid != null) {
@@ -297,7 +328,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 setCookie(uri.getHost(), "qc_session_id", sessionid);
                 setCookie(uri.getHost(), "sessionid", sessionid);
                 setCookie(uri.getHost(), "oem", getString(R.string.oem_tag));
-                LogUtil.e("session:"+sessionid);
+                LogUtil.e("session:" + sessionid);
             } catch (Exception e) {
                 //e.printStackTrace();
             }
@@ -316,6 +347,37 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     }
 
     private void initChromClient() {
+        mWebviewWebView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                downloadFile(url, mimetype);
+            }
+        });
+        mWebviewWebView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                WebView.HitTestResult hr = mWebviewWebView.getHitTestResult();
+                if (hr.getType() == WebView.HitTestResult.IMAGE_TYPE) {
+                    sheet = DialogSheet.builder(getContext()).addButton("保存图片", new View.OnClickListener() {
+                        @Override public void onClick(View v) {
+                            downloadFile(hr.getExtra(), "img/png");
+                            sheet.dismiss();
+                        }
+                    });
+                    sheet.show();
+                }
+                return false;
+            }
+        });
+
+        if (getTouchBig()){
+            mWebviewWebView.setOnTouchListener(new View.OnTouchListener() {
+                @Override public boolean onTouch(View v, MotionEvent event) {
+
+                    gestureDetectorCompat.onTouchEvent(event);
+                    return false;
+                }
+            });
+        }
 
         mWebviewWebView.setWebChromeClient(new WebChromeClient() {
 
@@ -324,12 +386,15 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
             }
 
-            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback,
+                android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
                 mValueCallbackNew = valueCallback;
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
                 return true;
             }
-            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams){
+
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
+                WebChromeClient.FileChooserParams fileChooserParams) {
                 mValueCallbackNew = filePathCallback;
                 choosePictureFragmentDialog.show(getFragmentManager(), "");
                 return true;
@@ -373,11 +438,18 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (mTitle != null){
-                    mTitle.setText(title);
-                }
+                setToolbarTitle(title);
             }
         });
+    }
+
+    private boolean touchBig;
+    protected boolean getTouchBig(){
+        return touchBig;
+    }
+
+    public void setTouchBig(boolean touchBig) {
+        this.touchBig = touchBig;
     }
 
     public void initWebClient() {
@@ -404,7 +476,11 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
-                if(mCurUrl != null && url != null && url.equals(mCurUrl)) {
+                if (!url.startsWith("http")) {
+                    handleSchema(url);
+                    return true;
+                }
+                if (mCurUrl != null && url != null && url.equals(mCurUrl)) {
                     mWebviewWebView.goBack();
                     return true;
                 }
@@ -412,22 +488,19 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 view.loadUrl(url);
                 mCurUrl = url;
 
-
                 return true;
             }
 
             @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 LogUtil.e("errorCode:" + errorCode);
-                if (mTitle !=null)
-                    mTitle.setText("");
+                setToolbarTitle("");
                 showNoNet();
             }
         });
     }
 
     public void showNoNet() {
-        if (mNoNetwork != null)
-            mNoNetwork.setVisibility(View.VISIBLE);
+        if (mNoNetwork != null) mNoNetwork.setVisibility(View.VISIBLE);
     }
 
     @Override public String getFragmentName() {
@@ -444,6 +517,35 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         } catch (Exception e) {
             return true;
         }
+    }
+
+    @Override public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override public boolean onSingleTapUp(MotionEvent e) {
+        WebView.HitTestResult hr = mWebviewWebView.getHitTestResult();
+        if (hr.getType() == WebView.HitTestResult.IMAGE_TYPE) {
+            SingleImageShowFragment.newInstance(hr.getExtra()).show(getFragmentManager(), "");
+            return true;
+        }else return false;
+
+    }
+
+    @Override public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 
     public class JsInterface {
@@ -497,31 +599,24 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         @JavascriptInterface public void openDrawer() {
 
         }
-         @JavascriptInterface public void onFinishLoad() {
-             if (getActivity() != null) {
-                 getActivity().runOnUiThread(new Runnable() {
-                     @Override public void run() {
-                         if (mRefreshSwipeRefreshLayout != null) {
-                             mRefreshSwipeRefreshLayout.setRefreshing(false);
-                         }
-                     }
-                 });
-             }
 
+        @JavascriptInterface public void onFinishLoad() {
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override public void run() {
+                        if (mRefreshSwipeRefreshLayout != null) {
+                            mRefreshSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                });
+            }
         }
-
 
         @JavascriptInterface public void setAction(String s) {
             final ToolbarAction toolStr = new Gson().fromJson(s, ToolbarAction.class);
             getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
-                    if (TextUtils.isEmpty(toolStr.name)) {
-                        mToobarActionTextView.setText("");
-                        mToobarActionTextView.setVisibility(View.GONE);
-                    } else {
-                        mToobarActionTextView.setVisibility(View.VISIBLE);
-                        mToobarActionTextView.setText(toolStr.name);
-                    }
+                    WebFragment.this.setAction(toolStr);
                 }
             });
         }
@@ -533,7 +628,6 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         @JavascriptInterface public void setTitle(final String s) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override public void run() {
-                    //                    mToolbar.setTitle(s);
                     mToolbar.setTitle(s);
                 }
             });
@@ -557,10 +651,10 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                     getActivity().onBackPressed();
                 }
             });
-       }
+        }
 
-        @JavascriptInterface public void sensorsTrack(String key,String json){
-            SensorsUtils.track(key,json);
+        @JavascriptInterface public void sensorsTrack(String key, String json) {
+            SensorsUtils.track(key, json);
         }
 
         @JavascriptInterface public String getSessionId() {
@@ -572,16 +666,14 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
         }
 
-        @JavascriptInterface
-        public void setArea() {// 跳转去设置
+        @JavascriptInterface public void setArea() {// 跳转去设置
             Intent intent = new Intent();
             intent.setClass(getActivity(), SettingActivity.class);
             intent.putExtra("to", 1);
             startActivity(intent);
         }
 
-        @JavascriptInterface
-        public void goNativePath(String s) {
+        @JavascriptInterface public void goNativePath(String s) {
 
             if ("activities".equals(s)) {//跳到青橙专享活动列表页
                 getActivity().finish();
@@ -591,20 +683,51 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 intent.putExtra("to", 1);
                 startActivity(intent);
             }
-
         }
-
-
     }
 
-    public boolean canGoBack(){
-        if (mWebviewWebView != null){
-            if (mWebviewWebView.canGoBack()){
+    /**
+     *
+     */
+    public void downloadFile(String url, String mime) {
+        try {
+            DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setMimeType(mime);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+            //request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_PICTURES,
+            //    MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+            request.allowScanningByMediaScanner();
+            downloadManager.enqueue(request);
+            ToastUtils.show("文件已下载");
+        } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * 相应非Http schema
+     */
+    public void handleSchema(String s) {
+        try {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(s));
+            startActivity(i);
+        } catch (Exception e) {
+
+        }
+    }
+
+    public boolean canGoBack() {
+        if (mWebviewWebView != null) {
+            if (mWebviewWebView.canGoBack()) {
                 mWebviewWebView.goBack();
                 return true;
-            }else {
+            } else {
                 return false;
             }
-        }else return false;
+        } else {
+            return false;
+        }
     }
 }

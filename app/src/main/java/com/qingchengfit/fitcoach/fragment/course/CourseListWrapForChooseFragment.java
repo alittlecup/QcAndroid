@@ -41,6 +41,12 @@ public class CourseListWrapForChooseFragment extends CourseListFragment {
         return fragment;
     }
 
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        layoutToolbar.setVisibility(View.GONE);
+        return view;
+    }
+
     @Override public View judgePermission(LayoutInflater inflater, ViewGroup container) {
         return null;
     }

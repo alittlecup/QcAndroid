@@ -1,10 +1,8 @@
 package com.qingchengfit.fitcoach.activity;
 
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
@@ -25,7 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.widgets.utils.NetWorkUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
@@ -38,7 +43,6 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
-import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
@@ -54,11 +58,10 @@ import com.qingchengfit.fitcoach.fragment.MyCoursePlanFragment;
 import com.qingchengfit.fitcoach.fragment.MyGymsFragment;
 import com.qingchengfit.fitcoach.fragment.MyStudentFragment;
 import com.qingchengfit.fitcoach.fragment.OriginWebFragment;
-import com.qingchengfit.fitcoach.fragment.schedule.ScheduesFragment;
 import com.qingchengfit.fitcoach.fragment.WebFragment;
+import com.qingchengfit.fitcoach.fragment.schedule.ScheduesFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.Coach;
-import com.qingchengfit.fitcoach.http.bean.DrawerGuide;
 import com.qingchengfit.fitcoach.http.bean.DrawerModule;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
@@ -70,16 +73,12 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
 import com.qingchengfit.fitcoach.server.CalendarIntentService;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.CookieSyncManager;
-
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,18 +88,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.FileUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.NetWorkUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import im.fir.sdk.FIR;
-import im.fir.sdk.VersionCheckCallback;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -317,7 +308,9 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             pushBody.device_type = "android";
             pushBody.distribute = getString(R.string.oem_tag);
             QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
-                    .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+
+                .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<QcResponse>() {
                         @Override
                         public void onCompleted() {
@@ -506,7 +499,8 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
         //获取用户拥有的系统
         QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<QcCoachSystemResponse>() {
                     @Override
                     public void onCompleted() {
@@ -838,58 +832,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         }
     }
 
-    public void setupBtn(DrawerGuide btnInfo, int count) {
-        SegmentLayout button = new SegmentLayout(this);
-
-        List<Drawable> drawables = new ArrayList<>();
-        Observable.just(btnInfo.drawableOff, btnInfo.drawableOn)
-                .flatMap(s -> {
-                    File f = new File(Configs.ExternalPath, s.substring(s.length() - 20, s.length()));
-                    if (!f.exists()) {
-                        OkHttpClient httpClient = new OkHttpClient();
-                        Request request = new Request.Builder().url(s).build();
-
-                        try {
-                            Response response = httpClient.newCall(request).execute();
-                            FileUtils.getFileFromBytes(response.body().bytes(), f.getAbsolutePath());
-
-                        } catch (FileNotFoundException e) {
-                            RevenUtils.sendException("initDrawer", TAG, e);
-                        } catch (IOException e) {
-                            RevenUtils.sendException("initDrawer", TAG, e);
-                        }
-                    }
-                    return Observable.just(f.getAbsolutePath());
-                })
-                .flatMap(s2 -> {
-                            drawables.add(Drawable.createFromPath(s2));
-                            return Observable.just("");
-                        }
-                )
-                .last()
-                .subscribe(s1 -> {
-                    runOnUiThread(() -> {
-                        button.setText(btnInfo.guideText);
-                        button.setDrawables(drawables.toArray(new Drawable[2]));
-                        button.setListener(view -> {
-                            mainDrawerlayout.closeDrawer(Gravity.LEFT);
-                            goXwalkfragment(btnInfo.intentUrl, null);
-                        });
-                        urls.add(btnInfo.intentUrl);
-                        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
-
-                        if (count == 0) {
-                            drawerRadiogroup.check(0);
-                            Fragment fragment = OriginWebFragment.newInstance(btnInfo.intentUrl);
-                            mFragmentManager.beginTransaction().replace(R.id.main_fraglayout, fragment, btnInfo.intentUrl)
-                                    .commit();
-                            topFragment = fragment;
-                        }
-                    });
-
-                })
-        ;
-    }
 
     @OnClick(R.id.drawer_headerview)
     public void onHeadClick() {

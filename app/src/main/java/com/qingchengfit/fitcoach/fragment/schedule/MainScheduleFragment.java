@@ -132,12 +132,17 @@ public class MainScheduleFragment extends BaseFragment {
     }
 
     @OnClick(R.id.student_order) public void onStuOrder() {
-        RxBus.getBus().post(new EventInit(false,1));
-        //if (mCoachService == null) {
-        //    new ChooseGymDialogFragment().show(getFragmentManager(), "");
-        //} else {
+        try {
+
+            RxBus.getBus().post(new EventInit(false, 1));
+            //if (mCoachService == null) {
+            //    new ChooseGymDialogFragment().show(getFragmentManager(), "");
+            //} else {
             goStudentPreview(mCoachService);
-        //}
+            //}
+        }catch (Exception e){
+
+        }
     }
 
     public void queryNotify() {

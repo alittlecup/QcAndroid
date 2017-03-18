@@ -8,7 +8,7 @@
     <group>
         <group>
             <path
-                android:fillColor="#C4C4C4"
+                android:fillColor="#666"
                 android:strokeWidth="1"
                 android:pathData="M2,10.7698 C2,15.6132,5.33383,19.5396,9.44626,19.5396
 C13.5587,19.5396,16.8925,15.6132,16.8925,10.7698

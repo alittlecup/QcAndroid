@@ -1,8 +1,5 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * power by
  * <p>
@@ -17,7 +14,7 @@ import java.util.List;
  * Created by Paper on 16/1/9 2016.
  */
 public class DelCourseManage {
-    public List<String> ids = new ArrayList<>();
+    public String ids ;
     public String model;
     public String id;
 }

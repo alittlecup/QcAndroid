@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,17 +21,20 @@ import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.UpYunClient;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.items.CommonNoDataItem;
 import com.qingchengfit.fitcoach.items.ImageItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
-import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.common.SmoothScrollGridLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -74,11 +78,10 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
         commonFlexAdapter = new CommonFlexAdapter(datas, this);
         SmoothScrollGridLayoutManager smoothScrollGridLayoutManager = new SmoothScrollGridLayoutManager(getContext(), 3);
         recyclerview.setHasFixedSize(true);
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), R.color.divider_grey, 3));
         recyclerview.setLayoutManager(smoothScrollGridLayoutManager);
         smoothScrollGridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override public int getSpanSize(int position) {
-                if (datas.size() > position && datas.get(position) instanceof CommonNoDataItem){
+                if (datas.size() > position && datas.get(position) instanceof CommonNoDataItem) {
                     return 3;
                 }
                 return 1;
@@ -86,35 +89,56 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
         });
         recyclerview.setAdapter(commonFlexAdapter);
 
-
         /**
          * 上传照片
          */
-        RxBusAdd(EventChooseImage.class).subscribe(eventChooseImage -> UpYunClient.rxUpLoad("/", eventChooseImage.filePath)
-            .flatMap(s -> QcCloudClient.getApi().postApi.qcUploadWallImage(s))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(qcResponeSingleImageWall -> {
-                datas.add(new ImageItem(qcResponeSingleImageWall.data.photo.photo));
-                commonFlexAdapter.notifyDataSetChanged();
-                ToastUtils.show("上传成功");
-            }, throwable -> ToastUtils.show("上传失败")));
+        RxBusAdd(EventChooseImage.class).subscribe(
+            eventChooseImage -> {
+                showLoading();
+                UpYunClient.rxUpLoad("/", eventChooseImage.filePath).observeOn(Schedulers.io()).flatMap(s -> {
 
+                    HashMap<String, Object> p = new HashMap<String, Object>();
+                    p.put("photo", s);
+                    return QcCloudClient.getApi().postApi.qcUploadWallImage(p);
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponeSingleImageWall -> {
+                    hideLoading();
+                    if (ResponseConstant.checkSuccess(qcResponeSingleImageWall)) {
+                        if (datas.size() == 1 && datas.get(0) instanceof CommonNoDataItem) {
+                            datas.clear();
+                        }
+                        datas.add(new ImageItem(qcResponeSingleImageWall.data.photo.photo, qcResponeSingleImageWall.data.photo.id));
+                        commonFlexAdapter.notifyDataSetChanged();
+                        ToastUtils.show("上传成功");
+                    } else {
+                        ToastUtils.show("上传失败");
+                    }
+                }, throwable -> {
+                    hideLoading();
+                    ToastUtils.show("上传失败");
+                });
+            });
+        freshData();
+        return view;
+    }
+    private void freshData(){
+        fragmentCallBack.ShowLoading("请稍后");
         RxRegiste(QcCloudClient.getApi().getApi.qcGetImageWalls()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponeSingleImageWall -> {
+                fragmentCallBack.hideLoading();
                 if (qcResponeSingleImageWall.data.photos != null) {
                     datas.clear();
                     for (int i = 0; i < qcResponeSingleImageWall.data.photos.size(); i++) {
-                        datas.add(new ImageItem(qcResponeSingleImageWall.data.photos.get(i).photo));
+                        datas.add(new ImageItem(qcResponeSingleImageWall.data.photos.get(i).photo,
+                            qcResponeSingleImageWall.data.photos.get(i).id));
                     }
                     if (datas.size() == 0) datas.add(new CommonNoDataItem(R.drawable.img_no_imgs, "暂无照片"));
                     commonFlexAdapter.notifyDataSetChanged();
                 }
             }, throwable -> {
+                fragmentCallBack.hideLoading();
             }));
-        return view;
     }
 
     private void changeMode() {
@@ -132,11 +156,42 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
     }
 
     @OnClick(R.id.btn_add) void uploadImages() {
+        if (datas.size() >= 5){
+            cn.qingchengfit.widgets.utils.ToastUtils.show("您最多只能上传五张图片");
+            return;
+        }
         ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
     }
 
-    private void deleteImages() {
-        //RxBusAdd(QcCloudClient.client.postApi)
+    @OnClick(R.id.del) public void deleteImages() {
+        String ids = "";
+        for (int i = 0; i < commonFlexAdapter.getSelectedPositions().size(); i++) {
+            int pos = commonFlexAdapter.getSelectedPositions().get(i);
+            AbstractFlexibleItem item = datas.get(pos);
+            if (item instanceof ImageItem) {
+                if (i < commonFlexAdapter.getSelectedPositions().size() - 1) {
+                    ids = ids.concat(((ImageItem) item).getId()).concat(",");
+                } else {
+                    ids = ids.concat(((ImageItem) item).getId());
+                }
+            }
+        }
+        if (!TextUtils.isEmpty(ids)) {
+            RxRegiste(QcCloudClient.getApi().postApi.qcDeleteWallImage(ids)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action1<QcResponse>() {
+                    @Override public void call(QcResponse qcResponse) {
+                        if (ResponseConstant.checkSuccess(qcResponse)) {
+                            cn.qingchengfit.widgets.utils.ToastUtils.show("删除成功");
+                            commonFlexAdapter.setMode(SelectableAdapter.MODE_IDLE);
+                            freshData();
+                            btnAdd.setVisibility(View.VISIBLE);
+                            del.setVisibility(View.GONE);
+                        }
+                    }
+                }));
+        }else cn.qingchengfit.widgets.utils.ToastUtils.show("您没有选择删除的照片");
     }
 
     @Override public String getFragmentName() {
@@ -144,6 +199,12 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
     }
 
     @Override public boolean onItemClick(int position) {
+        if (commonFlexAdapter.getMode() == SelectableAdapter.MODE_MULTI) {
+            if (datas.get(position) instanceof ImageItem) {
+                commonFlexAdapter.toggleSelection(position);
+                commonFlexAdapter.notifyItemChanged(position);
+            }
+        }
         return false;
     }
 }

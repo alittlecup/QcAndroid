@@ -105,11 +105,13 @@ public class CoursePlanHomeFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
+        showLoading();
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoursePlanAll(App.coachid + "")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCoursePlan>() {
                 @Override public void call(QcResponseCoursePlan qcResponse) {
+                    hideLoading();
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         if (qcResponse.data.plans != null && qcResponse.data.plans.size() > 0) {
                             mCustomPlanData.clear();
@@ -132,13 +134,14 @@ public class CoursePlanHomeFragment extends BaseFragment {
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
+                    hideLoading();
                 }
             }));
     }
 
     private void addCoursePlan() {
         Intent toWeb = new Intent(getContext(), WebActivity.class);
-        toWeb.putExtra("url", Configs.Server + "/fitness/redirect/plantpl/create/");
+        toWeb.putExtra("url", Configs.Server + "mobile/coaches/add/plans/");
         startActivityForResult(toWeb, 10001);
     }
 

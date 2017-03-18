@@ -15,7 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.widgets.utils.MeasureUtils;
+import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
@@ -29,18 +34,11 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
-
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.MeasureUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * power by
@@ -161,7 +159,8 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
                 handleResponse(qcMyhomeResponse);
         }
         qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
-                .observeOn(AndroidSchedulers.mainThread());
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
         qcMyhomeResponseObservable.subscribe(qcMyhomeResponseObserver);
     }
 
@@ -185,6 +184,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         super.onResume();
 //        if (isFresh) {
         QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
+            .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcMyhomeResponseObserver);
 //            isFresh = false;

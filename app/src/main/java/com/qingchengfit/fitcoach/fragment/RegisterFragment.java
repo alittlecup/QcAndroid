@@ -42,6 +42,7 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.lang.ref.WeakReference;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
@@ -138,7 +139,9 @@ public class RegisterFragment extends Fragment {
                                         .username(userName)
                                         .gender(compleGender.getCheckedRadioButtonId() == R.id.comple_gender_female ? 1 : 0)
                                         .build())
+
                                 .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(qcResponLogin ->
                                         {
                                             if (qcResponLogin.status == ResponseResult.SUCCESS) {
@@ -210,6 +213,7 @@ public class RegisterFragment extends Fragment {
                         .postApi
                         .qcGetCode(new GetCodeBean.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build())
                         .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(qcResponse -> {
                             if (qcResponse.status == ResponseResult.SUCCESS) {
                                 LogUtil.d("succ");

@@ -83,7 +83,9 @@ public class SyncGymFragment extends BaseFragment {
                 });
 
         RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcCoachServiceResponse -> {
                     if (qcCoachServiceResponse.status == 200) {
                         if (qcCoachServiceResponse.data.services == null || qcCoachServiceResponse.data.services.size() ==0 ){

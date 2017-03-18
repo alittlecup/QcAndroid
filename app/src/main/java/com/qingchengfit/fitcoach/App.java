@@ -21,6 +21,9 @@ import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.tencent.tinker.loader.app.ApplicationLike;
+import com.tinkerpatch.sdk.TinkerPatch;
+import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
 import im.fir.sdk.FIR;
 import java.util.Map;
 import java.util.jar.Attributes;
@@ -116,14 +119,29 @@ public class App extends Application {
         }
         return null;
     }
-
+    private ApplicationLike tinkerApplicationLike;
     //
     @Override
     public void onCreate() {
 
         super.onCreate();
-        MultiDex.install(this);
-        FIR.init(this);
+
+
+        tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
+        //开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
+        if (tinkerApplicationLike != null) {
+            TinkerPatch.init(tinkerApplicationLike)
+                .reflectPatchLibrary()
+                .fetchPatchUpdate(true)
+                .setPatchRollbackOnScreenOff(true)
+                .setPatchRestartOnSrceenOff(true);
+            TinkerPatch.with().fetchPatchUpdate(true);
+        }
+        try {
+            FIR.init(this);
+        }catch (Exception e){
+
+        }
 //        LeakCanary.install(this);
         AppContex = getApplicationContext();
 //        refWatcher = LeakCanary.install(this);
@@ -211,7 +229,7 @@ public class App extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-
+        MultiDex.install(this);
 //        if (!quickStart()) {
 //            if (needWait(base)){
 //                waitForDexopt(base);
