@@ -261,7 +261,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                         Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
                     }
 
-                });
+                },throwable -> {});
 
             //Observable.just(f)
             //        .observeOn(Schedulers.io())
@@ -291,7 +291,7 @@ public class ModifyBrifeFragment extends BaseSettingFragment {
                         Toast.makeText(getActivity(), "添加图片失败", Toast.LENGTH_SHORT).show();
                     }
 
-                });
+                },throwable -> {});
 
 
         }

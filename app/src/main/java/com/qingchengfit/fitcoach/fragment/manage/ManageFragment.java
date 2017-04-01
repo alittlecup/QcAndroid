@@ -206,7 +206,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                         }));
                 }
             }
-        });
+        },throwable -> {});
         String s = PreferenceUtils.getPrefString(getContext(),App.coachid+"permission","");
         if (s!= null && !s.isEmpty()){
             QcResponsePermission.Data d = gson.fromJson(s,QcResponsePermission.Data.class);

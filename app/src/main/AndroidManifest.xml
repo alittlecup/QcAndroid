@@ -73,7 +73,7 @@
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
-      android:theme="@style/AppTheme">
+      android:theme="@style/QcAppTheme">
     <meta-data
         android:name="UMENG_APPKEY"
         android:value="5657d0e167e58e8e7a006679"/>
@@ -316,6 +316,7 @@
         android:name=".activity.WebActivity"
         android:label="@string/title_activity_notification"
         android:screenOrientation="portrait"
+        android:theme="@style/QcAppThemeForWeb"
         android:windowSoftInputMode="stateHidden|adjustResize"
         android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
         />
@@ -355,7 +356,7 @@
     <activity
         android:name=".activity.ChooseStudentActivity"
         android:label="@string/title_activity_choose_student"
-        android:theme="@style/AppTheme"/>
+        android:theme="@style/QcAppTheme"/>
 
     <service
         android:name=".server.CalendarIntentService"
@@ -364,7 +365,7 @@
     <activity android:name=".activity.ChooseGymActivity"/>
     <activity
         android:name=".activity.BodyTestActivity"
-        android:theme="@style/AppTheme"/>
+        android:theme="@style/QcAppTheme"/>
     <activity android:name=".activity.CoachHomeActivity"/>
     <activity
         android:name=".activity.Main2Activity"

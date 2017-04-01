@@ -143,7 +143,7 @@ public class ScheduleListFragment extends BaseFragment {
                 if (!TextUtils.isEmpty(url)) {
                     Intent it = new Intent(getActivity(), WebActivity.class);
                     it.putExtra("url", url);
-                    getParentFragment().startActivityForResult(it, 404);
+                    startActivityForResult(it, 404);
                 }
             }
         });
@@ -190,7 +190,9 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
-
+        if (isVisible()){
+            refresh();
+        }
     }
 
     @Override protected void onVisible() {
@@ -310,7 +312,7 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode > 0) {
+        if (requestCode == 404) {
             refresh();
         }
     }

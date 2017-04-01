@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.guide;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import com.badoualy.stepperindicator.StepperIndicator;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
@@ -110,8 +112,8 @@ public class GuideFragment extends BaseFragment {
                             if (ResponseConstant.checkSuccess(qcResponse)) {
                                 if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
                                     Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-                                    startActivity(toChooseBrand);
-                                    getActivity().finish();
+                                    startActivityForResult(toChooseBrand,11);
+                                    //getActivity().finish();
                                 }else {
                                     getChildFragmentManager().beginTransaction()
                                         .replace(R.id.guide_frag, new GuideSetBrandFragment())
@@ -189,7 +191,18 @@ public class GuideFragment extends BaseFragment {
         return view;
     }
 
-
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == 11){
+                Brand b = (Brand) IntentUtils.getParcelable(data);
+                initBean.brand_id = b.getId();
+                getChildFragmentManager().beginTransaction()
+                    .replace(R.id.guide_frag, new GuideSetGymFragmentBuilder(b.getPhoto(), b.getName(), b.getId()).build())
+                    .commitAllowingStateLoss();
+            }
+        }
+    }
 
     public void setSetp(int s) {
         stepIndicator.setCurrentStep(s);

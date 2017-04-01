@@ -57,8 +57,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         multiDexEnabled true
-        versionCode 146
-        versionName "1.4.6"
+        versionCode 149
+        versionName "1.4.9"
         jackOptions {
             enabled false
         }

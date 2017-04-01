@@ -123,7 +123,7 @@ public class AddBatchPresenter extends BasePresenter {
                         //                    ToastUtils.logHttp(qcResponse);
                     }
                 }
-            });
+            },throwable -> {});
 
     }
 

@@ -174,7 +174,7 @@ public class QcCloudClient {
                 LogUtil.d(message);
             }
         });
-        interceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.BODY);
+        interceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient.Builder()
             .addNetworkInterceptor(new Interceptor() {
                 @Override
@@ -358,7 +358,7 @@ public class QcCloudClient {
 
         //获取教练系统带权限
         @GET("/api/v2/coaches/{id}/method/shops/") rx.Observable<QcCoachServiceResponse> qcGetCoachServicePermission(@Path("id") int id,
-            @Query("key") String key,@QueryMap HashMap<String,Object> params);
+            @Query("key") String key);
 
         //获取教练系统
         @GET("/api/coaches/{id}/systems/detail/") rx.Observable<QcCoachSystemDetailResponse> qcGetCoachSystemDetail(@Path("id") int id);
