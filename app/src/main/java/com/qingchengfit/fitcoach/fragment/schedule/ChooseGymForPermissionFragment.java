@@ -7,7 +7,6 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
@@ -64,7 +63,8 @@ import rx.schedulers.Schedulers;
         }
         Observable<QcCoachServiceResponse> s = null;
         if (action > 1) {
-            s = QcCloudClient.getApi().getApi.qcGetCoachServicePermission(App.coachid, key, GymUtils.getParams(mCoachService));
+            s = QcCloudClient.getApi().getApi
+                .qcGetCoachServicePermission(App.coachid, key);
         } else {
             if (mCoachService == null) {
                 s = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid);

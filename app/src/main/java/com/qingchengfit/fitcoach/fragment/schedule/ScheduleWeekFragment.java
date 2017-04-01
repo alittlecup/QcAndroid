@@ -175,7 +175,7 @@ public class ScheduleWeekFragment extends BaseFragment {
                 toWeb.putExtra("url", sb.toString());
                 startActivityForResult(toWeb, 404);
             }
-        });
+        },throwable -> {});
 
         RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {
             @Override public void call(EventMonthChange eventMonthChange) {

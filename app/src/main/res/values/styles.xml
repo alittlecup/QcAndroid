@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="QcAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -26,9 +26,34 @@
     </style>
 
 
+  <style name="QcAppThemeForWeb" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+
+        <item name="colorControlNormal">@color/divider_white</item>
+
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:actionBarStyle">@style/Qc.ActionBarStyle</item>
+        <item name="actionBarStyle">@style/Qc.ActionBarStyle</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <!--<item name="buttonStyle">@style/Qc.Datepicker.Btn</item>-->
+        <!--<item name="android:editTextStyle">@style/Qc.EditTextStyle</item>-->
+        <!--<item name="editTextStyle">@style/Qc.EditTextStyle</item>-->
+        <item name="android:scrollViewStyle">@style/Qc.ScrollviewStyle</item>
+        <item name="android:textViewStyle">@style/Qc.TextCommonGrey</item>
+        <!--<item name="android:buttonStyle">@style/Qc.Datepicker.Btn</item>-->
+    </style>
 
 
-    <style name="Qc.SplashTheme" parent="@style/AppTheme">
+
+
+    <style name="Qc.SplashTheme" parent="@style/QcAppTheme">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
@@ -40,7 +65,9 @@
     <style name="Qc.Datepicker" parent="android:Theme.Holo.Light.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowTitleSize">0dp</item>
-
+    </style>
+    <style name="Qc.Web.Datepicker" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+     <item name="android:buttonStyle">@style/Qc.Datepicker.Btn</item>
     </style>
 
     <style name="Qc.ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -66,6 +93,9 @@
         <item name="android:background">@drawable/btn_prime</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
+    </style>
+    <style name="Qc.Datepicker.Btn" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="Qc.EditTextStyle" parent="Base.Widget.AppCompat.EditText">

@@ -120,12 +120,12 @@ import rx.functions.Action1;
                 calendar.add(Calendar.MONTH, eventMonthChange.pos);
                 tvMonth.setText(DateUtils.getChineseMonth(calendar.getTime()));
             }
-        });
+        },throwable -> {});
         RxBusAdd(Date.class).subscribe(new Action1<Date>() {
             @Override public void call(Date date) {
                 goDateSchedule(date);
             }
-        });
+        },throwable -> {});
         if (getContext() != null) {
             RxPermissions.getInstance(getContext())
                 .request(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
@@ -136,7 +136,7 @@ import rx.functions.Action1;
                             //ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
                         }
                     }
-                });
+                },throwable -> {});
         }
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
@@ -192,7 +192,7 @@ import rx.functions.Action1;
                 toWeb.putExtra("url", sb.toString());
                 startActivityForResult(toWeb, 404);
             }
-        });
+        },throwable -> {});
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
