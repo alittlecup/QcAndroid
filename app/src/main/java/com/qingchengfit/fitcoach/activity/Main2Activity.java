@@ -371,6 +371,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 return new ManageFragment();
             } else if (position == 2) {
                 return MainWebFragment.newInstance(Configs.Server + "mobile/coach/discover/");
+            } else if (position == 3){
+                return new Fragment();
             } else {
                 return new MineFragmentFragment();
             }
@@ -381,7 +383,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         }
 
         @Override public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override public int[] onIconSelect(int position) {

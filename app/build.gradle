@@ -43,7 +43,7 @@ def renameAPK(buildVariant, appName) {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    buildToolsVersion '25.0.2'
 
 //    retrolambda {
 //        jdk "/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home/"
@@ -101,7 +101,7 @@ android {
 //
 //        }
         common {
-            minSdkVersion 15
+            minSdkVersion 16
 
         }
 
@@ -142,17 +142,7 @@ android {
     }
 
 }
-repositories {
-    jcenter()
-    mavenCentral()
-    maven() {
-        url uri('../repo')
-    }
-    maven() {
-        url "https://jitpack.io"
-    }
 
-}
 
 repositories {
     jcenter()
@@ -160,7 +150,12 @@ repositories {
     maven(){
         url uri('../repo')
     }
-
+    maven(){
+        url uri('../../repo')
+    }
+    maven() {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -192,7 +187,10 @@ dependencies {
     compile files('libs/pushservice-5.2.0.12.jar')
     compile files('libs/AMap2DMap_2.9.2_AMapLocation_3.1.0_20161027.jar')
     compile files('libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
-    compile 'cn.qingchegfit.widgets:widgets:1.0@aar'
+    compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+    compile 'cn.qingchegfit.chat:chat:latest.integration'
+    compile 'cn.qingchegfit.chat:sdk:latest.integration'
+    compile 'cn.qingchegfit.chat:tsl:latest.integration'
     compile 'cn.qingchegfit.widgets:weekview:1.0@aar'
     compile 'cn.qingchegfit.mvplib:mvplib:1.0@aar'
     compile 'io.reactivex:rxandroid:1.2.1'
