@@ -1,275 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/webview_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     >
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:gravity="center_vertical"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ToolbarStyle.Overflow"
-            app:theme="@style/Qc.toolbarStyle"
-            app:titleTextAppearance="@style/ToolbarStyle"
-            >
-        <TextView
-                android:id="@+id/toobar_action"
-                style="@style/ToolbarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:padding="10dp"
-                android:background="@color/transparent"
-                android:visibility="gone"
-                tools:text="测试"
-                />
-    </android.support.v7.widget.Toolbar>
+  <android.support.v7.widget.Toolbar
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorPrimary"
+      android:gravity="center_vertical"
+      android:minHeight="?attr/actionBarSize"
+      app:popupTheme="@style/ToolbarStyle.Overflow"
+      app:theme="@style/Qc.toolbarStyle"
+      app:titleTextAppearance="@style/ToolbarStyle"
+      >
 
     <TextView
-            android:id="@+id/toolbar_titile"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_centerHorizontal="true"
-            android:maxWidth="200dp"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            />
+        android:id="@+id/toobar_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@color/transparent"
+        android:padding="10dp"
+        android:visibility="gone"
+        tools:text="测试"
+        style="@style/ToolbarStyle"
+        />
+  </android.support.v7.widget.Toolbar>
 
-    <com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout
-            android:id="@+id/refresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+  <TextView
+      android:id="@+id/toolbar_titile"
+      android:layout_width="wrap_content"
+      android:layout_height="?attr/actionBarSize"
+      android:layout_centerHorizontal="true"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:maxWidth="200dp"
+      android:textColor="@color/white"
+      android:textSize="18sp"
+      style="@style/Qc.TextCommonBlack"
+      />
+
+  <com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout
+      android:id="@+id/refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/toolbar"
+      android:fitsSystemWindows="true"
+      >
+
+    <com.tencent.smtt.sdk.WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-            android:layout_below="@id/toolbar"
-            >
+        android:scrollbars="none"
+        >
 
-        <com.tencent.smtt.sdk.WebView
-            android:fitsSystemWindows="true"
-                android:id="@+id/webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none"
-                >
+    </com.tencent.smtt.sdk.WebView>
 
-        </com.tencent.smtt.sdk.WebView>
+  </com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>
 
-    </com.qingchengfit.fitcoach.component.CustomSwipeRefreshLayout>
+  <LinearLayout
+      android:id="@+id/no_newwork"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:background="@color/white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/img_no_network"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="网络连接失败"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+    <Button
+        android:id="@+id/refresh_network"
+        android:layout_width="130dp"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginTop="20dp"
+        android:text="重 试"
+        />
+  </LinearLayout>
+
+  <RelativeLayout
+      android:id="@+id/guide_to_wechat_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/halftransparent_grey"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
 
     <LinearLayout
-            android:id="@+id/no_newwork"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone"
-            >
+        android:id="@+id/wid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/white"
+        android:divider="@drawable/divier_linear_vectail"
+        android:orientation="vertical"
+        android:showDividers="middle|end"
+        >
 
-        <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="75dp"
-                android:src="@drawable/img_no_network"
 
-                />
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="52dp"
+          android:background="@color/colorPrimarytrans"
+          >
 
         <TextView
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="网络连接失败"
-                />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="微信约课"
+            android:textColor="@color/private_color"
+            />
 
-        <Button
-                android:id="@+id/refresh_network"
-                android:layout_width="130dp"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_marginTop="20dp"
-                android:text="重 试"
-                />
-    </LinearLayout>
+      </RelativeLayout>
 
-    <RelativeLayout
-            android:id="@+id/guide_to_wechat_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/halftransparent_grey"
-            android:visibility="gone"
-            tools:visibility="visible"
-            >
-
-        <LinearLayout
-                android:id="@+id/wid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="100dp"
-                android:background="@color/white"
-                android:divider="@drawable/divier_linear_vectail"
-                android:orientation="vertical"
-                android:showDividers="middle|end"
-                >
-
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="@color/colorPrimarytrans"
-                    >
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="微信约课"
-                        android:textColor="@color/private_color"
-                        />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="70dp"
-                    >
-
-                <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="30dp"
-                        android:paddingTop="5dp"
-                        android:src="@drawable/step1"
-                        />
-
-                <TextView
-                        android:id="@+id/webview_student_guide_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="50dp"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:text="@string/webview_student_guide_1"
-                        />
-
-                <TextView
-                        android:id="@+id/copy_link_to_wechat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/webview_student_guide_1"
-                        android:paddingLeft="50dp"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:text="复制链接到剪切板"
-                        android:textColor="@color/text_link"
-                        />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    >
-
-                <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="70dp"
-                        android:paddingBottom="30dp"
-                        android:paddingTop="5dp"
-                        android:src="@drawable/step2"
-                        />
-
-                <TextView
-                        android:id="@+id/step_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="50dp"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:text="将链接添加到健身房微信公众号的菜单栏"
-                        />
-
-                <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/step_2"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/img_link_to_wechat"
-                        />
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    >
-
-                <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="30dp"
-                        android:paddingTop="5dp"
-                        android:src="@drawable/step3"
-                        />
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="50dp"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:text="会员关注健身房的微信公众号，即可购买会员卡、预约课程"
-                        />
-
-            </RelativeLayout>
-
-            <Button
-                    android:id="@+id/go_to_how"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:background="@color/white"
-                    android:text="详细教程>>"
-                    android:textColor="@color/text_link"
-
-                    />
-        </LinearLayout>
-
-        <View
-                android:layout_width="1dp"
-                android:layout_height="45dp"
-                android:layout_alignRight="@id/wid"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="55dp"
-                android:background="@color/white"
-
-                />
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:minHeight="70dp"
+          >
 
         <ImageView
-                android:id="@+id/close_guide"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignRight="@id/wid"
-                android:layout_marginTop="16dp"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_cross_white"
-                />
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/step1"
+            />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/webview_student_guide_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/webview_student_guide_1"
+            />
+
+        <TextView
+            android:id="@+id/copy_link_to_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/webview_student_guide_1"
+            android:paddingLeft="50dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="复制链接到剪切板"
+            android:textColor="@color/text_link"
+            />
+
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/activity_vertical_margin"
+          >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:paddingBottom="30dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/step2"
+            />
+
+        <TextView
+            android:id="@+id/step_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="将链接添加到健身房微信公众号的菜单栏"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/step_2"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_link_to_wechat"
+            />
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="70dp"
+          >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/step3"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="会员关注健身房的微信公众号，即可购买会员卡、预约课程"
+            />
+
+      </RelativeLayout>
+
+      <Button
+          android:id="@+id/go_to_how"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:text="详细教程>>"
+          android:textColor="@color/text_link"
+
+          />
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="45dp"
+        android:layout_alignRight="@id/wid"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="55dp"
+        android:background="@color/white"
+
+        />
+
+    <ImageView
+        android:id="@+id/close_guide"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignRight="@id/wid"
+        android:layout_marginTop="16dp"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_cross_white"
+        />
+
+  </RelativeLayout>
 </RelativeLayout>

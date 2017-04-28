@@ -29,16 +29,13 @@ public class Configs {
      */
 //    public static boolean isDebug = true;
     public static boolean isDebug = false;
-    public static String ServerIp = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
-//        public static String ServerIp = isDebug ? "http://gravityccy.qingchengfit.cn" : "http://cloudtest.qingchengfit.cn/";
-    public static String ServerPort = isDebug ? ":7777/" : "";
     public static String Server = BuildConfig.DEBUG ? "http://cloudtest.qingchengfit.cn/" : "http://cloud.qingchengfit.cn/";
     //public static final String ORDER_PRIVATE_URL = Server + "mobile/coach/privatelesson/list/";
     //public static final String ORDER_GROUP_URL = Server + "mobile/coach/grouplesson/list/";
     public static String HOST_NAMESPACE_0 = "http://.qingchengfit.cn";
     public static String HOST_NAMESPACE_1 = "http://.qingchengfit.com";
-    public static String PRIVATE_PRIVEIW = Configs.ServerIp + "fitness/redirect/user/private/";
-    public static String GROUP_PRIVEIW = Configs.ServerIp+"fitness/redirect/user/group/";
+    public static String PRIVATE_PRIVEIW = Configs.Server + "fitness/redirect/user/private/";
+    public static String GROUP_PRIVEIW = Configs.Server+"fitness/redirect/user/group/";
 
     /**
      * 默认头像

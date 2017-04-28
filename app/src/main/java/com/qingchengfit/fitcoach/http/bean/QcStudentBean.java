@@ -15,6 +15,7 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Created by Paper on 15/10/14 2015.
  */
+@Deprecated
 public class QcStudentBean {
     @SerializedName("id")
     public String id;

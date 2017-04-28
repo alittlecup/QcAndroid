@@ -25,7 +25,7 @@ import com.qingchengfit.fitcoach.http.bean.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * power by

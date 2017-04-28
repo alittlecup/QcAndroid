@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * A simple {@link Fragment} subclass.

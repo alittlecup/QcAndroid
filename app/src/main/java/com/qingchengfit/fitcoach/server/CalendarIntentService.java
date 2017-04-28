@@ -18,9 +18,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

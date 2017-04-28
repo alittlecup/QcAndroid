@@ -1,5 +1,31 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+ext {
+    configuration = [
+        package          : "cn.qingchengfit.staffkit",
+        buildToolsVersion: "25.0.2",
+        compileVersion   : 24,
+        minSdk           : 15,
+        targetSdk        : 24,
+        version_code     : 67, //缝10必更
+        version_name     : "0.67",
+    ]
+
+    libraries = [supportVersion  : "25.2.0",
+                 dagger          : "2.10",
+                 rxjava          : "1.1.6",
+                 rxandroid       : "1.2.1",
+                 retrofit        : "2.0.2",
+                 rxbind          : "0.4.0",
+                 okhttp          : "3.2.0",
+                 butterknife     : "8.4.0",
+                 javax_annotation: "10.0-b28",
+                 glide           : "3.6.0",
+                 circleimageview : "1.3.0"
+    ]
+    bakPath = "tinkeroutput/"
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -13,7 +39,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
 //        classpath "com.android.databinding:dataBinder:1.0-rc1"
 //        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
@@ -26,6 +52,7 @@ buildscript {
         }
     }
 }
+
 //apply plugin: 'com.github.piasy.okbuck-gradle-plugin'//使用buck编译
 //okbuck {
 //    target "android-23"

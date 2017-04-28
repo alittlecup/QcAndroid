@@ -36,7 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.LogUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;

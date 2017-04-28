@@ -66,11 +66,11 @@ public class AddGymFragment extends GuideSetGymFragment {
     public void onNextStep() {
         showLoading();
         if (TextUtils.isEmpty(gymName.getContent()) ){
-            cn.qingchengfit.widgets.utils.ToastUtils.show("请填写场馆名称");
+            cn.qingchengfit.utils.ToastUtils.show("请填写场馆名称");
             return;
         }
         if ( lat == 0 || lng == 0){
-            cn.qingchengfit.widgets.utils.ToastUtils.show("请重新选择场馆位置");
+            cn.qingchengfit.utils.ToastUtils.show("请重新选择场馆位置");
             return;
         }
 

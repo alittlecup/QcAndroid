@@ -149,7 +149,7 @@ import rx.schedulers.Schedulers;
                         Integer.parseInt(orderCount.getContent());
 
                 }catch (Exception e){
-                    cn.qingchengfit.widgets.utils.ToastUtils.show("请填写正确的时间和人数，请勿输入空格或者其他符号");
+                    cn.qingchengfit.utils.ToastUtils.show("请填写正确的时间和人数，请勿输入空格或者其他符号");
                     return;
                 }
 

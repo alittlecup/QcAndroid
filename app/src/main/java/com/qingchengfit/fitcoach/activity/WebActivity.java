@@ -37,11 +37,33 @@ public class WebActivity extends BaseAcitivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.
             SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.
             SOFT_INPUT_STATE_HIDDEN);
+
+        //if (!CompatUtils.less21()) {
+        //    Window window = getWindow();
+        //    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+        //        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        //    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        //        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        //    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        //        window.setStatusBarColor(Color.TRANSPARENT);
+        //        window.setNavigationBarColor(Color.BLACK);
+        //    }
+        //}
         setContentView(R.layout.activity_frag);
         webfrag = WebFragment.newInstance(getIntent().getStringExtra("url"));
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.web_frag_layout,webfrag )
             .commit();
+    }
+
+    public void onNewWeb(String url){
+        getSupportFragmentManager().beginTransaction()
+            .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
+            .add(R.id.web_frag_layout, WebFragment.newInstance(url))
+            .addToBackStack("")
+            .commit();
+
     }
 
     @Override public void onBackPressed() {

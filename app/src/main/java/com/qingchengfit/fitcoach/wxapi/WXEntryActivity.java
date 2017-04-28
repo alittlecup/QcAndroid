@@ -10,19 +10,39 @@ package com.qingchengfit.fitcoach.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import cn.sharesdk.wechat.utils.WXAppExtendObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
 import cn.sharesdk.wechat.utils.WechatHandlerActivity;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.SensorsUtils;
+import com.tencent.mm.sdk.modelbase.BaseReq;
+import com.tencent.mm.sdk.modelbase.BaseResp;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import org.json.JSONObject;
 
 /** 微信客户端回调activity示例 */
-public class WXEntryActivity extends WechatHandlerActivity {
+public class WXEntryActivity extends WechatHandlerActivity  implements IWXAPIEventHandler {
+
+	private IWXAPI api;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		api = WXAPIFactory.createWXAPI(this, getString(R.string.wechat_code));
+		api.handleIntent(getIntent(), this);
 	}
 
-
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		setIntent(intent);
+		api.handleIntent(intent, this);
+	}
 
 	/**
 	 * 处理微信发出的向第三方应用请求app message
@@ -53,5 +73,42 @@ public class WXEntryActivity extends WechatHandlerActivity {
 			Toast.makeText(this, obj.extInfo, Toast.LENGTH_SHORT).show();
 		}
 	}
+
+
+	@Override
+	public void onReq(BaseReq baseReq) {
+		//ToastUtils.showS(baseReq.getType()+ ":  type" );
+	}
+
+	@Override
+	public void onResp(BaseResp baseResp) {
+		ToastUtils.showS(baseResp.errStr);
+		switch (baseResp.errCode) {
+			case BaseResp.ErrCode.ERR_OK: {
+				ToastUtils.showS("分享成功！" );
+				sensorTrack();
+			}
+			break;
+		}
+		this.finish();
+	}
+
+	public void sensorTrack(){
+
+		try {
+			String shareBean = PreferenceUtils.getPrefString(this,"share_tmp","");
+			if (!TextUtils.isEmpty(shareBean)) {
+				JSONObject jsonObject1 = new JSONObject(shareBean);
+				jsonObject1.put("qc_sharesuccess","1");
+				SensorsUtils.track("page_share",jsonObject1.toString());
+				PreferenceUtils.setPrefString(this,"share_tmp","");
+			}
+
+
+		}catch (Exception e){
+
+		}
+	}
+
 
 }

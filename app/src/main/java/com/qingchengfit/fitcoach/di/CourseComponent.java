@@ -59,7 +59,6 @@ public interface CourseComponent {
     void inject(CourseImageViewFragment a);
     void inject(CourseListFragment a);
     void inject(EditCourseFragment a);
-//    void inject(GymCourseListFragment a);
     void inject(JacketManagerFragment a);
     void inject(ShopCommentsFragment a);
 

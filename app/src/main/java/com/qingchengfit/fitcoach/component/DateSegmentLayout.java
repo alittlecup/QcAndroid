@@ -7,7 +7,7 @@ import android.view.View;
 import java.util.Calendar;
 import java.util.Date;
 
-import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.utils.DateUtils;
 
 /**
  * power by

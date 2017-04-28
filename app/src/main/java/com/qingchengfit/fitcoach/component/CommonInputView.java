@@ -22,9 +22,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.CompatUtils;
-import cn.qingchengfit.widgets.utils.MeasureUtils;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -74,6 +74,7 @@ public class CommonInputView extends RelativeLayout {
         super(context);
         showDivier = true;
         inflate(context, R.layout.layout_commoninput, this);
+        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
         onFinishInflate();
     }
 
@@ -82,7 +83,7 @@ public class CommonInputView extends RelativeLayout {
         str_content = content;
         showDivier = true;
         this.setIsNum(isNum);
-        textColor = cn.qingchengfit.widgets.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
 
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
@@ -94,7 +95,7 @@ public class CommonInputView extends RelativeLayout {
         showDivier = true;
         this.canBeNull = canBeNull;
         this.setIsNum(isNum);
-        textColor = cn.qingchengfit.widgets.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
 
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();

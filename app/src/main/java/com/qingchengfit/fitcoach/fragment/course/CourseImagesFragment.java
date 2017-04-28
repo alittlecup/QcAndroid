@@ -203,7 +203,8 @@ public class CourseImagesFragment extends BaseFragment
         return true;
     }
 
-    @Override public void onLoadMore() {
+    @Override public void onLoadMore(int i, int i1) {
+
         page++;
 
         if (page > totalPage) {
@@ -254,4 +255,10 @@ public class CourseImagesFragment extends BaseFragment
                 }
             }));
     }
+
+    @Override public void noMoreLoad(int i) {
+
+    }
+
+
 }

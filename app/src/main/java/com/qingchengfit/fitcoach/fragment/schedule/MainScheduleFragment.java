@@ -14,13 +14,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
-import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.event.EventGoPreview;
@@ -167,14 +166,14 @@ public class MainScheduleFragment extends BaseFragment {
                                 scheduleNotificationCount.setText("99");
                             }
                             scheduleNotificationCount.setVisibility(View.VISIBLE);
-                            if (getActivity() instanceof Main2Activity){
-                                ((Main2Activity) getActivity()).showIcon(0,true);
-                            }
+                            //if (getActivity() instanceof Main2Activity){
+                            //    ((Main2Activity) getActivity()).showIcon(0,true);
+                            //}
                         } else {
                             scheduleNotificationCount.setVisibility(View.GONE);
-                            if (getActivity() instanceof Main2Activity){
-                                ((Main2Activity) getActivity()).showIcon(0,false);
-                            }
+                            //if (getActivity() instanceof Main2Activity){
+                            //    ((Main2Activity) getActivity()).showIcon(0,false);
+                            //}
                         }
                     }
                 }

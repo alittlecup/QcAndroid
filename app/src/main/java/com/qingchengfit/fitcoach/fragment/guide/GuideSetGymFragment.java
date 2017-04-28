@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.utils.AppUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;

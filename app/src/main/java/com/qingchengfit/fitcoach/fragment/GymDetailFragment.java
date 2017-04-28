@@ -44,12 +44,12 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.BitmapUtils;
-import cn.qingchengfit.widgets.utils.ChoosePicUtils;
-import cn.qingchengfit.widgets.utils.FileUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BitmapUtils;
+import cn.qingchengfit.utils.ChoosePicUtils;
+import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -471,7 +471,7 @@ public class GymDetailFragment extends Fragment {
 
     private void initCookie(String url) {
         sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
-        setCookie(Configs.ServerIp, "sessionid", sessionid);
+        setCookie(Configs.Server, "sessionid", sessionid);
 
         if (sessionid != null) {
             try {

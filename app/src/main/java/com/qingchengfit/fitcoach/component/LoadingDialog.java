@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.LoadingPointerView;
-import cn.qingchengfit.widgets.utils.MeasureUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 import com.qingchengfit.fitcoach.R;
 
 

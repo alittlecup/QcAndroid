@@ -19,7 +19,7 @@ import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.chat.ConversationFriendsFragment;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CmBean;
@@ -16,16 +17,26 @@ public class ChooseActivity extends BaseAcitivity {
     public static final int TO_CHOSSE_CIRCLE = 1;
     public static final int TO_CHOSSE_GYM = 2;
     public static final int TO_CHOSSE_GYM_SCHEDULE = 3;
-
+    public static final int CONVERSATION_FRIEND = 61; // 用卡签到
+    private String chosenId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_address);
-        Fragment fragment = new ChooseAddressFragment();
-        switch (getIntent().getIntExtra("to",0)){
-            case 1:
+        Fragment fragment = new Fragment();
+        int to = getIntent().getIntExtra("to", 0);
+        chosenId = getIntent().getStringExtra("id");
+        if (getIntent().getData() != null && getIntent().getData().getPath() != null){
+            String path = getIntent().getData().getPath();
+            if (path.contains("chat_friend")){
+                to = CONVERSATION_FRIEND;
+            }
 
+        }
+
+        switch (to){
+            case 1:
                 fragment = AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"),getIntent().getLongExtra("len",0));
                 break;
             case TO_CHOSSE_GYM:
@@ -33,6 +44,9 @@ public class ChooseActivity extends BaseAcitivity {
                 break;
             case TO_CHOSSE_GYM_SCHEDULE:
                 fragment = new ChooseScheduleGymFragmentBuilder(getIntent().getParcelableExtra("service")).build();
+                break;
+            case CONVERSATION_FRIEND:
+                fragment = new ConversationFriendsFragment();
                 break;
             default:
                 fragment = new ChooseAddressFragment();

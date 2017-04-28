@@ -44,6 +44,8 @@ public class CoachService implements Parcelable {
     public boolean has_permission = true;
     @SerializedName("gd_district")
     public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity gd_district;
+    public String system_end;
+
 
     private CoachService(Builder builder) {
         setModel(builder.model);
@@ -58,7 +60,9 @@ public class CoachService implements Parcelable {
         setUsers_count(builder.users_count);
         gd_district = builder.gd_district;
     }
-
+    public String system_end(){
+        return system_end;
+    }
     public String getDistrictStr() {
         if (gd_district != null && gd_district.province != null && gd_district.city != null) {
             if (gd_district.city.name.startsWith(gd_district.province.name)) {
@@ -244,6 +248,7 @@ public class CoachService implements Parcelable {
         dest.writeString(this.brand_id);
         dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.gd_district, flags);
+        dest.writeString(this.system_end);
     }
 
     protected CoachService(Parcel in) {
@@ -260,6 +265,7 @@ public class CoachService implements Parcelable {
         this.brand_id = in.readString();
         this.has_permission = in.readByte() != 0;
         this.gd_district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
+        this.system_end = in.readString();
     }
 
     public static final Creator<CoachService> CREATOR = new Creator<CoachService>() {

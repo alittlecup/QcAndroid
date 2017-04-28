@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.WebFragment;

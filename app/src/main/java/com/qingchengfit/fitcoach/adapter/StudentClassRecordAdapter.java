@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 
 import java.util.List;
 
-import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.utils.DateUtils;
 
 /**
  * power by

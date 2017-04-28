@@ -16,7 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.StringUtils;
+import cn.qingchengfit.utils.StringUtils;
 import co.hkm.soltag.TagContainerLayout;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -82,7 +82,7 @@ public class ShopCommentItem extends AbstractFlexibleItem<ShopCommentItem.ShopCo
             holder.noImpression.setVisibility(View.GONE);
             holder.comments.setTags(BusinessUtils.impress2Str(commentShop.impressions));
         }
-        adapter.animateView(holder.itemView,position,false);
+        //adapter.animateView(holder.itemView,position,false);
     }
 
     public static class ShopCommentVH extends FlexibleViewHolder {

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.utils.DateUtils;
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;

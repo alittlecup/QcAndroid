@@ -25,7 +25,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.qingchengfit.widgets.utils.CompatUtils;
+import cn.qingchengfit.utils.CompatUtils;
 import com.qingchengfit.fitcoach.R;
 
 /*

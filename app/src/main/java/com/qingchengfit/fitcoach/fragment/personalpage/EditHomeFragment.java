@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;

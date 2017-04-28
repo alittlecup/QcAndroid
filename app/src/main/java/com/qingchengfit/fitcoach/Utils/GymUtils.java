@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import java.util.HashMap;
@@ -66,5 +67,13 @@ public class GymUtils {
             params.put("model", gymBase.getModel());
         }
         return params;
+    }
+
+    public static int getSystemEndDay(CoachService coachService){
+        try {
+            return DateUtils.dayNumFromToday(DateUtils.formatDateFromYYYYMMDD(coachService.system_end()));
+        }catch (Exception e){
+            return 0;
+        }
     }
 }

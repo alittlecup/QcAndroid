@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -196,12 +196,12 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                     PreferenceUtils.setPrefString(getContext(),App.coachid+"permission",ps);
                                     updatePermission(qcResponsePermission.data);
                                 } else {
-                                    cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                                    cn.qingchengfit.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
                                 }
                             }
                         }, new Action1<Throwable>() {
                             @Override public void call(Throwable throwable) {
-                                cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
+                                cn.qingchengfit.utils.ToastUtils.show("权限更新失败");
                             }
                         }));
                 }
@@ -282,11 +282,11 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                             PreferenceUtils.setPrefString(getContext(),App.coachid+"permission",ps);
                                             updatePermission(qcResponsePermission.data);
                                         } else {
-                                            cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                                            cn.qingchengfit.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
                                         }
                                     }
                                 }, throwable -> {
-                                    cn.qingchengfit.widgets.utils.ToastUtils.show("权限更新失败");
+                                    cn.qingchengfit.utils.ToastUtils.show("权限更新失败");
                                 }));
                             initView();
                         } else {
@@ -432,15 +432,15 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                         return;
                                     }
                                 }
-                                cn.qingchengfit.widgets.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
+                                cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
 
-                            }else cn.qingchengfit.widgets.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
-                        }else  cn.qingchengfit.widgets.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
+                            }else cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
+                        }else  cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
 
                     }
                 }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
-                        cn.qingchengfit.widgets.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
+                        cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
                     }
                 })
             );
@@ -478,16 +478,16 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
                                         ((Main2Activity) getActivity()).setCoachService(null);
-                                        cn.qingchengfit.widgets.utils.ToastUtils.show("退出健身房成功！");
+                                        cn.qingchengfit.utils.ToastUtils.show("退出健身房成功！");
                                         getServer();
                                     } else {
-                                        cn.qingchengfit.widgets.utils.ToastUtils.show(qcResponse.getMsg());
+                                        cn.qingchengfit.utils.ToastUtils.show(qcResponse.getMsg());
                                     }
                                 }
                             }, new Action1<Throwable>() {
                                 @Override public void call(Throwable throwable) {
                                     hideLoading();
-                                    cn.qingchengfit.widgets.utils.ToastUtils.show("error!");
+                                    cn.qingchengfit.utils.ToastUtils.show("error!");
                                 }
                             }));
                     }

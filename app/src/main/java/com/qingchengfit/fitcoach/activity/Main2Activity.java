@@ -17,16 +17,17 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.NetWorkUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.widgets.GuideWindow;
 import cn.qingchengfit.widgets.TabView;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.CompatUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.NetWorkUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
@@ -42,24 +43,24 @@ import com.qingchengfit.fitcoach.bean.NetworkBean;
 import com.qingchengfit.fitcoach.bean.UpdateVersion;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.event.EventInit;
+import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainWebFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-import com.qingchengfit.fitcoach.http.bean.QcResponseActivities;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.exceptions.InvalidDataException;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.qcloud.timchat.common.AppData;
 import im.fir.sdk.FIR;
 import im.fir.sdk.VersionCheckCallback;
 import java.io.File;
@@ -104,6 +105,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     MaterialDialog logoutDialog;
     @BindView(R.id.order_studnet) View orderStudnet;
     @BindView(R.id.web_position) View webPosition;
+    @BindView(R.id.tv_noti_count) TextView tvNotiCount;
     private Gson gson;
     private User user;
     private Date mChooseDate;
@@ -141,11 +143,13 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private File newAkp;
     AsyncDownloader mDownloadThread;
     private int mGwShowNum = 0;
+    private boolean isShowFindRed = true;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
+
 
         RxPermissions.getInstance(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
             @Override public void call(Boolean aBoolean) {
@@ -182,18 +186,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         initUser();
 
         initBDPush();
-        //RxPermissions.getInstance(this)
-        //    .request(
-        //    .subscribe(new Action1<Boolean>() {
-        //        @Override public void call(Boolean aBoolean) {
-        //            if (aBoolean) {
-        //
-        //            } else {
-        //                ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
-        //            }
-        //        }
-        //    });
-
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = getIntent().getStringExtra("url");
@@ -239,9 +231,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         PreferenceUtils.setPrefBoolean(this, "guide_1", true);
                         if (PreferenceUtils.getPrefBoolean(Main2Activity.this, "guide_1", false) && !PreferenceUtils.getPrefBoolean(
                             Main2Activity.this, "guide_2", false)) {
-                            if (gd2 == null) gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
-                            else
-                            if (webPosition != null && !gd2.isShowing()) gd2.show(webPosition);
+                            if (gd2 == null) {
+                                gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
+                            } else if (webPosition != null && !gd2.isShowing()) gd2.show(webPosition);
                         }
                         break;
                     case 2:
@@ -279,6 +271,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         if (gd2 == null) gd2 = new GuideWindow(Main2Activity.this, getString(R.string.hint_help_order), GuideWindow.UP);
                         gd2.show(webPosition);
                     }
+                }
+
+                if (position ==  2) {
+                    tabview.setPointStatu(2, false);
+                    isShowFindRed = false;
                 }
             }
 
@@ -318,11 +315,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         viewpager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
                 CompatUtils.removeGlobalLayout(viewpager.getViewTreeObserver(), this);
-                viewpager.setOffscreenPageLimit(4);
+                viewpager.setOffscreenPageLimit(5);
                 viewpager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), Main2Activity.this));
                 tabview.setViewPager(viewpager);
+                //默认设置发现页面有红点
+                tabview.setPointStatu(2, isShowFindRed);
             }
         });
+
     }
 
     @Override public void onfinish() {
@@ -351,11 +351,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
         private int[] mIconSelect = {
             R.drawable.ic_tabbar_schedule_active, R.drawable.ic_tabbar_manage_active, R.drawable.ic_tabbar_discover_active,
-            R.drawable.ic_tabbar_account_active
+            R.drawable.vd_tab_noti_activte, R.drawable.ic_tabbar_account_active
         };
         private int[] mIconNormal = {
             R.drawable.ic_tabbar_schedule_normal, R.drawable.ic_tabbar_manage_normal, R.drawable.ic_tabbar_discover_normal,
-            R.drawable.ic_tabbar_account_normal
+            R.drawable.vd_tab_noti_nomal, R.drawable.ic_tabbar_account_normal
         };
         private Context context;
 
@@ -371,8 +371,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 return new ManageFragment();
             } else if (position == 2) {
                 return MainWebFragment.newInstance(Configs.Server + "mobile/coach/discover/");
-            } else if (position == 3){
-                return new Fragment();
+            } else if (position == 3) {
+                return new MainMsgFragment();
             } else {
                 return new MineFragmentFragment();
             }
@@ -402,6 +402,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         PreferenceUtils.setPrefBoolean(Main2Activity.this, "hasPushId", false);
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);
         PushManager.stopWork(App.AppContex);
+        AppData.clear(this);
         PreferenceUtils.setPrefBoolean(this, "first", true);
         Intent logout = new Intent(this, SplashActivity.class);
         logout.putExtra("isRegiste", 0);
@@ -412,27 +413,27 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     @Override protected void onResume() {
         super.onResume();
 
-        if (spQCZX != null && !spQCZX.isUnsubscribed()) spQCZX.unsubscribe();
-        spQCZX = getApi().getApi.getActivitiesCount()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseActivities>() {
-                @Override public void call(QcResponseActivities qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        tabview.setPointStatu(2, qcResponse.data.count > 0);
-                    }
-                }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-
-                }
-            });
+        //if (spQCZX != null && !spQCZX.isUnsubscribed()) spQCZX.unsubscribe();
+        //spQCZX = getApi().getApi.getActivitiesCount()
+        //    .subscribeOn(Schedulers.io())
+        //    .observeOn(AndroidSchedulers.mainThread())
+        //    .subscribe(new Action1<QcResponseActivities>() {
+        //        @Override public void call(QcResponseActivities qcResponse) {
+        //            if (ResponseConstant.checkSuccess(qcResponse)) {
+        //                tabview.setPointStatu(2, qcResponse.data.count > 0);
+        //            }
+        //        }
+        //    }, new Action1<Throwable>() {
+        //        @Override public void call(Throwable throwable) {
+        //
+        //        }
+        //    });
         if (spOrders != null && !spOrders.isUnsubscribed()) spOrders.unsubscribe();
         spOrders = QcCloudClient.getApi().getApi.qcGetOrderList()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(qcResponsePage -> {
-                tabview.setPointStatu(3, (!PreferenceUtils.getPrefBoolean(this, App.coachid + "_has_show_orders", false)
+                tabview.setPointStatu(4, (!PreferenceUtils.getPrefBoolean(this, App.coachid + "_has_show_orders", false)
                     && qcResponsePage.data.total_count > 0));
                 ordersCount = qcResponsePage.data.total_count;
             });
@@ -561,6 +562,11 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 super.onFinish();
             }
         });
+    }
+
+    public void freshNotiCount(int count) {
+        tvNotiCount.setVisibility(count > 0 ? View.VISIBLE:View.GONE);
+        tvNotiCount.setText(count > 99 ?"…":Integer.toString(count));
     }
 
     private void initUser() {

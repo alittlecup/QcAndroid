@@ -1,9 +1,16 @@
 package com.qingchengfit.fitcoach.http;
 
 import android.support.annotation.Nullable;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.model.body.ClearNotiBody;
+import cn.qingchengfit.model.body.PostCommentBody;
+import cn.qingchengfit.model.responese.ArticleCommentListData;
+import cn.qingchengfit.model.responese.ChatFriendsData;
+import cn.qingchengfit.model.responese.Notification;
+import cn.qingchengfit.model.responese.NotificationGlance;
+import cn.qingchengfit.model.responese.QcResponseData;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qingchengfit.fitcoach.App;
@@ -123,6 +130,7 @@ import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Interceptor;
@@ -567,6 +575,25 @@ public class QcCloudClient {
         rx.Observable<QcResponsePage> qcGetOrderList();
 
 
+        /**
+         *
+         * 聊天相关
+         */
+        @GET("/api/im/gym/contacts/")
+        rx.Observable<QcResponseData<ChatFriendsData>> qcQueryChatFriends();
+        /*
+         *
+          *  评论相关
+         */
+        @GET("/api/news/{news_id}/comment/")
+        rx.Observable<QcResponseData<ArticleCommentListData>> qcQueryComments(@Path("news_id") String id,@QueryMap HashMap<String, Object> params);
+        @GET("/api/my/news/replies/")
+        rx.Observable<QcResponseData<ArticleCommentListData>> qcQueryReplies(@QueryMap HashMap<String, Object> params);
+
+        @GET("/api/v2/notifications/?order_by=-created_at") rx.Observable<QcResponseData<Notification>> qcGetNotification(@QueryMap HashMap<String,Object>  query);
+        @GET("/api/v2/notifications/index/") rx.Observable<QcResponseData<List<NotificationGlance>>> qcGetNotificationIndex(@Query("type_json") String query);
+
+
     }
 
     public interface PostApi {
@@ -790,6 +817,12 @@ public class QcCloudClient {
         @DELETE("/api/coaches/photos/") rx.Observable<QcResponse> qcDeleteWallImage(@Query("ids")  String ids);
 
 
+        //文章评论
+        @POST("/api/news/{newsid}/comment/")
+        rx.Observable<QcResponse> qcAddComment(@Path("newsid") String news_id,@Body PostCommentBody body);
+
+        @PUT("/api/v2/notifications/")
+        rx.Observable<QcResponse> qcClearTypeNoti(@Body ClearNotiBody body);
     }
 
     public interface DownLoadApi {

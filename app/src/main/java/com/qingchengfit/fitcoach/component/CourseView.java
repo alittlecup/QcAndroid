@@ -12,7 +12,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.http.bean.ShopCourse;
 
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.LogUtil;
 
 /**
  * power by

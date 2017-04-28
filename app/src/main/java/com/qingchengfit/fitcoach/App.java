@@ -1,37 +1,36 @@
 package com.qingchengfit.fitcoach;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import cn.qingchengfit.widgets.utils.StringUtils;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.activity.LoadResActivity;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
+import com.qingchengfit.fitcoach.di.AppComponent;
+import com.qingchengfit.fitcoach.di.AppModule;
+import com.qingchengfit.fitcoach.di.DaggerAppComponent;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.tinker.loader.app.ApplicationLike;
 import com.tinkerpatch.sdk.TinkerPatch;
 import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasDispatchingActivityInjector;
+import dagger.android.support.HasDispatchingSupportFragmentInjector;
 import im.fir.sdk.FIR;
-import java.util.Map;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
-
 
 //import com.qingchengfit.fitcoach.di.ApplicationComponet;
 
@@ -59,8 +58,9 @@ import rx.plugins.RxJavaPlugins;
  * <p>
  * Created by Paper on 15/7/29 2015.
  */
-public class App extends Application {
-
+public class App extends Application implements HasDispatchingActivityInjector,HasDispatchingSupportFragmentInjector {
+    @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+    @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
     // 数据接收的 URL
     final String SA_SERVER_URL = "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
     // 配置分发的 URL
@@ -80,28 +80,11 @@ public class App extends Application {
     public static DiskLruCache diskLruCache;
     public static boolean gCanReload = false;
 
-    //public static String staffId = "53";
-    //    private ApplicationComponet componet;
-//    private RefWatcher refWatcher;
     private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";
-//    public ApplicationComponet getComponet() {
-//        if (componet != null)
-//            return componet;
-//        else return null;
-//    }
 
     public static void setgUser(User ser) {
         gUser = ser;
     }
-
-    //
-//    public void setComponet(ApplicationComponet componet) {
-//        this.componet = componet;
-//    }
-//    public static RefWatcher getRefWatcher() {
-//        App application = (App) App.AppContex;
-//        return application.refWatcher;
-//    }
 
     public static String getCurProcessName(Context context) {
         try {
@@ -123,10 +106,7 @@ public class App extends Application {
     //
     @Override
     public void onCreate() {
-
         super.onCreate();
-
-
         tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
         //开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
         if (tinkerApplicationLike != null) {
@@ -144,7 +124,6 @@ public class App extends Application {
         }
 //        LeakCanary.install(this);
         AppContex = getApplicationContext();
-//        refWatcher = LeakCanary.install(this);
         if (!BuildConfig.DEBUG)
             CrashHandler.getInstance().init(this);
         ToastUtils.init(this);
@@ -161,20 +140,35 @@ public class App extends Application {
         } catch (Exception e) {
 
         }
+
+
+
         String u = PreferenceUtils.getPrefString(this, "user_info", "");
         if (!TextUtils.isEmpty(u)) {
             gUser = new Gson().fromJson(u, User.class);
+
         }
 
 
 
         Configs.APP_ID = getString(R.string.wechat_code);
         String id = PreferenceUtils.getPrefString(this, "coach", "");
+        String session_id =  PreferenceUtils.getPrefString(this, "session_id", "");
+
         if (TextUtils.isEmpty(id)) {
         } else {
             Coach coach = new Gson().fromJson(id, Coach.class);
             App.coachid = Integer.parseInt(coach.id);
+
         }
+        AppComponent appComponent = DaggerAppComponent.builder()
+            .appModule(new AppModule.Builder()
+                .app(this)
+                .gymWrapper(new GymWrapper.Builder().build())
+                .loginStatus(new LoginStatus.Builder().loginUser(gUser == null? new Staff():Staff.formatFromUser(gUser,App.coachid+"")).session(session_id).userId(gUser == null?"":gUser.getId()).build())
+                .build())
+            .build();
+        appComponent.inject(this);
 
         ToastUtils.init(this);
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
@@ -186,18 +180,6 @@ public class App extends Application {
                 }
             }
         });
-
-//        DefaultAcceptConfiguration.getInstance().registerAcceptConfiguration(new DefaultAcceptConfiguration.OnDefaultAcceptConfiguration() {
-//            @Override
-//            public Executor applyAcceptExecutor() {
-//                return acceptExecutor;
-//            }
-//
-//            @Override
-//            public Handler applyAcceptHandler() {
-//                return handler;
-//            }
-//        });
 
 
     }
@@ -212,105 +194,16 @@ public class App extends Application {
     }
 
 
-    //    public RefWatcher getRefWatcher(Context context) {
-//        return refWatcher;
-//    }
-//
-//    private  RefWatcher refWatcher;
-//
-    private void setupGraph() {
-
-//        componet = DaggerApplicationComponet.builder()
-//                .rxBusModule(new RxBusModule())
-//                .applicationModule(new ApplicationModule(this))
-//                .build();
-    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-//        if (!quickStart()) {
-//            if (needWait(base)){
-//                waitForDexopt(base);
-//            }
-//            MultiDex.install(this);
-//        } else {
-//            return;
-//        }
+
     }
 
-    public boolean quickStart() {
-        if (StringUtils.contains(getCurProcessName(this), ":mini")) {
-            LogUtil.d("loadDex", ":mini start!");
-            return true;
-        }
-        return false;
-    }
 
-    //neead wait for dexopt ?
-    private boolean needWait(Context context) {
-        String flag = get2thDexSHA1(context);
-        LogUtil.d("loadDex", "dex2-sha1 " + flag);
-        SharedPreferences sp = context.getSharedPreferences(
-                AppUtils.getAppVer(context), MODE_MULTI_PROCESS);
-        String saveValue = sp.getString(KEY_DEX2_SHA1, "");
-        return !StringUtils.equals(flag, saveValue);
-    }
 
-    /**
-     * Get classes.dex file signature
-     *
-     * @param context
-     * @return
-     */
-    private String get2thDexSHA1(Context context) {
-        ApplicationInfo ai = context.getApplicationInfo();
-        String source = ai.sourceDir;
-        try {
-            JarFile jar = new JarFile(source);
-            Manifest mf = jar.getManifest();
-            Map<String, Attributes> map = mf.getEntries();
-            Attributes a = map.get("classes2.dex");
-            return a.getValue("SHA1-Digest");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    // optDex finish
-    public void installFinish(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(
-                AppUtils.getAppVer(context), MODE_MULTI_PROCESS);
-        sp.edit().putString(KEY_DEX2_SHA1, get2thDexSHA1(context)).commit();
-    }
-
-    public void waitForDexopt(Context base) {
-        Intent intent = new Intent();
-        ComponentName componentName = new
-                ComponentName("com.zongwu", LoadResActivity.class.getName());
-        intent.setComponent(componentName);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        base.startActivity(intent);
-        long startWait = System.currentTimeMillis();
-        long waitTime = 10 * 1000;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1) {
-            waitTime = 20 * 1000;//实测发现某些场景下有些2.3版本有可能10s都不能完成optdex
-        }
-        while (needWait(base)) {
-            try {
-                long nowWait = System.currentTimeMillis() - startWait;
-                LogUtil.d("loadDex", "wait ms :" + nowWait);
-                if (nowWait >= waitTime) {
-                    return;
-                }
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
     public void finishActivity() {
@@ -319,4 +212,11 @@ public class App extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    @Override public DispatchingAndroidInjector<Activity> activityInjector() {
+        return dispatchingActivityInjector;
+    }
+
+    @Override public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingFragmentInjector;
+    }
 }

@@ -6,16 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.utils.MeasureUtils;
+import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * power by
@@ -39,43 +37,49 @@ import eu.davidea.viewholders.FlexibleViewHolder;
  */
 public class CommonNoDataItem extends AbstractFlexibleItem<CommonNoDataItem.CommonNodataVH> {
 
-    @DrawableRes
-    public  int imgRes;
+    @DrawableRes public int imgRes;
     public String hintStr;
+    public String titleStr;
+
+    public CommonNoDataItem(int imgRes, String hintStr, String titleStr) {
+        this.imgRes = imgRes;
+        this.hintStr = hintStr;
+        this.titleStr = titleStr;
+    }
 
     public CommonNoDataItem(int imgUrl, String hintStr) {
         this.imgRes = imgUrl;
         this.hintStr = hintStr;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
-
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_common_no_data;
     }
 
-    @Override
-    public CommonNodataVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new CommonNodataVH(inflater.inflate(getLayoutRes(),parent,false),adapter);
+    @Override public CommonNodataVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+        return new CommonNodataVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, CommonNodataVH holder, int position, List payloads) {
-//        Glide.with(App.context).load(imgRes).into(holder.img);
+    @Override public void bindViewHolder(FlexibleAdapter adapter, CommonNodataVH holder, int position, List payloads) {
+        holder.itemView.setMinimumHeight(MeasureUtils.getScreenHeight(holder.itemView.getResources())-MeasureUtils.dpToPx(120f,holder.itemView.getResources()));
         holder.img.setImageResource(imgRes);
         holder.hint.setText(hintStr);
+        if (cn.qingchengfit.utils.StringUtils.isEmpty(titleStr)){
+            holder.tvTitle.setVisibility(View.GONE);
+        }else {
+            holder.tvTitle.setVisibility(View.VISIBLE);
+            holder.tvTitle.setText(titleStr);
+        }
     }
 
     public static class CommonNodataVH extends FlexibleViewHolder {
-        @BindView(R.id.img)
-        ImageView img;
-        @BindView(R.id.hint)
-        TextView hint;
+        @BindView(R.id.img) ImageView img;
+        @BindView(R.id.tv_title) TextView tvTitle;
+        @BindView(R.id.hint) TextView hint;
 
         public CommonNodataVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);

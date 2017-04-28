@@ -2,9 +2,10 @@ package com.qingchengfit.fitcoach.reciever;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -83,19 +84,30 @@ public class PushReciever extends PushMessageReceiver {
             if (bean ==null || TextUtils.isEmpty(bean.url)){
                 return;
             }
-//            QcCloudClient.getApi().postApi.qcClearOneNotification(App.bean.notification_id).subscribeOn(Schedulers.io()).subscribe();
-            if (App.gMainAlive){
-                LogUtil.e("isAlive");
-                Intent toMain = new Intent(context, WebActivity.class);
-                toMain.putExtra("url",bean.url);
-                toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(toMain);
+            if (bean.url.startsWith("http")) {
+                if (App.gMainAlive) {
+                    LogUtil.e("isAlive");
+                    Intent toMain = new Intent(context, WebActivity.class);
+                    toMain.putExtra("url", bean.url);
+                    toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(toMain);
+                } else {
+                    Intent toMain = new Intent(context, Main2Activity.class);
+                    toMain.putExtra("url", bean.url);
+                    toMain.putExtra(MainActivity.ACTION, Main2Activity.NOTIFICATION);
+                    toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(toMain);
+                }
             }else {
-                Intent toMain = new Intent(context, Main2Activity.class);
-                toMain.putExtra("url",bean.url);
-                toMain.putExtra(MainActivity.ACTION,Main2Activity.NOTIFICATION);
-                toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(toMain);
+                Uri uri = Uri.parse(bean.url);
+                Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
+                if (uri.getQueryParameterNames() != null) {
+                    for (String key : uri.getQueryParameterNames()) {
+                        tosb.putExtra(key, uri.getQueryParameter(key));
+                    }
+                }
+                tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(tosb);
             }
 
         }

@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment.main;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.SensorsUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;

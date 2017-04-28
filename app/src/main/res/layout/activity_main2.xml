@@ -35,13 +35,51 @@
     </FrameLayout>
 
     <include layout="@layout/divider_grey"/>
-    <cn.qingchengfit.widgets.TabView
-        android:id="@+id/tabview"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        app:text_size="12sp"
-        app:text_select_color="@color/primary"
-        />
+        >
+        <cn.qingchengfit.widgets.TabView
+            android:id="@+id/tabview"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            app:text_size="12sp"
+            app:text_select_color="@color/primary"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            >
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.3"
+                />
+            <TextView
+                android:id="@+id/tv_noti_count"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/bg_notification"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:text="99"
+                />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                />
+        </LinearLayout>
+
+    </FrameLayout>
+
 </LinearLayout>

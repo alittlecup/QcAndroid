@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.component;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -27,11 +28,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.CompatUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.WebShowQcCodeDialogBuilder;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -43,6 +45,7 @@ import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.SensorsUtils;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
+import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.Contact;
 import com.qingchengfit.fitcoach.bean.PayEvent;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
@@ -120,6 +123,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     public String mCurUrl;
     private DialogSheet sheet;
     GestureDetectorCompat gestureDetectorCompat;
+    private boolean isTouchWebView;
 
     public static WebFragment newInstance(String url) {
 
@@ -215,7 +219,12 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                         }
                     }
                 });
-
+                mWebviewWebView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override public boolean onTouch(View view, MotionEvent motionEvent) {
+                        isTouchWebView = true;
+                        return false;
+                    }
+                });
                 onLoadedView();
             }
         });
@@ -457,7 +466,11 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-
+                if (TextUtils.equals(Uri.parse(url).getQueryParameter("hide_title"), "1")) {
+                    mToolbar.setVisibility(View.GONE);
+                } else {
+                    mToolbar.setVisibility(View.VISIBLE);
+                }
                 LogUtil.e(" start url:" + url);
             }
 
@@ -480,13 +493,22 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                     handleSchema(url);
                     return true;
                 }
-                if (mCurUrl != null && url != null && url.equals(mCurUrl)) {
-                    mWebviewWebView.goBack();
-                    return true;
-                }
                 initCookie(url);
-                view.loadUrl(url);
+                //view.loadUrl(url);
                 mCurUrl = url;
+                WebView.HitTestResult hit = view.getHitTestResult();
+                if (getActivity() instanceof WebActivity) {
+                    if (!isTouchWebView && (hit == null || hit.getExtra() == null)) {
+                        return super.shouldOverrideUrlLoading(view, url);
+                    }else {
+                        ((WebActivity) getActivity()).onNewWeb(url);
+                        isTouchWebView = false;
+                    }
+                } else {
+                    WebActivity.startWeb(url, getContext());
+                }
+
+                LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
 
                 return true;
             }
@@ -674,14 +696,66 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         }
 
         @JavascriptInterface public void goNativePath(String s) {
+            goNativePath(s,"");
 
-            if ("activities".equals(s)) {//跳到青橙专享活动列表页
-                getActivity().finish();
-            } else if ("area".equals(s)) {// 跳转去设置
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), SettingActivity.class);
-                intent.putExtra("to", 1);
-                startActivity(intent);
+        }
+
+        @JavascriptInterface public void goNativePath(final String s, String params) {
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override public void run() {
+                    if ("activities".equals(s)) {//跳到青橙专享活动列表页
+                        getActivity().finish();
+                    } else if ("area".equals(s)) {// 跳转去设置
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(), SettingActivity.class);
+                        intent.putExtra("to", 1);
+                        startActivity(intent);
+                    } else if (s.contains("qr_code")) {
+                        try {
+                            Uri qrCodeUri = Uri.parse(s);
+                            String url = Uri.decode(qrCodeUri.getQueryParameter("url"));
+                            String title = Uri.decode(qrCodeUri.getQueryParameter("title"));
+                            String content = Uri.decode(qrCodeUri.getQueryParameter("content"));
+                            new WebShowQcCodeDialogBuilder(title, url).content(content).build().show(getChildFragmentManager(), "");
+                        } catch (Exception e) {
+
+                        }
+
+                    } else {
+                        try {
+                            Uri uri = Uri.parse(s);
+                            Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
+                            if (uri.getQueryParameterNames() != null) {
+                                for (String s1 : uri.getQueryParameterNames()) {
+                                    tosb.putExtra(s1, uri.getQueryParameter(s1));
+                                }
+                            }
+                            tosb.putExtra("web_action", uri.getHost() + "/" + uri.getPath());
+                            startActivityForResult(tosb, 99);
+                        } catch (Exception e) {
+                            mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback(goNativePathFailed(" + s + "));");
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //if (requestCode == RESULT_LOGIN) {
+            //    RxBus.getBus().post(new EventFreshUnloginAd());
+            //    initCookie(mCurUrl);
+            //    if (mWebviewWebView != null) mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('login');");
+            //} else
+                if (requestCode == 99) {
+                if (mWebviewWebView != null) {
+                    mWebviewWebView.loadUrl(
+                        "javascript:window.nativeLinkWeb.runCallback('" + data.getStringExtra("web_action") + "','" + data.getStringExtra(
+                            "json") + "');");
+                }
             }
         }
     }

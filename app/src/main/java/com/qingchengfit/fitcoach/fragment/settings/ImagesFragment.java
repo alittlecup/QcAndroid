@@ -157,7 +157,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
 
     @OnClick(R.id.btn_add) void uploadImages() {
         if (datas.size() >= 5){
-            cn.qingchengfit.widgets.utils.ToastUtils.show("您最多只能上传五张图片");
+            cn.qingchengfit.utils.ToastUtils.show("您最多只能上传五张图片");
             return;
         }
         ChoosePictureFragmentDialog.newInstance(true).show(getFragmentManager(), "");
@@ -183,7 +183,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                 .subscribe(new Action1<QcResponse>() {
                     @Override public void call(QcResponse qcResponse) {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
-                            cn.qingchengfit.widgets.utils.ToastUtils.show("删除成功");
+                            cn.qingchengfit.utils.ToastUtils.show("删除成功");
                             commonFlexAdapter.setMode(SelectableAdapter.MODE_IDLE);
                             freshData();
                             btnAdd.setVisibility(View.VISIBLE);
@@ -191,7 +191,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                         }
                     }
                 }));
-        }else cn.qingchengfit.widgets.utils.ToastUtils.show("您没有选择删除的照片");
+        }else cn.qingchengfit.utils.ToastUtils.show("您没有选择删除的照片");
     }
 
     @Override public String getFragmentName() {

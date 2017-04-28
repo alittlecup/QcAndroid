@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.qingchengfit.fitcoach.App;
+import cn.qingchengfit.utils.LogUtil;
 import com.qingchengfit.fitcoach.R;
-
-import cn.qingchengfit.widgets.utils.LogUtil;
 
 /**
  * power by
@@ -47,7 +44,7 @@ public class LoadResActivity extends Activity {
             try {
                 MultiDex.install(getApplication());
                 LogUtil.d("loadDex", "install finish");
-                ((App) getApplication()).installFinish(getApplication());
+                //((App) getApplication()).installFinish(getApplication());
             } catch (Exception e) {
                 LogUtil.e("loadDex", e.getLocalizedMessage());
             }

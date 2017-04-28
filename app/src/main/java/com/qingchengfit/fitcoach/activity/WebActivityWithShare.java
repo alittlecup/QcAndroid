@@ -64,12 +64,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.BitmapUtils;
-import cn.qingchengfit.widgets.utils.ChoosePicUtils;
-import cn.qingchengfit.widgets.utils.FileUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BitmapUtils;
+import cn.qingchengfit.utils.ChoosePicUtils;
+import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -517,7 +517,7 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
-            setCookie(Configs.ServerIp, "sessionid", sessionid);
+            setCookie(Configs.Server, "sessionid", sessionid);
 //            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
 //            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
 //            setCookie(".qingchengfit.cn", "qc_session_id", sessionid);

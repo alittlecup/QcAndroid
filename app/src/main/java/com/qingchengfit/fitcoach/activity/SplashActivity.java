@@ -14,9 +14,11 @@ import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.google.gson.Gson;
@@ -30,8 +32,11 @@ import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
+import com.qingchengfit.fitcoach.http.bean.User;
+import dagger.android.AndroidInjection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,9 +76,11 @@ public class SplashActivity extends BaseAcitivity {
     private String[] mColors = new String[]{
             "#55b37f", "#5595b3", "#b38855", "#675Eb1", "#9e74b0"
     };
+    @Inject LoginStatus loginStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
             //结束你的activity
@@ -86,15 +93,23 @@ public class SplashActivity extends BaseAcitivity {
         if (BuildConfig.DEBUG){
             String ip = PreferenceUtils.getPrefString(this,"debug_ip", "");
             if (!TextUtils.isEmpty(ip))
-                Configs.Server = Configs.ServerIp = ip;
+                Configs.Server = ip;
         }
+        String u = PreferenceUtils.getPrefString(this, "user_info", "");
+        if (!TextUtils.isEmpty(u)) {
+           User gUser = new Gson().fromJson(u, User.class);
+            String id = PreferenceUtils.getPrefString(this, "coach", "");
+            String session_id =  PreferenceUtils.getPrefString(this, "session_id", "");
+
+            loginStatus.setLoginUser(Staff.formatFromUser(gUser,id));
+            loginStatus.setSession(session_id);
+            loginStatus.setUserId(gUser.getId());
+        }
+
+
         Observable.just("")
                 .subscribeOn(Schedulers.newThread())
                 .flatMap(s -> {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                    }
                     return Observable.just("");
                 }).subscribe(s1 -> {
             runOnUiThread(() -> {

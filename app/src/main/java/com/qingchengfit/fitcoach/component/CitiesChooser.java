@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.component;
 
 import android.content.Context;
 import android.view.View;
-import cn.qingchengfit.widgets.utils.FileUtils;
+import cn.qingchengfit.utils.FileUtils;
 import com.bigkoo.pickerview.OptionsDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.http.bean.CitiesData;

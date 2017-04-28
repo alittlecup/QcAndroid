@@ -25,7 +25,9 @@
         <item name="android:buttonStyle">@style/Qc.CommonBtn</item>
     </style>
 
+  <style name="QcChatStyle" parent="QcAppTheme">
 
+  </style>
   <style name="QcAppThemeForWeb" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>

@@ -56,9 +56,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  */
@@ -433,7 +433,7 @@ public class OriginWebFragment extends WebFragment {
     private void initCookie(String url) {
         sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
         if (sessionid != null) {
-            setCookie(Configs.ServerIp, "sessionid", sessionid);
+            setCookie(Configs.Server, "sessionid", sessionid);
             try {
                 URI uri = new URI(url);
                 if (!hostArray.contains(uri.getHost())) {

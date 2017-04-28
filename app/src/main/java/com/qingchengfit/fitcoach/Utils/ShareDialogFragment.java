@@ -14,7 +14,8 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.qingchengfit.fitcoach.R;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -22,6 +23,7 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import java.net.URL;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -146,7 +148,8 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
                 //cmb.setPrimaryClip();
                 cmb.setText( mUrl);
                 ToastUtils.showDefaultStyle("已复制");
-//                ToastUtils.showS(getString(R.string.copy_download_link));
+                sensorTrack("qc_copyurl");
+                sensorTrack("qc_copyurl","1");
                 break;
         }
         dismiss();
@@ -167,29 +170,34 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
             }else if (mBitmap != null){
                 msg.thumbData = Util.bmpToByteArray(mBitmap, true);
             }
-
-//            WXImageObject imgObject = new WXImageObject(bitmap);
-//            WXMediaMessage mediaMessage = new WXMediaMessage();
-//            mediaMessage.mediaObject = imgObject;
-//            Bitmap tumbl = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-//            bitmap.recycle();
-//            mediaMessage.thumbData = Util.bmpToByteArray(tumbl, true);
-
-
             SendMessageToWX.Req req = new SendMessageToWX.Req();
             req.transaction = buildTransaction("webpage");
             req.message = msg;
             req.scene = (!isFriend) ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
             api.sendReq(req);
+
+            sensorTrack(isFriend?"qc_sharetofriends":"qc_moments");
         } catch (Exception e) {
             LogUtil.e(e.getMessage());
             e.printStackTrace();
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    ToastUtils.show("分享失败");
-//                }
-//            });
+        }
+    }
+
+    public void sensorTrack(String channel){
+        sensorTrack(channel,"0");
+    }
+
+    public void sensorTrack(String channel,String success){
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("qc_page_url",mUrl);
+            jsonObject.put("qc_share_title",mTitle);
+            jsonObject.put("qc_share_channel",channel);
+            jsonObject.put("qc_sharesuccess",success);
+            SensorsUtils.track("page_share",jsonObject.toString());
+            PreferenceUtils.setPrefString(getContext(),"share_tmp",jsonObject.toString());
+
+        }catch (Exception e){
 
         }
     }

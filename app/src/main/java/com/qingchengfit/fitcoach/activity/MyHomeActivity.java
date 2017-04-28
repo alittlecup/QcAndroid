@@ -33,7 +33,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import rx.schedulers.Schedulers;
 
 public class MyHomeActivity extends AppCompatActivity {

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.qingchengfit.fitcoach.BaseAcitivity;

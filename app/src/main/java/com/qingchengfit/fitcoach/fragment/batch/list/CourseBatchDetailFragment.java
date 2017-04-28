@@ -17,8 +17,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.utils.DateUtils;
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.LogUtil;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.App;
@@ -283,9 +283,6 @@ public class CourseBatchDetailFragment extends VpFragment
         mCommonFlexAdapter.notifyDataSetChanged();
     }
 
-    @Override public void onLoadMore() {
-
-    }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -348,5 +345,13 @@ public class CourseBatchDetailFragment extends VpFragment
             + mCoachService.getId()
             + "&model="
             + mCoachService.getModel(), getContext());
+    }
+
+    @Override public void noMoreLoad(int i) {
+
+    }
+
+    @Override public void onLoadMore(int i, int i1) {
+
     }
 }

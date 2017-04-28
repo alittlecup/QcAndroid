@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.StringUtils;
+import cn.qingchengfit.utils.StringUtils;
 import co.hkm.soltag.TagContainerLayout;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;

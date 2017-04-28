@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
 
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.LogUtil;
 
 /**
  * power by

@@ -17,7 +17,7 @@ import com.qingchengfit.fitcoach.R;
 
 import java.util.List;
 
-import cn.qingchengfit.widgets.utils.MeasureUtils;
+import cn.qingchengfit.utils.MeasureUtils;
 
 /**
  * power by

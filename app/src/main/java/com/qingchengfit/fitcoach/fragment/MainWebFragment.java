@@ -36,8 +36,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import rx.Observable;
 
 /**
@@ -236,7 +236,7 @@ public class MainWebFragment extends MainBaseFragment {
     private void initCookie() {
         String sessionid = PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         if (sessionid != null) {
-            setCookie(Configs.ServerIp, "sessionid", sessionid);
+            setCookie(Configs.Server, "sessionid", sessionid);
             setCookie("", "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
             setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);

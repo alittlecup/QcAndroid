@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
-import cn.qingchengfit.widgets.utils.ToastUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;

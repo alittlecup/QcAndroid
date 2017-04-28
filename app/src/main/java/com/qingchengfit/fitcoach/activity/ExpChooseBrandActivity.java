@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
 import android.view.View;
-import cn.qingchengfit.widgets.utils.PreferenceUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;

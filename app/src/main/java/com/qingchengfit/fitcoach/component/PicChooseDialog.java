@@ -15,7 +15,7 @@ import com.qingchengfit.fitcoach.R;
 
 import java.io.File;
 
-import cn.qingchengfit.widgets.utils.ChoosePicUtils;
+import cn.qingchengfit.utils.ChoosePicUtils;
 
 /**
  * power by

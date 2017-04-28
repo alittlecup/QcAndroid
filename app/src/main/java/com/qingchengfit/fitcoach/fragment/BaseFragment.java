@@ -1,15 +1,20 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.AppUtils;
+import cn.qingchengfit.utils.AppUtils;
 import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
 import com.anbillon.qcmvplib.PresenterDelegate;
 import com.qingchengfit.fitcoach.BaseAcitivity;
+import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
+import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.List;
 import rx.Observable;
@@ -33,15 +38,32 @@ public abstract class BaseFragment extends Fragment {
     // 标志位，标志已经初始化完成
     protected boolean isVisible;
     boolean isPrepared;
-    private PresenterDelegate delegate;
     public Unbinder unbinder;
+    private List<PresenterDelegate> delegates = new ArrayList<>();
 
+    @Override public void onAttach(Context context) {
+        try{
+            AndroidSupportInjection.inject(this);
+        }catch (Exception e){
 
-    protected void delegatePresenter(Presenter presenter, PView pView) {
-        delegate = new PresenterDelegate(presenter);
-        delegate.attachView(pView);
+        }
+        super.onAttach(context);
     }
 
+    protected void delegatePresenter(Presenter presenter, PView pView) {
+        PresenterDelegate delegate = new PresenterDelegate(presenter);
+        delegate.attachView(pView);
+        delegates.add(delegate);
+    }
+
+    public void initToolbar(@NonNull Toolbar toolbar) {
+        toolbar.setNavigationIcon(R.drawable.md_nav_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
 
     public void showLoading() {
         if (getActivity() instanceof BaseAcitivity) {
@@ -96,8 +118,11 @@ public abstract class BaseFragment extends Fragment {
         if (getActivity() != null) {
             AppUtils.hideKeyboard(getActivity());
         }
-        if (delegate != null)
-            delegate.unattachView();
+        if (delegates.size() > 0) {
+            for (int i = 0; i < delegates.size(); i++) {
+                delegates.get(i).unattachView();
+            }
+        }
         unattachView();
         super.onDestroyView();
         if (unbinder != null)

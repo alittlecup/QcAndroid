@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.batch.single;
 
-import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.qcmvplib.CView;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;

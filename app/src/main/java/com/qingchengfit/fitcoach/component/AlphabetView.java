@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.qingchengfit.fitcoach.R;
 
-import cn.qingchengfit.widgets.utils.LogUtil;
+import cn.qingchengfit.utils.LogUtil;
 
 /**
  * power by

@@ -50,4 +50,8 @@ public class CommonFlexAdapter extends FlexibleAdapter {
 
         return animators;
     }
+    @Override public boolean hasNewSearchText(String newText) {
+        //return super.hasNewSearchText(newText);
+        return true;
+    }
 }

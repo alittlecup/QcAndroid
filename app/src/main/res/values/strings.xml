@@ -11,6 +11,8 @@
     <string name="file_provider">com.qingchengfit.fitcoach.provider</string>
     <string name="gd_key">ce6997d5c6f60e84d056394ff961b7b0</string>
     <string name="baidu_api_release">RqFugIxBdvAn7H8h5GsampTw</string>
+    <string formatted="false" name="chat_user_id_header">qc_%s</string>
+
     <!--<string name="baidu_api_release">RqFugIxBdvAn7H8h5GsampTw</string>-->
 
     <string name="pickerview_cancel">取消</string>
@@ -324,11 +326,11 @@
     <string name="brand_no_gym">该品牌下暂无场馆</string>
     <string name="brand_logo">品牌LOGO</string>
     <string name="name">姓名</string>
-    <string name="exp_group" formatted="false">团课%d节 服务%d人次</string>
-    <string name="exp_private" formatted="false">私教%d节 服务%d人次</string>
-    <string name="exp_sale" formatted="false">销售额达%s元</string>
+    <string formatted="false" name="exp_group">团课%d节 服务%d人次</string>
+    <string formatted="false" name="exp_private">私教%d节 服务%d人次</string>
+    <string formatted="false" name="exp_sale">销售额达%s元</string>
     <string name="create_time">"创建时间: "</string>
-    <string name="choose_brand_content" formatted="false">品牌ID: %s    创建人: %s </string>
+    <string formatted="false" name="choose_brand_content">品牌ID: %s    创建人: %s </string>
     <string name="creator_colon">"创建人: "</string>
     <string name="contact_gm">请联系青橙客服\n 010-59789319</string>
     <string name="qingcheng_gm_phone">010-59789319</string>
@@ -337,9 +339,25 @@
     <string name="course_date">课程日期</string>
     <string name="course_time">课程时间</string>
   <string name="check_sb_course_and_more">查看%s的课程及更多信息</string>
-  <string name="sb_trainer_home" formatted="false">%s教练的主页</string>
-  <string name="sb_trainer_resume" formatted="false">%s教练的简历</string>
+  <string formatted="false" name="sb_trainer_home">%s教练的主页</string>
+  <string formatted="false" name="sb_trainer_resume">%s教练的简历</string>
     <string name="check_sb_resume">查看%s的个人资料、工作经历及更多信息
 </string>
+  <string name="sales_sb" formatted="false">销售: %s</string>
+    <string name="qc_allotsale_checked">已选择</string>
+    <string name="qc_allotsale_select">已选择%d名会员</string>
+    <string name="qc_chat_friend_select">已选择%d名联系人</string>
+    <string name="qc_allotsale_select_clear">清空选择</string>
 
+
+    <string name="notification_system">系统通知</string>
+    <string name="notification_meetting">学习培训</string>
+    <string name="notification_checkin">签到处理</string>
+    <string name="notification_comment">收到回复</string>
+    <string name="notification_gym">场馆消息</string>
+    <string name="title_msg">消息</string>
+    <string name="common_comfirm">确定</string>
+    <string name="no_more_loading">没有更多内容了</string>
+    <string name="all_comments_count">全部评论(%d)</string>
+  <string name="test_title">标题</string>
 </resources>

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.utils.DateUtils;
+import cn.qingchengfit.utils.DateUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;

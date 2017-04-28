@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http;
 
+import javax.inject.Inject;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -26,6 +28,11 @@ public class RestRepository {
     public RestRepository(QcCloudClient client) {
         this.client = client;
     }
+    @Inject
+    RestRepository(){
+        this.client = QcCloudClient.getApi();
+    }
+
 
     private QcCloudClient client;
 

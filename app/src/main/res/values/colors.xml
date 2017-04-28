@@ -55,4 +55,7 @@
     <color name="current_day_of_month">@color/white</color>
     <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
     <color name="half_red">#1aea6161</color>
+
+    <color name="dard_green">#157539</color>
+
 </resources>

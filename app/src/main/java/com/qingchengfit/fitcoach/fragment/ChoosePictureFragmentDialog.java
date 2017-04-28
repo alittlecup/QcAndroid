@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import cn.qingchengfit.widgets.utils.FileUtils;
+import cn.qingchengfit.utils.FileUtils;
 import com.jakewharton.rxbinding.view.RxView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;

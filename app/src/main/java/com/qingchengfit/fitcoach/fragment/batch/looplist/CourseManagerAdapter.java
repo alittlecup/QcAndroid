@@ -16,7 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.utils.StringUtils;
+import cn.qingchengfit.utils.StringUtils;
 
 /**
  * power by

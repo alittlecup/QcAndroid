@@ -156,6 +156,16 @@
 # --------------------------------------------------------------------------
 # Addidional for x5.sdk classes for apps
 
+-keep class com.tencent.**{*;}
+-dontwarn com.tencent.**
+
+-keep class tencent.**{*;}
+-dontwarn tencent.**
+
+-keep class qalsdk.**{*;}
+-dontwarn qalsdk.**
+
+
 -keep class com.tencent.smtt.export.external.**{
     *;
 }
@@ -485,3 +495,26 @@
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
 
+#//push
+
+#//push
+
+
+-keep class com.tencent.qcloud.timchat.chatutils.** {*;}
+#可以防止一个误报的 warning 导致无法成功编译，如果编译使用的 Android 版本是 23。
+-dontwarn com.xiaomi.push.**
+-keep class com.huawei.android.pushagent.**{*;}
+-keep class com.huawei.android.pushselfshow.**{*;}
+-keep class com.huawei.android.microkernel.**{*;}
+-keep class com.baidu.mapapi.**{*;}
+-keep class com.tencent.**{*;}
+-dontwarn com.tencent.**
+
+-keep class tencent.**{*;}
+-dontwarn tencent.**
+
+-keep class qalsdk.**{*;}
+-dontwarn qalsdk.**
+
+-keep class com.qingchengfit.**{*;}
+-keep class cn.qingchengfit.**{*;}

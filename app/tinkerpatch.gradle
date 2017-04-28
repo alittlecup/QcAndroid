@@ -7,9 +7,9 @@ def pathPrefix = "${bakPath}/bak/"
 
 tinkerpatchSupport {
     tinkerEnable = true
-    appKey = "cb79fbe0febb2b33"
+    appKey = "82356b965448ac4f"
     reflectApplication = true
-    appVersion = "1.4.9"
+    appVersion = "1.5.0"
 
 //    pathPrefix = "${bakPath}/bak/"
     autoBackupApkPath = "${bakPath}"
