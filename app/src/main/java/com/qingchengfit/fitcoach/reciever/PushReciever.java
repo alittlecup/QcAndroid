@@ -99,24 +99,25 @@ public class PushReciever extends PushMessageReceiver {
                     context.startActivity(toMain);
                 }
             }else {
-                Uri uri = Uri.parse(bean.url);
-                Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
-                if (uri.getQueryParameterNames() != null) {
-                    for (String key : uri.getQueryParameterNames()) {
-                        tosb.putExtra(key, uri.getQueryParameter(key));
+                try {
+                    Uri uri = Uri.parse(bean.url);
+                    Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
+                    if (uri.getQueryParameterNames() != null) {
+                        for (String key : uri.getQueryParameterNames()) {
+                            tosb.putExtra(key, uri.getQueryParameter(key));
+                        }
                     }
+                    tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(tosb);
+                }catch (Exception e){
+                    Intent toMain = new Intent(context, Main2Activity.class);
+                    toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(toMain);
                 }
-                tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(tosb);
+
             }
 
         }
-//        toMain.putExtra(MainActivity.ACTION, MainActivity.NOTIFICATION);
-//        if (s2 == null)
-//            s2 = "";
-//        toMain.putExtra("content", s2);
-//        toMain.putExtra("url",)
-
 
     }
 

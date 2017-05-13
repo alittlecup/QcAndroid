@@ -33,15 +33,13 @@
       android:id="@+id/tv_comment_content"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/image_comment_head"
       android:layout_marginLeft="10dp"
       android:layout_marginTop="5dp"
       android:layout_toRightOf="@+id/image_comment_head"
       android:textColor="@color/qc_text_black"
       android:textSize="14sp"
-      tools:text="深度好闻，不错不错"
-      android:lines="1"
-      android:ellipsize="end"
+      tools:text="@string/test_long"
+      android:layout_below="@id/tv_comment_name"
       />
 
   <TextView
@@ -79,7 +77,6 @@
       android:layout_width="match_parent"
       android:layout_height="1px"
       android:layout_marginTop="@dimen/little"
-
       android:layout_alignLeft="@+id/tv_comment_content"
       android:layout_alignStart="@+id/tv_comment_content"
       />

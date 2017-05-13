@@ -678,7 +678,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
 
             }
         }
-
         if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
             logout();
         } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
