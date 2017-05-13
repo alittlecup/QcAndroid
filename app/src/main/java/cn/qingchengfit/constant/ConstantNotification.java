@@ -46,6 +46,8 @@ public class ConstantNotification {
     public static final int TYPE_FITNESS_REMIND_CARD_BALANCE = 13;              //健身房-会员卡余额不足提醒-工作人员
     public static final int TYPE_FITNESS_COACH_REST = 14;               //健身房-通知教练休息时间-教练
     public static final int TYPE_FITNESS_AFTER_CARD_ORDER_DONE = 15;                //健身房-在线购卡/冲卡成功-工作人员
+    public static final int TYPE_FITNESS_TRAINER_CHANGED = 16;                //健身房-教练变更
+
     public static final int TYPE_MEETING_PAY = 10001;               //会议-支付成功-购票人
     public static final int TYPE_MEETING_TICKET = 10002;                //会议-报名成功-参会人
     public static final int TYPE_MEETING_PAY_CERTIFICATES = 10003;              //会议-上传凭证成功-学员
@@ -70,6 +72,7 @@ public class ConstantNotification {
         TYPE_FITNESS_COACH,
         TYPE_FITNESS_ASK_PHOTO,
         TYPE_FITNESS_COACH_REST,
+        TYPE_FITNESS_TRAINER_CHANGED,
     };
     /*
        系统通知
