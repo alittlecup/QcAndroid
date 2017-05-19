@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.statement.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.fragment.statement.model.CardTpl;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**

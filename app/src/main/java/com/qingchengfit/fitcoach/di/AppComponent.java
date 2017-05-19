@@ -41,7 +41,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.FragmentKey;
 import dagger.multibindings.IntoMap;
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -164,16 +163,7 @@ import dagger.multibindings.IntoMap;
             ArticleCommentsListFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface StatementDetailFragmentSubcomponent extends AndroidInjector<StatementDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StatementDetailFragment> {
-        }
-    }
 
-    @Module(subcomponents = StatementDetailFragmentSubcomponent.class) abstract class StatementDetailFragmentModule {
-        @Binds @IntoMap @FragmentKey(StatementDetailFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            StatementDetailFragmentSubcomponent.Builder builder);
-    }
 
     @Subcomponent() public interface CourseChooseDialogFragmentSubcomponent extends AndroidInjector<CourseChooseDialogFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseChooseDialogFragment> {
@@ -217,6 +207,74 @@ import dagger.multibindings.IntoMap;
         @Binds @IntoMap @FragmentKey(SalerChooseDialogFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             SalerChooseDialogFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface StatementDetailFragmentSubcomponent extends AndroidInjector<StatementDetailFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StatementDetailFragment> {
+        }
+    }
+
+    @Module(subcomponents = StatementDetailFragmentSubcomponent.class) abstract class StatementDetailFragmentModule {
+        @Binds @IntoMap @FragmentKey(StatementDetailFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            StatementDetailFragmentSubcomponent.Builder builder);
+    }
+
+
+
+
+    @Subcomponent() public interface ManageFragmentSubcomponent extends AndroidInjector<ManageFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ManageFragment> {
+        }
+    }
+
+    @Module(subcomponents = ManageFragmentSubcomponent.class) abstract class ManageFragmentModule {
+        @Binds @IntoMap @FragmentKey(ManageFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ManageFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CustomStatmentFragmentSubcomponent extends AndroidInjector<CustomStatmentFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomStatmentFragment> {
+        }
+    }
+
+    @Module(subcomponents = CustomStatmentFragmentSubcomponent.class) abstract class CustomStatmentFragmentModule {
+        @Binds @IntoMap @FragmentKey(CustomStatmentFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            CustomStatmentFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface BaseDialogFragmentSubcomponent extends AndroidInjector<BaseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BaseDialogFragment> {
+        }
+    }
+
+    @Module(subcomponents = BaseDialogFragmentSubcomponent.class) abstract class BaseDialogFragmentModule {
+        @Binds @IntoMap @FragmentKey(BaseDialogFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            BaseDialogFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CustomSaleFragmentSubcomponent extends AndroidInjector<CustomSaleFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomSaleFragment> {
+        }
+    }
+
+    @Module(subcomponents = CustomSaleFragmentSubcomponent.class) abstract class CustomSaleFragmentModule {
+        @Binds @IntoMap @FragmentKey(CustomSaleFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            CustomSaleFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface CardTypeChooseDialogFragmentSubcomponent extends AndroidInjector<CardTypeChooseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardTypeChooseDialogFragment> {
+        }
+    }
+
+    @Module(subcomponents = CardTypeChooseDialogFragmentSubcomponent.class) abstract class CardTypeChooseDialogFragmentModule {
+        @Binds @IntoMap @FragmentKey(CardTypeChooseDialogFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
+            CardTypeChooseDialogFragmentSubcomponent.Builder builder);
     }
 
     @Subcomponent() public interface Main2Subcomponent extends AndroidInjector<Main2Activity> {
@@ -283,59 +341,7 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SyncGymFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface ManageFragmentSubcomponent extends AndroidInjector<ManageFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ManageFragment> {
-        }
-    }
 
-    @Module(subcomponents = ManageFragmentSubcomponent.class) abstract class ManageFragmentModule {
-        @Binds @IntoMap @FragmentKey(ManageFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ManageFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface CustomStatmentFragmentSubcomponent extends AndroidInjector<CustomStatmentFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomStatmentFragment> {
-        }
-    }
-
-    @Module(subcomponents = CustomStatmentFragmentSubcomponent.class) abstract class CustomStatmentFragmentModule {
-        @Binds @IntoMap @FragmentKey(CustomStatmentFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CustomStatmentFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface BaseDialogFragmentSubcomponent extends AndroidInjector<BaseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BaseDialogFragment> {
-        }
-    }
-
-    @Module(subcomponents = BaseDialogFragmentSubcomponent.class) abstract class BaseDialogFragmentModule {
-        @Binds @IntoMap @FragmentKey(BaseDialogFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            BaseDialogFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface CustomSaleFragmentSubcomponent extends AndroidInjector<CustomSaleFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomSaleFragment> {
-        }
-    }
-
-    @Module(subcomponents = CustomSaleFragmentSubcomponent.class) abstract class CustomSaleFragmentModule {
-        @Binds @IntoMap @FragmentKey(CustomSaleFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CustomSaleFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface CardTypeChooseDialogFragmentSubcomponent extends AndroidInjector<CardTypeChooseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardTypeChooseDialogFragment> {
-        }
-    }
-
-    @Module(subcomponents = CardTypeChooseDialogFragmentSubcomponent.class) abstract class CardTypeChooseDialogFragmentModule {
-        @Binds @IntoMap @FragmentKey(CardTypeChooseDialogFragment.class)
-        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
-            CardTypeChooseDialogFragmentSubcomponent.Builder builder);
-    }
 
     @Subcomponent() public interface SettingFragmentSubcomponent extends AndroidInjector<SettingFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SettingFragment> {

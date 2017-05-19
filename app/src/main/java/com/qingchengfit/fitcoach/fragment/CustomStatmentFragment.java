@@ -31,6 +31,7 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
