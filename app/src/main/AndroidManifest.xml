@@ -694,6 +694,15 @@
               android:theme="@style/QcChatStyle"
               tools:replace="android:theme"
         />
+    <activity android:name=".fragment.statement.StatmentFilterActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
+        />
+
+    <activity android:name=".fragment.statement.SaleFilterActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
+        />
 
   </application>
 

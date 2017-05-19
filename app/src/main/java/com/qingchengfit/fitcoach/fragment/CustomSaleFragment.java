@@ -1,10 +1,15 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,84 +18,67 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.DialogList;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.qingchengfit.fitcoach.App;
+import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.CardComparator;
-import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.bean.SpinnerBean;
+import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.component.DialogList;
-import com.qingchengfit.fitcoach.event.EventChooseCardtpl;
-import com.qingchengfit.fitcoach.fragment.statement.GymChooseCardtplFragmentBuilder;
-import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
-import com.qingchengfit.fitcoach.http.bean.QcSystemCardsResponse;
+import com.qingchengfit.fitcoach.fragment.statement.CardTypeChooseDialogFragment;
+import com.qingchengfit.fitcoach.fragment.statement.model.CardTpl;
+import com.qingchengfit.fitcoach.fragment.statement.CardTypeEvent;
+import com.qingchengfit.fitcoach.fragment.statement.presenter.CustomSalePresenter;
+import com.qingchengfit.fitcoach.fragment.statement.CustomSaleView;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
+import com.qingchengfit.fitcoach.fragment.statement.model.SaleFilter;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.SalerChooseDialogFragment;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import rx.Observer;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
+import javax.inject.Inject;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CustomSaleFragment extends BaseFragment {
+public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
 
     public static final String TAG = CustomSaleFragment.class.getName();
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.custom_statment_gym) CommonInputView customStatmentGym;
     @BindView(R.id.custom_statment_start) CommonInputView customStatmentStart;
     @BindView(R.id.custom_statment_end) CommonInputView customStatmentEnd;
-    @BindView(R.id.custom_statment_course) CommonInputView customStatmentCourse;
     @BindView(R.id.rootview) LinearLayout rootview;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    //    @BindView(R.id.custom_statment_student)
-    //    CommonInputView customStatmentStudent;
+
+    @Inject CustomSalePresenter presenter;
+    @Inject LoginStatus loginStatus;
+    @Inject GymWrapper gymWrapper;
+    @BindView(R.id.custom_statment_cardtype) CommonInputView customStatmentCardtype;
+    @BindView(R.id.trade_type) CommonInputView tradeType;
+    @BindView(R.id.pay_method) CommonInputView payMethod;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
 
     private Calendar date;
-    private List<SpinnerBean> spinnerBeans = new ArrayList<>();
-    private List<String> gymStrings = new ArrayList<>();
-    private List<String> courseStrings = new ArrayList<>();
-    private List<String> studentStrings = new ArrayList<>();
-    private List<Integer> cardIntegers = new ArrayList<>();
-    private int chooseGymId = 0;
-    private String chooseCoursId = "";
-    private List<QcSystemCardsResponse.Card> studentBeans;
-    private Observer<QcSystemCardsResponse> studentResponseObserver = new Observer<QcSystemCardsResponse>() {
-        @Override public void onCompleted() {
-        }
 
-        @Override public void onError(Throwable e) {
-        }
-
-        @Override public void onNext(QcSystemCardsResponse qcSystemCardsResponse) {
-            //            studentBeans = qcSystemCardsResponse.data.card_tpls;
-            //            studentStrings.clear();
-            //            Collections.sort(studentBeans, new CardComparator());
-            //            for (QcSystemCardsResponse.Card studentBean : studentBeans) {
-            //                studentStrings.add(studentBean.name);
-            //            }
-            //            studentStrings.add(0, "全部会员卡");
-
-        }
-    };
-    private List<QcCardsResponse.Card> cards = new ArrayList<>();
     private TimeDialogWindow pwTime;
-    private Subscription cardSp;
-    private Unbinder unbinder;
+    private String mChooseShopId;
+    private String startTime, endTime;
+    private String mShopStr;
+    private String card_extra;
+    private String card_id;
+    private String mSeller_id;
+    private int mPaytype;
+    private int mTradetype;
+
+    private SaleFilter mSaleFilter = new SaleFilter();
 
     public CustomSaleFragment() {
 
@@ -100,123 +88,134 @@ public class CustomSaleFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         date = Calendar.getInstance();
         //获取用户拥有系统信息
-        //        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.newThread())
-        //                .subscribe(qcCoachSystemResponse -> {
-        //                    List<QcCoachSystem> systems = qcCoachSystemResponse.date.systems;
-        //                    spinnerBeans.add(new SpinnerBean("", "全部健身房", 0,""));
-        //
-        //                    for (int i = 0; i < systems.size(); i++) {
-        //                        QcCoachSystem system = systems.get(i);
-        //                        spinnerBeans.add(new SpinnerBean(system.color, system.name, system.id,""));
-        //                        gymStrings.add(system.name);
-        //                    }
-        //                    gymStrings.add(0, "全部健身房");
-        //                }, throwable -> {
-        //                }, () -> {
-        //                });
-
-        cardSp = QcCloudClient.getApi().getApi.qcGetSaleCard(App.coachid)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(new Subscriber<QcCardsResponse>() {
-                @Override public void onCompleted() {
-
-                }
-
-                @Override public void onError(Throwable e) {
-
-                }
-
-                @Override public void onNext(QcCardsResponse qcCardsResponse) {
-                    cards.clear();
-                    for (QcCardsResponse.CardSystem sys : qcCardsResponse.data.systems) {
-                        for (QcCardsResponse.Card card : sys.card_tpls) {
-                            card.system_id = sys.system_id;
-                        }
-                        cards.addAll(sys.card_tpls);
-                    }
-                    Collections.sort(cards, new CardComparator());
-                    courseStrings.add("全部会员卡");
-                    for (QcCardsResponse.Card c : cards) {
-                        courseStrings.add(c.name);
-                        cardIntegers.add(c.system_id);
-                    }
-                }
-            });
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_sale, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText("自定义销售报表");
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        //initDI
+        //
         initView();
-        RxBusAdd(EventChooseCardtpl.class)
-            .subscribe(new Action1<EventChooseCardtpl>() {
-                @Override public void call(EventChooseCardtpl eventChooseCourse) {
-                    chooseCoursId = eventChooseCourse.cardtplId;
-                    customStatmentCourse.setContent(eventChooseCourse.cardtplName);
+        initToolbar(toolbar);
+        delegatePresenter(presenter, this);
+
+        RxBusAdd(CardTpl.class).subscribe(new Action1<CardTpl>() {
+            @Override public void call(CardTpl card_tpl) {
+                customStatmentCardtype.setContent(card_tpl.getName());
+                card_id = card_tpl.getId();
+                QcResponseSaleDetail.Card card = new QcResponseSaleDetail.Card();
+                card.name = card_tpl.getName();
+                card.card_tpl_id = card_tpl.getId();
+                mSaleFilter.card = card;
+            }
+        });
+        RxBusAdd(CardTypeEvent.class).subscribe(new Action1<CardTypeEvent>() {
+            @Override public void call(CardTypeEvent cardTypeEvent) {
+
+                mSaleFilter.card_category = cardTypeEvent.cardtype;
+                mSaleFilter.card = null;
+                card_id = null;
+                switch (cardTypeEvent.cardtype) {
+                    case 0:
+                        customStatmentCardtype.setContent(getString(R.string.cardtype_all));
+                        card_extra = null;
+
+                        break;
+                    case Configs.CATEGORY_VALUE:
+                        customStatmentCardtype.setContent(getString(R.string.all_cardtype_value));
+                        card_extra = "all_value";
+                        break;
+                    case Configs.CATEGORY_TIMES:
+                        customStatmentCardtype.setContent(getString(R.string.all_cardtype_times));
+                        card_extra = "all_times";
+                        break;
+                    case Configs.CATEGORY_DATE:
+                        customStatmentCardtype.setContent(getString(R.string.all_cardtype_date));
+                        card_extra = "all_time";
+                        break;
+                    default:
+                        break;
                 }
-            });
+            }
+        });
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
     private void initView() {
-        customStatmentCourse.setContent("所有会员卡");
-        customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(new Date()));
-        customStatmentEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));
-        customStatmentGym.setContent("所有健身房");
-
-        //        customStatmentStudent.setContent("所有学员");
+        //mCallbackActivity.setToolbar("自定义销售报表", false, null, 0, null);
+        if (TextUtils.isEmpty(startTime)) {
+            customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(new Date()));
+            startTime = customStatmentStart.getContent();
+        } else {
+            customStatmentStart.setContent(startTime);
+        }
+        if (TextUtils.isEmpty(endTime)) {
+            customStatmentEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));
+            endTime = customStatmentEnd.getContent();
+        } else {
+            customStatmentEnd.setContent(endTime);
+        }
     }
 
-    @OnClick(R.id.custom_statment_course) public void onClickCourse() {
-        customStatmentCourse.setClickable(false);
-        if (getActivity() instanceof FragActivity) {
-            new GymChooseCardtplFragmentBuilder(((FragActivity) getActivity()).getCoachService().getId()+""
-                ,((FragActivity) getActivity()).getCoachService().getModel()
-                ).build().show(getFragmentManager(), "");
-        }
-        customStatmentCourse.setClickable(true);
+    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
+        toolbarTitile.setText("自定义销售报表");
+    }
 
-        //DialogList dialogList = new DialogList(getContext());
-        //dialogList.title("请选择会员卡");
-        //dialogList.list(courseStrings, new AdapterView.OnItemClickListener() {
-        //    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //        dialogList.dismiss();
-        //        customStatmentCourse.setContent(courseStrings.get(position));
-        //        if (position == 0) {
-        //            chooseCoursId = 0;
-        //        } else {
-        //            chooseCoursId = cards.get(position - 1).id;
-        //            chooseGymId = cards.get(position - 1).system_id;
-        //        }
-        //    }
-        //});
-        //dialogList.show();
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
+                CardTpl card_tpl = data.getParcelableExtra(Configs.EXTRA_CARD_TYPE);
+                presenter.selectCard(card_tpl.getId());
+                //    } else if (requestCode == 2) {
+                //        mChooseShopId = IntentUtils.getIntentString(data, 1);
+                //        if (TextUtils.isEmpty(mChooseShopId)) {
+                //            mCallbackActivity.setToolbar(getString(R.string.all_gyms), true, new View.OnClickListener() {
+                //                @Override public void onClick(View v) {
+                //                    ChooseGymActivity.start(CustomSaleFragment.this, 2, getString(R.string.choose_gym), mChooseShopId);
+                //                }
+                //            }, 0, null);
+                //        } else {
+                //            mShopStr = IntentUtils.getIntentString(data, 0);
+                //            mCallbackActivity.setToolbar(IntentUtils.getIntentString(data, 0), true, new View.OnClickListener() {
+                //                @Override public void onClick(View v) {
+                //                    ChooseGymActivity.start(CustomSaleFragment.this, 2, getString(R.string.choose_gym), mChooseShopId);
+                //                }
+                //            }, 0, null);
+                //        }
+                //        if (TextUtils.isEmpty(mChooseShopId)) {
+                //            presenter.selectShopid("0");
+                //        } else {
+                //            presenter.selectShopid(mChooseShopId);
+                //        }
+                //    }
+            }
+        }
     }
 
     @OnClick(R.id.custom_statment_end) public void onClickEnd() {
         if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(1900, 2100);
-
-        pwTime.setOnTimeSelectListener(date -> {
-            //            customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(date));
-            try {
-                Date start = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
-                LogUtil.e(date.getTime() + "   " + start.getTime());
-                //if (date.getTime() - start.getTime() < 0) {
-                //    ToastUtils.show(R.drawable.ic_share_fail, "结束日期不能早于开始日期");
-                //} else if ((date.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
-                //    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
-                //} else {
+        pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+            @Override public void onTimeSelect(Date date) {
+                try {
                     pwTime.dismiss();
                     customStatmentEnd.setContent(DateUtils.Date2YYYYMMDD(date));
-                //}
-            } catch (Exception e) {
-                e.printStackTrace();
+                    presenter.selectEndTime(customStatmentEnd.getContent());
+                    endTime = customStatmentEnd.getContent();
+                    mSaleFilter.endDay = endTime;
+                    //                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         Date date = new Date();
@@ -225,143 +224,108 @@ public class CustomSaleFragment extends BaseFragment {
         } catch (Exception e) {
 
         }
-
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
-        //        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-        //            @Override
-        //            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        //                customStatmentEnd.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
-        //            }
-        //        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     @OnClick(R.id.custom_statment_start) public void onClickStart() {
         if (pwTime == null) pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
         pwTime.setRange(1900, 2100);
-        pwTime.setOnTimeSelectListener(date -> {
-            try {
-                Date end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
-
-                //if (date.getTime() - end.getTime() > 0) {
-                //    ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
-                //} else if ((end.getTime() - date.getTime()) > DateUtils.MONTH_TIME) {
-                //    ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
-                //} else {
+        pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+            @Override public void onTimeSelect(Date date) {
+                try {
                     pwTime.dismiss();
                     customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(date));
-                //}
-            } catch (Exception e) {
-                e.printStackTrace();
+                    startTime = customStatmentStart.getContent();
+                    presenter.selectStartTime(customStatmentStart.getContent());
+                    mSaleFilter.startDay = startTime;
+                    //                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         Date date = new Date();
         try {
             date = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
-
-        //        new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-        //            @Override
-        //            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        //                customStatmentStart.setContent(year + "-" + ++monthOfYear + "-" + dayOfMonth);
-        //            }
-        //        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH)).show();
     }
-
-    @OnClick(R.id.custom_statment_gym) public void onClickGym() {
-        DialogList dialogList = new DialogList(getContext());
-        dialogList.title("请选择健身房");
-        dialogList.list(gymStrings, new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dialogList.dismiss();
-                customStatmentGym.setContent(gymStrings.get(position));
-                if (chooseGymId != spinnerBeans.get(position).id) {
-                    chooseGymId = spinnerBeans.get(position).id;
-                    if (position == 0) {
-
-                        customStatmentCourse.setVisibility(View.GONE);
-                    } else {
-                        HashMap<String, String> params = new HashMap<String, String>();
-                        params.put("system_id", Integer.toString(chooseGymId));
-
-                        customStatmentCourse.setVisibility(View.VISIBLE);
-                        customStatmentCourse.setContent("所有会员卡");
-                        chooseCoursId = "";
-
-                    }
-                }
-            }
-        });
-        dialogList.show();
-        //        new MaterialDialog.Builder(getContext())
-        //                .title("请选择健身房")
-        //                .items(gymStrings.toArray(new String[gymStrings.size()]))
-        //                .itemsCallback(new MaterialDialog.ListCallback() {
-        //                    @Override
-        //                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-        //                        LogUtil.e("choose:" + which);
-        //                        customStatmentGym.setContent(text.toString());
-        //                        chooseGymId = spinnerBeans.get(which).id;
-        //                        if (which == 0) {
-        //
-        //                            customStatmentCourse.setVisibility(View.GONE);
-        //                        } else {
-        //                            HashMap<String, String> params = new HashMap<String, String>();
-        //                            params.put("system_id", Integer.toString(chooseGymId));
-        //
-        //                            QcCloudClient.getApi().getApi.qcGetSystemCard(App.coachid, params).subscribeOn(Schedulers.io()).subscribe(courseResponseObserver);
-        //
-        //
-        //                            customStatmentCourse.setVisibility(View.VISIBLE);
-        //                        }
-        //                    }
-        //                })
-        //                .show();
-    }
-
-    //    @OnClick(R.id.custom_statment_student)
-    //    public void onClickStudent() {
-    //        new MaterialDialog.Builder(getContext())
-    //                .title("请选择学员")
-    //                .items(studentStrings.toArray(new String[studentStrings.size()]))
-    //                .itemsCallback(new MaterialDialog.ListCallback() {
-    //                    @Override
-    //                    public void onSelection(MaterialDialog materialDialog, View view, int i, CharSequence charSequence) {
-    //                        customStatmentStudent.setContent(charSequence.toString());
-    //                        if (i == 0) {
-    //                            chooseUserId = 0;
-    //                        } else {
-    //                            chooseUserId = studentBeans.get(i - 1).id;
-    //                        }
-    //                    }
-    //                }).show();
-    //
-    //    }
 
     @OnClick(R.id.custom_statment_generate) public void onClickGenerate() {
-        Date start = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
-        Date end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
-        if (start.getTime() - end.getTime() > 0) {
-            ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
+        if (DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent()).getTime() > DateUtils.formatDateFromYYYYMMDD(
+            customStatmentEnd.getContent()).getTime()) {
+            ToastUtils.show("开始时间不能小于结束时间");
             return;
-        } else if ((end.getTime() - start.getTime()) > DateUtils.MONTH_TIME) {
+        }
+        if (DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent()).getTime() - DateUtils.formatDateFromYYYYMMDD(
+            customStatmentStart.getContent()).getTime() > DateUtils.MONTH_TIME) {
             ToastUtils.show(R.drawable.ic_share_fail, "自定义时间不能超过一个月");
             return;
         }
+        //        presenter.completedCustom(getFragmentManager(), mCallbackActivity.getFragId());
         getFragmentManager().beginTransaction()
             .add(R.id.web_frag_layout,
-                SaleDetailFragment.newInstance(3, customStatmentStart.getContent(), customStatmentEnd.getContent(), chooseGymId,
-                    chooseCoursId, customStatmentCourse.getContent()))
-            .addToBackStack(null)
+                SaleDetailFragment.newInstance(3, startTime, endTime, card_id, card_extra, mSeller_id, mTradetype, mPaytype, mSaleFilter))
+            .addToBackStack(getFragmentName())
             .commit();
     }
 
     @Override public void onDestroyView() {
-        if (cardSp != null && !cardSp.isUnsubscribed()) cardSp.unsubscribe();
         super.onDestroyView();
-        unbinder.unbind();
+    }
+
+    @Override public void onGetCards(List<CardTpl> cardtpls) {
+        CardTypeChooseDialogFragment dialog = CardTypeChooseDialogFragment.newInstance(cardtpls);
+        dialog.show(getFragmentManager(), "");
+    }
+
+    @Override public String getFragmentName() {
+        return CustomSaleFragment.class.getName();
+    }
+
+    @OnClick({ R.id.trade_type, R.id.pay_method, R.id.custom_statment_cardtype }) public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.trade_type:
+                List<String> tm = new ArrayList<>();
+                tm.add(getString(R.string.no_limit));
+                tm.addAll(Arrays.asList(getResources().getStringArray(R.array.trade_types)));
+                new DialogList(getContext()).list(tm, new AdapterView.OnItemClickListener() {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (position > 0) {
+                            tradeType.setContent(getResources().getStringArray(R.array.trade_types)[position - 1]);
+                            mTradetype = BusinessUtils.getTradeTypeServer(position - 1);
+                        } else {
+                            tradeType.setContent(getString(R.string.no_limit));
+                            mTradetype = 0;
+                        }
+                        mSaleFilter.tradeType = mTradetype;
+                    }
+                }).title(getString(R.string.trade_type)).show();
+                break;
+            case R.id.pay_method:
+                List<String> pm = new ArrayList<>();
+                pm.add(getString(R.string.no_limit));
+                pm.addAll(Arrays.asList(getResources().getStringArray(R.array.pay_method)));
+
+                new DialogList(getContext()).list(pm, new AdapterView.OnItemClickListener() {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        if (position > 0) {
+                            mPaytype = BusinessUtils.getPayMethodServer(position - 1);
+                            payMethod.setContent(getResources().getStringArray(R.array.pay_method)[position - 1]);
+                        } else {
+                            mPaytype = 0;
+                            payMethod.setContent(getString(R.string.no_limit));
+                        }
+                        mSaleFilter.payMethod = mPaytype;
+                    }
+                }).title(getString(R.string.pay_method)).show();
+                break;
+            case R.id.custom_statment_cardtype:
+                presenter.queryCardTpl();
+                break;
+        }
     }
 }

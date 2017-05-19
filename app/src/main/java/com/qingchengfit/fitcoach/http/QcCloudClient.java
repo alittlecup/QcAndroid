@@ -28,6 +28,14 @@ import com.qingchengfit.fitcoach.bean.ScanBody;
 import com.qingchengfit.fitcoach.bean.SingleBatchBody;
 import com.qingchengfit.fitcoach.bean.SyncExpBody;
 import com.qingchengfit.fitcoach.bean.base.Shop;
+import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportDetail;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
+import com.qingchengfit.fitcoach.fragment.statement.model.GymCardtpl;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
+import com.qingchengfit.fitcoach.fragment.statement.model.Sellers;
+import com.qingchengfit.fitcoach.fragment.statement.model.StatementGlanceResp;
 import com.qingchengfit.fitcoach.http.bean.AddBatchCourse;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.AddCertificate;
@@ -113,7 +121,6 @@ import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
 import com.qingchengfit.fitcoach.http.bean.QcResponseServiceDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseSingleBatch;
-import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import com.qingchengfit.fitcoach.http.bean.QcSaleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleGlanceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -200,7 +207,8 @@ public class QcCloudClient {
                     } else {
                         request = request.newBuilder()
                             .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
-                            .addHeader("User-Agent", " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(R.string.oem_tag) + "  QingchengApp/Trainer")
+                            .addHeader("User-Agent", " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
+                                R.string.oem_tag) + "  QingchengApp/Trainer")
                             .build();
                     }
                     return chain.proceed(request);
@@ -377,16 +385,12 @@ public class QcCloudClient {
         @Deprecated @GET("/api/v1/services/detail/") rx.Observable<QcServiceDetialResponse> qcGetServiceDetail(
             @QueryMap Map<String, String> params);
 
-        //获取教练销售详情
-        @GET("/api/v2/coaches/{id}/reports/sells/") rx.Observable<QcSaleDetailRespone> qcGetSaleDatail(@Path("id") int id,
-            @QueryMap Map<String, String> params);
-
         //获取教练销售 充值卡信息
         @GET("/api/v1/coaches/{id}/reports/sale/cardtpls/") rx.Observable<QcCardsResponse> qcGetSaleCard(@Path("id") int id);
 
         //获取教练课程
-        @GET("/api/coaches/{id}/systems/courses/") rx.Observable<QcCourseResponse> qcGetSystemCourses(@Path("id") int id,
-            @QueryMap Map<String, String> params);
+        @GET("/api/coaches/{id}/systems/courses/") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetSystemCourses(@Path("id") int id,
+            @QueryMap HashMap<String, Object> params);
 
         //获取教练某个系统下的学员
         @GET("/api/coaches/{id}/systems/users/") rx.Observable<QcStudentResponse> qcGetSystemStudent(@Path("id") int id,
@@ -465,6 +469,7 @@ public class QcCloudClient {
         //获取健身房课程列表
         @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCourses(@Path("id") String coach_id,
             @QueryMap HashMap<String, String> params, @Query("is_private") int is_private);
+
         @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCoursesAll(@Path("id") String coach_id,
             @QueryMap HashMap<String, String> params);
 
@@ -593,6 +598,42 @@ public class QcCloudClient {
         @GET("/api/v2/notifications/?order_by=-created_at") rx.Observable<QcResponseData<Notification>> qcGetNotification(@QueryMap HashMap<String,Object>  query);
         @GET("/api/v2/notifications/index/") rx.Observable<QcResponseData<List<NotificationGlance>>> qcGetNotificationIndex(@Query("type_json") String query);
 
+
+        //报表
+        @GET("/api/v2/coaches/{id}/reports/schedules/glance/") rx.Observable<QcResponseData<StatementGlanceResp>> qcGetReportGlance(
+                @Path("id") int id, @Query("brand_id") String brand_id, @Query("shop_id") String shop_id, @Query("id") String gymid,
+                @Query("model") String model);
+
+        @GET("/api/staffs/{id}/reports/sells/glance/") rx.Observable<QcResponseData<StatementGlanceResp>> qcGetSaleGlance(@Path("id") int id,
+                @Query("brand_id") String brand_id, @Query("shop_id") String shop_id, @Query("id") String gymid, @Query("model") String model);
+
+        @GET("/api/v2/coaches/{id}/reports/schedules/")
+        rx.Observable<QcResponseStatementDetail> qcGetStatementDatail(@Path("id") int id,
+            @Query("start") String start, @Query("end") String end, @QueryMap HashMap<String, Object> params);
+
+        @GET("/api/coaches/{staff_id}/sellers/") rx.Observable<QcResponseData<Sellers>> qcGetSalersAndCoach(@Path("staff_id") int staff_id,
+            @Query("brand_id") String brandid, @Query("id") String gymid, @Query("model") String model);
+
+        @GET("/api/v2/coaches/{id}/method/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetCoursesPermission(
+            @Path("id") int staff_id, @Query("is_private") int is_private, @QueryMap HashMap<String, Object> params);
+
+
+        @GET("/api/v2/coaches/{staff_id}/reports/schedules/{schedule_id}/")
+        rx.Observable<QcResponseData<CourseReportDetail>> qcGetCourseReportDetail(
+            @Path("staff_id") String staffId, @Path("schedule_id") String scheduleId, @QueryMap HashMap<String, Object> params);
+
+
+        @GET("/api/v2/coaches/{id}/reports/sells/") rx.Observable<QcResponseSaleDetail> qcGetSaleDatail(@Path("id") String id,
+
+            @Query("start") String start, @Query("end") String end, @QueryMap HashMap<String, Object> params);
+
+        //获取某个健身房的卡模板
+        @GET("/api/v2/coaches/{id}/cardtpls/?show_all=1") rx.Observable<QcResponseData<GymCardtpl>> qcGetGymCardtpl(@Path("id") String id,
+            @QueryMap HashMap<String, Object> params, @Query("type") String type);
+
+
+        @GET("/api/v2/staffs/{id}/cardtpls/all/?show_all=1&order_by=-id") rx.Observable<QcResponseData<CardTpls>> qcGetCardTpls(
+            @Path("id") String id, @QueryMap HashMap<String, Object> params, @Query("type") String type, @Query("is_enable") String isEnable);
 
     }
 
@@ -832,4 +873,6 @@ public class QcCloudClient {
     public interface MutiSystemApi {
         @POST("/api/cloud/authenticate/") rx.Observable<QcResponSystem> qcGetSession(@Body GetSysSessionBean phone);
     }
+
+
 }

@@ -1,72 +1,83 @@
 <LinearLayout
     android:id="@+id/rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/backgroud_grey"
-              android:orientation="vertical"
-              tools:context="com.qingchengfit.fitcoach.fragment.CustomStatmentFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
     >
 
-    <include layout="@layout/common_toolbar">
-    </include>
+    <include layout="@layout/common_simple_toolbar"/>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_gym"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="选择健身房"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
 
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/custom_statment_start"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
-        app:civ_lable="开始日期"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+        app:civ_lable="@string/start_day"
+        app:civ_showright="true"
+        />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/custom_statment_end"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
-        app:civ_lable="结束日期"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+        app:civ_lable="@string/end_day"
+        app:civ_showright="true"
+
+        />
 
     <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_course"
+        android:id="@+id/custom_statment_cardtype"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
-        app:civ_lable="选择会员卡"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+        app:civ_lable="@string/cardtype"
+        app:civ_showright="true"
+        app:civ_content="@string/cardtype_all"
+        />
+
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/trade_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_content="@string/no_limit"
+        app:civ_lable="@string/trade_type"
+        app:civ_showright="true"
+        />
 
     <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
-    <!--android:id="@+id/custom_statment_student"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:civ_clickable="true"-->
-    <!--app:civ_lable="选择是否首次充值"-->
-    <!-->-->
-    <!--</com.qingchengfit.fitcoach.component.CommonInputView>-->
+        <!--android:id="@+id/sale_menber"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/qc_item_height"-->
+        <!--app:civ_clickable="true"-->
+        <!--app:civ_content="@string/all"-->
+        <!--app:civ_lable="@string/sale_menber"-->
+        <!--app:civ_showright="true"-->
+        <!--/>-->
 
-    <include layout="@layout/divider_grey">
-    </include>
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/pay_method"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_content="@string/no_limit"
+        app:civ_lable="@string/pay_method"
+        app:civ_showright="true"
+        app:civ_showdivier="false"
+        />
+
+    <include layout="@layout/divider_grey"/>
 
     <Button
         android:id="@+id/custom_statment_generate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:layout_margin="30dp"
-        android:text="生成报表"
+        android:text="@string/generate_statment"
         />
 </LinearLayout>

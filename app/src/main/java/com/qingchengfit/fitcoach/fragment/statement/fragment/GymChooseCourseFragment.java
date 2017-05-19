@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment.statement;
+package com.qingchengfit.fitcoach.fragment.statement.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,12 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.event.EventChooseStudent;
+import com.qingchengfit.fitcoach.event.EventChooseCourse;
 import com.qingchengfit.fitcoach.fragment.course.SimpleTextItemItem;
+import com.qingchengfit.fitcoach.fragment.statement.item.ChooseCourseItem;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
-import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
+import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
 import java.util.HashMap;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -38,7 +39,8 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/9.
  */
-@FragmentWithArgs public class GymStudentChooseFragment extends BottomListFragment {
+
+@FragmentWithArgs  public class GymChooseCourseFragment extends BottomListFragment {
     @Arg String id;
     @Arg String model;
 
@@ -48,20 +50,20 @@ import rx.schedulers.Schedulers;
     }
 
     @Override public void loadData() {
-        HashMap<String, Object> prams = new HashMap<>();
+        HashMap<String, String> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid, prams)
+        QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid+"", prams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcAllStudentResponse>() {
-                @Override public void call(QcAllStudentResponse qcResponse) {
+            .subscribe(new Action1<QcResponseCourseList>() {
+                @Override public void call(QcResponseCourseList qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.users != null){
+                        if (qcResponse.data != null && qcResponse.data.courses != null){
                             mDatas.clear();
-                            mDatas.add(new SimpleTextItemItem("全部学员"));
-                            for (int i = 0; i < qcResponse.data.users.size(); i++) {
-                                mDatas.add(new ChooseStudentItem(qcResponse.data.users.get(i)));
+                            mDatas.add(new SimpleTextItemItem("全部课程"));
+                            for (int i = 0; i < qcResponse.data.courses.size(); i++) {
+                                mDatas.add(new ChooseCourseItem(qcResponse.data.courses.get(i)));
                             }
                             mFlexibleAdapter.notifyDataSetChanged();
                         }
@@ -74,16 +76,16 @@ import rx.schedulers.Schedulers;
     }
 
     @Override public String getTitle() {
-        return "请选择学员";
+        return "请选择课程";
     }
 
     @Override public boolean onItemClick(int position) {
 
-        if (mDatas.get(position) instanceof ChooseStudentItem){
-            RxBus.getBus().post(new EventChooseStudent.Builder().chooseStudentid(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.user.id
-            ).StudentName(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.username).build());
+        if (mDatas.get(position) instanceof ChooseCourseItem){
+            RxBus.getBus().post(new EventChooseCourse.Builder().courseId(((ChooseCourseItem) mDatas.get(position)).mCourse.getId()
+            ).courseName(((ChooseCourseItem) mDatas.get(position)).mCourse.getName()).build());
         }else if (mDatas.get(position) instanceof SimpleTextItemItem){
-            RxBus.getBus().post(new EventChooseStudent.Builder().chooseStudentid("0").StudentName("全部学员").build());
+            RxBus.getBus().post(new EventChooseCourse.Builder().courseId("").courseName("全部课程").build());
         }
         dismiss();
         return true;

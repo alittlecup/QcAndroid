@@ -50,14 +50,4 @@ public class Card implements Parcelable {
         this.id = in.readString();
         this.card_type = in.readInt();
     }
-
-    public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
-        @Override public Card createFromParcel(Parcel source) {
-            return new Card(source);
-        }
-
-        @Override public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
 }
