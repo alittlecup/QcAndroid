@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment.statement;
+package com.qingchengfit.fitcoach.fragment.statement.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,12 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.event.EventChooseCourse;
+import com.qingchengfit.fitcoach.event.EventChooseCardtpl;
 import com.qingchengfit.fitcoach.fragment.course.SimpleTextItemItem;
+import com.qingchengfit.fitcoach.fragment.statement.item.ChooseCardtplItem;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
+import com.qingchengfit.fitcoach.http.QcResponseCardTpls;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
-import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
 import java.util.HashMap;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -39,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2016/12/9.
  */
 
-@FragmentWithArgs  public class GymChooseCourseFragment extends BottomListFragment {
+@FragmentWithArgs  public class GymChooseCardtplFragment extends BottomListFragment {
     @Arg String id;
     @Arg String model;
 
@@ -52,17 +53,17 @@ import rx.schedulers.Schedulers;
         HashMap<String, String> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid+"", prams)
+        QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid+"",id,model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseCourseList>() {
-                @Override public void call(QcResponseCourseList qcResponse) {
+            .subscribe(new Action1<QcResponseCardTpls>() {
+                @Override public void call(QcResponseCardTpls qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.courses != null){
+                        if (qcResponse.data != null && qcResponse.data.card_tpls != null){
                             mDatas.clear();
-                            mDatas.add(new SimpleTextItemItem("全部课程"));
-                            for (int i = 0; i < qcResponse.data.courses.size(); i++) {
-                                mDatas.add(new ChooseCourseItem(qcResponse.data.courses.get(i)));
+                            mDatas.add(new SimpleTextItemItem("全部会员卡种类"));
+                            for (int i = 0; i < qcResponse.data.card_tpls.size(); i++) {
+                                mDatas.add(new ChooseCardtplItem(qcResponse.data.card_tpls.get(i)));
                             }
                             mFlexibleAdapter.notifyDataSetChanged();
                         }
@@ -75,16 +76,17 @@ import rx.schedulers.Schedulers;
     }
 
     @Override public String getTitle() {
-        return "请选择课程";
+        return "请选择会员卡种类";
     }
 
     @Override public boolean onItemClick(int position) {
 
-        if (mDatas.get(position) instanceof ChooseCourseItem){
-            RxBus.getBus().post(new EventChooseCourse.Builder().courseId(((ChooseCourseItem) mDatas.get(position)).mCourse.getId()
-            ).courseName(((ChooseCourseItem) mDatas.get(position)).mCourse.getName()).build());
+        if (mDatas.get(position) instanceof ChooseCardtplItem){
+            RxBus.getBus().post(new EventChooseCardtpl.Builder().cardtplId(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getId())
+                .cardtplName(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getName())
+                .build());
         }else if (mDatas.get(position) instanceof SimpleTextItemItem){
-            RxBus.getBus().post(new EventChooseCourse.Builder().courseId("").courseName("全部课程").build());
+            RxBus.getBus().post(new EventChooseCardtpl.Builder().cardtplId("").cardtplName("全部会员卡种类").build());
         }
         dismiss();
         return true;

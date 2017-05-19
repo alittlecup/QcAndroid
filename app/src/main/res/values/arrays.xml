@@ -51,4 +51,33 @@
         <item>星期六</item>
         <item>星期日</item>
     </array>
+    <string-array name="choose_course_type">
+        <item>@string/all_course</item>
+        <item>@string/course_type_group</item>
+        <item>@string/course_type_private</item>
+    </string-array>
+
+    <array name="cardtype_filter">
+        <item>@string/cardtype_all</item>
+        <item>@string/cardtype_value</item>
+        <item>@string/cardtype_times</item>
+        <item>@string/cardtype_date</item>
+    </array>
+
+    <string-array name="trade_types">
+        <item>@string/new_buy_card</item>
+        <item>@string/charge</item>
+        <item>@string/present</item>
+        <item>@string/refund</item>
+    </string-array>
+
+    <array name="pay_method">
+        <item>@string/wechat_scan</item>
+        <item>@string/wechat_pay</item>
+        <item>@string/cash_pay</item>
+        <item>@string/credit_pay</item>
+        <item>@string/transit_pay</item>
+        <item>@string/other</item>
+    </array>
+
 </resources>

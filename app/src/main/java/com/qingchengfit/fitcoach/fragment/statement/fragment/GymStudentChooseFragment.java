@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment.statement;
+package com.qingchengfit.fitcoach.fragment.statement.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,12 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.event.EventChooseCardtpl;
+import com.qingchengfit.fitcoach.event.EventChooseStudent;
 import com.qingchengfit.fitcoach.fragment.course.SimpleTextItemItem;
+import com.qingchengfit.fitcoach.fragment.statement.item.ChooseStudentItem;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.QcResponseCardTpls;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import java.util.HashMap;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -38,8 +39,7 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/9.
  */
-
-@FragmentWithArgs  public class GymChooseCardtplFragment extends BottomListFragment {
+@FragmentWithArgs public class GymStudentChooseFragment extends BottomListFragment {
     @Arg String id;
     @Arg String model;
 
@@ -49,20 +49,20 @@ import rx.schedulers.Schedulers;
     }
 
     @Override public void loadData() {
-        HashMap<String, String> prams = new HashMap<>();
+        HashMap<String, Object> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid+"",id,model)
+        QcCloudClient.getApi().getApi.qcGetAllStudent(App.coachid, prams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcResponseCardTpls>() {
-                @Override public void call(QcResponseCardTpls qcResponse) {
+            .subscribe(new Action1<QcAllStudentResponse>() {
+                @Override public void call(QcAllStudentResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.card_tpls != null){
+                        if (qcResponse.data != null && qcResponse.data.users != null){
                             mDatas.clear();
-                            mDatas.add(new SimpleTextItemItem("全部会员卡种类"));
-                            for (int i = 0; i < qcResponse.data.card_tpls.size(); i++) {
-                                mDatas.add(new ChooseCardtplItem(qcResponse.data.card_tpls.get(i)));
+                            mDatas.add(new SimpleTextItemItem("全部学员"));
+                            for (int i = 0; i < qcResponse.data.users.size(); i++) {
+                                mDatas.add(new ChooseStudentItem(qcResponse.data.users.get(i)));
                             }
                             mFlexibleAdapter.notifyDataSetChanged();
                         }
@@ -75,17 +75,16 @@ import rx.schedulers.Schedulers;
     }
 
     @Override public String getTitle() {
-        return "请选择会员卡种类";
+        return "请选择学员";
     }
 
     @Override public boolean onItemClick(int position) {
 
-        if (mDatas.get(position) instanceof ChooseCardtplItem){
-            RxBus.getBus().post(new EventChooseCardtpl.Builder().cardtplId(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getId())
-                .cardtplName(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getName())
-                .build());
+        if (mDatas.get(position) instanceof ChooseStudentItem){
+            RxBus.getBus().post(new EventChooseStudent.Builder().chooseStudentid(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.user.id
+            ).StudentName(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.username).build());
         }else if (mDatas.get(position) instanceof SimpleTextItemItem){
-            RxBus.getBus().post(new EventChooseCardtpl.Builder().cardtplId("").cardtplName("全部会员卡种类").build());
+            RxBus.getBus().post(new EventChooseStudent.Builder().chooseStudentid("0").StudentName("全部学员").build());
         }
         dismiss();
         return true;

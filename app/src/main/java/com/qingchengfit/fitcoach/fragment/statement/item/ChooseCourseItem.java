@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment.statement;
+package com.qingchengfit.fitcoach.fragment.statement.item;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,18 +7,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.base.Card_tpl;
+import com.qingchengfit.fitcoach.bean.CourseDetail;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class ChooseCardtplItem extends AbstractFlexibleItem<ChooseCardtplItem.ChooseStudentVH> {
+public class ChooseCourseItem extends AbstractFlexibleItem<ChooseCourseItem.ChooseStudentVH> {
 
-    public Card_tpl mCard_tpl;
+    public CourseDetail mCourse;
 
-    public ChooseCardtplItem(Card_tpl card_tpl) {
-        mCard_tpl = card_tpl;
+    public ChooseCourseItem(CourseDetail course) {
+        mCourse = course;
     }
 
     @Override public int getLayoutRes() {
@@ -30,7 +30,7 @@ public class ChooseCardtplItem extends AbstractFlexibleItem<ChooseCardtplItem.Ch
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {
-        holder.itemText.setText(mCard_tpl.getName());
+        holder.itemText.setText(mCourse.getName());
     }
 
     @Override public boolean equals(Object o) {

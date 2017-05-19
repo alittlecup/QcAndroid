@@ -1,5 +1,8 @@
 package com.qingchengfit.fitcoach.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * power by
  * <p>
@@ -13,7 +16,7 @@ package com.qingchengfit.fitcoach.bean;
  * <p>
  * Created by Paper on 15/10/15 2015.
  */
-public class StudentBean {
+public class StudentBean implements Parcelable{
     public String username;
     public String phone;
     public String gymStr;
@@ -30,4 +33,56 @@ public class StudentBean {
     public int modeltype;
     public String ship_id;
 
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.phone);
+        dest.writeString(this.gymStr);
+        dest.writeString(this.headerPic);
+        dest.writeByte(this.gender ? (byte) 1 : (byte) 0);
+        dest.writeString(this.systemUrl);
+        dest.writeString(this.head);
+        dest.writeString(this.id);
+        dest.writeByte(this.isTag ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isChosen ? (byte) 1 : (byte) 0);
+        dest.writeString(this.color);
+        dest.writeString(this.modelid);
+        dest.writeString(this.model);
+        dest.writeInt(this.modeltype);
+        dest.writeString(this.ship_id);
+    }
+
+    public StudentBean() {
+    }
+
+    protected StudentBean(Parcel in) {
+        this.username = in.readString();
+        this.phone = in.readString();
+        this.gymStr = in.readString();
+        this.headerPic = in.readString();
+        this.gender = in.readByte() != 0;
+        this.systemUrl = in.readString();
+        this.head = in.readString();
+        this.id = in.readString();
+        this.isTag = in.readByte() != 0;
+        this.isChosen = in.readByte() != 0;
+        this.color = in.readString();
+        this.modelid = in.readString();
+        this.model = in.readString();
+        this.modeltype = in.readInt();
+        this.ship_id = in.readString();
+    }
+
+    public static final Creator<StudentBean> CREATOR = new Creator<StudentBean>() {
+        @Override public StudentBean createFromParcel(Parcel source) {
+            return new StudentBean(source);
+        }
+
+        @Override public StudentBean[] newArray(int size) {
+            return new StudentBean[size];
+        }
+    };
 }

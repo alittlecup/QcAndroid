@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:divider="@drawable/divier_linear_vectail"
+    android:orientation="vertical"
+    android:showDividers="middle|beginning|end"
+
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/label_card_type"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/trade_times"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/charge"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/real_income_long"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/cardtype_date"
+        />
+
+    <TextView
+        android:id="@+id/data_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/data_charge"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+
+        />
+
+    <TextView
+        android:id="@+id/data_real_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/cardtype_times"
+        />
+
+    <TextView
+        android:id="@+id/times_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/times_charge"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/times_real_incomes"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text="@string/server_count"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/cardtype_value"
+        />
+
+    <TextView
+        android:id="@+id/value_trade_times"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/value_charge"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        tools:text="@string/server_count"
+        />
+
+    <TextView
+        android:id="@+id/value_real_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_orange"
+        tools:text="@string/server_count"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/form_height"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/total_count"
+        />
+
+    <TextView
+        android:id="@+id/total_server_num"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        tools:text="@string/server_count"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/form_null"
+        />
+
+    <TextView
+        style="@style/Qc.TextCommonBlack"
+        android:id="@+id/total_real_income"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        tools:text="@string/real_income_long"
+        />
+  </LinearLayout>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment.statement;
+package com.qingchengfit.fitcoach.fragment.statement.item;
 
 import android.view.LayoutInflater;
 import android.view.View;

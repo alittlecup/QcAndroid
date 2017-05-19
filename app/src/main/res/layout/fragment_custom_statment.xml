@@ -56,8 +56,8 @@
         android:layout_height="wrap_content"
         app:civ_clickable="true"
         app:civ_lable="选择学员"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+        android:visibility="gone"
+        />
 
     <include layout="@layout/divider_grey">
     </include>

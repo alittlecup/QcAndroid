@@ -1,6 +1,9 @@
 package cn.qingchengfit.utils;
 
+import android.content.Context;
 import android.text.TextUtils;
+import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -62,6 +65,27 @@ public class StringUtils {
             }
         }
         return ret;
+    }
+
+    public static String getBalance(Context context, float balance, int type) {
+        switch (type) {
+            case Configs.CATEGORY_VALUE:
+                return String.format(Locale.CHINA, "%.2f", balance) + context.getString(R.string.unit_yuan);
+            case Configs.CATEGORY_TIMES:
+                try {
+                    return String.format(Locale.CHINA, "%.0f", balance) + context.getString(R.string.unit_time);
+                } catch (Exception e) {
+                    return balance + context.getString(R.string.unit_time);
+                }
+            case Configs.CATEGORY_DATE:
+                try {
+                    return String.format(Locale.CHINA, "%.0f", balance) + context.getString(R.string.unit_day);
+                } catch (Exception e) {
+                    return balance + context.getString(R.string.unit_day);
+                }
+            default:
+                return "";
+        }
     }
 
     public static List<String> Str2List(String s) {
@@ -213,5 +237,18 @@ public class StringUtils {
                 ret = ret.concat(Integer.toString(from[i]));
         }
         return ret;
+    }
+
+    public static String getUnit(Context context, int type) {
+        switch (type) {
+            case Configs.CATEGORY_VALUE:
+                return context.getString(R.string.unit_yuan);
+            case Configs.CATEGORY_TIMES:
+                return context.getString(R.string.unit_time);
+            case Configs.CATEGORY_DATE:
+                return context.getString(R.string.unit_day);
+            default:
+                return "";
+        }
     }
 }

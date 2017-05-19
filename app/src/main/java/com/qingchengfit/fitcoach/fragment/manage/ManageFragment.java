@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -51,6 +52,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -87,6 +89,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @BindView(R.id.gym_info_layout) LinearLayout gymInfoLayout;
     @BindView(R.id.shop_img) ImageView shopImg;
     @BindView(R.id.gym_layout) LinearLayout gymLayout;
+    @Inject GymWrapper gymWrapper;
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
     private CoachService mCoachService;
@@ -182,6 +185,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
                     nameBrand.setText(coachService.brand_name);
                     addressPhone.setText(coachService.getName());
+                    gymWrapper.setCoachService(coachService);
 
                     HashMap<String, Object> params = new HashMap<String, Object>();
                     params.put("id", mCoachService.getId());
@@ -219,6 +223,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     public void setCoachService(CoachService mCoachService) {
         this.mCoachService = mCoachService;
+        gymWrapper.setCoachService(mCoachService);
     }
 
     public void updatePermission(QcResponsePermission.Data data){
@@ -269,6 +274,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                 }
                                 mCoachService = qcResponse.data.services.get(pos);
                             }
+                            gymWrapper.setCoachService(mCoachService);
                             HashMap<String, Object> params = new HashMap<String, Object>();
                             params.put("id", mCoachService.getId());
                             params.put("model", mCoachService.getModel());

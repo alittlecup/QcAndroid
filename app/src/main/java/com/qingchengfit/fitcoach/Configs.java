@@ -24,6 +24,7 @@ public class Configs {
     public static final String SIGN_PAUSE = "、";
     public static  String APP_ID ;
     public static  String SEPARATOR = ",";
+    public static final String EXTRA_CARD_TYPE = "qingcheng.card.type";
     /**
      * http config
      */
@@ -73,5 +74,32 @@ public class Configs {
      * 订单中心：http://cloudtest.qingchengfit.cn/mobile/trades/home/
      * 学习经历：http://cloudtest.qingchengfit.cn/mobile/educations/
      */
+
+    public static final String CHANNEL_CARD = "CARD";
+
+    public static final int CATEGORY_VALUE = 1;    //储值卡
+    public static final int CATEGORY_TIMES = 2;    //次卡
+    public static final int CATEGORY_DATE = 3;    //期限卡
+
+    /**
+     * 服务端交易方式
+     */
+    public static final int TRADE_CHARGE = 1;  //充值
+    public static final int TRADE_EXPENSE = 2;
+    public static final int TRADE_CHARGE_FIRST = 3; //开卡
+    public static final int TRADE_REFUND = 14; //扣费
+    public static final int TRADE_PRESENT = 13;  //赠送
+
+    /**
+     * 服务端支付方法值
+     */
+    public static final int CHARGE_MODE_CASH = 1; //现金
+    //    public static final String  = "/mobile/weixin/guide/";
+    public static final int CHARGE_MODE_CARD = 2; //卡
+    public static final int CHARGE_MODE_TRANSFER = 3; //转账
+    public static final int CHARGE_MODE_OTHER = 4; //其他
+    public static final int CHARGE_MODE_AUTO = 5; //赠送
+    public static final int CHARGE_MODE_WEIXIN = 6; //微信
+    public static final int CHARGE_MODE_WEIXIN_QRCODE = 7; //二维码
 
 }
