@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.utils.AppUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
@@ -26,6 +27,7 @@ import com.qingchengfit.fitcoach.fragment.BaseSettingFragment;
 import com.qingchengfit.fitcoach.fragment.CalSyncFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPhoneFragment;
 import com.qingchengfit.fitcoach.fragment.ModifyPwFragment;
+import javax.inject.Inject;
 
 /**
  * setting view
@@ -45,6 +47,7 @@ public class SettingFragment extends BaseSettingFragment {
     DialogSheet logoutSheet;
     @BindView(R.id.version_code)
     TextView versionCode;
+    @Inject LoginStatus loginStatus;
     private Unbinder unbinder;
     private String versionStr;
     public SettingFragment() {
@@ -105,36 +108,17 @@ public class SettingFragment extends BaseSettingFragment {
     })
     public void onClickUs(View view) {
         switch (view.getId()) {
-//            case R.id.settting_modifyinfo:
-//                fragmentCallBack.onFragmentChange(ModifyInfoFragment.newInstance("", ""));
-//                break;
-//
             case R.id.setting_modifypw:
                 fragmentCallBack.onFragmentChange(ModifyPwFragment.newInstance("", ""));
                 break;
-//
             case R.id.setting_advice:
                 fragmentCallBack.onFragmentChange(new AdviceFragment());
                 break;
-//            case R.id.setting_workexpe:
-//                fragmentCallBack.onFragmentChange(new WorkExepSettingFragment());
-//                break;
             case R.id.setting_aboutus:
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
                 toWeb.putExtra("url", Configs.Server + "/aboutus/?oem="+getString(R.string.oem_tag));
                 startActivity(toWeb);
                 break;
-//            case R.id.setting_comfirm:
-//                fragmentCallBack.onFragmentChange(new RecordFragment());
-//                break;
-//            case R.id.setting_logout:
-//
-//                Intent it = new Intent(getActivity(), MainActivity.class);
-//                it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
-//                startActivity(it);
-//                break;
-//
             case R.id.setting_modifyphone:
                 fragmentCallBack.onFragmentChange(new ModifyPhoneFragment());
                 break;
@@ -164,6 +148,7 @@ public class SettingFragment extends BaseSettingFragment {
 
                 break;
             case R.id.setting_logout:
+                loginStatus.logout(getContext());
                 Intent it = new Intent(getActivity(), Main2Activity.class);
                 it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 it.putExtra(Main2Activity.ACTION, Main2Activity.LOGOUT);

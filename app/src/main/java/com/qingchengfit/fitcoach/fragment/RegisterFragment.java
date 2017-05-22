@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,11 +21,13 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.PasswordView;
-import cn.qingchengfit.widgets.PhoneEditText;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.PasswordView;
+import cn.qingchengfit.widgets.PhoneEditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -41,6 +42,7 @@ import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
 import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import java.lang.ref.WeakReference;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -60,7 +62,7 @@ import rx.schedulers.Schedulers;
  * <p>
  * Created by Paper on 15/7/31 2015.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends BaseFragment {
 
 
 
@@ -93,7 +95,7 @@ public class RegisterFragment extends Fragment {
     private Observable<SendSmsCode> mSendsmsOb;
     private Gson gson;
     private MaterialDialog materialDialog;
-
+    @Inject LoginStatus loginStatus;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -154,6 +156,11 @@ public class RegisterFragment extends Fragment {
                                                     App.gUser = qcResponLogin.data.user;
                                                     PreferenceUtils.setPrefString(getActivity(), "coach", gson.toJson(qcResponLogin.data.coach));
                                                     App.coachid = Integer.parseInt(qcResponLogin.data.coach.id);
+
+                                                    loginStatus.setUserId(qcResponLogin.data.user.getId());
+                                                    loginStatus.setSession(qcResponLogin.data.session_id);
+                                                    loginStatus.setLoginUser(new Staff(App.gUser,App.coachid+""));
+
                                                     Intent toMain = new Intent(getActivity(), FragActivity.class);
                                                     toMain.putExtra("type",10);
                                                     startActivity(toMain);

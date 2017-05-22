@@ -2,11 +2,9 @@ package com.qingchengfit.fitcoach.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
-
 import com.qingchengfit.fitcoach.fragment.VpFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ import java.util.List;
  * <p>
  * Created by Paper on 15/11/19 2015.
  */
-public class FragmentAdapter extends FragmentStatePagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
 
     List<Fragment> fragments;
     FragmentManager fm;
@@ -33,7 +31,6 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.fragments = fs;
         this.fm = fm;
-
     }
 
     @Override

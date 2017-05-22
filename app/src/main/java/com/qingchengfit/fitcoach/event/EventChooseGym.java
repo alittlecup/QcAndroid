@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.event;
 
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by

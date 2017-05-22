@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.CoachService;
+
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

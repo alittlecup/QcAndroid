@@ -122,7 +122,6 @@ public class App extends Application implements HasDispatchingActivityInjector,H
         }catch (Exception e){
 
         }
-//        LeakCanary.install(this);
         AppContex = getApplicationContext();
         if (!BuildConfig.DEBUG)
             CrashHandler.getInstance().init(this);

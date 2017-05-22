@@ -30,7 +30,7 @@ import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.bean.SaleBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSaleDetailRespone;
 import java.util.ArrayList;
 import java.util.Calendar;

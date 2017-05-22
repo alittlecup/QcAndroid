@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,14 +14,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.GuideWindow;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.GuideWindow;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
+import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
@@ -32,6 +35,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import java.util.Locale;
+import javax.inject.Inject;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,38 +68,60 @@ public class MineFragmentFragment extends BaseFragment {
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.layout_my_orders) LinearLayout layoutMyOrders;
+    @BindView(R.id.btn_login) Button btnLogin;
+    @BindView(R.id.layout_login) LinearLayout layoutLogin;
     private Unbinder unbinder;
     private QcCoachRespone.DataEntity.CoachEntity user;
     private Subscription sp1;
     private GuideWindow gd1;
 
+    @Inject LoginStatus loginStatus;
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.mine);
-        toolbar.inflateMenu(R.menu.menu_setting);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
+
+        RxBusAdd(EventLoginChange.class).subscribe(eventLoginChange -> checkLogin());
+        checkLogin();
+        return view;
+    }
+
+    public void checkLogin() {
+        if (loginStatus.isLogined()) {
+            layoutLogin.setVisibility(View.GONE);
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_setting);
+            toolbar.setOnMenuItemClickListener(item -> {
                 Intent toBaseInfo = new Intent(getActivity(), SettingActivity.class);
                 toBaseInfo.putExtra("to", 0);
                 startActivity(toBaseInfo);
                 return false;
+            });
+            if (App.gUser != null) {
+                tvName.setText(App.gUser.username);
+                Glide.with(getContext())
+                    .load(App.gUser.avatar)
+                    .asBitmap()
+                    .error(App.gUser.gender == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female)
+                    .into(new CircleImgWrapper(imgHeader, getContext()));
             }
-        });
-        if (App.gUser != null) {
-            tvName.setText(App.gUser.username);
-            Glide.with(getContext())
-                .load(App.gUser.avatar)
-                .asBitmap()
-                .error(App.gUser.gender == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female)
-                .into(new CircleImgWrapper(imgHeader, getContext()));
+
+            queryData();
+        } else {
+            toolbar.getMenu().clear();
+            layoutLogin.setVisibility(View.VISIBLE);
         }
-        return view;
+    }
+
+    @OnClick(R.id.btn_login) public void doLogin() {
+        Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+        toLogin.putExtra("isRegiste", 0);
+        startActivity(toLogin);
     }
 
     @Override public void onResume() {
         super.onResume();
-        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() == 3) queryData();
     }
 
     @Override protected void onVisible() {
@@ -114,12 +140,14 @@ public class MineFragmentFragment extends BaseFragment {
     }
 
     public void showGuide() {
-        if (gd1 == null) gd1 = new GuideWindow(getContext(), "点击此处查看订单和门票", GuideWindow.DOWN);
-        gd1.show(layoutMyOrders);
+        if (loginStatus.isLogined()) {
+            if (gd1 == null) gd1 = new GuideWindow(getContext(), "点击此处查看订单和门票", GuideWindow.DOWN);
+            gd1.show(layoutMyOrders);
+        }
     }
-    public void hideGuide(){
-        if (gd1 != null)
-            gd1.dismiss();
+
+    public void hideGuide() {
+        if (gd1 != null) gd1.dismiss();
     }
 
     public void queryData() {
@@ -161,6 +189,11 @@ public class MineFragmentFragment extends BaseFragment {
 
     @OnClick({ R.id.layout_header, R.id.layout_my_page, R.id.layout_my_resume, R.id.layout_my_courseplan, R.id.layout_my_orders })
     public void onClickFunction(View view) {
+        if (!loginStatus.isLogined()) {
+            doLogin();
+            return;
+        }
+
         switch (view.getId()) {
             case R.id.layout_header:
                 Intent toBaseInfo = new Intent(getActivity(), SettingActivity.class);
@@ -192,29 +225,6 @@ public class MineFragmentFragment extends BaseFragment {
                 PreferenceUtils.setPrefBoolean(getContext(), App.coachid + "_has_show_orders", true);
                 WebActivity.startWeb(Configs.Server + Configs.HOST_ORDERS, getContext());
                 break;
-            //case R.id.layout_baseinfo:
-            //    Intent toStudnet = new Intent(getActivity(), StudentOrderPreviewActivity.class);
-            //    String s = "";
-            //    toStudnet.putExtra("url", Configs.HOST_STUDENT_PREVIEW + s);
-            //    startActivity(toStudnet);
-            //    break;
-            //case R.id.layout_my_meeting:
-            //    //修改个人介绍
-            //    Intent toSelfInfo = new Intent(getActivity(), SettingActivity.class);
-            //    toSelfInfo.putExtra("to", 5);
-            //    toSelfInfo.putExtra("desc",user.getDescription());
-            //    startActivity(toSelfInfo);
-            //    break;
-            //case R.id.layout_my_comfirm:
-            //    Intent toComfirm = new Intent(getActivity(), SettingActivity.class);
-            //    toComfirm.putExtra("to", 3);
-            //    startActivity(toComfirm);
-            //    break;
-            //case R.id.layout_my_exp:
-            //    Intent toExp = new Intent(getActivity(), SettingActivity.class);
-            //    toExp.putExtra("to", 4);
-            //    startActivity(toExp);
-            //    break;
         }
     }
 }

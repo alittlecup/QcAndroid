@@ -220,11 +220,6 @@ import rx.schedulers.Schedulers;
                 .build();
             gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
-            //getFragmentManager().beginTransaction()
-            //    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out)
-            //    .replace(R.id.guide_frag, new GuideCourseTypeFragment())
-            //    .addToBackStack(null)
-            //    .commit();
             showLoading();
             RxRegiste(QcCloudClient.getApi().postApi
                 .qcInit(((GuideFragment) getParentFragment()).getInitBean())
@@ -246,7 +241,7 @@ import rx.schedulers.Schedulers;
                     @Override
                     public void call(Throwable throwable) {
                         hideLoading();
-                        ToastUtils.showDefaultStyle("初始化系统失败!");
+                        ToastUtils.showDefaultStyle("创建场馆失败!");
                     }
                 }));
 

@@ -6,7 +6,7 @@
 //import com.anbillon.qcmvplib.Presenter;
 //import com.qingchengfit.fitcoach.Configs;
 //import com.qingchengfit.fitcoach.http.ResponseConstant;
-//import com.qingchengfit.fitcoach.http.bean.CoachService;
+//import cn.qingchengfit.model.base.CoachService;
 //import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
 //import com.qingchengfit.fitcoach.http.bean.QcResponse;
 //

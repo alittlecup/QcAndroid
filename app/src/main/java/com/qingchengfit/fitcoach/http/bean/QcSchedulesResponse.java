@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

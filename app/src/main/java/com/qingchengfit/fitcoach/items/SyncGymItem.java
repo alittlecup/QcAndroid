@@ -4,7 +4,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
 

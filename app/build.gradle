@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.squareup.sqldelight'
+
 //apply plugin: 'com.neenbedankt.android-apt'
 //def buildNumber = "1"
 //apply plugin: 'packer'                     //版本管理 多渠道打包
@@ -120,23 +122,23 @@ android {
     }
 
     internal {
-      minSdkVersion 15
+      minSdkVersion 16
     }
     joinfit {
-      minSdkVersion 15
+      minSdkVersion 16
     }
     suisheng {
       applicationIdSuffix ".vmsfit"
-      minSdkVersion 15
+      minSdkVersion 16
     }
     s567go {
-      minSdkVersion 15
+      minSdkVersion 16
     }
     eptc {
-      minSdkVersion 15
+      minSdkVersion 16
     }
     gravity {
-      minSdkVersion 15
+      minSdkVersion 16
     }
   }
 
@@ -243,6 +245,7 @@ dependencies {
   compile 'com.android.support:multidex:1.0.1'
   compile 'com.jakewharton:butterknife:8.4.0'
   compile 'com.github.bumptech.glide:glide:3.6.1'
+  compile 'com.squareup.sqlbrite:sqlbrite:0.7.0'
   compile 'eu.davidea:flexible-adapter:5.0.0-b7'
   compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
   compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.2'

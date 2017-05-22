@@ -190,9 +190,9 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
-        if (isVisible()){
-            refresh();
-        }
+        //if (isVisible()){
+        //    refresh();
+        //}
     }
 
     @Override protected void onVisible() {

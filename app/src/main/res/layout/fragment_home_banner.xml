@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      />
+  <android.support.v4.view.ViewPager
+      android:id="@+id/vp"
+      android:layout_width="match_parent"
+      android:layout_height="320dp"
+      />
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      />
+  <com.qingchengfit.fitcoach.component.CircleIndicator
+      android:id="@+id/splash_indicator"
+      android:layout_gravity="bottom"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      app:ci_drawable="@drawable/circle_prime"
+      />
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_horizontal"
+      >
+
+    <Button
+        android:id="@+id/btn_use_now"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:background="@drawable/btn_green_radius_full"
+        android:text="免费使用"
+        />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:text="已有账号登录"
+        android:layout_marginLeft="@dimen/little"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/btn_green_radius_full_outline"
+        />
+
+  </LinearLayout>
+</LinearLayout>

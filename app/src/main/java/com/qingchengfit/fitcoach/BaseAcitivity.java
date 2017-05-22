@@ -1,13 +1,14 @@
 package com.qingchengfit.fitcoach;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.app.AppCompatDelegate;
+import cn.qingchengfit.utils.LogUtil;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qingchengfit.fitcoach.component.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
+import dagger.android.AndroidInjection;
 
 //import com.qingchengfit.fitcoach.di.ApplicationComponet;
 
@@ -30,10 +31,16 @@ public class BaseAcitivity extends AppCompatActivity {
     }
     private LoadingDialog loadingDialog;
     private MaterialDialog mAlert;
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+        try {
+            AndroidInjection.inject(this);
+        }catch (Exception e){
+            LogUtil.e("not find in AppCompot ");
+        }
+        super.onCreate(savedInstanceState);
     }
+
 
     @Override
     protected void onResume() {

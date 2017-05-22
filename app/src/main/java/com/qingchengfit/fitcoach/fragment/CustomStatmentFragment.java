@@ -32,7 +32,7 @@ import com.qingchengfit.fitcoach.event.EventChooseStudent;
 import com.qingchengfit.fitcoach.fragment.statement.GymChooseCourseFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.statement.GymStudentChooseFragmentBuilder;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
 import com.qingchengfit.fitcoach.http.bean.QcStudentResponse;

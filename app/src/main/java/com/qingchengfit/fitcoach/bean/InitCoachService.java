@@ -1,7 +1,8 @@
 package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import android.os.Parcelable;
+import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by
@@ -45,7 +46,7 @@ public class InitCoachService extends CoachService{
         this.gym_id = in.readLong();
     }
 
-    public static final Creator<InitCoachService> CREATOR = new Creator<InitCoachService>() {
+    public static final Parcelable.Creator<InitCoachService> CREATOR = new Parcelable.Creator<InitCoachService>() {
         @Override public InitCoachService createFromParcel(Parcel source) {
             return new InitCoachService(source);
         }

@@ -35,7 +35,17 @@ public class Staff extends Personage implements Parcelable {
     public long count;// # 作为推荐人 已推荐人总数
     public String position_str;
     public String user_id;
+
+
+
     public Staff() {
+    }
+    public Staff(User user,String staffid) {
+        this.username = user.username;
+        this.avatar = user.avatar;
+        this.gender = user.gender;
+        this.user_id = user.id;
+        this.id = staffid;
     }
 
     public Staff(String username, String phone, String avatar, int gender) {

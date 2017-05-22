@@ -14,28 +14,26 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.widgets.GuideWindow;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.activity.ChooseActivity;
 import com.qingchengfit.fitcoach.activity.NotificationActivity;
-import com.qingchengfit.fitcoach.bean.NewPushMsg;
 import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import java.util.Date;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
 
 /**
  * power by
@@ -66,24 +64,36 @@ public class MainScheduleFragment extends BaseFragment {
     @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;
     @BindView(R.id.schedule_notification_layout) RelativeLayout scheduleNotificationLayout;
     @BindView(R.id.schedule_frag) FrameLayout scheduleFrag;
+    @BindView(R.id.view_p) View viewP;
 
     private CoachService mCoachService;
+    private boolean isWeekView;
+    private ScheduleWeekFragment scheduleWeekFragment;
+    private ScheduesFragment scheduesFragment;
+    private GuideWindow gd1;
+    private GuideWindow gd2;
 
     public CoachService getCoachService() {
         return mCoachService;
     }
 
+    @Override protected void onFinishAnimation() {
+        super.onFinishAnimation();
+        scheduleWeekFragment = new ScheduleWeekFragment();
+        scheduesFragment = new ScheduesFragmentBuilder(new Date().getTime()).build();
+
+        router(isWeekView ? scheduleWeekFragment : scheduesFragment);
+        setVisible();
+    }
+
+    @Override public int getLayoutRes() {
+        return R.id.schedule_frag;
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_schedule, container, false);
-
-        boolean isWeekView = PreferenceUtils.getPrefBoolean(getContext(),"is_week_view",false);
-        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag,isWeekView?new ScheduleWeekFragment() : new ScheduesFragmentBuilder(new Date().getTime()).build()).commitAllowingStateLoss();
-        ButterKnife.bind(this, view);
-        RxBusAdd(NewPushMsg.class).subscribe(new Action1<NewPushMsg>() {
-            @Override public void call(NewPushMsg newPushMsg) {
-                queryNotify();
-            }
-        });
+        unbinder = ButterKnife.bind(this, view);
+        isWeekView = PreferenceUtils.getPrefBoolean(getContext(), "is_week_view", false);
         RxBusAdd(EventGoPreview.class).subscribe(new Action1<EventGoPreview>() {
             @Override public void call(EventGoPreview eventGoPreview) {
                 goStudentPreview(eventGoPreview.mCoachService);
@@ -91,29 +101,54 @@ public class MainScheduleFragment extends BaseFragment {
         });
         RxBusAdd(EventScheduleService.class).subscribe(new Action1<EventScheduleService>() {
             @Override public void call(EventScheduleService eventScheduleService) {
-                if (eventScheduleService.mCoachService.getId() == 0){
+                if (eventScheduleService.mCoachService.getId() == 0) {
                     mCoachService = null;
                     title.setText(getString(R.string.all_schedules));
-
-                }else {
-                mCoachService = eventScheduleService.mCoachService;
-                title.setText(mCoachService.getName());
+                } else {
+                    mCoachService = eventScheduleService.mCoachService;
+                    title.setText(mCoachService.getName());
                 }
             }
         });
         //跳转到日视图或者周视图的某天
-        RxBusAdd(EventScheduleView.class)
-            .subscribe(new Action1<EventScheduleView>() {
-                @Override public void call(EventScheduleView eventScheduleView) {
-                    if (eventScheduleView.isWeekView){
+        RxBusAdd(EventScheduleView.class).subscribe(new Action1<EventScheduleView>() {
+            @Override public void call(EventScheduleView eventScheduleView) {
+                if (eventScheduleView.isWeekView) {
 
-                    }else
-                        getChildFragmentManager().beginTransaction().replace(R.id.schedule_frag,new ScheduesFragmentBuilder(eventScheduleView.mDate.getTime()).build()).commitAllowingStateLoss();
-
+                } else {
+                    getChildFragmentManager().beginTransaction()
+                        .replace(R.id.schedule_frag, new ScheduesFragmentBuilder(eventScheduleView.mDate.getTime()).build())
+                        .commitAllowingStateLoss();
                 }
-            });
+            }
+        });
+        RxBusAdd(EventInit.class).subscribe(new Action1<EventInit>() {
+            @Override public void call(EventInit eventInit) {
+                if (isVisible() && !eventInit.show && eventInit.pos == 2) {
+                    if (gd2 != null && gd2.isShowing()) gd2.dismiss();
+                    gd2 = null;
+                    PreferenceUtils.setPrefBoolean(getContext(), "guide_2", true);
+                }
+            }
+        });
+
         return view;
     }
+    public void setVisible(){
+        if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_1", false)) {
+            if (gd1 == null) gd1 = new GuideWindow(getContext(), getString(R.string.hint_order_self), GuideWindow.DOWN);
+            gd1.show(studentOrder);
+        } else if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_2", false)) {
+            if (gd2 == null) gd2 = new GuideWindow(getContext(), getString(R.string.hint_help_order), GuideWindow.UP);
+            gd2.show(viewP);
+        }
+    }
+
+    public void setInvisible(){
+        if (gd1 != null && gd1.isShowing()) gd1.dismiss();
+        if (gd2 != null && gd2.isShowing()) gd2.dismiss();
+    }
+
 
     private void goStudentPreview(CoachService coachService) {
         Intent toStudnet = new Intent(getActivity(), SpecialWebActivity.class);
@@ -132,15 +167,22 @@ public class MainScheduleFragment extends BaseFragment {
 
     @OnClick(R.id.student_order) public void onStuOrder() {
         try {
-
-            RxBus.getBus().post(new EventInit(false, 1));
-            //if (mCoachService == null) {
-            //    new ChooseGymDialogFragment().show(getFragmentManager(), "");
-            //} else {
+            hideHint();
             goStudentPreview(mCoachService);
-            //}
-        }catch (Exception e){
+        } catch (Exception e) {
 
+        }
+    }
+
+    private void hideHint() {
+        if (gd1 != null && gd1.isShowing()) gd1.dismiss();
+        gd1 = null;
+        PreferenceUtils.setPrefBoolean(getContext(), "guide_1", true);
+        if (PreferenceUtils.getPrefBoolean(getContext(), "guide_1", false) && !PreferenceUtils.getPrefBoolean(getContext(), "guide_2",
+            false)) {
+            if (gd2 == null) {
+                gd2 = new GuideWindow(getContext(), getString(R.string.hint_help_order), GuideWindow.UP);
+            } else if (viewP != null && !gd2.isShowing()) gd2.show(viewP);
         }
     }
 
@@ -189,7 +231,7 @@ public class MainScheduleFragment extends BaseFragment {
             case R.id.layout_title://选择场馆
                 Intent toChooseGym = new Intent(getContext(), ChooseActivity.class);
                 toChooseGym.putExtra("to", ChooseActivity.TO_CHOSSE_GYM_SCHEDULE);
-                toChooseGym.putExtra("service",mCoachService);
+                toChooseGym.putExtra("service", mCoachService);
                 startActivityForResult(toChooseGym, 1);
                 break;
             case R.id.student_order://会员预约
@@ -208,5 +250,9 @@ public class MainScheduleFragment extends BaseFragment {
 
             }
         }
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
     }
 }

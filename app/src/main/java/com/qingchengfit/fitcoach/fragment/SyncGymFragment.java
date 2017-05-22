@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
@@ -25,6 +27,7 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -55,6 +58,8 @@ public class SyncGymFragment extends BaseFragment {
     TextView syncGymHint;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
+
+    @Inject RepoCoachServiceImpl repoCoachService;
 
     private CommonFlexAdapter commonFlexAdapter;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
@@ -88,13 +93,9 @@ public class SyncGymFragment extends BaseFragment {
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(qcCoachServiceResponse -> {
                     if (qcCoachServiceResponse.status == 200) {
-                        if (qcCoachServiceResponse.data.services == null || qcCoachServiceResponse.data.services.size() ==0 ){
-                            Intent toGuide = new Intent(getActivity(), GuideActivity.class);
-                            startActivity(toGuide);
-                            getActivity().finish();
-                            return;
-                        }
                         syncGymHint.setText(getString(R.string.hint_sync_gyms,qcCoachServiceResponse.data.services.size()));
+                        repoCoachService.createServices(qcCoachServiceResponse.data.services);
+                        RxBus.getBus().post(new EventLoginChange());
                         mData.clear();
                         for (int i = 0; i < qcCoachServiceResponse.data.services.size(); i++) {
                             mData.add(new SyncGymItem(qcCoachServiceResponse.data.services.get(i)));

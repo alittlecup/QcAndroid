@@ -41,7 +41,7 @@ import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
 import com.qingchengfit.fitcoach.fragment.batch.details.BatchDetailFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.fragment.course.CourseListFragment;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.items.BatchItem;
