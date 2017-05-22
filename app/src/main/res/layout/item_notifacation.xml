@@ -57,7 +57,6 @@
           android:layout_marginRight="@dimen/activity_horizontal_margin"
           android:layout_marginTop="8dp"
           android:lineSpacingExtra="4dp"
-          tools:text="@string/test_test_short"
           style="@style/Qc.TextCommonBlack"
           />
 
