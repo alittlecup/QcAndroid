@@ -9,7 +9,7 @@
     <!--<string name="baidu_api_debug">Rth3x24pVQTIa3aX9BcmP8OW</string>-->
     <string name="baidu_provider">com.qingchengfit.fitcoach.bdpush</string>
     <string name="file_provider">com.qingchengfit.fitcoach.provider</string>
-    <string name="gd_key">ce6997d5c6f60e84d056394ff961b7b0</string>
+    <string name="gd_key">f6b43231ca913303da6818d62146408d</string>
     <string name="baidu_api_release">RqFugIxBdvAn7H8h5GsampTw</string>
     <string formatted="false" name="chat_user_id_header">qc_%s</string>
 
@@ -359,6 +359,20 @@
     <string name="common_comfirm">确定</string>
     <string name="no_more_loading">没有更多内容了</string>
     <string name="all_comments_count">全部评论(%d)</string>
+
+  <string name="str_guide_title_1">查看每日课程，代会员约课</string>
+  <string name="str_guide_title_2">团课、私教排期</string>
+  <string name="str_guide_title_3">会员管理</string>
+  <string name="str_guide_title_4">查看报表</string>
+
+
+  <string name="str_guide_content_1">标题</string>
+  <string name="str_guide_content_2"></string>
+  <string name="str_guide_content_3">便捷高效的管理会员会员卡</string>
+  <string name="str_guide_content_4">标题</string>
+
+
+
     <string name="test_title">标题</string>
     <string name="statement_change_filter">更改筛选条件</string>
     <string name="statment_detail">/报表明细/</string>

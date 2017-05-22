@@ -1,9 +1,10 @@
 package cn.qingchengfit.di.model;
 
 import com.qingchengfit.fitcoach.BuildConfig;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import java.util.HashMap;
 
 /**
@@ -169,6 +170,7 @@ public class GymWrapper {
 
     public void setCoachService(CoachService coachService) {
         this.coachService = coachService;
+        if (coachService != null) RxBus.getBus().post(coachService);
     }
 
     public Brand getBrand() {

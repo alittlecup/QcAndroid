@@ -42,18 +42,18 @@ import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseReverseFragmentBuilder;
-import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseCardForm;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseCardFormFragment;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseTypeFormFragment;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeform;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.fragment.statement.RxNetWorkEvent;
-import com.qingchengfit.fitcoach.fragment.statement.presenter.StatementDetailPresenter;
 import com.qingchengfit.fitcoach.fragment.statement.StatementDetailView;
 import com.qingchengfit.fitcoach.fragment.statement.StatmentFilterActivity;
 import com.qingchengfit.fitcoach.fragment.statement.TypeUtils;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseCardFormFragment;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseReverseFragmentBuilder;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseTypeFormFragment;
+import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseCardForm;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeform;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
+import com.qingchengfit.fitcoach.fragment.statement.presenter.StatementDetailPresenter;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
@@ -69,6 +69,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
 
 /**
  * A simple {@link Fragment} subclass.

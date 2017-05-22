@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
 import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
 import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
 import com.qingchengfit.fitcoach.fragment.manage.EditGymFragmentBuilder;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by

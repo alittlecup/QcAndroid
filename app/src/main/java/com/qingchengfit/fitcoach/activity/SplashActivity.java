@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -54,32 +55,26 @@ import rx.schedulers.Schedulers;
  * <p>
  * <p>
  * Created by Paper on 15/8/5 2015.
+ *
+ *
+ *
  */
 public class SplashActivity extends BaseAcitivity {
 
-    @BindView(R.id.splash_viewpager)
-    ViewPager splashViewpager;
-    @BindView(R.id.splash_indicator)
-    CircleIndicator splashIndicator;
-
+    @BindView(R.id.splash_viewpager) ViewPager splashViewpager;
+    @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
     List<View> imageViews = new ArrayList<>();
-    @BindView(R.id.main_loading)
-    RelativeLayout mainLoading;
-    float touchX;
-    private int[] mSplashImg = new int[]{
-            R.drawable.help1,
-            R.drawable.help2,
-            R.drawable.help3,
-            R.drawable.help4,
-            R.drawable.help5,
+    @BindView(R.id.main_loading) RelativeLayout mainLoading;
+    private int[] mSplashImg = new int[] {
+        R.drawable.help1, R.drawable.help2, R.drawable.help3, R.drawable.help4, R.drawable.help5,
     };
-    private String[] mColors = new String[]{
-            "#55b37f", "#5595b3", "#b38855", "#675Eb1", "#9e74b0"
+    private String[] mColors = new String[] {
+        "#55b37f", "#5595b3", "#b38855", "#675Eb1", "#9e74b0"
     };
     @Inject LoginStatus loginStatus;
+    @Inject RepoCoachServiceImpl repoCoachService;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
@@ -90,97 +85,104 @@ public class SplashActivity extends BaseAcitivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, getString(R.string.baidu_api_release));
-        if (BuildConfig.DEBUG){
-            String ip = PreferenceUtils.getPrefString(this,"debug_ip", "");
-            if (!TextUtils.isEmpty(ip))
-                Configs.Server = ip;
+        if (BuildConfig.DEBUG) {
+            String ip = PreferenceUtils.getPrefString(this, "debug_ip", "");
+            if (!TextUtils.isEmpty(ip)) Configs.Server = ip;
         }
         String u = PreferenceUtils.getPrefString(this, "user_info", "");
-        if (!TextUtils.isEmpty(u)) {
-           User gUser = new Gson().fromJson(u, User.class);
-            String id = PreferenceUtils.getPrefString(this, "coach", "");
-            String session_id =  PreferenceUtils.getPrefString(this, "session_id", "");
 
-            loginStatus.setLoginUser(Staff.formatFromUser(gUser,id));
+        if (!TextUtils.isEmpty(u)) {
+            /*
+                已登录跳转
+             */
+            User gUser = new Gson().fromJson(u, User.class);
+            String id = PreferenceUtils.getPrefString(this, "coach", "");
+            String session_id = PreferenceUtils.getPrefString(this, "session_id", "");
+
+            loginStatus.setLoginUser(Staff.formatFromUser(gUser, id));
             loginStatus.setSession(session_id);
             loginStatus.setUserId(gUser.getId());
-        }
+            Observable.just("").subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(s1 -> {
+                runOnUiThread(() -> {
+                    if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
 
+                        //获取用户拥有的系统
+                        QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<QcCoachServiceResponse>() {
+                                @Override public void onCompleted() {
 
-        Observable.just("")
-                .subscribeOn(Schedulers.newThread())
-                .flatMap(s -> {
-                    return Observable.just("");
-                }).subscribe(s1 -> {
-            runOnUiThread(() -> {
-                if (PreferenceUtils.getPrefString(this, "session_id", null) != null) {
-
-                    //获取用户拥有的系统
-                    QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<QcCoachServiceResponse>() {
-                            @Override public void onCompleted() {
-
-                            }
-
-                            @Override public void onError(Throwable e) {
-                                ToastUtils.show("服务器错误，请稍后再试");
-                                SplashActivity.this.finish();
-                            }
-
-                            @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
-                                if (qcCoachServiceResponse.status == ResponseResult.SUCCESS) {
-                                    if (qcCoachServiceResponse.data == null || qcCoachServiceResponse.data.services == null ||
-                                        qcCoachServiceResponse.data.services.size() == 0) {
-                                        Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
-                                        startActivity(toGym);
-                                        SplashActivity.this.finish();
-                                    } else {
-                                        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", new Gson().toJson(qcCoachServiceResponse));
-                                        Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
-                                        startActivity(toMain);
-                                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
-                                        SplashActivity.this.finish();
-                                    }
-                                } else if (qcCoachServiceResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-                                    logout();
                                 }
-                            }
-                        });
 
+                                @Override public void onError(Throwable e) {
+                                    ToastUtils.show("服务器错误，请稍后再试");
+                                    SplashActivity.this.finish();
+                                }
 
-                } else {
-                    goSplashViewpager();
-                    ViewCompat.animate(mainLoading).alpha(0.1f).setDuration(1000).withLayer().setListener(new ViewPropertyAnimatorListener() {
-                        @Override
-                        public void onAnimationStart(View view) {
+                                @Override public void onNext(QcCoachServiceResponse qcCoachServiceResponse) {
+                                    if (qcCoachServiceResponse.status == ResponseResult.SUCCESS) {
+                                        if (qcCoachServiceResponse.data == null
+                                            || qcCoachServiceResponse.data.services == null
+                                            || qcCoachServiceResponse.data.services.size() == 0) {
+                                            //无场馆  仍然让进入
+                                            Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
+                                            startActivity(toGym);
+                                            SplashActivity.this.finish();
+                                        } else {
+                                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems",
+                                                new Gson().toJson(qcCoachServiceResponse));
+                                            repoCoachService.createServices(qcCoachServiceResponse.data.services);
+                                            Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
+                                            startActivity(toMain);
+                                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+                                            SplashActivity.this.finish();
+                                        }
+                                    } else if (qcCoachServiceResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                                        logout();
+                                    }
+                                }
+                            });
+                    } else {
+                        goSplashViewpager();
+                        ViewCompat.animate(mainLoading)
+                            .alpha(0.1f)
+                            .setDuration(1000)
+                            .withLayer()
+                            .setListener(new ViewPropertyAnimatorListener() {
+                                @Override public void onAnimationStart(View view) {
 
-                        }
+                                }
 
-                        @Override
-                        public void onAnimationEnd(View view) {
+                                @Override public void onAnimationEnd(View view) {
 
-                            mainLoading.setVisibility(View.GONE);
-                        }
+                                    mainLoading.setVisibility(View.GONE);
+                                }
 
-                        @Override
-                        public void onAnimationCancel(View view) {
+                                @Override public void onAnimationCancel(View view) {
 
-                        }
-                    }).start();
-
-
-                }
+                                }
+                            })
+                            .start();
+                    }
+                });
             });
 
-        });
+        }else {
+            /*
+             *未登录 直接进入主页
+             */
+            Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
+            startActivity(toMain);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
+            SplashActivity.this.finish();
+        }
 
 
     }
 
     public void goSplashViewpager() {
-        LogUtil.e("oem:"+getString(R.string.oem_tag));
+        LogUtil.e("oem:" + getString(R.string.oem_tag));
         if (getString(R.string.oem_tag).contains("qingcheng")) {
 
             for (int i = 0; i < mSplashImg.length; i++) {
@@ -194,12 +196,9 @@ public class SplashActivity extends BaseAcitivity {
         } else {
             goLogin(0);
         }
-
     }
 
-
-    @UiThread
-    public void goLogin(int registe) {
+    @UiThread public void goLogin(int registe) {
         Intent toLogin = new Intent(this, LoginActivity.class);
         toLogin.putExtra("isRegiste", registe);
         startActivity(toLogin);
@@ -207,15 +206,15 @@ public class SplashActivity extends BaseAcitivity {
     }
 
     @OnClick({
-            R.id.splash_login_btn,
-            R.id.splash_registe_btn
-    })
-    public void OnBtnClick(View v) {
+        R.id.splash_login_btn, R.id.splash_registe_btn
+    }) public void OnBtnClick(View v) {
         if (v.getId() == R.id.splash_registe_btn) {
             goLogin(1);
-        } else goLogin(0);
-
+        } else {
+            goLogin(0);
+        }
     }
+
     public void logout() {
         PreferenceUtils.setPrefBoolean(SplashActivity.this, "hasPushId", false);
         PreferenceUtils.setPrefString(App.AppContex, "session_id", null);

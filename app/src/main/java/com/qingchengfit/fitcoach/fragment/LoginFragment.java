@@ -12,6 +12,8 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -28,18 +30,20 @@ import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment {
     LoginPresenter loginPresenter;
 
     @BindView(R.id.loginview) LoginView loginview;
     Gson gson = new Gson();
 
+    @Inject LoginStatus loginStatus;
     MaterialDialog materialDialog;
     private Observable mObservable;
     private Unbinder unbinder;
@@ -47,6 +51,7 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
 
     }
+
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +97,9 @@ public class LoginFragment extends Fragment {
                             App.coachid = Integer.parseInt(qcResponLogin.data.coach.id);
                             PreferenceUtils.setPrefBoolean(getActivity(), "first", false);
                             PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
+                            loginStatus.setUserId(qcResponLogin.data.user.getId());
+                            loginStatus.setSession(qcResponLogin.data.session_id);
+                            loginStatus.setLoginUser(new Staff(App.gUser,App.coachid+""));
                             return rx.Observable.just(true);
                         } else {
                             SnackbarOnUiThread("该号码未注册教练");
