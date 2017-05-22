@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
@@ -92,9 +93,13 @@ public class HomeBannerFragment extends BaseFragment {
      */
     @OnClick(R.id.btn_use_now)
     public void onClickUseNow(){
-        Intent toLogin = new Intent(getActivity(), LoginActivity.class);
-        toLogin.putExtra("isRegiste", 1);
-        startActivity(toLogin);
+        if (!loginStatus.isLogined()) {
+            Intent toLogin = new Intent(getActivity(), LoginActivity.class);
+            toLogin.putExtra("isRegiste", 1);
+            startActivity(toLogin);
+        }else {
+            startActivity(new Intent(getActivity(), GuideActivity.class));
+        }
     }
 
     /**
