@@ -9,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.widgets.PasswordView;
 import cn.qingchengfit.widgets.PhoneEditText;
-import cn.qingchengfit.utils.LogUtil;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -42,15 +40,11 @@ public class ModifyPwFragment extends BaseSettingFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    @BindView(R.id.modifypw_comfirm_btn)
-    Button modifypwComfirmBtn;
+    @BindView(R.id.modifypw_comfirm_btn) Button modifypwComfirmBtn;
     Gson gson = new Gson();
-    @BindView(R.id.phone_num)
-    PhoneEditText phoneNum;
-    @BindView(R.id.checkcode)
-    PasswordView checkcode;
-    @BindView(R.id.password)
-    PasswordView password;
+    @BindView(R.id.phone_num) PhoneEditText phoneNum;
+    @BindView(R.id.checkcode) PasswordView checkcode;
+    @BindView(R.id.password) PasswordView password;
 
     private String mParam1;
     private String mParam2;
@@ -79,8 +73,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -88,61 +81,45 @@ public class ModifyPwFragment extends BaseSettingFragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_modify_pw, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "更改密码");
         handler = new PostMsgHandler(getContext());
-        checkcode.setOnClickListener(v ->
-            getCode()
-        );
+        checkcode.setOnClickListener(v -> getCode());
         return view;
     }
 
-
-    @OnClick(R.id.modifypw_comfirm_btn)
-    public void onConfirm() {
-        if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()){
+    @OnClick(R.id.modifypw_comfirm_btn) public void onConfirm() {
+        if (phoneNum.checkPhoneNum() && checkcode.checkValid() && password.checkValid()) {
             fragmentCallBack.ShowLoading("请稍后");
-            QcCloudClient.getApi().postApi.qcMoidfyPw(App.coachid, new ModifyPwBean
-                    .Builder()
-                    .phone(phoneNum.getPhoneNum())
-                    .area_code(phoneNum.getDistrictInt())
-                    .code(checkcode.getCode())
-                    .password(password.getCode())
-                    .build())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<QcResponse>() {
-                        @Override
-                        public void onCompleted() {
+            QcCloudClient.getApi().postApi.qcMoidfyPw(App.coachid, new ModifyPwBean.Builder().phone(phoneNum.getPhoneNum())
+                .area_code(phoneNum.getDistrictInt())
+                .code(checkcode.getCode())
+                .password(password.getCode())
+                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcResponse>() {
+                @Override public void onCompleted() {
 
-                        }
+                }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            fragmentCallBack.hideLoading();
-                            Toast.makeText(App.AppContex, "修改失败", Toast.LENGTH_SHORT).show();
-                        }
+                @Override public void onError(Throwable e) {
+                    fragmentCallBack.hideLoading();
+                    Toast.makeText(App.AppContex, "修改失败", Toast.LENGTH_SHORT).show();
+                }
 
-                        @Override
-                        public void onNext(QcResponse qcResponse) {
-                            fragmentCallBack.hideLoading();
-                            if (qcResponse.status == ResponseResult.SUCCESS) {
+                @Override public void onNext(QcResponse qcResponse) {
+                    fragmentCallBack.hideLoading();
+                    if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                                Toast.makeText(App.AppContex, "修改成功", Toast.LENGTH_SHORT).show();
-                                getActivity().onBackPressed();
-                            } else {
-                                Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                        Toast.makeText(App.AppContex, "修改成功", Toast.LENGTH_SHORT).show();
+                        getActivity().onBackPressed();
+                    } else {
+                        Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
-
-
     }
 
     /**
@@ -150,40 +127,33 @@ public class ModifyPwFragment extends BaseSettingFragment {
      */
     public void getCode() {
         if (phoneNum.checkPhoneNum()) {
-            QcCloudClient.getApi()
-                    .postApi
-                    .qcGetCode(new GetCodeBean.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<QcResponse>() {
-                        @Override
-                        public void onCompleted() {
+            QcCloudClient.getApi().postApi.qcGetCode(
+                new GetCodeBean.Builder().phone(phoneNum.getPhoneNum()).area_code(phoneNum.getDistrictInt()).build())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override public void onCompleted() {
 
+                    }
+
+                    @Override public void onError(Throwable e) {
+                        Toast.makeText(App.AppContex, "发送验证码失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override public void onNext(QcResponse qcResponse) {
+
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            LogUtil.d("succ");
+                            handler.sendEmptyMessage(0);
+                        } else {
+                            LogUtil.d(":" + qcResponse.msg);
                         }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Toast.makeText(App.AppContex, "发送验证码失败", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onNext(QcResponse qcResponse) {
-
-                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                                LogUtil.d("succ");
-                                handler.sendEmptyMessage(0);
-                            } else {
-                                LogUtil.d(":" + qcResponse.msg);
-                            }
-                        }
-                    });
-
+                    }
+                });
         }
-
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -194,11 +164,9 @@ public class ModifyPwFragment extends BaseSettingFragment {
 
         PostMsgHandler(Context c) {
             context = new WeakReference<Context>(c);
-
         }
 
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (checkcode != null) {
                 StringBuffer stringBuffer = new StringBuffer();
@@ -206,8 +174,7 @@ public class ModifyPwFragment extends BaseSettingFragment {
                 stringBuffer.append(getString(R.string.login_resend_msg));
 
                 checkcode.setRightText(stringBuffer.toString());
-                if (count == 60)
-                    checkcode.blockRightClick(true);
+                if (count == 60) checkcode.blockRightClick(true);
                 if (count > 0) {
                     count--;
                     handler.sendEmptyMessageDelayed(0, 1000);

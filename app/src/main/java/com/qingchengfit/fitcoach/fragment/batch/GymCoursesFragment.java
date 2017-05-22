@@ -51,6 +51,7 @@ import rx.functions.Action1;
  */
 public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
 
+    public static final String TAG = "GymCoursesFragment";
     @BindView(R.id.gym_img) ImageView gymImg;
     @BindView(R.id.gym_name) TextView gymName;
     @BindView(R.id.gym_title_tag) ImageView gymTitleTag;
@@ -62,17 +63,14 @@ public class GymCoursesFragment extends BaseFragment implements GymCoursesView {
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     @BindView(R.id.linearlayout) LinearLayout linearlayout;
+    @Inject GymCoursesPresenter presenter;
     private FragmentAdapter fragmentAdater;
     private Observable<RxAddCourse> mAddObserable;
     private Observable<ImageThreeTextBean> mCourseObserable;
-    public static final String TAG = "GymCoursesFragment";
-
-    @Inject GymCoursesPresenter presenter;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gym_courses, container, false);
         unbinder = ButterKnife.bind(this, view);
-
 
         if (getActivity() instanceof BatchActivity) ((BatchActivity) getActivity()).getComponent().inject(this);
         presenter.attachView(this);

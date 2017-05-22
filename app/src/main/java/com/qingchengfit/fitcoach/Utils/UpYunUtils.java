@@ -14,12 +14,11 @@ package com.qingchengfit.fitcoach.Utils;
  * Created by Paper on 16/3/30 2016.
  */
 public class UpYunUtils {
-    public static String getMiniPhoto(String p){
-        if (p.contains("!")){
+    public static String getMiniPhoto(String p) {
+        if (p.contains("!")) {
             return p;
-        }else {
-            return p+"!120x120";
+        } else {
+            return p + "!120x120";
         }
-
     }
 }

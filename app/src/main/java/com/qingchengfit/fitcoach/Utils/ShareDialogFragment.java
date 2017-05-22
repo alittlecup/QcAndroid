@@ -28,7 +28,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
-
 /**
  * power by
  * <p>
@@ -44,18 +43,16 @@ import rx.schedulers.Schedulers;
  */
 public class ShareDialogFragment extends BottomSheetDialogFragment {
 
-
     private IWXAPI api;
 
     private String mTitle, mText, mImg, mUrl;
     private Bitmap mBitmap;
     private boolean isImg;
     private Unbinder unbinder;
-//    public static void start(String title,String text,String img,String url){
-//        ShareDialogFragment f = newInstance(title,text,img,url);
-//        f
-//    }
-
+    //    public static void start(String title,String text,String img,String url){
+    //        ShareDialogFragment f = newInstance(title,text,img,url);
+    //        f
+    //    }
 
     public static ShareDialogFragment newInstance(String title, String text, String img, String url) {
         Bundle args = new Bundle();
@@ -79,11 +76,9 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
+        //        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme);
         if (getArguments() != null) {
             mTitle = getArguments().getString("title");
             mText = getArguments().getString("text");
@@ -93,63 +88,56 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
         }
     }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         api = WXAPIFactory.createWXAPI(getActivity(), getString(R.string.wechat_code), true);
         api.registerApp(getString(R.string.wechat_code));
-        if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null))
+        if (TextUtils.isEmpty(mUrl) && (!TextUtils.isEmpty(mImg) || mBitmap != null)) {
             isImg = true;
-        else isImg = false;
+        } else {
+            isImg = false;
+        }
 
         return view;
     }
-
 
     private String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick({R.id.wechat_friend, R.id.wechat_circle, R.id.copy_link})
-    public void onClick(View view) {
+    @OnClick({ R.id.wechat_friend, R.id.wechat_circle, R.id.copy_link }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.wechat_friend:
                 Observable.create(new Observable.OnSubscribe<Boolean>() {
-                    @Override
-                    public void call(Subscriber<? super Boolean> subscriber) {
+                    @Override public void call(Subscriber<? super Boolean> subscriber) {
                         sendToWx(true);
                         subscriber.onCompleted();
                     }
-                }).subscribeOn(Schedulers.io())
-                        .subscribe();
+                }).subscribeOn(Schedulers.io()).subscribe();
                 break;
             case R.id.wechat_circle:
                 Observable.create(new Observable.OnSubscribe<Boolean>() {
-                    @Override
-                    public void call(Subscriber<? super Boolean> subscriber) {
+                    @Override public void call(Subscriber<? super Boolean> subscriber) {
                         sendToWx(false);
                         subscriber.onCompleted();
                     }
-                }).subscribeOn(Schedulers.io())
-                        .subscribe();
+                }).subscribeOn(Schedulers.io()).subscribe();
                 break;
             case R.id.copy_link:
                 ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                 //ClipData clipData = new ClipData(mTitle+mUrl,"text",)
                 //cmb.setPrimaryClip();
-                cmb.setText( mUrl);
+                cmb.setText(mUrl);
                 ToastUtils.showDefaultStyle("已复制");
                 sensorTrack("qc_copyurl");
-                sensorTrack("qc_copyurl","1");
+                sensorTrack("qc_copyurl", "1");
                 break;
         }
         dismiss();
@@ -167,7 +155,7 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
                 Bitmap thumb = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
                 bitmap.recycle();
                 msg.thumbData = Util.bmpToByteArray(thumb, true);
-            }else if (mBitmap != null){
+            } else if (mBitmap != null) {
                 msg.thumbData = Util.bmpToByteArray(mBitmap, true);
             }
             SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -176,30 +164,28 @@ public class ShareDialogFragment extends BottomSheetDialogFragment {
             req.scene = (!isFriend) ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
             api.sendReq(req);
 
-            sensorTrack(isFriend?"qc_sharetofriends":"qc_moments");
+            sensorTrack(isFriend ? "qc_sharetofriends" : "qc_moments");
         } catch (Exception e) {
             LogUtil.e(e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void sensorTrack(String channel){
-        sensorTrack(channel,"0");
+    public void sensorTrack(String channel) {
+        sensorTrack(channel, "0");
     }
 
-    public void sensorTrack(String channel,String success){
+    public void sensorTrack(String channel, String success) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("qc_page_url",mUrl);
-            jsonObject.put("qc_share_title",mTitle);
-            jsonObject.put("qc_share_channel",channel);
-            jsonObject.put("qc_sharesuccess",success);
-            SensorsUtils.track("page_share",jsonObject.toString());
-            PreferenceUtils.setPrefString(getContext(),"share_tmp",jsonObject.toString());
-
-        }catch (Exception e){
+            jsonObject.put("qc_page_url", mUrl);
+            jsonObject.put("qc_share_title", mTitle);
+            jsonObject.put("qc_share_channel", channel);
+            jsonObject.put("qc_sharesuccess", success);
+            SensorsUtils.track("page_share", jsonObject.toString());
+            PreferenceUtils.setPrefString(getContext(), "share_tmp", jsonObject.toString());
+        } catch (Exception e) {
 
         }
     }
-
 }

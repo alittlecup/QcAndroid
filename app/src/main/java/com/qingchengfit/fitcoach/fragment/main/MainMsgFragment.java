@@ -98,13 +98,12 @@ public class MainMsgFragment extends BaseFragment
     @Inject GymWrapper gymWrapper;
     @Inject SystemMsgPresenter presenter;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-
+    ConversationFragment conversationFragment = new ConversationFragment();
     private List<AbstractFlexibleItem> items = new ArrayList<>();
     private CommonFlexAdapter adapter;
     private LoginProcessor loginProcessor;
     private int unReadNoti = 0;
     private NotificationDeleted notificationDeleted = new NotificationDeleted();
-    ConversationFragment conversationFragment = new ConversationFragment();
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,7 +210,7 @@ public class MainMsgFragment extends BaseFragment
                     return false;
                 }
             });
-        }else {
+        } else {
             toolbar.getMenu().clear();
         }
     }

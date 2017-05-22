@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/14 2015.
  */
 public class UserData {
-    @SerializedName("user")
-    public User user;
+    @SerializedName("user") public User user;
 }

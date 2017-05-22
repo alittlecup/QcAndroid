@@ -73,8 +73,7 @@ public class RobotoCalendarView extends LinearLayout {
     // * Initialization methods
     // ************************************************************************************************************************************************************************
     private OnClickListener onDayOfMonthClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
+        @Override public void onClick(View view) {
             // Extract day selected
             ViewGroup dayOfMonthContainer = (ViewGroup) view;
             String tagId = (String) dayOfMonthContainer.getTag();
@@ -113,8 +112,10 @@ public class RobotoCalendarView extends LinearLayout {
     private void getAttributes(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RobotoCalendarView, 0, 0);
         monthTitleColor = typedArray.getColor(R.styleable.RobotoCalendarView_monthTitleColor, getResources().getColor(R.color.month_title));
-        dayOfWeekColor = typedArray.getColor(R.styleable.RobotoCalendarView_dayOfWeekColor, getResources().getColor(R.color.day_of_week_color));
-        dayOfMonthColor = typedArray.getColor(R.styleable.RobotoCalendarView_dayOfMonthColor, getResources().getColor(R.color.day_of_month));
+        dayOfWeekColor =
+            typedArray.getColor(R.styleable.RobotoCalendarView_dayOfWeekColor, getResources().getColor(R.color.day_of_week_color));
+        dayOfMonthColor =
+            typedArray.getColor(R.styleable.RobotoCalendarView_dayOfMonthColor, getResources().getColor(R.color.day_of_month));
         typedArray.recycle();
     }
 
@@ -129,11 +130,8 @@ public class RobotoCalendarView extends LinearLayout {
 
         initializeComponentBehavior();
 
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Roboto-Regular.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
-        );
+        CalligraphyConfig.initDefault(
+            new CalligraphyConfig.Builder().setDefaultFontPath("fonts/Roboto-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
 
         return view;
     }
@@ -178,8 +176,7 @@ public class RobotoCalendarView extends LinearLayout {
         initializeCalendar(currentCalendar);
     }
 
-    @SuppressLint("DefaultLocale")
-    private void initializeTitleLayout() {
+    @SuppressLint("DefaultLocale") private void initializeTitleLayout() {
 
         //int color = monthTitleColor;
         //dateTitle.setTextColor(color);
@@ -188,16 +185,15 @@ public class RobotoCalendarView extends LinearLayout {
         //dateTitle.setText(currentCalendar.get(Calendar.YEAR) + getResources().getString(R.string.pickerview_year) + dateText + getResources().getString(R.string.pickerview_month));
     }
 
-    @SuppressLint("DefaultLocale")
-    private void initializeWeekDaysLayout() {
+    @SuppressLint("DefaultLocale") private void initializeWeekDaysLayout() {
 
         // Apply styles
         int color = dayOfWeekColor;
 
         TextView dayOfWeek;
         String dayOfTheWeekString;
-//        String[] weekDaysArray = new DateFormatSymbols(locale).getShortWeekdays();
-        String[] weekDaysArray = new String[]{"六", "日", "一", "二", "三", "四", "五"};
+        //        String[] weekDaysArray = new DateFormatSymbols(locale).getShortWeekdays();
+        String[] weekDaysArray = new String[] { "六", "日", "一", "二", "三", "四", "五" };
         for (int i = 1; i < weekDaysArray.length; i++) {
             dayOfWeek = (TextView) view.findViewWithTag(DAY_OF_WEEK + getWeekIndex(i, currentCalendar));
             dayOfTheWeekString = weekDaysArray[i];
@@ -209,8 +205,7 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
-    @SuppressLint("DefaultLocale")
-    private String checkSpecificLocales(String dayOfTheWeekString, int i) {
+    @SuppressLint("DefaultLocale") private String checkSpecificLocales(String dayOfTheWeekString, int i) {
         // Set Wednesday as "X" in Spanish locale
         if (i == 4 && locale.getCountry().equals("ES")) {
             dayOfTheWeekString = "X";
@@ -369,8 +364,7 @@ public class RobotoCalendarView extends LinearLayout {
         return currentCalendar;
     }
 
-    @SuppressLint("DefaultLocale")
-    public void initializeCalendar(Calendar currentCalendar) {
+    @SuppressLint("DefaultLocale") public void initializeCalendar(Calendar currentCalendar) {
 
         this.currentCalendar = currentCalendar;
         locale = context.getResources().getConfiguration().locale;
@@ -444,9 +438,11 @@ public class RobotoCalendarView extends LinearLayout {
 
         // Draw day with style
         underline.setVisibility(View.VISIBLE);
-        if (style == RED_COLOR)
+        if (style == RED_COLOR) {
             underline.setBackgroundResource(R.drawable.red_dot);
-        else underline.setBackgroundResource(R.drawable.grey_dot);
+        } else {
+            underline.setBackgroundResource(R.drawable.grey_dot);
+        }
     }
 
     public void setRobotoCalendarListener(RobotoCalendarListener robotoCalendarListener) {

@@ -25,7 +25,7 @@ import com.qingchengfit.fitcoach.http.bean.User;
 
 public class ImageWall {
 
-        public User coach;
-        public String photo;
-        public String id;
+    public User coach;
+    public String photo;
+    public String id;
 }

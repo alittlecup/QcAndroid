@@ -53,22 +53,22 @@ public class BusinessUtils {
         String statuStr = "";
         Drawable drawable = new ColorDrawable();
         //switch (Integer.valueOf(status)) {
-            //case 0:
-            //    statuStr = "新注册";
-            //    drawable = new CircleView(R.color.qc_student_status_0);
-            //    break;
-            //case 1:
-            //    statuStr = "跟进中";
-            //    drawable = new CircleView(R.color.qc_student_status_1);
-            //    break;
-            //case 2:
-            //    statuStr = "会员";
-            //    drawable = new CircleView(R.color.qc_student_status_2);
-            //    break;
-            //default:
-            //    statuStr = "未知";
-            //    drawable = new CircleView(R.color.qc_student_status_0);
-            //    break;
+        //case 0:
+        //    statuStr = "新注册";
+        //    drawable = new CircleView(R.color.qc_student_status_0);
+        //    break;
+        //case 1:
+        //    statuStr = "跟进中";
+        //    drawable = new CircleView(R.color.qc_student_status_1);
+        //    break;
+        //case 2:
+        //    statuStr = "会员";
+        //    drawable = new CircleView(R.color.qc_student_status_2);
+        //    break;
+        //default:
+        //    statuStr = "未知";
+        //    drawable = new CircleView(R.color.qc_student_status_0);
+        //    break;
         //}
         view.setText(statuStr);
         drawable.setBounds(0, 0, 26, 26);
@@ -76,12 +76,10 @@ public class BusinessUtils {
         view.setCompoundDrawables(drawable, null, null, null);
     }
 
-
-    public static List<String> qcstudentIds2List(List<QcStudentBean> students,Context context) {
+    public static List<String> qcstudentIds2List(List<QcStudentBean> students, Context context) {
         List<String> ret = new ArrayList<>();
         for (int i = 0; i < students.size(); i++) {
-            if (students.get(i) instanceof Personage)
-                ret.add(context.getString(R.string.chat_user_id_header,students.get(i).getId()));
+            if (students.get(i) instanceof Personage) ret.add(context.getString(R.string.chat_user_id_header, students.get(i).getId()));
         }
 
         return ret;
@@ -177,11 +175,12 @@ public class BusinessUtils {
         return ret;
     }
 
-    public static List<String> qcstudentIds2ListChatExcepteSb(List<QcStudentBean> students, String id,Context context) {
+    public static List<String> qcstudentIds2ListChatExcepteSb(List<QcStudentBean> students, String id, Context context) {
         List<String> ret = new ArrayList<>();
         for (int i = 0; i < students.size(); i++) {
-            if (!TextUtils.equals(students.get(i).getId(),id))
-                ret.add(context.getString(R.string.chat_user_id_header,students.get(i).getId()));
+            if (!TextUtils.equals(students.get(i).getId(), id)) {
+                ret.add(context.getString(R.string.chat_user_id_header, students.get(i).getId()));
+            }
         }
 
         return ret;
@@ -231,6 +230,4 @@ public class BusinessUtils {
                 return Configs.CHARGE_MODE_OTHER;
         }
     }
-
-
 }

@@ -29,7 +29,6 @@ public class EventAddress {
     public double lat;
     public double log;
 
-
     private EventAddress(Builder builder) {
         city_code = builder.city_code;
         address = builder.address;
@@ -37,7 +36,6 @@ public class EventAddress {
         lat = builder.lat;
         log = builder.log;
     }
-
 
     public static final class Builder {
         private int city_code;

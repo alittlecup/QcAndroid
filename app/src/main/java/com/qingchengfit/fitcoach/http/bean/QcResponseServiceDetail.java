@@ -27,7 +27,7 @@ public class QcResponseServiceDetail extends QcResponse {
 
     public Data data;
 
-    public class Data{
+    public class Data {
         public CoachService gym;
     }
 }

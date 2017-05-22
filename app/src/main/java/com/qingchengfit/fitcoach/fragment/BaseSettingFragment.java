@@ -17,19 +17,18 @@ import android.content.Context;
  */
 public class BaseSettingFragment extends BaseFragment {
 
-
     public FragmentCallBack fragmentCallBack;
 
-    @Override
-    public void onAttach(Context context) {
+    @Override public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof FragmentCallBack) {
             fragmentCallBack = (FragmentCallBack) context;
-        } else throw new ExceptionInInitializerError();
+        } else {
+            throw new ExceptionInInitializerError();
+        }
     }
 
-    @Override
-    public void onDetach() {
+    @Override public void onDetach() {
         super.onDetach();
         fragmentCallBack = null;
     }

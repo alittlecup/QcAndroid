@@ -73,6 +73,9 @@ public class CourseManageFragment extends Fragment {
     private MaterialDialog delDialog;
     private Unbinder unbinder;
 
+    public CourseManageFragment() {
+    }
+
     public static CourseManageFragment newInstance(String Model, String id, String Batchid, int coursetype) {
 
         Bundle args = new Bundle();
@@ -93,9 +96,6 @@ public class CourseManageFragment extends Fragment {
             mBatchId = getArguments().getString("batchid");
             mCourseType = getArguments().getInt("courseid");
         }
-    }
-
-    public CourseManageFragment() {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,7 +127,7 @@ public class CourseManageFragment extends Fragment {
                 CourseManageBean bean = datas.get(pos);
                 if (!courseManagerAdapter.isEditable()) {
                     getFragmentManager().beginTransaction()
-                        .replace(R.id.frag,new SingleBatchFragmentBuilder(mCourseType==Configs.TYPE_PRIVATE,bean.id).build())
+                        .replace(R.id.frag, new SingleBatchFragmentBuilder(mCourseType == Configs.TYPE_PRIVATE, bean.id).build())
                         .addToBackStack(null)
                         .commit();
                 } else {
@@ -318,10 +318,9 @@ public class CourseManageFragment extends Fragment {
                         delCourseManage.model = mModel;
                         delCourseManage.ids = "";
                         for (CourseManageBean bean : datas) {
-                            if (bean.checked) delCourseManage.ids =TextUtils.concat(delCourseManage.ids,bean.id,",").toString();
+                            if (bean.checked) delCourseManage.ids = TextUtils.concat(delCourseManage.ids, bean.id, ",").toString();
                         }
-                        if (delCourseManage.ids.endsWith(","))
-                            delCourseManage.ids.substring(0,delCourseManage.ids.length()-1);
+                        if (delCourseManage.ids.endsWith(",")) delCourseManage.ids.substring(0, delCourseManage.ids.length() - 1);
                         QcCloudClient.getApi().postApi.qcDelCourseManage(App.coachid,
                             mCourseType == Configs.TYPE_PRIVATE ? "timetables" : "schedules", delCourseManage)
                             .observeOn(AndroidSchedulers.mainThread())

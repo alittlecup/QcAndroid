@@ -17,8 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.ExpandedLayout;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.ExpandedLayout;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.JacketManageAdapter;
@@ -65,11 +65,10 @@ public class JacketManagerFragment extends BaseFragment
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
+    @Inject JacketManagerPresenter mPresenter;
     private ArrayList<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private JacketManageAdapter mAdapter;
     private String courseid;
-
-    @Inject JacketManagerPresenter mPresenter;
     private ArrayList<String> stringList = new ArrayList<>();
 
     public static JacketManagerFragment newInstance(List<String> jacket, String courseid, boolean open) {

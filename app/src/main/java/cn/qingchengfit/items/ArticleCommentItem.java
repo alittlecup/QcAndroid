@@ -57,11 +57,11 @@ public class ArticleCommentItem extends AbstractFlexibleItem<ArticleCommentItem.
             holder.tvCommentTime.setText(DateUtils.getNotifacationTimeStr(DateUtils.formatDateFromServer(comment.created_at)));
             if (comment.reply != null && comment.reply.user != null) {
                 holder.tvCommentReply.setVisibility(View.VISIBLE);
-                holder.tvCommentReply.setText(comment.reply.user.getUsername()+":"+comment.reply.text);
+                holder.tvCommentReply.setText(comment.reply.user.getUsername() + ":" + comment.reply.text);
             } else {
                 holder.tvCommentReply.setVisibility(View.GONE);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             CrashUtils.sendCrash(e);
         }
     }
@@ -76,6 +76,7 @@ public class ArticleCommentItem extends AbstractFlexibleItem<ArticleCommentItem.
         @BindView(R.id.tv_comment_content) TextView tvCommentContent;
         @BindView(R.id.tv_comment_time) TextView tvCommentTime;
         @BindView(R.id.tv_comment_reply) TextView tvCommentReply;
+
         public ArticleCommentVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

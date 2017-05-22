@@ -117,9 +117,9 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
         });
     }
 
-    @OnClick({ R.id.start_day, R.id.end_day
-        , R.id.all_student, R.id.generate, R.id.all_course })
-    public void onClick(View view) {
+    @OnClick({
+        R.id.start_day, R.id.end_day, R.id.all_student, R.id.generate, R.id.all_course
+    }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_day:
                 if (pwTime == null) pwTime = new TimeDialogWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
@@ -181,8 +181,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
                 users.add(getString(R.string.all_students));
                 users.addAll(BusinessUtils.students2strs(mFilterUsers));
                 new DialogList(this).list(users, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (position == 0) {
                             allStudent.setContent(getString(R.string.all_students));
                             filterBean.student = null;

@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -18,36 +17,24 @@ import java.util.List;
  * Created by Paper on 15/12/30 2015.
  */
 public class QcServiceDetialResponse extends QcResponse {
-    @SerializedName("data")
-    public ServiceDetailData data;
+    @SerializedName("data") public ServiceDetailData data;
 
-    public static class ServiceDetailData{
-        @SerializedName("service")
-        public ServiceDetail service;
+    public static class ServiceDetailData {
+        @SerializedName("service") public ServiceDetail service;
     }
-    public static class ServiceDetail{
-        @SerializedName("model")
-        public String model;
-        @SerializedName("type")
-        public int type;
-        @SerializedName("id")
-        public long id;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("color")
-        public String color;
-        @SerializedName("photo")
-        public String photo;
-        @SerializedName("courses_count")
-        public int courses_count;
-        @SerializedName("users_count")
-        public int users_count;
 
-        @SerializedName("courses")
-        public List<QcCourseResponse.Course> courses;
+    public static class ServiceDetail {
+        @SerializedName("model") public String model;
+        @SerializedName("type") public int type;
+        @SerializedName("id") public long id;
+        @SerializedName("name") public String name;
+        @SerializedName("color") public String color;
+        @SerializedName("photo") public String photo;
+        @SerializedName("courses_count") public int courses_count;
+        @SerializedName("users_count") public int users_count;
 
-        @SerializedName("users")
-        public List<QcStudentBean> users;
+        @SerializedName("courses") public List<QcCourseResponse.Course> courses;
 
+        @SerializedName("users") public List<QcStudentBean> users;
     }
 }

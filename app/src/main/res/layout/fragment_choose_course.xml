@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/common_toolbar"/>
-    <FrameLayout
-        android:layout_marginTop="?attr/actionBarSize"
-        android:id="@+id/choose_cousre_frag"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_gravity="bottom"
-        android:id="@+id/btn_add_course"
-        android:text="+ 添加课程种类"
-        />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <FrameLayout
+      android:id="@+id/choose_cousre_frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      />
+
+  <Button
+      android:id="@+id/btn_add_course"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_gravity="bottom"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="+ 添加课程种类"
+      />
 </FrameLayout>

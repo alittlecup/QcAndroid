@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -25,14 +24,13 @@ import java.util.List;
  * Created by Paper on 16/8/2.
  */
 public class QcResponseJacket extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
-    public static class Data{
+    public static class Data {
         public List<Photo> photos;
     }
 
-    public static class Photo{
+    public static class Photo {
         public String photo;
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="56dp"
         android:height="56dp"
+        android:viewportHeight="56"
         android:viewportWidth="56"
-        android:viewportHeight="56">
+        android:width="56dp">
 
   <group
       android:pivotX="28"
@@ -11,10 +11,9 @@
       android:scaleX="2"
       android:scaleY="2"
       >
-          <path
-          android:fillColor="#FFFFFF"
-          android:strokeWidth="1"
-          android:pathData="M41.9893053,26 L40.1212802,26 C39.8226098,20.9197513 34.5008793,16.8599219
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M41.9893053,26 L40.1212802,26 C39.8226098,20.9197513 34.5008793,16.8599219
 28,16.8599219 C21.30975,16.8599219 15.86725,21.1619718 15.86725,26.4506345
 C15.86725,29.80965 18.1405,32.9664621 21.798,34.6904197 C22.25475,34.9065681
 22.58375,35.2813415 22.722,35.7450146 C22.86725,36.2191466 22.792,36.740343
@@ -43,6 +42,7 @@ C32.4242014,33.1917936 32.710354,32.9051568 33.0713708,32.9051568
 L37.3216225,32.9051568 L37.3216225,28.6711139 C37.3216225,28.315602
 37.615698,28.027387 37.9645762,28.027387 L38.4595953,28.027387
 C38.8146625,28.027387 39.1025491,28.3115523 39.1025491,28.6711139
-L39.1025491,32.9051568 L43.3528605,32.9051568 Z" />
-    </group>
+L39.1025491,32.9051568 L43.3528605,32.9051568 Z"
+        android:strokeWidth="1"/>
+  </group>
 </vector>

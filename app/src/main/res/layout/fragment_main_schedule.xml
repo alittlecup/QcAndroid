@@ -1,100 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="@color/primary"
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="?android:actionBarSize"
+      android:background="@color/primary"
+      >
+
+    <LinearLayout
+        android:id="@+id/layout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal"
         >
-        <LinearLayout
-            android:id="@+id/layout_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
-            <TextView
-                android:id="@+id/title"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:text="@string/all_schedules"
-                />
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                app:srcCompat="@drawable/ic_expand_more_white_24dp"
-                />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/student_order"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="我的主页"
-            android:textColor="@color/white"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            />
-        <RelativeLayout
-            android:id="@+id/schedule_notification_layout"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentRight="true"
-            android:visibility="gone"
-            >
 
-            <ImageView
-                android:id="@+id/schedule_notification"
-                android:layout_width="19dp"
-                android:layout_height="19dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/ic_actionbar_notification"
-                />
+      <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:text="@string/all_schedules"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          />
 
-            <TextView
-                android:id="@+id/schedule_notification_count"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="9dp"
-                android:layout_marginTop="11dp"
-                android:background="@drawable/bg_notification"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:visibility="gone"
-                tools:text="99"
-                />
+      <ImageView
+          android:layout_width="16dp"
+          android:layout_height="16dp"
+          app:srcCompat="@drawable/ic_expand_more_white_24dp"
+          />
+    </LinearLayout>
 
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/student_order"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="我的主页"
+        android:textColor="@color/white"
+        />
+
+    <RelativeLayout
+        android:id="@+id/schedule_notification_layout"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        >
+
+      <ImageView
+          android:id="@+id/schedule_notification"
+          android:layout_width="19dp"
+          android:layout_height="19dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_actionbar_notification"
+          />
+
+      <TextView
+          android:id="@+id/schedule_notification_count"
+          android:layout_width="18dp"
+          android:layout_height="18dp"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="9dp"
+          android:layout_marginTop="11dp"
+          android:background="@drawable/bg_notification"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="11sp"
+          android:visibility="gone"
+          tools:text="99"
+          />
+
     </RelativeLayout>
+  </RelativeLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
     <FrameLayout
+        android:id="@+id/schedule_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <FrameLayout
-            android:id="@+id/schedule_frag"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-        <View
-            android:id="@+id/view_p"
-            android:layout_width="50dp"
-            android:layout_height="70dp"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:layout_gravity="right|end|bottom"
-            />
+        />
 
-    </FrameLayout>
+    <View
+        android:id="@+id/view_p"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+        android:layout_gravity="right|end|bottom"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        />
+
+  </FrameLayout>
 
 </LinearLayout>

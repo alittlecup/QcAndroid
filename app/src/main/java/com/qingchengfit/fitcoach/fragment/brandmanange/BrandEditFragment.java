@@ -59,21 +59,14 @@ import rx.schedulers.Schedulers;
  */
 public class BrandEditFragment extends BaseFragment {
 
-    @BindView(R.id.header_img)
-    ImageView headerImg;
+    @BindView(R.id.header_img) ImageView headerImg;
     @BindView(R.id.brand_name) CommonInputView brandName;
-    @BindView(R.id.change_creator)
-    CommonInputView changeCreator;
-    @BindView(R.id.del)
-    TextView del;
-
-
+    @BindView(R.id.change_creator) CommonInputView changeCreator;
+    @BindView(R.id.del) TextView del;
 
     BrandBody postBrand = new BrandBody();
-    @BindView(R.id.brand_id)
-    CommonInputView brandId;
-    @BindView(R.id.brand_create)
-    CommonInputView brandCreateTime;
+    @BindView(R.id.brand_id) CommonInputView brandId;
+    @BindView(R.id.brand_create) CommonInputView brandCreateTime;
     private Brand brand;
 
     public static BrandEditFragment newInstance(Brand bran) {
@@ -85,9 +78,7 @@ public class BrandEditFragment extends BaseFragment {
         return fragment;
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_brand, container, false);
         unbinder = ButterKnife.bind(this, view);
         //((BrandManageComponent) mCallbackActivity.getComponent()).inject(this);
@@ -97,7 +88,7 @@ public class BrandEditFragment extends BaseFragment {
             if (brand != null) {
                 postBrand.name = brand.getName();
                 postBrand.photo = brand.getPhoto();
-                if (getActivity() instanceof BrandManageActivity){
+                if (getActivity() instanceof BrandManageActivity) {
                     ((BrandManageActivity) getActivity()).settoolbar("修改品牌信息", R.menu.menu_save, new Toolbar.OnMenuItemClickListener() {
                         @Override public boolean onMenuItemClick(MenuItem item) {
                             postBrand.name = brandName.getContent();
@@ -111,8 +102,7 @@ public class BrandEditFragment extends BaseFragment {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribeOn(Schedulers.io())
                                 .subscribe(new Action1<QcResponse>() {
-                                    @Override
-                                    public void call(QcResponse qcResponse) {
+                                    @Override public void call(QcResponse qcResponse) {
                                         hideLoading();
                                         if (ResponseConstant.checkSuccess(qcResponse)) {
                                             ToastUtils.show("修改成功");
@@ -121,15 +111,12 @@ public class BrandEditFragment extends BaseFragment {
                                             ToastUtils.show("修改失败");
                                         }
                                     }
-                                })
-                            );
+                                }));
 
                             return false;
                         }
                     });
-
                 }
-
 
                 brandName.setContent(brand.getName());
                 brandId.setHint(brand.getCname());
@@ -139,9 +126,12 @@ public class BrandEditFragment extends BaseFragment {
                 }
                 changeCreator.setContent(creator);
                 brandCreateTime.setHint(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(brand.getCreated_at())));
-                Glide.with(getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(headerImg, getContext()));
+                Glide.with(getContext())
+                    .load(PhotoUtils.getSmall(brand.getPhoto()))
+                    .asBitmap()
+                    .placeholder(R.drawable.ic_default_header)
+                    .into(new CircleImgWrapper(headerImg, getContext()));
             }
-
 
             //RxRegiste(restRepository.getGet_api().qcGetBrand(App.staffId, brand.getId())
             //        .subscribeOn(Schedulers.io())
@@ -160,39 +150,34 @@ public class BrandEditFragment extends BaseFragment {
 
         }
 
-        RxBusAdd(EventChooseImage.class)
-                .subscribe(new Action1<EventChooseImage>() {
-                    @Override
-                    public void call(EventChooseImage eventChooseImage) {
-                        showLoading();
-                        RxRegiste(UpYunClient.rxUpLoad("header/", eventChooseImage.filePath)
-                                .subscribe(new Action1<String>() {
-                                    @Override
-                                    public void call(String s) {
-                                        Glide.with(getContext()).load(PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(headerImg, getContext()));
-                                        postBrand.photo = s;
-                                        hideLoading();
-                                    }
-                                })
-                        );
+        RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
+            @Override public void call(EventChooseImage eventChooseImage) {
+                showLoading();
+                RxRegiste(UpYunClient.rxUpLoad("header/", eventChooseImage.filePath).subscribe(new Action1<String>() {
+                    @Override public void call(String s) {
+                        Glide.with(getContext())
+                            .load(PhotoUtils.getSmall(s))
+                            .asBitmap()
+                            .into(new CircleImgWrapper(headerImg, getContext()));
+                        postBrand.photo = s;
+                        hideLoading();
                     }
-                });
+                }));
+            }
+        });
         return view;
     }
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return BrandEditFragment.class.getName();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         hideLoading();
         super.onDestroyView();
     }
 
-    @OnClick({R.id.header_layout, R.id.change_creator, R.id.del})
-    public void onClick(View view) {
+    @OnClick({ R.id.header_layout, R.id.change_creator, R.id.del }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.header_layout:
                 ChoosePictureFragmentDialog f = ChoosePictureFragmentDialog.newInstance();
@@ -200,24 +185,22 @@ public class BrandEditFragment extends BaseFragment {
                 break;
             case R.id.change_creator:
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.frag, BrandCreatorEditFragment.newInstance(brand))
-                        .addToBackStack(getFragmentName())
-                        .commit();
+                    .replace(R.id.frag, BrandCreatorEditFragment.newInstance(brand))
+                    .addToBackStack(getFragmentName())
+                    .commit();
                 break;
             case R.id.del:
-                new MaterialDialog.Builder(getContext())
-                        .content(R.string.contact_gm)
-                        .autoDismiss(true)
-                        .canceledOnTouchOutside(true)
-                        .negativeText(R.string.pickerview_cancel)
-                        .positiveText(R.string.comfirm)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                PhoneFuncUtils.callPhone(getContext(), getString(R.string.qingcheng_gm_phone));
-                            }
-                        })
-                        .show();
+                new MaterialDialog.Builder(getContext()).content(R.string.contact_gm)
+                    .autoDismiss(true)
+                    .canceledOnTouchOutside(true)
+                    .negativeText(R.string.pickerview_cancel)
+                    .positiveText(R.string.comfirm)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            PhoneFuncUtils.callPhone(getContext(), getString(R.string.qingcheng_gm_phone));
+                        }
+                    })
+                    .show();
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch.details;
 
 import android.content.Intent;
+import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -10,7 +11,6 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateBatchDetail;
 import javax.inject.Inject;
@@ -108,14 +108,15 @@ public class BatchDetailPresenter extends BasePresenter {
             .subscribe(new Action1<QcResponsePrivateBatchDetail>() {
                 @Override public void call(QcResponsePrivateBatchDetail qcResponsePrivateBatchDetail) {
                     if (qcResponsePrivateBatchDetail.getStatus() == ResponseConstant.SUCCESS) {
-                                    view.onCoach(qcResponsePrivateBatchDetail.data.batch.teacher);
-                                    view.onCourse(qcResponsePrivateBatchDetail.data.batch.course);
-                                    view.onRule(qcResponsePrivateBatchDetail.data.batch.rule, qcResponsePrivateBatchDetail.data.batch.max_users);
-                                    view.onSpace(qcResponsePrivateBatchDetail.data.batch.spaces);
-                                    view.onTimeRepeat(qcResponsePrivateBatchDetail.data.batch.from_date ,qcResponsePrivateBatchDetail.data.batch.to_date);
-                                } else {
+                        view.onCoach(qcResponsePrivateBatchDetail.data.batch.teacher);
+                        view.onCourse(qcResponsePrivateBatchDetail.data.batch.course);
+                        view.onRule(qcResponsePrivateBatchDetail.data.batch.rule, qcResponsePrivateBatchDetail.data.batch.max_users);
+                        view.onSpace(qcResponsePrivateBatchDetail.data.batch.spaces);
+                        view.onTimeRepeat(qcResponsePrivateBatchDetail.data.batch.from_date,
+                            qcResponsePrivateBatchDetail.data.batch.to_date);
+                    } else {
 
-                                }
+                    }
                 }
             }, new Action1<Throwable>() {
                 @Override public void call(Throwable throwable) {
@@ -165,21 +166,21 @@ public class BatchDetailPresenter extends BasePresenter {
         upBody.shop_id = body.shop_id;
         upBody.to_date = body.to_date;
 
-        spUpdate = restRepository.getPost_api().qcUpdateBatch(App.coachid+"",id,coachService.getId()+"", coachService.getModel(),  upBody)
-             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                             .subscribe(new Action1<QcResponse>() {
-                                 @Override
-                                 public void call(QcResponse qcResponse) {
-                                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                                         view.onSuccess();
-                                     } view.onFailed(qcResponse.getMsg());
-                                 }
-                             }, new Action1<Throwable>() {
-                                 @Override
-                                 public void call(Throwable throwable) {
-                                     view.onFailed(throwable.getMessage());
-                                 }
-                             });
-
+        spUpdate = restRepository.getPost_api()
+            .qcUpdateBatch(App.coachid + "", id, coachService.getId() + "", coachService.getModel(), upBody)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcResponse>() {
+                @Override public void call(QcResponse qcResponse) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        view.onSuccess();
+                    }
+                    view.onFailed(qcResponse.getMsg());
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+                    view.onFailed(throwable.getMessage());
+                }
+            });
     }
 }

@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
-
 import com.qingchengfit.fitcoach.bean.Card;
 import java.util.List;
 
@@ -21,35 +20,21 @@ import java.util.List;
  */
 
 public class QcSaleDetailRespone extends QcResponse {
-    @SerializedName("data")
-    public DetailData data;
+    @SerializedName("data") public DetailData data;
 
     public static class DetailData {
-        @SerializedName("total_cost")
-        public int total_cost;
-        @SerializedName("total_account")
-        public int total_account;
-        @SerializedName("histories")
-        public List<History> histories;
-
+        @SerializedName("total_cost") public int total_cost;
+        @SerializedName("total_account") public int total_account;
+        @SerializedName("histories") public List<History> histories;
     }
 
     public static class History {
-        @SerializedName("users")
-        public List<User> users;
-        @SerializedName("seller_name")
-        public String seller_name;
-        @SerializedName("created_at")
-        public String created_at;
-        @SerializedName("remarks")
-        public String remarks;
-        @Nullable
-        @SerializedName("card")
-        public Card card;
-        @SerializedName("account")
-        public int account;
-        @SerializedName("cost")
-        public int cost;
+        @SerializedName("users") public List<User> users;
+        @SerializedName("seller_name") public String seller_name;
+        @SerializedName("created_at") public String created_at;
+        @SerializedName("remarks") public String remarks;
+        @Nullable @SerializedName("card") public Card card;
+        @SerializedName("account") public int account;
+        @SerializedName("cost") public int cost;
     }
-
 }

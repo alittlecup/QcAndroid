@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qingchengfit.fitcoach.activity.CoachHomeActivity">
+    tools:context="com.qingchengfit.fitcoach.activity.CoachHomeActivity"
+    >
 
-    <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_toolbar"/>
 
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+  <FrameLayout
+      android:id="@+id/content"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      />
 
 </RelativeLayout>

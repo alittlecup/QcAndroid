@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Notification {
 
-  public List<NotificationMsg> notifications;
-  public int pages;
-  public int unread_count;
+    public List<NotificationMsg> notifications;
+    public int pages;
+    public int unread_count;
 }

@@ -3,9 +3,7 @@ package com.qingchengfit.fitcoach.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import com.qingchengfit.fitcoach.fragment.VpFragment;
-
 import java.util.List;
 
 /**
@@ -25,28 +23,24 @@ public class FragmentAdater extends FragmentStatePagerAdapter {
 
     private List<VpFragment> datas;
 
-    public FragmentAdater(FragmentManager fm,List<VpFragment> d) {
+    public FragmentAdater(FragmentManager fm, List<VpFragment> d) {
         super(fm);
         datas = d;
     }
 
-    @Override
-    public Fragment getItem(int position) {
+    @Override public Fragment getItem(int position) {
         return datas.get(position);
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return datas.size();
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
         return datas.get(position).getTitle();
     }
 
-    @Override
-    public int getItemPosition(Object object) {
+    @Override public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
 }

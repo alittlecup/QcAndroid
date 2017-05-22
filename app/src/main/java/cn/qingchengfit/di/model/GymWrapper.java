@@ -1,10 +1,10 @@
 package cn.qingchengfit.di.model;
 
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
-import cn.qingchengfit.model.base.CoachService;
 import java.util.HashMap;
 
 /**
@@ -35,6 +35,11 @@ public class GymWrapper {
     private boolean noService;
     private boolean isOutOfDate;
 
+    private GymWrapper(Builder builder) {
+        coachService = builder.coachService;
+        brand = builder.brand;
+    }
+
     public boolean isNoService() {
         return noService;
     }
@@ -51,20 +56,15 @@ public class GymWrapper {
         isOutOfDate = outOfDate;
     }
 
-    private GymWrapper(Builder builder) {
-        coachService = builder.coachService;
-        brand = builder.brand;
-    }
-
-    public boolean inBrand(){
+    public boolean inBrand() {
         return coachService == null;
     }
 
-    public boolean isPro(){
+    public boolean isPro() {
         return GymUtils.getSystemEndDay(coachService) >= 0 && !isOutOfDate;
     }
 
-    public HashMap<String,Object> getParams(){
+    public HashMap<String, Object> getParams() {
         return GymUtils.getParams(coachService);
     }
 
@@ -78,8 +78,6 @@ public class GymWrapper {
     //        return GymUtils.getParams(coachService,brand);
     //}
 
-
-
     public String id() {
         if (coachService != null) {
             return Long.toString(coachService.id);
@@ -92,7 +90,7 @@ public class GymWrapper {
      * 是否为单场馆模式
      */
     // TODO: 2017/3/2
-    public boolean singleMode(){
+    public boolean singleMode() {
         return false;
     }
 
@@ -136,7 +134,7 @@ public class GymWrapper {
     //    }
     //}
 
-   public String name() {
+    public String name() {
         if (coachService != null) {
             return coachService.name;
         } else {
@@ -175,8 +173,8 @@ public class GymWrapper {
 
     public Brand getBrand() {
         if (BuildConfig.DEBUG) assert brand != null;
-        if (brand == null && coachService != null){
-                return new Brand.Builder().id(coachService.brand_id).name(coachService.brand_name).build();
+        if (brand == null && coachService != null) {
+            return new Brand.Builder().id(coachService.brand_id).name(coachService.brand_name).build();
         }
         return brand;
     }

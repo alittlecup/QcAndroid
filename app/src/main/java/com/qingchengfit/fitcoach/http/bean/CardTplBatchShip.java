@@ -26,18 +26,16 @@ import com.qingchengfit.fitcoach.bean.base.Card_tpl;
  */
 
 public class CardTplBatchShip extends Card_tpl {
+    public static final Parcelable.Creator<CardTplBatchShip> CREATOR = new Parcelable.Creator<CardTplBatchShip>() {
+        @Override public CardTplBatchShip createFromParcel(Parcel source) {
+            return new CardTplBatchShip(source);
+        }
+
+        @Override public CardTplBatchShip[] newArray(int size) {
+            return new CardTplBatchShip[size];
+        }
+    };
     public int status; //1，已经设置过结算 没约课 2、已设置结算 已约课
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(this.status);
-    }
 
     public CardTplBatchShip() {
     }
@@ -47,15 +45,12 @@ public class CardTplBatchShip extends Card_tpl {
         this.status = in.readInt();
     }
 
-    public static final Parcelable.Creator<CardTplBatchShip> CREATOR = new Parcelable.Creator<CardTplBatchShip>() {
-        @Override
-        public CardTplBatchShip createFromParcel(Parcel source) {
-            return new CardTplBatchShip(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public CardTplBatchShip[] newArray(int size) {
-            return new CardTplBatchShip[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.status);
+    }
 }

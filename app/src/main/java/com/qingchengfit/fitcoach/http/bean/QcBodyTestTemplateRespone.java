@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -22,33 +20,28 @@ import java.util.List;
  */
 public class QcBodyTestTemplateRespone extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
-    public class Data{
-        @SerializedName("template")
-        public Template template;
-    }
-    public class Template{
-        @SerializedName("base")
-        public Base base;
-        @SerializedName("extra")
-        public List<Extra> extra;
-    }
+    @SerializedName("data") public Data data;
+
     public static class Base implements Parcelable {
+        public static final Creator<Base> CREATOR = new Creator<Base>() {
+            @Override public Base createFromParcel(Parcel source) {
+                return new Base(source);
+            }
+
+            @Override public Base[] newArray(int size) {
+                return new Base[size];
+            }
+        };
         @SerializedName("show_circumference_of_right_thigh")//大腿
         public boolean show_circumference_of_right_thigh;
         @SerializedName("show_circumference_of_left_thigh")//大腿
         public boolean show_circumference_of_left_thigh;
         @SerializedName("show_weight")  //体重
         public boolean show_weight;
-        @SerializedName("show_bmi")
-        public boolean show_bmi;
-        @SerializedName("show_circumference_of_right_upper")
-        public boolean show_circumference_of_right_upper;//上臂围
-        @SerializedName("show_circumference_of_left_upper")
-        public boolean show_circumference_of_left_upper;//上臂围
-        @SerializedName("id")
-        public String id;
+        @SerializedName("show_bmi") public boolean show_bmi;
+        @SerializedName("show_circumference_of_right_upper") public boolean show_circumference_of_right_upper;//上臂围
+        @SerializedName("show_circumference_of_left_upper") public boolean show_circumference_of_left_upper;//上臂围
+        @SerializedName("id") public String id;
         @SerializedName("show_hipline") //臀围
         public boolean show_hipline;
         @SerializedName("show_waistline") //腰围
@@ -65,29 +58,6 @@ public class QcBodyTestTemplateRespone extends QcResponse {
         public boolean show_body_fat_rate;
 
         public Base() {
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeByte(this.show_circumference_of_right_thigh ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_circumference_of_left_thigh ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_weight ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_bmi ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_circumference_of_right_upper ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_circumference_of_left_upper ? (byte) 1 : (byte) 0);
-            dest.writeString(this.id);
-            dest.writeByte(this.show_hipline ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_waistline ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_height ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_circumference_of_right_calf ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_circumference_of_left_calf ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_circumference_of_chest ? (byte) 1 : (byte) 0);
-            dest.writeByte(this.show_body_fat_rate ? (byte) 1 : (byte) 0);
         }
 
         protected Base(Parcel in) {
@@ -107,51 +77,29 @@ public class QcBodyTestTemplateRespone extends QcResponse {
             this.show_body_fat_rate = in.readByte() != 0;
         }
 
-        public static final Creator<Base> CREATOR = new Creator<Base>() {
-            @Override
-            public Base createFromParcel(Parcel source) {
-                return new Base(source);
-            }
-
-            @Override
-            public Base[] newArray(int size) {
-                return new Base[size];
-            }
-        };
-    }
-    public static class Extra implements Parcelable {
-        @SerializedName("id")
-        public String id;
-        @SerializedName("unit")
-        public String unit;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("value")
-        public String value;
-
-        public Extra() {
-        }
-
-        @Override
-        public int describeContents() {
+        @Override public int describeContents() {
             return 0;
         }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeByte(this.show_circumference_of_right_thigh ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_circumference_of_left_thigh ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_weight ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_bmi ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_circumference_of_right_upper ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_circumference_of_left_upper ? (byte) 1 : (byte) 0);
             dest.writeString(this.id);
-            dest.writeString(this.unit);
-            dest.writeString(this.name);
-            dest.writeString(this.value);
+            dest.writeByte(this.show_hipline ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_waistline ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_height ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_circumference_of_right_calf ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_circumference_of_left_calf ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_circumference_of_chest ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.show_body_fat_rate ? (byte) 1 : (byte) 0);
         }
+    }
 
-        protected Extra(Parcel in) {
-            this.id = in.readString();
-            this.unit = in.readString();
-            this.name = in.readString();
-            this.value = in.readString();
-        }
-
+    public static class Extra implements Parcelable {
         public static final Creator<Extra> CREATOR = new Creator<Extra>() {
             public Extra createFromParcel(Parcel source) {
                 return new Extra(source);
@@ -161,6 +109,39 @@ public class QcBodyTestTemplateRespone extends QcResponse {
                 return new Extra[size];
             }
         };
+        @SerializedName("id") public String id;
+        @SerializedName("unit") public String unit;
+        @SerializedName("name") public String name;
+        @SerializedName("value") public String value;
+
+        public Extra() {
+        }
+
+        protected Extra(Parcel in) {
+            this.id = in.readString();
+            this.unit = in.readString();
+            this.name = in.readString();
+            this.value = in.readString();
+        }
+
+        @Override public int describeContents() {
+            return 0;
+        }
+
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.unit);
+            dest.writeString(this.name);
+            dest.writeString(this.value);
+        }
     }
 
+    public class Data {
+        @SerializedName("template") public Template template;
+    }
+
+    public class Template {
+        @SerializedName("base") public Base base;
+        @SerializedName("extra") public List<Extra> extra;
+    }
 }

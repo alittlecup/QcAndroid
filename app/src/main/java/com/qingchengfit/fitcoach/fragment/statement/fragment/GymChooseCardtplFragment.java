@@ -40,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2016/12/9.
  */
 
-@FragmentWithArgs  public class GymChooseCardtplFragment extends BottomListFragment {
+@FragmentWithArgs public class GymChooseCardtplFragment extends BottomListFragment {
     @Arg String id;
     @Arg String model;
 
@@ -53,13 +53,13 @@ import rx.schedulers.Schedulers;
         HashMap<String, String> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid+"",id,model)
+        QcCloudClient.getApi().getApi.qcGetCardTpls(App.coachid + "", id, model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCardTpls>() {
                 @Override public void call(QcResponseCardTpls qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.card_tpls != null){
+                        if (qcResponse.data != null && qcResponse.data.card_tpls != null) {
                             mDatas.clear();
                             mDatas.add(new SimpleTextItemItem("全部会员卡种类"));
                             for (int i = 0; i < qcResponse.data.card_tpls.size(); i++) {
@@ -81,11 +81,12 @@ import rx.schedulers.Schedulers;
 
     @Override public boolean onItemClick(int position) {
 
-        if (mDatas.get(position) instanceof ChooseCardtplItem){
-            RxBus.getBus().post(new EventChooseCardtpl.Builder().cardtplId(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getId())
-                .cardtplName(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getName())
-                .build());
-        }else if (mDatas.get(position) instanceof SimpleTextItemItem){
+        if (mDatas.get(position) instanceof ChooseCardtplItem) {
+            RxBus.getBus()
+                .post(new EventChooseCardtpl.Builder().cardtplId(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getId())
+                    .cardtplName(((ChooseCardtplItem) mDatas.get(position)).mCard_tpl.getName())
+                    .build());
+        } else if (mDatas.get(position) instanceof SimpleTextItemItem) {
             RxBus.getBus().post(new EventChooseCardtpl.Builder().cardtplId("").cardtplName("全部会员卡种类").build());
         }
         dismiss();

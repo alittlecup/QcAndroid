@@ -20,7 +20,12 @@ import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.BitmapUtils;
+import cn.qingchengfit.utils.ChoosePicUtils;
+import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -53,23 +58,14 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebStorage;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.BitmapUtils;
-import cn.qingchengfit.utils.ChoosePicUtils;
-import cn.qingchengfit.utils.FileUtils;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -110,24 +106,23 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
     private CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
     private String sessionid;
     private IWXAPI msgApi;
-    private String test = "{\'appId\': \'wx81e378c8fd03319d\',\'nonceStr\': \'IvGxLujqa73veSM\',\'package\': \'Sign=WXPay\',\'partnerId \': \'1316532101\',\'paySign\': \'205F1707DD8379C0DA1782F7F9BEA2F8\',\'prepayId\': \'wx20160226124520229c7c8edf0039065235\',\'timeStamp\': \'1456462707\'}";
+    private String test =
+        "{\'appId\': \'wx81e378c8fd03319d\',\'nonceStr\': \'IvGxLujqa73veSM\',\'package\': \'Sign=WXPay\',\'partnerId \': \'1316532101\',\'paySign\': \'205F1707DD8379C0DA1782F7F9BEA2F8\',\'prepayId\': \'wx20160226124520229c7c8edf0039065235\',\'timeStamp\': \'1456462707\'}";
     private Subscription paySp;
     private Bitmap mFirstBitmap;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         mToobarActionTextView = (TextView) findViewById(R.id.toobar_action);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mWebviewWebView = (WebView) findViewById(R.id.webview);
         mRefreshSwipeRefreshLayout = (CustomSwipeRefreshLayout) findViewById(R.id.refresh);
-//        mWebviewRootLinearLayout = (LinearLayout) findViewById(R.id.webview_root);
+        //        mWebviewRootLinearLayout = (LinearLayout) findViewById(R.id.webview_root);
         mNoNetwork = (LinearLayout) findViewById(R.id.no_newwork);
         mRefresh = (Button) findViewById(R.id.refresh_network);
         mRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 mNoNetwork.setVisibility(View.GONE);
                 mWebviewWebView.reload();
             }
@@ -137,16 +132,15 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         mToolbar.setNavigationOnClickListener(v -> {
             onBackPressed();
-//            mWebviewWebView.loadUrl("javascript:NativeMethod.wechatPay(\"" + test + "\");");
-//                msgApi.openWXApp();
+            //            mWebviewWebView.loadUrl("javascript:NativeMethod.wechatPay(\"" + test + "\");");
+            //                msgApi.openWXApp();
         });
         mToolbar.setTitle("");
 
         initWebClient();
         initChromClient();
         mWebviewWebView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+            @Override public boolean onLongClick(View v) {
                 return true;
             }
         });
@@ -154,17 +148,18 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         mToobarActionTextView.setText(R.string.share);
         mToobarActionTextView.setVisibility(View.VISIBLE);
         mToobarActionTextView.setOnClickListener(v -> {
-//            if (mWebviewWebView != null)
-//                mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
+            //            if (mWebviewWebView != null)
+            //                mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
             if (mFirstBitmap != null) {
-                ShareDialogFragment.newInstance(mWebviewWebView.getTitle(), mWebviewWebView.getTitle(), mFirstBitmap, mWebviewWebView.getUrl()).show(getSupportFragmentManager(), "");
-            } else
-                ShareDialogFragment.newInstance(mWebviewWebView.getTitle(), mWebviewWebView.getTitle(), "", mWebviewWebView.getUrl()).show(getSupportFragmentManager(), "");
-
+                ShareDialogFragment.newInstance(mWebviewWebView.getTitle(), mWebviewWebView.getTitle(), mFirstBitmap,
+                    mWebviewWebView.getUrl()).show(getSupportFragmentManager(), "");
+            } else {
+                ShareDialogFragment.newInstance(mWebviewWebView.getTitle(), mWebviewWebView.getTitle(), "", mWebviewWebView.getUrl())
+                    .show(getSupportFragmentManager(), "");
+            }
         });
         mWebviewWebView.setPictureListener(new WebView.PictureListener() {
-            @Override
-            public void onNewPicture(WebView webView, Picture picture) {
+            @Override public void onNewPicture(WebView webView, Picture picture) {
                 if (picture != null && mFirstBitmap == null) {
                     try {
                         mFirstBitmap = BitmapUtils.pictureDrawable2Bitmap(new PictureDrawable(picture));
@@ -172,7 +167,6 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                         e.printStackTrace();
                     }
                 }
-
             }
         });
 
@@ -191,26 +185,24 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
 
             initCookie(url);
             mWebviewWebView.loadUrl(url);
-////            setCookie(".qingchengfit.cn", "qc_session_id", "abcd");
-//            cookieManager.setCookie("*.qingchengfit.cn","key = abc");
-//            String cookieResult = cookieManager.getCookie("feature3.qingchengfit.cn");
-//            LogUtil.e("  1:"+cookieResult);
-//            LogUtil.e("  2:"+cookieManager.getCookie(Configs.Server));
-//            LogUtil.e("  3:"+cookieManager.getCookie("www.qingchengfit.cn"));
-//            LogUtil.e("  4:"+cookieManager.getCookie(".qingchengfit.cn"));
-//            Toast.makeText(this,cookieResult,Toast.LENGTH_LONG).show();
+            ////            setCookie(".qingchengfit.cn", "qc_session_id", "abcd");
+            //            cookieManager.setCookie("*.qingchengfit.cn","key = abc");
+            //            String cookieResult = cookieManager.getCookie("feature3.qingchengfit.cn");
+            //            LogUtil.e("  1:"+cookieResult);
+            //            LogUtil.e("  2:"+cookieManager.getCookie(Configs.Server));
+            //            LogUtil.e("  3:"+cookieManager.getCookie("www.qingchengfit.cn"));
+            //            LogUtil.e("  4:"+cookieManager.getCookie(".qingchengfit.cn"));
+            //            Toast.makeText(this,cookieResult,Toast.LENGTH_LONG).show();
         }
 
         mRefreshSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
         mRefreshSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 mWebviewWebView.reload();
             }
         });
         mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
+            @Override public void onGlobalLayout() {
                 mRefreshSwipeRefreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 mRefreshSwipeRefreshLayout.setRefreshing(true);
             }
@@ -219,82 +211,74 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         msgApi = WXAPIFactory.createWXAPI(getApplicationContext(), getString(R.string.wechat_code));
         msgApi.registerApp(getString(R.string.wechat_code));
 
-        paySp = RxBus.getBus().register(PayEvent.class)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<PayEvent>() {
-                    @Override
-                    public void onCompleted() {
+        paySp = RxBus.getBus()
+            .register(PayEvent.class)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<PayEvent>() {
+                @Override public void onCompleted() {
 
-                    }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
+                @Override public void onError(Throwable e) {
 
-                    }
+                }
 
-                    @Override
-                    public void onNext(PayEvent payEvent) {
-                        if (payEvent.result == 0) {
-                            if (mWebviewWebView != null)
-                                mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
-                        } else {
-                            if (mWebviewWebView != null)
-                                mWebviewWebView.loadUrl("javascript:window.payErrorCallback(" + payEvent.result + ");");
+                @Override public void onNext(PayEvent payEvent) {
+                    if (payEvent.result == 0) {
+                        if (mWebviewWebView != null) mWebviewWebView.loadUrl("javascript:window.paySuccessCallback();");
+                    } else {
+                        if (mWebviewWebView != null) {
+                            mWebviewWebView.loadUrl("javascript:window.payErrorCallback(" + payEvent.result + ");");
                         }
                     }
-                })
-        ;
-
+                }
+            });
 
         if (dialog == null) {
             dialog = new PicChooseDialog(WebActivityWithShare.this);
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-
+                @Override public void onDismiss(DialogInterface dialog) {
 
                 }
             });
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    if (mValueCallback != null)
-                        mValueCallback.onReceiveValue(null);
-                    if (mValueCallbackNew != null)
-                        mValueCallbackNew.onReceiveValue(null);
+                @Override public void onCancel(DialogInterface dialog) {
+                    if (mValueCallback != null) mValueCallback.onReceiveValue(null);
+                    if (mValueCallbackNew != null) mValueCallbackNew.onReceiveValue(null);
                 }
             });
             dialog.setListener(v -> {
-                        dialog.dismiss();
-                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.CAMERA)) {
-                            Intent intent = new Intent();
-                            // 指定开启系统相机的Action
-                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.addCategory(Intent.CATEGORY_DEFAULT);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
-                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
-                        } else ToastUtils.showDefaultStyle("请开启拍照权限");
-                    },
-                    v -> {
-                        //图片选择
-                        dialog.dismiss();
-                        if (RxPermissions.getInstance(this).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
-                            intent.addCategory(Intent.CATEGORY_OPENABLE);
-                            intent.setType("image/jpeg");
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-                            } else {
-                                startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
-
-                            }
-                        } else ToastUtils.showDefaultStyle("请开启外部存储权限");
+                    dialog.dismiss();
+                    if (RxPermissions.getInstance(this).isGranted(Manifest.permission.CAMERA)) {
+                        Intent intent = new Intent();
+                        // 指定开启系统相机的Action
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Configs.CameraPic)));
+                        startActivityForResult(intent, ChoosePicUtils.CHOOSE_CAMERA);
+                    } else {
+                        ToastUtils.showDefaultStyle("请开启拍照权限");
                     }
+                }, v -> {
+                    //图片选择
+                    dialog.dismiss();
+                    if (RxPermissions.getInstance(this).isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/jpeg");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                        } else {
+                            startActivityForResult(intent, ChoosePicUtils.CHOOSE_GALLERY);
+                    }
+                    } else {
+                        ToastUtils.showDefaultStyle("请开启外部存储权限");
+                    }
+                }
 
             );
         }
-
     }
 
     private void initChromClient() {
@@ -302,105 +286,88 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         mWebviewWebView.setWebChromeClient(new WebChromeClient() {
 
             public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
-//                super.openFileChooser(valueCallback, s, s1);
+                //                super.openFileChooser(valueCallback, s, s1);
                 mValueCallback = valueCallback;
 
                 dialog.show();
             }
 
-
-            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback, android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> valueCallback,
+                android.webkit.WebChromeClient.FileChooserParams fileChooserParams) {
                 mValueCallbackNew = valueCallback;
                 dialog.show();
                 return true;
             }
 
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                new MaterialDialog.Builder(WebActivityWithShare.this)
-                        .content(message)
-                        .cancelable(false)
-                        .positiveText(R.string.common_i_konw)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                result.confirm();
-                            }
-                        })
-                        .show();
+            @Override public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                new MaterialDialog.Builder(WebActivityWithShare.this).content(message)
+                    .cancelable(false)
+                    .positiveText(R.string.common_i_konw)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            result.confirm();
+                        }
+                    })
+                    .show();
                 return true;
             }
 
-            @Override
-            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-                new MaterialDialog.Builder(WebActivityWithShare.this)
-                        .content(message)
-                        .positiveText("确定")
-                        .negativeText("取消")
-                        .cancelable(false)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                result.confirm();
-                                dialog.dismiss();
-                            }
+            @Override public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                new MaterialDialog.Builder(WebActivityWithShare.this).content(message)
+                    .positiveText("确定")
+                    .negativeText("取消")
+                    .cancelable(false)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            result.confirm();
+                            dialog.dismiss();
+                        }
 
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                result.cancel();
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                        @Override public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            result.cancel();
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
                 return true;
             }
 
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
+            @Override public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (title.length() > 10){
-                    title = title.substring(0,10).concat("...");
+                if (title.length() > 10) {
+                    title = title.substring(0, 10).concat("...");
                 }
                 mToolbar.setTitle(title);
-
             }
-
         });
-
     }
 
     private void initWebClient() {
         mWebviewWebView.setWebViewClient(new WebViewClient() {
 
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 LogUtil.e("url:" + url);
             }
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
+            @Override public void onPageFinished(WebView view, String url) {
                 mRefreshSwipeRefreshLayout.setRefreshing(false);
                 super.onPageFinished(view, url);
-
             }
 
-            @Override
-            public void onLoadResource(WebView view, String url) {
+            @Override public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
             }
 
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
 
                 if (!TextUtils.isEmpty(mToolbar.getTitle().toString())) {
-//                    mToobarActionTextView.setText("");
-//                    mToobarActionTextView.setVisibility(View.GONE);
+                    //                    mToobarActionTextView.setText("");
+                    //                    mToobarActionTextView.setVisibility(View.GONE);
                     URI uri = null;
                     try {
                         uri = new URI(url);
@@ -428,44 +395,38 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                             mlastPosition = mlastPosition.subList(0, urls.indexOf(path));
                             mlastPosition.add(webBackForwardList.getCurrentIndex() - step + 1);
                             urls = urls.subList(0, urls.indexOf(path));
-//                                                     mTitleStack = mTitleStack.subList(0,urls.indexOf(path)+1);
+                            //                                                     mTitleStack = mTitleStack.subList(0,urls.indexOf(path)+1);
                         } else {
                             mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                         }
                         urls.add(path);
-
                     } else {
                         mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                     }
-
 
                     LogUtil.e("webCount:" + webBackForwardList.getCurrentIndex());
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-//                super.onReceivedError(view, errorCode, description, failingUrl);
+            @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                //                super.onReceivedError(view, errorCode, description, failingUrl);
                 LogUtil.e("errorCode:" + errorCode);
                 mToolbar.setTitle("");
-//                mWebviewWebView.loadUrl("");
+                //                mWebviewWebView.loadUrl("");
                 showNoNet();
-
             }
-
-
         });
-
     }
 
     public Boolean canGoBack() {
 
         if (mWebviewWebView != null) {
             return mlastPosition.size() > 0;
-        } else return false;
+        } else {
+            return false;
+        }
     }
-
 
     /**
      * 显示无网络状态
@@ -492,14 +453,17 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         webSetting.setDomStorageEnabled(true);
         webSetting.setGeolocationEnabled(true);
         webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
-        webSetting.setUserAgentString(webSetting.getUserAgentString() + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + getString(R.string.oem_tag));
+        webSetting.setUserAgentString(webSetting.getUserAgentString()
+            + " FitnessTrainerAssistant/"
+            + AppUtils.getAppVer(App.AppContex)
+            + " Android  OEM:"
+            + getString(R.string.oem_tag));
         // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
         LogUtil.e("uA:" + webSetting.getUserAgentString());
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
     }
-
 
     private void initCookie(String url) {
         sessionid = PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
@@ -518,12 +482,12 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                 //e.printStackTrace();
             }
             setCookie(Configs.Server, "sessionid", sessionid);
-//            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
-//            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
-//            setCookie(".qingchengfit.cn", "qc_session_id", sessionid);
-//            setCookie(".cn", "qc_session_id", sessionid);
-//            setCookie(".com", "qc_session_id", sessionid);
-//            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+            //            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
+            //            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
+            //            setCookie(".qingchengfit.cn", "qc_session_id", sessionid);
+            //            setCookie(".cn", "qc_session_id", sessionid);
+            //            setCookie(".com", "qc_session_id", sessionid);
+            //            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
             //TODO logout
         }
@@ -531,96 +495,82 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
 
     public void setCookie(String url, String key, String value) {
         StringBuffer sb = new StringBuffer();
-//        String oriCookie = xWalkCookieManager.getCookie(url);
-//        if (oriCookie != null){
-//        sb.append(xWalkCookieManager.getCookie(url));
-//        sb.append(";");}
+        //        String oriCookie = xWalkCookieManager.getCookie(url);
+        //        if (oriCookie != null){
+        //        sb.append(xWalkCookieManager.getCookie(url));
+        //        sb.append(";");}
         sb.append(key);
         sb.append("=");
         sb.append(value).append(";");
         cookieManager.setCookie(url, sb.toString());
-//        LogUtil.e(sb.toString());
+        //        LogUtil.e(sb.toString());
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String filepath = "";
-        if (mWebviewWebView == null)
-            return;
+        if (mWebviewWebView == null) return;
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == ChoosePicUtils.CHOOSE_GALLERY) {
                 filepath = FileUtils.getPath(this, data.getData());
-                if (mValueCallback != null)
-                    mValueCallback.onReceiveValue(data.getData());
+                if (mValueCallback != null) mValueCallback.onReceiveValue(data.getData());
                 if (mValueCallbackNew != null) {
                     Uri[] uris = new Uri[1];
                     uris[0] = data.getData();
                     mValueCallbackNew.onReceiveValue(uris);
                 }
                 return;
-            } else filepath = Configs.CameraPic;
+            } else {
+                filepath = Configs.CameraPic;
+            }
             LogUtil.d(filepath);
             ShowLoading("正在上传");
-            Observable.just(filepath)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(s -> {
-                        String filename = UUID.randomUUID().toString();
-                        BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
-                        File upFile = new File(Configs.ExternalCache + filename);
+            Observable.just(filepath).subscribeOn(Schedulers.io()).subscribe(s -> {
+                String filename = UUID.randomUUID().toString();
+                BitmapUtils.compressPic(s, Configs.ExternalCache + filename);
+                File upFile = new File(Configs.ExternalCache + filename);
 
-//                        boolean reslut = UpYunClient.upLoadImg("/webup/" + App.coachid + "/", filename, upFile);
-                        runOnUiThread(() -> {
-                            loadingDialog.dismiss();
-                            if (upFile.exists()) {
-                                ToastUtils.show("上传图片成功");
+                //                        boolean reslut = UpYunClient.upLoadImg("/webup/" + App.coachid + "/", filename, upFile);
+                runOnUiThread(() -> {
+                    loadingDialog.dismiss();
+                    if (upFile.exists()) {
+                        ToastUtils.show("上传图片成功");
 
-//                                mValueCallback.onReceiveValue(Uri.fromFile(upFile));
-                                if (mValueCallback != null)
-                                    mValueCallback.onReceiveValue(Uri.fromFile(upFile));
-                                if (mValueCallbackNew != null) {
-                                    Uri[] uris = new Uri[1];
-                                    uris[0] = Uri.fromFile(upFile);
-                                    mValueCallbackNew.onReceiveValue(uris);
-                                }
-                                mValueCallback = null;
-                                mValueCallbackNew = null;
-                            } else {
-                                if (mValueCallback != null)
-                                    mValueCallback.onReceiveValue(null);
-                                if (mValueCallbackNew != null) {
-                                    mValueCallbackNew.onReceiveValue(null);
-                                }
-                                ToastUtils.show(R.drawable.ic_share_fail, "上传图片失败");
-                            }
-//                            if (reslut) {
-//                                LogUtil.d("success");
-//
-//
-//                            } else {
-//                                ToastUtils.show(R.drawable.ic_share_fail,"资源服务器错误");
-//                            }
-                        });
-
-                    });
-
+                        //                                mValueCallback.onReceiveValue(Uri.fromFile(upFile));
+                        if (mValueCallback != null) mValueCallback.onReceiveValue(Uri.fromFile(upFile));
+                        if (mValueCallbackNew != null) {
+                            Uri[] uris = new Uri[1];
+                            uris[0] = Uri.fromFile(upFile);
+                            mValueCallbackNew.onReceiveValue(uris);
+                        }
+                        mValueCallback = null;
+                        mValueCallbackNew = null;
+                    } else {
+                        if (mValueCallback != null) mValueCallback.onReceiveValue(null);
+                        if (mValueCallbackNew != null) {
+                            mValueCallbackNew.onReceiveValue(null);
+                        }
+                        ToastUtils.show(R.drawable.ic_share_fail, "上传图片失败");
+                    }
+                    //                            if (reslut) {
+                    //                                LogUtil.d("success");
+                    //
+                    //
+                    //                            } else {
+                    //                                ToastUtils.show(R.drawable.ic_share_fail,"资源服务器错误");
+                    //                            }
+                });
+            });
         } else {
-            if (mValueCallback != null)
-                mValueCallback.onReceiveValue(null);
-            if (mValueCallbackNew != null)
-                mValueCallbackNew.onReceiveValue(null);
+            if (mValueCallback != null) mValueCallback.onReceiveValue(null);
+            if (mValueCallbackNew != null) mValueCallbackNew.onReceiveValue(null);
         }
     }
 
     public void ShowLoading(String content) {
-        if (loadingDialog == null)
-            loadingDialog = new MaterialDialog.Builder(this)
-                    .content("请稍后")
-                    .progress(true, 0)
-                    .cancelable(false)
-                    .build();
-        if (content != null)
-            loadingDialog.setContent(content);
+        if (loadingDialog == null) {
+            loadingDialog = new MaterialDialog.Builder(this).content("请稍后").progress(true, 0).cancelable(false).build();
+        }
+        if (content != null) loadingDialog.setContent(content);
         loadingDialog.show();
     }
 
@@ -631,11 +581,9 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         for (String host : hostArray) {
             cookieManager.setCookie(host, "sessionid" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
         }
-
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         dialog = null;
         mValueCallback = null;
         mValueCallbackNew = null;
@@ -645,10 +593,8 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
             mWebviewWebView.removeAllViews();
             mWebviewWebView.destroy();
         }
-        if (paySp != null)
-            paySp.unsubscribe();
+        if (paySp != null) paySp.unsubscribe();
         super.onDestroy();
-
     }
 
     public void goBack() {
@@ -661,35 +607,29 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         mToobarActionTextView.setText("");
     }
 
-
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (canGoBack()) {
-//            originWebFragment.goBack();
+            //            originWebFragment.goBack();
             goBack();
         } else {
             setResult(-1);
             this.finish();
         }
-
     }
 
-    @Override
-    public void onfinish() {
+    @Override public void onfinish() {
 
         setResult(1001);
         this.finish();
     }
 
-    @Override
-    public boolean canSwipeRefreshChildScrollUp() {
+    @Override public boolean canSwipeRefreshChildScrollUp() {
         try {
             boolean result = mWebviewWebView.getWebScrollY() > 0;
             return result;
         } catch (Exception e) {
             return true;
         }
-
     }
 
     public class JsInterface {
@@ -697,33 +637,30 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         JsInterface() {
         }
 
-        @JavascriptInterface
-        public String getToken() {
+        @JavascriptInterface public String getToken() {
             return PreferenceUtils.getPrefString(App.AppContex, "token", "");
         }
 
-        @JavascriptInterface
-        public void shareInfo(String json) {
+        @JavascriptInterface public void shareInfo(String json) {
             LogUtil.e(json);
             try {
 
                 ShareBean bean = new Gson().fromJson(json, ShareBean.class);
-//                ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, ben.title);
+                //                ShareUtils.oneKeyShared(WebActivity.this, bean.link, bean.imgUrl, bean.desc, ben.title);
                 ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link).show(getSupportFragmentManager(), "");
             } catch (Exception e) {
 
             }
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            });
+            //            runOnUiThread(new Runnable() {
+            //                @Override
+            //                public void run() {
+            //
+            //                }
+            //            });
 
         }
 
-        @JavascriptInterface
-        public void wechatPay(String info) {
+        @JavascriptInterface public void wechatPay(String info) {
             LogUtil.d(info);
 
             // 将该app注册到微信
@@ -731,16 +668,16 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                 JSONObject object = new JSONObject(info);
 
                 PayReq request = new PayReq();
-//                request.appId = Configs.APP_ID;
+                //                request.appId = Configs.APP_ID;
                 request.appId = getString(R.string.wechat_code);
                 request.partnerId = object.getString("partnerid");
-//                request.partnerId = "1316532101";
-//                request.prepayId = "wx201602261807466f5480e7010494724957";
-//                request.packageValue = "Sign=WXPay";
-//                request.nonceStr = "4VNwF2PFwgXCbmr";
-//                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
-//                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
-//                request.partnerId = object.getString("partnerId");
+                //                request.partnerId = "1316532101";
+                //                request.prepayId = "wx201602261807466f5480e7010494724957";
+                //                request.packageValue = "Sign=WXPay";
+                //                request.nonceStr = "4VNwF2PFwgXCbmr";
+                //                request.timeStamp = "1456481266";//MD5.genTimeStamp() + "";
+                //                request.sign = "053EB9B1AD8487A3008DFE2035D774A9";//MD5.getSign(request.timeStamp, request.nonceStr);
+                //                request.partnerId = object.getString("partnerId");
 
                 request.prepayId = object.getString("prepayid");
                 request.packageValue = "Sign=WXPay";
@@ -753,17 +690,13 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                 e.printStackTrace();
                 LogUtil.e("wechat pay error");
             }
+        }
+
+        @JavascriptInterface public void openDrawer() {
 
         }
 
-        @JavascriptInterface
-        public void openDrawer() {
-
-
-        }
-
-        @JavascriptInterface
-        public void setAction(String s) {
+        @JavascriptInterface public void setAction(String s) {
             LogUtil.e("setAction:" + s);
             ToolbarAction toolStr = new Gson().fromJson(s, ToolbarAction.class);
 
@@ -774,55 +707,43 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
                 } else {
                     mToobarActionTextView.setVisibility(View.VISIBLE);
                     mToobarActionTextView.setText(toolStr.name);
-
                 }
-
             });
         }
 
-        @JavascriptInterface
-        public void completeAction() {
+        @JavascriptInterface public void completeAction() {
             onfinish();
         }
 
-        @JavascriptInterface
-        public void setTitle(String s) {
+        @JavascriptInterface public void setTitle(String s) {
             runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+                @Override public void run() {
                     mToolbar.setTitle(s);
                 }
             });
-
         }
 
-
-        @JavascriptInterface
-        public String getContacts() {
+        @JavascriptInterface public String getContacts() {
             List<Contact> contacts = PhoneFuncUtils.initContactList(WebActivityWithShare.this);
             Gson gson = new Gson();
             return gson.toJson(contacts);
         }
 
-        @JavascriptInterface
-        public String getPlatform() {
+        @JavascriptInterface public String getPlatform() {
             PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(WebActivityWithShare.this));
             Gson gson = new Gson();
             return gson.toJson(info);
         }
 
-        @JavascriptInterface
-        public void goBack() {
+        @JavascriptInterface public void goBack() {
             runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+                @Override public void run() {
                     onBackPressed();
                 }
             });
         }
 
-        @JavascriptInterface
-        public String getSessionId() {
+        @JavascriptInterface public String getSessionId() {
             return PreferenceUtils.getPrefString(App.AppContex, "session_id", "");
         }
 
@@ -830,8 +751,5 @@ public class WebActivityWithShare extends BaseAcitivity implements WebActivityIn
         public void shareTimeline(String title, String link, String imgurl, String successCallback, String failedCallback) {
 
         }
-
     }
-
-
 }

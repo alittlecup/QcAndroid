@@ -61,15 +61,18 @@ public class WebForResumeFragment extends WebFragment {
         mToolbar.inflateMenu(R.menu.personal_home);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_edit){
+                if (item.getItemId() == R.id.action_edit) {
                     Intent toSetting = new Intent(getContext(), SettingActivity.class);
-                    toSetting.putExtra("to",7);
+                    toSetting.putExtra("to", 7);
                     startActivity(toSetting);
-                }else if (item.getItemId() == R.id.action_share){
+                } else if (item.getItemId() == R.id.action_share) {
                     if (App.gUser != null) {
-                        ShareDialogFragment.newInstance(getString(R.string.sb_trainer_resume,App.gUser.getUsername()),getString(R.string.check_sb_resume,App.gUser.getUsername()),App.gUser.avatar,mCurUrl).show(getFragmentManager(),"");
-                    }else ToastUtils.show("用户信息丢失");
-
+                        ShareDialogFragment.newInstance(getString(R.string.sb_trainer_resume, App.gUser.getUsername()),
+                            getString(R.string.check_sb_resume, App.gUser.getUsername()), App.gUser.avatar, mCurUrl)
+                            .show(getFragmentManager(), "");
+                    } else {
+                        ToastUtils.show("用户信息丢失");
+                    }
                 }
                 return true;
             }
@@ -112,9 +115,11 @@ public class WebForResumeFragment extends WebFragment {
                 if (mCurUrl != null && url != null && url.equals(mCurUrl)) {
                     mWebviewWebView.goBack();
                     return true;
-                }else pageLv++;
-                if (pageLv >1){
-                    WebActivity.startWeb(url,getContext());
+                } else {
+                    pageLv++;
+                }
+                if (pageLv > 1) {
+                    WebActivity.startWeb(url, getContext());
                     return true;
                 }
 
@@ -131,10 +136,10 @@ public class WebForResumeFragment extends WebFragment {
             }
         });
     }
+
     /**
      * 复写以屏蔽 web端对actionbar的控制
      */
     @Override public void setAction(ToolbarAction toolStr) {
     }
-
 }

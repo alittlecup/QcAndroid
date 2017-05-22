@@ -3,18 +3,15 @@ package com.qingchengfit.fitcoach.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Pair;
-
+import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.Utils.PairFirstComparer;
 import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import cn.qingchengfit.utils.DateUtils;
 
 /**
  * power by
@@ -30,11 +27,41 @@ import cn.qingchengfit.utils.DateUtils;
  * Created by Paper on 16/5/5 2016.
  */
 public class CmBean implements Parcelable {
+    public static final Parcelable.Creator<CmBean> CREATOR = new Parcelable.Creator<CmBean>() {
+        @Override public CmBean createFromParcel(Parcel source) {
+            return new CmBean(source);
+        }
+
+        @Override public CmBean[] newArray(int size) {
+            return new CmBean[size];
+        }
+    };
     public ArrayList<Integer> week = new ArrayList<>();
     public Date dateStart;
     public Date dateEnd;
 
     public CmBean() {
+    }
+
+    public CmBean(ArrayList<Integer> week, Date dateStart) {
+        this.week = week;
+        this.dateStart = dateStart;
+        this.dateEnd = null;
+    }
+
+    public CmBean(ArrayList<Integer> week, Date dateStart, Date dateEnd) {
+        this.week = week;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+    }
+
+    protected CmBean(Parcel in) {
+        this.week = new ArrayList<Integer>();
+        in.readList(this.week, Integer.class.getClassLoader());
+        long tmpDateStart = in.readLong();
+        this.dateStart = tmpDateStart == -1 ? null : new Date(tmpDateStart);
+        long tmpDateEnd = in.readLong();
+        this.dateEnd = tmpDateEnd == -1 ? null : new Date(tmpDateEnd);
     }
 
     public static List<CmBean> getBeansFromTimeRep(HashMap<String, ArrayList<Integer>> map) {
@@ -52,7 +79,6 @@ public class CmBean implements Parcelable {
 
         }
         return ret;
-
     }
 
     public static ArrayList<TimeRepeat> geTimeRepFromBean(List<CmBean> cmBeens) {
@@ -60,9 +86,8 @@ public class CmBean implements Parcelable {
         try {
             for (CmBean cmBean : cmBeens) {
                 for (Integer week : cmBean.week) {
-                    TimeRepeat time_repeat = new TimeRepeat(DateUtils.getTimeHHMM(cmBean.dateStart),
-                            DateUtils.getTimeHHMM(cmBean.dateEnd),week
-                            );
+                    TimeRepeat time_repeat =
+                        new TimeRepeat(DateUtils.getTimeHHMM(cmBean.dateStart), DateUtils.getTimeHHMM(cmBean.dateEnd), week);
                     ret.add(time_repeat);
                 }
             }
@@ -108,54 +133,15 @@ public class CmBean implements Parcelable {
             }
         }
         return true;
-
-
     }
 
-
-
-    public CmBean(ArrayList<Integer> week, Date dateStart) {
-        this.week = week;
-        this.dateStart = dateStart;
-        this.dateEnd = null;
-    }
-
-    public CmBean(ArrayList<Integer> week, Date dateStart, Date dateEnd) {
-        this.week = week;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
-    }
-
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(this.week);
         dest.writeLong(dateStart != null ? dateStart.getTime() : -1);
         dest.writeLong(dateEnd != null ? dateEnd.getTime() : -1);
     }
-
-    protected CmBean(Parcel in) {
-        this.week = new ArrayList<Integer>();
-        in.readList(this.week, Integer.class.getClassLoader());
-        long tmpDateStart = in.readLong();
-        this.dateStart = tmpDateStart == -1 ? null : new Date(tmpDateStart);
-        long tmpDateEnd = in.readLong();
-        this.dateEnd = tmpDateEnd == -1 ? null : new Date(tmpDateEnd);
-    }
-
-    public static final Parcelable.Creator<CmBean> CREATOR = new Parcelable.Creator<CmBean>() {
-        @Override
-        public CmBean createFromParcel(Parcel source) {
-            return new CmBean(source);
-        }
-
-        @Override
-        public CmBean[] newArray(int size) {
-            return new CmBean[size];
-        }
-    };
 }

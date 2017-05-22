@@ -6,14 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
+import java.util.List;
 
 /**
  * power by
@@ -28,60 +25,52 @@ import butterknife.ButterKnife;
  * <p>
  * Created by Paper on 16/1/8 2016.
  */
-public class SimpleTextIconAdapter extends RecyclerView.Adapter<SimpleTextIconAdapter.SimpleTextVH>
-        implements View.OnClickListener {
+public class SimpleTextIconAdapter extends RecyclerView.Adapter<SimpleTextIconAdapter.SimpleTextVH> implements View.OnClickListener {
 
     private List<ImageIconBean> datas;
     private OnRecycleItemClickListener listener;
-
-    public void setListener(OnRecycleItemClickListener listener) {
-        this.listener = listener;
-    }
 
     public SimpleTextIconAdapter(List<ImageIconBean> datas) {
         this.datas = datas;
     }
 
+    public void setListener(OnRecycleItemClickListener listener) {
+        this.listener = listener;
+    }
 
-    @Override
-    public SimpleTextVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public SimpleTextVH onCreateViewHolder(ViewGroup parent, int viewType) {
         SimpleTextVH vh = new SimpleTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simpleicon, parent, false));
         vh.itemView.setOnClickListener(this);
         vh.icon.setOnClickListener(this);
         return vh;
     }
 
-    @Override
-    public void onBindViewHolder(SimpleTextVH holder, int position) {
+    @Override public void onBindViewHolder(SimpleTextVH holder, int position) {
         ImageIconBean bean = datas.get(position);
         holder.itemView.setTag(position);
         holder.icon.setTag(position);
         holder.imageiconText.setText(bean.content);
-        if (bean.showIcon){
+        if (bean.showIcon) {
             holder.icon.setVisibility(View.VISIBLE);
             holder.icon.setImageResource(bean.icon);
-        }else {
+        } else {
             holder.icon.setVisibility(View.GONE);
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return datas.size();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
     public class SimpleTextVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imageicon_text)
-        TextView imageiconText;
-        @BindView(R.id.icon)
-        ImageView icon;
+        @BindView(R.id.imageicon_text) TextView imageiconText;
+        @BindView(R.id.icon) ImageView icon;
+
         public SimpleTextVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

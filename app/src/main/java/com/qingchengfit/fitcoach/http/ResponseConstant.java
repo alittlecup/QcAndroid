@@ -19,10 +19,11 @@ public class ResponseConstant {
     public static final int SUCCESS = 200;
     public static final String E_Login = "400001";
 
-
     public static boolean checkSuccess(QcResponse qcResponse) {
-        if (qcResponse.status == SUCCESS)
+        if (qcResponse.status == SUCCESS) {
             return true;
-        else return false;
+        } else {
+            return false;
+        }
     }
 }

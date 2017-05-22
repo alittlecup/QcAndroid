@@ -20,8 +20,7 @@ import com.qingchengfit.fitcoach.bean.StudentBean;
  * Created by Paper on 16/6/29 2016.
  */
 public class ClassStatmentFilterBean implements Parcelable {
-    public static final Creator<ClassStatmentFilterBean>
-        CREATOR = new Creator<ClassStatmentFilterBean>() {
+    public static final Creator<ClassStatmentFilterBean> CREATOR = new Creator<ClassStatmentFilterBean>() {
         @Override public ClassStatmentFilterBean createFromParcel(Parcel source) {
             return new ClassStatmentFilterBean(source);
         }

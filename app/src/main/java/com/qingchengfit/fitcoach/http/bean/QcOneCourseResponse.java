@@ -16,25 +16,18 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/1/9 2016.
  */
 public class QcOneCourseResponse extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
-    public class Data{
-        @SerializedName("course")
-        public Course course;
+    public class Data {
+        @SerializedName("course") public Course course;
     }
-    public class Course{
-        @SerializedName("length")
-        public int length;
-        @SerializedName("photo")
-        public String photo;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("is_private")
-        public boolean is_private;
-        @SerializedName("capacity")
-        public String capacity;
-        @SerializedName("id")
-        public String id;
+
+    public class Course {
+        @SerializedName("length") public int length;
+        @SerializedName("photo") public String photo;
+        @SerializedName("name") public String name;
+        @SerializedName("is_private") public boolean is_private;
+        @SerializedName("capacity") public String capacity;
+        @SerializedName("id") public String id;
     }
 }

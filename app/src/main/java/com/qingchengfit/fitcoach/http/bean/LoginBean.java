@@ -32,7 +32,6 @@ public class LoginBean {
         this.code = password;
     }
 
-
     public String getArea_code() {
         return area_code;
     }

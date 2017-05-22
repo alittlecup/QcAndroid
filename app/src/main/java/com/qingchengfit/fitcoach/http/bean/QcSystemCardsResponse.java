@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,25 +18,17 @@ import java.util.List;
  */
 public class QcSystemCardsResponse extends QcResponse {
 
-
-    @SerializedName("data")
-    public Cards data;
+    @SerializedName("data") public Cards data;
 
     public static class Cards {
-        @SerializedName("card_tpls")
-        public List<Card> card_tpls;
+        @SerializedName("card_tpls") public List<Card> card_tpls;
     }
 
     public static class Card {
-        @SerializedName("type_name")
-        public String type_name;
-        @SerializedName("description")
-        public String description;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("type")
-        public int type;
-        @SerializedName("id")
-        public int id;
+        @SerializedName("type_name") public String type_name;
+        @SerializedName("description") public String description;
+        @SerializedName("name") public String name;
+        @SerializedName("type") public int type;
+        @SerializedName("id") public int id;
     }
 }

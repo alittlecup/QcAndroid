@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_gym"
     android:layout_width="match_parent"
     android:layout_height="78dp"
+    android:background="@drawable/bg_click"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="@drawable/bg_click"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:id="@+id/layout_gym"
     >
 
   <CheckBox
@@ -36,16 +36,18 @@
       android:layout_width="@dimen/activity_horizontal_margin"
       android:layout_height="@dimen/activity_horizontal_margin"
       />
+
   <FrameLayout
       android:layout_width="0dp"
-      android:layout_weight="1"
       android:layout_height="match_parent"
+      android:layout_weight="1"
       >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
+        android:orientation="vertical"
         >
 
       <TextView
@@ -69,6 +71,7 @@
           style="@style/QcTextStyleSmallWarm"
           />
     </LinearLayout>
+
     <ImageView
         android:id="@+id/ic_entry_triangel"
         android:layout_width="wrap_content"

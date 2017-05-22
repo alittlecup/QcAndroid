@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -42,15 +41,10 @@ import rx.schedulers.Schedulers;
  */
 public class AdviceFragment extends BaseSettingFragment {
 
-
-    @BindView(R.id.setting_advice_mail)
-    EditText settingAdviceMail;
-    @BindView(R.id.setting_advice_content)
-    EditText settingAdviceContent;
-    @BindView(R.id.advice_update)
-    RelativeLayout adviceUpdate;
-    @BindView(R.id.advice_update_img)
-    ImageView adviceUpdateImg;
+    @BindView(R.id.setting_advice_mail) EditText settingAdviceMail;
+    @BindView(R.id.setting_advice_content) EditText settingAdviceContent;
+    @BindView(R.id.advice_update) RelativeLayout adviceUpdate;
+    @BindView(R.id.advice_update_img) ImageView adviceUpdateImg;
     private FeedBackBean feedBackBean;
     private DialogSheet dialogSheet;
     private String filepath;
@@ -60,20 +54,16 @@ public class AdviceFragment extends BaseSettingFragment {
     public AdviceFragment() {
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_advice, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "意见反馈");
         feedBackBean = new FeedBackBean();
 
         return view;
     }
 
-    @OnClick(R.id.setting_advice_btn)
-    public void onAdvice() {
+    @OnClick(R.id.setting_advice_btn) public void onAdvice() {
         String email = settingAdviceMail.getText().toString();
         String content = settingAdviceContent.getText().toString();
         feedBackBean.setEmail(email);
@@ -81,57 +71,48 @@ public class AdviceFragment extends BaseSettingFragment {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(content)) {
             fragmentCallBack.ShowLoading("请稍后");
             QcCloudClient.getApi().postApi.qcFeedBack(feedBackBean)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<QcEvaluateResponse>() {
-                        @Override
-                        public void onCompleted() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcEvaluateResponse>() {
+                    @Override public void onCompleted() {
 
+                    }
+
+                    @Override public void onError(Throwable e) {
+                        fragmentCallBack.hideLoading();
+
+                        Toast.makeText(getContext(), "提交失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override public void onNext(QcEvaluateResponse qcEvaluateResponse) {
+                        fragmentCallBack.hideLoading();
+                        if (qcEvaluateResponse.status == ResponseResult.SUCCESS) {
+                            Toast.makeText(getContext(), "感谢您的反馈,我们会继续努力", Toast.LENGTH_SHORT).show();
+                            getActivity().onBackPressed();
+                        } else {
+                            Toast.makeText(getContext(), "服务器错误,请稍后再试", Toast.LENGTH_SHORT).show();
                         }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            fragmentCallBack.hideLoading();
-
-                            Toast.makeText(getContext(), "提交失败,请稍后再试", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onNext(QcEvaluateResponse qcEvaluateResponse) {
-                            fragmentCallBack.hideLoading();
-                            if (qcEvaluateResponse.status == ResponseResult.SUCCESS) {
-                                Toast.makeText(getContext(), "感谢您的反馈,我们会继续努力", Toast.LENGTH_SHORT).show();
-                                getActivity().onBackPressed();
-                            } else {
-                                Toast.makeText(getContext(), "服务器错误,请稍后再试", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
+                    }
+                });
         }
     }
 
-    @OnClick(R.id.advice_update)
-    public void onAddImg() {
+    @OnClick(R.id.advice_update) public void onAddImg() {
         if (adviceUpdateImg.getVisibility() == View.VISIBLE) {
-            if (dialogSheet == null)
-                dialogSheet = DialogSheet.builder(getContext())
-                        .addButton("重新上传", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialogSheet.hide();
-                                uploadImg();
-                            }
-                        })
-                        .addButton("删除照片", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialogSheet.hide();
-                                feedBackBean.setPhoto("");
-                                adviceUpdateImg.setVisibility(View.GONE);
-
-                            }
-                        });
+            if (dialogSheet == null) {
+                dialogSheet = DialogSheet.builder(getContext()).addButton("重新上传", new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        dialogSheet.hide();
+                        uploadImg();
+                    }
+                }).addButton("删除照片", new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        dialogSheet.hide();
+                        feedBackBean.setPhoto("");
+                        adviceUpdateImg.setVisibility(View.GONE);
+                    }
+                });
+            }
             dialogSheet.show();
         } else {
             uploadImg();
@@ -149,19 +130,16 @@ public class AdviceFragment extends BaseSettingFragment {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (settingAdviceMail == null)
-//            return;
+        //        if (settingAdviceMail == null)
+        //            return;
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY)
-                filepath = FileUtils.getPath(getActivity(), data.getData());
+            if (requestCode == ChoosePicUtils.CHOOSE_GALLERY) filepath = FileUtils.getPath(getActivity(), data.getData());
             LogUtil.d(filepath);
             fragmentCallBack.ShowLoading("正在上传");
 
-
-            spUpImg = UpYunClient.rxUpLoad("advice/",filepath)
+            spUpImg = UpYunClient.rxUpLoad("advice/", filepath)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
@@ -202,11 +180,10 @@ public class AdviceFragment extends BaseSettingFragment {
         }
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (spUpImg != null && spUpImg.isUnsubscribed()){
+        if (spUpImg != null && spUpImg.isUnsubscribed()) {
             spUpImg.unsubscribe();
         }
     }

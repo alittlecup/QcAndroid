@@ -23,7 +23,7 @@ public class AddCourse {
     public String course_id;
     public String capacity;
 
-    public AddCourse(int id,String model, String name, String photo, int length, boolean is_private,String capacity) {
+    public AddCourse(int id, String model, String name, String photo, int length, boolean is_private, String capacity) {
         this.model = model;
         this.id = id;
         this.name = name;
@@ -36,6 +36,6 @@ public class AddCourse {
     public AddCourse(int id, String model, int course_id) {
         this.id = id;
         this.model = model;
-        this.course_id = course_id+"";
+        this.course_id = course_id + "";
     }
 }

@@ -18,40 +18,41 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SystemMsgPresenter extends BasePresenter {
-    private MVPView view;
-
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
+    private MVPView view;
 
     @Inject public SystemMsgPresenter() {
     }
 
-    public void querySimpleList(String json){
-        RxRegiste(restRepository.getGet_api().qcGetNotificationIndex(json)
-            .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+    public void querySimpleList(String json) {
+        RxRegiste(
+            restRepository.getGet_api().qcGetNotificationIndex(json).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
             .subscribe(new Action1<QcResponseData<List<NotificationGlance>>>() {
                 @Override public void call(QcResponseData<List<NotificationGlance>> notificationGlanceQcResponseData) {
-                    if (ResponseConstant.checkSuccess(notificationGlanceQcResponseData)){
+                    if (ResponseConstant.checkSuccess(notificationGlanceQcResponseData)) {
                         view.onNotificationList(notificationGlanceQcResponseData.getData());
-                    }else {
+                    } else {
                         view.onShowError(notificationGlanceQcResponseData.getMsg());
                     }
-
                 }
-            },new NetWorkThrowable())
-        );
+            }, new NetWorkThrowable()));
     }
-    public void clearNoti(String type){
-        RxRegiste(restRepository.getPost_api().qcClearTypeNoti(new ClearNotiBody(type))
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+    public void clearNoti(String type) {
+        RxRegiste(restRepository.getPost_api()
+            .qcClearTypeNoti(new ClearNotiBody(type))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponse>() {
                 @Override public void call(QcResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
                         view.onClearNotiOk();
-                    }else view.onShowError(qcResponse.getMsg());
+                    } else {
+                        view.onShowError(qcResponse.getMsg());
+                    }
                 }
-            },new NetWorkThrowable())
-        );
+            }, new NetWorkThrowable()));
     }
 
     @Override public void attachView(PView v) {
@@ -65,6 +66,7 @@ public class SystemMsgPresenter extends BasePresenter {
 
     public interface MVPView extends CView {
         void onNotificationList(List<NotificationGlance> list);
+
         void onClearNotiOk();
     }
 }

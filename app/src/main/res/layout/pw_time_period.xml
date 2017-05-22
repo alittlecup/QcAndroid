@@ -1,88 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/divider_grey"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      >
+
+    <LinearLayout
+        android:id="@+id/timepick_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <include
+          layout="@layout/include_timepicker"
+          android:id="@+id/timepicker_start"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="至"
+          />
+
+      <include
+          layout="@layout/include_timepicker"
+          android:id="@+id/timepicker_end"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          />
+    </LinearLayout>
 
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_grey"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/timepick_layout"
+        android:layout_alignTop="@id/timepick_layout"
+        android:background="@drawable/bg_above_timepicker"
+        />
+  </RelativeLayout>
 
-        >
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@android:color/white"
+      android:gravity="center_vertical"
+      >
 
-        <LinearLayout
-            android:id="@+id/timepick_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="60dp"
+        android:layout_height="34dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="@string/pickerview_cancel"
+        android:textColor="@drawable/wheel_timebtn"
+        android:visibility="gone"
+        />
 
-            <include
-                android:id="@+id/timepicker_start"
-                layout="@layout/include_timepicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="至"
-                />
-
-            <include
-                android:id="@+id/timepicker_end"
-                layout="@layout/include_timepicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/timepick_layout"
-            android:layout_alignTop="@id/timepick_layout"
-            android:background="@drawable/bg_above_timepicker"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <Button
+        android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        >
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="60dp"
-            android:layout_height="34dp"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="@string/pickerview_cancel"
-            android:textColor="@drawable/wheel_timebtn"
-            android:visibility="gone"
-            />
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="@string/pickerview_submit"
-            />
-    </RelativeLayout>
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="@string/pickerview_submit"
+        />
+  </RelativeLayout>
 
 </LinearLayout>

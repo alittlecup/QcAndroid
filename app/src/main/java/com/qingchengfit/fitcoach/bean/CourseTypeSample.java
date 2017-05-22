@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
  * 88      88   88 88      88.     88 `88.
  * 88      YP   YP 88      Y88888P 88   YD
  * <p>
- *     课程排期--选择课程种类--课程种类 item bean
+ * 课程排期--选择课程种类--课程种类 item bean
  * <p>
  * Created by Paper on 16/2/23 2016.
  */
@@ -85,25 +85,23 @@ public class CourseTypeSample implements Parcelable, Cloneable {
         this.is_private = is_private;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return id.hashCode();
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (o instanceof CourseTypeSample) {
             return ((CourseTypeSample) o).getId().equalsIgnoreCase(this.id);
-        }else return false;
+        } else {
+            return false;
+        }
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.photo);

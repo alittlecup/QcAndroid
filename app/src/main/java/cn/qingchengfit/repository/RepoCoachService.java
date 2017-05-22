@@ -30,23 +30,27 @@ public interface RepoCoachService {
      * 创建单条数据
      */
     void createService(CoachService coachService);
+
     void createServices(List<CoachService> coachService);
 
     /**
      * 读取数据
      */
-    Observable<CoachService> readServiceByIdModel(String id,String model);
+    Observable<CoachService> readServiceByIdModel(String id, String model);
+
     Observable<List<CoachService>> readAllServices();
 
     /**
      * 更新
      */
     void updateService(CoachService coachService);
+
     void updateServices(List<CoachService> coachServices);
 
     /**
      * 删除
      */
-    void deleteServiceByIdModel(String id,String model);
+    void deleteServiceByIdModel(String id, String model);
+
     void deleteAllServices();
 }

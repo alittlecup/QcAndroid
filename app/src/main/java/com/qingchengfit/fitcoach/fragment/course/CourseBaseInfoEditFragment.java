@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
@@ -23,7 +24,6 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
-import cn.qingchengfit.model.base.CoachService;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
@@ -56,11 +56,9 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     @BindView(R.id.course_min_count) CommonInputView courseMinCount;
     @BindView(R.id.default_course_plan) CommonInputView defaultCoursePlan;
     @BindView(R.id.single_count) CommonInputView singleCount;
-
+    @Inject CoachService mCoachService;
     private CourseDetail mCourse;
     private Unbinder unbinder;
-    @Inject
-    CoachService mCoachService;
 
     public static CourseBaseInfoEditFragment newInstance(CourseDetail course) {
         Bundle args = new Bundle();
@@ -80,7 +78,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_base_info_edit, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (getActivity() instanceof CourseActivity){
+        if (getActivity() instanceof CourseActivity) {
             ((CourseActivity) getActivity()).getComponent().inject(this);
         }
         if (mCourse != null) {
@@ -138,8 +136,7 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
             ToastUtils.show("请填写单节可约人数");
             return null;
         }
-        if (singleCount.getVisibility() == View.VISIBLE)
-            mCourse.setCapacity(Integer.parseInt(singleCount.getContent()));
+        if (singleCount.getVisibility() == View.VISIBLE) mCourse.setCapacity(Integer.parseInt(singleCount.getContent()));
         return mCourse;
     }
 
@@ -158,12 +155,11 @@ public class CourseBaseInfoEditFragment extends BaseFragment {
 
     @OnClick(R.id.default_course_plan) public void onCoursePlan() {
         //getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frag, x).addToBackStack("").show(x).commit();
-        Intent toPlan = new Intent(getActivity(),CourseActivity.class);
-        toPlan.putExtra("service",mCoachService);
-        toPlan.putExtra("id",(mCourse.getPlan() == null || mCourse.getPlan().getId() == null) ? 0L : mCourse.getPlan().getId());
-        toPlan.putExtra("to",CourseActivity.TO_CHOOSE_PLAN);
+        Intent toPlan = new Intent(getActivity(), CourseActivity.class);
+        toPlan.putExtra("service", mCoachService);
+        toPlan.putExtra("id", (mCourse.getPlan() == null || mCourse.getPlan().getId() == null) ? 0L : mCourse.getPlan().getId());
+        toPlan.putExtra("to", CourseActivity.TO_CHOOSE_PLAN);
         startActivity(toPlan);
-
     }
 
     /**

@@ -44,135 +44,128 @@ import javax.inject.Inject;
  * Created by fb on 2017/5/11.
  */
 
-@FragmentWithArgs public class CourseReverseFragment extends BaseFragment
-    implements CourseReversePresenter.CourseView {
+@FragmentWithArgs public class CourseReverseFragment extends BaseFragment implements CourseReversePresenter.CourseView {
 
-  @Arg String sechduleId;
+    @Arg String sechduleId;
 
-  @BindView(R.id.image_report_detail_head) ImageView imageReportDetailHead;
-  @BindView(R.id.text_report_detail_name) TextView textReportDetailName;
-  @BindView(R.id.text_report_detail_studio_name) TextView textReportDetailStudioName;
-  @BindView(R.id.image_report_detail_coach_head) ImageView imageReportDetailCoachHead;
-  @BindView(R.id.image_report_detail_coach_name) TextView imageReportDetailCoachName;
-  @BindView(R.id.student_judge_coach_star) RatingBarVectorFix studentJudgeCoachStar;
-  @BindView(R.id.text_report_reverse_number) TextView textReportReverseNumber;
-  @BindView(R.id.text_report_reverse_income) TextView textReportReverseIncome;
-  @BindView(R.id.text_report_reverse_fact) TextView textReportReverseFact;
-  @BindView(R.id.recycler_report_detail) RecyclerView recyclerReportDetail;
-  @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.image_report_detail_head) ImageView imageReportDetailHead;
+    @BindView(R.id.text_report_detail_name) TextView textReportDetailName;
+    @BindView(R.id.text_report_detail_studio_name) TextView textReportDetailStudioName;
+    @BindView(R.id.image_report_detail_coach_head) ImageView imageReportDetailCoachHead;
+    @BindView(R.id.image_report_detail_coach_name) TextView imageReportDetailCoachName;
+    @BindView(R.id.student_judge_coach_star) RatingBarVectorFix studentJudgeCoachStar;
+    @BindView(R.id.text_report_reverse_number) TextView textReportReverseNumber;
+    @BindView(R.id.text_report_reverse_income) TextView textReportReverseIncome;
+    @BindView(R.id.text_report_reverse_fact) TextView textReportReverseFact;
+    @BindView(R.id.recycler_report_detail) RecyclerView recyclerReportDetail;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
-  @Inject CourseReversePresenter presenter;
-  @BindView(R.id.toolbar_title) TextView toolbarTitle;
-  private CommonFlexAdapter adapter;
-  private List<CourseReverseDetailItem> itemList = new ArrayList<>();
+    @Inject CourseReversePresenter presenter;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    private CommonFlexAdapter adapter;
+    private List<CourseReverseDetailItem> itemList = new ArrayList<>();
 
-  @Override public String getFragmentName() {
-    return CourseReverseFragment.class.getName();
-  }
-
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    FragmentArgs.inject(this);
-  }
-
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_report_detail, container, false);
-    unbinder = ButterKnife.bind(this, view);
-    delegatePresenter(presenter, this);
-    setToolbar();
-
-    presenter.qcGetCourseReverse(sechduleId);
-    adapter = new CommonFlexAdapter(itemList, this);
-    recyclerReportDetail.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerReportDetail.addItemDecoration(
-        new DividerItemDecoration(getContext(), R.drawable.divider_card_list, 5));
-    recyclerReportDetail.setAdapter(adapter);
-    return view;
-  }
-
-  private void setToolbar() {
-    initToolbar(toolbar);
-    toolbarTitle.setText("课程预约");
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-  }
-
-  @Override public void onGetSuccessed(CourseReportDetail courseReportDetail) {
-    itemList.clear();
-    for (CourseReportOrder order : courseReportDetail.orders) {
-      itemList.add(new CourseReverseDetailItem(order));
+    @Override public String getFragmentName() {
+        return CourseReverseFragment.class.getName();
     }
-    adapter.notifyDataSetChanged();
 
-    CourseReportSchedule schedule = courseReportDetail.schedule;
-    Glide.with(getContext())
-        .load(PhotoUtils.getSmall(schedule.course.getPhoto()))
-        .asBitmap()
-        .into(new CircleImgWrapper(imageReportDetailHead, getContext()));
-
-    textReportDetailName.setText(schedule.course.getName());
-    textReportDetailStudioName.setText(
-        DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(schedule.start))
-            + "     "
-            + schedule.shop.name);
-    textReportReverseNumber.setText(getSb(schedule.count + "人次"));
-    textReportReverseNumber.setTextSize(15);
-    textReportReverseIncome.setTextSize(15);
-    if (formatView(courseReportDetail)) {
-      textReportReverseIncome.setText("－－");
-      textReportReverseFact.setText("－－");
-    } else {
-      setInCome(schedule);
-      textReportReverseFact.setText("¥" + schedule.total_real_price);
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
     }
-    Glide.with(getContext())
-        .load(PhotoUtils.getSmall(schedule.teacher.avatar))
-        .asBitmap()
-        .into(new CircleImgWrapper(imageReportDetailCoachHead, getContext()));
-    imageReportDetailCoachName.setText(schedule.teacher.username);
-    studentJudgeCoachStar.setRating(schedule.teacher.score);
-  }
 
-  private boolean formatView(CourseReportDetail detail) {
-    boolean isTime = true;
-    for (CourseReportOrder order : detail.orders) {
-      if (order.card != null && order.card.card_type == 3) {
-      } else {
-        isTime = false;
-        break;
-      }
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_report_detail, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        delegatePresenter(presenter, this);
+        setToolbar();
+
+        presenter.qcGetCourseReverse(sechduleId);
+        adapter = new CommonFlexAdapter(itemList, this);
+        recyclerReportDetail.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerReportDetail.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.divider_card_list, 5));
+        recyclerReportDetail.setAdapter(adapter);
+        return view;
     }
-    return isTime;
-  }
 
-  private void setInCome(CourseReportSchedule schedule) {
-    if (!TextUtils.isEmpty(schedule.total_account)) {
-      if (schedule.total_times != 0) {
-        textReportReverseIncome.setText(
-            getSb(schedule.total_account + "元+" + schedule.total_times + "次"));
-      } else {
-        textReportReverseIncome.setText(getSb(schedule.total_account + "元"));
-      }
-    } else if (schedule.total_times != 0) {
-      textReportReverseIncome.setText(getSb(schedule.total_times + "次"));
+    private void setToolbar() {
+        initToolbar(toolbar);
+        toolbarTitle.setText("课程预约");
     }
-  }
 
-  private SpannableString getSb(String str) {
-    SpannableString sb = new SpannableString(str);
-    Pattern pattern = Pattern.compile("\\d+");
-    Matcher matcher = pattern.matcher(sb);
-    while (matcher.find()) {
-      sb.setSpan(new AbsoluteSizeSpan(20, true), matcher.start(), matcher.end(),
-          Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    @Override public void onDestroyView() {
+        super.onDestroyView();
     }
-    return sb;
-  }
 
-  @Override public void onGetFailed(String msg) {
-    ToastUtils.show(msg);
-  }
+    @Override public void onGetSuccessed(CourseReportDetail courseReportDetail) {
+        itemList.clear();
+        for (CourseReportOrder order : courseReportDetail.orders) {
+            itemList.add(new CourseReverseDetailItem(order));
+        }
+        adapter.notifyDataSetChanged();
+
+        CourseReportSchedule schedule = courseReportDetail.schedule;
+        Glide.with(getContext())
+            .load(PhotoUtils.getSmall(schedule.course.getPhoto()))
+            .asBitmap()
+            .into(new CircleImgWrapper(imageReportDetailHead, getContext()));
+
+        textReportDetailName.setText(schedule.course.getName());
+        textReportDetailStudioName.setText(
+            DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(schedule.start)) + "     " + schedule.shop.name);
+        textReportReverseNumber.setText(getSb(schedule.count + "人次"));
+        textReportReverseNumber.setTextSize(15);
+        textReportReverseIncome.setTextSize(15);
+        if (formatView(courseReportDetail)) {
+            textReportReverseIncome.setText("－－");
+            textReportReverseFact.setText("－－");
+        } else {
+            setInCome(schedule);
+            textReportReverseFact.setText("¥" + schedule.total_real_price);
+        }
+        Glide.with(getContext())
+            .load(PhotoUtils.getSmall(schedule.teacher.avatar))
+            .asBitmap()
+            .into(new CircleImgWrapper(imageReportDetailCoachHead, getContext()));
+        imageReportDetailCoachName.setText(schedule.teacher.username);
+        studentJudgeCoachStar.setRating(schedule.teacher.score);
+    }
+
+    private boolean formatView(CourseReportDetail detail) {
+        boolean isTime = true;
+        for (CourseReportOrder order : detail.orders) {
+            if (order.card != null && order.card.card_type == 3) {
+            } else {
+                isTime = false;
+                break;
+            }
+        }
+        return isTime;
+    }
+
+    private void setInCome(CourseReportSchedule schedule) {
+        if (!TextUtils.isEmpty(schedule.total_account)) {
+            if (schedule.total_times != 0) {
+                textReportReverseIncome.setText(getSb(schedule.total_account + "元+" + schedule.total_times + "次"));
+            } else {
+                textReportReverseIncome.setText(getSb(schedule.total_account + "元"));
+            }
+        } else if (schedule.total_times != 0) {
+            textReportReverseIncome.setText(getSb(schedule.total_times + "次"));
+        }
+    }
+
+    private SpannableString getSb(String str) {
+        SpannableString sb = new SpannableString(str);
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(sb);
+        while (matcher.find()) {
+            sb.setSpan(new AbsoluteSizeSpan(20, true), matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return sb;
+    }
+
+    @Override public void onGetFailed(String msg) {
+        ToastUtils.show(msg);
+    }
 }

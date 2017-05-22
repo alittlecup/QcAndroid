@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/6 2015.
  */
 public class Code extends BaseBean {
-    @SerializedName("code")
-    public String code;
+    @SerializedName("code") public String code;
 }

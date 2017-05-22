@@ -71,7 +71,7 @@ import rx.schedulers.Schedulers;
     @Arg public String brandid;
     @Arg public String brandImgUrl;
     @Arg public String brandNameStr;
-
+    public String imgUrl;
     @BindView(R.id.brand_img) protected ImageView brandImg;
     @BindView(R.id.brand_name) protected TextView brandName;
     @BindView(R.id.gym_img) protected ImageView gymImg;
@@ -80,11 +80,9 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.gym_address) protected CommonInputView gymAddress;
     @BindView(R.id.hint) protected TextView hint;
     @BindView(R.id.layout_brand) protected LinearLayout layoutBrand;
-
     protected double lat;
     protected double lng;
     protected int city_code;
-    public String imgUrl;
     private Unbinder unbinder;
     private String addressStr;
     private String gymNameStr;
@@ -98,7 +96,6 @@ import rx.schedulers.Schedulers;
         View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
         unbinder = ButterKnife.bind(GuideSetGymFragment.this, view);
 
-
         Glide.with(getContext())
             .load(PhotoUtils.getSmall(brandImgUrl))
             .asBitmap()
@@ -107,16 +104,23 @@ import rx.schedulers.Schedulers;
         brandName.setText(brandNameStr);
         String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
         CoachInitBean initBean;
-        if (initStr == null || initStr.isEmpty())
+        if (initStr == null || initStr.isEmpty()) {
             initBean = new CoachInitBean();
-        else initBean = new Gson().fromJson(initStr, CoachInitBean.class);
+        } else {
+            initBean = new Gson().fromJson(initStr, CoachInitBean.class);
+        }
 
-        if (initBean.shop != null){
+        if (initBean.shop != null) {
             gymName.setContent(initBean.shop.name);
             gymNameStr = initBean.shop.name;
             gymAddress.setContent(initBean.shop.address);
             addressStr = initBean.shop.address;
-            Glide.with(getContext()).load(PhotoUtils.getSmall(initBean.shop.photo)).asBitmap().placeholder(R.drawable.ic_default_header).error(R.drawable.ic_default_header).into(new CircleImgWrapper(gymImg, getContext()));
+            Glide.with(getContext())
+                .load(PhotoUtils.getSmall(initBean.shop.photo))
+                .asBitmap()
+                .placeholder(R.drawable.ic_default_header)
+                .error(R.drawable.ic_default_header)
+                .into(new CircleImgWrapper(gymImg, getContext()));
         }
 
         RxBus.getBus().post(new EventStep.Builder().step(0).build());
@@ -139,7 +143,10 @@ import rx.schedulers.Schedulers;
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             hideLoading();
-                            Glide.with(getContext()).load(PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
+                            Glide.with(getContext())
+                                .load(PhotoUtils.getSmall(s))
+                                .asBitmap()
+                                .into(new CircleImgWrapper(gymImg, getContext()));
                             imgUrl = s;
                         }
                     }, new Action1<Throwable>() {
@@ -206,7 +213,7 @@ import rx.schedulers.Schedulers;
             ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
             return;
         }
-        if (gymName.isEmpty() ) {
+        if (gymName.isEmpty()) {
             ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
             return;
         }
@@ -221,12 +228,11 @@ import rx.schedulers.Schedulers;
             gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
             showLoading();
-            RxRegiste(QcCloudClient.getApi().postApi
-                .qcInit(((GuideFragment) getParentFragment()).getInitBean())
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            RxRegiste(QcCloudClient.getApi().postApi.qcInit(((GuideFragment) getParentFragment()).getInitBean())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseSystenInit>() {
-                    @Override
-                    public void call(QcResponseSystenInit qcResponse) {
+                    @Override public void call(QcResponseSystenInit qcResponse) {
                         hideLoading();
                         if (qcResponse.status == 200) {
                             PreferenceUtils.setPrefString(getContext(), "initSystem", "");
@@ -235,16 +241,16 @@ import rx.schedulers.Schedulers;
                             toMain.putExtra("service", qcResponse.data);
                             startActivity(toMain);
                             getActivity().finish();
-                        } else ToastUtils.showDefaultStyle(qcResponse.msg);
+                        } else {
+                            ToastUtils.showDefaultStyle(qcResponse.msg);
+                        }
                     }
                 }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
+                    @Override public void call(Throwable throwable) {
                         hideLoading();
                         ToastUtils.showDefaultStyle("创建场馆失败!");
                     }
                 }));
-
         }
     }
 
@@ -256,7 +262,10 @@ import rx.schedulers.Schedulers;
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
                 brandImgUrl = brand.getPhoto();
                 brandNameStr = brand.getName();
-                Glide.with(getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
+                Glide.with(getContext())
+                    .load(PhotoUtils.getSmall(brand.getPhoto()))
+                    .asBitmap()
+                    .into(new CircleImgWrapper(brandImg, getContext()));
                 brandName.setText(brand.getName());
                 if (getParentFragment() instanceof GuideFragment) {
                     ((GuideFragment) getParentFragment()).initBean.brand_id = brand.getId();

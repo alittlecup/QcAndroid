@@ -16,8 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.widgets.PhoneEditText;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
@@ -27,7 +28,6 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -52,11 +52,10 @@ public class AddStudentManulkFragment extends Fragment {
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.hint) TextView hint;
     @BindView(R.id.choose_phone) PhoneEditText choosePhone;
-
+    List<CoachService> systems = new ArrayList<>();
     private List<String> gymStrings = new ArrayList<>();
     private int chooseGymId = 0;
     private String chooseGymModel;
-    List<CoachService> systems = new ArrayList<>();
     private Unbinder unbinder;
 
     public AddStudentManulkFragment() {
@@ -130,7 +129,8 @@ public class AddStudentManulkFragment extends Fragment {
         }
 
         List<AddStudentBean> sss = new ArrayList<>();
-        sss.add(new AddStudentBean(chooseName.getContent(), choosePhone.getPhoneNum(), compleGenderMale.isChecked() ? 0 : 1,choosePhone.getDistrictInt()));
+        sss.add(new AddStudentBean(chooseName.getContent(), choosePhone.getPhoneNum(), compleGenderMale.isChecked() ? 0 : 1,
+            choosePhone.getDistrictInt()));
         PostStudents students = new PostStudents(sss);
         if (getActivity() instanceof FragActivity) {
             QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, students,

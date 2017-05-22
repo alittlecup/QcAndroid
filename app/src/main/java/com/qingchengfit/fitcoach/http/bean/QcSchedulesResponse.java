@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -22,8 +21,7 @@ import java.util.List;
  */
 public class QcSchedulesResponse extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
     private QcSchedulesResponse() {
     }
@@ -42,50 +40,51 @@ public class QcSchedulesResponse extends QcResponse {
     }
 
     public static class Data {
-        @SerializedName("services")
-        public List<Service> services;
+        @SerializedName("services") public List<Service> services;
     }
 
     public static class Service {
-        @SerializedName("rests")
-        public List<Rest> rests;
-        @SerializedName("service")
-        public CoachService system;
-        @SerializedName("schedules")
-        public List<QcScheduleBean> schedules;
-        @SerializedName("private_schedules_exists")
-        public boolean private_schedules_exists;
-
+        @SerializedName("rests") public List<Rest> rests;
+        @SerializedName("service") public CoachService system;
+        @SerializedName("schedules") public List<QcScheduleBean> schedules;
+        @SerializedName("private_schedules_exists") public boolean private_schedules_exists;
     }
 
     public static class Schedule {
-        @SerializedName("rests")
-        public List<Rest> rests;
-        @SerializedName("system")
-        public QcCoachSystem system;
-        @SerializedName("schedules")
-        public List<QcScheduleBean> schedules;
-
+        @SerializedName("rests") public List<Rest> rests;
+        @SerializedName("system") public QcCoachSystem system;
+        @SerializedName("schedules") public List<QcScheduleBean> schedules;
     }
 
     public static class Rest {
-        @SerializedName("url")
-        public String url;
-        @SerializedName("start")
-        public String start;
-        @SerializedName("end")
-        public String end;
-        @SerializedName("teacher")
-        public Teacher teacher;
+        @SerializedName("url") public String url;
+        @SerializedName("start") public String start;
+        @SerializedName("end") public String end;
+        @SerializedName("teacher") public Teacher teacher;
     }
 
     public static class Teacher implements Parcelable {
-        @SerializedName("username")
-        public String username;
-        @SerializedName("id")
-        public String id;
-        @SerializedName("avatar")
-        public String avatar;
+        public static final Parcelable.Creator<Teacher> CREATOR = new Parcelable.Creator<Teacher>() {
+            @Override public Teacher createFromParcel(Parcel source) {
+                return new Teacher(source);
+            }
+
+            @Override public Teacher[] newArray(int size) {
+                return new Teacher[size];
+            }
+        };
+        @SerializedName("username") public String username;
+        @SerializedName("id") public String id;
+        @SerializedName("avatar") public String avatar;
+
+        public Teacher() {
+        }
+
+        protected Teacher(Parcel in) {
+            this.username = in.readString();
+            this.id = in.readString();
+            this.avatar = in.readString();
+        }
 
         public String getUsername() {
             return username;
@@ -120,26 +119,5 @@ public class QcSchedulesResponse extends QcResponse {
             dest.writeString(this.id);
             dest.writeString(this.avatar);
         }
-
-        public Teacher() {
-        }
-
-        protected Teacher(Parcel in) {
-            this.username = in.readString();
-            this.id = in.readString();
-            this.avatar = in.readString();
-        }
-
-        public static final Parcelable.Creator<Teacher> CREATOR = new Parcelable.Creator<Teacher>() {
-            @Override public Teacher createFromParcel(Parcel source) {
-                return new Teacher(source);
-            }
-
-            @Override public Teacher[] newArray(int size) {
-                return new Teacher[size];
-            }
-        };
     }
-
-
 }

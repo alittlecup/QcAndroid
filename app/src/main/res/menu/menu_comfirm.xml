@@ -2,8 +2,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.qingchengfit.fitcoach.activity.CompleteActivity">
-    <item android:id="@+id/action_comfirm"
-          android:title="@string/login_comfirm"
-          android:orderInCategory="100"
-          app:showAsAction="always"/>
+  <item
+      android:id="@+id/action_comfirm"
+      android:orderInCategory="100"
+      android:title="@string/login_comfirm"
+      app:showAsAction="always"/>
 </menu>

@@ -39,7 +39,7 @@ public class EditHomeFragment extends BaseSettingFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_home, container, false);
         ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0,R.drawable.ic_arrow_left,"编辑主页");
+        fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "编辑主页");
         return view;
     }
 
@@ -51,9 +51,11 @@ public class EditHomeFragment extends BaseSettingFragment {
         switch (view.getId()) {
             case R.id.btn_personal_intro:
                 //fragmentCallBack.onFragmentChange();
-                if (App.gUser != null)
+                if (App.gUser != null) {
                     fragmentCallBack.onFragmentChange(ModifyBrifeFragment.newInstance(App.gUser.desc));
-                else ToastUtils.show("用户信息丢失");
+                } else {
+                    ToastUtils.show("用户信息丢失");
+                }
                 break;
             case R.id.btn_pics:
                 fragmentCallBack.onFragmentChange(new ImagesFragment());

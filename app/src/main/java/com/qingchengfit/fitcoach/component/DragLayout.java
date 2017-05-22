@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -31,38 +30,33 @@ public class DragLayout extends LinearLayout {
     private View mDragView, contentView;
     private int dragRange;
     private ViewDragHelper.Callback callback = new ViewDragHelper.Callback() {
-        @Override
-        public boolean tryCaptureView(View child, int pointerId) {
+        @Override public boolean tryCaptureView(View child, int pointerId) {
             return child == mDragView;
         }
 
-        @Override
-        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+        @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
 
             contentView.layout(0, top + mDragView.getHeight(), getWidth(), top + mDragView.getHeight() + dragRange);
         }
 
-        @Override
-        public int clampViewPositionVertical(View child, int top, int dy) {
+        @Override public int clampViewPositionVertical(View child, int top, int dy) {
             int topBound = getHeight() - dragRange - mDragView.getHeight();
             int bottomBound = getHeight() - mDragView.getHeight();
             final int newHeight = Math.min(Math.max(topBound, top), bottomBound);
             return newHeight;
         }
 
-        @Override
-        public int getViewVerticalDragRange(View child) {
+        @Override public int getViewVerticalDragRange(View child) {
             return 500;
         }
 
-        @Override
-        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+        @Override public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
-//            if (yvel > 0) {
-//                smoothToBottom();
-//            }else if (yvel < 0) {
-//                smoothToTop();
-//            }
+            //            if (yvel > 0) {
+            //                smoothToBottom();
+            //            }else if (yvel < 0) {
+            //                smoothToTop();
+            //            }
         }
     };
 
@@ -76,8 +70,7 @@ public class DragLayout extends LinearLayout {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DragLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP) public DragLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -91,28 +84,24 @@ public class DragLayout extends LinearLayout {
         dragHelper = ViewDragHelper.create(this, callback);
     }
 
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
-//        mDragView = findViewById(R.id.halfscroll_first);
+        //        mDragView = findViewById(R.id.halfscroll_first);
         contentView = findViewById(R.id.myhome_viewpager);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         dragRange = contentView.getMeasuredHeight();
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         mDragView.layout(0, getHeight() - mDragView.getHeight(), getWidth(), getHeight());
         contentView.layout(0, getHeight(), getWidth(), getHeight() + dragRange);
     }
 
-    @Override
-    public boolean onInterceptHoverEvent(MotionEvent event) {
+    @Override public boolean onInterceptHoverEvent(MotionEvent event) {
         final int action = MotionEventCompat.getActionMasked(event);
         if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
             dragHelper.cancel();
@@ -121,8 +110,7 @@ public class DragLayout extends LinearLayout {
         return dragHelper.shouldInterceptTouchEvent(event);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    @Override public boolean onTouchEvent(MotionEvent event) {
         dragHelper.processTouchEvent(event);
         return true;
     }
@@ -139,11 +127,9 @@ public class DragLayout extends LinearLayout {
         }
     }
 
-    @Override
-    public void computeScroll() {
+    @Override public void computeScroll() {
         if (dragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
-
 }

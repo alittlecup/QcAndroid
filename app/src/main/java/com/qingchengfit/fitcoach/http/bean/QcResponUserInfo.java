@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/14 2015.
  */
 public class QcResponUserInfo extends QcResponse {
-    @SerializedName("data")
-    public UserData data;
+    @SerializedName("data") public UserData data;
 }

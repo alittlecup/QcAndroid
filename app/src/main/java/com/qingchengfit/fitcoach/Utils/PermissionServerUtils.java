@@ -150,7 +150,7 @@ public class PermissionServerUtils {
     public static final String KOUBEI_CAN_WRITE = "koubei_can_write";
     public static final String KOUBEI_CAN_CHANGE = "koubei_can_change";
 
-    public static boolean checkServerPermission(HashMap<String,Boolean> permission, String key){
+    public static boolean checkServerPermission(HashMap<String, Boolean> permission, String key) {
         return permission.get(key);
     }
 }

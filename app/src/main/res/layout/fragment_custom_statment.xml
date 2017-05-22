@@ -1,74 +1,74 @@
 <LinearLayout
-    android:id="@+id/rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/backgroud_grey"
-              android:orientation="vertical"
-              tools:context="com.qingchengfit.fitcoach.fragment.CustomStatmentFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.CustomStatmentFragment"
     >
 
-    <include layout="@layout/common_toolbar">
-    </include>
+  <include layout="@layout/common_toolbar">
+  </include>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_gym"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="选择健身房"
-        android:visibility="gone"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/custom_statment_gym"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:civ_clickable="true"
+      app:civ_lable="选择健身房"
+      >
+  </com.qingchengfit.fitcoach.component.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="开始日期"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/custom_statment_start"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:civ_clickable="true"
+      app:civ_lable="开始日期"
+      >
+  </com.qingchengfit.fitcoach.component.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="结束日期"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/custom_statment_end"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:civ_clickable="true"
+      app:civ_lable="结束日期"
+      >
+  </com.qingchengfit.fitcoach.component.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_course"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="选择课程"
-        >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/custom_statment_course"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:civ_clickable="true"
+      app:civ_lable="选择课程"
+      >
+  </com.qingchengfit.fitcoach.component.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/custom_statment_student"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_clickable="true"
-        app:civ_lable="选择学员"
-        android:visibility="gone"
-        />
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/custom_statment_student"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:civ_clickable="true"
+      app:civ_lable="选择学员"
+      />
 
-    <include layout="@layout/divider_grey">
-    </include>
+  <include layout="@layout/divider_grey">
+  </include>
 
-    <Button
-        android:id="@+id/custom_statment_generate"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="20dp"
-        android:text="生成报表"
-        />
+  <Button
+      android:id="@+id/custom_statment_generate"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="20dp"
+      android:text="生成报表"
+      />
 </LinearLayout>

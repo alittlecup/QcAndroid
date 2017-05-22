@@ -26,10 +26,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.RatingBarVectorFix;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
 import co.hkm.soltag.TagContainerLayout;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -51,7 +52,6 @@ import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.component.TouchyWebView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
-import cn.qingchengfit.model.base.CoachService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -134,7 +134,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             }
         });
         toolbarTitle.setText("课程种类详情");
-        editJacket.setCompoundDrawables(ContextCompat.getDrawable(getContext(),R.drawable.ic_mode_edit_white_24dp),null,null,null);
+        editJacket.setCompoundDrawables(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_white_24dp), null, null, null);
         toolbar.inflateMenu(R.menu.menu_flow);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
@@ -199,14 +199,15 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case RESULT_DEL://删除课程
-                    if (mCourseDetail.getShops().size() >1)
-                        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
-                    if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_DELETE)
-                        || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
-                        PermissionServerUtils.PRISETTING_CAN_DELETE)) {
+                    if (mCourseDetail.getShops().size() > 1) StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
+                    if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
+                        PermissionServerUtils.PRISETTING_CAN_DELETE) || !mCourseDetail.is_private() && SerPermisAction.check(
+                        coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_DELETE)) {
 
                         mPresenter.judgeDel(mCourseDetail, mCourseDetail.getShops() == null ? 1 : mCourseDetail.getShops().size());
-                    }else showAlert(R.string.sorry_no_permission);
+                    } else {
+                        showAlert(R.string.sorry_no_permission);
+                    }
 
                     break;
                 default:
@@ -284,7 +285,6 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         courseTeacherRv.setAdapter(adapter);
     }
 
-
     /**
      * 课程映像
      */
@@ -306,18 +306,20 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             descHtml.setText("暂无介绍");
         } else {
             descHtml.setVisibility(View.GONE);
-            webDesc.loadData("<html>\n" +
-                "<head>\n" +
-                "\t<title>容器</title>\n" +
-                "\t<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\">\n" +
-                "\t<style type=\"text/css\">\n" +
-                "\t\tbody{overflow-x:hidden;overflow-y:auto;}\n" +
-                "\t\t.richTxtCtn{margin:0;padding:0;}\n" +
-                "\t\t.richTxtCtn *{max-width:100% !important;}\n" +
-                "\t</style>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "\t<div class=\"richTxtCtn\">" + descripe + "</div></body></html>", "text/html; charset=UTF-8", null);
+            webDesc.loadData("<html>\n"
+                + "<head>\n"
+                + "\t<title>容器</title>\n"
+                + "\t<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\">\n"
+                + "\t<style type=\"text/css\">\n"
+                + "\t\tbody{overflow-x:hidden;overflow-y:auto;}\n"
+                + "\t\t.richTxtCtn{margin:0;padding:0;}\n"
+                + "\t\t.richTxtCtn *{max-width:100% !important;}\n"
+                + "\t</style>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "\t<div class=\"richTxtCtn\">"
+                + descripe
+                + "</div></body></html>", "text/html; charset=UTF-8", null);
         }
     }
 
@@ -359,29 +361,30 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
     }
 
     @Override public void onStaff() {
-        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
     }
 
     /**
      * 封面管理
      */
     @OnClick(R.id.edit_jacket) public void onJacketVp() {
-        if (mCourseDetail.getShops().size() > 1){
-            StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+        if (mCourseDetail.getShops().size() > 1) {
+            StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
             return;
-        }else {
+        } else {
             if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
                 || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
                 PermissionServerUtils.PRISETTING_CAN_CHANGE)) {
 
                 getFragmentManager().beginTransaction()
-                .replace(R.id.frag, JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(), !mCourseDetail.isRandom_show_photos()))
-                .addToBackStack(getFragmentName())
-                .commit();
-            }else showAlert(R.string.sorry_no_permission);
-
+                    .replace(R.id.frag, JacketManagerFragment.newInstance(mCourseDetail.getPhotos(), mCourseDetail.getId(),
+                        !mCourseDetail.isRandom_show_photos()))
+                    .addToBackStack(getFragmentName())
+                    .commit();
+            } else {
+                showAlert(R.string.sorry_no_permission);
+            }
         }
-
     }
 
     /**
@@ -394,10 +397,10 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         //        .addToBackStack(getFragmentName())
         //        .commit();
         //} else {
-            getFragmentManager().beginTransaction()
-                .replace(R.id.frag, CoachCommentListFragment.newInstance(mCourseDetail.getId()))
-                .addToBackStack(getFragmentName())
-                .commit();
+        getFragmentManager().beginTransaction()
+            .replace(R.id.frag, CoachCommentListFragment.newInstance(mCourseDetail.getId()))
+            .addToBackStack(getFragmentName())
+            .commit();
         //}
     }
 
@@ -405,32 +408,31 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
      * 编辑简介 跳转二维码扫码
      */
     @OnClick(R.id.go_to_scan) public void gotoScan() {
-        StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
-                //RxPermissions.getInstance(getContext())
-                //        .request(Manifest.permission.CAMERA)
-                //        .subscribe(new Action1<Boolean>() {
-                //            @Override
-                //            public void call(Boolean aBoolean) {
-                //                if (aBoolean) {
-                //                    Intent toScan = new Intent(getActivity(), QRActivity.class);
-                //                    toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
-                //                    startActivity(toScan);
-                //                } else {
-                //                    ToastUtils.show(getString(R.string.please_open_camera));
-                //                }
-                //            }
-                //        });
+        StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
+        //RxPermissions.getInstance(getContext())
+        //        .request(Manifest.permission.CAMERA)
+        //        .subscribe(new Action1<Boolean>() {
+        //            @Override
+        //            public void call(Boolean aBoolean) {
+        //                if (aBoolean) {
+        //                    Intent toScan = new Intent(getActivity(), QRActivity.class);
+        //                    toScan.putExtra(QRActivity.LINK_URL, mCourseDetail.getEdit_url());
+        //                    startActivity(toScan);
+        //                } else {
+        //                    ToastUtils.show(getString(R.string.please_open_camera));
+        //                }
+        //            }
+        //        });
     }
 
     /**
      * 编辑基本信息
      */
     @OnClick(R.id.edit_base_info) public void editBaseInfo() {
-        if (mCourseDetail.getShops().size() > 1){
-            StaffAppFragmentFragment.newInstance().show(getFragmentManager(),"");
+        if (mCourseDetail.getShops().size() > 1) {
+            StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
             return;
         }
-
 
         if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
             || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
@@ -440,7 +442,31 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
                 .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
                 .addToBackStack(getFragmentName())
                 .commit();
-        }else showAlert(R.string.sorry_no_permission);
+        } else {
+            showAlert(R.string.sorry_no_permission);
+        }
+    }
+
+    /**
+     * 编辑基本信息
+     */
+    @OnClick(R.id.edit_base_info) public void editBaseInfo() {
+        if (mCourseDetail.getShops().size() > 1) {
+            StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
+            return;
+        }
+
+        if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
+            || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
+            PermissionServerUtils.PRISETTING_CAN_CHANGE)) {
+
+            getFragmentManager().beginTransaction()
+                .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
+                .addToBackStack(getFragmentName())
+                .commit();
+        } else {
+            showAlert(R.string.sorry_no_permission);
+        }
     }
 
     @Override public String getFragmentName() {

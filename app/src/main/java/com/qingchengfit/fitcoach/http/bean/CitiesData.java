@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ import java.util.List;
  */
 
 public class CitiesData {
-    @SerializedName("provinces")
-    public List<ProvinceBean> provinces;
+    @SerializedName("provinces") public List<ProvinceBean> provinces;
 }
 

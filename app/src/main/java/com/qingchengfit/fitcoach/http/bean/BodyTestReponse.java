@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,23 +18,16 @@ import java.util.List;
  */
 public class BodyTestReponse extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
-    public class Data{
-        @SerializedName("measures")
-        public List<BodyTestMeasure> measures;
-        @SerializedName("current_page")
-        public String current_page;
-        @SerializedName("pages")
-        public String pages;
+    public class Data {
+        @SerializedName("measures") public List<BodyTestMeasure> measures;
+        @SerializedName("current_page") public String current_page;
+        @SerializedName("pages") public String pages;
     }
 
-
-
-    public class BodyTestMeasure{
-        @SerializedName("created_at")
-        public String created_at;
+    public class BodyTestMeasure {
+        @SerializedName("created_at") public String created_at;
         @SerializedName("id")
 
         public String id;

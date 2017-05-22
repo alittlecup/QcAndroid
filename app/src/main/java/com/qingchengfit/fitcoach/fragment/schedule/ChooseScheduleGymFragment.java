@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.CoachService;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -30,7 +31,6 @@ import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.ChosenAllGymItem;
@@ -67,11 +67,10 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 16/11/16.
  */
 @FragmentWithArgs public class ChooseScheduleGymFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
-    @Arg @Nullable CoachService mCoachService;
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
-
     protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     protected CommonFlexAdapter mAdapter;
+    @Arg @Nullable CoachService mCoachService;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @BindView(R.id.root_view) LinearLayout rootView;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;

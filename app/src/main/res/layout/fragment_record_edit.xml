@@ -1,8 +1,8 @@
 <ScrollView
-    android:id="@+id/rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroud_grey"
@@ -10,395 +10,407 @@
     android:scrollbars="none"
     >
 
-    <RelativeLayout
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/backgroud_grey"
+      tools:context="com.qingchengfit.fitcoach.fragment.RecordEditFragment"
+      >
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroud_grey"
-        tools:context="com.qingchengfit.fitcoach.fragment.RecordEditFragment">
+        android:orientation="vertical"
 
+        >
+
+      <RelativeLayout
+          android:id="@+id/host_layout"
+          android:layout_width="match_parent"
+          android:layout_height="66dp"
+          android:background="@color/white"
+          >
+
+        <ImageView
+            android:id="@+id/host_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            tools:src="@drawable/test_pic"
+            />
+
+        <ImageView
+            android:id="@+id/host_qc_identify"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignBottom="@id/host_img"
+            android:layout_alignRight="@id/host_img"
+            android:background="@drawable/circle_white"
+            android:padding="1dp"
+            android:src="@drawable/ic_qc_identify"
+            />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
             android:orientation="vertical"
-
             >
-            <RelativeLayout
-                android:id="@+id/host_layout"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:background="@color/white"
-                >
-                <ImageView
-                    android:id="@+id/host_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    tools:src="@drawable/test_pic"
-                    />
-                <ImageView
-                    android:id="@+id/host_qc_identify"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_alignBottom="@id/host_img"
-                    android:layout_alignRight="@id/host_img"
-                    android:background="@drawable/circle_white"
-                    android:padding="1dp"
-                    android:src="@drawable/ic_qc_identify"
-                    />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="70dp"
-                    >
-                    <TextView
-                        android:id="@+id/host_name"
-                        style="@style/Qc.TextCommonBlack"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        tools:text="很长很长才名字"
-                        />
-                    <TextView
-                        android:id="@+id/host_address"
-                        style="@style/Qc.TextCommonGrey"
-                        android:textSize="12sp"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        tools:text="很长  很长才名字"
-                        />
-                </LinearLayout>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    />
 
-            </RelativeLayout>
-            <!--<RelativeLayout-->
+          <TextView
+              android:id="@+id/host_name"
+              android:layout_width="200dp"
+              android:layout_height="wrap_content"
+              tools:text="很长很长才名字"
+              style="@style/Qc.TextCommonBlack"
+              />
 
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/qc_item_height"-->
-            <!--android:background="@color/white"-->
-            <!--android:paddingBottom="0dp"-->
-            <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-            <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-            <!-->-->
-
-            <!--<TextView-->
-            <!--style="@style/Qc.TextCommonGrey"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:text="@string/recordedit_label_type"-->
-            <!--/>-->
-
-            <!--<RadioGroup-->
-            <!--android:id="@+id/recordedit_type"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:orientation="horizontal"-->
-            <!-->-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/recordedit_type_meeting"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:button="@drawable/radio_selector"-->
-            <!--android:checked="true"-->
-            <!--android:text="@string/recordedit_meeting"-->
-            <!--/>-->
-
-            <!--<Space-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="match_parent"/>-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/recordedit_type_comfirm"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:button="@drawable/radio_selector"-->
-            <!--android:text="@string/recordedit_comfirm"-->
-
-            <!--/>-->
-
-            <!--<Space-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="match_parent"/>-->
-
-            <!--<RadioButton-->
-            <!--android:id="@+id/recordedit_type_competition"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:button="@drawable/radio_selector"-->
-            <!--android:text="@string/recordedit_competition"-->
-            <!--/>-->
-            <!--</RadioGroup>-->
-
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/divider_white"-->
-            <!-->-->
-            <!--</View>-->
-            <!--</RelativeLayout>-->
-
-            <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
-            <!--android:id="@+id/recordedit_host"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/qc_item_height"-->
-            <!--app:civ_clickable="true"-->
-            <!--app:civ_lable="@string/recordedit_host_organization"-->
-            <!-->-->
-            <!--</com.qingchengfit.fitcoach.component.CommonInputView>-->
-            <include layout="@layout/divider_grey"/>
-            <include
-                layout="@layout/divider_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                />
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/record_edit_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_lable="@string/recordedit_name"
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/recordedit_date"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_clickable="true"
-                app:civ_lable="@string/recordedit_certificate_date"
-                app:civ_showdivier="false"
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-            <include layout="@layout/divider_grey"/>
-
-            <include
-                layout="@layout/divider_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                />
-
-            <RelativeLayout
-                android:id="@+id/comfirm_scroe_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:background="@color/white"
-                >
-
-                <TextView
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:text="有无学分"
-                    />
-
-                <Switch
-                    android:id="@+id/comfirm_scroe_switch"
-                    android:checked="false"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="@color/divider_white"
-                    />
-            </RelativeLayout>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/recordedit_score"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_inputnum="true"
-                app:civ_lable="@string/recordedit_score"
-                app:civ_showdivier="false"
-                android:visibility="gone"
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-            <include layout="@layout/divider_grey"/>
-
-            <include
-                layout="@layout/divider_grey"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                />
-            <RelativeLayout
-                android:id="@+id/comfirm_certification_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:background="@color/white"
-                >
-
-                <TextView
-                    android:id="@+id/comfirm_has_certification"
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:text="有无证书"
-                    />
-
-                <Switch
-                    android:id="@+id/comfirm_certification_switch"
-                    android:checked="false"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="@color/divider_white"
-                    />
-            </RelativeLayout>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/recordedit_certificat_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_lable="证书名称"
-                android:visibility="gone"
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/recordedit_datestart"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_clickable="true"
-                app:civ_lable="@string/recordedit_certificat_timestart"
-                android:visibility="gone"
-
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/recordedit_dateoff"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_clickable="true"
-                app:civ_lable="@string/recordedit_certificat_timeend"
-                android:visibility="gone"
-
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-
-            <!--<View-->
-                <!--android:id="@+id/divider"-->
-                <!--android:background="@color/divider_grey"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!-->-->
-            <!--</View>-->
-
-            <!--<View-->
-                <!--android:id="@+id/divider_margin"-->
-                <!--android:background="@color/divider_grey"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!-->-->
-            <!--</View>-->
-
-            <RelativeLayout
-                android:id="@+id/recordedit_upimg_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone"
-
-                >
-
-                <TextView
-                    android:id="@+id/recordedit_upimg"
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:layout_centerVertical="true"
-                    android:text="上传照片"
-                    />
-
-                <ImageView
-                    android:id="@+id/advice_right_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/ic_arrow_right"
-                    />
-
-                <ImageView
-                    android:id="@+id/recordedit_img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="50dp"
-                    android:padding="5dp"
-                    android:visibility="gone"
-
-                    />
-                <!--<ImageView-->
-                    <!--android:id="@+id/recordedit_img"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
-                    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-                    <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
-                    <!--android:background="@color/white"-->
-                    <!--android:visibility="gone"-->
-                    <!--/>-->
-
-            </RelativeLayout>
-
-            <include layout="@layout/divider_grey">
-            </include>
-
-            <Button
-                android:id="@+id/recordedit_comfirm_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:text="@string/login_comfirm"
-                />
+          <TextView
+              android:id="@+id/host_address"
+              android:layout_width="200dp"
+              android:layout_height="wrap_content"
+              android:textSize="12sp"
+              tools:text="很长  很长才名字"
+              style="@style/Qc.TextCommonGrey"
+              />
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
 
-    </RelativeLayout>
+      </RelativeLayout>
+      <!--<RelativeLayout-->
+
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="@dimen/qc_item_height"-->
+      <!--android:background="@color/white"-->
+      <!--android:paddingBottom="0dp"-->
+      <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+      <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+      <!-->-->
+
+      <!--<TextView-->
+      <!--style="@style/Qc.TextCommonGrey"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_centerVertical="true"-->
+      <!--android:text="@string/recordedit_label_type"-->
+      <!--/>-->
+
+      <!--<RadioGroup-->
+      <!--android:id="@+id/recordedit_type"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_alignParentRight="true"-->
+      <!--android:layout_centerVertical="true"-->
+      <!--android:orientation="horizontal"-->
+      <!-->-->
+
+      <!--<RadioButton-->
+      <!--android:id="@+id/recordedit_type_meeting"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:button="@drawable/radio_selector"-->
+      <!--android:checked="true"-->
+      <!--android:text="@string/recordedit_meeting"-->
+      <!--/>-->
+
+      <!--<Space-->
+      <!--android:layout_width="20dp"-->
+      <!--android:layout_height="match_parent"/>-->
+
+      <!--<RadioButton-->
+      <!--android:id="@+id/recordedit_type_comfirm"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:button="@drawable/radio_selector"-->
+      <!--android:text="@string/recordedit_comfirm"-->
+
+      <!--/>-->
+
+      <!--<Space-->
+      <!--android:layout_width="20dp"-->
+      <!--android:layout_height="match_parent"/>-->
+
+      <!--<RadioButton-->
+      <!--android:id="@+id/recordedit_type_competition"-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:button="@drawable/radio_selector"-->
+      <!--android:text="@string/recordedit_competition"-->
+      <!--/>-->
+      <!--</RadioGroup>-->
+
+      <!--<View-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="1dp"-->
+      <!--android:layout_alignParentBottom="true"-->
+      <!--android:background="@color/divider_white"-->
+      <!-->-->
+      <!--</View>-->
+      <!--</RelativeLayout>-->
+
+      <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
+      <!--android:id="@+id/recordedit_host"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="@dimen/qc_item_height"-->
+      <!--app:civ_clickable="true"-->
+      <!--app:civ_lable="@string/recordedit_host_organization"-->
+      <!-->-->
+      <!--</com.qingchengfit.fitcoach.component.CommonInputView>-->
+      <include layout="@layout/divider_grey"/>
+
+      <include
+          layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="10dp"
+          />
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/record_edit_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="@string/recordedit_name"
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/recordedit_date"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="@string/recordedit_certificate_date"
+          app:civ_showdivier="false"
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <include layout="@layout/divider_grey"/>
+
+      <include
+          layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="10dp"
+          />
+
+      <RelativeLayout
+          android:id="@+id/comfirm_scroe_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="有无学分"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <Switch
+            android:id="@+id/comfirm_scroe_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:checked="false"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/divider_white"
+            />
+      </RelativeLayout>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/recordedit_score"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_inputnum="true"
+          app:civ_lable="@string/recordedit_score"
+          app:civ_showdivier="false"
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <include layout="@layout/divider_grey"/>
+
+      <include
+          layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="10dp"
+          />
+
+      <RelativeLayout
+          android:id="@+id/comfirm_certification_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          >
+
+        <TextView
+            android:id="@+id/comfirm_has_certification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="有无证书"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <Switch
+            android:id="@+id/comfirm_certification_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:checked="false"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/divider_white"
+            />
+      </RelativeLayout>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/recordedit_certificat_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_lable="证书名称"
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/recordedit_datestart"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_clickable="true"
+          app:civ_lable="@string/recordedit_certificat_timestart"
+
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/recordedit_dateoff"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_clickable="true"
+          app:civ_lable="@string/recordedit_certificat_timeend"
+
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+
+      <!--<View-->
+      <!--android:id="@+id/divider"-->
+      <!--android:background="@color/divider_grey"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="1px"-->
+      <!-->-->
+      <!--</View>-->
+
+      <!--<View-->
+      <!--android:id="@+id/divider_margin"-->
+      <!--android:background="@color/divider_grey"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="1px"-->
+      <!--android:layout_marginTop="20dp"-->
+      <!-->-->
+      <!--</View>-->
+
+      <RelativeLayout
+          android:id="@+id/recordedit_upimg_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:visibility="gone"
+
+          >
+
+        <TextView
+            android:id="@+id/recordedit_upimg"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="上传照片"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <ImageView
+            android:id="@+id/advice_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <ImageView
+            android:id="@+id/recordedit_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:padding="5dp"
+            android:visibility="gone"
+
+            />
+        <!--<ImageView-->
+        <!--android:id="@+id/recordedit_img"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+        <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+        <!--android:background="@color/white"-->
+        <!--android:visibility="gone"-->
+        <!--/>-->
+
+      </RelativeLayout>
+
+      <include layout="@layout/divider_grey">
+      </include>
+
+      <Button
+          android:id="@+id/recordedit_comfirm_btn"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:text="@string/login_comfirm"
+          />
+    </LinearLayout>
+
+
+  </RelativeLayout>
 </ScrollView>

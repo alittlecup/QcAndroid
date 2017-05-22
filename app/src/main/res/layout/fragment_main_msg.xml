@@ -3,14 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
+
   <include layout="@layout/common_simple_toolbar"/>
+
   <android.support.v4.widget.SwipeRefreshLayout
       android:id="@+id/refresh"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginTop="?attr/actionBarSize"
       >
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,12 +25,14 @@
           android:layout_height="wrap_content"
           android:orientation="vertical"
           >
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
-            android:minHeight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="10dp"
             />
+
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
@@ -36,9 +42,10 @@
 
         <FrameLayout
             android:id="@+id/frame_chat"
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            />
       </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -57,5 +64,6 @@
       app:elevation="4dp"
       app:fabSize="normal"
       app:rippleColor="@color/dard_green"
-      app:srcCompat="@drawable/vd_add_conversation" />
+      app:srcCompat="@drawable/vd_add_conversation"
+      />
 </FrameLayout>

@@ -21,7 +21,7 @@ public class SpaceItem extends AbstractFlexibleItem<SpaceItem.SpaceVH> {
     public Space mSpace;
     public int courseType;
 
-    public SpaceItem(Context context, Space space , int type) {
+    public SpaceItem(Context context, Space space, int type) {
         mContext = context;
         mSpace = space;
         this.courseType = type;
@@ -37,16 +37,15 @@ public class SpaceItem extends AbstractFlexibleItem<SpaceItem.SpaceVH> {
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, SpaceVH holder, int position, List payloads) {
         holder.text1.setText(mSpace.name);
-        String content = holder.itemView.getContext().getResources().getString(R.string.space_content,mSpace.capacity);
-        if (mSpace.is_support_team)
-            content = content.concat(mContext.getString(R.string.course_group));
-        if (mSpace.is_support_private)
-            content = content.concat(mContext.getString(R.string.space_support_private));
+        String content = holder.itemView.getContext().getResources().getString(R.string.space_content, mSpace.capacity);
+        if (mSpace.is_support_team) content = content.concat(mContext.getString(R.string.course_group));
+        if (mSpace.is_support_private) content = content.concat(mContext.getString(R.string.space_support_private));
         holder.text2.setText(content);
-        if (courseType == Configs.TYPE_GROUP)
+        if (courseType == Configs.TYPE_GROUP) {
             holder.righticon.setImageResource(R.drawable.ic_arrow_right);
-        else holder.righticon.setImageResource(adapter.isSelected(position)?R.drawable.ic_radio_checked:R.drawable.ic_radio_unchecked);
-
+        } else {
+            holder.righticon.setImageResource(adapter.isSelected(position) ? R.drawable.ic_radio_checked : R.drawable.ic_radio_unchecked);
+        }
     }
 
     @Override public boolean equals(Object o) {
@@ -57,6 +56,7 @@ public class SpaceItem extends AbstractFlexibleItem<SpaceItem.SpaceVH> {
         @BindView(R.id.text1) TextView text1;
         @BindView(R.id.text2) TextView text2;
         @BindView(R.id.righticon) ImageView righticon;
+
         public SpaceVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

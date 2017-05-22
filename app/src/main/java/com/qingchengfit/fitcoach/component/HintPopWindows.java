@@ -23,6 +23,6 @@ import android.widget.PopupWindow;
  * Created by Paper on 16/11/15.
  */
 
-public class HintPopWindows  extends PopupWindow{
+public class HintPopWindows extends PopupWindow {
 
 }

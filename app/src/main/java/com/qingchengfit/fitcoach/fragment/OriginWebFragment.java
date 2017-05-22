@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,12 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,7 +48,6 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -53,27 +56,16 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
-
 /**
  */
 public class OriginWebFragment extends WebFragment {
     public static final String TAG = OriginWebFragment.class.getName();
     private static final int REQUEST_UPLOAD_FILE_CODE = 12343;
-    @BindView(R.id.webview)
-    WebView webview;
+    @BindView(R.id.webview) WebView webview;
     CookieManager cookieManager;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.toobar_action)
-    TextView toobarAction;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toobar_action) TextView toobarAction;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private String base_url;
     private Gson gson;
     //    private Observable<NewPushMsg> mObservable;
@@ -97,38 +89,33 @@ public class OriginWebFragment extends WebFragment {
 
     private void showDialog() {
         if (delDialog == null) {
-            delDialog = new MaterialDialog.Builder(getContext())
-                    .autoDismiss(true)
-                    .content("请检查您的网络")
-                    .positiveText("确定")
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            super.onPositive(dialog);
+            delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
+                .content("请检查您的网络")
+                .positiveText("确定")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
 
-                            dialog.dismiss();
-                        }
-                    })
-                    .cancelable(false)
-                    .build();
+                        dialog.dismiss();
+                    }
+                })
+                .cancelable(false)
+                .build();
         }
         delDialog.show();
     }
 
-    @Override
-    public void onAttach(Context context) {
+    @Override public void onAttach(Context context) {
         super.onAttach(context);
         mActivityCallback = (WebActivityInterface) context;
     }
 
-    @Override
-    public void onDetach() {
+    @Override public void onDetach() {
         mActivityCallback = null;
         super.onDetach();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson = new Gson();
         if (getArguments() != null) {
@@ -137,23 +124,18 @@ public class OriginWebFragment extends WebFragment {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @SuppressLint("SetJavaScriptEnabled") @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
 
-
         mWebviewRootLinearLayout = (LinearLayout) view.findViewById(R.id.webview_root);
-
 
         unbinder = ButterKnife.bind(this, view);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbarTitle.setText("");
-        if (isTitle)
-            toolbar.setVisibility(View.GONE);
+        if (isTitle) toolbar.setVisibility(View.GONE);
 
         webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
         String hosts = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
@@ -163,26 +145,20 @@ public class OriginWebFragment extends WebFragment {
         }
         webview.setWebViewClient(new WebViewClient() {
 
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 LogUtil.e("url:" + url);
             }
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
+            @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
             }
 
-            @Override
-            public void onLoadResource(WebView view, String url) {
+            @Override public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
             }
 
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading" + url);
                 if (!TextUtils.isEmpty(toolbarTitle.getText().toString())) {
                     URI uri = null;
@@ -195,7 +171,6 @@ public class OriginWebFragment extends WebFragment {
                         LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
                         setCookie(uri.getHost(), "qc_session_id", sessionid);
                         LogUtil.e(uri.getHost() + "  " + cookieManager.getCookie(uri.getHost()));
-
                     } catch (URISyntaxException e) {
 
                     }
@@ -213,7 +188,6 @@ public class OriginWebFragment extends WebFragment {
                             urls.add(path);
                             mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                         }
-
                     } else {
                         mlastPosition.add(webBackForwardList.getCurrentIndex() + 1);
                     }
@@ -221,20 +195,15 @@ public class OriginWebFragment extends WebFragment {
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 toolbarTitle.setText("");
                 webview.loadUrl("");
                 showDialog();
-
             }
-
         });
 
-
         webview.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
+            @Override public void openFileChooser(ValueCallback<Uri> valueCallback, String s, String s1) {
                 super.openFileChooser(valueCallback, s, s1);
                 ToastUtils.show("open file");
             }
@@ -248,67 +217,63 @@ public class OriginWebFragment extends WebFragment {
                 return cameraIntent;
             }
 
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                new MaterialDialog.Builder(getContext())
-                        .content(message)
-                        .cancelable(false)
-                        .positiveText(R.string.common_i_konw)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                result.confirm();
-                            }
-                        })
-                        .show();
+            @Override public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                new MaterialDialog.Builder(getContext()).content(message)
+                    .cancelable(false)
+                    .positiveText(R.string.common_i_konw)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            result.confirm();
+                        }
+                    })
+                    .show();
                 return true;
             }
 
-            @Override
-            public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-                new MaterialDialog.Builder(getContext())
-                        .content(message)
-                        .positiveText("确定")
-                        .negativeText("取消")
-                        .cancelable(false)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                result.confirm();
-                                dialog.dismiss();
-                            }
+            @Override public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
+                new MaterialDialog.Builder(getContext()).content(message)
+                    .positiveText("确定")
+                    .negativeText("取消")
+                    .cancelable(false)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            result.confirm();
+                            dialog.dismiss();
+                        }
 
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                result.cancel();
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                        @Override public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            result.cancel();
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
                 return true;
             }
 
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
+            @Override public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
 
                 toolbarTitle.setText(title);
-
             }
 
-            @Override
-            public void getVisitedHistory(ValueCallback<String[]> callback) {
+            @Override public void getVisitedHistory(ValueCallback<String[]> callback) {
                 super.getVisitedHistory(callback);
-
             }
         });
         webview.getSettings().setJavaScriptEnabled(true);
-//        webview.setInitialScale(getScale());
+        //        webview.setInitialScale(getScale());
         String s = webview.getSettings().getUserAgentString();
-        webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  "+"QingchengApp/Trainer  "+"OEM:"+getString(R.string.oem_tag));
+        webview.getSettings()
+            .setUserAgentString(s
+                + " FitnessTrainerAssistant/"
+                + AppUtils.getAppVer(App.AppContex)
+                + " Android  "
+                + "QingchengApp/Trainer  "
+                + "OEM:"
+                + getString(R.string.oem_tag));
         webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
         // 开启DOM storage API 功能
         webview.getSettings().setDomStorageEnabled(true);
@@ -323,15 +288,13 @@ public class OriginWebFragment extends WebFragment {
         // 开启Application Cache功能
         webview.getSettings().setAppCacheEnabled(true);
 
-
-//        initCookie();
+        //        initCookie();
         //toolbar action callback
         toobarAction.setOnClickListener(v -> {
-            if (webview != null)
-                webview.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
+            if (webview != null) webview.loadUrl("javascript:window.nativeLinkWeb.runCallback('setAction');");
         });
-//        mObservable = RxBus.getBus().register(NewPushMsg.class);
-//        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
+        //        mObservable = RxBus.getBus().register(NewPushMsg.class);
+        //        mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
         webview.loadUrl(base_url);
         CookieSyncManager.createInstance(getContext());
         cookieManager = CookieManager.getInstance();
@@ -342,31 +305,30 @@ public class OriginWebFragment extends WebFragment {
     }
 
     //最后在OnActivityResult中接受返回的结果
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_UPLOAD_FILE_CODE && resultCode == Activity.RESULT_OK) {
-//            if (null == mUploadFile) {
-//                return;
-//            }
-//            Uri result = (null == data) ? null : data.getData();
-//            if (null != result) {
-//                ContentResolver resolver = getActivity().getContentResolver();
-//                String[] columns = {MediaStore.Images.Media.DATA};
-//                Cursor cursor = resolver.query(result, columns, null, null, null);
-//                cursor.moveToFirst();
-//                int columnIndex = cursor.getColumnIndex(columns[0]);
-//                String imgPath = cursor.getString(columnIndex);
-//                System.out.println("imgPath = " + imgPath);
-//                if (null == imgPath) {
-//                    return;
-//                }
-//                File file = new File(imgPath);
-//                //将图片处理成大小符合要求的文件
-//                result = Uri.fromFile(handleFile(file));
-//                mUploadFile.onReceiveValue(result);
-//                mUploadFile = null;
-//            }
-//        }
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //        if (requestCode == REQUEST_UPLOAD_FILE_CODE && resultCode == Activity.RESULT_OK) {
+        //            if (null == mUploadFile) {
+        //                return;
+        //            }
+        //            Uri result = (null == data) ? null : data.getData();
+        //            if (null != result) {
+        //                ContentResolver resolver = getActivity().getContentResolver();
+        //                String[] columns = {MediaStore.Images.Media.DATA};
+        //                Cursor cursor = resolver.query(result, columns, null, null, null);
+        //                cursor.moveToFirst();
+        //                int columnIndex = cursor.getColumnIndex(columns[0]);
+        //                String imgPath = cursor.getString(columnIndex);
+        //                System.out.println("imgPath = " + imgPath);
+        //                if (null == imgPath) {
+        //                    return;
+        //                }
+        //                File file = new File(imgPath);
+        //                //将图片处理成大小符合要求的文件
+        //                result = Uri.fromFile(handleFile(file));
+        //                mUploadFile.onReceiveValue(result);
+        //                mUploadFile = null;
+        //            }
+        //        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -397,16 +359,15 @@ public class OriginWebFragment extends WebFragment {
         }
 
         return handleFile;
-
     }
 
-
-    @Override
-    public Boolean canGoBack() {
+    @Override public Boolean canGoBack() {
 
         if (webview != null) {
             return mlastPosition.size() > 0;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     public void goBack() {
@@ -416,18 +377,15 @@ public class OriginWebFragment extends WebFragment {
         toolbarTitle.setText(mTitleStack.get(mTitleStack.size() - 1));
         mTitleStack.remove(mTitleStack.size() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
-//        if (mlastPosition.size()>0){
-//            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
-//            mlastPosition.remove(mlastPosition.size()-1);
-//        }else
-//            webview.goBack();
+        //        if (mlastPosition.size()>0){
+        //            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
+        //            mlastPosition.remove(mlastPosition.size()-1);
+        //        }else
+        //            webview.goBack();
     }
 
-
     public void startLoadUrl(String url) {
-        if (webview != null)
-            webview.loadUrl(url);
-
+        if (webview != null) webview.loadUrl(url);
     }
 
     private void initCookie(String url) {
@@ -445,35 +403,30 @@ public class OriginWebFragment extends WebFragment {
             } catch (URISyntaxException e) {
                 //e.printStackTrace();
             }
-//            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
-//            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
-//            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
+            //            setCookie("http://192.168.31.108", "qc_session_id", sessionid);
+            //            setCookie(Configs.HOST_NAMESPACE_0, "qc_session_id", sessionid);
+            //            setCookie(Configs.HOST_NAMESPACE_1, "qc_session_id", sessionid);
         } else {
             //TODO logout
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", new Gson().toJson(hostArray));
         //必须先移除webview
         if (webview != null) {
             mWebviewRootLinearLayout.removeView(webview);
-//            webview.removeAllViews();
+            //            webview.removeAllViews();
             webview.destroy();
         }
         unbinder.unbind();
         super.onDestroyView();
-
     }
 
-
-    @Override
-    public void removeCookie() {
-//        if (cookieManager != null) {
-//            cookieManager.removeAllCookie();
-//        }
+    @Override public void removeCookie() {
+        //        if (cookieManager != null) {
+        //            cookieManager.removeAllCookie();
+        //        }
     }
 
     public void openmainDrawer() {
@@ -482,44 +435,36 @@ public class OriginWebFragment extends WebFragment {
 
     public void setCookie(String url, String key, String value) {
         StringBuffer sb = new StringBuffer();
-//        String oriCookie = xWalkCookieManager.getCookie(url);
-//        if (oriCookie != null){
-//        sb.append(xWalkCookieManager.getCookie(url));
-//        sb.append(";");}
+        //        String oriCookie = xWalkCookieManager.getCookie(url);
+        //        if (oriCookie != null){
+        //        sb.append(xWalkCookieManager.getCookie(url));
+        //        sb.append(";");}
         sb.append(key);
         sb.append("=");
         sb.append(value);
         cookieManager.setCookie(url, sb.toString());
     }
 
-
     public class JsInterface {
 
         JsInterface() {
         }
 
-        @JavascriptInterface
-        public String getToken() {
+        @JavascriptInterface public String getToken() {
             return PreferenceUtils.getPrefString(App.AppContex, "token", "");
         }
 
-        @JavascriptInterface
-        public void shareInfo(String json) {
+        @JavascriptInterface public void shareInfo(String json) {
             ShareBean bean = gson.fromJson(json, ShareBean.class);
-//            ShareUtils.oneKeyShared(getContext(), bean.title, bean.imgUrl, bean.desc, bean.title);
-            ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link)
-                    .show(getFragmentManager(), "");
+            //            ShareUtils.oneKeyShared(getContext(), bean.title, bean.imgUrl, bean.desc, bean.title);
+            ShareDialogFragment.newInstance(bean.title, bean.desc, bean.imgUrl, bean.link).show(getFragmentManager(), "");
         }
 
-
-        @JavascriptInterface
-        public void openDrawer() {
+        @JavascriptInterface public void openDrawer() {
             openmainDrawer();
-
         }
 
-        @JavascriptInterface
-        public void setAction(String s) {
+        @JavascriptInterface public void setAction(String s) {
             LogUtil.e("setAction:" + s);
             ToolbarAction toolStr = gson.fromJson(s, ToolbarAction.class);
 
@@ -529,47 +474,37 @@ public class OriginWebFragment extends WebFragment {
                 } else {
                     toobarAction.setVisibility(View.VISIBLE);
                     toobarAction.setText(toolStr.name);
-
                 }
-
             });
         }
 
-        @JavascriptInterface
-        public void completeAction() {
+        @JavascriptInterface public void completeAction() {
             mActivityCallback.onfinish();
         }
 
-        @JavascriptInterface
-        public void setTitle(String s) {
+        @JavascriptInterface public void setTitle(String s) {
             if (getActivity() != null) {
                 getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                    @Override public void run() {
                         toolbarTitle.setText(s);
                     }
                 });
             }
-
         }
 
-
-        @JavascriptInterface
-        public String getContacts() {
+        @JavascriptInterface public String getContacts() {
             List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
             Gson gson = new Gson();
             return gson.toJson(contacts);
         }
 
-        @JavascriptInterface
-        public String getPlatform() {
+        @JavascriptInterface public String getPlatform() {
             PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
             Gson gson = new Gson();
             return gson.toJson(info);
         }
 
-        @JavascriptInterface
-        public void goBack() {
+        @JavascriptInterface public void goBack() {
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     getActivity().onBackPressed();
@@ -577,8 +512,7 @@ public class OriginWebFragment extends WebFragment {
             }
         }
 
-        @JavascriptInterface
-        public String getSessionId() {
+        @JavascriptInterface public String getSessionId() {
             return PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         }
 
@@ -587,15 +521,14 @@ public class OriginWebFragment extends WebFragment {
 
         }
 
-//        @JavascriptInterface
-//        public void resize(final float height) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    webview.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
-//                }
-//            });
-//        }
-
+        //        @JavascriptInterface
+        //        public void resize(final float height) {
+        //            getActivity().runOnUiThread(new Runnable() {
+        //                @Override
+        //                public void run() {
+        //                    webview.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+        //                }
+        //            });
+        //        }
     }
 }

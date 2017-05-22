@@ -31,13 +31,13 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 
 public class LazyloadFragment extends BaseFragment {
 
+    public static final String INTENT_BOOLEAN_LAZYLOAD = "intent_boolean_lazyLoad";
+    FrameLayout frameLayout;
     private boolean isInit = false;//真正要显示的View是否已经被初始化（正常加载）
     private Bundle savedInstanceState;
-    public static final String INTENT_BOOLEAN_LAZYLOAD = "intent_boolean_lazyLoad";
     private boolean isLazyLoad = false;
     private FrameLayout layout;
     private boolean isStart = false;//是否处于可见状态，in the screen
-    FrameLayout frameLayout;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,14 +81,13 @@ public class LazyloadFragment extends BaseFragment {
         return frameLayout;
     }
 
-    protected void onCreateViewLazy( Bundle savedInstanceState ){
-    }
-
-    public void setContentView(int res){
-        if (getContentView() != null){
-            View view = LayoutInflater.from(getContext()).inflate(res,null);
+    public void setContentView(int res) {
+        if (getContentView() != null) {
+            View view = LayoutInflater.from(getContext()).inflate(res, null);
             getContentView().addView(view);
         }
     }
 
+    protected void onCreateViewLazy(Bundle savedInstanceState) {
+    }
 }

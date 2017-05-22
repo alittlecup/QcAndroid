@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetLeft="44dp"
+       android:insetLeft="44dp"
     >
   <shape android:shape="rectangle">
-    <size android:height="1px" android:width="400dp"/>
+    <size
+        android:height="1px"
+        android:width="400dp"/>
     <solid android:color="@color/divider_grey"/>
   </shape>
 </inset>

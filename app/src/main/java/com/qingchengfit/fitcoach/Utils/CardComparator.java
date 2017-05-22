@@ -1,12 +1,9 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import android.text.TextUtils;
-
 import com.qingchengfit.fitcoach.http.bean.QcCardsResponse;
-
-import net.sourceforge.pinyin4j.PinyinHelper;
-
 import java.util.Comparator;
+import net.sourceforge.pinyin4j.PinyinHelper;
 
 /**
  * power by
@@ -28,7 +25,6 @@ public class CardComparator implements Comparator<QcCardsResponse.Card> {
         return (v >= 19968 && v <= 171941);
     }
 
-
     private String concatPinyinStringArray(String[] pinyinArray) {
         StringBuffer pinyinSbf = new StringBuffer();
         if ((pinyinArray != null) && (pinyinArray.length > 0)) {
@@ -39,8 +35,7 @@ public class CardComparator implements Comparator<QcCardsResponse.Card> {
         return pinyinSbf.toString();
     }
 
-    @Override
-    public int compare(QcCardsResponse.Card course1, QcCardsResponse.Card course2) {
+    @Override public int compare(QcCardsResponse.Card course1, QcCardsResponse.Card course2) {
         String o1 = course1.name;
         String o2 = course2.name;
         if (TextUtils.isEmpty(o1)) {
@@ -51,13 +46,12 @@ public class CardComparator implements Comparator<QcCardsResponse.Card> {
         }
         char c1 = o1.charAt(0);
         char c2 = o2.charAt(0);
-        if (isChinese(c1) && isChinese(c2))
-            return concatPinyinStringArray(
-                    PinyinHelper.toHanyuPinyinStringArray(c1)).compareTo(
-                    concatPinyinStringArray(PinyinHelper
-                            .toHanyuPinyinStringArray(c2)));
-        else
+        if (isChinese(c1) && isChinese(c2)) {
+            return concatPinyinStringArray(PinyinHelper.toHanyuPinyinStringArray(c1)).compareTo(
+                concatPinyinStringArray(PinyinHelper.toHanyuPinyinStringArray(c2)));
+        } else {
             return o1.compareTo(o2);
+        }
     }
 }
 

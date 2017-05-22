@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.bean.SingleBatch;
  * Created by Paper on 2017/3/13.
  */
 
-public class QcResponseSingleBatch extends QcResponse{
+public class QcResponseSingleBatch extends QcResponse {
     public Data data;
 
     public Data getData() {
@@ -34,7 +34,7 @@ public class QcResponseSingleBatch extends QcResponse{
         this.data = data;
     }
 
-    public class Data{
+    public class Data {
         public SingleBatch schedule;
         public SingleBatch timetable;
     }

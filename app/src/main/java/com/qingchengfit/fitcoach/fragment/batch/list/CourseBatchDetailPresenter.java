@@ -1,11 +1,11 @@
 package com.qingchengfit.fitcoach.fragment.batch.list;
 
 import android.content.Intent;
+import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import javax.inject.Inject;
 import rx.Subscription;
@@ -29,12 +29,10 @@ import rx.schedulers.Schedulers;
 public class CourseBatchDetailPresenter extends BasePresenter {
 
     CoachService coachService;
-
+    @Inject RestRepository restRepository;
     private CourseBatchDetailView view;
     private Subscription groupSp;
     private Subscription priSp;
-
-    @Inject RestRepository restRepository;
 
     @Inject public CourseBatchDetailPresenter(CoachService coachService) {
         //        this.gymUseCase = gymUseCase;
@@ -86,9 +84,8 @@ public class CourseBatchDetailPresenter extends BasePresenter {
 
     }
 
-    public void queryGroup(String staffid,boolean isPrivate) {
-        RxRegiste(restRepository.getGet_api()
-            .qcGetGroupCourses(staffid, coachService.id + "", coachService.getModel(),isPrivate?1:0)
+    public void queryGroup(String staffid, boolean isPrivate) {
+        RxRegiste(restRepository.getGet_api().qcGetGroupCourses(staffid, coachService.id + "", coachService.getModel(), isPrivate ? 1 : 0)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseGroupDetail>() {

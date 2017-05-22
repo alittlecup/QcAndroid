@@ -17,16 +17,18 @@ import java.util.List;
 
 public class CoursePlanItem extends AbstractFlexibleItem<CoursePlanItem.CoursePlanVH> {
 
+    CoursePlan coursePlan;
+
     public CoursePlanItem(CoursePlan coursePlan) {
         this.coursePlan = coursePlan;
     }
 
-    CoursePlan coursePlan;
-
-    public  String getUrl(){
-        if (coursePlan != null){
+    public String getUrl() {
+        if (coursePlan != null) {
             return coursePlan.getUrl();
-        }else return "";
+        } else {
+            return "";
+        }
     }
 
     @Override public int getLayoutRes() {
@@ -40,9 +42,8 @@ public class CoursePlanItem extends AbstractFlexibleItem<CoursePlanItem.CoursePl
     @Override public void bindViewHolder(FlexibleAdapter adapter, CoursePlanVH holder, int position, List payloads) {
         holder.name.setText(coursePlan.getName());
         String ct = "";
-        if (coursePlan.brand != null)
-            ct = TextUtils.concat(ct,coursePlan.brand.getName()," | ").toString();
-        holder.content.setText(TextUtils.concat(ct,coursePlan.getTagsStr()));
+        if (coursePlan.brand != null) ct = TextUtils.concat(ct, coursePlan.brand.getName(), " | ").toString();
+        holder.content.setText(TextUtils.concat(ct, coursePlan.getTagsStr()));
         holder.chosen.setImageResource(R.drawable.ic_arrow_right);
     }
 
@@ -54,6 +55,7 @@ public class CoursePlanItem extends AbstractFlexibleItem<CoursePlanItem.CoursePl
         @BindView(R.id.name) TextView name;
         @BindView(R.id.content) TextView content;
         @BindView(R.id.chosen) ImageView chosen;
+
         public CoursePlanVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

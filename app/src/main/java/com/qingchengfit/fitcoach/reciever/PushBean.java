@@ -17,8 +17,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PushBean {
     //    {"url":"http:\/\/feature2.qingchengfit.cn\/mobile\/schedule\/7031\/details\/","photo":"http:\/\/zoneke-img.b0.upaiyun.com\/dff71b1cca9db02065d2477e4dbd0d0f.jpg","created_at":"2015-12-10T19:53:36","read_at":"","sender":"Let`s Move Test"
-    @SerializedName("url")
-    public String url;
-    @SerializedName("notification_id")
-    public int notification_id;
+    @SerializedName("url") public String url;
+    @SerializedName("notification_id") public int notification_id;
 }

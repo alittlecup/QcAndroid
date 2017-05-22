@@ -25,7 +25,15 @@ import android.os.Parcelable;
  */
 public class Permission implements Parcelable {
 
+    public static final Creator<Permission> CREATOR = new Creator<Permission>() {
+        @Override public Permission createFromParcel(Parcel source) {
+            return new Permission(source);
+        }
 
+        @Override public Permission[] newArray(int size) {
+            return new Permission[size];
+        }
+    };
     public String shop_id;
     public boolean value;
     public String key;
@@ -34,16 +42,6 @@ public class Permission implements Parcelable {
         shop_id = builder.shop_id;
         value = builder.value;
         key = builder.key;
-    }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.shop_id);
-        dest.writeByte(this.value ? (byte) 1 : (byte) 0);
-        dest.writeString(this.key);
     }
 
     public Permission() {
@@ -55,15 +53,15 @@ public class Permission implements Parcelable {
         this.key = in.readString();
     }
 
-    public static final Creator<Permission> CREATOR = new Creator<Permission>() {
-        @Override public Permission createFromParcel(Parcel source) {
-            return new Permission(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override public Permission[] newArray(int size) {
-            return new Permission[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.shop_id);
+        dest.writeByte(this.value ? (byte) 1 : (byte) 0);
+        dest.writeString(this.key);
+    }
 
     public static final class Builder {
         private String shop_id;

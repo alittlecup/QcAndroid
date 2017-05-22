@@ -15,7 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.utils.DateUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
@@ -31,16 +35,9 @@ import com.qingchengfit.fitcoach.http.bean.AddWorkExperience;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import cn.qingchengfit.utils.DateUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -62,42 +59,24 @@ import static android.text.TextUtils.isEmpty;
  */
 public class WorkExpeEditFragment extends BaseSettingFragment {
 
-
-    @BindView(R.id.workexpedit_start_time)
-    CommonInputView workexpeditStartTime;
-    @BindView(R.id.workexpedit_start_end)
-    CommonInputView workexpeditStartEnd;
-    @BindView(R.id.workexpedit_city)
-    CommonInputView workexpeditCity;
-    @BindView(R.id.workexpedit_gym_name)
-    TextView workexpeditGymName;
-    @BindView(R.id.workexpedit_position)
-    CommonInputView workexpeditPosition;
-    @BindView(R.id.workexpedit_descripe)
-    EditText workexpeditDescripe;
-    @BindView(R.id.workexpedit_group_class)
-    CommonInputView workexpeditGroupClass;
-    @BindView(R.id.workexpedit_group_num)
-    CommonInputView workexpeditGroupNum;
-    @BindView(R.id.workexpedit_private_class)
-    CommonInputView workexpeditPrivateClass;
-    @BindView(R.id.workexpedit_private_num)
-    CommonInputView workexpeditPrivateNum;
-    @BindView(R.id.workexpedit_sale)
-    CommonInputView workexpeditSale;
-    @BindView(R.id.workexpedit_comfirm_btn)
-    Button workexpeditComfirmBtn;
-    @BindView(R.id.rootview)
-    ScrollView rootview;
+    @BindView(R.id.workexpedit_start_time) CommonInputView workexpeditStartTime;
+    @BindView(R.id.workexpedit_start_end) CommonInputView workexpeditStartEnd;
+    @BindView(R.id.workexpedit_city) CommonInputView workexpeditCity;
+    @BindView(R.id.workexpedit_gym_name) TextView workexpeditGymName;
+    @BindView(R.id.workexpedit_position) CommonInputView workexpeditPosition;
+    @BindView(R.id.workexpedit_descripe) EditText workexpeditDescripe;
+    @BindView(R.id.workexpedit_group_class) CommonInputView workexpeditGroupClass;
+    @BindView(R.id.workexpedit_group_num) CommonInputView workexpeditGroupNum;
+    @BindView(R.id.workexpedit_private_class) CommonInputView workexpeditPrivateClass;
+    @BindView(R.id.workexpedit_private_num) CommonInputView workexpeditPrivateNum;
+    @BindView(R.id.workexpedit_sale) CommonInputView workexpeditSale;
+    @BindView(R.id.workexpedit_comfirm_btn) Button workexpeditComfirmBtn;
+    @BindView(R.id.rootview) ScrollView rootview;
     TimeDialogWindow pwTime;
-    @BindView(R.id.workexpedit_expe_layout)
-    LinearLayout workexpeditExpeLayout;
-    @BindView(R.id.host_img)
-    ImageView hostImg;
-    @BindView(R.id.host_qc_identify)
-    ImageView hostQcIdentify;
-    @BindView(R.id.host_address)
-    TextView hostAddress;
+    @BindView(R.id.workexpedit_expe_layout) LinearLayout workexpeditExpeLayout;
+    @BindView(R.id.host_img) ImageView hostImg;
+    @BindView(R.id.host_qc_identify) ImageView hostQcIdentify;
+    @BindView(R.id.host_address) TextView hostAddress;
     private String mTitle;
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
     private AddWorkExperience addWorkExperience;
@@ -106,24 +85,23 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
     private boolean mIsAdd;
     private Unbinder unbinder;
 
-
     public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity) {
 
         Bundle args = new Bundle();
         args.putString("title", mTitle);
-        if (experiencesEntity != null)
-            args.putParcelable("experience", experiencesEntity);
+        if (experiencesEntity != null) args.putParcelable("experience", experiencesEntity);
         WorkExpeEditFragment fragment = new WorkExpeEditFragment();
         fragment.setArguments(args);
         return fragment;
     }
-    public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity,boolean add) {
+
+    public static WorkExpeEditFragment newInstance(String mTitle, QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity,
+        boolean add) {
 
         Bundle args = new Bundle();
         args.putString("title", mTitle);
-        if (experiencesEntity != null)
-            args.putParcelable("experience", experiencesEntity);
-        args.putBoolean("add",add);
+        if (experiencesEntity != null) args.putParcelable("experience", experiencesEntity);
+        args.putBoolean("add", add);
         WorkExpeEditFragment fragment = new WorkExpeEditFragment();
         fragment.setArguments(args);
         return fragment;
@@ -131,48 +109,44 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
 
     private void showDialog() {
         if (delDialog == null) {
-            delDialog = new MaterialDialog.Builder(getContext())
-                    .autoDismiss(true)
-                    .content("删除此条工作经历?")
-                    .positiveText("确定")
-                    .negativeText("取消")
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            super.onPositive(dialog);
-                            fragmentCallBack.ShowLoading("请稍后");
-                            QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
-                                    .subscribe(aBoolean -> {
-                                        fragmentCallBack.hideLoading();
-                                        if (aBoolean) {
-                                            getActivity().onBackPressed();
-                                            Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
-                                        } else
-                                            Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
+            delDialog = new MaterialDialog.Builder(getContext()).autoDismiss(true)
+                .content("删除此条工作经历?")
+                .positiveText("确定")
+                .negativeText("取消")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        fragmentCallBack.ShowLoading("请稍后");
+                        QcCloudClient.getApi().postApi.qcDelExperience(experiencesEntity.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .map(qcResponse -> qcResponse.status == ResponseResult.SUCCESS)
+                            .subscribe(aBoolean -> {
+                                fragmentCallBack.hideLoading();
+                                if (aBoolean) {
+                                    getActivity().onBackPressed();
+                                    Toast.makeText(App.AppContex, "删除成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(App.AppContex, "删除失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }, throwable -> {
+                            }, () -> {
+                            });
+                        dialog.dismiss();
+                    }
 
-                                    }, throwable -> {
-                                    }, () -> {
-                                    });
-                            dialog.dismiss();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            super.onNegative(dialog);
-                            dialog.dismiss();
-                        }
-                    })
-                    .cancelable(false)
-                    .build();
+                    @Override public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+                })
+                .cancelable(false)
+                .build();
         }
         delDialog.show();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTitle = getArguments().getString("title");
@@ -182,11 +156,9 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workexepedit, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.showToolbar();
         fragmentCallBack.onToolbarMenu(0, 0, mTitle);
 
@@ -195,13 +167,13 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         }
         if (experiencesEntity != null) {
             fragmentCallBack.onToolbarMenu(0, 0, mTitle);
-//            fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    showDialog();
-//                    return true;
-//                }
-//            });
+            //            fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
+            //                @Override
+            //                public boolean onMenuItemClick(MenuItem item) {
+            //                    showDialog();
+            //                    return true;
+            //                }
+            //            });
             workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -212,18 +184,19 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                 workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(d));
             }
 
-
             workexpeditDescripe.setText(experiencesEntity.getDescription());
             workexpeditPosition.setContent(experiencesEntity.getPosition());
             if (experiencesEntity.getGym() != null) {
                 workexpeditGymName.setText(experiencesEntity.getGym().getName());
-                addWorkExperience.setGym_id((int)experiencesEntity.getGym().getId());
-                Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
-//                if (experiencesEntity.getGym().is_authenticated()){
-//                    hostQcIdentify.setVisibility(View.VISIBLE);
-//                }else hostQcIdentify.setVisibility(View.GONE);
+                addWorkExperience.setGym_id((int) experiencesEntity.getGym().getId());
+                Glide.with(App.AppContex)
+                    .load(experiencesEntity.getGym().getPhoto())
+                    .asBitmap()
+                    .into(new CircleImgWrapper(hostImg, App.AppContex));
+                //                if (experiencesEntity.getGym().is_authenticated()){
+                //                    hostQcIdentify.setVisibility(View.VISIBLE);
+                //                }else hostQcIdentify.setVisibility(View.GONE);
                 hostAddress.setText(experiencesEntity.getGym().getAddress());
-
             }
             workexpeditGroupClass.setContent(Integer.toString(experiencesEntity.getGroup_course()));
             workexpeditGroupNum.setContent(Integer.toString(experiencesEntity.getGroup_user()));
@@ -233,16 +206,12 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         } else {
             workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(new Date()));
             workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(new Date()));
-
         }
-
 
         return view;
     }
 
-    @OnClick(R.id.workexpedit_comfirm_btn)
-    public void onComfirm() {
-
+    @OnClick(R.id.workexpedit_comfirm_btn) public void onComfirm() {
 
         String starttime = DateUtils.formatDateToServer(workexpeditStartTime.getContent());
         String endtime = DateUtils.formatDateToServer(workexpeditStartEnd.getContent());
@@ -255,7 +224,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         String sale = workexpeditSale.getContent();
         String gym = workexpeditGymName.getText().toString().trim();
 
-
         if (TextUtils.isEmpty(postion)) {
             Toast.makeText(getContext(), "请填写职位信息", Toast.LENGTH_SHORT).show();
             return;
@@ -264,7 +232,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
             Toast.makeText(getContext(), "请选择健身房", Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         if (endtime.equalsIgnoreCase("至今")) {
             endtime = "3000-1-1";
@@ -283,55 +250,51 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         addWorkExperience.setPrivate_user(privateNum);
         addWorkExperience.setSale(sale);
 
-
         Observer<QcResponse> qcResponseAction = new Observer<QcResponse>() {
-            @Override
-            public void onCompleted() {
+            @Override public void onCompleted() {
 
             }
 
-            @Override
-            public void onError(Throwable e) {
+            @Override public void onError(Throwable e) {
                 fragmentCallBack.hideLoading();
                 Toast.makeText(App.AppContex, "提交失败", Toast.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onNext(QcResponse qcResponse) {
+            @Override public void onNext(QcResponse qcResponse) {
                 fragmentCallBack.hideLoading();
                 if (qcResponse.status == ResponseResult.SUCCESS) {
                     fragmentCallBack.fixCount();
                     getActivity().onBackPressed();
-
                 } else {
                     Toast.makeText(App.AppContex, qcResponse.msg, Toast.LENGTH_SHORT).show();
                 }
             }
         };
         fragmentCallBack.ShowLoading("请稍后");
-        if (mIsAdd)
-            QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponseAction);
-        else
-            QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponseAction);
-
+        if (mIsAdd) {
+            QcCloudClient.getApi().postApi.qcAddExperience(addWorkExperience)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcResponseAction);
+        } else {
+            QcCloudClient.getApi().postApi.qcEditExperience(experiencesEntity.getId(), addWorkExperience)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(qcResponseAction);
+        }
     }
 
-
-
-    @OnClick(R.id.workexpedit_expe_layout)
-    public void onDescripte() {
+    @OnClick(R.id.workexpedit_expe_layout) public void onDescripte() {
         workexpeditDescripe.requestFocus();
     }
 
-    @OnClick(R.id.host_layout)
-    public void onClickGym() {
+    @OnClick(R.id.host_layout) public void onClickGym() {
         Intent toSearch = new Intent(getActivity(), SearchActivity.class);
         toSearch.putExtra("type", SearchFragment.TYPE_GYM);
         startActivityForResult(toSearch, 10010);
     }
 
-    @OnClick(R.id.workexpedit_start_time)
-    public void onStartTime() {
+    @OnClick(R.id.workexpedit_start_time) public void onStartTime() {
         pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
         pwTime.setOnTimeSelectListener(date -> {
             if (date.getTime() > new Date().getTime()) {
@@ -339,13 +302,12 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
                 return;
             }
 
-            if (!TextUtils.equals("至今", workexpeditStartEnd.getContent()) &&
-                    DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime()
-                            < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
+            if (!TextUtils.equals("至今", workexpeditStartEnd.getContent())
+                && DateUtils.formatDateFromYYYYMMDD(workexpeditStartEnd.getContent()).getTime() < DateUtils.formatDateFromYYYYMMDD(
+                workexpeditStartTime.getContent()).getTime()) {
                 Toast.makeText(App.AppContex, "起始时间不能晚于结束时间", Toast.LENGTH_SHORT).show();
                 return;
             }
-
 
             workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(date));
             pwTime.dismiss();
@@ -353,72 +315,61 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
     }
 
-    @OnClick(R.id.workexpedit_start_end)
-    public void onEndTime() {
+    @OnClick(R.id.workexpedit_start_end) public void onEndTime() {
         if (mDialogSheet == null) {
-            mDialogSheet = DialogSheet.builder(getContext())
-                    .addButton("至今", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mDialogSheet.dismiss();
-                            workexpeditStartEnd.setContent("至今");
+            mDialogSheet = DialogSheet.builder(getContext()).addButton("至今", new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    mDialogSheet.dismiss();
+                    workexpeditStartEnd.setContent("至今");
+                }
+            }).addButton("选择日期", new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    mDialogSheet.dismiss();
+                    pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
+                    pwTime.setOnTimeSelectListener(date -> {
+                        if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
+                            Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                    })
-                    .addButton("选择日期", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mDialogSheet.dismiss();
-                            pwTime.setRange(1900, Calendar.getInstance(Locale.getDefault()).get(Calendar.YEAR));
-                            pwTime.setOnTimeSelectListener(date -> {
-                                if (date.getTime() < DateUtils.formatDateFromYYYYMMDD(workexpeditStartTime.getContent()).getTime()) {
-                                    Toast.makeText(App.AppContex, "结束时间不能早于结束时间", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(date));
-                                pwTime.dismiss();
-                            });
-                            pwTime.setRange(1900, 2100);
-                            pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
-
-
-                        }
+                        workexpeditStartEnd.setContent(DateUtils.Date2YYYYMMDD(date));
+                        pwTime.dismiss();
                     });
+                    pwTime.setRange(1900, 2100);
+                    pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, new Date());
+                }
+            });
         }
 
         mDialogSheet.show();
-
     }
 
-
-    @OnClick(R.id.workexpedit_city)
-    public void onCityClick() {
+    @OnClick(R.id.workexpedit_city) public void onCityClick() {
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10010 && resultCode > 0) {
             workexpeditGymName.setText(data.getStringExtra("username"));
             addWorkExperience.setGym_id(data.getIntExtra("id", 0));
-            boolean isAuth = data.getBooleanExtra("isauth",false);
-            if (isAuth)
+            boolean isAuth = data.getBooleanExtra("isauth", false);
+            if (isAuth) {
                 hostQcIdentify.setVisibility(View.VISIBLE);
-            else hostQcIdentify.setVisibility(View.GONE);
+            } else {
+                hostQcIdentify.setVisibility(View.GONE);
+            }
             String address = data.getStringExtra("address");
-            if (isEmpty(address)){
+            if (isEmpty(address)) {
                 hostAddress.setVisibility(View.GONE);
-            }else {
+            } else {
                 hostAddress.setVisibility(View.VISIBLE);
                 hostAddress.setText(address);
             }
-            Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
-
+            Glide.with(App.AppContex).load(data.getStringExtra("pic")).asBitmap().into(new CircleImgWrapper(hostImg, App.AppContex));
         }
     }
 }

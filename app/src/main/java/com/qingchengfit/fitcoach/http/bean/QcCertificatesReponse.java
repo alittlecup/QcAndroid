@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ import java.util.List;
  * Created by Paper on 15/9/16 2015.
  */
 public class QcCertificatesReponse extends QcResponse {
-
 
     /**
      * data : {"certificates":[{"date_of_issue":"2015-09-16T15:08:00","coach":{"id":6},"username":"青橙科技","photo":"http://zoneke-img.b0.upaiyun.com/21d3bcb5600f8b2a005cdd40c57d0c4d.png","grade":"100","organization":{},"created_at":"2015-09-16T15:08:00","type":1,"id":1,"is_authenticated":true}],"total_count":1,"current_page":1,"pages":1}
@@ -81,6 +79,15 @@ public class QcCertificatesReponse extends QcResponse {
         }
 
         public static class CertificatesEntity implements Parcelable {
+            public static final Parcelable.Creator<CertificatesEntity> CREATOR = new Parcelable.Creator<CertificatesEntity>() {
+                @Override public CertificatesEntity createFromParcel(Parcel source) {
+                    return new CertificatesEntity(source);
+                }
+
+                @Override public CertificatesEntity[] newArray(int size) {
+                    return new CertificatesEntity[size];
+                }
+            };
             /**
              * date_of_issue : 2015-09-16T15:08:00
              * coach : {"id":6}
@@ -110,6 +117,26 @@ public class QcCertificatesReponse extends QcResponse {
             private boolean is_hidden; //是否隐藏
             private boolean will_expired; //是否有有效期
 
+            public CertificatesEntity() {
+            }
+
+            protected CertificatesEntity(Parcel in) {
+                this.date_of_issue = in.readString();
+                this.coach = in.readParcelable(CoachEntity.class.getClassLoader());
+                this.name = in.readString();
+                this.photo = in.readString();
+                this.grade = in.readString();
+                this.organization = in.readParcelable(OrganizationEntity.class.getClassLoader());
+                this.created_at = in.readString();
+                this.type = in.readInt();
+                this.id = in.readInt();
+                this.is_authenticated = in.readByte() != 0;
+                this.start = in.readString();
+                this.end = in.readString();
+                this.certificate_name = in.readString();
+                this.is_hidden = in.readByte() != 0;
+                this.will_expired = in.readByte() != 0;
+            }
 
             public boolean is_hidden() {
                 return is_hidden;
@@ -235,12 +262,50 @@ public class QcCertificatesReponse extends QcResponse {
                 this.is_authenticated = is_authenticated;
             }
 
+            @Override public int describeContents() {
+                return 0;
+            }
+
+            @Override public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.date_of_issue);
+                dest.writeParcelable(this.coach, flags);
+                dest.writeString(this.name);
+                dest.writeString(this.photo);
+                dest.writeString(this.grade);
+                dest.writeParcelable(this.organization, flags);
+                dest.writeString(this.created_at);
+                dest.writeInt(this.type);
+                dest.writeInt(this.id);
+                dest.writeByte(is_authenticated ? (byte) 1 : (byte) 0);
+                dest.writeString(this.start);
+                dest.writeString(this.end);
+                dest.writeString(this.certificate_name);
+                dest.writeByte(is_hidden ? (byte) 1 : (byte) 0);
+                dest.writeByte(will_expired ? (byte) 1 : (byte) 0);
+            }
+
             public static class CoachEntity implements Parcelable {
+                public static final Creator<CoachEntity> CREATOR = new Creator<CoachEntity>() {
+                    @Override public CoachEntity createFromParcel(Parcel source) {
+                        return new CoachEntity(source);
+                    }
+
+                    @Override public CoachEntity[] newArray(int size) {
+                        return new CoachEntity[size];
+                    }
+                };
                 /**
                  * id : 6
                  */
 
                 private int id;
+
+                public CoachEntity() {
+                }
+
+                protected CoachEntity(Parcel in) {
+                    this.id = in.readInt();
+                }
 
                 public int getId() {
                     return id;
@@ -250,43 +315,41 @@ public class QcCertificatesReponse extends QcResponse {
                     this.id = id;
                 }
 
-                @Override
-                public int describeContents() {
+                @Override public int describeContents() {
                     return 0;
                 }
 
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
+                @Override public void writeToParcel(Parcel dest, int flags) {
                     dest.writeInt(this.id);
                 }
-
-                public CoachEntity() {
-                }
-
-                protected CoachEntity(Parcel in) {
-                    this.id = in.readInt();
-                }
-
-                public static final Creator<CoachEntity> CREATOR = new Creator<CoachEntity>() {
-                    @Override
-                    public CoachEntity createFromParcel(Parcel source) {
-                        return new CoachEntity(source);
-                    }
-
-                    @Override
-                    public CoachEntity[] newArray(int size) {
-                        return new CoachEntity[size];
-                    }
-                };
             }
 
             public static class OrganizationEntity implements Parcelable {
+                public static final Creator<OrganizationEntity> CREATOR = new Creator<OrganizationEntity>() {
+                    @Override public OrganizationEntity createFromParcel(Parcel source) {
+                        return new OrganizationEntity(source);
+                    }
+
+                    @Override public OrganizationEntity[] newArray(int size) {
+                        return new OrganizationEntity[size];
+                    }
+                };
                 String name;
                 String photo;
                 String contact;
                 int id;
                 boolean isAuth;
 
+                public OrganizationEntity() {
+                }
+
+                protected OrganizationEntity(Parcel in) {
+                    this.name = in.readString();
+                    this.photo = in.readString();
+                    this.contact = in.readString();
+                    this.id = in.readInt();
+                    this.isAuth = in.readByte() != 0;
+                }
 
                 public String getContact() {
                     return contact;
@@ -328,100 +391,18 @@ public class QcCertificatesReponse extends QcResponse {
                     this.name = name;
                 }
 
-                @Override
-                public int describeContents() {
+                @Override public int describeContents() {
                     return 0;
                 }
 
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
+                @Override public void writeToParcel(Parcel dest, int flags) {
                     dest.writeString(this.name);
                     dest.writeString(this.photo);
                     dest.writeString(this.contact);
                     dest.writeInt(this.id);
                     dest.writeByte(isAuth ? (byte) 1 : (byte) 0);
                 }
-
-                public OrganizationEntity() {
-                }
-
-                protected OrganizationEntity(Parcel in) {
-                    this.name = in.readString();
-                    this.photo = in.readString();
-                    this.contact = in.readString();
-                    this.id = in.readInt();
-                    this.isAuth = in.readByte() != 0;
-                }
-
-                public static final Creator<OrganizationEntity> CREATOR = new Creator<OrganizationEntity>() {
-                    @Override
-                    public OrganizationEntity createFromParcel(Parcel source) {
-                        return new OrganizationEntity(source);
-                    }
-
-                    @Override
-                    public OrganizationEntity[] newArray(int size) {
-                        return new OrganizationEntity[size];
-                    }
-                };
             }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-                dest.writeString(this.date_of_issue);
-                dest.writeParcelable(this.coach, flags);
-                dest.writeString(this.name);
-                dest.writeString(this.photo);
-                dest.writeString(this.grade);
-                dest.writeParcelable(this.organization, flags);
-                dest.writeString(this.created_at);
-                dest.writeInt(this.type);
-                dest.writeInt(this.id);
-                dest.writeByte(is_authenticated ? (byte) 1 : (byte) 0);
-                dest.writeString(this.start);
-                dest.writeString(this.end);
-                dest.writeString(this.certificate_name);
-                dest.writeByte(is_hidden ? (byte) 1 : (byte) 0);
-                dest.writeByte(will_expired ? (byte) 1 : (byte) 0);
-            }
-
-            public CertificatesEntity() {
-            }
-
-            protected CertificatesEntity(Parcel in) {
-                this.date_of_issue = in.readString();
-                this.coach = in.readParcelable(CoachEntity.class.getClassLoader());
-                this.name = in.readString();
-                this.photo = in.readString();
-                this.grade = in.readString();
-                this.organization = in.readParcelable(OrganizationEntity.class.getClassLoader());
-                this.created_at = in.readString();
-                this.type = in.readInt();
-                this.id = in.readInt();
-                this.is_authenticated = in.readByte() != 0;
-                this.start = in.readString();
-                this.end = in.readString();
-                this.certificate_name = in.readString();
-                this.is_hidden = in.readByte() != 0;
-                this.will_expired = in.readByte() != 0;
-            }
-
-            public static final Parcelable.Creator<CertificatesEntity> CREATOR = new Parcelable.Creator<CertificatesEntity>() {
-                @Override
-                public CertificatesEntity createFromParcel(Parcel source) {
-                    return new CertificatesEntity(source);
-                }
-
-                @Override
-                public CertificatesEntity[] newArray(int size) {
-                    return new CertificatesEntity[size];
-                }
-            };
         }
     }
 }

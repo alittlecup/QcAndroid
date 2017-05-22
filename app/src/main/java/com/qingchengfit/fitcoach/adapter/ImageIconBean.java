@@ -17,8 +17,7 @@ import android.support.annotation.DrawableRes;
  */
 public class ImageIconBean {
     public String content;
-    @DrawableRes
-    public int icon;
+    @DrawableRes public int icon;
     public boolean showIcon;
     public String id;
 
@@ -30,7 +29,7 @@ public class ImageIconBean {
 
     public ImageIconBean(String content) {
         this.content = content;
-        this.icon= 0;
+        this.icon = 0;
         this.showIcon = false;
     }
 }

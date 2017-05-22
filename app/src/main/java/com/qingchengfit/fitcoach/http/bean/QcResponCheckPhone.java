@@ -17,6 +17,5 @@ import com.google.gson.annotations.SerializedName;
  */
 public class QcResponCheckPhone extends QcResponse {
 
-    @SerializedName("exists")
-    boolean exists;
+    @SerializedName("exists") boolean exists;
 }

@@ -20,7 +20,6 @@ public class ModifyPwBean {
     public String password;
     public String area_code;
 
-
     public ModifyPwBean(String phone, String code, String password) {
         this.phone = phone;
         this.code = code;

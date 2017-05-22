@@ -3,9 +3,7 @@ package com.qingchengfit.fitcoach.component;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.widget.ImageView;
-
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-
 import java.lang.ref.WeakReference;
 
 /**
@@ -26,32 +24,33 @@ public class ScaleWidthWrapper extends BitmapImageViewTarget {
     WeakReference<Bitmap> mSourse;
     ImageView imageView;
     private int mWidth = 0;
+
     public ScaleWidthWrapper(ImageView view) {
         super(view);
         this.imageView = view;
-//        this.context = new WeakReference<Context>(context);
+        //        this.context = new WeakReference<Context>(context);
     }
 
-    public ScaleWidthWrapper(ImageView view,int w) {
+    public ScaleWidthWrapper(ImageView view, int w) {
         super(view);
         this.imageView = view;
         this.mWidth = w;
     }
 
-    @Override
-    protected void setResource(Bitmap resource) {
+    @Override protected void setResource(Bitmap resource) {
 
         int SrcWidth = 0;
-        if (mWidth != 0)
+        if (mWidth != 0) {
             SrcWidth = mWidth;
-        else     SrcWidth = imageView.getWidth();
+        } else {
+            SrcWidth = imageView.getWidth();
+        }
         float scale = (float) SrcWidth / (float) resource.getWidth();
         Matrix matrix = new Matrix();
-//        if (scale > 1)
-//            scale = 1;
+        //        if (scale > 1)
+        //            scale = 1;
         matrix.postScale(scale, scale);
-        if (resource.getWidth() <=0 || resource.getHeight() <= 0 || scale<=0)
-            return;
+        if (resource.getWidth() <= 0 || resource.getHeight() <= 0 || scale <= 0) return;
         mSourse = new WeakReference<Bitmap>(Bitmap.createBitmap(resource, 0, 0, resource.getWidth(), resource.getHeight(), matrix, true));
         imageView.setImageBitmap(mSourse.get());
     }

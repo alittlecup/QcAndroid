@@ -48,8 +48,7 @@ public class CourseTypeFormFragment extends BaseFragment {
     }
 
     @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-        Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_type_form, container, false);
         unbinder = ButterKnife.bind(this, view);
 
@@ -60,23 +59,17 @@ public class CourseTypeFormFragment extends BaseFragment {
                     CourseTypeform t = typesgalance.get(i);
                     switch (t.course_type) {
                         case Configs.TYPE_PRIVATE:
-                            privateCourseNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.course_unit), t.course_count));
-                            privateServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), t.server_count));
+                            privateCourseNum.setText(String.format(Locale.CHINA, getString(R.string.course_unit), t.course_count));
+                            privateServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), t.server_count));
                             break;
                         case Configs.TYPE_GROUP:
-                            groupCourseNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.course_unit), t.course_count));
-                            groupServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), t.server_count));
+                            groupCourseNum.setText(String.format(Locale.CHINA, getString(R.string.course_unit), t.course_count));
+                            groupServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), t.server_count));
 
                             break;
                         default:
-                            totalCourseNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.course_unit), t.course_count));
-                            totalServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), t.server_count));
+                            totalCourseNum.setText(String.format(Locale.CHINA, getString(R.string.course_unit), t.course_count));
+                            totalServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), t.server_count));
                             break;
                     }
                 }

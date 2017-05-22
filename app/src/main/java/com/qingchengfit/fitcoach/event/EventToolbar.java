@@ -28,7 +28,6 @@ public class EventToolbar {
         title = builder.title;
     }
 
-
     public static final class Builder {
         private String title;
 

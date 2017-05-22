@@ -78,7 +78,6 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     @BindView(R.id.modifyinfo_inputpan) LinearLayout modifyinfoInputpan;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
 
-
     private QcCoachRespone.DataEntity.CoachEntity user;
     private ModifyCoachInfo mModifyCoachInfo;
 
@@ -86,6 +85,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
     private CitiesChooser citiesChooser;
     private Unbinder unbinder;
     private Subscription spUpImg;
+    private Observable<UpyunService.UpYunResult> uppicObserver;
 
     public ModifyInfoFragment() {
     }
@@ -97,27 +97,27 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         return fragment;
     }
 
-    private Observable<UpyunService.UpYunResult> uppicObserver;
-
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         citiesChooser = new CitiesChooser(getContext());
         mModifyCoachInfo = new ModifyCoachInfo();
         uppicObserver = RxBus.getBus().register(UpyunService.UpYunResult.class.getName());
-        uppicObserver.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<UpyunService.UpYunResult>() {
-            @Override public void onCompleted() {
+        uppicObserver.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<UpyunService.UpYunResult>() {
+                @Override public void onCompleted() {
 
-            }
+                }
 
-            @Override public void onError(Throwable e) {
+                @Override public void onError(Throwable e) {
 
-            }
+                }
 
-            @Override public void onNext(UpyunService.UpYunResult upYunResult) {
-                mModifyCoachInfo.setAvatar(upYunResult.getUrl());
-                user.setAvatar(upYunResult.getUrl());
-            }
-        });
+                @Override public void onNext(UpyunService.UpYunResult upYunResult) {
+                    mModifyCoachInfo.setAvatar(upYunResult.getUrl());
+                    user.setAvatar(upYunResult.getUrl());
+                }
+            });
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,7 +129,7 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         refresh.setColorSchemeResources(R.color.primary);
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(), this);
                 refresh.setRefreshing(true);
             }
         });
@@ -228,7 +228,6 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         choosePictureFragmentDialog.show(getFragmentManager(), "choose pic");
     }
 
-
     /**
      * 修改简介
      */
@@ -280,12 +279,11 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
             });
     }
 
-
     @Override public void onDestroyView() {
         RxBus.getBus().unregister(UpyunService.UpYunResult.class.getName(), uppicObserver);
         unbinder.unbind();
         super.onDestroyView();
-        if (spUpImg != null && spUpImg.isUnsubscribed()){
+        if (spUpImg != null && spUpImg.isUnsubscribed()) {
             spUpImg.unsubscribe();
         }
     }
@@ -294,36 +292,36 @@ public class ModifyInfoFragment extends BaseSettingFragment implements ChoosePic
         if (isSuccess) {
             fragmentCallBack.ShowLoading("正在上传");
 
-            spUpImg = UpYunClient.rxUpLoad("course/",filePath)
-            //Observable.create(new Observable.OnSubscribe<String>() {
-            //    @Override public void call(Subscriber<? super String> subscriber) {
-            //        String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
-            //        subscriber.onNext(upImg);
-            //    }
-            //})
-        .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
-                @Override public void onCompleted() {
+            spUpImg = UpYunClient.rxUpLoad("course/", filePath)
+                //Observable.create(new Observable.OnSubscribe<String>() {
+                //    @Override public void call(Subscriber<? super String> subscriber) {
+                //        String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
+                //        subscriber.onNext(upImg);
+                //    }
+                //})
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Subscriber<String>() {
+                    @Override public void onCompleted() {
 
-                }
-
-                @Override public void onError(Throwable e) {
-                    fragmentCallBack.hideLoading();
-                }
-
-                @Override public void onNext(String upImg) {
-                    upImg = upImg + "!120x120";
-                    if (TextUtils.isEmpty(upImg)) {
-                        ToastUtils.showDefaultStyle("图片上传失败");
-                    } else {
-                        mModifyCoachInfo.setAvatar(upImg);
-                        Glide.with(App.AppContex)
-                            .load(PhotoUtils.getSmall(upImg))
-                            .asBitmap()
-                            .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
                     }
-                    fragmentCallBack.hideLoading();
-                }
-            });
+
+                    @Override public void onError(Throwable e) {
+                        fragmentCallBack.hideLoading();
+                    }
+
+                    @Override public void onNext(String upImg) {
+                        upImg = upImg + "!120x120";
+                        if (TextUtils.isEmpty(upImg)) {
+                            ToastUtils.showDefaultStyle("图片上传失败");
+                        } else {
+                            mModifyCoachInfo.setAvatar(upImg);
+                            Glide.with(App.AppContex)
+                                .load(PhotoUtils.getSmall(upImg))
+                                .asBitmap()
+                                .into(new CircleImgWrapper(modifyinfoHeaderPic, App.AppContex));
+                        }
+                        fragmentCallBack.hideLoading();
+                    }
+                });
         } else {
             LogUtil.e("选择图片失败");
         }

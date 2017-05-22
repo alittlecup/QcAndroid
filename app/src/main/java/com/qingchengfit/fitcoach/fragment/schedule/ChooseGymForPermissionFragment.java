@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.schedule;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import cn.qingchengfit.model.base.CoachService;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -12,7 +13,6 @@ import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymDialogFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.GymItem;
 import java.util.List;
@@ -63,8 +63,7 @@ import rx.schedulers.Schedulers;
         }
         Observable<QcCoachServiceResponse> s = null;
         if (action > 1) {
-            s = QcCloudClient.getApi().getApi
-                .qcGetCoachServicePermission(App.coachid, key);
+            s = QcCloudClient.getApi().getApi.qcGetCoachServicePermission(App.coachid, key);
         } else {
             if (mCoachService == null) {
                 s = QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid);
@@ -95,7 +94,7 @@ import rx.schedulers.Schedulers;
                             return;
                         }
                         for (int i = 0; i < services.size(); i++) {
-                            mDatas.add(new GymItem(services.get(i),!services.get(i).has_permission));
+                            mDatas.add(new GymItem(services.get(i), !services.get(i).has_permission));
                         }
                     }
                     mAdapter.notifyDataSetChanged();

@@ -16,11 +16,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/1/21 2016.
  */
 public class AddCoourseResponse extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
-    public class Data{
-        @SerializedName("course")
-        public QcOneCourseResponse.Course course;
+    public class Data {
+        @SerializedName("course") public QcOneCourseResponse.Course course;
     }
 }

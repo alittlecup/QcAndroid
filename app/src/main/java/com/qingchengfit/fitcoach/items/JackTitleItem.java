@@ -3,15 +3,11 @@ package com.qingchengfit.fitcoach.items;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.qingchengfit.fitcoach.R;
-
-import java.util.List;
-
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
-
+import java.util.List;
 
 /**
  * power by
@@ -33,30 +29,25 @@ import eu.davidea.viewholders.FlexibleViewHolder;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/1.
  */
-public class JackTitleItem  extends AbstractFlexibleItem<JackTitleItem.JacketTitleVH> {
-
+public class JackTitleItem extends AbstractFlexibleItem<JackTitleItem.JacketTitleVH> {
 
     public JackTitleItem() {
         setDraggable(false);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
-    @Override
-    public JacketTitleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return  new JacketTitleVH(inflater.inflate(getLayoutRes(),parent,false),adapter);
+    @Override public JacketTitleVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+        return new JacketTitleVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_jacket_manage_title;
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, JacketTitleVH holder, int position, List payloads) {
+    @Override public void bindViewHolder(FlexibleAdapter adapter, JacketTitleVH holder, int position, List payloads) {
 
     }
 

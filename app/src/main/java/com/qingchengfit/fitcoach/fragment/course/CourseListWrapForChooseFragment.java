@@ -62,18 +62,18 @@ public class CourseListWrapForChooseFragment extends CourseListFragment {
         return true;
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.add_course_btn){
-            if ((!mIsPrivate  && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))
-                || (mIsPrivate&& !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))) {
+    @Override public void onClick(View view) {
+        if (view.getId() == R.id.add_course_btn) {
+            if ((!mIsPrivate && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE)) || (mIsPrivate
+                && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))) {
                 showAlert(R.string.sorry_no_permission);
                 return;
             }
 
-            if (getActivity() instanceof CourseActivity){
-                getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frag, AddCourseFragment.newInstance(getArguments().getBoolean("isPrivate",false)))
+            if (getActivity() instanceof CourseActivity) {
+                getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frag, AddCourseFragment.newInstance(getArguments().getBoolean("isPrivate", false)))
                     .addToBackStack(getFragmentName())
                     .commit();
             }

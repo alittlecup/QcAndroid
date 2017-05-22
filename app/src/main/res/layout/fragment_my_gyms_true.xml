@@ -1,90 +1,93 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context="com.qingchengfit.fitcoach.fragment.MyGymsFragment">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qingchengfit.fitcoach.fragment.MyGymsFragment"
+    >
 
-    <include layout="@layout/common_toolbar">
-    </include>
+  <include layout="@layout/common_toolbar">
+  </include>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      >
+
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+
+        android:clipToPadding="false"
         >
 
-        <android.support.v7.widget.RecyclerView
+    </android.support.v7.widget.RecyclerView>
+  </android.support.v4.widget.SwipeRefreshLayout>
 
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/refresh_nodata"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:background="@color/white"
+      android:visibility="gone"
+      >
 
-            android:clipToPadding="false"
-            >
-
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_nodata"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:background="@color/white"
-        android:visibility="gone"
         >
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+      <LinearLayout
+          android:id="@+id/no_data"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:orientation="vertical"
+          >
 
-            <LinearLayout
-                android:id="@+id/no_data"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                >
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="75dp"
+            android:src="@drawable/img_no_gyms"
+            />
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginTop="75dp"
-                    android:src="@drawable/img_no_gyms"
-                    />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="您还没有添加任何健身房"
+            style="@style/Qc.TextCommonGrey"
 
-                <TextView
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="您还没有添加任何健身房"
+            />
 
-                    />
+        <Button
+            android:id="@+id/course_add_private"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginTop="20dp"
+            android:text="设置健身房"
+            />
 
-                <Button
-                    android:id="@+id/course_add_private"
-                    android:layout_width="200dp"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:layout_marginTop="20dp"
-                    android:text="设置健身房"
-                    />
-
-                <Button
-                    android:visibility="gone"
-                    android:id="@+id/course_add_belong"
-                    android:layout_width="200dp"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:layout_marginTop="20dp"
-                    android:text="添加所属健身房"
-                    />
-            </LinearLayout>
+        <Button
+            android:id="@+id/course_add_belong"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginTop="20dp"
+            android:text="添加所属健身房"
+            android:visibility="gone"
+            />
+      </LinearLayout>
 
 
-        </ScrollView>
+    </ScrollView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+  </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
 import android.support.annotation.StringRes;
+import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
@@ -14,7 +15,6 @@ import com.qingchengfit.fitcoach.bean.TeacherImpression;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseDetail;
 import java.util.List;
@@ -113,8 +113,7 @@ public class CourseDetailPresenter extends BasePresenter {
                     view.showDelFailed(R.string.alert_permission_forbid);
                     return false;
                 }
-            }
-            else {
+            } else {
                 view.showDelFailed("此课程种类适用于多个场馆，请在【连锁运营】里进行编辑");
                 return false;
             }

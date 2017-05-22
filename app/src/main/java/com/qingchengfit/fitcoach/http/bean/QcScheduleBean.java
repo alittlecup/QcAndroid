@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -21,48 +19,33 @@ import java.util.List;
  * Created by Paper on 15/10/13 2015.
  */
 public class QcScheduleBean {
-    @SerializedName("count")
-    public int count;
-    @SerializedName("end")
-    public String end;
-    @SerializedName("start")
-    public String start;
-    @SerializedName("id")
-    public int id;
-    @SerializedName("url")
-    public String url;
-    @SerializedName("shop")
-    public Shop shop;
-    @SerializedName("course")
-    public Course course;
-    @SerializedName("users")
-    public String users;
-    @SerializedName("orders")
-    public List<Order> orders;
+    @SerializedName("count") public int count;
+    @SerializedName("end") public String end;
+    @SerializedName("start") public String start;
+    @SerializedName("id") public int id;
+    @SerializedName("url") public String url;
+    @SerializedName("shop") public Shop shop;
+    @SerializedName("course") public Course course;
+    @SerializedName("users") public String users;
+    @SerializedName("orders") public List<Order> orders;
 
     public static class Order {
-        @SerializedName("count")
-        public int count;
-        @SerializedName("username")
-        public String username;
+        @SerializedName("count") public int count;
+        @SerializedName("username") public String username;
     }
 
     public static class Shop implements Parcelable {
-        @SerializedName("name")
-        public String name;
-        @SerializedName("id")
-        public String id;
+        public static final Parcelable.Creator<Shop> CREATOR = new Parcelable.Creator<Shop>() {
+            @Override public Shop createFromParcel(Parcel source) {
+                return new Shop(source);
+            }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.name);
-            dest.writeString(this.id);
-        }
+            @Override public Shop[] newArray(int size) {
+                return new Shop[size];
+            }
+        };
+        @SerializedName("name") public String name;
+        @SerializedName("id") public String id;
 
         public Shop() {
         }
@@ -72,25 +55,19 @@ public class QcScheduleBean {
             this.id = in.readString();
         }
 
-        public static final Parcelable.Creator<Shop> CREATOR = new Parcelable.Creator<Shop>() {
-            @Override
-            public Shop createFromParcel(Parcel source) {
-                return new Shop(source);
-            }
+        @Override public int describeContents() {
+            return 0;
+        }
 
-            @Override
-            public Shop[] newArray(int size) {
-                return new Shop[size];
-            }
-        };
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.name);
+            dest.writeString(this.id);
+        }
     }
 
     public static class Course {
-        @SerializedName("name")
-        public String name;
-        @SerializedName("photo")
-        public String photo;
+        @SerializedName("name") public String name;
+        @SerializedName("photo") public String photo;
         public boolean is_private;
-
     }
 }

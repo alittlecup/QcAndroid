@@ -22,7 +22,6 @@ public class CreatBrandBody {
         photo = builder.photo;
     }
 
-
     public static final class Builder {
         private String name;
         private String photo;

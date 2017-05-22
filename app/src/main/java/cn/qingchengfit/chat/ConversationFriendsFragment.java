@@ -69,7 +69,7 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
         getFragmentManager().beginTransaction().replace(R.id.chat_friend_frag, new ChatFriendAllChooseFragment()).commit();
         RxBusAdd(EventChoosePerson.class).subscribe(new Action1<EventChoosePerson>() {
             @Override public void call(EventChoosePerson eventChoosePerson) {
-                tvAllotsaleSelectCount.setText (DirtySender.studentList.size() >99?"...":DirtySender.studentList.size()+"");
+                tvAllotsaleSelectCount.setText(DirtySender.studentList.size() > 99 ? "..." : DirtySender.studentList.size() + "");
             }
         });
         return view;
@@ -112,8 +112,9 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
      */
     @OnClick(R.id.btn_modify_sale) public void onDone() {
         Intent ret = new Intent();
-        ret.putExtra("ids", (ArrayList<String>) BusinessUtils.qcstudentIds2ListChatExcepteSb(new ArrayList<>(DirtySender.studentList),loginStatus.getUserId(),getContext()));
-        getActivity().setResult(Activity.RESULT_OK,ret);
+        ret.putExtra("ids", (ArrayList<String>) BusinessUtils.qcstudentIds2ListChatExcepteSb(new ArrayList<>(DirtySender.studentList),
+            loginStatus.getUserId(), getContext()));
+        getActivity().setResult(Activity.RESULT_OK, ret);
         DirtySender.studentList.clear();
         getActivity().finish();
     }
@@ -127,13 +128,12 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
         super.onDestroyView();
     }
 
-
     @OnClick(R.id.ll_show_select) public void onViewClicked() {
         BottomStudentsFragment selectSutdentFragment = new BottomStudentsFragment();
         selectSutdentFragment.setListener(new BottomStudentsFragment.BottomStudentsListener() {
             @Override public void onBottomStudents(List<Personage> list) {
                 DirtySender.studentList.clear();
-                DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(),list));
+                DirtySender.studentList.addAll(ListUtils.transerList(new ArrayList<QcStudentBean>(), list));
                 RxBus.getBus().post(new EventFresh());
             }
         });

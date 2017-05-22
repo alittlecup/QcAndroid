@@ -26,5 +26,6 @@ import java.util.List;
  */
 public interface BrandManageView extends PView {
     void onList(List<Brand> list);
+
     void onFailed(String s);
 }

@@ -7,7 +7,6 @@ import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import java.util.List;
 
-
 /**
  * power by
  * <p/>
@@ -23,36 +22,22 @@ import java.util.List;
  */
 public class QcResponsePrivateBatchDetail extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
-
+    @SerializedName("data") public Data data;
 
     public class Data {
-        @SerializedName("batch")
-        public BatchDetail batch;
+        @SerializedName("batch") public BatchDetail batch;
     }
 
     public class BatchDetail {
-        @SerializedName("id")
-        public String id;
-        @SerializedName("shop")
-        public QcScheduleBean.Shop shop;
-        @SerializedName("max_users")
-        public int max_users;
-        @SerializedName("from_date")
-        public String from_date;
-        @SerializedName("to_date")
-        public String to_date;
-        @SerializedName("spaces")
-        public List<Space> spaces;
-        @SerializedName("course")
-        public Course course;
-        @SerializedName("rule")
-        public List<Rule> rule;
-        @SerializedName("teacher")
-        public QcSchedulesResponse.Teacher teacher;
-        @SerializedName("time_repeats")
-        public List<TimeRepeat> time_repeats;
-
+        @SerializedName("id") public String id;
+        @SerializedName("shop") public QcScheduleBean.Shop shop;
+        @SerializedName("max_users") public int max_users;
+        @SerializedName("from_date") public String from_date;
+        @SerializedName("to_date") public String to_date;
+        @SerializedName("spaces") public List<Space> spaces;
+        @SerializedName("course") public Course course;
+        @SerializedName("rule") public List<Rule> rule;
+        @SerializedName("teacher") public QcSchedulesResponse.Teacher teacher;
+        @SerializedName("time_repeats") public List<TimeRepeat> time_repeats;
     }
 }

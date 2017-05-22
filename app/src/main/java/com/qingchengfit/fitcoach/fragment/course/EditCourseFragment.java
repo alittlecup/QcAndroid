@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -30,7 +31,6 @@ import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.CourseBody;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrandShops;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -71,11 +71,40 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
-    private Fragment mCourseInfoFragment;
-
     @Inject EditCoursePresenter mPresenter;
     @Inject CoachService coachService;
+    private Fragment mCourseInfoFragment;
     private Unbinder unbinding;
+    private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+            if (mCourseInfoFragment instanceof CourseBaseInfoEditFragment) {
+                CourseDetail courseDetail = ((CourseBaseInfoEditFragment) mCourseInfoFragment).getCourse();
+                if (courseDetail != null) {
+                    //                    String supportIds = null;
+                    //                    if (suitGymsEdit.getVisibility() == View.VISIBLE) {
+                    //                        supportIds = (String) suitGymsEdit.getTag();
+                    //                    }
+                    //                    if (supportIds == null && GymUtils.isInBrand(coachService)) {
+                    //                        supportIds = ((CourseDetail) getArguments().getParcelable("c")).getShopId();
+                    //                    }
+
+                    CourseBody body = new CourseBody.Builder().length(courseDetail.getLength() + "")
+                        .is_private(courseDetail.is_private() ? 1 : 0)
+                        .capacity(courseDetail.getCapacity())
+                        .min_users(courseDetail.getMin_users())
+                        .photo(courseDetail.getPhoto())
+                        .name(courseDetail.getName())
+                        //                            .shop_ids(supportIds)
+                        .plan_id(courseDetail.getPlan() == null ? null
+                            : (courseDetail.getPlan().getId() == null ? null : courseDetail.getPlan().getId() + ""))
+                        .build();
+                    showLoading();
+                    mPresenter.editCourse(courseDetail.getId(), body);
+                }
+            }
+            return true;
+        }
+    };
 
     public static EditCourseFragment newInstance(CourseDetail course) {
 
@@ -109,37 +138,6 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
         });
         return view;
     }
-
-    private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
-        @Override public boolean onMenuItemClick(MenuItem item) {
-            if (mCourseInfoFragment instanceof CourseBaseInfoEditFragment) {
-                CourseDetail courseDetail = ((CourseBaseInfoEditFragment) mCourseInfoFragment).getCourse();
-                if (courseDetail != null) {
-                    //                    String supportIds = null;
-                    //                    if (suitGymsEdit.getVisibility() == View.VISIBLE) {
-                    //                        supportIds = (String) suitGymsEdit.getTag();
-                    //                    }
-                    //                    if (supportIds == null && GymUtils.isInBrand(coachService)) {
-                    //                        supportIds = ((CourseDetail) getArguments().getParcelable("c")).getShopId();
-                    //                    }
-
-                    CourseBody body = new CourseBody.Builder().length(courseDetail.getLength() + "")
-                        .is_private(courseDetail.is_private() ? 1 : 0)
-                        .capacity(courseDetail.getCapacity())
-                        .min_users(courseDetail.getMin_users())
-                        .photo(courseDetail.getPhoto())
-                        .name(courseDetail.getName())
-                        //                            .shop_ids(supportIds)
-                        .plan_id(courseDetail.getPlan() == null ? null
-                            : (courseDetail.getPlan().getId() == null ? null : courseDetail.getPlan().getId() + ""))
-                        .build();
-                    showLoading();
-                    mPresenter.editCourse(courseDetail.getId(), body);
-                }
-            }
-            return true;
-        }
-    };
 
     @Override public String getFragmentName() {
         return EditCourseFragment.class.getName();

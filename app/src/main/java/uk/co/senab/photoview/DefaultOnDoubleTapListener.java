@@ -32,11 +32,9 @@ public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapLi
         this.photoViewAttacher = newPhotoViewAttacher;
     }
 
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
+    @Override public boolean onSingleTapConfirmed(MotionEvent e) {
 
-        if (this.photoViewAttacher == null)
-            return false;
+        if (this.photoViewAttacher == null) return false;
 
         ImageView imageView = photoViewAttacher.getImageView();
 
@@ -49,10 +47,8 @@ public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapLi
                 // Check to see if the user tapped on the photo
                 if (displayRect.contains(x, y)) {
 
-                    float xResult = (x - displayRect.left)
-                            / displayRect.width();
-                    float yResult = (y - displayRect.top)
-                            / displayRect.height();
+                    float xResult = (x - displayRect.left) / displayRect.width();
+                    float yResult = (y - displayRect.top) / displayRect.height();
 
                     photoViewAttacher.getOnPhotoTapListener().onPhotoTap(imageView, xResult, yResult);
                     return true;
@@ -66,11 +62,9 @@ public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapLi
         return false;
     }
 
-    @Override
-    public boolean onDoubleTap(MotionEvent ev) {
+    @Override public boolean onDoubleTap(MotionEvent ev) {
 
-        if (photoViewAttacher == null)
-            return false;
+        if (photoViewAttacher == null) return false;
 
         try {
             float scale = photoViewAttacher.getScale();
@@ -91,10 +85,8 @@ public class DefaultOnDoubleTapListener implements GestureDetector.OnDoubleTapLi
         return true;
     }
 
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent e) {
+    @Override public boolean onDoubleTapEvent(MotionEvent e) {
         // Wait for the confirmed onDoubleTap() instead
         return false;
     }
-
 }

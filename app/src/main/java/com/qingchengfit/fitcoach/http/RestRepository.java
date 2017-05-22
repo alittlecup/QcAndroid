@@ -25,23 +25,21 @@ import javax.inject.Inject;
 
 public class RestRepository {
 
+    private QcCloudClient client;
+
     public RestRepository(QcCloudClient client) {
         this.client = client;
     }
-    @Inject
-    RestRepository(){
+
+    @Inject RestRepository() {
         this.client = QcCloudClient.getApi();
     }
 
-
-    private QcCloudClient client;
-
-    public QcCloudClient.GetApi getGet_api(){
+    public QcCloudClient.GetApi getGet_api() {
         return client.getApi;
     }
-    public QcCloudClient.PostApi getPost_api(){
+
+    public QcCloudClient.PostApi getPost_api() {
         return client.postApi;
     }
-
-
 }

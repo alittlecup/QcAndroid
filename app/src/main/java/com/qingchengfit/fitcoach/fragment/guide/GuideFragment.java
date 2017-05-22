@@ -56,35 +56,33 @@ public class GuideFragment extends BaseFragment {
 
     public static final int RESULT_BRAND = 11;
 
-    @BindView(R.id.step_indicator)
-    StepperIndicator stepIndicator;
+    @BindView(R.id.step_indicator) StepperIndicator stepIndicator;
 
     CoachInitBean initBean;
     Gson gson = new Gson();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private Unbinder unbinder;
     private boolean isAddBrannd = false;
     private Brand brand;
+
     public void setAddBrannd(boolean addBrannd) {
         isAddBrannd = addBrannd;
     }
 
-    public void setBrand(Brand brand){
+    public void setBrand(Brand brand) {
         this.brand = brand;
-    };
+    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    ;
+
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guide_container, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 getActivity().onBackPressed();
             }
         });
@@ -95,21 +93,21 @@ public class GuideFragment extends BaseFragment {
         if (isAddBrannd) {
             getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
             return view;
-        }else {
-            if (brand != null)
-                initBean.brand_id = brand.getId();
+        } else {
+            if (brand != null) initBean.brand_id = brand.getId();
         }
-        if (TextUtils.isEmpty(initBean.brand_id)){
+        if (TextUtils.isEmpty(initBean.brand_id)) {
             if (App.gUser != null && App.gUser.id != null) {
                 RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
-                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponseBrands>() {
                         @Override public void call(QcResponseBrands qcResponse) {
                             if (ResponseConstant.checkSuccess(qcResponse)) {
                                 if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
                                     Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
-                                    startActivityForResult(toChooseBrand,11);
-                                }else {
+                                    startActivityForResult(toChooseBrand, 11);
+                                } else {
                                     getChildFragmentManager().beginTransaction()
                                         .replace(R.id.guide_frag, new GuideSetBrandFragment())
                                         .commit();
@@ -120,76 +118,64 @@ public class GuideFragment extends BaseFragment {
                         @Override public void call(Throwable throwable) {
                         }
                     }));
-            }else {
-                getChildFragmentManager().beginTransaction()
-                    .replace(R.id.guide_frag, new GuideSetBrandFragment())
-                    .commit();
+            } else {
+                getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
             }
-        }else {
-            if (App.gUser != null && App.gUser.id != null){
-            RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id+"")
-                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                                 .subscribe(new Action1<QcResponseBrands>() {
-                                     @Override
-                                     public void call(QcResponseBrands qcResponse) {
-                                         if (ResponseConstant.checkSuccess(qcResponse)) {
-                                             if (qcResponse.data != null && qcResponse.data.brands.size() >0){
-                                                 for (int i = 0; i < qcResponse.data.brands.size(); i++) {
-                                                     Brand b = qcResponse.data.brands.get(i);
-                                                     if (b.getId().equalsIgnoreCase(initBean.brand_id)){
-                                                         getChildFragmentManager().beginTransaction()
-                                                             .replace(R.id.guide_frag, new GuideSetGymFragmentBuilder(b.getPhoto(), b.getName(), b.getId()).build())
-                                                             .commit();
-                                                         break;
-                                                     }
-                                                 }
-                                             }else {
-                                                 getChildFragmentManager().beginTransaction()
-                                                     .replace(R.id.guide_frag, new GuideSetBrandFragment())
-                                                     .commit();
-                                             }
-                                         }else {
-                                             getChildFragmentManager().beginTransaction()
-                                                 .replace(R.id.guide_frag, new GuideSetBrandFragment())
-                                                 .commit();
-                                         }
-                                     }
-                                 }, new Action1<Throwable>() {
-                                     @Override
-                                     public void call(Throwable throwable) {
-                                     }
-                                 })
-            );}else {
-                getChildFragmentManager().beginTransaction()
-                    .replace(R.id.guide_frag, new GuideSetBrandFragment())
-                    .commit();
+        } else {
+            if (App.gUser != null && App.gUser.id != null) {
+                RxRegiste(QcCloudClient.getApi().getApi.qcGetBrands(App.gUser.id + "")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<QcResponseBrands>() {
+                        @Override public void call(QcResponseBrands qcResponse) {
+                            if (ResponseConstant.checkSuccess(qcResponse)) {
+                                if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
+                                    for (int i = 0; i < qcResponse.data.brands.size(); i++) {
+                                        Brand b = qcResponse.data.brands.get(i);
+                                        if (b.getId().equalsIgnoreCase(initBean.brand_id)) {
+                                            getChildFragmentManager().beginTransaction()
+                                                .replace(R.id.guide_frag,
+                                                    new GuideSetGymFragmentBuilder(b.getPhoto(), b.getName(), b.getId()).build())
+                                                .commit();
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    getChildFragmentManager().beginTransaction()
+                                        .replace(R.id.guide_frag, new GuideSetBrandFragment())
+                                        .commit();
+                                }
+                            } else {
+                                getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
+                            }
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override public void call(Throwable throwable) {
+                        }
+                    }));
+            } else {
+                getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
             }
-
         }
 
-
-        RxBusAdd(EventStep.class)
-                .subscribe(new Action1<EventStep>() {
-                    @Override
-                    public void call(EventStep eventStep) {
-                        setSetp(eventStep.step);
-                    }
-                });
-        RxBusAdd(CoachInitBean.class)
-                .subscribe(new Action1<CoachInitBean>() {
-                    @Override
-                    public void call(CoachInitBean coachInitBean) {
-                        PreferenceUtils.setPrefString(getContext(), "initSystem", gson.toJson(initBean));
-                        LogUtil.e(gson.toJson(initBean));
-                    }
-                });
+        RxBusAdd(EventStep.class).subscribe(new Action1<EventStep>() {
+            @Override public void call(EventStep eventStep) {
+                setSetp(eventStep.step);
+            }
+        });
+        RxBusAdd(CoachInitBean.class).subscribe(new Action1<CoachInitBean>() {
+            @Override public void call(CoachInitBean coachInitBean) {
+                PreferenceUtils.setPrefString(getContext(), "initSystem", gson.toJson(initBean));
+                LogUtil.e(gson.toJson(initBean));
+            }
+        });
         return view;
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == 11){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 11) {
                 Brand b = (Brand) IntentUtils.getParcelable(data);
                 initBean.brand_id = b.getId();
                 getChildFragmentManager().beginTransaction()
@@ -207,16 +193,12 @@ public class GuideFragment extends BaseFragment {
         return initBean;
     }
 
-    @Override
-    protected void lazyLoad() {
+    @Override protected void lazyLoad() {
 
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 }

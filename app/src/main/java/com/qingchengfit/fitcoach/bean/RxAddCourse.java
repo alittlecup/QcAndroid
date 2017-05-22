@@ -14,7 +14,7 @@ package com.qingchengfit.fitcoach.bean;
  * Created by Paper on 16/1/7 2016.
  */
 public class RxAddCourse {
-    public int type ;
+    public int type;
 
     public RxAddCourse(int type) {
         this.type = type;

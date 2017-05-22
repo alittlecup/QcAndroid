@@ -20,15 +20,12 @@ import java.util.List;
 
 public class SystemMsgItem extends AbstractFlexibleItem<SystemMsgItem.SystemMsgVH> {
 
+    @DrawableRes int type;
+    NotificationGlance notificationGlance;
     public SystemMsgItem(int type, NotificationGlance notificationGlance) {
         this.type = type;
         this.notificationGlance = notificationGlance;
     }
-
-
-
-    @DrawableRes int type;
-    NotificationGlance notificationGlance;
 
     public int getType() {
         return type;
@@ -57,19 +54,19 @@ public class SystemMsgItem extends AbstractFlexibleItem<SystemMsgItem.SystemMsgV
     @Override public void bindViewHolder(FlexibleAdapter adapter, SystemMsgVH holder, int position, List payloads) {
         holder.itemImg.setImageResource(type);
         holder.itemName.setText(ConstantNotification.getNotiStr(type));
-        holder.itemRedDogt.setVisibility(notificationGlance.unread > 0?View.VISIBLE:View.GONE );
+        holder.itemRedDogt.setVisibility(notificationGlance.unread > 0 ? View.VISIBLE : View.GONE);
         if (notificationGlance.notification != null && notificationGlance.notification.getId() != null) {
-            if (TextUtils.isEmpty(notificationGlance.notification.shop_name)){
+            if (TextUtils.isEmpty(notificationGlance.notification.shop_name)) {
                 holder.itemMsgTag.setVisibility(View.GONE);
-            }else {
+            } else {
                 holder.itemMsgTag.setVisibility(View.VISIBLE);
-                holder.itemMsgTag.setText("["+ notificationGlance.notification.shop_name +"]");
+                holder.itemMsgTag.setText("[" + notificationGlance.notification.shop_name + "]");
             }
 
             holder.itemMsgContent.setText(notificationGlance.notification != null ? notificationGlance.notification.getDescription() : "");
-            holder.itemTime.setText(DateUtils.getNotifacationTimeStr(DateUtils.formatDateFromServer(notificationGlance.notification.getCreated_at())));
+            holder.itemTime.setText(
+                DateUtils.getNotifacationTimeStr(DateUtils.formatDateFromServer(notificationGlance.notification.getCreated_at())));
         }
-
     }
 
     @Override public boolean equals(Object o) {
@@ -83,6 +80,7 @@ public class SystemMsgItem extends AbstractFlexibleItem<SystemMsgItem.SystemMsgV
         @BindView(R.id.item_time) TextView itemTime;
         @BindView(R.id.item_msg_tag) TextView itemMsgTag;
         @BindView(R.id.item_msg_content) TextView itemMsgContent;
+
         public SystemMsgVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

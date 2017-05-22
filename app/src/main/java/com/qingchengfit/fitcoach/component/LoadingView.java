@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -48,14 +47,13 @@ public class LoadingView extends RelativeLayout {
         animationDrawable = (AnimationDrawable) ((ImageView) view.findViewById(R.id.loading_img)).getDrawable();
         addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         this.setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
+            @Override public void onSystemUiVisibilityChange(int visibility) {
                 if (visibility == VISIBLE) {
                     animationDrawable.start();
-                } else animationDrawable.stop();
+                } else {
+                    animationDrawable.stop();
+                }
             }
         });
     }
-
-
 }

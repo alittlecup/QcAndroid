@@ -35,21 +35,17 @@ public class UpYunClient {
 
     public static Observable<String> rxUpLoad(final String cloudpath, final String filePath) {
         return Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
+            @Override public void call(Subscriber<? super String> subscriber) {
                 String upImg = UpYunClient.upLoadImg(cloudpath, new File(filePath));
                 subscriber.onNext(upImg);
                 subscriber.onCompleted();
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-
     }
 
     /**
-     * @param path   记得带分隔符 eg /header/
+     * @param path 记得带分隔符 eg /header/
      * @param userid 云上存储的文件名
-     * @param file
-     * @return
      */
     public static boolean upLoadImg(String path, String userid, File file) {
         UpYun upYun = init();
@@ -71,8 +67,6 @@ public class UpYunClient {
 
     /**
      * @param path 记得带分隔符 eg /header/
-     * @param file
-     * @return
      */
     public static String upLoadImg(String path, File file) {
         UpYun upYun = init();
@@ -95,69 +89,65 @@ public class UpYunClient {
         }
     }
 
-
-
-
     /**
-        public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com";
+     public static final String UPYUNPATH = "http://zoneke-img.b0.upaiyun.com";
 
-        public static String KEY = "9TRMelXZlcUdrm+lrIluDPR4BFc=";
-        public static String SPACE = "zoneke-img";
-        //public static String SPACE = "qcandroid";
-        public static String savePath = "/uploads/{year}{mon}{day}/{random32}{.suffix}";
-
-
-
-        public static Map<String, Object> getUpParams(){
-             Map<String, Object> paramsMap = new HashMap<>();
-            //上传空间
-            paramsMap.put(Params.BUCKET, SPACE);
-            //保存路径，任选其中一个
-            paramsMap.put(Params.SAVE_KEY,savePath);
-            //paramsMap.put(Params.RETURN_URL,UPYUNPATH);
-            return paramsMap;
-        }
-
-        public static Observable<String> rxUpLoad(final String cloudpath, final String filePath) {
-            return Observable.create(new Observable.OnSubscribe<String>() {
-                @Override
-                public void call(Subscriber<? super String> subscriber) {
-                    //Map<String, Object> params = getUpParams();
-                    //if (cloudpath.startsWith("/"))
-                    //else params.put(Params.RETURN_URL,UPYUNPATH+"/"+cloudpath);
-                    UploadManager.getInstance().formUpload(new File(filePath), getUpParams(), new SignatureListener() {
-                        @Override public String getSignature(String policy) {
-                             return UpYunUtils.md5(policy + KEY);
-                        }
-                    }, new UpCompleteListener() {
-                        @Override public void onComplete(boolean isSuccess, String result) {
-                            if (isSuccess) {
-                                try{
-                                    JSONObject jsonObject = new JSONObject(result);
-                                    subscriber.onNext(UPYUNPATH+jsonObject.getString("url"));
-
-                                }catch (Exception e){
-                                    subscriber.onNext("");
-                                }
+     public static String KEY = "9TRMelXZlcUdrm+lrIluDPR4BFc=";
+     public static String SPACE = "zoneke-img";
+     //public static String SPACE = "qcandroid";
+     public static String savePath = "/uploads/{year}{mon}{day}/{random32}{.suffix}";
 
 
-                            } else {
-                                subscriber.onNext("");
-                            }
-                            subscriber.onCompleted();
-                        }
-                    }, new UpProgressListener() {
-                        @Override public void onRequestProgress(long bytesWrite, long contentLength) {
 
-                        }
-                    });
+     public static Map<String, Object> getUpParams(){
+     Map<String, Object> paramsMap = new HashMap<>();
+     //上传空间
+     paramsMap.put(Params.BUCKET, SPACE);
+     //保存路径，任选其中一个
+     paramsMap.put(Params.SAVE_KEY,savePath);
+     //paramsMap.put(Params.RETURN_URL,UPYUNPATH);
+     return paramsMap;
+     }
+
+     public static Observable<String> rxUpLoad(final String cloudpath, final String filePath) {
+     return Observable.create(new Observable.OnSubscribe<String>() {
+    @Override public void call(Subscriber<? super String> subscriber) {
+    //Map<String, Object> params = getUpParams();
+    //if (cloudpath.startsWith("/"))
+    //else params.put(Params.RETURN_URL,UPYUNPATH+"/"+cloudpath);
+    UploadManager.getInstance().formUpload(new File(filePath), getUpParams(), new SignatureListener() {
+    @Override public String getSignature(String policy) {
+    return UpYunUtils.md5(policy + KEY);
+    }
+    }, new UpCompleteListener() {
+    @Override public void onComplete(boolean isSuccess, String result) {
+    if (isSuccess) {
+    try{
+    JSONObject jsonObject = new JSONObject(result);
+    subscriber.onNext(UPYUNPATH+jsonObject.getString("url"));
+
+    }catch (Exception e){
+    subscriber.onNext("");
+    }
 
 
-                }
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    } else {
+    subscriber.onNext("");
+    }
+    subscriber.onCompleted();
+    }
+    }, new UpProgressListener() {
+    @Override public void onRequestProgress(long bytesWrite, long contentLength) {
 
-        }
+    }
+    });
 
-    */
+
+    }
+    }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+     }
+
+     */
 
 }

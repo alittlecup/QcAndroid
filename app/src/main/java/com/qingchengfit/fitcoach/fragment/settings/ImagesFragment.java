@@ -92,35 +92,35 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
         /**
          * 上传照片
          */
-        RxBusAdd(EventChooseImage.class).subscribe(
-            eventChooseImage -> {
-                showLoading();
-                UpYunClient.rxUpLoad("/", eventChooseImage.filePath).observeOn(Schedulers.io()).flatMap(s -> {
+        RxBusAdd(EventChooseImage.class).subscribe(eventChooseImage -> {
+            showLoading();
+            UpYunClient.rxUpLoad("/", eventChooseImage.filePath).observeOn(Schedulers.io()).flatMap(s -> {
 
-                    HashMap<String, Object> p = new HashMap<String, Object>();
-                    p.put("photo", s);
-                    return QcCloudClient.getApi().postApi.qcUploadWallImage(p);
-                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponeSingleImageWall -> {
-                    hideLoading();
-                    if (ResponseConstant.checkSuccess(qcResponeSingleImageWall)) {
-                        if (datas.size() == 1 && datas.get(0) instanceof CommonNoDataItem) {
-                            datas.clear();
-                        }
-                        datas.add(new ImageItem(qcResponeSingleImageWall.data.photo.photo, qcResponeSingleImageWall.data.photo.id));
-                        commonFlexAdapter.notifyDataSetChanged();
-                        ToastUtils.show("上传成功");
-                    } else {
-                        ToastUtils.show("上传失败");
+                HashMap<String, Object> p = new HashMap<String, Object>();
+                p.put("photo", s);
+                return QcCloudClient.getApi().postApi.qcUploadWallImage(p);
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcResponeSingleImageWall -> {
+                hideLoading();
+                if (ResponseConstant.checkSuccess(qcResponeSingleImageWall)) {
+                    if (datas.size() == 1 && datas.get(0) instanceof CommonNoDataItem) {
+                        datas.clear();
                     }
-                }, throwable -> {
-                    hideLoading();
+                    datas.add(new ImageItem(qcResponeSingleImageWall.data.photo.photo, qcResponeSingleImageWall.data.photo.id));
+                    commonFlexAdapter.notifyDataSetChanged();
+                    ToastUtils.show("上传成功");
+                } else {
                     ToastUtils.show("上传失败");
-                });
+                }
+            }, throwable -> {
+                hideLoading();
+                ToastUtils.show("上传失败");
             });
+        });
         freshData();
         return view;
     }
-    private void freshData(){
+
+    private void freshData() {
         fragmentCallBack.ShowLoading("请稍后");
         RxRegiste(QcCloudClient.getApi().getApi.qcGetImageWalls()
             .subscribeOn(Schedulers.io())
@@ -156,7 +156,7 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
     }
 
     @OnClick(R.id.btn_add) void uploadImages() {
-        if (datas.size() >= 5){
+        if (datas.size() >= 5) {
             cn.qingchengfit.utils.ToastUtils.show("您最多只能上传五张图片");
             return;
         }
@@ -191,7 +191,9 @@ public class ImagesFragment extends BaseSettingFragment implements FlexibleAdapt
                         }
                     }
                 }));
-        }else cn.qingchengfit.utils.ToastUtils.show("您没有选择删除的照片");
+        } else {
+            cn.qingchengfit.utils.ToastUtils.show("您没有选择删除的照片");
+        }
     }
 
     @Override public String getFragmentName() {

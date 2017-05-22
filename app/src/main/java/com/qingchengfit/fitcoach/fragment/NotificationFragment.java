@@ -77,6 +77,9 @@ public class NotificationFragment extends BaseSettingFragment {
     private Unbinder unbinder;
     private int type;
 
+    public NotificationFragment() {
+    }
+
     public static NotificationFragment newInstance(int type) {
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
@@ -88,9 +91,6 @@ public class NotificationFragment extends BaseSettingFragment {
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments().getInt("t");
-    }
-
-    public NotificationFragment() {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,7 +115,7 @@ public class NotificationFragment extends BaseSettingFragment {
                     Intent toWeb = new Intent(getContext(), WebActivity.class);
                     toWeb.putExtra("url", adapter.datas.get(pos).getUrl());
                     startActivity(toWeb);
-                }else {
+                } else {
                     try {
                         Uri uri = Uri.parse(adapter.datas.get(pos).getUrl());
                         Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
@@ -126,10 +126,9 @@ public class NotificationFragment extends BaseSettingFragment {
                         }
                         tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(tosb);
-                    }catch (Exception e){
-                        
-                    }
+                    } catch (Exception e) {
 
+                    }
                 }
             }
             adapter.notifyItemChanged(pos);
@@ -196,15 +195,16 @@ public class NotificationFragment extends BaseSettingFragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 RxRegiste(QcCloudClient.getApi().postApi.qcClearTypeNoti(new ClearNotiBody(ConstantNotification.getCategloreStr(type)))
-                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<QcResponse>() {
                         @Override public void call(QcResponse qcResponse) {
                             if (ResponseConstant.checkSuccess(qcResponse)) {
                                 freshData();
-                            };
+                            }
+                            ;
                         }
-                    },new NetWorkThrowable())
-                );
+                    }, new NetWorkThrowable()));
                 return true;
             }
         });

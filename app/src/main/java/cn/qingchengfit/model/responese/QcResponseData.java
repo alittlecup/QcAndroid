@@ -9,8 +9,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 public class QcResponseData<T> extends QcResponse {
 
-    @SerializedName("data")
-    public T data;
+    @SerializedName("data") public T data;
 
     public T getData() {
         return data;
@@ -19,5 +18,4 @@ public class QcResponseData<T> extends QcResponse {
     public void setData(T data) {
         this.data = data;
     }
-
 }

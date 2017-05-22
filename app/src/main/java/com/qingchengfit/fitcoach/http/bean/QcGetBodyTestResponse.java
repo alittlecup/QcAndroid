@@ -16,12 +16,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/1/14 2016.
  */
 public class QcGetBodyTestResponse extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
-    public class Data{
-    @SerializedName("measure")
-    public Measure measure;
-}
-
+    public class Data {
+        @SerializedName("measure") public Measure measure;
+    }
 }

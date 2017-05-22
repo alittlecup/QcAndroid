@@ -9,7 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -52,20 +51,20 @@ public class DialogSheet extends Dialog {
 
     public DialogSheet addButton(String text, View.OnClickListener listener) {
         TextView textView = new TextView(context, null, R.style.Qc_TextCommonBlack);
-//        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
+        //        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
         textView.setTextColor(getContext().getResources().getColor(R.color.text_black));
         textView.setPadding(30, textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
         textView.setText(text);
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setBackgroundResource(R.drawable.qc_backgroud_selector);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.qc_item_height));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) context.getResources().getDimension(R.dimen.qc_item_height));
         view.addView(textView, params);
         textView.setOnClickListener(listener);
         return this;
     }
 
-    @Override
-    public void show() {
+    @Override public void show() {
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -76,6 +75,4 @@ public class DialogSheet extends Dialog {
         window.setWindowAnimations(R.style.ButtomDialogStyle);
         super.show();
     }
-
-
 }

@@ -75,10 +75,10 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
 
     @Inject GymWrapper gymWrapper;
+    List<Brand> brands = new ArrayList<>();
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
-    List<Brand> brands = new ArrayList<>();
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +88,9 @@ import rx.schedulers.Schedulers;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (getActivity() instanceof PopFromBottomActivity){
+        if (getActivity() instanceof PopFromBottomActivity) {
             getActivity().setTitle("选择健身房");
         }
-
 
         mDatas.clear();
         //mDatas.add(new AddBatchCircleItem("+ 添加健身房"));
@@ -104,20 +103,18 @@ import rx.schedulers.Schedulers;
         /**
          * 点击健身房
          */
-        RxBusAdd(EventChooseGym.class)
-            .subscribe(eventChooseGym -> {
-                gymWrapper.setCoachService(eventChooseGym.getCoachService());
-                getActivity().onBackPressed();
-            });
+        RxBusAdd(EventChooseGym.class).subscribe(eventChooseGym -> {
+            gymWrapper.setCoachService(eventChooseGym.getCoachService());
+            getActivity().onBackPressed();
+        });
         /**
          * 管理品牌
          */
-        RxBusAdd(EventClickManageBrand.class)
-            .subscribe(eventClickManageBrand -> {
-                Intent toBrand = new Intent(getContext(), BrandManageActivity.class);
-                toBrand.putExtra("brand",eventClickManageBrand.getBrand());
-                startActivity(toBrand);
-            });
+        RxBusAdd(EventClickManageBrand.class).subscribe(eventClickManageBrand -> {
+            Intent toBrand = new Intent(getContext(), BrandManageActivity.class);
+            toBrand.putExtra("brand", eventClickManageBrand.getBrand());
+            startActivity(toBrand);
+        });
         refresh();
         return view;
     }
@@ -130,7 +127,9 @@ import rx.schedulers.Schedulers;
                     hideLoading();
                     brands.clear();
                     brands.addAll(qcResponseBrands.data.brands);
-                    return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                    return QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
                 }
             })
             .map(qcCoachServiceResponse -> {
@@ -162,14 +161,12 @@ import rx.schedulers.Schedulers;
                                 ds.add(new ChosenGymItem(lists.get(i).get(j)));
                             }
                         }
-                        mDatas.add(new BrandShopsItem(b,ds));
-
+                        mDatas.add(new BrandShopsItem(b, ds));
                     }
                     mDatas.add(new AddCardStyleItem("新建健身房"));
                     mAdapter.notifyDataSetChanged();
                 }
-            },throwable -> hideLoading()));
-
+            }, throwable -> hideLoading()));
     }
 
     @Override protected void lazyLoad() {
@@ -199,7 +196,7 @@ import rx.schedulers.Schedulers;
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
                 if (brand != null) {
                     Intent guide = new Intent(getActivity(), GuideActivity.class);
-                    guide.putExtra("brand",brand);
+                    guide.putExtra("brand", brand);
                     startActivity(guide);
                 }
             }

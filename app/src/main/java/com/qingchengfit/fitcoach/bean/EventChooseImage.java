@@ -21,13 +21,11 @@ package com.qingchengfit.fitcoach.bean;
  * Created by Paper on 16/8/24.
  */
 public class EventChooseImage {
-   public String filePath;
+    public String filePath;
     public int request;
 
     public EventChooseImage(String filePath, int request) {
         this.filePath = filePath;
         this.request = request;
     }
-
-
 }

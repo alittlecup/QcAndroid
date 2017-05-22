@@ -41,6 +41,7 @@ public class DatePicker extends DialogFragment {
     @BindView(R.id.bg) View bg;
     @BindView(R.id.tv_month) TextView tvMonth;
     private Unbinder unbinder;
+    private DatePickerChange listener;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +62,9 @@ public class DatePicker extends DialogFragment {
             @Override public void onPageSelected(int position) {
 
                 //if (listener != null){
-                    Calendar c = Calendar.getInstance();
-                    c.add(Calendar.MONTH,position-50);
-                    tvMonth.setText(DateUtils.getChineseMonth(c.getTime()));
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.MONTH, position - 50);
+                tvMonth.setText(DateUtils.getChineseMonth(c.getTime()));
                 //    listener.onMonthChange(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1);
                 //}
             }
@@ -74,14 +75,6 @@ public class DatePicker extends DialogFragment {
         });
         return view;
     }
-
-    public interface DatePickerChange {
-        void onMonthChange(int year, int month);
-
-        void onDismiss(int year, int month);
-    }
-
-    private DatePickerChange listener;
 
     public void setListener(DatePickerChange listener) {
         this.listener = listener;
@@ -114,6 +107,12 @@ public class DatePicker extends DialogFragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public interface DatePickerChange {
+        void onMonthChange(int year, int month);
+
+        void onDismiss(int year, int month);
     }
 
     public class CalendarAdapter extends FragmentStatePagerAdapter {

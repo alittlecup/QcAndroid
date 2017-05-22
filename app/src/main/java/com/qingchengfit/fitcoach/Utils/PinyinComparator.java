@@ -1,11 +1,9 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import android.text.TextUtils;
-
-import net.sourceforge.pinyin4j.PinyinHelper;
-
 import java.lang.reflect.Field;
 import java.util.Comparator;
+import net.sourceforge.pinyin4j.PinyinHelper;
 
 /**
  * power by
@@ -44,7 +42,6 @@ public class PinyinComparator implements Comparator<Object> {
             o2 = String.valueOf(f2.get(oo1));
         } catch (Exception e) {
             e.printStackTrace();
-
         }
 
         if (TextUtils.isEmpty(o1)) {
@@ -55,14 +52,12 @@ public class PinyinComparator implements Comparator<Object> {
         }
         char c1 = o1.charAt(0);
         char c2 = o2.charAt(0);
-        if (isChinese(c1) && isChinese(c2))
-            return concatPinyinStringArray(
-                    PinyinHelper.toHanyuPinyinStringArray(c1)).compareTo(
-                    concatPinyinStringArray(PinyinHelper
-                            .toHanyuPinyinStringArray(c2)));
-        else
+        if (isChinese(c1) && isChinese(c2)) {
+            return concatPinyinStringArray(PinyinHelper.toHanyuPinyinStringArray(c1)).compareTo(
+                concatPinyinStringArray(PinyinHelper.toHanyuPinyinStringArray(c2)));
+        } else {
             return o1.compareTo(o2);
-
+        }
     }
 
     private String concatPinyinStringArray(String[] pinyinArray) {
@@ -74,6 +69,5 @@ public class PinyinComparator implements Comparator<Object> {
         }
         return pinyinSbf.toString();
     }
-
 }
 

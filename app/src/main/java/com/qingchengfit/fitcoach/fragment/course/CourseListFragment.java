@@ -17,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.DialogAction;
@@ -36,7 +37,6 @@ import com.qingchengfit.fitcoach.fragment.VpFragment;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseList;
 import com.qingchengfit.fitcoach.items.CourseEmptyItem;
@@ -75,20 +75,17 @@ import rx.schedulers.Schedulers;
  */
 public class CourseListFragment extends VpFragment implements FlexibleAdapter.OnItemClickListener, View.OnClickListener {
 
-    @BindView(R.id.rv) RecycleViewWithNoImg rv;
-
-    List<AbstractFlexibleItem> mDatas = new ArrayList<>();
-
     public CommonFlexAdapter mAdatper;
-
+    @BindView(R.id.layout_toolbar) public RelativeLayout layoutToolbar;
+    protected boolean mIsPrivate;
+    protected boolean mIsload = false;
+    @BindView(R.id.rv) RecycleViewWithNoImg rv;
+    List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     @Inject RestRepository restRepository;
     @Inject Brand brand;
     @Inject CoachService coachService;
-    protected boolean mIsPrivate;
-    protected boolean mIsload = false;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.layout_toolbar) public RelativeLayout layoutToolbar;
     private Unbinder unbinding;
 
     public static CourseListFragment newInstance(boolean isPrivate) {
@@ -116,12 +113,12 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
 
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbarTitle.setText(mIsPrivate?"私教种类":"团课种类");
+        toolbarTitle.setText(mIsPrivate ? "私教种类" : "团课种类");
         toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
+                    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
                     .replace(R.id.frag, AddCourseFragment.newInstance(mIsPrivate))
                     .addToBackStack(null)
                     .commitAllowingStateLoss();
@@ -318,7 +315,7 @@ public class CourseListFragment extends VpFragment implements FlexibleAdapter.On
                 return;
             }
 
-            if (getActivity() instanceof CourseActivity){
+            if (getActivity() instanceof CourseActivity) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frag, AddCourseFragment.newInstance(mIsPrivate))
                     .addToBackStack(getFragmentName())

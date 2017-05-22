@@ -14,7 +14,7 @@ package com.qingchengfit.fitcoach.http.bean;
  * Created by Paper on 16/1/9 2016.
  */
 public class DelCourseManage {
-    public String ids ;
+    public String ids;
     public String model;
     public String id;
 }

@@ -6,19 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
-
 import java.util.Date;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.utils.DateUtils;
 
 /**
  * power by
@@ -35,12 +32,11 @@ import cn.qingchengfit.utils.DateUtils;
  */
 public class PrivateBatchAdapter extends RecyclerView.Adapter<PrivateBatchAdapter.BatchViewHolder> implements View.OnClickListener {
 
+    private List<QcResponsePrivateDetail.PrivateBatch> data;
+    private OnRecycleItemClickListener listener;
     public PrivateBatchAdapter(List<QcResponsePrivateDetail.PrivateBatch> data) {
         this.data = data;
     }
-
-    private List<QcResponsePrivateDetail.PrivateBatch> data;
-    private OnRecycleItemClickListener listener;
 
     public OnRecycleItemClickListener getListener() {
         return listener;
@@ -50,51 +46,42 @@ public class PrivateBatchAdapter extends RecyclerView.Adapter<PrivateBatchAdapte
         this.listener = listener;
     }
 
-    @Override
-    public PrivateBatchAdapter.BatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public PrivateBatchAdapter.BatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BatchViewHolder holder = new BatchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_batch, parent, false));
         holder.itemView.setOnClickListener(this);
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(PrivateBatchAdapter.BatchViewHolder holder, int position) {
+    @Override public void onBindViewHolder(PrivateBatchAdapter.BatchViewHolder holder, int position) {
         holder.itemView.setTag(position);
         QcResponsePrivateDetail.PrivateBatch batch = data.get(position);
         holder.courseName.setText(batch.course.getName());
         Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.course.getPhoto())).into(holder.img);
         holder.title.setText(batch.from_date + "至" + batch.to_date);
-        if (DateUtils.getDayMidnight(DateUtils.formatDateFromYYYYMMDD(batch.to_date)) < DateUtils.getDayMidnight(new Date()) ){
+        if (DateUtils.getDayMidnight(DateUtils.formatDateFromYYYYMMDD(batch.to_date)) < DateUtils.getDayMidnight(new Date())) {
             holder.view.setVisibility(View.VISIBLE);
-        }else holder.view.setVisibility(View.GONE);
+        } else {
+            holder.view.setVisibility(View.GONE);
+        }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
-
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return data.size();
     }
 
     public class BatchViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title)
-        TextView title;
-        @BindView(R.id.course_name)
-        TextView courseName;
-        @BindView(R.id.img)
-        ImageView img;
-        @BindView(R.id.outofdate)
-        View view;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.course_name) TextView courseName;
+        @BindView(R.id.img) ImageView img;
+        @BindView(R.id.outofdate) View view;
 
         public BatchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

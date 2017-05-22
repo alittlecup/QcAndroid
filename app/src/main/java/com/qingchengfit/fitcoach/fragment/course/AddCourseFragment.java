@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
@@ -21,16 +24,9 @@ import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.CourseBody;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.functions.Action1;
-
 
 /**
  * power by
@@ -56,24 +52,53 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
 
     public static final int RESULT_GYMS = 0;
 
-
-    @BindView(R.id.btn_suit_gyms)
-    CommonInputView btnSuitGyms;
-    @BindView(R.id.layout_suit_gym)
-    LinearLayout layoutSuitGym;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.btn_suit_gyms) CommonInputView btnSuitGyms;
+    @BindView(R.id.layout_suit_gym) LinearLayout layoutSuitGym;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @Inject AddCoursePresenter mPresenter;
+    @Inject Brand brand;
+    @Inject CoachService coachService;
     private CourseBaseInfoEditFragment mEditBaseInfo;
+    private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+            if (mEditBaseInfo != null) {
+                CourseDetail courseDetail = mEditBaseInfo.getCourse();
+                if (courseDetail != null) {
+                    String support_gym = "";
+                    if (GymUtils.isInBrand(coachService)) {
+                        if (layoutSuitGym.getVisibility() == View.VISIBLE) {
+                            support_gym = (String) btnSuitGyms.getTag();
+                        }
+                    } else {
+                        support_gym = null;
+                    }
+                    if (GymUtils.isInBrand(coachService) && support_gym == null) {
+                        ToastUtils.show("请至少选择一个家场馆");
+                        return true;
+                    }
 
-    @Inject
-    AddCoursePresenter mPresenter;
-    @Inject
-    Brand brand;
-    @Inject
-    CoachService coachService;
+                    String Planid = null;
+                    if (courseDetail.getPlan() != null) {
+                        Planid = Long.toString(courseDetail.getPlan().getId());
+                    }
+                    CourseBody body = new CourseBody.Builder().name(courseDetail.getName())
+                        .capacity(courseDetail.getCapacity())
+                        .is_private(getArguments().getBoolean("p") ? 1 : 0)
+                        .length(courseDetail.getLength() + "")
+                        .min_users(getArguments().getBoolean("p") ? null : courseDetail.getMin_users())
+                        .photo(courseDetail.getPhoto())
+                        .plan_id(Planid)
+                        .shop_ids(support_gym)
+                        .build();
+                    showLoading();
+                    mPresenter.addCourse(App.coachid + "", body);
+                }
+            }
 
+            return true;
+        }
+    };
 
     public static AddCourseFragment newInstance(boolean isPrivate) {
 
@@ -84,15 +109,11 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
         return fragment;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_course, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity) {
@@ -100,10 +121,9 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
             delegatePresenter(mPresenter, this);
         }
         RxBusAdd(CoursePlan.class).subscribe(new Action1<CoursePlan>() {
-            @Override
-            public void call(CoursePlan coursePlan) {
+            @Override public void call(CoursePlan coursePlan) {
 
-//                mCallbackActivity.setToolbar(getArguments().getBoolean("p") ? "新增私教种类" : "新增团课种类", false, null, R.menu.menu_compelete, listener);
+                //                mCallbackActivity.setToolbar(getArguments().getBoolean("p") ? "新增私教种类" : "新增团课种类", false, null, R.menu.menu_compelete, listener);
             }
         });
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -121,9 +141,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
         if (mEditBaseInfo == null) {
             mEditBaseInfo = CourseBaseInfoEditFragment.newInstance(courseDetail);
         }
-        getFragmentManager().beginTransaction()
-                .replace(R.id.frag_baseinfo, mEditBaseInfo)
-                .commit();
+        getFragmentManager().beginTransaction().replace(R.id.frag_baseinfo, mEditBaseInfo).commit();
 
         if (GymUtils.isInBrand(coachService)) {
             layoutSuitGym.setVisibility(View.VISIBLE);
@@ -134,82 +152,34 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
         return view;
     }
 
-    private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if (mEditBaseInfo != null) {
-                CourseDetail courseDetail = mEditBaseInfo.getCourse();
-                if (courseDetail != null) {
-                    String support_gym = "";
-                    if (GymUtils.isInBrand(coachService)) {
-                        if (layoutSuitGym.getVisibility() == View.VISIBLE) {
-                            support_gym = (String) btnSuitGyms.getTag();
-                        }
-                    } else {
-                        support_gym = null;
-                    }
-                    if (GymUtils.isInBrand(coachService) && support_gym == null) {
-                        ToastUtils.show("请至少选择一个家场馆");
-                        return true;
-                    }
-
-
-                    String Planid = null;
-                    if (courseDetail.getPlan() != null) {
-                        Planid = Long.toString(courseDetail.getPlan().getId());
-                    }
-                    CourseBody body = new CourseBody.Builder()
-                            .name(courseDetail.getName())
-                            .capacity(courseDetail.getCapacity())
-                            .is_private(getArguments().getBoolean("p") ? 1 : 0)
-                            .length(courseDetail.getLength()+"")
-                            .min_users(getArguments().getBoolean("p") ? null : courseDetail.getMin_users())
-                            .photo(courseDetail.getPhoto())
-                            .plan_id(Planid)
-                            .shop_ids(support_gym)
-                            .build();
-                    showLoading();
-                    mPresenter.addCourse(App.coachid+"", body);
-                }
-            }
-
-            return true;
-        }
-    };
-
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return AddCourseFragment.class.getName();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
-
     }
 
-    @OnClick(R.id.btn_suit_gyms)
-    public void onClick() {
-//        MutiChooseGymFragment.start(this,false,null,getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE: PermissionServerUtils.TEAMSETTING_CAN_WRITE,RESULT_GYMS);
+    @OnClick(R.id.btn_suit_gyms) public void onClick() {
+        //        MutiChooseGymFragment.start(this,false,null,getArguments().getBoolean("p") ? PermissionServerUtils.PRISETTING_CAN_WRITE: PermissionServerUtils.TEAMSETTING_CAN_WRITE,RESULT_GYMS);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RESULT_GYMS) {
                 String ids = "";
-//                ArrayList<QcResponseBrandShops.BrandShop> shops = data.getParcelableArrayListExtra(IntentUtils.RESULT);
-//                if (shops != null) {
-//                    for (int i = 0; i < shops.size(); i++) {
-//                        if (i < shops.size() - 1)
-//                            ids = TextUtils.concat(ids, shops.get(i).id, ",").toString();
-//                        else
-//                            ids = TextUtils.concat(ids, shops.get(i).id).toString();
-//                    }
-//                    btnSuitGyms.setTag(ids);
-//                    btnSuitGyms.setContent(shops.size() + "家");
-//                }
+                //                ArrayList<QcResponseBrandShops.BrandShop> shops = data.getParcelableArrayListExtra(IntentUtils.RESULT);
+                //                if (shops != null) {
+                //                    for (int i = 0; i < shops.size(); i++) {
+                //                        if (i < shops.size() - 1)
+                //                            ids = TextUtils.concat(ids, shops.get(i).id, ",").toString();
+                //                        else
+                //                            ids = TextUtils.concat(ids, shops.get(i).id).toString();
+                //                    }
+                //                    btnSuitGyms.setTag(ids);
+                //                    btnSuitGyms.setContent(shops.size() + "家");
+                //                }
             }
         }
     }
@@ -217,19 +187,16 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
     /**
      * 可以使用viewStub 优化 todo
      */
-    @Override
-    public void showSuitGym() {
+    @Override public void showSuitGym() {
         layoutSuitGym.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onSuccess() {
+    @Override public void onSuccess() {
         hideLoading();
         getActivity().onBackPressed();
     }
 
-    @Override
-    public void onFailed(String s) {
+    @Override public void onFailed(String s) {
         hideLoading();
         ToastUtils.show(s);
     }

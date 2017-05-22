@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
+import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
@@ -8,13 +9,9 @@ import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -46,45 +43,38 @@ public class ShopCommentPresenter extends BasePresenter {
     CoachService coachService;
     private ShopCommentView view;
 
-    @Inject
-    public ShopCommentPresenter(RestRepository restRepository, Brand brand, CoachService coachService) {
+    @Inject public ShopCommentPresenter(RestRepository restRepository, Brand brand, CoachService coachService) {
         this.restRepository = restRepository;
         this.brand = brand;
         this.coachService = coachService;
     }
 
-
-    @Override
-    public void attachView(PView v) {
-        view = (ShopCommentView)v;
+    @Override public void attachView(PView v) {
+        view = (ShopCommentView) v;
     }
 
-    public void queryShopComments(String courseid){
-        RxRegiste(restRepository.getGet_api().qcGetShopComment(App.coachid+"",courseid, GymUtils.getParams(coachService,brand))
-                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new Action1<QcResponseShopComment>() {
-                    @Override
-                    public void call(QcResponseShopComment qcResponseShopComment) {
-                        if (ResponseConstant.checkSuccess(qcResponseShopComment)){
-                            view.onCourse(qcResponseShopComment.data.scores.course);
-                            view.onGetComment(qcResponseShopComment.data.scores.shops);
-
-                        }
+    public void queryShopComments(String courseid) {
+        RxRegiste(restRepository.getGet_api()
+            .qcGetShopComment(App.coachid + "", courseid, GymUtils.getParams(coachService, brand))
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Action1<QcResponseShopComment>() {
+                @Override public void call(QcResponseShopComment qcResponseShopComment) {
+                    if (ResponseConstant.checkSuccess(qcResponseShopComment)) {
+                        view.onCourse(qcResponseShopComment.data.scores.course);
+                        view.onGetComment(qcResponseShopComment.data.scores.shops);
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
 
-                    }
-                })
-        );
+                }
+            }));
     }
 
-
-
-    public interface ShopCommentView extends PView{
+    public interface ShopCommentView extends PView {
         void onGetComment(List<QcResponseShopComment.CommentShop> shops);
-        void onCourse(CourseDetail courseDetail);
 
+        void onCourse(CourseDetail courseDetail);
     }
 }

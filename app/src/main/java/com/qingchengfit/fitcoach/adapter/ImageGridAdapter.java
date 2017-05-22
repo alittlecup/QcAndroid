@@ -6,17 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
-
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * power by
@@ -31,20 +28,19 @@ import butterknife.ButterKnife;
  * <p>
  * Created by Paper on 16/1/12 2016.
  */
-public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.ImageGridVh>
-        implements View.OnClickListener {
+public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.ImageGridVh> implements View.OnClickListener {
 
     private List<AddBodyTestBean.Photo> datas;
     private OnRecycleItemClickListener listener;
     private boolean isEditable = false;
 
+    public ImageGridAdapter(List<AddBodyTestBean.Photo> datas) {
+        this.datas = datas;
+    }
+
     public void setIsEditable(boolean isEditable) {
         this.isEditable = isEditable;
         this.notifyDataSetChanged();
-    }
-
-    public ImageGridAdapter(List<AddBodyTestBean.Photo> datas) {
-        this.datas = datas;
     }
 
     public List<AddBodyTestBean.Photo> getDatas() {
@@ -55,67 +51,56 @@ public class ImageGridAdapter extends RecyclerView.Adapter<ImageGridAdapter.Imag
         this.listener = listener;
     }
 
-    @Override
-    public ImageGridVh onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public ImageGridVh onCreateViewHolder(ViewGroup parent, int viewType) {
         ImageGridVh vh = new ImageGridVh(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_grid_img, parent, false));
         vh.itemView.setOnClickListener(this);
         vh.delete.setOnClickListener(this);
         return vh;
     }
-    public void refresh(List<AddBodyTestBean.Photo> photos){
+
+    public void refresh(List<AddBodyTestBean.Photo> photos) {
         this.datas = photos;
         notifyDataSetChanged();
     }
-    @Override
-    public void onBindViewHolder(ImageGridVh holder, int position) {
+
+    @Override public void onBindViewHolder(ImageGridVh holder, int position) {
         holder.itemView.setTag(position);
         holder.delete.setTag(position);
-        if (isEditable && position == datas.size()){
+        if (isEditable && position == datas.size()) {
             holder.delete.setVisibility(View.GONE);
             holder.img.setScaleType(ImageView.ScaleType.CENTER);
-            holder.img.setPadding(40,40,40,40);
+            holder.img.setPadding(40, 40, 40, 40);
             holder.img.setImageResource(R.drawable.ic_add_image);
             holder.img.setBackgroundResource(R.drawable.bg_rect);
-
-        }else {
+        } else {
             holder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            holder.img.setPadding(0,0,0,0);
+            holder.img.setPadding(0, 0, 0, 0);
             Glide.with(App.AppContex).load(datas.get(position).photo).into(holder.img);
-            if (isEditable)
+            if (isEditable) {
                 holder.delete.setVisibility(View.VISIBLE);
-            else holder.delete.setVisibility(View.GONE);
+            } else {
+                holder.delete.setVisibility(View.GONE);
+            }
         }
-
-
-
-
     }
 
-    @Override
-    public int getItemCount() {
-        return datas.size()+(isEditable?1:0);
+    @Override public int getItemCount() {
+        return datas.size() + (isEditable ? 1 : 0);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
-
 
     public class ImageGridVh extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.img)
-        ImageView img;
-        @BindView(R.id.delete)
-        ImageView delete;
-        @BindView(R.id.progress)
-        ProgressBar progress;
+        @BindView(R.id.img) ImageView img;
+        @BindView(R.id.delete) ImageView delete;
+        @BindView(R.id.progress) ProgressBar progress;
 
         public ImageGridVh(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
 }

@@ -14,8 +14,6 @@ import java.util.List;
 
 public class ChosenAllGymItem extends AbstractFlexibleItem<ChosenAllGymItem.ChosenAllGymVH> {
 
-
-
     @Override public int getLayoutRes() {
         return R.layout.item_all_gyms;
     }
@@ -25,7 +23,7 @@ public class ChosenAllGymItem extends AbstractFlexibleItem<ChosenAllGymItem.Chos
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChosenAllGymVH holder, int position, List payloads) {
-        holder.chosen.setVisibility(adapter.isSelected(position)?View.VISIBLE:View.GONE);
+        holder.chosen.setVisibility(adapter.isSelected(position) ? View.VISIBLE : View.GONE);
     }
 
     @Override public boolean equals(Object o) {
@@ -34,6 +32,7 @@ public class ChosenAllGymItem extends AbstractFlexibleItem<ChosenAllGymItem.Chos
 
     public class ChosenAllGymVH extends FlexibleViewHolder {
         @BindView(R.id.chosen) ImageView chosen;
+
         public ChosenAllGymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

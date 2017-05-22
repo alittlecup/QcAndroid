@@ -53,41 +53,6 @@ public class CourseFragment extends BaseFragment {
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     private FragmentAdapter fragmentAdater;
     private Unbinder unbinder;
-
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course, container, false);
-        unbinder = ButterKnife.bind(this, view);
-
-        //        mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-        toolbarTitle
-        .setText("课程种类");
-        toolbar.inflateMenu(R.menu.add);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                getFragmentManager().beginTransaction()
-                    .replace(R.id.frag,AddCourseFragment.newInstance(viewpager.getCurrentItem() == 1))
-                    .addToBackStack(getFragmentName())
-                    .commit();
-                return true;
-            }
-        });
-        if (fragments.size() == 0) {
-            fragments.add(CourseListFragment.newInstance(false));
-            fragments.add(CourseListFragment.newInstance(true));
-        }
-        fragmentAdater = new FragmentAdapter(getChildFragmentManager(), fragments);
-        viewpager.setAdapter(fragmentAdater);
-        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
-        myhomeTab.setupWithViewPager(viewpager);
-        return view;
-    }
-
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
@@ -118,6 +83,38 @@ public class CourseFragment extends BaseFragment {
             return true;
         }
     };
+
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_course, container, false);
+        unbinder = ButterKnife.bind(this, view);
+
+        //        mCallbackActivity.setToolbar("课程种类", false, null, R.menu.menu_course_list_nomal, menuItemClickListener);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbarTitle.setText("课程种类");
+        toolbar.inflateMenu(R.menu.add);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                getFragmentManager().beginTransaction().replace(R.id.frag, AddCourseFragment.newInstance(viewpager.getCurrentItem() == 1))
+                    .addToBackStack(getFragmentName())
+                    .commit();
+                return true;
+            }
+        });
+        if (fragments.size() == 0) {
+            fragments.add(CourseListFragment.newInstance(false));
+            fragments.add(CourseListFragment.newInstance(true));
+        }
+        fragmentAdater = new FragmentAdapter(getChildFragmentManager(), fragments);
+        viewpager.setAdapter(fragmentAdater);
+        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(myhomeTab));
+        myhomeTab.setupWithViewPager(viewpager);
+        return view;
+    }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);

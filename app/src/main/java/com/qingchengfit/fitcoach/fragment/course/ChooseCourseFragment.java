@@ -77,13 +77,14 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
     }
 
     @OnClick(R.id.btn_add_course) public void onClickAddCourse() {
-        if ((!(mCourseType == Configs.TYPE_PRIVATE)  && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE))
-            || ((mCourseType == Configs.TYPE_PRIVATE)&& !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))) {
+        if ((!(mCourseType == Configs.TYPE_PRIVATE) && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.TEAMSETTING_CAN_WRITE)) || ((
+            mCourseType
+                == Configs.TYPE_PRIVATE) && !SerPermisAction.checkAtLeastOne(PermissionServerUtils.PRISETTING_CAN_WRITE))) {
             showAlert(R.string.sorry_no_permission);
             return;
         }
 
-        if (getActivity() instanceof CourseActivity){
+        if (getActivity() instanceof CourseActivity) {
             getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frag, AddCourseFragment.newInstance(mCourseType == Configs.TYPE_PRIVATE))
                 .addToBackStack(getFragmentName())

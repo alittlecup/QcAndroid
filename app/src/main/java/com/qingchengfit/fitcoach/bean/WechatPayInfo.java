@@ -15,5 +15,4 @@ package com.qingchengfit.fitcoach.bean;
  */
 public class WechatPayInfo {
     public String partnerId;
-
 }

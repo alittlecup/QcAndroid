@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.main;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -34,22 +33,17 @@ import javax.inject.Inject;
  */
 public class SettingFragment extends BaseSettingFragment {
 
-
-    @BindView(R.id.settting_modifyinfo)
-    RelativeLayout setttingModifyinfo;
-    @BindView(R.id.setting_modifypw)
-    RelativeLayout settingModifypw;
-    @BindView(R.id.setting_advice)
-    RelativeLayout settingAdvice;
-    @BindView(R.id.setting_aboutus)
-    RelativeLayout settingAboutus;
+    @BindView(R.id.settting_modifyinfo) RelativeLayout setttingModifyinfo;
+    @BindView(R.id.setting_modifypw) RelativeLayout settingModifypw;
+    @BindView(R.id.setting_advice) RelativeLayout settingAdvice;
+    @BindView(R.id.setting_aboutus) RelativeLayout settingAboutus;
     FragmentManager mFragmentManager;
     DialogSheet logoutSheet;
-    @BindView(R.id.version_code)
-    TextView versionCode;
+    @BindView(R.id.version_code) TextView versionCode;
     @Inject LoginStatus loginStatus;
     private Unbinder unbinder;
     private String versionStr;
+
     public SettingFragment() {
     }
 
@@ -58,8 +52,7 @@ public class SettingFragment extends BaseSettingFragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getFragmentManager();
     }
@@ -68,8 +61,7 @@ public class SettingFragment extends BaseSettingFragment {
         if (logoutSheet == null) {
             logoutSheet = DialogSheet.builder(getContext());
             logoutSheet.addButton("退出登录", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     logoutSheet.dismiss();
                     Intent it = new Intent(getActivity(), MainActivity.class);
                     it.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -81,32 +73,22 @@ public class SettingFragment extends BaseSettingFragment {
         logoutSheet.show();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
-        unbinder=ButterKnife.bind(this, view);
-        fragmentCallBack.onToolbarMenu(0 ,R.drawable.ic_arrow_left,"设置");
+        unbinder = ButterKnife.bind(this, view);
+        fragmentCallBack.onToolbarMenu(0, R.drawable.ic_arrow_left, "设置");
         versionCode.setText(AppUtils.getAppVer(getContext()));
         return view;
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
     }
 
-    @OnClick({R.id.setting_aboutus,
-            R.id.setting_advice,
-            R.id.setting_modifypw,
-            R.id.settting_modifyinfo,
-            R.id.setting_comfirm,
-            R.id.setting_workexpe,
-            R.id.setting_logout,
-            R.id.setting_modifyphone,
-            R.id.setting_calsync
-    })
-    public void onClickUs(View view) {
+    @OnClick({
+        R.id.setting_aboutus, R.id.setting_advice, R.id.setting_modifypw, R.id.settting_modifyinfo, R.id.setting_comfirm,
+        R.id.setting_workexpe, R.id.setting_logout, R.id.setting_modifyphone, R.id.setting_calsync
+    }) public void onClickUs(View view) {
         switch (view.getId()) {
             case R.id.setting_modifypw:
                 fragmentCallBack.onFragmentChange(ModifyPwFragment.newInstance("", ""));
@@ -116,7 +98,7 @@ public class SettingFragment extends BaseSettingFragment {
                 break;
             case R.id.setting_aboutus:
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url", Configs.Server + "/aboutus/?oem="+getString(R.string.oem_tag));
+                toWeb.putExtra("url", Configs.Server + "/aboutus/?oem=" + getString(R.string.oem_tag));
                 startActivity(toWeb);
                 break;
             case R.id.setting_modifyphone:
@@ -127,22 +109,19 @@ public class SettingFragment extends BaseSettingFragment {
                 break;
             default:
                 break;
-
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick({R.id.setting_share, R.id.setting_update, R.id.setting_logout})
-    public void onClick(View view) {
+    @OnClick({ R.id.setting_share, R.id.setting_update, R.id.setting_logout }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.setting_share:
-                ShareDialogFragment.newInstance(getString(R.string.app_name),getString(R.string.app_slogan),getString(R.string.app_icon_net),getString(R.string.app_download_link)).show(getFragmentManager(),"");
+                ShareDialogFragment.newInstance(getString(R.string.app_name), getString(R.string.app_slogan),
+                    getString(R.string.app_icon_net), getString(R.string.app_download_link)).show(getFragmentManager(), "");
                 break;
             case R.id.setting_update:
 

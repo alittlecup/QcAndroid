@@ -24,6 +24,15 @@ import android.os.Parcelable;
  * Created by Paper on 16/8/3.
  */
 public class SchedulePhoto implements Parcelable {
+    public static final Parcelable.Creator<SchedulePhoto> CREATOR = new Parcelable.Creator<SchedulePhoto>() {
+        @Override public SchedulePhoto createFromParcel(Parcel source) {
+            return new SchedulePhoto(source);
+        }
+
+        @Override public SchedulePhoto[] newArray(int size) {
+            return new SchedulePhoto[size];
+        }
+    };
     private String photo;
     private String created_at;
     private Coach created_by;
@@ -31,7 +40,17 @@ public class SchedulePhoto implements Parcelable {
     private boolean is_public;
     private Long id;
 
+    public SchedulePhoto() {
+    }
 
+    protected SchedulePhoto(Parcel in) {
+        this.photo = in.readString();
+        this.created_at = in.readString();
+        this.created_by = in.readParcelable(Coach.class.getClassLoader());
+        this.owner = in.readParcelable(Coach.class.getClassLoader());
+        this.is_public = in.readByte() != 0;
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+    }
 
     public String getPhoto() {
         return photo;
@@ -81,13 +100,11 @@ public class SchedulePhoto implements Parcelable {
         this.id = id;
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.photo);
         dest.writeString(this.created_at);
         dest.writeParcelable(this.created_by, flags);
@@ -95,28 +112,4 @@ public class SchedulePhoto implements Parcelable {
         dest.writeByte(this.is_public ? (byte) 1 : (byte) 0);
         dest.writeValue(this.id);
     }
-
-    public SchedulePhoto() {
-    }
-
-    protected SchedulePhoto(Parcel in) {
-        this.photo = in.readString();
-        this.created_at = in.readString();
-        this.created_by = in.readParcelable(Coach.class.getClassLoader());
-        this.owner = in.readParcelable(Coach.class.getClassLoader());
-        this.is_public = in.readByte() != 0;
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<SchedulePhoto> CREATOR = new Parcelable.Creator<SchedulePhoto>() {
-        @Override
-        public SchedulePhoto createFromParcel(Parcel source) {
-            return new SchedulePhoto(source);
-        }
-
-        @Override
-        public SchedulePhoto[] newArray(int size) {
-            return new SchedulePhoto[size];
-        }
-    };
 }

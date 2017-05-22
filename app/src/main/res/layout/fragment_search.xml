@@ -1,119 +1,127 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.qingchengfit.fitcoach.fragment.SearchFragment">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qingchengfit.fitcoach.fragment.SearchFragment"
+    >
 
-    <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?android:actionBarSize"
+      android:orientation="vertical"
+      >
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?android:actionBarSize"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroud_grey"
         android:orientation="vertical"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/backgroud_grey"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:id="@+id/search_hint"
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:text="请选择主办机构"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                />
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_weight="4"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
 
-                >
+      <TextView
+          android:id="@+id/search_hint"
+          android:layout_width="match_parent"
+          android:layout_height="37dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:text="请选择主办机构"
+          />
 
-                <EditText
-                    android:id="@+id/searchview_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:drawableLeft="@drawable/ic_search_black"
-                    android:imeOptions="actionDone"
-                    android:maxLength="40"
-                    android:paddingLeft="10dp"
-                    android:singleLine="true"
-                    />
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="36dp"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:layout_weight="4"
 
-                <ImageView
-                    android:id="@+id/searchview_clear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_cross_blace"
-                    />
-            </FrameLayout>
-            <include layout="@layout/divider_grey"
-                     android:layout_width="match_parent"
-                     android:layout_height="1dp"
-                     android:layout_marginTop="10dp"
-                />
+          >
 
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/search_hottable"
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="热门机构"
-            />
-
-        <RelativeLayout
+        <EditText
+            android:id="@+id/searchview_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:background="@color/white"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:imeOptions="actionDone"
+            android:maxLength="40"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            />
 
-            <LinearLayout
-                android:id="@+id/searchresult_none"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                >
+        <ImageView
+            android:id="@+id/searchview_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_cross_blace"
+            />
+      </FrameLayout>
 
-                <TextView
-                    android:id="@+id/searchresult_hint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:text="没有匹配的机构\n您可以添加该机构"
-                    />
+      <include
+          layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="10dp"
+          />
 
-                <Button
-                    android:id="@+id/searchresult_btn"
-                    android:layout_width="200dp"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:layout_marginTop="50dp"
-                    android:text="添加主办机构"
-                    />
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/searchresult_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:background="@color/white"
-                android:clipToPadding="true"
-                android:visibility="gone"
-                />
-
-        </RelativeLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/search_hottable"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="热门机构"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:id="@+id/searchresult_none"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/searchresult_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="没有匹配的机构\n您可以添加该机构"
+            />
+
+        <Button
+            android:id="@+id/searchresult_btn"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/qc_item_height"
+            android:layout_marginTop="50dp"
+            android:text="添加主办机构"
+            />
+      </LinearLayout>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/searchresult_rv"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:background="@color/white"
+          android:clipToPadding="true"
+          android:visibility="gone"
+          />
+
+    </RelativeLayout>
+  </LinearLayout>
 
 </RelativeLayout>

@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
-
 import com.qingchengfit.fitcoach.activity.OpenDrawerInterface;
 
 /**
@@ -22,14 +21,12 @@ public class MainBaseFragment extends Fragment {
 
     protected OpenDrawerInterface openDrawerInterface;
 
-    @Override
-    public void onAttach(Context context) {
+    @Override public void onAttach(Context context) {
         openDrawerInterface = (OpenDrawerInterface) context;
         super.onAttach(context);
     }
 
-    @Override
-    public void onDetach() {
+    @Override public void onDetach() {
         openDrawerInterface = null;
         super.onDetach();
     }

@@ -5,18 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
-
-
+import java.util.List;
 
 /**
  * power by
@@ -40,50 +35,42 @@ import eu.davidea.viewholders.FlexibleViewHolder;
  */
 public class CourseEmptyItem extends AbstractFlexibleItem<CourseEmptyItem.CourseEmptyVH> {
 
-
-
     private View.OnClickListener clickListener;
     private String hint;
     private boolean isPrivate;
-    public CourseEmptyItem(View.OnClickListener clickListener, String hint , boolean p) {
+
+    public CourseEmptyItem(View.OnClickListener clickListener, String hint, boolean p) {
         this.clickListener = clickListener;
         this.isPrivate = p;
         this.hint = hint;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
-
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_no_course;
     }
 
-    @Override
-    public CourseEmptyVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    @Override public CourseEmptyVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
         return new CourseEmptyVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, CourseEmptyVH holder, int position, List payloads) {
+    @Override public void bindViewHolder(FlexibleAdapter adapter, CourseEmptyVH holder, int position, List payloads) {
         holder.addCourseBtn.setOnClickListener(clickListener);
         holder.nodataHint.setText(hint);
-        holder.addCourseBtn.setText(isPrivate?"+ 添加私教种类":"+ 添加团课种类");
+        holder.addCourseBtn.setText(isPrivate ? "+ 添加私教种类" : "+ 添加团课种类");
     }
 
     public static class CourseEmptyVH extends FlexibleViewHolder {
 
-        @BindView(R.id.nodata_hint)
-        TextView nodataHint;
-        @BindView(R.id.add_course_btn)
-        Button addCourseBtn;
+        @BindView(R.id.nodata_hint) TextView nodataHint;
+        @BindView(R.id.add_course_btn) Button addCourseBtn;
 
         public CourseEmptyVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
         }
     }
 }

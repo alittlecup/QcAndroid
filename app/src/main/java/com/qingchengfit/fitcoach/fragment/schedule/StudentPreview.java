@@ -42,10 +42,7 @@ public class StudentPreview extends WebFragment {
         return fragment;
     }
 
-
-
     @Override public void initToolbar() {
-
 
         mTitle.setText("我的主页");
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -63,7 +60,6 @@ public class StudentPreview extends WebFragment {
         });
     }
 
-
     @Override public void onLoadedView() {
         super.onLoadedView();
     }
@@ -72,8 +68,7 @@ public class StudentPreview extends WebFragment {
         super.onWebFinish();
     }
 
-    @OnClick({R.id.close_guide, R.id.copy_link_to_wechat, R.id.go_to_how})
-    public void onClick(View view) {
+    @OnClick({ R.id.close_guide, R.id.copy_link_to_wechat, R.id.go_to_how }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.close_guide:
                 guideToWechatLayout.setVisibility(View.GONE);
@@ -89,5 +84,4 @@ public class StudentPreview extends WebFragment {
                 break;
         }
     }
-
 }

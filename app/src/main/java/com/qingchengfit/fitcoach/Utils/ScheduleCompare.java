@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
-
 import java.util.Comparator;
 
 /**
@@ -19,11 +18,11 @@ import java.util.Comparator;
  */
 public class ScheduleCompare implements Comparator<ScheduleBean> {
 
-
-    @Override
-    public int compare(ScheduleBean lhs, ScheduleBean rhs) {
+    @Override public int compare(ScheduleBean lhs, ScheduleBean rhs) {
         if (lhs.time > rhs.time) {
             return 1;
-        } else return -1;
+        } else {
+            return -1;
+        }
     }
 }

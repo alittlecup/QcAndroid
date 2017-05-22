@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.fragment.batch.looplist;
 
 import com.anbillon.qcmvplib.PView;
 
-
 /**
  * power by
  * <p>
@@ -17,8 +16,9 @@ import com.anbillon.qcmvplib.PView;
  * Created by Paper on 16/5/6 2016.
  */
 public interface CourseManageView extends PView {
-//    void onList(List<QcResponseBatchSchedules.Schedule> schedules);
+    //    void onList(List<QcResponseBatchSchedules.Schedule> schedules);
 
     void onDelSuccess();
+
     void onFixSuccess();
 }

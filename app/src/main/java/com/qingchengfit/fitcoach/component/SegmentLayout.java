@@ -9,12 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
 
 /**
  * power by
@@ -33,10 +31,8 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
 
     public SegmentListener segmentListener;
     public TouchUpListener listener;
-    @BindView(R.id.segment_img)
-    ImageView segmentImg;
-    @BindView(R.id.segment_text)
-    TextView segmentText;
+    @BindView(R.id.segment_img) ImageView segmentImg;
+    @BindView(R.id.segment_text) TextView segmentText;
     Drawable[] drawables;
     private String text;
 
@@ -69,19 +65,14 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
         setOnClickListener(this);
     }
 
-
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
-
-
     }
 
-    @Override
-    public void onViewAdded(View child) {
+    @Override public void onViewAdded(View child) {
         super.onViewAdded(child);
-//        segmentImg.setImageDrawable(drawables[0]);
-//       segmentText.setText(text);
+        //        segmentImg.setImageDrawable(drawables[0]);
+        //       segmentText.setText(text);
 
     }
 
@@ -89,11 +80,10 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
 
     }
 
-    @Override
-    public void onCheckChange(boolean isChecked) {
+    @Override public void onCheckChange(boolean isChecked) {
         if (isChecked) {
             segmentImg.setImageDrawable(drawables[1]);
-//            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
+            //            segmentText.setTextColor(Color.argb(255, 39, 191, 189));
             segmentText.setTextColor(getResources().getColor(R.color.primary));
         } else {
             segmentImg.setImageDrawable(drawables[0]);
@@ -107,10 +97,10 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
     }
 
     public void setDrawables(int res0, int res1) {
-        this.drawables = new Drawable[]{getContext().getResources().getDrawable(res0),
-                getContext().getResources().getDrawable(res1)};
+        this.drawables = new Drawable[] {
+            getContext().getResources().getDrawable(res0), getContext().getResources().getDrawable(res1)
+        };
         segmentImg.setImageDrawable(drawables[0]);
-
     }
 
     public void setText(String s) {
@@ -118,13 +108,9 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
         segmentText.setText(text);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onTouchUp(v);
-        if (segmentListener != null)
-            segmentListener.onSegmentClick(v);
-
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onTouchUp(v);
+        if (segmentListener != null) segmentListener.onSegmentClick(v);
     }
 
     public interface TouchUpListener {
@@ -134,5 +120,4 @@ public class SegmentLayout extends LinearLayout implements onSegmentChangeListen
     public interface SegmentListener {
         void onSegmentClick(View v);
     }
-
 }

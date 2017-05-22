@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/17 2015.
  */
 public class QcResponDrawer extends QcResponse {
-    @SerializedName("data")
-    public DrawerData data;
+    @SerializedName("data") public DrawerData data;
 }

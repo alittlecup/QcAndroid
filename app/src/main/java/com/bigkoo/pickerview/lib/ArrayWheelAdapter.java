@@ -22,7 +22,7 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
     /**
      * Constructor
      *
-     * @param items  the items
+     * @param items the items
      * @param length the max items length
      */
     public ArrayWheelAdapter(ArrayList<T> items, int length) {
@@ -39,22 +39,18 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
         this(items, DEFAULT_LENGTH);
     }
 
-    @Override
-    public String getItem(int index) {
+    @Override public String getItem(int index) {
         if (index >= 0 && index < items.size()) {
             return items.get(index).toString();
         }
         return null;
     }
 
-    @Override
-    public int getItemsCount() {
+    @Override public int getItemsCount() {
         return items.size();
     }
 
-    @Override
-    public int getMaximumLength() {
+    @Override public int getMaximumLength() {
         return length;
     }
-
 }

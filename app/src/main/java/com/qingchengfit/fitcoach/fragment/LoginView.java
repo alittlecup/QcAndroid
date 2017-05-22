@@ -9,21 +9,15 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
+import cn.qingchengfit.widgets.PasswordView;
+import cn.qingchengfit.widgets.PhoneEditText;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.SendSmsCode;
-import java.lang.ref.WeakReference;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;
-
 import java.lang.ref.WeakReference;
-
-import cn.qingchengfit.widgets.PasswordView;
-import cn.qingchengfit.widgets.PhoneEditText;
 import rx.Observable;
-
-import static android.text.InputType.TYPE_CLASS_PHONE;
-import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 
 /**
  * ,==.              |~~~
@@ -66,27 +60,25 @@ public class LoginView extends LinearLayout {
         this.loginPresenter = loginPresenter;
     }
 
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
         handler = new InternalHandler(getContext());
         mLoginBtn = (Button) findViewById(R.id.login_btn);
         mForgotPwBtn = (ToggleButton) findViewById(R.id.forgetpw_btn);
         mGoRegister = (Button) findViewById(R.id.goregiste_btn);
-        mPasswordView = (PasswordView)findViewById(R.id.pw_view);
-        mPhoneNumView = (PhoneEditText)findViewById(R.id.phone_view);
+        mPasswordView = (PasswordView) findViewById(R.id.pw_view);
+        mPhoneNumView = (PhoneEditText) findViewById(R.id.phone_view);
         mForgotPwBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
             }
         });
         mForgotPwBtn.toggle();
         mPasswordView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mPhoneNumView.checkPhoneNum()){
-                    loginPresenter.getCode(new GetCodeBean.Builder().phone(mPhoneNumView.getPhoneNum()).area_code(mPhoneNumView.getDistrictInt()).build());
+            @Override public void onClick(View v) {
+                if (mPhoneNumView.checkPhoneNum()) {
+                    loginPresenter.getCode(
+                        new GetCodeBean.Builder().phone(mPhoneNumView.getPhoneNum()).area_code(mPhoneNumView.getDistrictInt()).build());
                     RxBus.getBus().post(new SendSmsCode());
                     mPasswordView.blockRightClick(true);
                 }
@@ -100,22 +92,19 @@ public class LoginView extends LinearLayout {
         mObservable.subscribe(sendSmsCode -> handler.sendEmptyMessage(0));
 
         mLoginBtn.setOnClickListener(view -> doLogin());
-
     }
 
     public void unRegiste() {
         RxBus.getBus().unregister(SendSmsCode.class.getName(), mObservable);
     }
 
-
     public void doLogin() {
-        if (mPhoneNumView.checkPhoneNum() && mPasswordView.checkValid()){
-            loginPresenter.doLogin(mPhoneNumView.getDistrictInt(),mPhoneNumView.getPhoneNum(), mPasswordView.getCode());
+        if (mPhoneNumView.checkPhoneNum() && mPasswordView.checkValid()) {
+            loginPresenter.doLogin(mPhoneNumView.getDistrictInt(), mPhoneNumView.getPhoneNum(), mPasswordView.getCode());
         }
-
     }
 
-    public boolean isPassword(){
+    public boolean isPassword() {
         return mPasswordView.isPwMode();
     }
 
@@ -129,19 +118,16 @@ public class LoginView extends LinearLayout {
 
         InternalHandler(Context c) {
             context = new WeakReference<Context>(c);
-
         }
 
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             super.handleMessage(msg);
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(Integer.toString(count));
             stringBuffer.append(getContext().getString(R.string.login_resend_msg));
             if (mPasswordView != null) {
                 mPasswordView.setRightText(stringBuffer.toString());
-                if (count == 60)
-                    mPasswordView.blockRightClick(true);
+                if (count == 60) mPasswordView.blockRightClick(true);
                 if (count > 0) {
                     count--;
                     this.sendEmptyMessageDelayed(0, 1000);
@@ -153,6 +139,4 @@ public class LoginView extends LinearLayout {
             }
         }
     }
-
-
 }

@@ -41,22 +41,22 @@ import rx.schedulers.Schedulers;
  */
 public class CalendarFragment extends BaseFragment {
 
+    @BindView(R.id.calendar) RobotoCalendarView calendarView;
+
     public static CalendarFragment newInstance(int pos) {
         Bundle args = new Bundle();
-        args.putInt("p",pos);
-         CalendarFragment fragment = new CalendarFragment();
+        args.putInt("p", pos);
+        CalendarFragment fragment = new CalendarFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
-    @BindView(R.id.calendar) RobotoCalendarView calendarView;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         unbinder = ButterKnife.bind(this, view);
         Calendar mCurCalendar = Calendar.getInstance(Locale.getDefault());
         Calendar today = Calendar.getInstance(Locale.getDefault());
-        mCurCalendar.add(Calendar.MONTH,getArguments().getInt("p"));
+        mCurCalendar.add(Calendar.MONTH, getArguments().getInt("p"));
         calendarView.initializeCalendar(mCurCalendar);
         if (mCurCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) && mCurCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
             calendarView.markDayAsSelectedDay(new Date());
@@ -64,10 +64,10 @@ public class CalendarFragment extends BaseFragment {
         calendarView.setRobotoCalendarListener(new RobotoCalendarView.RobotoCalendarListener() {
             @Override public void onDateSelected(Date date) {
                 //RxBus.getBus().post(date);
-                if (getActivity() instanceof Main2Activity){
+                if (getActivity() instanceof Main2Activity) {
                     ((Main2Activity) getActivity()).setChooseDate(date);
                 }
-                if (getParentFragment() instanceof DatePicker){
+                if (getParentFragment() instanceof DatePicker) {
                     ((DatePicker) getParentFragment()).dismiss();
                 }
             }
@@ -90,7 +90,8 @@ public class CalendarFragment extends BaseFragment {
                     for (String day : qcScheduleGlanceResponse.data.dates) {
                         markDay(day);
                     }
-                    if (mCurCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) && mCurCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+                    if (mCurCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) && mCurCalendar.get(Calendar.YEAR) == today.get(
+                        Calendar.YEAR)) {
                         calendarView.markDayAsSelectedDay(new Date());
                     }
                 });
@@ -99,6 +100,7 @@ public class CalendarFragment extends BaseFragment {
             });
         return view;
     }
+
     public void markDay(String day) {
         Date makeD = DateUtils.formatDateFromYYYYMMDD(day);
         if ((makeD.getTime() + 3600000) < DateUtils.getToadayMidnight()) {
@@ -107,6 +109,7 @@ public class CalendarFragment extends BaseFragment {
             calendarView.markSecondUnderlineWithStyle(RobotoCalendarView.RED_COLOR, makeD);
         }
     }
+
     @Override public String getFragmentName() {
         return CalendarFragment.class.getName();
     }

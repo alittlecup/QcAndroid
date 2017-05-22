@@ -8,207 +8,207 @@
     >
 
 
-    <View
-        android:id="@+id/item_statement_detail_bottomdivier"
+  <View
+      android:id="@+id/item_statement_detail_bottomdivier"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_alignParentBottom="true"
+      android:background="@color/divider_grey"
+      >
+  </View>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <LinearLayout
+        android:id="@+id/item_statement_detail_date"
+        android:layout_width="54dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/item_statement_detail_day"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="34sp"
+          tools:text="11"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/item_statement_detail_month"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="14sp"
+          tools:text="5月"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        >
+
+      <TextView
+          android:id="@+id/item_statement_detail_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:maxLines="2"
+          android:textSize="16sp"
+          tools:text="@string/test_long"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/item_statement_time_shop"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          tools:text="5月"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="会员: "
+            />
+
+        <TextView
+            android:id="@+id/users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:orientation="horizontal"
+          android:paddingBottom="4dp"
+          android:paddingLeft="8dp"
+          android:paddingTop="4dp"
+          >
+
+        <TextView
+            android:id="@+id/trade_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_charge_bg"
+            android:paddingBottom="4dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="4dp"
+            tools:text="赠送"
+            />
+
+        <TextView
+            android:id="@+id/pay_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            tools:text="赠送"
+            />
+
+        <TextView
+            android:id="@+id/pay_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="赠送"
+            />
+
+        <TextView
+            android:id="@+id/account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            tools:text="赠送"
+            />
+
+      </LinearLayout>
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:orientation="horizontal"
+      >
+
+    <View
+        android:id="@+id/item_statement_detail_headerdivier"
+        android:layout_width="54dp"
         android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/divider_grey"
         >
     </View>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:divider="@drawable/divier_linear_nomargin"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:showDividers="middle"
-        >
-
-        <LinearLayout
-            android:id="@+id/item_statement_detail_date"
-            android:layout_width="54dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:id="@+id/item_statement_detail_day"
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="34sp"
-                tools:text="11"
-                />
-
-            <TextView
-                android:id="@+id/item_statement_detail_month"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="5月"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:paddingTop="8dp"
-            >
-
-            <TextView
-                android:id="@+id/item_statement_detail_name"
-                style="@style/Qc.TextCommonBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:maxLines="2"
-                android:textSize="16sp"
-                tools:text="@string/test_long"
-                />
-
-            <TextView
-                android:id="@+id/item_statement_time_shop"
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                tools:text="5月"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="会员: "
-                    />
-
-                <TextView
-                    android:id="@+id/users"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,谁谁谁,"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp"
-                >
-
-                <TextView
-                    android:id="@+id/trade_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_charge_bg"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:paddingTop="4dp"
-                    tools:text="赠送"
-                    />
-
-                <TextView
-                    android:id="@+id/pay_method"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    tools:text="赠送"
-                    />
-
-                <TextView
-                    android:id="@+id/pay_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="赠送"
-                    />
-
-                <TextView
-                    android:id="@+id/account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    tools:text="赠送"
-                    />
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:orientation="horizontal"
+        android:background="@color/divider_grey"
         >
-
-        <View
-            android:id="@+id/item_statement_detail_headerdivier"
-            android:layout_width="54dp"
-            android:layout_height="1dp"
-            android:background="@color/divider_grey"
-            >
-        </View>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider_grey"
-            >
-        </View>
-    </LinearLayout>
+    </View>
+  </LinearLayout>
 
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:gravity="right"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:gravity="right"
-        android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:text="实收"
+        style="@style/Qc.TextCommonGrey"
+        />
 
-        <TextView
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="实收"
-            />
-
-        <TextView
-            android:id="@+id/item_statement_detail_price"
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@color/colorPrimary"
-            tools:text="5月"
-            />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/item_statement_detail_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="@color/colorPrimary"
+        tools:text="5月"
+        style="@style/Qc.TextCommonGrey"
+        />
+  </LinearLayout>
 
 
 </RelativeLayout>

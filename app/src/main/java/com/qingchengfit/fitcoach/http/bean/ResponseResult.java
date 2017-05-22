@@ -17,5 +17,4 @@ public class ResponseResult {
     public final static int SUCCESS = 200;
 
     public final static String error_no_login = "400001";
-
 }

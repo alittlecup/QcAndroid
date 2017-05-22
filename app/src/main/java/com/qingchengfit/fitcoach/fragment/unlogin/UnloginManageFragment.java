@@ -36,6 +36,7 @@ import javax.inject.Inject;
 public class UnloginManageFragment extends LazyloadFragment {
     ManageFragment manageFragment;
     HomeBannerFragment homeBannerFragment;
+    @Inject LoginStatus loginStatus;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,8 @@ public class UnloginManageFragment extends LazyloadFragment {
 
     @Override protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
-
     }
 
-    @Inject LoginStatus loginStatus;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
         RxBusAdd(EventLoginChange.class).delay(500, TimeUnit.MILLISECONDS).subscribe(eventLoginChange -> changeView());
@@ -59,10 +58,10 @@ public class UnloginManageFragment extends LazyloadFragment {
         changeView();
     }
 
-    public void changeView(){
-        if (loginStatus.isLogined()){
+    public void changeView() {
+        if (loginStatus.isLogined()) {
             router(manageFragment);
-        }else {
+        } else {
             router(homeBannerFragment);
         }
     }

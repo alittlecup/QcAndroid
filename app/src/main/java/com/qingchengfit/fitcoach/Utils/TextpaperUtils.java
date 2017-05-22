@@ -18,8 +18,7 @@ import android.text.TextUtils;
 public class TextpaperUtils {
     public static boolean isEmpty(String... s) {
         for (int i = 0; i < s.length; i++) {
-            if (TextUtils.isEmpty(s[i]))
-                return true;
+            if (TextUtils.isEmpty(s[i])) return true;
         }
         return false;
     }

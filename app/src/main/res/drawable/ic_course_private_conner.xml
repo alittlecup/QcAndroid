@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="18dp"
         android:height="18dp"
         android:viewportHeight="18"
         android:viewportWidth="18"
+        android:width="18dp"
     >
-    <group
-        android:translateX="1"
-        android:translateY="000000">
-        <path
-            android:fillColor="#BA68C8"
-            android:pathData="M 7.5 0 C 11.6421356237 0 15 3.35786437627 15 7.5 C 15 11.6421356237 11.6421356237 15 7.5 15 C 3.35786437627 15 0 11.6421356237 0 7.5 C 0 3.35786437627 3.35786437627 0 7.5 0 Z"
-            android:strokeColor="#FFFFFF"
-            android:strokeWidth="2"/>
-        <path
-            android:fillColor="#BA68C8"
-            android:pathData="M 7.5 0 C 11.6421356237 0 15 3.35786437627 15 7.5 C 15 11.6421356237 11.6421356237 15 7.5 15 C 3.35786437627 15 0 11.6421356237 0 7.5 C 0 3.35786437627 3.35786437627 0 7.5 0 Z"
-            android:strokeColor="#FFFFFF"
-            android:strokeWidth="2"/>
-        <path
-            android:fillColor="#FFFFFF"
-            android:pathData="M7.5,7.5 C8.4625,7.5 9.25,6.7125 9.25,5.75 C9.25,4.7875 8.4625,4 7.5,4 C6.5375,4
+  <group
+      android:translateX="1"
+      android:translateY="000000">
+    <path
+        android:fillColor="#BA68C8"
+        android:pathData="M 7.5 0 C 11.6421356237 0 15 3.35786437627 15 7.5 C 15 11.6421356237 11.6421356237 15 7.5 15 C 3.35786437627 15 0 11.6421356237 0 7.5 C 0 3.35786437627 3.35786437627 0 7.5 0 Z"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"/>
+    <path
+        android:fillColor="#BA68C8"
+        android:pathData="M 7.5 0 C 11.6421356237 0 15 3.35786437627 15 7.5 C 15 11.6421356237 11.6421356237 15 7.5 15 C 3.35786437627 15 0 11.6421356237 0 7.5 C 0 3.35786437627 3.35786437627 0 7.5 0 Z"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M7.5,7.5 C8.4625,7.5 9.25,6.7125 9.25,5.75 C9.25,4.7875 8.4625,4 7.5,4 C6.5375,4
 5.75,4.7875 5.75,5.75 C5.75,6.7125 6.5375,7.5 7.5,7.5 L7.5,7.5 Z M7.5,8.375
 C6.31875,8.375 4,8.94375 4,10.125 L4,11 L11,11 L11,10.125 C11,8.94375
 8.68125,8.375 7.5,8.375 L7.5,8.375 Z"
-            android:strokeWidth="1"/>
-    </group>
+        android:strokeWidth="1"/>
+  </group>
 </vector>

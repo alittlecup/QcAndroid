@@ -27,6 +27,15 @@ import java.util.List;
  */
 
 public class OnlineLimit implements Parcelable {
+    public static final Creator<OnlineLimit> CREATOR = new Creator<OnlineLimit>() {
+        @Override public OnlineLimit createFromParcel(Parcel source) {
+            return new OnlineLimit(source);
+        }
+
+        @Override public OnlineLimit[] newArray(int size) {
+            return new OnlineLimit[size];
+        }
+    };
     public int user_count;
     public List<Integer> user_status;
 
@@ -35,32 +44,18 @@ public class OnlineLimit implements Parcelable {
         this.user_status = user_status;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.user_count);
-        dest.writeList(this.user_status);
-    }
-
     protected OnlineLimit(Parcel in) {
         this.user_count = in.readInt();
         this.user_status = new ArrayList<Integer>();
         in.readList(this.user_status, Integer.class.getClassLoader());
     }
 
-    public static final Creator<OnlineLimit> CREATOR = new Creator<OnlineLimit>() {
-        @Override
-        public OnlineLimit createFromParcel(Parcel source) {
-            return new OnlineLimit(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public OnlineLimit[] newArray(int size) {
-            return new OnlineLimit[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.user_count);
+        dest.writeList(this.user_status);
+    }
 }

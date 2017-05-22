@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.items;
 
 import android.view.View;
+import cn.qingchengfit.model.base.CoachService;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import cn.qingchengfit.model.base.CoachService;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.List;
 

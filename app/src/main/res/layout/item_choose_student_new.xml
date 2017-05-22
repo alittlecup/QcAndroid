@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="1dp"
     android:background="@drawable/bg_click"
     android:minHeight="90dp"
@@ -14,21 +14,22 @@
 
   <LinearLayout
       android:layout_width="0dp"
-      android:layout_weight="1"
       android:layout_height="match_parent"
+      android:layout_weight="1"
       android:background="@color/white"
       android:gravity="center_vertical"
       android:orientation="horizontal"
       android:paddingLeft="@dimen/activity_horizontal_margin"
       android:paddingRight="@dimen/activity_horizontal_margin"
       >
-      <CheckBox
-          android:id="@+id/cb"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:button="@drawable/radio_selector"
-          android:clickable="false"
-          />
+
+    <CheckBox
+        android:id="@+id/cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/radio_selector"
+        android:clickable="false"
+        />
 
     <RelativeLayout
         android:id="@+id/item_person_header_loop"
@@ -36,6 +37,7 @@
         android:layout_height="47dp"
         android:layout_margin="10dp"
         >
+
       <ImageView
           android:id="@+id/item_person_header"
           android:layout_width="45dp"
@@ -68,10 +70,12 @@
             tools:text="陈驰元"
             style="@style/Qc.TextCommonBlack"
             />
+
         <Space
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             />
+
         <ImageView
             android:id="@+id/item_person_gender"
             android:layout_width="15dp"
@@ -108,6 +112,7 @@
     </LinearLayout>
 
   </LinearLayout>
+
   <TextView
       android:id="@+id/status"
       android:layout_width="50dp"

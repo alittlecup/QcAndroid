@@ -53,8 +53,7 @@ public class SaleTradeTypeFormFragment extends BaseFragment {
     }
 
     @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-        Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sale_trade_form, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (getArguments() != null) {
@@ -64,32 +63,25 @@ public class SaleTradeTypeFormFragment extends BaseFragment {
                     SaleTradeForm t = ts.get(i);
                     switch (t.trade_type) {
                         case Configs.TRADE_CHARGE_FIRST:
-                            newBuyTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            newBuyTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
                             newBuyRealincome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
                             break;
                         case Configs.TRADE_CHARGE:
-                            chargeTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
-                            chargeRealIncomes.setText(
-                                String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
+                            chargeTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            chargeRealIncomes.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
                             break;
                         case Configs.TRADE_REFUND:
-                            fefundTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            fefundTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
                             refundRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
 
                             break;
                         case Configs.TRADE_PRESENT:
-                            presentTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
-                            presentRealIncome.setText(
-                                String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
+                            presentTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            presentRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
 
                             break;
                         default:
-                            totalTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            totalTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
                             totalRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2((t.real_income))));
 
                             break;

@@ -23,17 +23,14 @@ import eu.davidea.flexibleadapter.items.ISectionable;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.ChooseStaffVH> implements
-    ISectionable<ChooseStaffItem.ChooseStaffVH, AlphabetHeaderItem>,IFilterable{
-    public static final  int COMMON = 0;
-    public static final  int UNDER_GYM = 1;
+public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.ChooseStaffVH>
+    implements ISectionable<ChooseStaffItem.ChooseStaffVH, AlphabetHeaderItem>, IFilterable {
+    public static final int COMMON = 0;
+    public static final int UNDER_GYM = 1;
     Staff staff;
     int choosetype; // 0 在全部场馆下  1在场馆下
-
-    public Staff getStaff() {
-        return staff;
-    }
     private AlphabetHeaderItem headerItem;
+
     public ChooseStaffItem(Staff staff) {
         this.staff = staff;
     }
@@ -48,7 +45,9 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
         this.choosetype = choosetype;
     }
 
-
+    public Staff getStaff() {
+        return staff;
+    }
 
     @Override public int getLayoutRes() {
         return R.layout.item_choose_staff;
@@ -78,10 +77,11 @@ public class ChooseStaffItem extends AbstractFlexibleItem<ChooseStaffItem.Choose
     }
 
     @Override public boolean equals(Object o) {
-        if (o instanceof ChooseStaffItem){
-           return  ((ChooseStaffItem) o).staff.getId().equals(staff.getId());
-        }else
+        if (o instanceof ChooseStaffItem) {
+            return ((ChooseStaffItem) o).staff.getId().equals(staff.getId());
+        } else {
             return false;
+        }
     }
 
     @Override public AlphabetHeaderItem getHeader() {

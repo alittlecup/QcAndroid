@@ -52,7 +52,6 @@ public class LoginFragment extends BaseFragment {
 
     }
 
-
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         materialDialog = new MaterialDialog.Builder(getActivity()).content("登录中请稍后").progress(true, 0).build();
@@ -99,7 +98,7 @@ public class LoginFragment extends BaseFragment {
                             PreferenceUtils.setPrefString(getActivity(), qcResponLogin.data.coach.id + "hostarray", "");
                             loginStatus.setUserId(qcResponLogin.data.user.getId());
                             loginStatus.setSession(qcResponLogin.data.session_id);
-                            loginStatus.setLoginUser(new Staff(App.gUser,App.coachid+""));
+                            loginStatus.setLoginUser(new Staff(App.gUser, App.coachid + ""));
                             return rx.Observable.just(true);
                         } else {
                             SnackbarOnUiThread("该号码未注册教练");

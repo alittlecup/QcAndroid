@@ -19,18 +19,17 @@ import java.util.List;
 
 public class ChatGymItem extends AbstractFlexibleItem<ChatGymItem.ChatGymVH> {
 
+    ChatGym chatGym;
+    boolean canChoose = false;
+
     public ChatGymItem(ChatGym chatGym) {
         this.chatGym = chatGym;
         this.canChoose = false;
     }
-
     public ChatGymItem(ChatGym chatGym, boolean canChoose) {
         this.chatGym = chatGym;
         this.canChoose = canChoose;
     }
-
-    ChatGym chatGym;
-    boolean canChoose = false;
 
     public ChatGym getChatGym() {
         return chatGym;
@@ -45,12 +44,15 @@ public class ChatGymItem extends AbstractFlexibleItem<ChatGymItem.ChatGymVH> {
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChatGymVH holder, int position, List payloads) {
-        holder.checkbox.setVisibility(canChoose?View.VISIBLE:View.GONE);
+        holder.checkbox.setVisibility(canChoose ? View.VISIBLE : View.GONE);
         holder.checkbox.setChecked(adapter.isSelected(position));
         holder.tvGymName.setText(chatGym.name);
-        int cont = (chatGym.coaches == null?0:chatGym.coaches.size()) + (chatGym.staffs == null?0:chatGym.staffs.size());
-        holder.tvStaffCount.setText(cont+"人");
-        Glide.with(holder.itemView.getContext()).load(chatGym.photo).asBitmap().into(new CircleImgWrapper(holder.imgAvatar,holder.imgAvatar.getContext()));
+        int cont = (chatGym.coaches == null ? 0 : chatGym.coaches.size()) + (chatGym.staffs == null ? 0 : chatGym.staffs.size());
+        holder.tvStaffCount.setText(cont + "人");
+        Glide.with(holder.itemView.getContext())
+            .load(chatGym.photo)
+            .asBitmap()
+            .into(new CircleImgWrapper(holder.imgAvatar, holder.imgAvatar.getContext()));
     }
 
     @Override public boolean equals(Object o) {
@@ -63,6 +65,7 @@ public class ChatGymItem extends AbstractFlexibleItem<ChatGymItem.ChatGymVH> {
         @BindView(R.id.img_avatar) ImageView imgAvatar;
         @BindView(R.id.tv_gym_name) TextView tvGymName;
         @BindView(R.id.tv_staff_count) TextView tvStaffCount;
+
         public ChatGymVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

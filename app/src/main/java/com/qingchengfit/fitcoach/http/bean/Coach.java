@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/21 2015.
  */
 public class Coach {
-    @SerializedName("id")
-    public String id;
+    @SerializedName("id") public String id;
 }

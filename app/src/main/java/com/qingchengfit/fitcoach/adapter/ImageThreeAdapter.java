@@ -7,13 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.ImageThreeBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
 import java.util.List;
 
 /**
@@ -34,11 +32,9 @@ public class ImageThreeAdapter extends RecyclerView.Adapter<ImageThreeAdapter.Im
     private List<ImageThreeBean> datas;
     private OnRecycleItemClickListener listener;
 
-
     public ImageThreeAdapter(List<ImageThreeBean> datas) {
         this.datas = datas;
     }
-
 
     public OnRecycleItemClickListener getListener() {
         return listener;
@@ -48,15 +44,14 @@ public class ImageThreeAdapter extends RecyclerView.Adapter<ImageThreeAdapter.Im
         this.listener = listener;
     }
 
-    @Override
-    public ImageThreeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ImageThreeHolder holder = new ImageThreeHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym_course, parent, false));
+    @Override public ImageThreeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ImageThreeHolder holder =
+            new ImageThreeHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym_course, parent, false));
         holder.itemView.setOnClickListener(this);
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(ImageThreeHolder holder, int position) {
+    @Override public void onBindViewHolder(ImageThreeHolder holder, int position) {
         holder.itemView.setTag(position);
         if (datas != null && datas.size() > position) {
             ImageThreeBean bean = datas.get(position);
@@ -74,13 +69,11 @@ public class ImageThreeAdapter extends RecyclerView.Adapter<ImageThreeAdapter.Im
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return datas.size();
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         if (listener != null) {
             listener.onItemClick(v, (int) v.getTag());
         }
@@ -101,6 +94,5 @@ public class ImageThreeAdapter extends RecyclerView.Adapter<ImageThreeAdapter.Im
             content2 = (TextView) itemView.findViewById(R.id.gym_course_tag);
             tag = (TextView) itemView.findViewById(R.id.gym_course_title_tag);
         }
-
     }
 }

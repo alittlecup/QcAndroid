@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
@@ -23,7 +24,6 @@ import com.qingchengfit.fitcoach.event.CourseImageManageEvent;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseSchedulePhotos;
 import com.qingchengfit.fitcoach.items.AllCourseImageHeaderItem;
 import com.qingchengfit.fitcoach.items.AllCourseImageItem;
@@ -259,6 +259,4 @@ public class CourseImagesFragment extends BaseFragment
     @Override public void noMoreLoad(int i) {
 
     }
-
-
 }

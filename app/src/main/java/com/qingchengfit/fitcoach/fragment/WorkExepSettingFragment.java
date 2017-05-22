@@ -18,7 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.LogUtil;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -27,17 +31,10 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.LogUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -56,30 +53,21 @@ import rx.schedulers.Schedulers;
  */
 public class WorkExepSettingFragment extends BaseSettingFragment {
 
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.record_comfirm_no_img)
-    ImageView recordComfirmNoImg;
-    @BindView(R.id.record_comfirm_no_txt)
-    TextView recordComfirmNoTxt;
-    @BindView(R.id.record_confirm_none)
-    RelativeLayout recordConfirmNone;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    @BindView(R.id.record_comfirm_no_img) ImageView recordComfirmNoImg;
+    @BindView(R.id.record_comfirm_no_txt) TextView recordComfirmNoTxt;
+    @BindView(R.id.record_confirm_none) RelativeLayout recordConfirmNone;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
     private WorkExepAdapter adapter;
     private Unbinder unbinder;
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_workexp_list, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add, 0, getActivity().getString(R.string.workexper_title));
         fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-//                fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", null));
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                //                fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", null));
                 Intent toSearch = new Intent(getActivity(), SearchActivity.class);
                 toSearch.putExtra("type", SearchFragment.TYPE_GYM);
                 startActivityForResult(toSearch, 10010);
@@ -90,19 +78,15 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
-
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 freshData();
             }
         });
 
-
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
+            @Override public void onGlobalLayout() {
                 refresh.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 refresh.setRefreshing(true);
                 freshData();
@@ -112,13 +96,13 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogUtil.e("onActivityReslut:" + requestCode + "  " + requestCode);
         if (requestCode == 10010 && resultCode > 0) {
             QcExperienceResponse.DataEntity.ExperiencesEntity entity = new QcExperienceResponse.DataEntity.ExperiencesEntity();
-            QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity = new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
+            QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity gymEntity =
+                new QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity();
             gymEntity.setId(data.getLongExtra("id", 0));
             gymEntity.setName(data.getStringExtra("username"));
             gymEntity.setAddress(data.getStringExtra("address"));
@@ -126,70 +110,59 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             gymEntity.setIs_authenticated(data.getBooleanExtra("isauth", false));
             entity.setGym(gymEntity);
 
-            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity,true));
-
+            fragmentCallBack.onFragmentChange(WorkExpeEditFragment.newInstance("添加工作经历", entity, true));
         }
     }
 
     public void freshData() {
 
         QcCloudClient.getApi().getApi.qcGetExperiences(App.coachid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcExperienceResponse -> {
-                            if (recyclerview != null) {
-                                if (qcExperienceResponse.getData().getExperiences() != null && qcExperienceResponse.getData().getExperiences().size() > 0) {
-                                    recyclerview.setVisibility(View.VISIBLE);
-                                    recordConfirmNone.setVisibility(View.GONE);
-                                    adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
-                                    adapter.setListener(new OnRecycleItemClickListener() {
-                                        @Override
-                                        public void onItemClick(View v, int pos) {
-                                            fragmentCallBack.onFragmentChange(WorkExpDetailFragment.newInstance(qcExperienceResponse.getData().getExperiences().get(pos).getId()));
-                                        }
-                                    });
-                                    recyclerview.setAdapter(adapter);
-                                } else {
-                                    recyclerview.setVisibility(View.GONE);
-                                    recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
-                                    recordComfirmNoTxt.setText("您还没有添加任何工作经历请点击添加按钮");
-                                    recordConfirmNone.setVisibility(View.VISIBLE);
-                                }
-                                refresh.setRefreshing(false);
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(qcExperienceResponse -> {
+                if (recyclerview != null) {
+                    if (qcExperienceResponse.getData().getExperiences() != null
+                        && qcExperienceResponse.getData().getExperiences().size() > 0) {
+                        recyclerview.setVisibility(View.VISIBLE);
+                        recordConfirmNone.setVisibility(View.GONE);
+                        adapter = new WorkExepAdapter(qcExperienceResponse.getData().getExperiences());
+                        adapter.setListener(new OnRecycleItemClickListener() {
+                            @Override public void onItemClick(View v, int pos) {
+                                fragmentCallBack.onFragmentChange(
+                                    WorkExpDetailFragment.newInstance(qcExperienceResponse.getData().getExperiences().get(pos).getId()));
                             }
-                        }, throwable -> {
-                        }, () -> {
-                        }
-                );
+                        });
+                        recyclerview.setAdapter(adapter);
+                    } else {
+                        recyclerview.setVisibility(View.GONE);
+                        recordComfirmNoImg.setImageResource(R.drawable.img_no_experience);
+                        recordComfirmNoTxt.setText("您还没有添加任何工作经历请点击添加按钮");
+                        recordConfirmNone.setVisibility(View.VISIBLE);
+                    }
+                    refresh.setRefreshing(false);
+                }
+            }, throwable -> {
+            }, () -> {
+            });
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 
     public interface OnRecycleItemClickListener {
         void onItemClick(View v, int pos);
     }
 
     public static class WorkExepVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_workexpe_name)
-        TextView itemWorkexpeName;
-        @BindView(R.id.item_workexpe_time)
-        TextView itemWorkexpeTime;
-        @BindView(R.id.item_workexpe)
-        LinearLayout itemWorkexpe;
-        @BindView(R.id.item_workexpe_address)
-        TextView itemAddress;
-        @BindView(R.id.qc_identify)
-        ImageView qcIdentify;
-        @BindView(R.id.item_workexpe_hidden)
-        View isHidden;
-        @BindView(R.id.item_workexpe_img)
-        ImageView img;
+        @BindView(R.id.item_workexpe_name) TextView itemWorkexpeName;
+        @BindView(R.id.item_workexpe_time) TextView itemWorkexpeTime;
+        @BindView(R.id.item_workexpe) LinearLayout itemWorkexpe;
+        @BindView(R.id.item_workexpe_address) TextView itemAddress;
+        @BindView(R.id.qc_identify) ImageView qcIdentify;
+        @BindView(R.id.item_workexpe_hidden) View isHidden;
+        @BindView(R.id.item_workexpe_img) ImageView img;
 
         public WorkExepVH(View itemView) {
             super(itemView);
@@ -198,7 +171,6 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
     }
 
     class WorkExepAdapter extends RecyclerView.Adapter<WorkExepVH> implements View.OnClickListener {
-
 
         private List<QcExperienceResponse.DataEntity.ExperiencesEntity> datas;
         private OnRecycleItemClickListener listener;
@@ -215,15 +187,13 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             this.listener = listener;
         }
 
-        @Override
-        public WorkExepVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override public WorkExepVH onCreateViewHolder(ViewGroup parent, int viewType) {
             WorkExepVH holder = new WorkExepVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_workexpe, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(WorkExepVH holder, int position) {
+        @Override public void onBindViewHolder(WorkExepVH holder, int position) {
             holder.itemView.setTag(position);
             QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity = datas.get(position);
 
@@ -234,17 +204,22 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());
             c.setTime(d);
-            if (c.get(Calendar.YEAR) == 3000)
+            if (c.get(Calendar.YEAR) == 3000) {
                 stringBuffer.append(getContext().getString(R.string.common_today));
-            else
+            } else {
                 stringBuffer.append(DateUtils.Date2YYYYMMDD(d));
+            }
             holder.itemWorkexpeTime.setText(stringBuffer.toString());
-            if (experiencesEntity.is_authenticated())
+            if (experiencesEntity.is_authenticated()) {
                 holder.qcIdentify.setVisibility(View.VISIBLE);
-            else holder.qcIdentify.setVisibility(View.GONE);
-            if (experiencesEntity.getGym().getDistrict() != null && experiencesEntity.getGym().getDistrict().city != null &&
-                    !TextUtils.isEmpty(experiencesEntity.getGym().getDistrict().city.name))
+            } else {
+                holder.qcIdentify.setVisibility(View.GONE);
+            }
+            if (experiencesEntity.getGym().getDistrict() != null
+                && experiencesEntity.getGym().getDistrict().city != null
+                && !TextUtils.isEmpty(experiencesEntity.getGym().getDistrict().city.name)) {
                 holder.itemAddress.setText("|" + experiencesEntity.getGym().getDistrict().city.name);
+            }
 
             if (experiencesEntity.is_hidden()) {
                 holder.isHidden.setVisibility(View.VISIBLE);
@@ -252,17 +227,17 @@ public class WorkExepSettingFragment extends BaseSettingFragment {
             } else {
                 holder.isHidden.setVisibility(View.GONE);
             }
-            Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(holder.img, App.AppContex));
+            Glide.with(App.AppContex)
+                .load(experiencesEntity.getGym().getPhoto())
+                .asBitmap()
+                .into(new CircleImgWrapper(holder.img, App.AppContex));
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
+        @Override public void onClick(View v) {
             listener.onItemClick(v, (int) v.getTag());
         }
     }

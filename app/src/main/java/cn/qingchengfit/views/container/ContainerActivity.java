@@ -11,10 +11,9 @@ import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.utils.IntentUtils;
 import com.qingchengfit.fitcoach.R;
 
-
 public class ContainerActivity extends AppCompatActivity {
 
-    public static void router(String module,Context context){
+    public static void router(String module, Context context) {
         Intent toStatement = new Intent(context, ContainerActivity.class);
         toStatement.putExtra("router", module);
         context.startActivity(toStatement);
@@ -25,31 +24,28 @@ public class ContainerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_container);
 
         String router = getIntent().getStringExtra("router");
-        if (getIntent() != null && getIntent().getData() != null && getIntent().getData().getPath() != null){
+        if (getIntent() != null && getIntent().getData() != null && getIntent().getData().getPath() != null) {
             router = getIntent().getData().getPath();
         }
         Fragment fragment = new Fragment();
-        switch (router.toLowerCase()){
+        switch (router.toLowerCase()) {
             case "/replies/":
             case "/replies":
                 fragment = new ArticleReplyFragment();
                 break;
             case "/comments/":
             case "/comments":
-                String articleid = IntentUtils.getIntentFromUri(getIntent(),"news_id");
-                String replyId = IntentUtils.getIntentFromUri(getIntent(),"replyId");
-                String replayname = IntentUtils.getIntentFromUri(getIntent(),"replyName");
+                String articleid = IntentUtils.getIntentFromUri(getIntent(), "news_id");
+                String replyId = IntentUtils.getIntentFromUri(getIntent(), "replyId");
+                String replayname = IntentUtils.getIntentFromUri(getIntent(), "replyName");
                 fragment = new ArticleCommentsListFragmentBuilder(articleid).replyId(replyId).replyName(replayname).build();
                 break;
         }
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.frag,fragment).commit();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.frag, fragment).commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        if ( getIntent() != null && getIntent().getData() != null) {
+    @Override public void onBackPressed() {
+        if (getIntent() != null && getIntent().getData() != null) {
             Intent ret = new Intent();
             String aciton = getIntent().getData().getHost() + getIntent().getData().getPath();
             ret.putExtra("web_action", aciton);

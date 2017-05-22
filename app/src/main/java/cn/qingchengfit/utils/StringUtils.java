@@ -29,14 +29,14 @@ public class StringUtils {
     public static boolean isEmpty(String str) {
         return (str == null || str.equalsIgnoreCase(""));
     }
+
     public static boolean isNumZero(String str) {
         try {
-            if (str == null || str.equalsIgnoreCase("") || str.equalsIgnoreCase("null"))
-                return true;
+            if (str == null || str.equalsIgnoreCase("") || str.equalsIgnoreCase("null")) return true;
 
             float x = Float.parseFloat(str);
-            return  x == 0;
-        }catch (Exception e){
+            return x == 0;
+        } catch (Exception e) {
             return false;
         }
     }
@@ -155,14 +155,12 @@ public class StringUtils {
         }
     }
 
-
     public static String getFloatDot2(float f) {
         if (((int) (f * 100)) % 100 != 0) return String.format(Locale.CHINA, "%.2f", f);
         if (f == 0) return "0";
 
         return String.format(Locale.CHINA, "%.0f", f);
     }
-
 
     /**
      * 数字数组,包含头尾
@@ -174,8 +172,6 @@ public class StringUtils {
         }
         return ret;
     }
-
-
 
     /**
      * 是否是汉字
@@ -223,18 +219,18 @@ public class StringUtils {
         }
     }
 
-    public static String  getStringHtml(String text,String color){
-        return TextUtils.concat("<font color=\""+color+"\">"+text+"</font>").toString();
+    public static String getStringHtml(String text, String color) {
+        return TextUtils.concat("<font color=\"" + color + "\">" + text + "</font>").toString();
     }
 
-
-    public static String array2str(int[] from){
+    public static String array2str(int[] from) {
         String ret = "";
         for (int i = 0; i < from.length; i++) {
-            if (i < from.length -1){
+            if (i < from.length - 1) {
                 ret = ret.concat(Integer.toString(from[i])).concat(",");
-            }else
+            } else {
                 ret = ret.concat(Integer.toString(from[i]));
+            }
         }
         return ret;
     }

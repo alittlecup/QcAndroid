@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class EditJacketBody {
 
-
     List<String> photos;
     boolean random_show_photos;
 

@@ -20,24 +20,23 @@ public class ChooseActivity extends BaseAcitivity {
     public static final int CONVERSATION_FRIEND = 61; // 用卡签到
     private String chosenId;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_address);
         Fragment fragment = new Fragment();
         int to = getIntent().getIntExtra("to", 0);
         chosenId = getIntent().getStringExtra("id");
-        if (getIntent().getData() != null && getIntent().getData().getPath() != null){
+        if (getIntent().getData() != null && getIntent().getData().getPath() != null) {
             String path = getIntent().getData().getPath();
-            if (path.contains("chat_friend")){
+            if (path.contains("chat_friend")) {
                 to = CONVERSATION_FRIEND;
             }
-
         }
 
-        switch (to){
+        switch (to) {
             case 1:
-                fragment = AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"),getIntent().getLongExtra("len",0));
+                fragment =
+                    AddCycleFragment.newInstance((CmBean) getIntent().getParcelableExtra("cmbean"), getIntent().getLongExtra("len", 0));
                 break;
             case TO_CHOSSE_GYM:
                 fragment = new ChooseGymFragmentBuilder(getIntent().getParcelableExtra("service")).build();
@@ -52,8 +51,6 @@ public class ChooseActivity extends BaseAcitivity {
                 fragment = new ChooseAddressFragment();
                 break;
         }
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.activity_choose_address,fragment)
-                .commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.activity_choose_address, fragment).commit();
     }
 }

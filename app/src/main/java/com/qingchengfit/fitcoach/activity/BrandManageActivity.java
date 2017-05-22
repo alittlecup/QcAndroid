@@ -34,7 +34,7 @@ import com.qingchengfit.fitcoach.fragment.brandmanange.BrandDetailFragment;
  * Created by Paper on 2017/3/7.
  */
 
-public class BrandManageActivity extends BaseAcitivity{
+public class BrandManageActivity extends BaseAcitivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
@@ -50,13 +50,14 @@ public class BrandManageActivity extends BaseAcitivity{
             }
         });
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.frag, BrandDetailFragment.newInstance((Brand)getIntent().getParcelableExtra("brand")))
+            .replace(R.id.frag, BrandDetailFragment.newInstance((Brand) getIntent().getParcelableExtra("brand")))
             .commitAllowingStateLoss();
     }
+
     public void settoolbar(String title, @MenuRes int menu, Toolbar.OnMenuItemClickListener listener) {
         toolbarTitle.setText(title);
         toolbar.getMenu().clear();
-        if (menu != 0){
+        if (menu != 0) {
             toolbar.inflateMenu(menu);
             toolbar.setOnMenuItemClickListener(listener);
         }

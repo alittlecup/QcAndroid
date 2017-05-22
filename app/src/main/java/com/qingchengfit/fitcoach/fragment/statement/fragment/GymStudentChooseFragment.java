@@ -58,7 +58,7 @@ import rx.schedulers.Schedulers;
             .subscribe(new Action1<QcAllStudentResponse>() {
                 @Override public void call(QcAllStudentResponse qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.users != null){
+                        if (qcResponse.data != null && qcResponse.data.users != null) {
                             mDatas.clear();
                             mDatas.add(new SimpleTextItemItem("全部学员"));
                             for (int i = 0; i < qcResponse.data.users.size(); i++) {
@@ -80,10 +80,12 @@ import rx.schedulers.Schedulers;
 
     @Override public boolean onItemClick(int position) {
 
-        if (mDatas.get(position) instanceof ChooseStudentItem){
-            RxBus.getBus().post(new EventChooseStudent.Builder().chooseStudentid(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.user.id
-            ).StudentName(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.username).build());
-        }else if (mDatas.get(position) instanceof SimpleTextItemItem){
+        if (mDatas.get(position) instanceof ChooseStudentItem) {
+            RxBus.getBus()
+                .post(new EventChooseStudent.Builder().chooseStudentid(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.user.id)
+                    .StudentName(((ChooseStudentItem) mDatas.get(position)).mQcStudentBean.username)
+                    .build());
+        } else if (mDatas.get(position) instanceof SimpleTextItemItem) {
             RxBus.getBus().post(new EventChooseStudent.Builder().chooseStudentid("0").StudentName("全部学员").build());
         }
         dismiss();

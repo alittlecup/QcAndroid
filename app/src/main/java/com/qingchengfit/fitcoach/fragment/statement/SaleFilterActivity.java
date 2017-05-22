@@ -185,8 +185,7 @@ public class SaleFilterActivity extends BaseAcitivity {
     }
 
     @OnClick({
-        R.id.start_day, R.id.end_day, R.id.card_type, R.id.trade_type, R.id.pay_method, R.id.student,
-        R.id.custom_statment_generate
+        R.id.start_day, R.id.end_day, R.id.card_type, R.id.trade_type, R.id.pay_method, R.id.student, R.id.custom_statment_generate
     }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_day:
@@ -245,8 +244,8 @@ public class SaleFilterActivity extends BaseAcitivity {
                 break;
             case R.id.card_type:
 
-                CardTypeChooseDialogFragment cardTypeChooseDialog = CardTypeChooseDialogFragment.newInstance(
-                    BusinessUtils.card2Card_tpl(mFilterCardTpl));
+                CardTypeChooseDialogFragment cardTypeChooseDialog =
+                    CardTypeChooseDialogFragment.newInstance(BusinessUtils.card2Card_tpl(mFilterCardTpl));
                 cardTypeChooseDialog.show(getSupportFragmentManager(), "");
                 break;
             case R.id.trade_type://交易类型
@@ -254,8 +253,7 @@ public class SaleFilterActivity extends BaseAcitivity {
                 trades.add(getString(R.string.no_limit));
                 trades.addAll(BusinessUtils.getTradeTypes(this, mFilterTradeType));
                 new DialogList(this).list(trades, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         tradeType.setContent(trades.get(position));
                         if (position == 0) {
                             mSaleFilter.tradeType = 0;
@@ -271,8 +269,7 @@ public class SaleFilterActivity extends BaseAcitivity {
                 paystringList.add(getString(R.string.no_limit));
                 paystringList.addAll(BusinessUtils.getPayMethods(this, mFilterPayMethod));
                 new DialogList(this).list(paystringList, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         payMethod.setContent(paystringList.get(position));
                         if (position == 0) {
                             mSaleFilter.payMethod = 0;
@@ -288,8 +285,7 @@ public class SaleFilterActivity extends BaseAcitivity {
                 stus.addAll(BusinessUtils.students2strs(mFilterStudents));
 
                 new DialogList(this).list(stus, new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         student.setContent(stus.get(position));
                         if (position == 0) {
                             mSaleFilter.student = null;

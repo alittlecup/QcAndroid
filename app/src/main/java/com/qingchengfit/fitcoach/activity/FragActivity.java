@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.AppUtils;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
@@ -21,7 +22,6 @@ import com.qingchengfit.fitcoach.fragment.batch.SetAccountFragment;
 import com.qingchengfit.fitcoach.fragment.batch.space.SpaceListFragment;
 import com.qingchengfit.fitcoach.fragment.course.plan.CoursePlanHomeFragment;
 import com.qingchengfit.fitcoach.fragment.manage.EditGymFragmentBuilder;
-import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by
@@ -39,10 +39,9 @@ import cn.qingchengfit.model.base.CoachService;
 public class FragActivity extends BaseAcitivity {
 
     Fragment fragment;
-    CoachService mCoachService ;
+    CoachService mCoachService;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag);
         int type = getIntent().getIntExtra("type", 0);
@@ -93,10 +92,10 @@ public class FragActivity extends BaseAcitivity {
                 fragment = SpaceListFragment.newInstance(getIntent().getIntExtra("course_type", Configs.TYPE_GROUP));
                 break;
             case 12:
-                fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count",1),getIntent().getBooleanExtra("isfree",true));
+                fragment = SetAccountFragment.newInstance(getIntent().getIntExtra("count", 1), getIntent().getBooleanExtra("isfree", true));
                 break;
-           case 13:
-                fragment = new EditGymFragmentBuilder("",mCoachService.getBrand_name(),"",mCoachService.id,mCoachService.model).build();
+            case 13:
+                fragment = new EditGymFragmentBuilder("", mCoachService.getBrand_name(), "", mCoachService.id, mCoachService.model).build();
                 break;
             case 14:
                 fragment = new CoursePlanHomeFragment();
@@ -104,29 +103,25 @@ public class FragActivity extends BaseAcitivity {
             default:
                 break;
         }
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.web_frag_layout, fragment)
-                .commit();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.web_frag_layout, fragment).commit();
     }
 
     public CoachService getCoachService() {
         return mCoachService;
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
-
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         AppUtils.hideKeyboard(this);
         if (fragment instanceof GymDetailFragment && fragment.isVisible()) {
             if (((GymDetailFragment) fragment).canGoBack()) {
                 ((GymDetailFragment) fragment).goBack();
-            } else this.finish();
+            } else {
+                this.finish();
+            }
         } else if (getSupportFragmentManager().popBackStackImmediate()) {
 
         } else {

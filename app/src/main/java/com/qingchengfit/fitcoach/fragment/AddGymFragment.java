@@ -31,92 +31,81 @@ import rx.schedulers.Schedulers;
  * <p>
  * 与引导公用  ！！！！！！！！！！！
  */
-@FragmentWithArgs
-public class AddGymFragment extends GuideSetGymFragment {
+@FragmentWithArgs public class AddGymFragment extends GuideSetGymFragment {
     private SearchInterface searchListener;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         view.findViewById(R.id.hint).setVisibility(View.GONE);
         ((Button) view.findViewById(R.id.next_step)).setText(R.string.login_comfirm);
         if (view instanceof LinearLayout) {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
-            Toolbar tb = (Toolbar)v.findViewById(R.id.toolbar);
-            ((TextView)v.findViewById(R.id.toolbar_title)).setText("新建健身房");
+            Toolbar tb = (Toolbar) v.findViewById(R.id.toolbar);
+            ((TextView) v.findViewById(R.id.toolbar_title)).setText("新建健身房");
             tb.setNavigationIcon(R.drawable.ic_arrow_left);
             tb.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     getActivity().onBackPressed();
                 }
             });
             TypedValue tv = new TypedValue();
-            if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-            {
-                int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-                ((LinearLayout) view).addView(v, 0,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,actionBarHeight));
+            if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+                int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+                ((LinearLayout) view).addView(v, 0, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, actionBarHeight));
             }
         }
         return view;
     }
 
-
-    @Override
-    public void onNextStep() {
+    @Override public void onNextStep() {
         showLoading();
-        if (TextUtils.isEmpty(gymName.getContent()) ){
+        if (TextUtils.isEmpty(gymName.getContent())) {
             cn.qingchengfit.utils.ToastUtils.show("请填写场馆名称");
             return;
         }
-        if ( lat == 0 || lng == 0){
+        if (lat == 0 || lng == 0) {
             cn.qingchengfit.utils.ToastUtils.show("请重新选择场馆位置");
             return;
         }
 
         CoachInitBean bean = new CoachInitBean();
         bean.brand_id = brandid;
-        bean.shop = new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code+"").photo(imgUrl).build();
+        bean.shop =
+            new Shop.Builder().gd_lat(lat).gd_lng(lng).name(gymName.getContent()).gd_district_id(city_code + "").photo(imgUrl).build();
 
-        RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean)
-            .subscribeOn(Schedulers.io())
+        RxRegiste(QcCloudClient.getApi().postApi.qcInit(bean).subscribeOn(Schedulers.io())
 
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponseSystenInit>() {
-                    @Override
-                    public void call(QcResponseSystenInit qcResponse) {
-                        hideLoading();
-                        if (ResponseConstant.checkSuccess(qcResponse)) {
-                            // TODO: 16/11/16 新建成功
-                            //getActivity().onBackPressed();
-                            searchListener.onSearchResult(100, qcResponse.data.gym_id,qcResponse.data.name,qcResponse.data.brand_name,qcResponse.data.photo,false);
-                        } else ToastUtils.showDefaultStyle(qcResponse.msg);
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<QcResponseSystenInit>() {
+                @Override public void call(QcResponseSystenInit qcResponse) {
+                    hideLoading();
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        // TODO: 16/11/16 新建成功
+                        //getActivity().onBackPressed();
+                        searchListener.onSearchResult(100, qcResponse.data.gym_id, qcResponse.data.name, qcResponse.data.brand_name,
+                            qcResponse.data.photo, false);
+                    } else {
+                        ToastUtils.showDefaultStyle(qcResponse.msg);
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        hideLoading();
-                        ToastUtils.showDefaultStyle("error!");
-                    }
-                })
-        );
-
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+                    hideLoading();
+                    ToastUtils.showDefaultStyle("error!");
+                }
+            }));
     }
 
-        @Override
-        public void onAttach(Context context) {
-            super.onAttach(context);
-            if (context instanceof SearchInterface) {
-                searchListener = (SearchInterface) context;
-            }
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof SearchInterface) {
+            searchListener = (SearchInterface) context;
         }
+    }
 
-        @Override
-        public void onDetach() {
-            super.onDetach();
-            searchListener = null;
-        }
-
+    @Override public void onDetach() {
+        super.onDetach();
+        searchListener = null;
+    }
 }
 
 //public class AddGymFragment extends Fragment {

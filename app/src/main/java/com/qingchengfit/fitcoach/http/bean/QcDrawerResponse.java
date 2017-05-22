@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -18,41 +17,26 @@ import java.util.List;
  * Created by Paper on 15/10/16 2015.
  */
 public class QcDrawerResponse extends QcResponse {
-    @SerializedName("data")
-    public DrawerData data;
+    @SerializedName("data") public DrawerData data;
 
     public static class DrawerData {
-        @SerializedName("plan_count")
-        public String plan_count;
-        @SerializedName("user_count")
-        public String user_count;
-        @SerializedName("system_count")
-        public String system_count;
-        @SerializedName("coach")
-        public DrawerCoach coach;
-        @SerializedName("activities")
-        public List<Activity> activities;
+        @SerializedName("plan_count") public String plan_count;
+        @SerializedName("user_count") public String user_count;
+        @SerializedName("system_count") public String system_count;
+        @SerializedName("coach") public DrawerCoach coach;
+        @SerializedName("activities") public List<Activity> activities;
     }
 
     public static class DrawerCoach {
-        @SerializedName("username")
-        public String username;
-        @SerializedName("avatar")
-        public String avatar;
-        @SerializedName("id")
-        public int id;
+        @SerializedName("username") public String username;
+        @SerializedName("avatar") public String avatar;
+        @SerializedName("id") public int id;
     }
 
-    public static class Activity{
-        @SerializedName("image")
-        public String image;
-        @SerializedName("link")
-        public String link;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("id")
-        public String id;
+    public static class Activity {
+        @SerializedName("image") public String image;
+        @SerializedName("link") public String link;
+        @SerializedName("name") public String name;
+        @SerializedName("id") public String id;
     }
-
-
 }

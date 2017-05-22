@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 public class InterupteLinearLayout extends LinearLayout {
 
     private boolean canChildClick = false;
+
     public InterupteLinearLayout(Context context) {
         super(context);
     }
@@ -37,8 +38,7 @@ public class InterupteLinearLayout extends LinearLayout {
         this.canChildClick = canChildClick;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
 
         return !canChildClick;
     }

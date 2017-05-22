@@ -5,11 +5,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.MainActivity;
 import com.umeng.analytics.MobclickAgent;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -59,8 +57,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     /**
      * 初始化
-     *
-     * @param context
      */
     public void init(Context context) {
         mContext = context;
@@ -73,8 +69,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 当UncaughtException发生时会转入该函数来处理
      */
-    @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
+    @Override public void uncaughtException(Thread thread, Throwable ex) {
         if (!handleException(ex) && mDefaultHandler != null) {
             //如果用户没有处理则让系统默认的异常处理器来处理
             mDefaultHandler.uncaughtException(thread, ex);
@@ -85,24 +80,23 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 Log.e(TAG, "error : ", e);
             }
             //退出程序
-//            Looper.prepare();
+            //            Looper.prepare();
             if (App.gCanReload) {
                 Intent intent = new Intent(mContext.getApplicationContext(), MainActivity.class);
-                PendingIntent restartIntent = PendingIntent.getActivity(
-                        mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//             退出程序
+                PendingIntent restartIntent =
+                    PendingIntent.getActivity(mContext.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                //             退出程序
                 AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
                 mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
             }
             ((App) mContext).finishActivity();
-//            Looper.loop();
+            //            Looper.loop();
         }
     }
 
     /**
      * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.
      *
-     * @param ex
      * @return true:如果处理了该异常信息;否则返回false.
      */
     private boolean handleException(Throwable ex) {
@@ -111,26 +105,24 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
         ex.printStackTrace();
         //使用Toast来显示异常信息
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
-//                Looper.loop();
-//            }
-//        }.start();
+        //        new Thread() {
+        //            @Override
+        //            public void run() {
+        //                Looper.prepare();
+        //                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_LONG).show();
+        //                Looper.loop();
+        //            }
+        //        }.start();
         //收集设备参数信息
-//        collectDeviceInfo(mContext);
+        //        collectDeviceInfo(mContext);
         //保存日志文件
-//        RevenUtils.sendException("uncatch", ex.toString(), ex);
-        MobclickAgent.reportError(App.AppContex,ex);
+        //        RevenUtils.sendException("uncatch", ex.toString(), ex);
+        MobclickAgent.reportError(App.AppContex, ex);
         return true;
     }
 
     /**
      * 收集设备参数信息
-     *
-     * @param ctx
      */
     public void collectDeviceInfo(Context ctx) {
 
@@ -142,44 +134,44 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @param ex
      * @return 返回文件名称, 便于将文件传送到服务器
      */
-//    private String saveCrashInfo2File(Throwable ex) {
-//
-//        StringBuffer sb = new StringBuffer();
-//        for (Map.Entry<String, String> entry : infos.entrySet()) {
-//            String key = entry.getKey();
-//            String value = entry.getValue();
-//            sb.append(key + "=" + value + "\n");
-//        }
-//
-//        Writer writer = new StringWriter();
-//        PrintWriter printWriter = new PrintWriter(writer);
-//        ex.printStackTrace(printWriter);
-//        Throwable cause = ex.getCause();
-//        while (cause != null) {
-//            cause.printStackTrace(printWriter);
-//            cause = cause.getCause();
-//        }
-//        printWriter.close();
-//        String result = writer.toString();
-//        sb.append(result);
-//        try {
-//            long timestamp = System.currentTimeMillis();
-//            String time = formatter.format(new Date());
-//            String fileName = "crash-" + time + "-" + timestamp + ".log";
-//            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//                String path = "/sdcard/crash/";
-//                File dir = new File(path);
-//                if (!dir.exists()) {
-//                    dir.mkdirs();
-//                }
-//                FileOutputStream fos = new FileOutputStream(path + fileName);
-//                fos.write(sb.toString().getBytes());
-//                fos.close();
-//            }
-//            return fileName;
-//        } catch (Exception e) {
-//            Log.e(TAG, "an error occured while writing file...", e);
-//        }
-//        return null;
-//    }
+    //    private String saveCrashInfo2File(Throwable ex) {
+    //
+    //        StringBuffer sb = new StringBuffer();
+    //        for (Map.Entry<String, String> entry : infos.entrySet()) {
+    //            String key = entry.getKey();
+    //            String value = entry.getValue();
+    //            sb.append(key + "=" + value + "\n");
+    //        }
+    //
+    //        Writer writer = new StringWriter();
+    //        PrintWriter printWriter = new PrintWriter(writer);
+    //        ex.printStackTrace(printWriter);
+    //        Throwable cause = ex.getCause();
+    //        while (cause != null) {
+    //            cause.printStackTrace(printWriter);
+    //            cause = cause.getCause();
+    //        }
+    //        printWriter.close();
+    //        String result = writer.toString();
+    //        sb.append(result);
+    //        try {
+    //            long timestamp = System.currentTimeMillis();
+    //            String time = formatter.format(new Date());
+    //            String fileName = "crash-" + time + "-" + timestamp + ".log";
+    //            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+    //                String path = "/sdcard/crash/";
+    //                File dir = new File(path);
+    //                if (!dir.exists()) {
+    //                    dir.mkdirs();
+    //                }
+    //                FileOutputStream fos = new FileOutputStream(path + fileName);
+    //                fos.write(sb.toString().getBytes());
+    //                fos.close();
+    //            }
+    //            return fileName;
+    //        } catch (Exception e) {
+    //            Log.e(TAG, "an error occured while writing file...", e);
+    //        }
+    //        return null;
+    //    }
 }

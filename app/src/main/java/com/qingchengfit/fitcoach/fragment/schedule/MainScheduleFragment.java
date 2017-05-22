@@ -134,7 +134,8 @@ public class MainScheduleFragment extends BaseFragment {
 
         return view;
     }
-    public void setVisible(){
+
+    public void setVisible() {
         if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_1", false)) {
             if (gd1 == null) gd1 = new GuideWindow(getContext(), getString(R.string.hint_order_self), GuideWindow.DOWN);
             gd1.show(studentOrder);
@@ -144,11 +145,10 @@ public class MainScheduleFragment extends BaseFragment {
         }
     }
 
-    public void setInvisible(){
+    public void setInvisible() {
         if (gd1 != null && gd1.isShowing()) gd1.dismiss();
         if (gd2 != null && gd2.isShowing()) gd2.dismiss();
     }
-
 
     private void goStudentPreview(CoachService coachService) {
         Intent toStudnet = new Intent(getActivity(), SpecialWebActivity.class);

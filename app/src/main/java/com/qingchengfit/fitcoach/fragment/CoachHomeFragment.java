@@ -55,52 +55,35 @@ import rx.schedulers.Schedulers;
  */
 public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
 
-    @BindView(R.id.header)
-    ImageView myhomeHeader;
-    @BindView(R.id.gender)
-    ImageView myhomeGender;
-    @BindView(R.id.name)
-    TextView myhomeName;
-    @BindView(R.id.myhome_brief)
-    TextView myhomeBrief;
-    @BindView(R.id.myhome_location)
-    TextView myhomeLocation;
-    @BindView(R.id.myhome_sawtooth)
-    ImageView myhomeSawtooth;
-    @BindView(R.id.myhome_appBar)
-    AppBarLayout myhomeAppBar;
-    @BindView(R.id.tab)
-    TabLayout myhomeTab;
-    @BindView(R.id.student)
-    ViewPager myhomeViewpager;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.sfl)
-    CustomSwipeRefreshLayout sfl;
-    @BindView(R.id.scroll_root)
-    CoordinatorLayout scrollRoot;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+    @BindView(R.id.header) ImageView myhomeHeader;
+    @BindView(R.id.gender) ImageView myhomeGender;
+    @BindView(R.id.name) TextView myhomeName;
+    @BindView(R.id.myhome_brief) TextView myhomeBrief;
+    @BindView(R.id.myhome_location) TextView myhomeLocation;
+    @BindView(R.id.myhome_sawtooth) ImageView myhomeSawtooth;
+    @BindView(R.id.myhome_appBar) AppBarLayout myhomeAppBar;
+    @BindView(R.id.tab) TabLayout myhomeTab;
+    @BindView(R.id.student) ViewPager myhomeViewpager;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.sfl) CustomSwipeRefreshLayout sfl;
+    @BindView(R.id.scroll_root) CoordinatorLayout scrollRoot;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private Gson gson = new Gson();
     private int mAppBarOffset = 0;
     private Observable<QcMyhomeResponse> qcMyhomeResponseObservable;
     private QcMyhomeResponse qcMyhomeResponse;
     private FragmentAdapter adatper;
 
-
     Observer<QcMyhomeResponse> qcMyhomeResponseObserver = new Observer<QcMyhomeResponse>() {
-        @Override
-        public void onCompleted() {
+        @Override public void onCompleted() {
 
         }
 
-        @Override
-        public void onError(Throwable e) {
+        @Override public void onError(Throwable e) {
 
         }
 
-        @Override
-        public void onNext(QcMyhomeResponse qcMyhomeResponse)
+        @Override public void onNext(QcMyhomeResponse qcMyhomeResponse)
 
         {
             CoachHomeFragment.this.qcMyhomeResponse = qcMyhomeResponse;
@@ -109,10 +92,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
     };
     private Unbinder unbinder;
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText("我的主页");
@@ -124,39 +104,40 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_myhome_share) {
                 StringBuffer sb = new StringBuffer();
-                sb.append(Configs.Server).append("mobile/coaches/").append(App.coachid).append("/share/index/").append("?oem=").append(getString(R.string.oem_tag));
+                sb.append(Configs.Server)
+                    .append("mobile/coaches/")
+                    .append(App.coachid)
+                    .append("/share/index/")
+                    .append("?oem=")
+                    .append(getString(R.string.oem_tag));
                 if (qcMyhomeResponse != null && qcMyhomeResponse.getData() != null && qcMyhomeResponse.getData().getCoach() != null) {
-//                    ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
-//                            qcMyhomeResponse.getData().getCoach().getShort_description()
-//                            , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
-                    ShareDialogFragment.newInstance(qcMyhomeResponse.getData().getCoach().getUsername() + "教练的主页"
-                            , getString(R.string.share_hint_open_desc,qcMyhomeResponse.getData().getCoach().getUsername())
-                            , qcMyhomeResponse.getData().getCoach().getAvatar()
-                            , Configs.Server+ String.format(Configs.HOST_STUDENT_PREVIEW ,App.coachid+"")
-                    ).show(getFragmentManager(), "");
+                    //                    ShareUtils.oneKeyShared(App.AppContex, sb.toString(), qcMyhomeResponse.getData().getCoach().getAvatar(),
+                    //                            qcMyhomeResponse.getData().getCoach().getShort_description()
+                    //                            , qcMyhomeResponse.getData().getCoach().getUsername() + "的教练主页");//分享
+                    ShareDialogFragment.newInstance(qcMyhomeResponse.getData().getCoach().getUsername() + "教练的主页",
+                        getString(R.string.share_hint_open_desc, qcMyhomeResponse.getData().getCoach().getUsername()),
+                        qcMyhomeResponse.getData().getCoach().getAvatar(),
+                        Configs.Server + String.format(Configs.HOST_STUDENT_PREVIEW, App.coachid + "")).show(getFragmentManager(), "");
                 }
             }
             return true;
         });
         initUser();
         myhomeAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                LogUtil.e("verticalOffset:"+verticalOffset+"   "+scrollRoot.canScrollVertically(-1));
+            @Override public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                //                LogUtil.e("verticalOffset:"+verticalOffset+"   "+scrollRoot.canScrollVertically(-1));
                 mAppBarOffset = verticalOffset;
             }
         });
         initSRL();
         return view;
-
     }
 
     private void initUser() {
         String cache = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "_cache_myhome", "");
         if (!TextUtils.isEmpty(cache)) {
             this.qcMyhomeResponse = gson.fromJson(cache, QcMyhomeResponse.class);
-            if (qcMyhomeResponse != null)
-                handleResponse(qcMyhomeResponse);
+            if (qcMyhomeResponse != null) handleResponse(qcMyhomeResponse);
         }
         qcMyhomeResponseObservable = QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
             .subscribeOn(Schedulers.io())
@@ -168,46 +149,40 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         sfl.setColorSchemeResources(R.color.primary);
         sfl.setProgressViewOffset(true, MeasureUtils.dpToPx(50f, getResources()), MeasureUtils.dpToPx(70f, getResources()));
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-//                initUser();
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.myhome_fraglayout, new CoachHomeFragment()).commit();
+            @Override public void onRefresh() {
+                //                initUser();
+                getFragmentManager().beginTransaction().replace(R.id.myhome_fraglayout, new CoachHomeFragment()).commit();
             }
         });
         sfl.setCanChildScrollUpCallback(this);
     }
 
-
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
-//        if (isFresh) {
+        //        if (isFresh) {
         QcCloudClient.getApi().getApi.qcGetDetail(Integer.toString(App.coachid))
-            .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcMyhomeResponseObserver);
-//            isFresh = false;
-//        }
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcMyhomeResponseObserver);
+        //            isFresh = false;
+        //        }
     }
 
     public void handleResponse(QcMyhomeResponse qcMyhomeResponse) {
         myhomeLocation.setText(qcMyhomeResponse.getData().getCoach().getCity());
-        if (TextUtils.isEmpty(qcMyhomeResponse.getData().getCoach().getShort_description()))
+        if (TextUtils.isEmpty(qcMyhomeResponse.getData().getCoach().getShort_description())) {
             myhomeBrief.setText(getString(R.string.myhome_default_desc));
-        else
+        } else {
             myhomeBrief.setText(qcMyhomeResponse.getData().getCoach().getShort_description());
+        }
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(BaseInfoFragment.newInstance(gson.toJson(qcMyhomeResponse.getData().getCoach()), ""));
         fragments.add(new RecordComfirmFragment());
         fragments.add(new WorkExperienceFragment());
         fragments.add(new StudentEvaluateFragment());
         adatper = new FragmentAdapter(getChildFragmentManager(), fragments);
-        StudentJudgeFragment fragment = StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray()
-                , qcMyhomeResponse.getData().getCoach().getEvaluate());
+        StudentJudgeFragment fragment = StudentJudgeFragment.newInstance(qcMyhomeResponse.getData().getCoach().getTagArray(),
+            qcMyhomeResponse.getData().getCoach().getEvaluate());
         getChildFragmentManager().beginTransaction().replace(R.id.myhome_student_judge, fragment).
-                commit();
-
+            commit();
 
         myhomeViewpager.setAdapter(adatper);
         myhomeViewpager.setOffscreenPageLimit(4);
@@ -220,8 +195,7 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
         sfl.setRefreshing(false);
     }
 
-    @OnClick(R.id.myhome_student_judge)
-    public void onJudge() {
+    @OnClick(R.id.myhome_student_judge) public void onJudge() {
         myhomeAppBar.setExpanded(false);
         myhomeTab.setScrollPosition(3, 0, true);
         myhomeViewpager.setCurrentItem(3);
@@ -229,43 +203,32 @@ public class CoachHomeFragment extends Fragment implements CustomSwipeRefreshLay
 
     public void initHead(String userAvatar, int userGender) {
         int gender = R.drawable.img_default_female;
-        Glide.with(App.AppContex)
-                .load(R.drawable.ic_gender_signal_female)
-                .into(myhomeGender);
+        Glide.with(App.AppContex).load(R.drawable.ic_gender_signal_female).into(myhomeGender);
         if (userGender == 0) {
             gender = R.drawable.img_default_male;
-            Glide.with(App.AppContex)
-                    .load(R.drawable.ic_gender_signal_male)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(myhomeGender);
+            Glide.with(App.AppContex).load(R.drawable.ic_gender_signal_male).diskCacheStrategy(DiskCacheStrategy.ALL).into(myhomeGender);
         }
         if (TextUtils.isEmpty(userAvatar)) {
             Glide.with(App.AppContex)
-                    .load(gender)
-                    .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
+                .load(gender)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
         } else {
             Glide.with(App.AppContex)
-                    .load(PhotoUtils.getSmall(userAvatar))
-                    .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
+                .load(PhotoUtils.getSmall(userAvatar))
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(new CircleImgWrapper(myhomeHeader, App.AppContex));
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @Override
-    public boolean canSwipeRefreshChildScrollUp() {
+    @Override public boolean canSwipeRefreshChildScrollUp() {
         return mAppBarOffset != 0;
-
     }
-
-
 }

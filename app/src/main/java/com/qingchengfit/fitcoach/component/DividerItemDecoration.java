@@ -44,11 +44,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      */
     private Paint mPaint;
     private Context context;
+
     /**
      * 构造方法传入布局方向，不可不传
-     *
-     * @param context
-     * @param orientation
      */
     public DividerItemDecoration(Context context, int orientation) {
         this.mOrientation = orientation;
@@ -56,28 +54,27 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             throw new IllegalArgumentException("请传入正确的参数");
         }
         this.context = context;
-//        mItemSize = (float) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TypedValue.COMPLEX_UNIT_PX, context.getResources().getDisplayMetrics());
+        //        mItemSize = (float) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TypedValue.COMPLEX_UNIT_PX, context.getResources().getDisplayMetrics());
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(context.getResources().getColor(R.color.divider_grey));
          /*设置填充*/
         mPaint.setStyle(Paint.Style.FILL);
     }
 
-    public DividerItemDecoration(Context context, int orientation,float dividerHeight) {
+    public DividerItemDecoration(Context context, int orientation, float dividerHeight) {
         this.mOrientation = orientation;
         if (orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL) {
             throw new IllegalArgumentException("请传入正确的参数");
         }
         this.context = context;
-        mItemSize = (int) MeasureUtils.dpToPx(dividerHeight,context.getResources());
+        mItemSize = (int) MeasureUtils.dpToPx(dividerHeight, context.getResources());
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(context.getResources().getColor(R.color.bg_grey));
          /*设置填充*/
         mPaint.setStyle(Paint.Style.FILL);
     }
 
-    @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             drawVertical(c, parent);
         } else {
@@ -87,9 +84,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 绘制纵向 item 分割线
-     *
-     * @param canvas
-     * @param parent
      */
     private void drawVertical(Canvas canvas, RecyclerView parent) {
         final int left = parent.getPaddingLeft();
@@ -106,9 +100,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 绘制横向 item 分割线
-     *
-     * @param canvas
-     * @param parent
      */
     private void drawHorizontal(Canvas canvas, RecyclerView parent) {
         final int top = parent.getPaddingTop();
@@ -125,14 +116,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 设置item分割线的size
-     *
-     * @param outRect
-     * @param view
-     * @param parent
-     * @param state
      */
-    @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             //outRect.set(0, 0, 0, MeasureUtils.dpToPx((float) mItemSize, context.getResources()));
             outRect.set(0, 0, 0, mItemSize);

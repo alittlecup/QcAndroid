@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
 
     >
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
       android:background="@drawable/bg_click"
+      android:orientation="horizontal"
       >
 
-      <View
-          android:id="@+id/indicator"
-          android:layout_width="4dp"
-          android:layout_height="match_parent"
-          android:background="@color/primary"
-          android:visibility="gone"
-          />
+    <View
+        android:id="@+id/indicator"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:visibility="gone"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,24 +34,27 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@color/white"
-          android:orientation="horizontal"
           android:gravity="center_vertical"
+          android:orientation="horizontal"
           >
+
         <ImageView
-            android:layout_marginLeft="30dp"
             android:id="@+id/item_schedule_classpic"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
 
             android:scaleType="fitXY"
             />
+
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:visibility="gone"
             >
+
           <TextView
 
               android:id="@+id/item_schedule_time"
@@ -63,6 +68,7 @@
               tools:text="9:00"
               style="@style/Qc.TextCommonBlack"
               />
+
           <TextView
               android:id="@+id/item_schedule_done"
               android:layout_width="wrap_content"
@@ -79,19 +85,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="4dp"
             >
 
           <LinearLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
               android:layout_marginLeft="10dp"
               android:layout_marginStart="10dp"
               android:orientation="vertical"
-              android:layout_centerVertical="true"
               >
 
             <TextView
@@ -118,21 +124,24 @@
                 tools:text="中美引力工作室"
                 style="@style/Qc.TextCommonGrey"
                 />
+
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
                 >
+
               <ImageView
                   android:id="@+id/item_schedule_status"
                   android:layout_width="12dp"
                   android:layout_height="12dp"
-                  tools:src="@drawable/ic_schedule_hook"
-                  android:layout_marginRight="8dp"
                   android:layout_marginEnd="8dp"
+                  android:layout_marginRight="8dp"
+                  tools:src="@drawable/ic_schedule_hook"
                   />
+
               <TextView
                   android:id="@+id/item_schedule_num"
                   android:layout_width="wrap_content"
@@ -147,27 +156,26 @@
             </LinearLayout>
 
 
-
-
           </LinearLayout>
 
 
         </RelativeLayout>
       </LinearLayout>
+
       <TextView
-          android:visibility="gone"
           android:id="@+id/item_schedule_conflict"
           android:layout_width="match_parent"
           android:layout_height="22dp"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:background="@color/half_red"
           android:drawablePadding="5dp"
           android:maxLength="20"
+          android:paddingLeft="@dimen/little"
           android:textColor="@color/red"
           android:textSize="10sp"
+          android:visibility="gone"
           tools:text="事件冲突:xxxxxx"
-          android:paddingLeft="@dimen/little"
-          android:background="@color/half_red"
           style="@style/Qc.TextCommonGrey"
-          android:layout_marginRight="@dimen/activity_horizontal_margin"
           />
 
     </LinearLayout>
@@ -175,12 +183,11 @@
   </LinearLayout>
 
 
-
   <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/divider_grey"
       android:layout_gravity="bottom"
+      android:background="@color/divider_grey"
       />
 
 </FrameLayout>

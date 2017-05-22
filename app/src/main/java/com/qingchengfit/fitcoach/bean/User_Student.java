@@ -18,6 +18,15 @@ import android.os.Parcelable;
  */
 public class User_Student implements Parcelable {
 
+    public static final Creator<User_Student> CREATOR = new Creator<User_Student>() {
+        @Override public User_Student createFromParcel(Parcel source) {
+            return new User_Student(source);
+        }
+
+        @Override public User_Student[] newArray(int size) {
+            return new User_Student[size];
+        }
+    };
     private String username;
     private String id;
     private String date_of_birth;
@@ -30,7 +39,6 @@ public class User_Student implements Parcelable {
     private String seller_ids;
     private String shops;
     private int status;
-
 
     private User_Student(Builder builder) {
         setUsername(builder.username);
@@ -48,6 +56,24 @@ public class User_Student implements Parcelable {
         status = builder.status;
     }
 
+    public User_Student() {
+    }
+
+    protected User_Student(Parcel in) {
+        this.username = in.readString();
+        this.id = in.readString();
+        this.date_of_birth = in.readString();
+        this.phone = in.readString();
+        this.address = in.readString();
+        this.joined_at = in.readString();
+        this.avatar = in.readString();
+        this.checkin_avatar = in.readString();
+        this.gender = in.readInt();
+        this.seller_ids = in.readString();
+        this.shops = in.readString();
+        this.status = in.readInt();
+    }
+
     public int getStatus() {
         return status;
     }
@@ -63,7 +89,6 @@ public class User_Student implements Parcelable {
     public void setShops(String shops) {
         this.shops = shops;
     }
-
 
     public void setSeller_ids(String seller_ids) {
         this.seller_ids = seller_ids;
@@ -133,16 +158,31 @@ public class User_Student implements Parcelable {
         this.avatar = avatar;
     }
 
-    public User_Student() {
-    }
-
     public String getCheckin_avatar() {
         return checkin_avatar;
     }
 
-
     public void setCheckin_avatar(String checkin_avatar) {
         this.checkin_avatar = checkin_avatar;
+    }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.id);
+        dest.writeString(this.date_of_birth);
+        dest.writeString(this.phone);
+        dest.writeString(this.address);
+        dest.writeString(this.joined_at);
+        dest.writeString(this.avatar);
+        dest.writeString(this.checkin_avatar);
+        dest.writeInt(this.gender);
+        dest.writeString(this.seller_ids);
+        dest.writeString(this.shops);
+        dest.writeInt(this.status);
     }
 
     public static final class Builder {
@@ -207,8 +247,6 @@ public class User_Student implements Parcelable {
             return this;
         }
 
-
-
         public Builder seller_ids(String val) {
             seller_ids = val;
             return this;
@@ -228,52 +266,4 @@ public class User_Student implements Parcelable {
             return new User_Student(this);
         }
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.id);
-        dest.writeString(this.date_of_birth);
-        dest.writeString(this.phone);
-        dest.writeString(this.address);
-        dest.writeString(this.joined_at);
-        dest.writeString(this.avatar);
-        dest.writeString(this.checkin_avatar);
-        dest.writeInt(this.gender);
-        dest.writeString(this.seller_ids);
-        dest.writeString(this.shops);
-        dest.writeInt(this.status);
-    }
-
-    protected User_Student(Parcel in) {
-        this.username = in.readString();
-        this.id = in.readString();
-        this.date_of_birth = in.readString();
-        this.phone = in.readString();
-        this.address = in.readString();
-        this.joined_at = in.readString();
-        this.avatar = in.readString();
-        this.checkin_avatar = in.readString();
-        this.gender = in.readInt();
-        this.seller_ids = in.readString();
-        this.shops = in.readString();
-        this.status = in.readInt();
-    }
-
-    public static final Creator<User_Student> CREATOR = new Creator<User_Student>() {
-        @Override
-        public User_Student createFromParcel(Parcel source) {
-            return new User_Student(source);
-        }
-
-        @Override
-        public User_Student[] newArray(int size) {
-            return new User_Student[size];
-        }
-    };
 }

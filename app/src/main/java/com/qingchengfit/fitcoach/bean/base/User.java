@@ -26,13 +26,21 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
     public String username;
     public String phone;
     public int gender;
     public String area_code;
     public String avatar;
     public String id;
-
 
     private User(Builder builder) {
         username = builder.username;
@@ -44,6 +52,28 @@ public class User implements Parcelable {
     }
 
     public User() {
+    }
+
+    protected User(Parcel in) {
+        this.username = in.readString();
+        this.phone = in.readString();
+        this.gender = in.readInt();
+        this.area_code = in.readString();
+        this.avatar = in.readString();
+        this.id = in.readString();
+    }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.phone);
+        dest.writeInt(this.gender);
+        dest.writeString(this.area_code);
+        dest.writeString(this.avatar);
+        dest.writeString(this.id);
     }
 
     public static final class Builder {
@@ -91,36 +121,4 @@ public class User implements Parcelable {
             return new User(this);
         }
     }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.phone);
-        dest.writeInt(this.gender);
-        dest.writeString(this.area_code);
-        dest.writeString(this.avatar);
-        dest.writeString(this.id);
-    }
-
-    protected User(Parcel in) {
-        this.username = in.readString();
-        this.phone = in.readString();
-        this.gender = in.readInt();
-        this.area_code = in.readString();
-        this.avatar = in.readString();
-        this.id = in.readString();
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 }

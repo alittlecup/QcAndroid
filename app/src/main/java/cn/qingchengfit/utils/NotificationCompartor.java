@@ -25,16 +25,18 @@ import java.util.Comparator;
  * Created by Paper on 2017/4/15.
  */
 
-public class NotificationCompartor implements Comparator<NotificationGlance>{
+public class NotificationCompartor implements Comparator<NotificationGlance> {
 
     /**
      * 按时间排序
+     *
      * @return 大于在左边排前
      */
     @Override public int compare(NotificationGlance notificationGlance, NotificationGlance t1) {
-        long time1 = (notificationGlance.notification == null || TextUtils.isEmpty(notificationGlance.notification.getCreated_at()))?0:DateUtils.formatDateFromServer(notificationGlance.notification.getCreated_at()).getTime();
-        long time2 = (t1.notification == null || TextUtils.isEmpty(t1.notification.getCreated_at()))?0:DateUtils.formatDateFromServer(t1.notification.getCreated_at()).getTime();
-        return (int)(time2- time1);
+        long time1 = (notificationGlance.notification == null || TextUtils.isEmpty(notificationGlance.notification.getCreated_at())) ? 0
+            : DateUtils.formatDateFromServer(notificationGlance.notification.getCreated_at()).getTime();
+        long time2 = (t1.notification == null || TextUtils.isEmpty(t1.notification.getCreated_at())) ? 0
+            : DateUtils.formatDateFromServer(t1.notification.getCreated_at()).getTime();
+        return (int) (time2 - time1);
     }
-
 }

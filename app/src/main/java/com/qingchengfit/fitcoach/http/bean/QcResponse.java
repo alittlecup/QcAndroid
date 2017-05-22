@@ -16,19 +16,13 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/7/30 2015.
  */
 public class QcResponse {
-    @SerializedName("status")
-    public int status;
-    @SerializedName("msg")
-    public String msg;
-    @SerializedName("info")
-    public String info;
-//    @SerializedName("data")
-//    public String data;
-    @SerializedName("level")
-    public String level;
-    @SerializedName("error_code")
-    public String error_code;
-
+    @SerializedName("status") public int status;
+    @SerializedName("msg") public String msg;
+    @SerializedName("info") public String info;
+    //    @SerializedName("data")
+    //    public String data;
+    @SerializedName("level") public String level;
+    @SerializedName("error_code") public String error_code;
 
     public int getStatus() {
         return status;

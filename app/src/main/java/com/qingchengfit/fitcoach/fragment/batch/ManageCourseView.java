@@ -1,8 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
-
-import com.anbillon.qcmvplib.PView;
 import cn.qingchengfit.model.base.CoachService;
+import com.anbillon.qcmvplib.PView;
 
 /**
  * power by
@@ -21,5 +20,4 @@ public interface ManageCourseView extends PView {
     void onSucceed(CoachService coachService);
 
     void onFailed();
-
 }

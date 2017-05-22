@@ -21,6 +21,5 @@ public class ImageThreeBean {
     public String content1;
     public String content2;
     public String tag;
-    @DrawableRes
-    public int tagBg;
+    @DrawableRes public int tagBg;
 }

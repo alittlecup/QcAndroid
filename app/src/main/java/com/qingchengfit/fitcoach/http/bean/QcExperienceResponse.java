@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.http.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-
 import java.util.List;
 
 /**
@@ -20,7 +19,6 @@ import java.util.List;
  * Created by Paper on 15/9/16 2015.
  */
 public class QcExperienceResponse extends QcResponse {
-
 
     /**
      * data : {"total_count":1,"current_page":1,"experiences":[{"coach":{"id":6},"description":"无","is_authenticated":false,"position":"教练","private_course":421,"city":"北京","end":"2015-11-16T15:29:00","username":"中美引力工作室","group_user":123,"sale":10000000,"start":"2015-09-16T15:29:00","group_course":100,"private_user":568}],"pages":1}
@@ -82,6 +80,15 @@ public class QcExperienceResponse extends QcResponse {
         }
 
         public static class ExperiencesEntity implements Parcelable {
+            public static final Creator<ExperiencesEntity> CREATOR = new Creator<ExperiencesEntity>() {
+                @Override public ExperiencesEntity createFromParcel(Parcel source) {
+                    return new ExperiencesEntity(source);
+                }
+
+                @Override public ExperiencesEntity[] newArray(int size) {
+                    return new ExperiencesEntity[size];
+                }
+            };
             /**
              * coach : {"id":6}
              * description : 无
@@ -118,6 +125,27 @@ public class QcExperienceResponse extends QcResponse {
             private boolean sale_is_hidden;
 
             public ExperiencesEntity() {
+            }
+
+            protected ExperiencesEntity(Parcel in) {
+                this.coach = in.readParcelable(CoachEntity.class.getClassLoader());
+                this.description = in.readString();
+                this.is_authenticated = in.readByte() != 0;
+                this.position = in.readString();
+                this.private_course = in.readInt();
+                this.end = in.readString();
+                this.name = in.readString();
+                this.id = in.readInt();
+                this.group_user = in.readInt();
+                this.sale = in.readString();
+                this.start = in.readString();
+                this.group_course = in.readInt();
+                this.private_user = in.readInt();
+                this.gym = in.readParcelable(GymEntity.class.getClassLoader());
+                this.is_hidden = in.readByte() != 0;
+                this.group_is_hidden = in.readByte() != 0;
+                this.private_is_hidden = in.readByte() != 0;
+                this.sale_is_hidden = in.readByte() != 0;
             }
 
             public boolean is_hidden() {
@@ -268,7 +296,41 @@ public class QcExperienceResponse extends QcResponse {
                 this.sale_is_hidden = sale_is_hidden;
             }
 
+            @Override public int describeContents() {
+                return 0;
+            }
+
+            @Override public void writeToParcel(Parcel dest, int flags) {
+                dest.writeParcelable(this.coach, flags);
+                dest.writeString(this.description);
+                dest.writeByte(this.is_authenticated ? (byte) 1 : (byte) 0);
+                dest.writeString(this.position);
+                dest.writeInt(this.private_course);
+                dest.writeString(this.end);
+                dest.writeString(this.name);
+                dest.writeInt(this.id);
+                dest.writeInt(this.group_user);
+                dest.writeString(this.sale);
+                dest.writeString(this.start);
+                dest.writeInt(this.group_course);
+                dest.writeInt(this.private_user);
+                dest.writeParcelable(this.gym, flags);
+                dest.writeByte(this.is_hidden ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.group_is_hidden ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.private_is_hidden ? (byte) 1 : (byte) 0);
+                dest.writeByte(this.sale_is_hidden ? (byte) 1 : (byte) 0);
+            }
+
             public static class GymEntity implements Parcelable {
+                public static final Creator<GymEntity> CREATOR = new Creator<GymEntity>() {
+                    @Override public GymEntity createFromParcel(Parcel source) {
+                        return new GymEntity(source);
+                    }
+
+                    @Override public GymEntity[] newArray(int size) {
+                        return new GymEntity[size];
+                    }
+                };
                 private long id;
                 private String name;
                 private String photo;
@@ -280,21 +342,31 @@ public class QcExperienceResponse extends QcResponse {
                 public GymEntity() {
                 }
 
+                protected GymEntity(Parcel in) {
+                    this.id = in.readLong();
+                    this.name = in.readString();
+                    this.photo = in.readString();
+                    this.district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
+                    this.is_authenticated = in.readByte() != 0;
+                    this.address = in.readString();
+                    this.brand_name = in.readString();
+                }
 
                 public String getAddress() {
-                    if (!TextUtils.isEmpty(address))
-                        return address;
+                    if (!TextUtils.isEmpty(address)) return address;
                     StringBuffer sb = new StringBuffer();
-                    if (district!=null && district.city!=null){
+                    if (district != null && district.city != null) {
 
-                        if (!TextUtils.isEmpty(district.city.name)){
+                        if (!TextUtils.isEmpty(district.city.name)) {
                             sb.append(district.city.name).append("    ");
                         }
-
                     }
                     sb.append(brand_name);
                     return sb.toString();
+                }
 
+                public void setAddress(String address) {
+                    this.address = address;
                 }
 
                 public String getBrand_name() {
@@ -303,10 +375,6 @@ public class QcExperienceResponse extends QcResponse {
 
                 public void setBrand_name(String brand_name) {
                     this.brand_name = brand_name;
-                }
-
-                public void setAddress(String address) {
-                    this.address = address;
                 }
 
                 public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity getDistrict() {
@@ -332,8 +400,6 @@ public class QcExperienceResponse extends QcResponse {
                 public void setIs_authenticated(boolean is_authenticated) {
                     this.is_authenticated = is_authenticated;
                 }
-
-
 
                 public long getId() {
                     return id;
@@ -364,26 +430,6 @@ public class QcExperienceResponse extends QcResponse {
                     dest.writeString(this.address);
                     dest.writeString(this.brand_name);
                 }
-
-                protected GymEntity(Parcel in) {
-                    this.id = in.readLong();
-                    this.name = in.readString();
-                    this.photo = in.readString();
-                    this.district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
-                    this.is_authenticated = in.readByte() != 0;
-                    this.address = in.readString();
-                    this.brand_name = in.readString();
-                }
-
-                public static final Creator<GymEntity> CREATOR = new Creator<GymEntity>() {
-                    @Override public GymEntity createFromParcel(Parcel source) {
-                        return new GymEntity(source);
-                    }
-
-                    @Override public GymEntity[] newArray(int size) {
-                        return new GymEntity[size];
-                    }
-                };
             }
 
             public static class CoachEntity implements Parcelable {
@@ -417,72 +463,14 @@ public class QcExperienceResponse extends QcResponse {
                     this.id = id;
                 }
 
-                @Override
-                public int describeContents() {
+                @Override public int describeContents() {
                     return 0;
                 }
 
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
+                @Override public void writeToParcel(Parcel dest, int flags) {
                     dest.writeInt(this.id);
                 }
             }
-
-            @Override public int describeContents() {
-                return 0;
-            }
-
-            @Override public void writeToParcel(Parcel dest, int flags) {
-                dest.writeParcelable(this.coach, flags);
-                dest.writeString(this.description);
-                dest.writeByte(this.is_authenticated ? (byte) 1 : (byte) 0);
-                dest.writeString(this.position);
-                dest.writeInt(this.private_course);
-                dest.writeString(this.end);
-                dest.writeString(this.name);
-                dest.writeInt(this.id);
-                dest.writeInt(this.group_user);
-                dest.writeString(this.sale);
-                dest.writeString(this.start);
-                dest.writeInt(this.group_course);
-                dest.writeInt(this.private_user);
-                dest.writeParcelable(this.gym, flags);
-                dest.writeByte(this.is_hidden ? (byte) 1 : (byte) 0);
-                dest.writeByte(this.group_is_hidden ? (byte) 1 : (byte) 0);
-                dest.writeByte(this.private_is_hidden ? (byte) 1 : (byte) 0);
-                dest.writeByte(this.sale_is_hidden ? (byte) 1 : (byte) 0);
-            }
-
-            protected ExperiencesEntity(Parcel in) {
-                this.coach = in.readParcelable(CoachEntity.class.getClassLoader());
-                this.description = in.readString();
-                this.is_authenticated = in.readByte() != 0;
-                this.position = in.readString();
-                this.private_course = in.readInt();
-                this.end = in.readString();
-                this.name = in.readString();
-                this.id = in.readInt();
-                this.group_user = in.readInt();
-                this.sale = in.readString();
-                this.start = in.readString();
-                this.group_course = in.readInt();
-                this.private_user = in.readInt();
-                this.gym = in.readParcelable(GymEntity.class.getClassLoader());
-                this.is_hidden = in.readByte() != 0;
-                this.group_is_hidden = in.readByte() != 0;
-                this.private_is_hidden = in.readByte() != 0;
-                this.sale_is_hidden = in.readByte() != 0;
-            }
-
-            public static final Creator<ExperiencesEntity> CREATOR = new Creator<ExperiencesEntity>() {
-                @Override public ExperiencesEntity createFromParcel(Parcel source) {
-                    return new ExperiencesEntity(source);
-                }
-
-                @Override public ExperiencesEntity[] newArray(int size) {
-                    return new ExperiencesEntity[size];
-                }
-            };
         }
     }
 }

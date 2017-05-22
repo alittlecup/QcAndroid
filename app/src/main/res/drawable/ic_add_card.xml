@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="56dp"
         android:height="56dp"
+        android:viewportHeight="56"
         android:viewportWidth="56"
-        android:viewportHeight="56">
+        android:width="56dp">
 
-    <group
-        android:scaleX="1.9"
-        android:scaleY="1.9"
-        android:translateX="-24"
-        android:translateY="-24"
-    >
-        <path
-            android:fillColor="#FFFFFF"
-            android:strokeWidth="1"
-            android:pathData="M33.4165,38 L16.167,38 C14.421,38,13,36.58,13,34.834 L13,19.166
+  <group
+      android:scaleX="1.9"
+      android:scaleY="1.9"
+      android:translateX="-24"
+      android:translateY="-24"
+      >
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M33.4165,38 L16.167,38 C14.421,38,13,36.58,13,34.834 L13,19.166
 C13,17.42,14.421,16,16.167,16 L37.833,16 C39.579,16,41,17.42,41,19.166
 L41,30.417 L41,26 L39,26 L39,19.166 C39,18.523,38.477,18,37.833,18 L16.167,18
 C15.523,18,15,18.523,15,19.166 L15,34.834 C15,35.477,15.523,36,16.167,36 L29,36
@@ -22,17 +21,18 @@ L29,38 L33.4165,38 Z M36,24 L18,24 C17.448,24,17,23.552,17,23
 C17,22.448,17.448,22,18,22 L36,22 C36.553,22,37,22.448,37,23
 C37,23.552,36.553,24,36,24 Z M21,33 L18,33 C17.448,33,17,32.553,17,32
 C17,31.447,17.448,31,18,31 L21,31 C21.552,31,22,31.447,22,32
-C22,32.553,21.552,33,21,33 Z" />
-        <path
-            android:fillColor="#FFFFFF"
-            android:strokeWidth="1"
-            android:pathData="M39,36 L39,39.0046 C39,39.5443,38.5523,40,38,40
+C22,32.553,21.552,33,21,33 Z"
+        android:strokeWidth="1"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M39,36 L39,39.0046 C39,39.5443,38.5523,40,38,40
 C37.4439,40,37,39.5543,37,39.0046 L37,36 L33.9954,36
 C33.4557,36,33,35.5523,33,35 C33,34.4439,33.4457,34,33.9954,34 L37,34
 L37,30.9954 C37,30.4557,37.4477,30,38,30 C38.5561,30,39,30.4457,39,30.9954
 L39,34 L42.0046,34 C42.5443,34,43,34.4477,43,35
-C43,35.5561,42.5543,36,42.0046,36 L39,36 Z" />
+C43,35.5561,42.5543,36,42.0046,36 L39,36 Z"
+        android:strokeWidth="1"/>
 
-    </group>
+  </group>
 
 </vector>

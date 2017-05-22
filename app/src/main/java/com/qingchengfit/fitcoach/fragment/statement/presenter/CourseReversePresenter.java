@@ -64,8 +64,7 @@ public class CourseReversePresenter extends BasePresenter {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CourseReportDetail>>() {
-                @Override
-                public void call(QcResponseData<CourseReportDetail> courseReportDetailQcResponseData) {
+                @Override public void call(QcResponseData<CourseReportDetail> courseReportDetailQcResponseData) {
                     if (courseReportDetailQcResponseData.status == 200) {
                         view.onGetSuccessed(courseReportDetailQcResponseData.data);
                     } else {

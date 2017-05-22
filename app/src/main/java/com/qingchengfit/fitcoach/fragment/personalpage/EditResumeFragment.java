@@ -38,11 +38,9 @@ import com.qingchengfit.fitcoach.fragment.WorkExepSettingFragment;
  * Created by Paper on 2017/2/22.
  */
 
-@FragmentWithArgs
-public class EditResumeFragment extends BaseSettingFragment {
+@FragmentWithArgs public class EditResumeFragment extends BaseSettingFragment {
 
-    @Arg
-    String desc;
+    @Arg String desc;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +51,12 @@ public class EditResumeFragment extends BaseSettingFragment {
         View view = inflater.inflate(R.layout.fragment_edit_resume, container, false);
         unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.showToolbar();
-        fragmentCallBack.onToolbarMenu(0,0,"编辑我的简历");
+        fragmentCallBack.onToolbarMenu(0, 0, "编辑我的简历");
         return view;
     }
 
-    @OnClick({ R.id.btn_base_info, R.id.btn_train_grow, R.id.btn_work_exp, R.id.btn_personal_intro }) public void onClickFunction(View view) {
+    @OnClick({ R.id.btn_base_info, R.id.btn_train_grow, R.id.btn_work_exp, R.id.btn_personal_intro })
+    public void onClickFunction(View view) {
         switch (view.getId()) {
             case R.id.btn_base_info:
                 fragmentCallBack.onFragmentChange(ModifyInfoFragment.newInstance("", ""));

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="splash_last" type="id"></item>
-    <item name="segmentbtn_0" type="id"></item>
-    <item name="segmentbtn_1" type="id"></item>
-    <item name="segmentbtn_2" type="id"></item>
-    <item name="segmentbtn_3" type="id"></item>
-    <item name="segmentbtn_4" type="id"></item>
-    <item name="segmentbtn_5" type="id"></item>
-    <item name="segmentbtn_6" type="id"></item>
-    <item name="segmentbtn_7" type="id"></item>
-    <item name="segmentbtn_8" type="id"></item>
-    <item name="segmentbtn_9" type="id"></item>
+  <item name="splash_last" type="id"></item>
+  <item name="segmentbtn_0" type="id"></item>
+  <item name="segmentbtn_1" type="id"></item>
+  <item name="segmentbtn_2" type="id"></item>
+  <item name="segmentbtn_3" type="id"></item>
+  <item name="segmentbtn_4" type="id"></item>
+  <item name="segmentbtn_5" type="id"></item>
+  <item name="segmentbtn_6" type="id"></item>
+  <item name="segmentbtn_7" type="id"></item>
+  <item name="segmentbtn_8" type="id"></item>
+  <item name="segmentbtn_9" type="id"></item>
 
-    <item name="segmentbtn_01" type="id"></item>
-    <item name="segmentbtn_11" type="id"></item>
-    <item name="segmentbtn_21" type="id"></item>
-    <item name="segmentbtn_31" type="id"></item>
-    <item name="segmentbtn_41" type="id"></item>
-    <item name="segmentbtn_51" type="id"></item>
-    <item name="segmentbtn_61" type="id"></item>
-    <item name="segmentbtn_71" type="id"></item>
-    <item name="segmentbtn_81" type="id"></item>
-    <item name="segmentbtn_91" type="id"></item>
-    <item name="fab_expand_menu_button" type="id"/>
-    <item name="fab_label" type="id"/>
-    <item name="tag_0" type="id"/>
-    <item name="tag_1" type="id"/>
-    <item name="tag_2" type="id"/>
+  <item name="segmentbtn_01" type="id"></item>
+  <item name="segmentbtn_11" type="id"></item>
+  <item name="segmentbtn_21" type="id"></item>
+  <item name="segmentbtn_31" type="id"></item>
+  <item name="segmentbtn_41" type="id"></item>
+  <item name="segmentbtn_51" type="id"></item>
+  <item name="segmentbtn_61" type="id"></item>
+  <item name="segmentbtn_71" type="id"></item>
+  <item name="segmentbtn_81" type="id"></item>
+  <item name="segmentbtn_91" type="id"></item>
+  <item name="fab_expand_menu_button" type="id"/>
+  <item name="fab_label" type="id"/>
+  <item name="tag_0" type="id"/>
+  <item name="tag_1" type="id"/>
+  <item name="tag_2" type="id"/>
 
 </resources>

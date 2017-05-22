@@ -37,10 +37,9 @@ import rx.functions.Action1;
  */
 public class SalerChoosePresenter extends BasePresenter {
 
-    private StatementUsecase usecase;
-
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    private StatementUsecase usecase;
     private SalerChooseDialogView view;
 
     @Inject public SalerChoosePresenter(StatementUsecase usecase) {
@@ -58,23 +57,22 @@ public class SalerChoosePresenter extends BasePresenter {
     }
 
     public void querySaler() {
-        usecase.querySalers(gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model(),
-            new Action1<QcResponseData<Sellers>>() {
-                @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
-                    if (ResponseConstant.checkSuccess(qcResponseSalers)) {
-                        if (qcResponseSalers.data.users != null) {
-                            List<StudentBean> ret = new ArrayList<StudentBean>();
-                            for (int i = 0; i < qcResponseSalers.data.users.size(); i++) {
-                                StudentBean studentBean = new StudentBean();
-                                studentBean.headerPic = qcResponseSalers.data.users.get(i).avatar;
-                                studentBean.id = qcResponseSalers.data.users.get(i).id;
-                                studentBean.username = qcResponseSalers.data.users.get(i).username;
-                                ret.add(studentBean);
-                            }
-                            view.onList(ret);
+        usecase.querySalers(gymWrapper.brand_id(), gymWrapper.id(), gymWrapper.model(), new Action1<QcResponseData<Sellers>>() {
+            @Override public void call(QcResponseData<Sellers> qcResponseSalers) {
+                if (ResponseConstant.checkSuccess(qcResponseSalers)) {
+                    if (qcResponseSalers.data.users != null) {
+                        List<StudentBean> ret = new ArrayList<StudentBean>();
+                        for (int i = 0; i < qcResponseSalers.data.users.size(); i++) {
+                            StudentBean studentBean = new StudentBean();
+                            studentBean.headerPic = qcResponseSalers.data.users.get(i).avatar;
+                            studentBean.id = qcResponseSalers.data.users.get(i).id;
+                            studentBean.username = qcResponseSalers.data.users.get(i).username;
+                            ret.add(studentBean);
                         }
+                        view.onList(ret);
                     }
                 }
-            });
+            }
+        });
     }
 }

@@ -34,7 +34,6 @@ public class StatementUsecase {
 
     @Inject RestRepository restRepository;
 
-
     @Inject public StatementUsecase(RestRepository restRepository) {
         this.restRepository = restRepository;
     }
@@ -106,32 +105,32 @@ public class StatementUsecase {
     //            }
     //        });
 
-  public Subscription queryCardTypeList(String brand_id, int type, Action1<QcResponseData<CardTpls>> action1) {
-    String t = type == 0 ? null : Integer.toString(type);
-    HashMap<String, Object> params = new HashMap<>();
-    params.put("id", "10212");
-    return restRepository.getGet_api()
-        .qcGetCardTpls("7409", params, "staff_model", "true")
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
-        .subscribe(action1, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
+    public Subscription queryCardTypeList(String brand_id, int type, Action1<QcResponseData<CardTpls>> action1) {
+        String t = type == 0 ? null : Integer.toString(type);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", "10212");
+        return restRepository.getGet_api()
+            .qcGetCardTpls("7409", params, "staff_model", "true")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
 
-          }
-        });
-  }
+                }
+            });
+    }
 
-  public Subscription queryGymCardTpl(int type, Action1<QcResponseData<GymCardtpl>> action1, HashMap<String, Object> params) {
-    String t = type == 0 ? null : Integer.toString(type);
-    return restRepository.getGet_api()
-        .qcGetGymCardtpl(String.valueOf(App.coachid), params, t)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
-        .subscribe(action1, new Action1<Throwable>() {
-          @Override public void call(Throwable throwable) {
-          }
-        });
-  }
+    public Subscription queryGymCardTpl(int type, Action1<QcResponseData<GymCardtpl>> action1, HashMap<String, Object> params) {
+        String t = type == 0 ? null : Integer.toString(type);
+        return restRepository.getGet_api()
+            .qcGetGymCardtpl(String.valueOf(App.coachid), params, t)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(action1, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+                }
+            });
+    }
 
     //public Subscription queryGymCardTpl(String gymid, String model, int type, Action1<QcResponseData<GymCardtpl>> action1) {
     //    String t = type == 0 ? null : Integer.toString(type);
@@ -165,8 +164,7 @@ public class StatementUsecase {
     //        .subscribe(action1, new NetError());
     //}
 
-    public Subscription querySalers(String brandid, String gymid, String gymmodel,
-        Action1<QcResponseData<Sellers>> action1) {
+    public Subscription querySalers(String brandid, String gymid, String gymmodel, Action1<QcResponseData<Sellers>> action1) {
         return restRepository.getGet_api()
             .qcGetSalersAndCoach(App.coachid, brandid, gymid, gymmodel)
             .observeOn(AndroidSchedulers.mainThread())

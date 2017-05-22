@@ -25,26 +25,7 @@ import cn.qingchengfit.model.base.CoachService;
  * Created by Paper on 2016/12/21.
  */
 
-public class InitCoachService extends CoachService{
-
-    public long gym_id;
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeLong(this.gym_id);
-    }
-
-    public InitCoachService() {
-    }
-
-    protected InitCoachService(Parcel in) {
-        super(in);
-        this.gym_id = in.readLong();
-    }
+public class InitCoachService extends CoachService {
 
     public static final Parcelable.Creator<InitCoachService> CREATOR = new Parcelable.Creator<InitCoachService>() {
         @Override public InitCoachService createFromParcel(Parcel source) {
@@ -55,4 +36,22 @@ public class InitCoachService extends CoachService{
             return new InitCoachService[size];
         }
     };
+    public long gym_id;
+
+    public InitCoachService() {
+    }
+
+    protected InitCoachService(Parcel in) {
+        super(in);
+        this.gym_id = in.readLong();
+    }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeLong(this.gym_id);
+    }
 }

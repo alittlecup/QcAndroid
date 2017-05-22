@@ -197,15 +197,14 @@ public class ScheduleListFragment extends BaseFragment {
 
     @Override protected void onVisible() {
         super.onVisible();
-        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() ==0 )
-            refresh();
+        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() == 0) refresh();
     }
 
     @Override protected void lazyLoad() {
         super.lazyLoad();
 
-        if (hasLoad && scheduleBeans.size() == 0  && isInit){
-            RxBus.getBus().post(new EventInit(true,3));
+        if (hasLoad && scheduleBeans.size() == 0 && isInit) {
+            RxBus.getBus().post(new EventInit(true, 3));
         }
     }
 
@@ -234,8 +233,7 @@ public class ScheduleListFragment extends BaseFragment {
             if (system.system == null) continue;
             String syscolor = system.system.name;
             if (curentGym != 0 && (curentGym != system.system.id || !system.system.model.equals(currentModel))) continue;
-            if (!system.private_schedules_exists)
-                showPrivate++;
+            if (!system.private_schedules_exists) showPrivate++;
             for (int j = 0; j < rests.size(); j++) {
                 QcSchedulesResponse.Rest rest = rests.get(j);
                 ScheduleBean bean = new ScheduleBean();
@@ -269,11 +267,12 @@ public class ScheduleListFragment extends BaseFragment {
                 bean.intent_url = schedule.url;
                 if (getContext() != null) {
                     try {
-                        if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(App.AppContex, Manifest.permission.READ_CALENDAR)
+                            != PackageManager.PERMISSION_GRANTED) {
                             String thing = PhoneFuncUtils.queryEvent(getContext(), bean.time, bean.timeEnd, mCurCalId);
                             bean.conflict = thing;
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }
@@ -282,12 +281,10 @@ public class ScheduleListFragment extends BaseFragment {
         }
 
         Collections.sort(scheduleBeans, new ScheduleCompare());
-        if (mCurCalId != 0 && TextUtils.isEmpty(currentModel)){
-            if (showPrivate > 0)
-                scheduleBeans.add(0,new ScheduleBean(100));
-        }else {
-            if (showPrivate >= systems.size())
-                scheduleBeans.add(0,new ScheduleBean(100));
+        if (mCurCalId != 0 && TextUtils.isEmpty(currentModel)) {
+            if (showPrivate > 0) scheduleBeans.add(0, new ScheduleBean(100));
+        } else {
+            if (showPrivate >= systems.size()) scheduleBeans.add(0, new ScheduleBean(100));
         }
         if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
@@ -360,7 +357,7 @@ public class ScheduleListFragment extends BaseFragment {
             if (viewType == 100) {
                 holder =
                     new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule_no_private, parent, false));
-            }else if(viewType == 0){
+            } else if (viewType == 0) {
                 holder = new SchedulesVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedules_rest, parent, false));
                 holder.itemView.setOnClickListener(this);
             } else {
@@ -394,8 +391,8 @@ public class ScheduleListFragment extends BaseFragment {
                 Glide.with(App.AppContex).load(bean.pic_url).into(holder.itemScheduleClasspic);
 
                 holder.itemScheduleClasspic.setVisibility(View.VISIBLE);
-            }else {
-                return ;
+            } else {
+                return;
             }
             holder.indicator.setVisibility(bean.type == 0 ? View.GONE : View.VISIBLE);
             if (bean.conflict == null) {

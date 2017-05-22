@@ -17,6 +17,5 @@ import com.google.gson.annotations.SerializedName;
  */
 public class QcResponCode extends QcResponse {
 
-    @SerializedName("data")
-    public Code data;
+    @SerializedName("data") public Code data;
 }

@@ -1,185 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="304dp"
-              android:layout_height="match_parent"
-              android:background="#f8f8f8"
-              android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="304dp"
+    android:layout_height="match_parent"
+    android:background="#f8f8f8"
+    android:orientation="vertical"
     >
 
-    <RelativeLayout
-        android:id="@+id/drawer_headerview"
-        android:layout_width="match_parent"
-        android:layout_height="152dp"
-        android:background="@color/primary"
+  <RelativeLayout
+      android:id="@+id/drawer_headerview"
+      android:layout_width="match_parent"
+      android:layout_height="152dp"
+      android:background="@color/primary"
+      >
+
+    <FrameLayout
+        android:id="@+id/header_icon_out"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/circle_halftrans"
+        android:baseline="32dp"
         >
 
-        <FrameLayout
-            android:id="@+id/header_icon_out"
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="24dp"
-            android:background="@drawable/circle_halftrans"
-            android:baseline="32dp"
-            >
-
-            <ImageView
-                android:id="@+id/header_icon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                >
-            </ImageView>
-        </FrameLayout>
+      <ImageView
+          android:id="@+id/header_icon"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:layout_gravity="center"
+          android:scaleType="fitXY"
+          >
+      </ImageView>
+    </FrameLayout>
 
 
-        <TextView
-            android:id="@+id/drawer_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="48dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_toRightOf="@id/header_icon_out"
-            android:baseline="32dp"
-            android:drawableRight="@drawable/ic_arrow_right_white"
-
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            />
-
-
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:src="@drawable/ic_arrow_right_white"-->
-        <!--/>-->
-    </RelativeLayout>
-
-    <ScrollView
+    <TextView
+        android:id="@+id/drawer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@id/header_icon_out"
+        android:baseline="32dp"
+        android:drawableRight="@drawable/ic_arrow_right_white"
+
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        />
+
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:src="@drawable/ic_arrow_right_white"-->
+    <!--/>-->
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="none"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+
+      <com.qingchengfit.fitcoach.component.CustomSetmentLayout
+          android:id="@+id/drawer_radiogroup"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          >
+
+        <!--<com.qingchengfit.fitcoach.component.SegmentButton-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:button="@drawable/ic_drawer_schedule_selector"-->
+        <!--android:paddingLeft="@dimen/qc_edit_drawable_padding"-->
+        <!--android:text="日程安排"-->
+        <!--/>-->
 
 
-            <com.qingchengfit.fitcoach.component.CustomSetmentLayout
-                android:id="@+id/drawer_radiogroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                >
+      </com.qingchengfit.fitcoach.component.CustomSetmentLayout>
 
-                <!--<com.qingchengfit.fitcoach.component.SegmentButton-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:button="@drawable/ic_drawer_schedule_selector"-->
-                <!--android:paddingLeft="@dimen/qc_edit_drawable_padding"-->
-                <!--android:text="日程安排"-->
-                <!--/>-->
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#dddddd"
+          />
 
+      <LinearLayout
+          android:id="@+id/oem_acts"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:visibility="gone"
+          >
 
-            </com.qingchengfit.fitcoach.component.CustomSetmentLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd"
-                />
+      </LinearLayout>
 
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/oem_acts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#dddddd"
+          >
+      </View>
 
-            </LinearLayout>
+      <LinearLayout
+          android:id="@+id/drawer_modules"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:clickable="false"
+          android:orientation="vertical"
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd"
-            >
-            </View>
+          >
 
-            <LinearLayout
-                android:id="@+id/drawer_modules"
-            android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
-                android:orientation="vertical"
+        <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="58dp"-->
+        <!--android:background="@drawable/qc_backgroud_selector"-->
+        <!--android:clickable="true"-->
 
-            >
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!-->-->
 
-                <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="58dp"-->
-                <!--android:background="@drawable/qc_backgroud_selector"-->
-                <!--android:clickable="true"-->
+        <!--<TextView-->
+        <!--style="@style/Qc.TextCommonBlack"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:text="我的课程计划"-->
+        <!--/>-->
 
-                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-                <!-->-->
+        <!--<TextView-->
+        <!--style="@style/Qc.TextCommonBlack"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="right"-->
+        <!--android:gravity="center_vertical|right"-->
+        <!--android:text="102"-->
+        <!--/>-->
+        <!--</FrameLayout>-->
 
-                <!--<TextView-->
-                <!--style="@style/Qc.TextCommonBlack"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:text="我的课程计划"-->
-                <!--/>-->
+        <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="58dp"-->
+        <!--android:background="@drawable/qc_backgroud_selector"-->
+        <!--android:clickable="true"-->
+        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+        <!-->-->
 
-                <!--<TextView-->
-                <!--style="@style/Qc.TextCommonBlack"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:gravity="center_vertical|right"-->
-                <!--android:text="102"-->
-                <!--/>-->
-                <!--</FrameLayout>-->
+        <!--<TextView-->
+        <!--style="@style/Qc.TextCommonBlack"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:text="我的健身房"-->
+        <!--/>-->
 
-                <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="58dp"-->
-                <!--android:background="@drawable/qc_backgroud_selector"-->
-                <!--android:clickable="true"-->
-                <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-                <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-                <!-->-->
-
-                <!--<TextView-->
-                <!--style="@style/Qc.TextCommonBlack"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:text="我的健身房"-->
-                <!--/>-->
-
-                <!--<TextView-->
-                <!--style="@style/Qc.TextCommonBlack"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:gravity="center_vertical|right"-->
-                <!--android:text="102"-->
-                <!--/>-->
-                <!--</FrameLayout>-->
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        <!--<TextView-->
+        <!--style="@style/Qc.TextCommonBlack"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="right"-->
+        <!--android:gravity="center_vertical|right"-->
+        <!--android:text="102"-->
+        <!--/>-->
+        <!--</FrameLayout>-->
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>

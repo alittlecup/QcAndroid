@@ -23,8 +23,7 @@ import com.qingchengfit.fitcoach.R;
  * Created by Paper on 15/10/21 2015.
  */
 public class LoadResActivity extends Activity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -33,14 +32,12 @@ public class LoadResActivity extends Activity {
         new LoadDexTask().execute();
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         //cannot backpress
     }
 
     class LoadDexTask extends AsyncTask {
-        @Override
-        protected Object doInBackground(Object[] params) {
+        @Override protected Object doInBackground(Object[] params) {
             try {
                 MultiDex.install(getApplication());
                 LogUtil.d("loadDex", "install finish");
@@ -51,8 +48,7 @@ public class LoadResActivity extends Activity {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Object o) {
+        @Override protected void onPostExecute(Object o) {
             LogUtil.d("loadDex", "get install finish");
             finish();
             System.exit(0);

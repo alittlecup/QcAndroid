@@ -26,7 +26,8 @@ import java.util.List;
 
 public class QcReponseBrandDetailShops extends QcResponse {
     public Data data;
-    public class Data{
+
+    public class Data {
         public List<Shop> shops;
     }
 }

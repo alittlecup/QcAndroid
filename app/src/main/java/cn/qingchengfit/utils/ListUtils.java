@@ -25,18 +25,19 @@ import java.util.List;
  */
 
 public class ListUtils {
-    public static void test(){
+    public static void test() {
 
     }
+
     /**
      * List 类型转换  好累
      */
-    public static <T,G> List<T> transerList(List<T> to,List<G> list){
+    public static <T, G> List<T> transerList(List<T> to, List<G> list) {
         to = new ArrayList<>();
-        if (list != null){
+        if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 G g = list.get(i);
-                to.add((T)g);
+                to.add((T) g);
             }
         }
         return to;

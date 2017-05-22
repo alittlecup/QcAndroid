@@ -16,10 +16,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.ExpandedLayout;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.ExpandedLayout;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -31,7 +31,6 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-import com.qingchengfit.fitcoach.http.bean.Token;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -80,21 +79,20 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
     @BindView(R.id.sw_sale) ExpandedLayout swSale;
     @BindView(R.id.rootview) ScrollView rootview;
 
-
     private QcExperienceResponse.DataEntity.ExperiencesEntity experiencesEntity;
 
     public static WorkExpSyncDetailFragment newInstance(QcExperienceResponse.DataEntity.ExperiencesEntity e) {
-         Bundle args = new Bundle();
-        args.putParcelable("e",e);
-         WorkExpSyncDetailFragment fragment = new WorkExpSyncDetailFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("e", e);
+        WorkExpSyncDetailFragment fragment = new WorkExpSyncDetailFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            experiencesEntity = (QcExperienceResponse.DataEntity.ExperiencesEntity)getArguments().getParcelable("e");
+        if (getArguments() != null) {
+            experiencesEntity = (QcExperienceResponse.DataEntity.ExperiencesEntity) getArguments().getParcelable("e");
         }
     }
 
@@ -123,49 +121,50 @@ public class WorkExpSyncDetailFragment extends BaseSettingFragment {
         workexpeditPosition.setHint(experiencesEntity.getPosition());
         if (experiencesEntity.getGym() != null) {
             workexpeditGymName.setText(experiencesEntity.getGym().getName());
-            Glide.with(App.AppContex).load(experiencesEntity.getGym().getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg,App.AppContex));
+            Glide.with(App.AppContex)
+                .load(experiencesEntity.getGym().getPhoto())
+                .asBitmap()
+                .into(new CircleImgWrapper(hostImg, App.AppContex));
             hostAddress.setText(experiencesEntity.getGym().getAddress());
         }
         workexpeditDescripe.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(workexpeditDescripe.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(workexpeditDescripe.getViewTreeObserver(), this);
                 swGroup.setExpanded(!experiencesEntity.isGroup_is_hidden());
                 swPrivate.setExpanded(!experiencesEntity.isPrivate_is_hidden());
                 swSale.setExpanded(!experiencesEntity.isSale_is_hidden());
-                tvGroup.setText(getString(R.string.exp_group,experiencesEntity.getGroup_course(),experiencesEntity.getGroup_user()));
-                tvPrivate.setText(getString(R.string.exp_group,experiencesEntity.getPrivate_course(),experiencesEntity.getPrivate_user()));
-                tvSales.setText(getString(R.string.exp_sale,experiencesEntity.getSale()));
+                tvGroup.setText(getString(R.string.exp_group, experiencesEntity.getGroup_course(), experiencesEntity.getGroup_user()));
+                tvPrivate.setText(
+                    getString(R.string.exp_group, experiencesEntity.getPrivate_course(), experiencesEntity.getPrivate_user()));
+                tvSales.setText(getString(R.string.exp_sale, experiencesEntity.getSale()));
             }
         });
         return view;
     }
 
-    void putWorkExp(){
+    void putWorkExp() {
         fragmentCallBack.ShowLoading("正在保存");
-        RxRegiste(QcCloudClient.getApi().postApi.qcEditSyncExperience(experiencesEntity.getId(),new SyncExpBody.Builder()
-            .description(workexpeditDescripe.getText().toString().trim())
-            .group_is_hidden(!swGroup.isExpanded())
-            .private_is_hidden(!swPrivate.isExpanded())
-            .sale_is_hidden(!swSale.isExpanded())
-            .build())
-             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                             .subscribe(new Action1<QcResponse>() {
-                                 @Override
-                                 public void call(QcResponse qcResponse) {
-                                     fragmentCallBack.hideLoading();
-                                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                                         ToastUtils.show("保存成功");
-                                         getActivity().onBackPressed();
-                                     } else ToastUtils.show("保存失败");
-                                 }
-                             }, new Action1<Throwable>() {
-                                 @Override
-                                 public void call(Throwable throwable) {
-                                    fragmentCallBack.hideLoading();
-                                 }
-                             }));
+        RxRegiste(QcCloudClient.getApi().postApi.qcEditSyncExperience(experiencesEntity.getId(),
+            new SyncExpBody.Builder().description(workexpeditDescripe.getText().toString().trim())
+                .group_is_hidden(!swGroup.isExpanded())
+                .private_is_hidden(!swPrivate.isExpanded())
+                .sale_is_hidden(!swSale.isExpanded())
+                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<QcResponse>() {
+            @Override public void call(QcResponse qcResponse) {
+                fragmentCallBack.hideLoading();
+                if (ResponseConstant.checkSuccess(qcResponse)) {
+                    ToastUtils.show("保存成功");
+                    getActivity().onBackPressed();
+                } else {
+                    ToastUtils.show("保存失败");
+                }
+            }
+        }, new Action1<Throwable>() {
+            @Override public void call(Throwable throwable) {
+                fragmentCallBack.hideLoading();
+            }
+        }));
     }
-
 
     @Override public String getFragmentName() {
         return WorkExpSyncDetailFragment.class.getName();

@@ -1,63 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_grey">
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:gravity="center"
+      android:text="@string/set_gym_brand_hint"
+      style="@style/Qc.TextCommonGrey"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:id="@+id/layout_brand_logo"
+      android:layout_width="match_parent"
+      android:layout_height="84dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
     <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/label_brand_logo"
         style="@style/Qc.TextCommonGrey"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/set_gym_brand_hint"
         />
-    <include layout="@layout/divider_grey"/>
-    <LinearLayout
-        android:id="@+id/layout_brand_logo"
-        android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:gravity="center_vertical"
-        >
-        <TextView
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/label_brand_logo"
-            />
-        <ImageView
-            android:id="@+id/brand_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_default_header"
-            />
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@drawable/ic_arrow_right"
-            />
-    </LinearLayout>
-    <include layout="@layout/divider_grey_left_right"/>
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/brand_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:civ_lable="@string/gym_brand_name"
-        app:civ_nonnull="true"
+
+    <ImageView
+        android:id="@+id/brand_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_default_header"
         />
-    <Button
-        android:id="@+id/next_step"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="@string/next_step"
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_arrow_right"
         />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/brand_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:civ_lable="@string/gym_brand_name"
+      app:civ_nonnull="true"
+      />
+
+  <Button
+      android:id="@+id/next_step"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/next_step"
+      />
 
 </LinearLayout>

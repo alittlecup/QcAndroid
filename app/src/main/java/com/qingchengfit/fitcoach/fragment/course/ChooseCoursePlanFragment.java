@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.ToastUtils;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -25,7 +26,6 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
@@ -37,7 +37,6 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
 
 /**
  * power by
@@ -59,24 +58,17 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/2.
  */
-public class ChooseCoursePlanFragment extends BaseFragment implements
-        FlexibleAdapter.OnItemClickListener {
+public class ChooseCoursePlanFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
     CommonFlexAdapter mAdapter;
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
 
-    @Inject
-    RestRepository restRepository;
-    @Inject
-    CoachService coachService;
-    @Inject
-    Brand brand;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @Inject RestRepository restRepository;
+    @Inject CoachService coachService;
+    @Inject Brand brand;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     private Long mChosenId = 0L;
     private Unbinder unbinder;
 
@@ -89,21 +81,18 @@ public class ChooseCoursePlanFragment extends BaseFragment implements
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mChosenId = getArguments().getLong("id");
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_plan, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (getActivity() instanceof CourseActivity) {
             ((CourseActivity) getActivity()).getComponent().inject(this);
-
         }
         toolbarTitle.setText("选择默认课程计划");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -114,61 +103,57 @@ public class ChooseCoursePlanFragment extends BaseFragment implements
         recyclerview.setHasFixedSize(true);
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL));
         recyclerview.setAdapter(mAdapter);
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("id",coachService.getId());
-        params.put("model",coachService.getModel());
-        RxRegiste(restRepository.getGet_api().qcGetAllPlans(App.coachid, params)
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcAllCoursePlanResponse>() {
-                    @Override
-                    public void call(QcAllCoursePlanResponse qcResponseCoursePlan) {
-                        if (ResponseConstant.checkSuccess(qcResponseCoursePlan)) {
-                            mDatas.clear();
-                            mDatas.add(new ChooseCoursePlanItem(false, new CoursePlan.Builder().id(0L).name("不使用任何课程计划模板").build()));
-                            for (int i = 0; i < qcResponseCoursePlan.data.plans.size(); i++) {
-                                mDatas.add(new ChooseCoursePlanItem(qcResponseCoursePlan.data.plans.get(i).getId().longValue() == mChosenId, qcResponseCoursePlan.data.plans.get(i)));
-                            }
-                            mAdapter.notifyDataSetChanged();
-                        } else {
-                            ToastUtils.show("server error");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", coachService.getId());
+        params.put("model", coachService.getModel());
+        RxRegiste(restRepository.getGet_api()
+            .qcGetAllPlans(App.coachid, params)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcAllCoursePlanResponse>() {
+                @Override public void call(QcAllCoursePlanResponse qcResponseCoursePlan) {
+                    if (ResponseConstant.checkSuccess(qcResponseCoursePlan)) {
+                        mDatas.clear();
+                        mDatas.add(new ChooseCoursePlanItem(false, new CoursePlan.Builder().id(0L).name("不使用任何课程计划模板").build()));
+                        for (int i = 0; i < qcResponseCoursePlan.data.plans.size(); i++) {
+                            mDatas.add(new ChooseCoursePlanItem(qcResponseCoursePlan.data.plans.get(i).getId().longValue() == mChosenId,
+                                qcResponseCoursePlan.data.plans.get(i)));
                         }
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        ToastUtils.show("server error");
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
 
-                    }
-                })
-        );
+                }
+            }));
         view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            @Override public boolean onTouch(View view, MotionEvent motionEvent) {
                 return true;
             }
         });
         return view;
     }
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return ChooseCoursePlanFragment.class.getName();
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         //unbinder.unbind();
     }
 
-    @OnClick(R.id.copy_link)
-    public void onClick() {
+    @OnClick(R.id.copy_link) public void onClick() {
     }
 
-    @Override
-    public boolean onItemClick(int position) {
+    @Override public boolean onItemClick(int position) {
         getActivity().onBackPressed();
-        if (mAdapter.getItem(position) instanceof ChooseCoursePlanItem)
+        if (mAdapter.getItem(position) instanceof ChooseCoursePlanItem) {
             RxBus.getBus().post(((ChooseCoursePlanItem) mAdapter.getItem(position)).coursePlan);
+        }
 
         return true;
     }

@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class QcStudentBean extends Personage implements Parcelable {//extends RealmObject
 
-
     public static final Creator<QcStudentBean> CREATOR = new Creator<QcStudentBean>() {
         @Override public QcStudentBean createFromParcel(Parcel in) {
             return new QcStudentBean(in);
@@ -53,14 +52,12 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
     public QcStudentBean() {
     }
 
-    public QcStudentBean(Personage personage){
-        this.username= personage.username;
-        this.gender= personage.gender;
-        this.id= personage.id;
-        this.avatar= personage.avatar;
-        this.phone= personage.phone;
-
-
+    public QcStudentBean(Personage personage) {
+        this.username = personage.username;
+        this.gender = personage.gender;
+        this.id = personage.id;
+        this.avatar = personage.avatar;
+        this.phone = personage.phone;
     }
 
     public QcStudentBean(String id, String username, int status, String phone, String avatar, String checkin_avatar, String gender,
@@ -199,6 +196,10 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
         return sellers;
     }
 
+    public void setSellers(List<Staff> sellers) {
+        this.sellers = sellers;
+    }
+
     public String getSellersStr() {
         if (sellers == null || sellers.size() == 0) {
             return "";
@@ -213,10 +214,6 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
             }
             return ret;
         }
-    }
-
-    public void setSellers(List<Staff> sellers) {
-        this.sellers = sellers;
     }
 
     public String getCheckin_avatar() {
@@ -316,51 +313,51 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
         this.head = head;
     }
 
-    @Nullable  public String id() {
+    @Nullable public String id() {
         return id;
     }
 
-    @Nullable  public String username() {
+    @Nullable public String username() {
         return username;
     }
 
-    @Nullable  public String status() {
+    @Nullable public String status() {
         return String.valueOf(status);
     }
 
-    @Nullable  public String phone() {
+    @Nullable public String phone() {
         return phone;
     }
 
-    @Nullable  public String avatar() {
+    @Nullable public String avatar() {
         return avatar;
     }
 
-    @Nullable  public String checkin_avatar() {
+    @Nullable public String checkin_avatar() {
         return checkin_avatar;
     }
 
-    @Nullable  public Integer gender() {
+    @Nullable public Integer gender() {
         return gender;
     }
 
-    @Nullable  public String head() {
+    @Nullable public String head() {
         return head;
     }
 
-    @Nullable  public String brand_id() {
+    @Nullable public String brand_id() {
         return brand_id;
     }
 
-    @Nullable  public String join_at() {
+    @Nullable public String join_at() {
         return join_at;
     }
 
-    @Nullable  public String support_gym() {
+    @Nullable public String support_gym() {
         return support_gym;
     }
 
-    @Nullable  public String supoort_gym_ids() {
+    @Nullable public String supoort_gym_ids() {
         return supoort_gym_ids;
     }
 

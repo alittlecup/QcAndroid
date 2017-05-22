@@ -4,9 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-
-import junit.framework.Assert;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import junit.framework.Assert;
 
 public class Util {
 
     private static final String TAG = "SDK_Sample.Util";
+    private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 
     public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -113,15 +112,12 @@ public class Util {
             in.seek(offset);
             in.readFully(b);
             in.close();
-
         } catch (Exception e) {
             Log.e(TAG, "readFromFile : errMsg = " + e.getMessage());
             e.printStackTrace();
         }
         return b;
     }
-
-    private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 
     public static Bitmap extractThumbNail(final String path, final int height, final int width, final boolean crop) {
         Assert.assertTrue(path != null && !path.equals("") && height > 0 && width > 0);
@@ -168,7 +164,16 @@ public class Util {
 
             options.inJustDecodeBounds = false;
 
-            Log.i(TAG, "bitmap required size=" + newWidth + "x" + newHeight + ", orig=" + options.outWidth + "x" + options.outHeight + ", sample=" + options.inSampleSize);
+            Log.i(TAG, "bitmap required size="
+                + newWidth
+                + "x"
+                + newHeight
+                + ", orig="
+                + options.outWidth
+                + "x"
+                + options.outHeight
+                + ", sample="
+                + options.inSampleSize);
             Bitmap bm = BitmapFactory.decodeFile(path, options);
             if (bm == null) {
                 Log.e(TAG, "bitmap decode failed");
@@ -193,7 +198,6 @@ public class Util {
                 Log.i(TAG, "bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
             }
             return bm;
-
         } catch (final OutOfMemoryError e) {
             Log.e(TAG, "decode bitmap failed: " + e.getMessage());
             options = null;

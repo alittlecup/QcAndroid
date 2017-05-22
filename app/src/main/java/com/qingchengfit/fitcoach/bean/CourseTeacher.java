@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.List;
 
 /**
@@ -26,6 +25,15 @@ import java.util.List;
  * Created by Paper on 16/8/3.
  */
 public class CourseTeacher implements Parcelable {
+    public static final Creator<CourseTeacher> CREATOR = new Creator<CourseTeacher>() {
+        @Override public CourseTeacher createFromParcel(Parcel source) {
+            return new CourseTeacher(source);
+        }
+
+        @Override public CourseTeacher[] newArray(int size) {
+            return new CourseTeacher[size];
+        }
+    };
     private List<TeacherImpression> impressions;
     private Coach user;
     private float course_score;
@@ -33,8 +41,17 @@ public class CourseTeacher implements Parcelable {
     private float service_score;
     private Long id;
 
+    public CourseTeacher() {
+    }
 
-
+    protected CourseTeacher(Parcel in) {
+        this.impressions = in.createTypedArrayList(TeacherImpression.CREATOR);
+        this.user = in.readParcelable(Coach.class.getClassLoader());
+        this.course_score = in.readFloat();
+        this.teacher_score = in.readFloat();
+        this.service_score = in.readFloat();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+    }
 
     public List<TeacherImpression> getImpressions() {
         return impressions;
@@ -84,16 +101,11 @@ public class CourseTeacher implements Parcelable {
         this.id = id;
     }
 
-    public CourseTeacher() {
-    }
-
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeTypedList(this.impressions);
         dest.writeParcelable(this.user, flags);
         dest.writeFloat(this.course_score);
@@ -101,25 +113,4 @@ public class CourseTeacher implements Parcelable {
         dest.writeFloat(this.service_score);
         dest.writeValue(this.id);
     }
-
-    protected CourseTeacher(Parcel in) {
-        this.impressions = in.createTypedArrayList(TeacherImpression.CREATOR);
-        this.user = in.readParcelable(Coach.class.getClassLoader());
-        this.course_score = in.readFloat();
-        this.teacher_score = in.readFloat();
-        this.service_score = in.readFloat();
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-    }
-
-    public static final Creator<CourseTeacher> CREATOR = new Creator<CourseTeacher>() {
-        @Override
-        public CourseTeacher createFromParcel(Parcel source) {
-            return new CourseTeacher(source);
-        }
-
-        @Override
-        public CourseTeacher[] newArray(int size) {
-            return new CourseTeacher[size];
-        }
-    };
 }

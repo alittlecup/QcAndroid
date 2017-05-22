@@ -37,12 +37,10 @@ import com.qingchengfit.fitcoach.Utils.Utils;
  * Created by Paper on 16/11/15.
  *
  * 提示跳转至 工作人员App
- *
- *
  */
 public class StaffAppFragmentFragment extends DialogFragment {
 
-
+    @BindView(R.id.title) TextView title;
     private Unbinder unbinder;
 
     public static StaffAppFragmentFragment newInstance() {
@@ -54,31 +52,22 @@ public class StaffAppFragmentFragment extends DialogFragment {
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NORMAL,R.style.LoadingDialog_Style);
+        setStyle(STYLE_NORMAL, R.style.LoadingDialog_Style);
     }
 
-    @BindView(R.id.title)
-    TextView title;
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_staff_app, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         return view;
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick({R.id.close, R.id.open_app})
-    public void onClick(View view) {
+    @OnClick({ R.id.close, R.id.open_app }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.close:
                 dismiss();
@@ -87,7 +76,7 @@ public class StaffAppFragmentFragment extends DialogFragment {
                 try {
                     Utils.openApp(getActivity());
                     dismiss();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse("http://fir.im/qcfit"));
                     startActivity(i);

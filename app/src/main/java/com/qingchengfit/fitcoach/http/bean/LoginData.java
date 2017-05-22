@@ -16,10 +16,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/5 2015.
  */
 public class LoginData {
-    @SerializedName("session_id")
-    public String session_id;
-    @SerializedName("user")
-    public User user;
-    @SerializedName("coach")
-    public Coach coach;
+    @SerializedName("session_id") public String session_id;
+    @SerializedName("user") public User user;
+    @SerializedName("coach") public Coach coach;
 }

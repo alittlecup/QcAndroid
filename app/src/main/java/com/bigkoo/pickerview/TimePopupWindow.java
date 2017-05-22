@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
-
 import com.bigkoo.pickerview.lib.ScreenInfo;
 import com.bigkoo.pickerview.lib.WheelTime;
 import com.qingchengfit.fitcoach.R;
-
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,9 +67,6 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 
     /**
      * 设置可以选择的时间范围
-     *
-     * @param START_YEAR
-     * @param END_YEAR
      */
     public void setRange(int START_YEAR, int END_YEAR) {
         WheelTime.setSTART_YEAR(START_YEAR);
@@ -80,15 +75,14 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 
     /**
      * 设置选中时间
-     *
-     * @param date
      */
     public void setTime(Date date) {
         Calendar calendar = Calendar.getInstance();
-        if (date == null)
+        if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
-        else
+        } else {
             calendar.setTime(date);
+        }
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -99,19 +93,14 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 
     /**
      * 指定选中的时间，显示选择器
-     *
-     * @param parent
-     * @param gravity
-     * @param x
-     * @param y
-     * @param date
      */
     public void showAtLocation(View parent, int gravity, int x, int y, Date date) {
         Calendar calendar = Calendar.getInstance();
-        if (date == null)
+        if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
-        else
+        } else {
             calendar.setTime(date);
+        }
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -124,15 +113,12 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 
     /**
      * 设置是否循环滚动
-     *
-     * @param cyclic
      */
     public void setCyclic(boolean cyclic) {
         wheelTime.setCyclic(cyclic);
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         String tag = (String) v.getTag();
         if (tag.equals(TAG_CANCEL)) {
             dismiss();
@@ -162,5 +148,4 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
     public interface OnTimeSelectListener {
         public void onTimeSelect(Date date);
     }
-
 }

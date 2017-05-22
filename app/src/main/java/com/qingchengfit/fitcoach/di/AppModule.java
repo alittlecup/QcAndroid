@@ -26,8 +26,7 @@ import dagger.Provides;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/17.
  */
-@Module
-public class AppModule {
+@Module public class AppModule {
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;
     private App app;
@@ -38,17 +37,15 @@ public class AppModule {
         app = builder.app;
     }
 
-    @Provides
-    LoginStatus providerLoginStatus(){
+    @Provides LoginStatus providerLoginStatus() {
         return loginStatus;
     }
 
-    @Provides
-    GymWrapper provideGym(){
+    @Provides GymWrapper provideGym() {
         return gymWrapper;
     }
-    @Provides
-    App provideApplicationContext() {
+
+    @Provides App provideApplicationContext() {
         return app;
     }
 

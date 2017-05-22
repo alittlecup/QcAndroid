@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -18,12 +17,8 @@ import java.util.List;
  * Created by Paper on 15/12/29 2015.
  */
 public class ShopBean {
-    @SerializedName("id")
-    public long id;
-    @SerializedName("address")
-    public String address;
-    @SerializedName("name")
-    public String name;
-    @SerializedName("open_time")
-    public List<QcPrivateGymReponse.OpenTime> open_time;
+    @SerializedName("id") public long id;
+    @SerializedName("address") public String address;
+    @SerializedName("name") public String name;
+    @SerializedName("open_time") public List<QcPrivateGymReponse.OpenTime> open_time;
 }

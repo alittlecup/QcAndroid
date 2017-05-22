@@ -4,11 +4,9 @@ import android.animation.Animator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import java.util.ArrayList;
 import java.util.List;
-
-import eu.davidea.flexibleadapter.FlexibleAdapter;
 
 /**
  * power by
@@ -32,6 +30,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter;
  */
 public class CommonFlexAdapter extends FlexibleAdapter {
     private int positionOld = -1;
+
     public CommonFlexAdapter(@NonNull List items) {
         super(items);
     }
@@ -40,16 +39,14 @@ public class CommonFlexAdapter extends FlexibleAdapter {
         super(items, listeners);
     }
 
-    @Override
-    public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
+    @Override public List<Animator> getAnimators(View itemView, int position, boolean isSelected) {
         List<Animator> animators = new ArrayList<Animator>();
 
-
-        if (position != positionOld)
-            positionOld = position;
+        if (position != positionOld) positionOld = position;
 
         return animators;
     }
+
     @Override public boolean hasNewSearchText(String newText) {
         //return super.hasNewSearchText(newText);
         return true;

@@ -7,7 +7,6 @@ import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.List;
 
-
 /**
  * power by
  * <p>
@@ -31,10 +30,12 @@ public interface BatchDetailView extends PView {
     void onRule(List<Rule> rules, int max_user);
 
     void onTimeRepeat(String timestart, String timeend);
+
     void checkOk();
+
     void onSuccess();
+
     void onFailed(String s);
+
     void onDelOk();
-
-
 }

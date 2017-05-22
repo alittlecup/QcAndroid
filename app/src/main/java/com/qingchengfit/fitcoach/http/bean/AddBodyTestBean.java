@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.List;
 
 /**
@@ -40,28 +39,6 @@ public class AddBodyTestBean {
     public String created_at;
 
     public static class Photo implements Parcelable {
-        public String photo;
-        public boolean isLoading;
-
-        public Photo() {
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.photo);
-            dest.writeByte(isLoading ? (byte) 1 : (byte) 0);
-        }
-
-        protected Photo(Parcel in) {
-            this.photo = in.readString();
-            this.isLoading = in.readByte() != 0;
-        }
-
         public static final Creator<Photo> CREATOR = new Creator<Photo>() {
             public Photo createFromParcel(Parcel source) {
                 return new Photo(source);
@@ -71,5 +48,24 @@ public class AddBodyTestBean {
                 return new Photo[size];
             }
         };
+        public String photo;
+        public boolean isLoading;
+
+        public Photo() {
+        }
+
+        protected Photo(Parcel in) {
+            this.photo = in.readString();
+            this.isLoading = in.readByte() != 0;
+        }
+
+        @Override public int describeContents() {
+            return 0;
+        }
+
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.photo);
+            dest.writeByte(isLoading ? (byte) 1 : (byte) 0);
+        }
     }
 }

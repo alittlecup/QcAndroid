@@ -18,31 +18,43 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/13 2015.
  */
 public class User implements Parcelable {
-    @SerializedName("username")
-    public String username;
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
 
-    @SerializedName("phone")
-    public String phone;
-    @SerializedName("id")
-    public String id;
-    @SerializedName("city")
-    public String city;
-    @SerializedName("description")
-    public String desc;
-    @SerializedName("avatar")
-    public String avatar;
+        @Override public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+    @SerializedName("username") public String username;
+    @SerializedName("phone") public String phone;
+    @SerializedName("id") public String id;
+    @SerializedName("city") public String city;
+    @SerializedName("description") public String desc;
+    @SerializedName("avatar") public String avatar;
+    @SerializedName("address") public String address;
+    @SerializedName("joined_at") public String joined_at;
+    @SerializedName("hidden_phone") public String hidden_phone;
+    @SerializedName("date_of_birth") public String date_of_birth;
+    @SerializedName("gender") public int gender;
 
-    @SerializedName("address")
-    public String address;
-    @SerializedName("joined_at")
-    public String joined_at;
-    @SerializedName("hidden_phone")
-    public String hidden_phone;
-    @SerializedName("date_of_birth")
-    public String date_of_birth;
+    public User() {
+    }
 
-    @SerializedName("gender")
-    public int gender;
+    protected User(Parcel in) {
+        this.username = in.readString();
+        this.phone = in.readString();
+        this.id = in.readString();
+        this.city = in.readString();
+        this.desc = in.readString();
+        this.avatar = in.readString();
+        this.address = in.readString();
+        this.joined_at = in.readString();
+        this.hidden_phone = in.readString();
+        this.date_of_birth = in.readString();
+        this.gender = in.readInt();
+    }
 
     public String getUsername() {
         return username;
@@ -149,31 +161,4 @@ public class User implements Parcelable {
         dest.writeString(this.date_of_birth);
         dest.writeInt(this.gender);
     }
-
-    public User() {
-    }
-
-    protected User(Parcel in) {
-        this.username = in.readString();
-        this.phone = in.readString();
-        this.id = in.readString();
-        this.city = in.readString();
-        this.desc = in.readString();
-        this.avatar = in.readString();
-        this.address = in.readString();
-        this.joined_at = in.readString();
-        this.hidden_phone = in.readString();
-        this.date_of_birth = in.readString();
-        this.gender = in.readInt();
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        @Override public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 }

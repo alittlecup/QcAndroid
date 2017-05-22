@@ -15,27 +15,12 @@ package com.qingchengfit.fitcoach.http.bean;
  */
 public class CourseBody {
 
-    public CourseBody() {
-    }
-
-
-
-
-    public CourseBody(String name, String length, int is_private, String model, String model_id) {
-        this.name = name;
-        this.length = length;
-        this.is_private = is_private;
-        this.model = model;
-        this.id = model_id;
-    }
-
     public String name;
     public String length;
     public int is_private;
     public String model;
     public String id;
     public String photo;
-
     /**
      * 新增
      */
@@ -45,6 +30,17 @@ public class CourseBody {
     public Integer capacity;
     public Integer min_users;
     public String shop_ids;
+
+    public CourseBody() {
+    }
+
+    public CourseBody(String name, String length, int is_private, String model, String model_id) {
+        this.name = name;
+        this.length = length;
+        this.is_private = is_private;
+        this.model = model;
+        this.id = model_id;
+    }
 
     private CourseBody(Builder builder) {
         name = builder.name;
@@ -85,7 +81,6 @@ public class CourseBody {
             length = val;
             return this;
         }
-
 
         public Builder is_private(int val) {
             is_private = val;

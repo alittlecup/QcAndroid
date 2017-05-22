@@ -101,7 +101,6 @@ import rx.schedulers.Schedulers;
 
 import static com.qingchengfit.fitcoach.App.diskLruCache;
 
-
 //import javax.inject.Inject;
 
 public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
@@ -112,36 +111,20 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     public static final int NOTIFICATION = 1;
     private static final String TAG = MainActivity.class.getName();
     private static int ids[] = {
-            R.id.segmentbtn_0,
-            R.id.segmentbtn_1,
-            R.id.segmentbtn_2,
-            R.id.segmentbtn_3,
-            R.id.segmentbtn_4,
-            R.id.segmentbtn_5,
-            R.id.segmentbtn_6,
-            R.id.segmentbtn_7,
-            R.id.segmentbtn_8,
-            R.id.segmentbtn_9,
+        R.id.segmentbtn_0, R.id.segmentbtn_1, R.id.segmentbtn_2, R.id.segmentbtn_3, R.id.segmentbtn_4, R.id.segmentbtn_5, R.id.segmentbtn_6,
+        R.id.segmentbtn_7, R.id.segmentbtn_8, R.id.segmentbtn_9,
     };
     FragmentManager mFragmentManager;
-    @BindView(R.id.main_drawerlayout)
-    DrawerLayout mainDrawerlayout;
-    @BindView(R.id.main_fraglayout)
-    FrameLayout mainFraglayout;
-    @BindView(R.id.drawer_headerview)
-    RelativeLayout drawerHeaderview;
-    @BindView(R.id.drawer_radiogroup)
-    CustomSetmentLayout drawerRadiogroup;
-    @BindView(R.id.header_icon)
-    ImageView headerIcon;
-    @BindView(R.id.drawer_modules)
-    LinearLayout drawerModules;
-    @BindView(R.id.drawer_name)
-    TextView drawerName;
+    @BindView(R.id.main_drawerlayout) DrawerLayout mainDrawerlayout;
+    @BindView(R.id.main_fraglayout) FrameLayout mainFraglayout;
+    @BindView(R.id.drawer_headerview) RelativeLayout drawerHeaderview;
+    @BindView(R.id.drawer_radiogroup) CustomSetmentLayout drawerRadiogroup;
+    @BindView(R.id.header_icon) ImageView headerIcon;
+    @BindView(R.id.drawer_modules) LinearLayout drawerModules;
+    @BindView(R.id.drawer_name) TextView drawerName;
     AsyncDownloader mDownloadThread;
     HashMap<String, Fragment> fragments = new HashMap<>();
-    @BindView(R.id.oem_acts)
-    LinearLayout oemActs;
+    @BindView(R.id.oem_acts) LinearLayout oemActs;
     private boolean mGoMyhome = false;
     private User user;
     private Fragment topFragment;
@@ -174,23 +157,21 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
     private Snackbar NonetworkSnack;
 
     //    @Inject RxBus rxBus;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        RxPermissions.getInstance(this)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            setupFile();
-                            initVersion();
-                        } else ToastUtils.showDefaultStyle("请开启存储空间权限");
-                    }
-                });
+        RxPermissions.getInstance(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
+            @Override public void call(Boolean aBoolean) {
+                if (aBoolean) {
+                    setupFile();
+                    initVersion();
+                } else {
+                    ToastUtils.showDefaultStyle("请开启存储空间权限");
+                }
+            }
+        });
 
         gson = new Gson();
         mFragmentManager = getSupportFragmentManager();
@@ -198,30 +179,27 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mMainObservabel.subscribe((Action1) o -> mainDrawerlayout.openDrawer(Gravity.LEFT));
         mNetworkObservabel = RxBus.getBus().register(NetworkBean.class.getName());
         mNetworkObservabel.subscribe(new Observer() {
-            @Override
-            public void onCompleted() {
+            @Override public void onCompleted() {
 
             }
 
-            @Override
-            public void onError(Throwable e) {
+            @Override public void onError(Throwable e) {
 
             }
 
-            @Override
-            public void onNext(Object o) {
+            @Override public void onNext(Object o) {
                 if (o instanceof NetworkBean) {
                     if (NonetworkSnack == null) {
                         NonetworkSnack = Snackbar.make(mainFraglayout, "您的网络异常,请检查网络连接", Snackbar.LENGTH_INDEFINITE);
                     }
                     if (((NetworkBean) o).isAvaliable()) {
                         NonetworkSnack.dismiss();
-                    } else NonetworkSnack.show();
+                    } else {
+                        NonetworkSnack.show();
+                    }
                 }
-
             }
         });
-
 
         initUser();
         initDialog();
@@ -230,22 +208,18 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         initBDPush();
         initCalendar();
 
-        RxPermissions.getInstance(this).request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.READ_CALENDAR
-                , Manifest.permission.WRITE_CALENDAR
-        )
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
+        RxPermissions.getInstance(this)
+            .request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            .subscribe(new Action1<Boolean>() {
+                @Override public void call(Boolean aBoolean) {
+                    if (aBoolean) {
 
-                        } else {
-                            ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
-                        }
+                    } else {
+                        ToastUtils.showDefaultStyle("请到设置-应用程序-教练助手-权限中开启权限");
                     }
-                });
-
+                }
+            });
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -275,26 +249,23 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             params.put("to_date", DateUtils.Date2YYYYMMDD(calendar.getTime()));
             LogUtil.e("sync calendar:");
             QcCloudClient.getApi().getApi.qcGetCoachSchedule(App.coachid, params)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<QcSchedulesResponse>() {
-                        @Override
-                        public void onCompleted() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<QcSchedulesResponse>() {
+                    @Override public void onCompleted() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
+                    @Override public void onError(Throwable e) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onNext(QcSchedulesResponse qcSchedulesResponse) {
-                            CalendarIntentService.startActionWeek(MainActivity.this, new Date().getTime(), gson.toJson(qcSchedulesResponse));
-                            LogUtil.e("save calendar!");
-                            PreferenceUtils.setSettingLong(MainActivity.this, "calendar_sync_time", new Date().getTime());
-                        }
-                    });
+                    @Override public void onNext(QcSchedulesResponse qcSchedulesResponse) {
+                        CalendarIntentService.startActionWeek(MainActivity.this, new Date().getTime(), gson.toJson(qcSchedulesResponse));
+                        LogUtil.e("save calendar!");
+                        PreferenceUtils.setSettingLong(MainActivity.this, "calendar_sync_time", new Date().getTime());
+                    }
+                });
         }
     }
 
@@ -307,53 +278,41 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             pushBody.push_id = userid;
             pushBody.device_type = "android";
             pushBody.distribute = getString(R.string.oem_tag);
-            QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody)
-                .subscribeOn(Schedulers.io())
+            QcCloudClient.getApi().postApi.qcPostPushId(App.coachid, pushBody).subscribeOn(Schedulers.io())
 
-                .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<QcResponse>() {
-                        @Override
-                        public void onCompleted() {
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<QcResponse>() {
+                @Override public void onCompleted() {
 
-                        }
+                }
 
-                        @Override
-                        public void onError(Throwable e) {
+                @Override public void onError(Throwable e) {
 
-                        }
+                }
 
-                        @Override
-                        public void onNext(QcResponse qcResponse) {
-                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                                PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
-                            }
-                        }
-                    });
+                @Override public void onNext(QcResponse qcResponse) {
+                    if (qcResponse.status == ResponseResult.SUCCESS) {
+                        PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", true);
+                    }
+                }
+            });
         } else {
             LogUtil.e("bdpush:empty");
         }
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
-
-
     }
 
-    @Override
-    protected void onStop() {
+    @Override protected void onStop() {
         super.onStop();
         mainDrawerlayout.closeDrawers();
-
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         App.gMainAlive = false;
         super.onDestroy();
-        if (mDownloadThread != null)
-            mDownloadThread.cancel(true);
+        if (mDownloadThread != null) mDownloadThread.cancel(true);
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
         RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
     }
@@ -362,29 +321,20 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
      * loading dialog
      */
     public void initLoadingDialog() {
-        loadingDialog = new MaterialDialog.Builder(this)
-                .content("请稍后")
-                .progress(true, 0)
-                .build();
-
+        loadingDialog = new MaterialDialog.Builder(this).content("请稍后").progress(true, 0).build();
     }
 
-    @Override
-    public void showLoading() {
-        if (loadingDialog == null)
-            initLoadingDialog();
+    @Override public void showLoading() {
+        if (loadingDialog == null) initLoadingDialog();
         loadingDialog.show();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
 
     }
 
-    @Override
-    public void hideLoading() {
-        if (loadingDialog.isShowing())
-            loadingDialog.hide();
+    @Override public void hideLoading() {
+        if (loadingDialog.isShowing()) loadingDialog.hide();
     }
 
     private void initVersion() {
@@ -394,86 +344,72 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             NonetworkSnack.show();
         }
 
-
         FIR.checkForUpdateInFIR(getString(BuildConfig.DEBUG ? R.string.fir_token_debug : R.string.fir_token), new VersionCheckCallback() {
-            @Override
-            public void onSuccess(String s) {
+            @Override public void onSuccess(String s) {
                 super.onSuccess(s);
                 UpdateVersion updateVersion = new Gson().fromJson(s, UpdateVersion.class);
                 if (BuildConfig.DEBUG) {
                     long oldupdate = PreferenceUtils.getPrefLong(MainActivity.this, "update", 0);
-                    if (updateVersion.updated_at <= oldupdate){
+                    if (updateVersion.updated_at <= oldupdate) {
                         return;
                     }
                     PreferenceUtils.setPrefLong(MainActivity.this, "update", updateVersion.updated_at);
-
                 } else {
-                    if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex))
-                        return;
+                    if (updateVersion.version <= AppUtils.getAppVerCode(App.AppContex)) return;
                 }
 
                 url = updateVersion.direct_install_url;
                 newAkp = new File(Configs.ExternalCache + getString(R.string.app_name) + "_" + updateVersion.version + ".apk");
-                updateDialog = new MaterialDialog.Builder(MainActivity.this)
-                        .title("前方发现新版本!!")
-                        .content(updateVersion.changelog)
-                        .positiveText("更新")
-                        .negativeText("下次再说")
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                updateDialog.dismiss();
-                                if (url != null) {
-                                    //TODO download app
-                                    downloadDialog.show();
-                                    mDownloadThread = new AsyncDownloader();
-                                    mDownloadThread.execute(url);
-                                }
+                updateDialog = new MaterialDialog.Builder(MainActivity.this).title("前方发现新版本!!")
+                    .content(updateVersion.changelog)
+                    .positiveText("更新")
+                    .negativeText("下次再说")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            updateDialog.dismiss();
+                            if (url != null) {
+                                //TODO download app
+                                downloadDialog.show();
+                                mDownloadThread = new AsyncDownloader();
+                                mDownloadThread.execute(url);
                             }
+                        }
 
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                updateDialog.dismiss();
-                            }
-                        })
-                        .build();
-                downloadDialog = new MaterialDialog.Builder(MainActivity.this)
-                        .content("正在飞速为您下载")
-                        .progress(false, 100)
-                        .cancelable(false)
-                        .positiveText("后台更新")
-                        .negativeText("取消更新")
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                            }
+                        @Override public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            updateDialog.dismiss();
+                        }
+                    })
+                    .build();
+                downloadDialog = new MaterialDialog.Builder(MainActivity.this).content("正在飞速为您下载")
+                    .progress(false, 100)
+                    .cancelable(false)
+                    .positiveText("后台更新")
+                    .negativeText("取消更新")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                        }
 
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                mDownloadThread.cancel(true);
-                            }
-                        })
-                        .build();
+                        @Override public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            mDownloadThread.cancel(true);
+                        }
+                    })
+                    .build();
                 updateDialog.show();
             }
 
-
-            @Override
-            public void onFail(Exception e) {
+            @Override public void onFail(Exception e) {
                 super.onFail(e);
             }
 
-            @Override
-            public void onStart() {
+            @Override public void onStart() {
                 super.onStart();
             }
 
-            @Override
-            public void onFinish() {
+            @Override public void onFinish() {
                 super.onFinish();
             }
         });
@@ -498,49 +434,42 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         App.coachid = Integer.parseInt(coach.id);
 
         //获取用户拥有的系统
-        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid).subscribeOn(Schedulers.io())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<QcCoachSystemResponse>() {
-                    @Override
-                    public void onCompleted() {
+        QcCloudClient.getApi().getApi.qcGetCoachSystem(App.coachid)
+            .subscribeOn(Schedulers.io()).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<QcCoachSystemResponse>() {
+            @Override public void onCompleted() {
 
-                    }
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
+            @Override public void onError(Throwable e) {
 
-                    }
+            }
 
-                    @Override
-                    public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
-                        if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
-                            if (qcCoachSystemResponse.date == null || qcCoachSystemResponse.date.systems == null ||
-                                    qcCoachSystemResponse.date.systems.size() == 0) {
-                                Intent intent = new Intent(MainActivity.this, FragActivity.class);
-                                intent.putExtra("type", 3);
-                                intent.putExtra("isNew", true);
-                                startActivity(intent);
-                            } else {
-                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
-
-                            }
-                        } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
-                            logout();
+            @Override public void onNext(QcCoachSystemResponse qcCoachSystemResponse) {
+                if (qcCoachSystemResponse.status == ResponseResult.SUCCESS) {
+                    if (qcCoachSystemResponse.date == null
+                        || qcCoachSystemResponse.date.systems == null
+                        || qcCoachSystemResponse.date.systems.size() == 0) {
+                        Intent intent = new Intent(MainActivity.this, FragActivity.class);
+                        intent.putExtra("type", 3);
+                        intent.putExtra("isNew", true);
+                        startActivity(intent);
+                    } else {
+                        PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems", gson.toJson(qcCoachSystemResponse));
                         }
+                } else if (qcCoachSystemResponse.error_code.equalsIgnoreCase(ResponseResult.error_no_login)) {
+                    logout();
                     }
-                });
-
+            }
+        });
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
+    @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getIntExtra(ACTION, -1) == LOGOUT) {
             logout();
         } else if (intent.getIntExtra(ACTION, -1) == FINISH) {
             MainActivity.this.finish();
-
         } else if (intent.getIntExtra(ACTION, -1) == NOTIFICATION) {
             String contetn = intent.getStringExtra("url");
             Intent toWeb = new Intent(this, WebActivity.class);
@@ -548,7 +477,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             startActivity(toWeb);
         }
     }
-
 
     public void logout() {
         PreferenceUtils.setPrefBoolean(MainActivity.this, "hasPushId", false);
@@ -582,9 +510,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         } catch (IOException e) {
             //TODO 没有存储的情况
         }
-
     }
-
 
     private void removeCookies(CookieManager cookieManager) {
         String h = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "hostarray", "");
@@ -597,39 +523,27 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 cookieManager.setCookie(host, "qc_session_id" + "=" + ";expires=Mon, 03 Jun 0000 07:01:29 GMT;");
                 LogUtil.e(host + "  " + cookieManager.getCookie(host));
             }
-
         }
         PreferenceUtils.setPrefString(App.AppContex, App.coachid + "hostarray", "");
     }
 
-
     public void initDialog() {
-        dialog = new MaterialDialog.Builder(this)
-                .content("是否确认退出?")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        dialog.dismiss();
-                        MainActivity.this.finish();
-                    }
+        dialog = new MaterialDialog.Builder(this).content("是否确认退出?").callback(new MaterialDialog.ButtonCallback() {
+            @Override public void onPositive(MaterialDialog dialog) {
+                dialog.dismiss();
+                MainActivity.this.finish();
+            }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        dialog.dismiss();
-                    }
-                })
-                .positiveText("退出")
-                .negativeText("不要")
-                .build();
-
+            @Override public void onNegative(MaterialDialog dialog) {
+                dialog.dismiss();
+            }
+        }).positiveText("退出").negativeText("不要").build();
     }
-
 
     /**
      * 初始化侧滑,从后台拉去
      */
     private void initDrawer() {
-
 
         mScheduesFragment = new ScheduesFragment();
         mDataStatementFragment = new DataStatementFragment();
@@ -642,17 +556,20 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         button.setText("日程安排");
         button.setId(ids[0]);
         button.setDrawables(R.drawable.ic_drawer_schedule_normal, R.drawable.ic_drawer_schedule_checked);
-        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        drawerRadiogroup.addView(button, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         button2 = new SegmentLayout(this);
         button2.setId(ids[1]);
         button2.setText("数据报表");
         button2.setDrawables(R.drawable.ic_drawer_statistic_normal, R.drawable.ic_drawer_statistic_checked);
-        drawerRadiogroup.addView(button2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        drawerRadiogroup.addView(button2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         button3 = new SegmentLayout(this);
         button3.setText("会议培训");
         button3.setId(ids[2]);
         button3.setDrawables(R.drawable.ic_drawer_meeting_normal, R.drawable.ic_drawer_meeting_checked);
-        drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        drawerRadiogroup.addView(button3, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
 
         button.setListener(v -> {
             changeFragment(mScheduesFragment);
@@ -666,37 +583,38 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
             HashMap<String, String> params = new HashMap<>();
             params.put("oem", getString(R.string.oem_tag));
-            QcCloudClient.getApi().getApi
-                    .qcGetMeetingList(params)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Action1<QcMeetingResponse>() {
-                        @Override
-                        public void call(QcMeetingResponse qcMeetingResponse) {
-                            if (qcMeetingResponse.data.meetings.size() == 1) {
-                                Intent toWeb = new Intent(MainActivity.this, WebActivityWithShare.class);
-                                toWeb.putExtra("url", qcMeetingResponse.data.meetings.get(0).link);
-                                startActivity(toWeb);
-                            } else {
-                                changeFragment(mMeetingFragment);
-                            }
+            QcCloudClient.getApi().getApi.qcGetMeetingList(params)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action1<QcMeetingResponse>() {
+                    @Override public void call(QcMeetingResponse qcMeetingResponse) {
+                        if (qcMeetingResponse.data.meetings.size() == 1) {
+                            Intent toWeb = new Intent(MainActivity.this, WebActivityWithShare.class);
+                            toWeb.putExtra("url", qcMeetingResponse.data.meetings.get(0).link);
+                            startActivity(toWeb);
+                        } else {
+                            changeFragment(mMeetingFragment);
                         }
-                    });
+                    }
+                });
         });
 
         button.performClick();
         item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item.setTitle("我的学员");
         item.setCount("0");
-        drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item1 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item1.setTitle(getString(R.string.my_course_template));
         item1.setCount("0");
-        drawerModules.addView(item1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        drawerModules.addView(item1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item2 = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
         item2.setTitle("我的健身房");
         item2.setCount("0");
-        drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+        drawerModules.addView(item2, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         item.setOnClickListener(v -> {
             changeFragment(mMyStudentFragment);
             drawerRadiogroup.cleanCheck();
@@ -710,66 +628,59 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             drawerRadiogroup.cleanCheck();
         });
         mainDrawerlayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
+            @Override public void onDrawerSlide(View drawerView, float slideOffset) {
 
             }
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
+            @Override public void onDrawerOpened(View drawerView) {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("oem", getString(R.string.oem_tag));
                 QcCloudClient.getApi().getApi.qcGetDrawerInfo(App.coachid, params)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<QcDrawerResponse>() {
-                            @Override
-                            public void onCompleted() {
-                            }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<QcDrawerResponse>() {
+                        @Override public void onCompleted() {
+                        }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
-                            }
+                        @Override public void onError(Throwable e) {
+                            ToastUtils.show(R.drawable.ic_share_fail, "网络错误");
+                        }
 
-                            @Override
-                            public void onNext(QcDrawerResponse qcDrawerResponse) {
-                                Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
-                                drawerName.setText(qcDrawerResponse.data.coach.username);
-                                item.setCount(qcDrawerResponse.data.user_count);
-                                item1.setCount(qcDrawerResponse.data.plan_count);
-                                item2.setCount(qcDrawerResponse.data.system_count);
-                                if (qcDrawerResponse.data.activities != null) {
-                                    oemActs.setVisibility(View.VISIBLE);
-                                    oemActs.removeAllViews();
-                                    for (QcDrawerResponse.Activity a : qcDrawerResponse.data.activities) {
-                                        oemActs.addView(new DrawerImgItem(MainActivity.this, a.image, a.name, new View.OnClickListener() {
+                        @Override public void onNext(QcDrawerResponse qcDrawerResponse) {
+                            Glide.with(App.AppContex)
+                                .load(qcDrawerResponse.data.coach.avatar)
+                                .asBitmap()
+                                .into(new CircleImgWrapper(headerIcon, App.AppContex));
+                            drawerName.setText(qcDrawerResponse.data.coach.username);
+                            item.setCount(qcDrawerResponse.data.user_count);
+                            item1.setCount(qcDrawerResponse.data.plan_count);
+                            item2.setCount(qcDrawerResponse.data.system_count);
+                            if (qcDrawerResponse.data.activities != null) {
+                                oemActs.setVisibility(View.VISIBLE);
+                                oemActs.removeAllViews();
+                                for (QcDrawerResponse.Activity a : qcDrawerResponse.data.activities) {
+                                    oemActs.addView(new DrawerImgItem(MainActivity.this, a.image, a.name, new View.OnClickListener() {
 
-                                            @Override
-                                            public void onClick(View v) {
-                                                goWeb(a.link);
-                                            }
-                                        }));
-                                    }
-                                } else {
-                                    oemActs.setVisibility(View.GONE);
+                                        @Override public void onClick(View v) {
+                                            goWeb(a.link);
+                                        }
+                                    }));
                                 }
-                                PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
-
+                            } else {
+                                oemActs.setVisibility(View.GONE);
                             }
-                        });
-
+                            PreferenceUtils.setPrefString(App.AppContex, App.coachid + "drawer_info", new Gson().toJson(qcDrawerResponse));
+                        }
+                    });
             }
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
+            @Override public void onDrawerClosed(View drawerView) {
                 if (mGoMyhome) {
                     mGoMyhome = false;
                 }
             }
 
-            @Override
-            public void onDrawerStateChanged(int newState) {
+            @Override public void onDrawerStateChanged(int newState) {
 
             }
         });
@@ -780,7 +691,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         String cache = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "drawer_info", "");
         if (!TextUtils.isEmpty(cache)) {
             QcDrawerResponse qcDrawerResponse = gson.fromJson(cache, QcDrawerResponse.class);
-            Glide.with(App.AppContex).load(qcDrawerResponse.data.coach.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
+            Glide.with(App.AppContex)
+                .load(qcDrawerResponse.data.coach.avatar)
+                .asBitmap()
+                .into(new CircleImgWrapper(headerIcon, App.AppContex));
             drawerName.setText(qcDrawerResponse.data.coach.username);
             item.setCount(qcDrawerResponse.data.user_count);
             item1.setCount(qcDrawerResponse.data.plan_count);
@@ -793,10 +707,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         mainDrawerlayout.closeDrawers();
         if (topFragment != fragment) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            if (mFragmentManager.getFragments() == null || !mFragmentManager.getFragments().contains(fragment))
+            if (mFragmentManager.getFragments() == null || !mFragmentManager.getFragments().contains(fragment)) {
                 fragmentTransaction.add(R.id.main_fraglayout, fragment);
-            if (topFragment != null)
-                fragmentTransaction.hide(topFragment);
+            }
+            if (topFragment != null) fragmentTransaction.hide(topFragment);
 
             fragmentTransaction.show(fragment);
             fragmentTransaction.commitAllowingStateLoss();
@@ -816,9 +730,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         }
     }
 
-
-    @UiThread
-    private void setupModules(List<DrawerModule> modules) {
+    @UiThread private void setupModules(List<DrawerModule> modules) {
         for (DrawerModule module : modules) {
             DrawerModuleItem item = (DrawerModuleItem) LayoutInflater.from(this).inflate(R.layout.drawer_module_item, null);
             item.setTitle(module.title);
@@ -828,13 +740,12 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 mainDrawerlayout.closeDrawers();
             });
             urls.add(module.url);
-            drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
+            drawerModules.addView(item, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                (int) getResources().getDimension(R.dimen.qc_drawer_item_height)));
         }
     }
 
-
-    @OnClick(R.id.drawer_headerview)
-    public void onHeadClick() {
+    @OnClick(R.id.drawer_headerview) public void onHeadClick() {
         startActivityForResult(new Intent(MainActivity.this, MyHomeActivity.class), 9);
     }
 
@@ -850,34 +761,29 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         } else {
             ((OriginWebFragment) fragment).startLoadUrl(url);
         }
-
     }
 
-
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (topFragment != mScheduesFragment) {
-//            changeFragment(mScheduesFragment);
+            //            changeFragment(mScheduesFragment);
             button.performClick();
-        } else
+        } else {
             dialog.show();
+        }
     }
 
-    @Override
-    public void onOpenDrawer() {
+    @Override public void onOpenDrawer() {
         mainDrawerlayout.openDrawer(Gravity.LEFT);
     }
 
-    @Override
-    public void goWeb(String url) {
+    @Override public void goWeb(String url) {
         Intent toWeb = new Intent(this, WebActivityWithShare.class);
         toWeb.putExtra("url", url);
         startActivity(toWeb);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case 1:
@@ -894,11 +800,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 break;
             case 5:
                 item1.performClick();
-//                    changeFragment(mMyCoursePlanFragment);
+                //                    changeFragment(mMyCoursePlanFragment);
                 break;
             case 6:
                 item2.performClick();
-//                    changeFragment(mMyGymsFragment);
+                //                    changeFragment(mMyGymsFragment);
                 break;
             case -1:
                 if (data != null && data.getStringExtra("url") != null && !TextUtils.isEmpty(data.getStringExtra("url"))) {
@@ -906,11 +812,10 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 }
                 break;
             default:
-//                    changeFragment(mScheduesFragment);
+                //                    changeFragment(mScheduesFragment);
                 break;
 
-
-//            }
+            //            }
         }
     }
 
@@ -920,8 +825,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
 
     private class AsyncDownloader extends AsyncTask<String, Long, Boolean> {
 
-        @Override
-        protected Boolean doInBackground(String... params) {
+        @Override protected Boolean doInBackground(String... params) {
             OkHttpClient httpClient = new OkHttpClient();
             Call call = httpClient.newCall(new Request.Builder().url(params[0]).get().build());
             try {
@@ -950,7 +854,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                                 return false;
                             }
                         }
-//                        FileUtils.getFileFromBytes(response.body().bytes(), newAkp.getAbsolutePath());
+                        //                        FileUtils.getFileFromBytes(response.body().bytes(), newAkp.getAbsolutePath());
                         return downloaded == target;
                     } catch (IOException ignore) {
                         return false;
@@ -971,14 +875,11 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
             }
         }
 
-        @Override
-        protected void onProgressUpdate(Long... values) {
+        @Override protected void onProgressUpdate(Long... values) {
             downloadDialog.setProgress((int) (values[0] * 100 / values[1]));
-
         }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
+        @Override protected void onPostExecute(Boolean result) {
             if (result) {
                 downloadDialog.dismiss();
                 AppUtils.install(MainActivity.this, newAkp.getAbsolutePath());
@@ -986,9 +887,6 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
                 downloadDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
-
-
 }

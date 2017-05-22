@@ -5,92 +5,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
   <include layout="@layout/common_toolbar"/>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+  <ScrollView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?actionBarSize"
+      >
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-                    <include
-                        android:id="@+id/layout_course"
-                        layout="@layout/layout_course"/>
-
-                    <com.qingchengfit.fitcoach.component.CommonInputView
-                        android:id="@+id/coach"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/qc_item_height"
-                        app:civ_showdivier="true"
-                        app:civ_showright="true"
-                        app:civ_clickable="false"
-
-                        />
-
-                    <com.qingchengfit.fitcoach.component.CommonInputView
-                        android:id="@+id/space"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/qc_item_height"
-                        app:civ_lable="@string/course_place"
-                        app:civ_showdivier="true"
-                        app:civ_showright="true"
-                        app:civ_clickable="true"
-                        />
-                    <com.qingchengfit.fitcoach.component.CommonInputView
-                        android:id="@+id/account_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:civ_clickable="true"
-                        app:civ_hint="@string/common_please_choose"
-                        app:civ_lable="@string/need_pay"
-                        app:civ_showright="true"
-
-                        />
-
-                </LinearLayout>
-                <View
-                    android:id="@+id/permission_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:background="@color/bg_grey"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="@string/course_batch"
-                />
-
-            <include
-                layout="@layout/item_batchloop"
-
-                />
-        </LinearLayout>
-    </ScrollView>
-    <Button
-        android:id="@+id/del_batch"
-        android:background="@color/white"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="删除排期"
-        android:textColor="@color/red"
-        />
+        android:orientation="vertical"
+        >
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <include
+              layout="@layout/layout_course"
+              android:id="@+id/layout_course"
+              />
+
+          <com.qingchengfit.fitcoach.component.CommonInputView
+              android:id="@+id/coach"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              app:civ_clickable="false"
+              app:civ_showdivier="true"
+              app:civ_showright="true"
+
+              />
+
+          <com.qingchengfit.fitcoach.component.CommonInputView
+              android:id="@+id/space"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              app:civ_clickable="true"
+              app:civ_lable="@string/course_place"
+              app:civ_showdivier="true"
+              app:civ_showright="true"
+              />
+
+          <com.qingchengfit.fitcoach.component.CommonInputView
+              android:id="@+id/account_type"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              app:civ_clickable="true"
+              app:civ_hint="@string/common_please_choose"
+              app:civ_lable="@string/need_pay"
+              app:civ_showright="true"
+
+              />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/permission_view"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            />
+      </FrameLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/bg_grey"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:text="@string/course_batch"
+          />
+
+      <include
+          layout="@layout/item_batchloop"
+
+          />
+    </LinearLayout>
+  </ScrollView>
+
+  <Button
+      android:id="@+id/del_batch"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@color/white"
+      android:text="删除排期"
+      android:textColor="@color/red"
+      />
 </RelativeLayout>
 

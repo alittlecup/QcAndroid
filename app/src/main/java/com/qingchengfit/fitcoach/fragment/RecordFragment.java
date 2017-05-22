@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,8 +24,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.qingchengfit.fitcoach.R.id.record_confirm_none;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,10 +44,7 @@ public class RecordFragment extends BaseSettingFragment {
     private RecordComfirmAdapter adapter;
     private Unbinder unbinder;
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         //unbinder=ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(R.menu.add_certification, 0, getActivity().getString(R.string.record_title));
@@ -75,11 +68,9 @@ public class RecordFragment extends BaseSettingFragment {
             startActivityForResult(toSearch, requestCode);
             return false;
         });
-        WebFragmentNoToolbar web = WebFragmentNoToolbar.newInstance(Configs.Server+Configs.HOST_EDUCATION);
+        WebFragmentNoToolbar web = WebFragmentNoToolbar.newInstance(Configs.Server + Configs.HOST_EDUCATION);
         web.setTouchBig(true);
-        getChildFragmentManager().beginTransaction()
-            .replace(R.id.frag_record, web)
-            .commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.frag_record, web).commit();
         //recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         //recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         //freshData();
@@ -126,12 +117,13 @@ public class RecordFragment extends BaseSettingFragment {
         //});
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10011 && resultCode > 0) {
-            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
-            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity =
+                new QcCertificatesReponse.DataEntity.CertificatesEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity =
+                new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId((int) data.getLongExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
@@ -141,8 +133,10 @@ public class RecordFragment extends BaseSettingFragment {
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity), 1);
             fragmentCallBack.onFragmentChange(fragment);
         } else if (requestCode == 10012 && resultCode > 0) {
-            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
-            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity =
+                new QcCertificatesReponse.DataEntity.CertificatesEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity =
+                new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId((int) data.getLongExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
@@ -152,8 +146,10 @@ public class RecordFragment extends BaseSettingFragment {
             RecordEditFragment fragment = RecordEditFragment.newInstance(false, gson.toJson(certificatesEntity), 2);
             fragmentCallBack.onFragmentChange(fragment);
         } else if (requestCode == 10013 && resultCode > 0) {
-            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = new QcCertificatesReponse.DataEntity.CertificatesEntity();
-            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity = new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity =
+                new QcCertificatesReponse.DataEntity.CertificatesEntity();
+            QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity entity =
+                new QcCertificatesReponse.DataEntity.CertificatesEntity.OrganizationEntity();
             entity.setId((int) data.getLongExtra("id", 0));
             entity.setName(data.getStringExtra("username"));
             entity.setPhoto(data.getStringExtra("pic"));
@@ -165,28 +161,20 @@ public class RecordFragment extends BaseSettingFragment {
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
     }
-
 
     public interface OnRecycleItemClickListener {
         void onItemClick(View v, int pos);
     }
 
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.recordcomfirm_title)
-        TextView recordcomfirmTitle;
-        @BindView(R.id.recordcomfirm_subtitle)
-        TextView recordcomfirmSubtitle;
-        @BindView(R.id.recordcomfirm_time)
-        TextView recordcomfirmTime;
-        @BindView(R.id.recordcomfirm_comfirm)
-        ImageView recordcomfirmImg;
-        @BindView(R.id.item__hidden)
-        View hideView;
+        @BindView(R.id.recordcomfirm_title) TextView recordcomfirmTitle;
+        @BindView(R.id.recordcomfirm_subtitle) TextView recordcomfirmSubtitle;
+        @BindView(R.id.recordcomfirm_time) TextView recordcomfirmTime;
+        @BindView(R.id.recordcomfirm_comfirm) ImageView recordcomfirmImg;
+        @BindView(R.id.item__hidden) View hideView;
 
         public RecordComfirmVH(View itemView) {
             super(itemView);
@@ -211,15 +199,14 @@ public class RecordFragment extends BaseSettingFragment {
             this.listener = listener;
         }
 
-        @Override
-        public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_record_list, parent, false));
+        @Override public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            RecordComfirmVH holder =
+                new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_record_list, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(RecordComfirmVH holder, int position) {
+        @Override public void onBindViewHolder(RecordComfirmVH holder, int position) {
             holder.itemView.setTag(position);
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = datas.get(position);
             holder.recordcomfirmTitle.setText(certificatesEntity.getName());
@@ -236,27 +223,25 @@ public class RecordFragment extends BaseSettingFragment {
                         Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
                         Calendar c = Calendar.getInstance(Locale.getDefault());
                         c.setTime(d);
-                        if (c.get(Calendar.YEAR) == 3000)
+                        if (c.get(Calendar.YEAR) == 3000) {
                             holder.recordcomfirmTime.setText("长期有效");
-                        else {
+                        } else {
                             sb.append(DateUtils.Date2YYYYMMDD(d));
                             holder.recordcomfirmTime.setText(sb.toString());
                         }
                     } else {
                         holder.recordcomfirmTime.setText("长期有效");
                     }
-
                 } else {
                     holder.hideView.setVisibility(View.VISIBLE);
                     holder.recordcomfirmTime.setText("已隐藏");
                 }
-
             } else {
                 holder.recordcomfirmImg.setVisibility(View.GONE);
                 holder.hideView.setVisibility(View.GONE);
-                if (TextUtils.isEmpty(certificatesEntity.getStart()) || TextUtils.isEmpty(certificatesEntity.getEnd())){
+                if (TextUtils.isEmpty(certificatesEntity.getStart()) || TextUtils.isEmpty(certificatesEntity.getEnd())) {
                     holder.recordcomfirmTime.setText("");
-                }else {
+                } else {
                     StringBuffer sb = new StringBuffer();
                     sb.append("有效期:");
                     sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
@@ -264,9 +249,9 @@ public class RecordFragment extends BaseSettingFragment {
                     Date d = DateUtils.formatDateFromServer(certificatesEntity.getEnd());
                     Calendar c = Calendar.getInstance(Locale.getDefault());
                     c.setTime(d);
-                    if (c.get(Calendar.YEAR) == 3000)
+                    if (c.get(Calendar.YEAR) == 3000) {
                         holder.recordcomfirmTime.setText("长期有效");
-                    else {
+                    } else {
                         sb.append(DateUtils.Date2YYYYMMDD(d));
                         holder.recordcomfirmTime.setText(sb.toString());
                     }
@@ -274,16 +259,12 @@ public class RecordFragment extends BaseSettingFragment {
             }
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
+        @Override public void onClick(View v) {
             listener.onItemClick(v, (int) v.getTag());
         }
     }
-
 }

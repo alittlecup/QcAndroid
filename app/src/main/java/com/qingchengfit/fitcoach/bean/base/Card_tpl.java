@@ -20,11 +20,20 @@ import java.util.List;
  * Created by Paper on 16/2/23 2016.
  */
 public class Card_tpl implements Parcelable {
+    public static final Creator<Card_tpl> CREATOR = new Creator<Card_tpl>() {
+        @Override public Card_tpl createFromParcel(Parcel source) {
+            return new Card_tpl(source);
+        }
+
+        @Override public Card_tpl[] newArray(int size) {
+            return new Card_tpl[size];
+        }
+    };
+    public boolean isChoosen;
     private String name;
     private String type; //1 是储值卡 2次卡 3期限卡
     private String description;
     private List<String> costs;
-    public boolean isChoosen;
     private String id;
     private String limit;
     private String color;
@@ -39,15 +48,46 @@ public class Card_tpl implements Parcelable {
     private List<Shop> shops;
     private List<CardTplOption> options;
 
-
-    @Override
-    public boolean equals(Object o) {
-        return this.id.equalsIgnoreCase(((Card_tpl)o).id);
+    public Card_tpl() {
     }
 
-    public int getCardTypeInt(){
+    public Card_tpl(String name, String type, String description, String id, String limit) {
+        this.name = name;
+        this.type = type;
+        this.description = description;
+        this.id = id;
+        this.limit = limit;
+    }
+
+    protected Card_tpl(Parcel in) {
+        this.name = in.readString();
+        this.type = in.readString();
+        this.description = in.readString();
+        this.costs = in.createStringArrayList();
+        this.isChoosen = in.readByte() != 0;
+        this.id = in.readString();
+        this.limit = in.readString();
+        this.color = in.readString();
+        this.is_limit = in.readByte() != 0;
+        this.month_times = in.readInt();
+        this.day_times = in.readInt();
+        this.week_times = in.readInt();
+        this.pre_times = in.readInt();
+        this.buy_limit = in.readInt();
+        this.gymid = in.readString();
+        this.gymModel = in.readString();
+        this.shops = in.createTypedArrayList(Shop.CREATOR);
+        this.options = in.createTypedArrayList(CardTplOption.CREATOR);
+    }
+
+    @Override public boolean equals(Object o) {
+        return this.id.equalsIgnoreCase(((Card_tpl) o).id);
+    }
+
+    public int getCardTypeInt() {
         return Integer.parseInt(type);
     }
+
     public List<CardTplOption> getOptions() {
         return options;
     }
@@ -134,32 +174,19 @@ public class Card_tpl implements Parcelable {
             for (Shop shop : shops) {
                 ret.add(shop.id);
             }
-
         }
         return ret;
     }
 
-    public String getShopNames(){
+    public String getShopNames() {
         String ret = "";
         if (shops != null && shops.size() > 0) {
             for (Shop shop : shops) {
-                ret = TextUtils.concat(ret,shop.name,"、").toString();
+                ret = TextUtils.concat(ret, shop.name, "、").toString();
             }
         }
-        if (ret.endsWith("、"))
-            ret = ret.substring(0,ret.length()-1);
+        if (ret.endsWith("、")) ret = ret.substring(0, ret.length() - 1);
         return ret;
-    }
-
-    public Card_tpl() {
-    }
-
-    public Card_tpl(String name, String type, String description, String id, String limit) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.id = id;
-        this.limit = limit;
     }
 
     public String getName() {
@@ -218,13 +245,11 @@ public class Card_tpl implements Parcelable {
         this.buy_limit = buy_limit;
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.type);
         dest.writeString(this.description);
@@ -244,37 +269,4 @@ public class Card_tpl implements Parcelable {
         dest.writeTypedList(this.shops);
         dest.writeTypedList(this.options);
     }
-
-    protected Card_tpl(Parcel in) {
-        this.name = in.readString();
-        this.type = in.readString();
-        this.description = in.readString();
-        this.costs = in.createStringArrayList();
-        this.isChoosen = in.readByte() != 0;
-        this.id = in.readString();
-        this.limit = in.readString();
-        this.color = in.readString();
-        this.is_limit = in.readByte() != 0;
-        this.month_times = in.readInt();
-        this.day_times = in.readInt();
-        this.week_times = in.readInt();
-        this.pre_times = in.readInt();
-        this.buy_limit = in.readInt();
-        this.gymid = in.readString();
-        this.gymModel = in.readString();
-        this.shops = in.createTypedArrayList(Shop.CREATOR);
-        this.options = in.createTypedArrayList(CardTplOption.CREATOR);
-    }
-
-    public static final Creator<Card_tpl> CREATOR = new Creator<Card_tpl>() {
-        @Override
-        public Card_tpl createFromParcel(Parcel source) {
-            return new Card_tpl(source);
-        }
-
-        @Override
-        public Card_tpl[] newArray(int size) {
-            return new Card_tpl[size];
-        }
-    };
 }

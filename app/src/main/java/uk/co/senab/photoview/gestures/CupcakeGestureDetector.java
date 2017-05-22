@@ -23,27 +23,24 @@ import android.view.ViewConfiguration;
 
 public class CupcakeGestureDetector implements GestureDetector {
 
-    protected OnGestureListener mListener;
     private static final String LOG_TAG = "CupcakeGestureDetector";
-    float mLastTouchX;
-    float mLastTouchY;
     final float mTouchSlop;
     final float mMinimumVelocity;
-
-    @Override
-    public void setOnGestureListener(OnGestureListener listener) {
-        this.mListener = listener;
-    }
+    protected OnGestureListener mListener;
+    float mLastTouchX;
+    float mLastTouchY;
+    private VelocityTracker mVelocityTracker;
+    private boolean mIsDragging;
 
     public CupcakeGestureDetector(Context context) {
-        final ViewConfiguration configuration = ViewConfiguration
-                .get(context);
+        final ViewConfiguration configuration = ViewConfiguration.get(context);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mTouchSlop = configuration.getScaledTouchSlop();
     }
 
-    private VelocityTracker mVelocityTracker;
-    private boolean mIsDragging;
+    @Override public void setOnGestureListener(OnGestureListener listener) {
+        this.mListener = listener;
+    }
 
     float getActiveX(MotionEvent ev) {
         return ev.getX();
@@ -57,8 +54,7 @@ public class CupcakeGestureDetector implements GestureDetector {
         return false;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    @Override public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 mVelocityTracker = VelocityTracker.obtain();
@@ -116,14 +112,12 @@ public class CupcakeGestureDetector implements GestureDetector {
                         mVelocityTracker.addMovement(ev);
                         mVelocityTracker.computeCurrentVelocity(1000);
 
-                        final float vX = mVelocityTracker.getXVelocity(), vY = mVelocityTracker
-                                .getYVelocity();
+                        final float vX = mVelocityTracker.getXVelocity(), vY = mVelocityTracker.getYVelocity();
 
                         // If the velocity is greater than minVelocity, call
                         // listener
                         if (Math.max(Math.abs(vX), Math.abs(vY)) >= mMinimumVelocity) {
-                            mListener.onFling(mLastTouchX, mLastTouchY, -vX,
-                                    -vY);
+                            mListener.onFling(mLastTouchX, mLastTouchY, -vX, -vY);
                         }
                     }
                 }

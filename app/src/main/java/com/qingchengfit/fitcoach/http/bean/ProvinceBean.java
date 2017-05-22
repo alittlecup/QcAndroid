@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,24 +20,18 @@ import java.util.List;
  * Created by Paper on 15/9/18 2015.
  */
 public class ProvinceBean implements Parcelable {
-    @SerializedName("code")
-    public int id;
-    @SerializedName("name")
-    public String name;
-    @SerializedName("cities")
-    public List<CityBean> cities;
+    public static final Parcelable.Creator<ProvinceBean> CREATOR = new Parcelable.Creator<ProvinceBean>() {
+        public ProvinceBean createFromParcel(Parcel source) {
+            return new ProvinceBean(source);
+        }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.name);
-        dest.writeList(this.cities);
-    }
+        public ProvinceBean[] newArray(int size) {
+            return new ProvinceBean[size];
+        }
+    };
+    @SerializedName("code") public int id;
+    @SerializedName("name") public String name;
+    @SerializedName("cities") public List<CityBean> cities;
 
     public ProvinceBean() {
     }
@@ -51,13 +43,13 @@ public class ProvinceBean implements Parcelable {
         in.readList(this.cities, List.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<ProvinceBean> CREATOR = new Parcelable.Creator<ProvinceBean>() {
-        public ProvinceBean createFromParcel(Parcel source) {
-            return new ProvinceBean(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        public ProvinceBean[] newArray(int size) {
-            return new ProvinceBean[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeList(this.cities);
+    }
 }

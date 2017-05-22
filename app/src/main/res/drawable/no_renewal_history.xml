@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="80dp"
-    android:height="80dp"
-    android:viewportWidth="80"
-    android:viewportHeight="80">
+        android:height="80dp"
+        android:viewportHeight="80"
+        android:viewportWidth="80"
+        android:width="80dp">
 
   <group>
     <group>
       <path
           android:fillColor="#E5E5E5"
-          android:strokeWidth="1"
           android:pathData="M73.7714,33.0409 C73.7714,34.7368,75.0857,36.0819,76.7429,36.0819
 C78.4,36.0819,79.7143,34.7368,79.7143,33.0409 C79.7143,31.345,78.4,30,76.7429,30
 C75.0857,30.0585,73.7714,31.4035,73.7714,33.0409 Z M77.0286,43.2749
@@ -49,7 +48,8 @@ C61.6,30.4678,60.3428,31.9298,60.3428,33.6842 Z M11.5429,33.6842 L11.5429,45.614
 C11.5429,47.4269,13.0286,48.8889,14.8,48.8889
 C16.5714,48.8889,18.0571,47.4269,18.0571,45.614 L18.0571,33.6842
 C18.0571,31.8713,16.5714,30.4094,14.8,30.4094
-C13.0286,30.4094,11.5429,31.9298,11.5429,33.6842 Z" />
+C13.0286,30.4094,11.5429,31.9298,11.5429,33.6842 Z"
+          android:strokeWidth="1"/>
     </group>
   </group>
 </vector>

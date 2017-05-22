@@ -16,15 +16,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/1/13 2016.
  */
 public class StudentInfoResponse extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
     public class Data {
-        @SerializedName("ship")
-        public QcStudentBean ship;
-        @SerializedName("private_url")
-        public String private_url;
-        @SerializedName("group_url")
-        public String group_url;
+        @SerializedName("ship") public QcStudentBean ship;
+        @SerializedName("private_url") public String private_url;
+        @SerializedName("group_url") public String group_url;
     }
 }

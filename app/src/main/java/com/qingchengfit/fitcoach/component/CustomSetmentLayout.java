@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
  */
 public class CustomSetmentLayout extends LinearLayout {
 
-
     public CustomSetmentLayout(Context context) {
         super(context);
     }
@@ -38,20 +37,14 @@ public class CustomSetmentLayout extends LinearLayout {
 
     }
 
-    @Override
-    public void addView(View child) {
+    @Override public void addView(View child) {
         super.addView(child);
-
-
     }
 
-    @Override
-    public void addView(View child, ViewGroup.LayoutParams params) {
+    @Override public void addView(View child, ViewGroup.LayoutParams params) {
         super.addView(child, params);
         if (child instanceof SegmentLayout) {
-            ((SegmentLayout) child).setSegmentListener(v ->
-                            CustomSetmentLayout.this.onSegmentClick(v.getId())
-            );
+            ((SegmentLayout) child).setSegmentListener(v -> CustomSetmentLayout.this.onSegmentClick(v.getId()));
         }
     }
 
@@ -62,7 +55,9 @@ public class CustomSetmentLayout extends LinearLayout {
             if (v instanceof onSegmentChangeListener) {
                 if (v.getId() == id) {
                     ((onSegmentChangeListener) v).onCheckChange(true);
-                } else ((onSegmentChangeListener) v).onCheckChange(false);
+                } else {
+                    ((onSegmentChangeListener) v).onCheckChange(false);
+                }
             }
         }
     }
@@ -81,9 +76,8 @@ public class CustomSetmentLayout extends LinearLayout {
             ((SegmentLayout) getChildAt(0)).onCheckChange(true);
         }
     }
+
     public interface onSegmentChangeListener {
         void onCheckChange(boolean isChecked);
     }
-
-
 }

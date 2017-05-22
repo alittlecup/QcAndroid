@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,42 +18,27 @@ import java.util.List;
  */
 public class QcResponsePrivateCourse extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
-
+    @SerializedName("data") public Data data;
 
     public class Data {
-        @SerializedName("coaches")
-        public List<PrivateClass> coaches;
+        @SerializedName("coaches") public List<PrivateClass> coaches;
 
-        @SerializedName("order_url")
-        public String order_url;
-        @SerializedName("total_count")
-        public int total_count;
-
+        @SerializedName("order_url") public String order_url;
+        @SerializedName("total_count") public int total_count;
     }
 
     public class PrivateClass {
 
-        @SerializedName("courses_count")
-        public int courses_count;
+        @SerializedName("courses_count") public int courses_count;
 
-        @SerializedName("username")
-        public String username;
+        @SerializedName("username") public String username;
 
-        @SerializedName("avatar")
-        public String avatar;
+        @SerializedName("avatar") public String avatar;
 
-        @SerializedName("from_date")
-        public String from_date;
+        @SerializedName("from_date") public String from_date;
 
-        @SerializedName("to_date")
-        public String to_date;
+        @SerializedName("to_date") public String to_date;
 
-        @SerializedName("id")
-        public String id;
-
-
+        @SerializedName("id") public String id;
     }
-
 }

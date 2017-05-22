@@ -57,36 +57,36 @@ public class UnLoginHomeFragment extends BaseFragment {
 
     @Override protected void onInVisible() {
         super.onInVisible();
-        if (mainScheduleFragment.isVisible()){
+        if (mainScheduleFragment.isVisible()) {
             mainScheduleFragment.setInvisible();
         }
     }
 
     @Override protected void onVisible() {
         super.onVisible();
-        if (mainScheduleFragment.isVisible()){
+        if (mainScheduleFragment.isVisible()) {
             mainScheduleFragment.setVisible();
         }
     }
 
-    private void changeLogin(){
+    private void changeLogin() {
         if (loginStatus.isLogined()) {
             //已登录
             //if (spGetService == null) {
-                spGetService = repoCoachService.readAllServices();
-                RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
-                    if (coachServices.size() == 0) {
-                        //无场馆
-                        router(homeBannerFragment, "banner1");
-                    } else {
-                        //有场馆
-                        router(mainScheduleFragment);
-                    }
-                }));
+            spGetService = repoCoachService.readAllServices();
+            RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+                if (coachServices.size() == 0) {
+                    //无场馆
+                    router(homeBannerFragment, "banner1");
+                } else {
+                    //有场馆
+                    router(mainScheduleFragment);
+                }
+            }));
             //}
         } else {
             //未登录
-            router(homeBannerFragment,"banner1");
+            router(homeBannerFragment, "banner1");
         }
     }
 

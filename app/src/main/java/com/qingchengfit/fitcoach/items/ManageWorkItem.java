@@ -21,45 +21,40 @@ public class ManageWorkItem extends AbstractFlexibleItem<ManageWorkItem.ManageWo
 
     public FunctionBean bean;
 
-
     public ManageWorkItem(FunctionBean bean) {
         this.bean = bean;
     }
 
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_manage_work;
     }
 
-    @Override
-    public ManageWorkVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    @Override public ManageWorkVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
         return new ManageWorkVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, ManageWorkVH holder, int position, List payloads) {
+    @Override public void bindViewHolder(FlexibleAdapter adapter, ManageWorkVH holder, int position, List payloads) {
         holder.title.setText(bean.text);
-        if (!TextpaperUtils.isEmpty(bean.subname)){
+        if (!TextpaperUtils.isEmpty(bean.subname)) {
             holder.subTitle.setVisibility(View.VISIBLE);
             holder.subTitle.setText(bean.subname);
-        }else holder.subTitle.setVisibility(View.GONE);
-        Drawable drawable = ContextCompat.getDrawable(holder.image.getContext(),bean.resImg);
+        } else {
+            holder.subTitle.setVisibility(View.GONE);
+        }
+        Drawable drawable = ContextCompat.getDrawable(holder.image.getContext(), bean.resImg);
         //DrawableCompat.setTint(drawable, CompatUtils.getColor(holder.itemView.getContext(),R.color.text_grey));
         holder.image.setImageDrawable(drawable);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
     public class ManageWorkVH extends FlexibleViewHolder {
-        @BindView(R.id.image)
-        ImageView image;
-        @BindView(R.id.title)
-        TextView title;
-        @BindView(R.id.subTitle)
-        TextView subTitle;
+        @BindView(R.id.image) ImageView image;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.subTitle) TextView subTitle;
+
         public ManageWorkVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

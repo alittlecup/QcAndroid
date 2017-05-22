@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/white"
-            >
+        >
 
             <ImageButton
                 android:id="@+id/statement_detail_less"
@@ -52,30 +52,30 @@
 
                 <TextView
                     android:id="@+id/statement_detail_time"
-                    style="@style/Qc.TextCommonBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="2015-09-11"
+                    style="@style/Qc.TextCommonBlack"
                     />
 
                 <TextView
                     android:id="@+id/statement_detail_filter"
-                    style="@style/Qc.TextCommonBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:visibility="gone"
                     tools:text="所有学员 所有课程"
+                    style="@style/Qc.TextCommonBlack"
                     />
 
                 <TextView
                     android:id="@+id/item_statement_time_shop"
-                    style="@style/Qc.TextCommonBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:visibility="gone"
                     tools:text="8节课程 12人参加 服务30人次"
+                    style="@style/Qc.TextCommonBlack"
                     />
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
                     app:layout_scrollFlags="scroll|snap"
-                    >
+            >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -173,7 +173,7 @@
             android:layout_gravity="bottom"
             android:text="@string/statement_change_filter"
             android:visibility="visible"
-            />
+        />
     </LinearLayout>
 
     <CheckBox

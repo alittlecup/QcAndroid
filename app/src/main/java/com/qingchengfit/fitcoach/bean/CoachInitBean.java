@@ -2,12 +2,10 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.bean.base.InitBatch;
 import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.bean.base.User;
-
 import java.util.List;
 
 /**
@@ -33,6 +31,15 @@ import java.util.List;
 
 public class CoachInitBean implements Parcelable {
 
+    public static final Creator<CoachInitBean> CREATOR = new Creator<CoachInitBean>() {
+        @Override public CoachInitBean createFromParcel(Parcel source) {
+            return new CoachInitBean(source);
+        }
+
+        @Override public CoachInitBean[] newArray(int size) {
+            return new CoachInitBean[size];
+        }
+    };
     public String brand_id;
     public Shop shop;
     public List<User> teachers;
@@ -47,21 +54,6 @@ public class CoachInitBean implements Parcelable {
         batches = builder.batches;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.brand_id);
-        dest.writeParcelable(this.shop, flags);
-        dest.writeTypedList(this.teachers);
-        dest.writeTypedList(this.courses);
-        dest.writeTypedList(this.batches);
-    }
-
     public CoachInitBean() {
     }
 
@@ -73,17 +65,17 @@ public class CoachInitBean implements Parcelable {
         this.batches = in.createTypedArrayList(InitBatch.CREATOR);
     }
 
-    public static final Creator<CoachInitBean> CREATOR = new Creator<CoachInitBean>() {
-        @Override
-        public CoachInitBean createFromParcel(Parcel source) {
-            return new CoachInitBean(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public CoachInitBean[] newArray(int size) {
-            return new CoachInitBean[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.brand_id);
+        dest.writeParcelable(this.shop, flags);
+        dest.writeTypedList(this.teachers);
+        dest.writeTypedList(this.courses);
+        dest.writeTypedList(this.batches);
+    }
 
     public static final class Builder {
         private String brand_id;

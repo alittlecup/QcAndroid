@@ -6,18 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
+import java.util.List;
 
 /**
  * power by
@@ -41,14 +38,12 @@ import eu.davidea.viewholders.FlexibleViewHolder;
  */
 public class JackManageItem extends AbstractFlexibleItem<JackManageItem.JackManageVH> {
 
+    String img;
 
     public JackManageItem(String img) {
         this.img = img;
         setDraggable(true);
     }
-
-    String img;
-
 
     public String getImg() {
         return img;
@@ -58,53 +53,40 @@ public class JackManageItem extends AbstractFlexibleItem<JackManageItem.JackMana
         this.img = img;
     }
 
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_jacket_manage;
     }
 
-    @Override
-    public JackManageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return new JackManageVH(inflater.inflate(getLayoutRes(),parent,false),adapter);
+    @Override public JackManageVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+        return new JackManageVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, JackManageVH holder, int position, List payloads) {
+    @Override public void bindViewHolder(FlexibleAdapter adapter, JackManageVH holder, int position, List payloads) {
         Glide.with(holder.getContentView().getContext()).load(PhotoUtils.getSmall(img)).into(holder.img);
     }
 
-
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
     public static class JackManageVH extends FlexibleViewHolder {
-        @BindView(R.id.delete)
-        ImageView delete;
-        @BindView(R.id.img)
-        ImageView img;
-        @BindView(R.id.drag_tag)
-        ImageView dragTag;
-        @BindView(R.id.container)
-        LinearLayout container;
-        @BindView(R.id.text)
-        TextView textView;
+        @BindView(R.id.delete) ImageView delete;
+        @BindView(R.id.img) ImageView img;
+        @BindView(R.id.drag_tag) ImageView dragTag;
+        @BindView(R.id.container) LinearLayout container;
+        @BindView(R.id.text) TextView textView;
+
         public JackManageVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this,view);
-            if (adapter.isHandleDragEnabled()){
+            ButterKnife.bind(this, view);
+            if (adapter.isHandleDragEnabled()) {
                 setDragHandleView(dragTag);
             }
             delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     adapter.removeItem(getAdapterPosition());
                 }
             });
-
         }
-
-
     }
 }

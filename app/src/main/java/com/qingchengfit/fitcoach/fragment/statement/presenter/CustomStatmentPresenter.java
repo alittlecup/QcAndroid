@@ -197,8 +197,8 @@ public class CustomStatmentPresenter implements Presenter {
 
         fragmentManager.beginTransaction()
             .add(layout,
-                StatementDetailFragment.newInstance(3, startTime, endTime, selectModel, selectId, teacher_id, course_id,
-                    course_extra, bean))
+                StatementDetailFragment.newInstance(3, startTime, endTime, selectModel, selectId, teacher_id, course_id, course_extra,
+                    bean))
             .addToBackStack(null)
             .commit();
     }

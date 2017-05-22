@@ -39,23 +39,23 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/2/22.
  */
-public class FlexableListFragment extends BaseFragment{
+public class FlexableListFragment extends BaseFragment {
 
+    @DrawableRes public int customNoImage;
+    public String customNoStr;
     @BindView(R.id.recycleview) RecyclerView recycleview;
-
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mFlexAdapter;
     private FlexibleAdapter.OnItemClickListener mItemClickListener;
-    @DrawableRes public int customNoImage;
-    public String customNoStr;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_flexable_list, container, false);
         unbinder = ButterKnife.bind(this, view);
         recycleview.setHasFixedSize(true);
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recycleview.addItemDecoration(new com.qingchengfit.fitcoach.component.DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        mFlexAdapter = new CommonFlexAdapter(mData,mItemClickListener);
+        recycleview.addItemDecoration(
+            new com.qingchengfit.fitcoach.component.DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        mFlexAdapter = new CommonFlexAdapter(mData, mItemClickListener);
         recycleview.setAdapter(mFlexAdapter);
         return view;
     }
@@ -65,8 +65,8 @@ public class FlexableListFragment extends BaseFragment{
         freshView();
     }
 
-    public void freshView(){
-        if (getContext() != null && mFlexAdapter != null){
+    public void freshView() {
+        if (getContext() != null && mFlexAdapter != null) {
             mFlexAdapter.notifyDataSetChanged();
         }
     }
@@ -75,14 +75,13 @@ public class FlexableListFragment extends BaseFragment{
         return FlexableListFragment.class.getName();
     }
 
-    public void setData(@NonNull List<AbstractFlexibleItem> ds){
+    public void setData(@NonNull List<AbstractFlexibleItem> ds) {
         mData.clear();
         mData.addAll(ds);
 
-        if (mData.size() == 0){
-            mData.add(new CommonNoDataItem(customNoImage,customNoStr));
+        if (mData.size() == 0) {
+            mData.add(new CommonNoDataItem(customNoImage, customNoStr));
         }
-
     }
 
     public FlexibleAdapter.OnItemClickListener getItemClickListener() {

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:id="@+id/rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
   <LinearLayout
       android:layout_width="match_parent"
@@ -13,12 +14,14 @@
       android:background="@color/backgroud_grey"
       android:orientation="vertical"
       >
+
     <RelativeLayout
         android:id="@+id/host_layout"
         android:layout_width="match_parent"
         android:layout_height="66dp"
         android:background="@color/white"
         >
+
       <ImageView
           android:id="@+id/host_img"
           android:layout_width="40dp"
@@ -26,6 +29,7 @@
           android:layout_centerVertical="true"
           android:layout_marginLeft="@dimen/activity_horizontal_margin"
           />
+
       <ImageView
           android:id="@+id/host_qc_identify"
           android:layout_width="14dp"
@@ -37,46 +41,53 @@
           android:src="@drawable/ic_qc_identify"
           android:visibility="gone"
           />
+
       <LinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
           android:layout_centerVertical="true"
           android:layout_marginLeft="70dp"
+          android:orientation="vertical"
           >
+
         <TextView
             android:id="@+id/workexpedit_gym_name"
-            style="@style/Qc.TextCommonBlack"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             tools:text="很长很长才名字"
+            style="@style/Qc.TextCommonBlack"
             />
+
         <TextView
             android:id="@+id/host_address"
-            style="@style/Qc.TextCommonGrey"
-            android:textSize="12sp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             tools:text="很长  很长才名字"
+            style="@style/Qc.TextCommonGrey"
             />
       </LinearLayout>
+
       <ImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:src="@drawable/ic_arrow_right"
           android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
           android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_arrow_right"
           />
 
     </RelativeLayout>
+
     <include layout="@layout/divider_grey"/>
+
     <include
         layout="@layout/divider_grey"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         />
+
     <com.qingchengfit.fitcoach.component.CommonInputView
         android:id="@+id/workexpedit_start_time"
         android:layout_width="match_parent"
@@ -127,17 +138,16 @@
         >
 
       <TextView
-          style="@style/Qc.TextCommonGrey"
           android:layout_width="wrap_content"
           android:layout_height="@dimen/qc_item_height"
           android:layout_centerVertical="true"
           android:gravity="center_vertical"
           android:text="描述"
+          style="@style/Qc.TextCommonGrey"
           />
 
       <EditText
           android:id="@+id/workexpedit_descripe"
-          style="@style/Qc.TextCommonBlack"
           android:layout_width="match_parent"
           android:layout_height="70dp"
           android:layout_alignParentRight="true"
@@ -145,13 +155,16 @@
           android:background="@color/transparent"
           android:gravity="top"
           android:maxLength="50"
+          style="@style/Qc.TextCommonBlack"
 
           />
 
       <include layout="@layout/divider_grey"></include>
 
     </LinearLayout>
+
     <include layout="@layout/divider_grey_margin"/>
+
     <cn.qingchengfit.widgets.ExpandedLayout
         android:id="@+id/sw_group"
         android:layout_width="match_parent"
@@ -159,51 +172,56 @@
         android:background="@color/white"
         app:el_label="展示团课业绩"
         >
+
       <TextView
           android:id="@+id/tv_group"
-          style="@style/Qc.TextCommonGrey"
-          android:gravity="center_vertical"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
-          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:gravity="center_vertical"
           android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
           tools:text="@string/test_short"
+          style="@style/Qc.TextCommonGrey"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>
-  <cn.qingchengfit.widgets.ExpandedLayout
-      android:id="@+id/sw_private"
-      android:layout_width="match_parent"
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/sw_private"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:el_label="展示私教业绩"
         >
+
       <TextView
           android:id="@+id/tv_private"
-          style="@style/Qc.TextCommonGrey"
-          android:gravity="center_vertical"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
-          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:gravity="center_vertical"
           android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
           tools:text="@string/test_short"
+          style="@style/Qc.TextCommonGrey"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>
-  <cn.qingchengfit.widgets.ExpandedLayout
-      android:id="@+id/sw_sale"
-      android:layout_width="match_parent"
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/sw_sale"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:el_label="展示销售业绩"
         >
+
       <TextView
           android:id="@+id/tv_sales"
-          style="@style/Qc.TextCommonGrey"
-          android:gravity="center_vertical"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
-          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:gravity="center_vertical"
           android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
           tools:text="@string/test_short"
+          style="@style/Qc.TextCommonGrey"
           />
     </cn.qingchengfit.widgets.ExpandedLayout>
   </LinearLayout>

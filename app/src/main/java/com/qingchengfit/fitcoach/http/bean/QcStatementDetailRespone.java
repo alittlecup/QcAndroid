@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -20,40 +19,24 @@ import java.util.List;
  */
 
 public class QcStatementDetailRespone extends QcResponse {
-    @SerializedName("data")
-    public DetailData data;
+    @SerializedName("data") public DetailData data;
 
     public static class DetailData {
-        @SerializedName("service")
-        public CoachService service;
-        @SerializedName("schedules")
-        public StatamentSchedule schedules;
-
-
-
+        @SerializedName("service") public CoachService service;
+        @SerializedName("schedules") public StatamentSchedule schedules;
     }
 
-    public static class StatamentSchedule{
-        @SerializedName("start")
-        public String start;
-        @SerializedName("end")
-        public String end;
-        @SerializedName("stat")
-        public StatementGlance stat;
-        @SerializedName("user_id")
-        public String user_id;
-        @SerializedName("schedules")
-        public List<QcScheduleBean> schedules;
-
+    public static class StatamentSchedule {
+        @SerializedName("start") public String start;
+        @SerializedName("end") public String end;
+        @SerializedName("stat") public StatementGlance stat;
+        @SerializedName("user_id") public String user_id;
+        @SerializedName("schedules") public List<QcScheduleBean> schedules;
     }
 
     public static class StatementGlance {
-        @SerializedName("course_count")
-        public int course_count;
-        @SerializedName("user_count")
-        public int user_count;
-        @SerializedName("order_count")
-        public int order_count;
+        @SerializedName("course_count") public int course_count;
+        @SerializedName("user_count") public int user_count;
+        @SerializedName("order_count") public int order_count;
     }
-
 }

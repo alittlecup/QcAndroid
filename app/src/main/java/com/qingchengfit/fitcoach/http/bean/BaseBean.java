@@ -16,11 +16,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/7/31 2015.
  */
 public class BaseBean {
-    @SerializedName("total_count")
-    public int total_count;
-    @SerializedName("pages")
-    public int pages;
-    @SerializedName("current_page")
-    public int current_page;
-
+    @SerializedName("total_count") public int total_count;
+    @SerializedName("pages") public int pages;
+    @SerializedName("current_page") public int current_page;
 }

@@ -3,10 +3,8 @@ package com.qingchengfit.fitcoach.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip;
 import com.qingchengfit.fitcoach.fragment.NotificationFragment;
-
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ import java.util.List;
  * <p>
  * Created by Paper on 16/1/7 2016.
  */
-public class NotiFragmentAdater extends FragmentStatePagerAdapter implements PagerSlidingTabImageStrip.ImageTabProvider{
+public class NotiFragmentAdater extends FragmentStatePagerAdapter implements PagerSlidingTabImageStrip.ImageTabProvider {
 
     private List<Fragment> datas;
 
@@ -31,38 +29,34 @@ public class NotiFragmentAdater extends FragmentStatePagerAdapter implements Pag
         datas = d;
     }
 
-    @Override
-    public Fragment getItem(int position) {
+    @Override public Fragment getItem(int position) {
         return datas.get(position);
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return datas.size();
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
         return getTextStr(position);
     }
 
-    @Override
-    public int getItemPosition(Object object) {
+    @Override public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
 
-    @Override
-    public String getTextStr(int position) {
-        if (position == 2 )
+    @Override public String getTextStr(int position) {
+        if (position == 2) {
             return "会议培训";
-        else if (position == 0)
+        } else if (position == 0) {
             return "课程通知";
-        else return "系统通知";
+        } else {
+            return "系统通知";
+        }
     }
 
-    @Override
-    public boolean getShowRed(int position) {
-        if (getItem(position) instanceof NotificationFragment){
+    @Override public boolean getShowRed(int position) {
+        if (getItem(position) instanceof NotificationFragment) {
             return ((NotificationFragment) getItem(position)).getUnReadCount() > 0;
         }
         return false;

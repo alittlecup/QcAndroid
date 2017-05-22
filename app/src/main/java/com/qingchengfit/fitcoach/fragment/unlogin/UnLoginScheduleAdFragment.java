@@ -75,7 +75,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
             toLogin.putExtra("isRegiste", 1);
             startActivity(toLogin);
-        }else {
+        } else {
             startActivity(new Intent(getActivity(), GuideActivity.class));
         }
     }

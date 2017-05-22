@@ -23,7 +23,7 @@ import java.util.List;
  * Created by Paper on 2017/4/13.
  */
 
-public class ArticleCommentListData{
+public class ArticleCommentListData {
     public int pages;
     public int current_page;
     public int total_count;

@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <FrameLayout
-        android:id="@+id/activity_student_order_preview"
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <TextView
-        android:id="@+id/send_friend"
-        style="@style/ToolbarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/primary"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:text="发送给会员"
-        android:visibility="gone"
-        />
+  <FrameLayout
+      android:id="@+id/activity_student_order_preview"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
+  <TextView
+      android:id="@+id/send_friend"
+      android:layout_width="wrap_content"
+      android:layout_height="?attr/actionBarSize"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:background="@color/primary"
+      android:padding="10dp"
+      android:text="发送给会员"
+      android:textColor="@color/white"
+      android:visibility="gone"
+      style="@style/ToolbarStyle"
+      />
 </RelativeLayout>

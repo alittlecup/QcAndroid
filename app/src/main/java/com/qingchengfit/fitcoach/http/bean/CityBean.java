@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,27 +20,19 @@ import java.util.List;
  * Created by Paper on 15/9/18 2015.
  */
 public class CityBean implements Parcelable {
-    @SerializedName("code")
-    public int id;
-    @SerializedName("gd_province_id")
-    public int province_id;
-    @SerializedName("name")
-    public String name;
-    @SerializedName("districts")
-    public List<DistrictBean> districts;
+    public static final Parcelable.Creator<CityBean> CREATOR = new Parcelable.Creator<CityBean>() {
+        public CityBean createFromParcel(Parcel source) {
+            return new CityBean(source);
+        }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeInt(this.province_id);
-        dest.writeString(this.name);
-        dest.writeList(this.districts);
-    }
+        public CityBean[] newArray(int size) {
+            return new CityBean[size];
+        }
+    };
+    @SerializedName("code") public int id;
+    @SerializedName("gd_province_id") public int province_id;
+    @SerializedName("name") public String name;
+    @SerializedName("districts") public List<DistrictBean> districts;
 
     public CityBean() {
     }
@@ -55,13 +45,14 @@ public class CityBean implements Parcelable {
         in.readList(this.districts, List.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<CityBean> CREATOR = new Parcelable.Creator<CityBean>() {
-        public CityBean createFromParcel(Parcel source) {
-            return new CityBean(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        public CityBean[] newArray(int size) {
-            return new CityBean[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeInt(this.province_id);
+        dest.writeString(this.name);
+        dest.writeList(this.districts);
+    }
 }

@@ -74,8 +74,7 @@ public class CardTypeChooseDialogFragment extends BaseDialogFragment {
         if (getArguments() != null) mOrigin = getArguments().getParcelableArrayList("datas");
     }
 
-    @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_cardtype, container, false);
         unbinder = ButterKnife.bind(this, view);
         ArrayWheelAdapter<String> courseTypeAdatper =

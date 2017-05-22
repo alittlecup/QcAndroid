@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -47,7 +48,6 @@ import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.bean.Coach;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ScheduleBean;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -61,8 +61,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 @FragmentWithArgs public class ScheduesFragment extends BaseFragment {
-    @Arg @Nullable Long mDateTime;
     public static final String TAG = ScheduesFragment.class.getName();
+    @Arg @Nullable Long mDateTime;
     @BindView(R.id.schedule_tab) PagerSlidingTabStrip scheduleTab;
     @BindView(R.id.schedule_vp) ViewPager scheduleVp;
     @BindView(R.id.month_view) TextView monthView;
@@ -91,7 +91,6 @@ import rx.functions.Action1;
     private String mTitle;
     private Unbinder unbinder;
 
-
     public ScheduesFragment() {
     }
 
@@ -103,7 +102,7 @@ import rx.functions.Action1;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
         unbinder = ButterKnife.bind(this, view);
-        PreferenceUtils.setPrefBoolean(getContext(),"is_week_view",false);
+        PreferenceUtils.setPrefBoolean(getContext(), "is_week_view", false);
         Gson gson = new Gson();
         String id = PreferenceUtils.getPrefString(getActivity(), "coach", "");
         if (TextUtils.isEmpty(id)) {
@@ -120,12 +119,14 @@ import rx.functions.Action1;
                 calendar.add(Calendar.MONTH, eventMonthChange.pos);
                 tvMonth.setText(DateUtils.getChineseMonth(calendar.getTime()));
             }
-        },throwable -> {});
+        }, throwable -> {
+        });
         RxBusAdd(Date.class).subscribe(new Action1<Date>() {
             @Override public void call(Date date) {
                 goDateSchedule(date);
             }
-        },throwable -> {});
+        }, throwable -> {
+        });
         if (getContext() != null) {
             RxPermissions.getInstance(getContext())
                 .request(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
@@ -136,7 +137,8 @@ import rx.functions.Action1;
                             //ToastUtils.show("您并未授予日历权限,请到设置(或者安全软件)中开启权限");
                         }
                     }
-                },throwable -> {});
+                }, throwable -> {
+                });
         }
         btn1 = new FloatingActionButton(getActivity());
         btn1.setIcon(R.drawable.ic_action_rest);
@@ -192,14 +194,15 @@ import rx.functions.Action1;
                 toWeb.putExtra("url", sb.toString());
                 startActivityForResult(toWeb, 404);
             }
-        },throwable -> {});
+        }, throwable -> {
+        });
 
         webFloatbtn.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override public void onMenuExpanded() {
                 btn1.setEnabled(true);
                 btn2.setEnabled(true);
                 btn3.setEnabled(true);
-                RxBus.getBus().post(new EventInit(false,2));
+                RxBus.getBus().post(new EventInit(false, 2));
                 bgShow.setVisibility(View.VISIBLE);
                 //ViewCompat.setAlpha(bgShow,0);
                 //ViewCompat.animate(bgShow).alpha(1).setDuration(R.integer.anim_time).start();
@@ -239,7 +242,6 @@ import rx.functions.Action1;
 
     @Override public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        
     }
 
     private void setUpViewPager() {
@@ -251,9 +253,9 @@ import rx.functions.Action1;
         scheduleTab.setViewPager(scheduleVp);
         scheduleTab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(scheduleTab.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(scheduleTab.getViewTreeObserver(), this);
                 scheduleTab.notifyDataSetChanged();
-                goDateSchedule(mDateTime == null ?new Date():new Date(mDateTime));
+                goDateSchedule(mDateTime == null ? new Date() : new Date(mDateTime));
             }
         });
         scheduleVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -274,8 +276,7 @@ import rx.functions.Action1;
         });
     }
 
-    @OnClick(R.id.back_today)
-    public void backToady(){
+    @OnClick(R.id.back_today) public void backToady() {
         goDateSchedule(new Date());
     }
 
@@ -286,11 +287,11 @@ import rx.functions.Action1;
         webFloatbtn.collapse();
         if (getParentFragment() instanceof MainScheduleFragment) {
             CoachService c = ((MainScheduleFragment) getParentFragment()).getCoachService();
-            if (c != null){
+            if (c != null) {
                 RxBus.getBus().post(new EventScheduleAction(c, v));
-            }else
-                new ChooseGymForPermissionFragmentBuilder(v, null).build()
-                .show(getFragmentManager(), "");
+            } else {
+                new ChooseGymForPermissionFragmentBuilder(v, null).build().show(getFragmentManager(), "");
+            }
         }
         //webFloatbtn.collapse();
     }
@@ -342,10 +343,7 @@ import rx.functions.Action1;
                 }
             }
         });
-
     }
-
-
 
     @Override public void onDestroyView() {
         RxBus.getBus().unregister(NewPushMsg.class.getName(), mObservable);
@@ -402,17 +400,19 @@ import rx.functions.Action1;
         public Date getCurDay() {
             return curDate;
         }
-        public int getCurMidPos(){
+
+        public int getCurMidPos() {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             int weekNo = calendar.get(Calendar.DAY_OF_WEEK);
-            return (70+weekNo-1);
+            return (70 + weekNo - 1);
         }
+
         @Override public Fragment getItem(int position) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             int weekNo = calendar.get(Calendar.DAY_OF_WEEK);
-            calendar.add(Calendar.DAY_OF_MONTH, position - 70-weekNo+1);
+            calendar.add(Calendar.DAY_OF_MONTH, position - 70 - weekNo + 1);
             return ScheduleListFragment.newInstance(calendar.getTime().getTime(), curSystemId, curModel);
         }
 
@@ -424,7 +424,7 @@ import rx.functions.Action1;
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(curDate);
             int weekNo = calendar.get(Calendar.DAY_OF_WEEK);
-            calendar.add(Calendar.DAY_OF_MONTH, position - 70-weekNo+1);
+            calendar.add(Calendar.DAY_OF_MONTH, position - 70 - weekNo + 1);
             StringBuffer sb = new StringBuffer();
             sb.append(weekDays[calendar.get(Calendar.DAY_OF_WEEK) - 1]);
             sb.append("\n");

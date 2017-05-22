@@ -25,8 +25,9 @@ import java.util.List;
  */
 
 public class QcResponeSingleImageWall extends QcResponse {
-   public Data data;
-    public class Data{
+    public Data data;
+
+    public class Data {
         public ImageWall photo;
         public List<ImageWall> photos;
     }

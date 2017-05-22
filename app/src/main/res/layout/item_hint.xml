@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hint_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/qc_item_height"
     android:gravity="center"
-    android:text="@string/out_of_date_batch"
-    android:id="@+id/hint_text"
-    android:paddingTop="@dimen/little"
+    android:minHeight="@dimen/qc_item_height"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/little"
+    android:paddingTop="@dimen/little"
+    android:text="@string/out_of_date_batch"
     >
 
 

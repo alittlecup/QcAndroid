@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -22,60 +20,28 @@ import java.util.List;
  */
 public class QcResponseGroupCourse extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
-
-
-    public class Data {
-        @SerializedName("courses")
-        public List<GroupClass> courses;
-
-        @SerializedName("order_url")
-        public String order_url;
-        @SerializedName("total_count")
-        public int total_count;
-
-    }
+    @SerializedName("data") public Data data;
 
     public static class GroupClass implements Parcelable {
 
-        @SerializedName("count")
-        public int count;
+        public static final Creator<GroupClass> CREATOR = new Creator<GroupClass>() {
+            @Override public GroupClass createFromParcel(Parcel source) {
+                return new GroupClass(source);
+            }
 
-        @SerializedName("name")
-        public String name;
-
-        @SerializedName("photo")
-        public String photo;
-
-        @SerializedName("from_date")
-        public String from_date;
-
-        @SerializedName("to_date")
-        public String to_date;
-
-        @SerializedName("id")
-        public String id;
-        @SerializedName("length")
-        public String length;
+            @Override public GroupClass[] newArray(int size) {
+                return new GroupClass[size];
+            }
+        };
+        @SerializedName("count") public int count;
+        @SerializedName("name") public String name;
+        @SerializedName("photo") public String photo;
+        @SerializedName("from_date") public String from_date;
+        @SerializedName("to_date") public String to_date;
+        @SerializedName("id") public String id;
+        @SerializedName("length") public String length;
 
         public GroupClass() {
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(this.count);
-            dest.writeString(this.name);
-            dest.writeString(this.photo);
-            dest.writeString(this.from_date);
-            dest.writeString(this.to_date);
-            dest.writeString(this.id);
-            dest.writeString(this.length);
         }
 
         protected GroupClass(Parcel in) {
@@ -88,17 +54,25 @@ public class QcResponseGroupCourse extends QcResponse {
             this.length = in.readString();
         }
 
-        public static final Creator<GroupClass> CREATOR = new Creator<GroupClass>() {
-            @Override
-            public GroupClass createFromParcel(Parcel source) {
-                return new GroupClass(source);
-            }
+        @Override public int describeContents() {
+            return 0;
+        }
 
-            @Override
-            public GroupClass[] newArray(int size) {
-                return new GroupClass[size];
-            }
-        };
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.count);
+            dest.writeString(this.name);
+            dest.writeString(this.photo);
+            dest.writeString(this.from_date);
+            dest.writeString(this.to_date);
+            dest.writeString(this.id);
+            dest.writeString(this.length);
+        }
     }
 
+    public class Data {
+        @SerializedName("courses") public List<GroupClass> courses;
+
+        @SerializedName("order_url") public String order_url;
+        @SerializedName("total_count") public int total_count;
+    }
 }

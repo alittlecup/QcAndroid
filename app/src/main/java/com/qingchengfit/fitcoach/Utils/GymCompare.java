@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import com.qingchengfit.fitcoach.http.bean.QcPrivateGymReponse;
-
 import java.util.Comparator;
 
 /**
@@ -19,11 +18,11 @@ import java.util.Comparator;
  */
 public class GymCompare implements Comparator<QcPrivateGymReponse.OpenTime> {
 
-
-    @Override
-    public int compare(QcPrivateGymReponse.OpenTime lhs, QcPrivateGymReponse.OpenTime rhs) {
+    @Override public int compare(QcPrivateGymReponse.OpenTime lhs, QcPrivateGymReponse.OpenTime rhs) {
         if (lhs.day >= rhs.day) {
             return 1;
-        } else return -1;
+        } else {
+            return -1;
+        }
     }
 }

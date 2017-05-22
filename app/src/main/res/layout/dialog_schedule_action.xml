@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-    <Button
-        android:id="@+id/schedule_rest_btn"
-        style="@style/ToolbarStyle"
-        android:layout_width="175dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/green"
-        android:text="设置休息"
-        />
+  <Button
+      android:id="@+id/schedule_rest_btn"
+      android:layout_width="175dp"
+      android:layout_height="48dp"
+      android:layout_marginTop="10dp"
+      android:background="@color/green"
+      android:text="设置休息"
+      style="@style/ToolbarStyle"
+      />
 
-    <Button
-        android:id="@+id/schedule_group_btn"
-        style="@style/ToolbarStyle"
-        android:layout_width="175dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/blue"
-        android:text="代约团课"
-        />
+  <Button
+      android:id="@+id/schedule_group_btn"
+      android:layout_width="175dp"
+      android:layout_height="48dp"
+      android:layout_marginTop="10dp"
+      android:background="@color/blue"
+      android:text="代约团课"
+      style="@style/ToolbarStyle"
+      />
 
-    <Button
-        android:id="@+id/schedule_private_btn"
-        style="@style/ToolbarStyle"
-        android:layout_width="175dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/purple"
-        android:text="代约私教"
-        />
+  <Button
+      android:id="@+id/schedule_private_btn"
+      android:layout_width="175dp"
+      android:layout_height="48dp"
+      android:layout_marginTop="10dp"
+      android:background="@color/purple"
+      android:text="代约私教"
+      style="@style/ToolbarStyle"
+      />
 </LinearLayout>

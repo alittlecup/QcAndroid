@@ -56,17 +56,12 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
  */
 public class ChooseAddressFragment extends BaseFragment {
 
-    @BindView(R.id.mapview)
-    MapView mMapview;
+    @BindView(R.id.mapview) MapView mMapview;
     AMap mAMap;
-    @BindView(R.id.city_name)
-    TextView cityName;
-    @BindView(R.id.address)
-    CommonInputView address;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+    @BindView(R.id.city_name) TextView cityName;
+    @BindView(R.id.address) CommonInputView address;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private GeocodeSearch geocoderSearch;
@@ -75,33 +70,30 @@ public class ChooseAddressFragment extends BaseFragment {
     private Unbinder unbinder;
     private CitiesChooser mCitiesChooser;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_address, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbarTitle.setText(R.string.address);
         toolbar.inflateMenu(R.menu.menu_comfirm);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (mLatLng == null){
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                if (mLatLng == null) {
                     ToastUtils.showDefaultStyle("尚未获取gp信息");
                     return true;
                 }
-                try{
+                try {
                     int cityCode = Integer.parseInt(mCityCode);
-                }catch (Exception e){
+                } catch (Exception e) {
                     ToastUtils.showDefaultStyle("获取城市信息失败，请重试");
                     return true;
                 }
 
-                RxBus.getBus().post(new EventAddress.Builder()
-                        .city_code(Integer.parseInt(mCityCode))
+                RxBus.getBus().post(new EventAddress.Builder().city_code(Integer.parseInt(mCityCode))
                         .city(cityName.getText().toString().trim())
                         .address(address.getContent().trim())
-                        .lat(mLatLng == null ? 0:mLatLng.latitude)
-                        .log(mLatLng == null ? 0:mLatLng.longitude)
+                    .lat(mLatLng == null ? 0 : mLatLng.latitude)
+                    .log(mLatLng == null ? 0 : mLatLng.longitude)
                         .build());
                 getActivity().onBackPressed();
                 return true;
@@ -109,7 +101,7 @@ public class ChooseAddressFragment extends BaseFragment {
         });
         toolbar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(toolbar.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(toolbar.getViewTreeObserver(), this);
                 mLocationClient = new AMapLocationClient(getContext());
                 mLocationOption = new AMapLocationClientOption();
                 mLocationClient.setLocationOption(mLocationOption);
@@ -117,12 +109,11 @@ public class ChooseAddressFragment extends BaseFragment {
                 mLocationClient.startLocation();
                 mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
                 mLocationClient.setLocationListener(new AMapLocationListener() {
-                    @Override
-                    public void onLocationChanged(AMapLocation aMapLocation) {
+                    @Override public void onLocationChanged(AMapLocation aMapLocation) {
                         mLocationClient.stopLocation();
                         hideLoading();
-                        mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
-                            new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
+                        mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                            new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 18, 0, 0)));
 
                         //设置城市
                         cityName.setText(aMapLocation.getCity());
@@ -130,20 +121,16 @@ public class ChooseAddressFragment extends BaseFragment {
 
                         //设置地理位置
                         address.setContent(aMapLocation.getDistrict() + aMapLocation.getStreet() + aMapLocation.getStreetNum());
-
-
                     }
                 });
             }
         });
 
-
         showLoading();
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mMapview.onCreate(savedInstanceState);
         if (mAMap == null) {
@@ -152,73 +139,60 @@ public class ChooseAddressFragment extends BaseFragment {
             uiSettings.setZoomGesturesEnabled(true);
             geocoderSearch = new GeocodeSearch(getContext());
             geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
-                @Override
-                public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+                @Override public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
                     if (i == 1000) {
 
                     }
                 }
 
-                @Override
-                public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+                @Override public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
                 }
             });
 
-
             mAMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
-                @Override
-                public void onCameraChange(CameraPosition cameraPosition) {
+                @Override public void onCameraChange(CameraPosition cameraPosition) {
                 }
 
-                @Override
-                public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                @Override public void onCameraChangeFinish(CameraPosition cameraPosition) {
                     mLatLng = cameraPosition.target;
                 }
             });
         }
-
     }
 
-    @OnClick(R.id.layout_city)
-    public void onCity(){
-        if (mCitiesChooser == null){
+    @OnClick(R.id.layout_city) public void onCity() {
+        if (mCitiesChooser == null) {
             mCitiesChooser = new CitiesChooser(getContext());
             mCitiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
                 @Override public void onCityChoosen(String provice, String city, String district, int id) {
                     cityName.setText(city);
-                    mCityCode = id+"";
+                    mCityCode = id + "";
                 }
             });
         }
         mCitiesChooser.show(getView());
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         mMapview.onPause();
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         mMapview.onResume();
-
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
+    @Override public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mMapview.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void lazyLoad() {
+    @Override protected void lazyLoad() {
 
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         mMapview.onDestroy();
         unbinder.unbind();

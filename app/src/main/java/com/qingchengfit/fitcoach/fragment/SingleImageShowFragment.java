@@ -53,6 +53,7 @@ public class SingleImageShowFragment extends BottomSheetDialogFragment {
     @BindView(R.id.photo_view) PhotoView photoView;
     @BindView(R.id.btn_download) Button btnDownload;
     @BindView(R.id.close) ImageView close;
+    Unbinder unbinder;
     private BottomSheetBehavior<ViewGroup> mBehavior;
     private String s;
 
@@ -64,17 +65,14 @@ public class SingleImageShowFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
-    Unbinder unbinder;
-
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_single_iamge_show, container, false);
-         s = getArguments().getString("r");
-        if (s != null && s.contains("!"))
-            s =s.split("!")[0];
+        s = getArguments().getString("r");
+        if (s != null && s.contains("!")) s = s.split("!")[0];
         unbinder = ButterKnife.bind(this, v);
         Glide.with(getContext()).load(s).placeholder(R.drawable.img_loadingimage).into(photoView);
-        btnDownload.setOnClickListener(v1 -> downloadFile(s,"image/jpg"));
+        btnDownload.setOnClickListener(v1 -> downloadFile(s, "image/jpg"));
         close.setOnClickListener(v1 -> dismiss());
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View v, MotionEvent event) {
@@ -99,6 +97,7 @@ public class SingleImageShowFragment extends BottomSheetDialogFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     /**
      * 暂时只处理了图片
      */

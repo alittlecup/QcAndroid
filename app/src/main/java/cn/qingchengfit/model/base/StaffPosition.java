@@ -20,13 +20,11 @@ import android.os.Parcelable;
 public class StaffPosition implements Parcelable {
 
     public static final Creator<StaffPosition> CREATOR = new Creator<StaffPosition>() {
-        @Override
-        public StaffPosition createFromParcel(Parcel source) {
+        @Override public StaffPosition createFromParcel(Parcel source) {
             return new StaffPosition(source);
         }
 
-        @Override
-        public StaffPosition[] newArray(int size) {
+        @Override public StaffPosition[] newArray(int size) {
             return new StaffPosition[size];
         }
     };
@@ -57,13 +55,11 @@ public class StaffPosition implements Parcelable {
         this.name = name;
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
     }

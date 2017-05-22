@@ -36,7 +36,6 @@ public class ChangeBrandCreatorBody {
         area_code = builder.area_code;
     }
 
-
     public static final class Builder {
         private String phone;
         private String username;

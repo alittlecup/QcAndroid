@@ -11,7 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -29,15 +33,8 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.utils.AppUtils;
-import cn.qingchengfit.utils.PreferenceUtils;
 import rx.Observable;
 
 /**
@@ -54,11 +51,9 @@ import rx.Observable;
  * Created by Paper on 15/10/12 2015.
  */
 public class MainWebFragment extends MainBaseFragment {
-    @BindView(R.id.webview)
-    WebView webview;
+    @BindView(R.id.webview) WebView webview;
     CookieManager cookieManager;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     private String base_url;
     private Gson gson;
     private Observable<NewPushMsg> mObservable;
@@ -77,8 +72,7 @@ public class MainWebFragment extends MainBaseFragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson = new Gson();
         if (getArguments() != null) {
@@ -86,99 +80,88 @@ public class MainWebFragment extends MainBaseFragment {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @SuppressLint("SetJavaScriptEnabled") @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_origin_web, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
         toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
         toolbar.setTitle("会议培训");
-//        webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
+        //        webview.addJavascriptInterface(new JsInterface(), "NativeMethod");
 
         webview.setWebViewClient(new WebViewClient() {
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
+            @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
             }
 
-            @Override
-            public void onLoadResource(WebView view, String url) {
+            @Override public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
             }
 
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 if (!url.equalsIgnoreCase(base_url)) {
                     openDrawerInterface.goWeb(url);
                     return true;
-                } else
+                } else {
                     return super.shouldOverrideUrlLoading(view, url);
+                }
             }
 
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-//                super.onReceivedError(view, errorCode, description, failingUrl);
+            @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                //                super.onReceivedError(view, errorCode, description, failingUrl);
                 webview.loadUrl("");
             }
         });
 
-
         webview.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
+            @Override public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-//                if (title.contains("clientJsonBegin")) {
-//                    String[] strings = title.split("clientJsonBegin");
-//                    toolbar.setTitle(strings[0]);
-//                    String jsonStr = strings[1].replace("clientJsonBegin", "");
-//                    Gson gson = new Gson();
-//                    TitleBean titleBean = gson.fromJson(jsonStr, TitleBean.class);
-//                    toolbar.getMenu().clear();
-//                    switch (titleBean.navIcon) {
-//                        case 0:
-//                            break;
-//                        case 1:
-//                            toolbar.setNavigationIcon(R.drawable.ic_cross_white);
-//                            break;
-//                        case 2:
-//                            toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                    switch (titleBean.actionIcon) {
-//                        case 0:
-//                            break;
-//                        case 1:
-//                            toolbar.inflateMenu(R.menu.add);
-//                            break;
-//                        case 2:
-//                            break;
-//
-//                        default:
-//                            break;
-//                    }
-//
-//                } else {
-//                    toolbar.setTitle(title);
-//                }
+                //                if (title.contains("clientJsonBegin")) {
+                //                    String[] strings = title.split("clientJsonBegin");
+                //                    toolbar.setTitle(strings[0]);
+                //                    String jsonStr = strings[1].replace("clientJsonBegin", "");
+                //                    Gson gson = new Gson();
+                //                    TitleBean titleBean = gson.fromJson(jsonStr, TitleBean.class);
+                //                    toolbar.getMenu().clear();
+                //                    switch (titleBean.navIcon) {
+                //                        case 0:
+                //                            break;
+                //                        case 1:
+                //                            toolbar.setNavigationIcon(R.drawable.ic_cross_white);
+                //                            break;
+                //                        case 2:
+                //                            toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                //                            break;
+                //                        default:
+                //                            break;
+                //                    }
+                //                    switch (titleBean.actionIcon) {
+                //                        case 0:
+                //                            break;
+                //                        case 1:
+                //                            toolbar.inflateMenu(R.menu.add);
+                //                            break;
+                //                        case 2:
+                //                            break;
+                //
+                //                        default:
+                //                            break;
+                //                    }
+                //
+                //                } else {
+                //                    toolbar.setTitle(title);
+                //                }
 
             }
 
-            @Override
-            public void getVisitedHistory(ValueCallback<String[]> callback) {
+            @Override public void getVisitedHistory(ValueCallback<String[]> callback) {
                 super.getVisitedHistory(callback);
-
             }
         });
         webview.getSettings().setJavaScriptEnabled(true);
-//        webview.setInitialScale(getScale());
+        //        webview.setInitialScale(getScale());
         String s = webview.getSettings().getUserAgentString();
         webview.getSettings().setUserAgentString(s + " FitnessTrainerAssistant/0.2.5" + " Android");
         webview.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 设置缓存模式
@@ -201,36 +184,32 @@ public class MainWebFragment extends MainBaseFragment {
         mObservable = RxBus.getBus().register(NewPushMsg.class);
         mObservable.subscribe(newPushMsg -> webview.loadUrl("javascript:window.nativeLinkWeb.updateNotifications();"));
         webview.loadUrl(base_url);
-//        webview.loadUrl("http://www.baidu.com");
+        //        webview.loadUrl("http://www.baidu.com");
         return view;
     }
 
     private int getScale() {
         Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int width = display.getWidth();
-//        Double val = new Double(width)/new Double(PIC_WIDTH);
-//        val = val * 100d;
-//        return val.intValue();
+        //        Double val = new Double(width)/new Double(PIC_WIDTH);
+        //        val = val * 100d;
+        //        return val.intValue();
         return 1;
     }
-
 
     public void goBack() {
         WebBackForwardList webBackForwardList = webview.copyBackForwardList();
         webview.goBackOrForward(mlastPosition.get(mlastPosition.size() - 1) - webBackForwardList.getCurrentIndex() - 1);
         mlastPosition.remove(mlastPosition.size() - 1);
-//        if (mlastPosition.size()>0){
-//            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
-//            mlastPosition.remove(mlastPosition.size()-1);
-//        }else
-//            webview.goBack();
+        //        if (mlastPosition.size()>0){
+        //            webview.goBackOrForward(-mlastPosition.get(mlastPosition.size()-1)+webBackForwardList.getCurrentIndex());
+        //            mlastPosition.remove(mlastPosition.size()-1);
+        //        }else
+        //            webview.goBack();
     }
 
-
     public void startLoadUrl(String url) {
-        if (webview != null)
-            webview.loadUrl(url);
-
+        if (webview != null) webview.loadUrl(url);
     }
 
     private void initCookie() {
@@ -245,14 +224,11 @@ public class MainWebFragment extends MainBaseFragment {
         }
     }
 
-
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
         RxBus.getBus().unregister(NewPushMsg.class.getSimpleName(), mObservable);
     }
-
 
     public void setCookie(String url, String key, String value) {
         StringBuffer sb = new StringBuffer();
@@ -262,34 +238,28 @@ public class MainWebFragment extends MainBaseFragment {
         cookieManager.setCookie(url, sb.toString());
     }
 
-
     public class JsInterface {
 
         JsInterface() {
         }
 
-        @JavascriptInterface
-        public String getToken() {
+        @JavascriptInterface public String getToken() {
             return PreferenceUtils.getPrefString(App.AppContex, "token", "");
         }
 
-
-        @JavascriptInterface
-        public String getContacts() {
+        @JavascriptInterface public String getContacts() {
             List<Contact> contacts = PhoneFuncUtils.initContactList(getActivity());
             Gson gson = new Gson();
             return gson.toJson(contacts);
         }
 
-        @JavascriptInterface
-        public String getPlatform() {
+        @JavascriptInterface public String getPlatform() {
             PlatformInfo info = new PlatformInfo("android", AppUtils.getAppVer(getActivity()));
             Gson gson = new Gson();
             return gson.toJson(info);
         }
 
-        @JavascriptInterface
-        public void goBack() {
+        @JavascriptInterface public void goBack() {
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     getActivity().onBackPressed();
@@ -297,8 +267,7 @@ public class MainWebFragment extends MainBaseFragment {
             }
         }
 
-        @JavascriptInterface
-        public String getSessionId() {
+        @JavascriptInterface public String getSessionId() {
             return PreferenceUtils.getPrefString(getActivity(), "session_id", "");
         }
 
@@ -306,6 +275,5 @@ public class MainWebFragment extends MainBaseFragment {
         public void shareTimeline(String title, String link, String imgurl, String successCallback, String failedCallback) {
 
         }
-
     }
 }

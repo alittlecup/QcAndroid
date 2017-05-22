@@ -17,7 +17,6 @@ import java.util.List;
  */
 public class QcSerachGymRepsonse extends QcResponse {
 
-
     /**
      * data : {"total_count":4,"gym":[{"contact":"123456","id":2,"username":"测试"},{"contact":"123456","id":3,"username":"测试"},{"contact":"123456","id":4,"username":"测试2"},{"contact":"123456","id":5,"username":"测试3"}],"current_page":1,"pages":1}
      */
@@ -77,40 +76,40 @@ public class QcSerachGymRepsonse extends QcResponse {
             this.gym = gym;
         }
 
-//        public static class GymEntity {
-//            /**
-//             * contact : 123456
-//             * id : 2
-//             * username : 测试
-//             */
-//
-//            private String contact;
-//            private int id;
-//            private String username;
-//
-//            public void setContact(String contact) {
-//                this.contact = contact;
-//            }
-//
-//            public void setId(int id) {
-//                this.id = id;
-//            }
-//
-//            public void setName(String username) {
-//                this.username = username;
-//            }
-//
-//            public String getContact() {
-//                return contact;
-//            }
-//
-//            public int getId() {
-//                return id;
-//            }
-//
-//            public String getName() {
-//                return username;
-//            }
-//        }
+        //        public static class GymEntity {
+        //            /**
+        //             * contact : 123456
+        //             * id : 2
+        //             * username : 测试
+        //             */
+        //
+        //            private String contact;
+        //            private int id;
+        //            private String username;
+        //
+        //            public void setContact(String contact) {
+        //                this.contact = contact;
+        //            }
+        //
+        //            public void setId(int id) {
+        //                this.id = id;
+        //            }
+        //
+        //            public void setName(String username) {
+        //                this.username = username;
+        //            }
+        //
+        //            public String getContact() {
+        //                return contact;
+        //            }
+        //
+        //            public int getId() {
+        //                return id;
+        //            }
+        //
+        //            public String getName() {
+        //                return username;
+        //            }
+        //        }
     }
 }

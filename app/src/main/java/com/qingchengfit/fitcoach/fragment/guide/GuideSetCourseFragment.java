@@ -79,7 +79,7 @@ import rx.schedulers.Schedulers;
         View view = inflater.inflate(R.layout.fragment_guide_set_course, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        guideTitle.setText(getString(isPrivate?R.string.guide_set_private_course_hint:R.string.guide_set_group_course_hint));
+        guideTitle.setText(getString(isPrivate ? R.string.guide_set_private_course_hint : R.string.guide_set_group_course_hint));
         RxBusAdd(EventChooseImage.class).subscribe(new Action1<EventChooseImage>() {
             @Override public void call(EventChooseImage eventChooseImage) {
                 showLoading();
@@ -95,7 +95,7 @@ import rx.schedulers.Schedulers;
                     });
             }
         });
-        orderCount.setVisibility(isPrivate?View.GONE:View.VISIBLE);
+        orderCount.setVisibility(isPrivate ? View.GONE : View.VISIBLE);
         btnGroup.setClick(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 btnPrivate.toggle();
@@ -115,11 +115,10 @@ import rx.schedulers.Schedulers;
 
     @Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        if (mCourse != null){
+        if (mCourse != null) {
             name.setContent(mCourse.getName());
-            timeLong.setContent(mCourse.getLength()/60+"");
-            if (!mCourse.is_private)
-                orderCount.setContent(mCourse.capacity+"");
+            timeLong.setContent(mCourse.getLength() / 60 + "");
+            if (!mCourse.is_private) orderCount.setContent(mCourse.capacity + "");
         }
     }
 
@@ -143,12 +142,10 @@ import rx.schedulers.Schedulers;
                     return;
                 }
 
-                try{
+                try {
                     Integer.parseInt(timeLong.getContent());
-                    if (!isPrivate)
-                        Integer.parseInt(orderCount.getContent());
-
-                }catch (Exception e){
+                    if (!isPrivate) Integer.parseInt(orderCount.getContent());
+                } catch (Exception e) {
                     cn.qingchengfit.utils.ToastUtils.show("请填写正确的时间和人数，请勿输入空格或者其他符号");
                     return;
                 }
@@ -166,12 +163,13 @@ import rx.schedulers.Schedulers;
                         .name(name.getContent())
                         .is_private(isPrivate)
                         .length((Integer.parseInt(timeLong.getContent()) * 60));
-                    if (!isPrivate)
+                    if (!isPrivate) {
                         b.capacity(Integer.parseInt(orderCount.getContent()));
-                    else b.capacity(1);
+                    } else {
+                        b.capacity(1);
+                    }
 
-                    ((GuideFragment) getParentFragment()).initBean.courses.add(
-                        b.build());
+                    ((GuideFragment) getParentFragment()).initBean.courses.add(b.build());
                     mCourse = b.build();
                     RxBus.getBus().post(new CoachInitBean());
                     getFragmentManager().beginTransaction()

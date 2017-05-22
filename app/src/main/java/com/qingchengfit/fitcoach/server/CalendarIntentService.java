@@ -6,21 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
-
+import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;
 import com.qingchengfit.fitcoach.Utils.RevenUtils;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import cn.qingchengfit.utils.DateUtils;
-import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -56,8 +53,7 @@ public class CalendarIntentService extends IntentService {
                 return;
             }
             boolean isSync = PreferenceUtils.getPrefBoolean(context, "cal_sync", true);
-            if (!isSync)
-                return;
+            if (!isSync) return;
             ;
             Intent intent = new Intent(context, CalendarIntentService.class);
             intent.setAction(ACTION_CAL_DAY);
@@ -82,8 +78,7 @@ public class CalendarIntentService extends IntentService {
                 return;
             }
             boolean isSync = PreferenceUtils.getPrefBoolean(context, "cal_sync", true);
-            if (!isSync)
-                return;
+            if (!isSync) return;
             ;
             Intent intent = new Intent(context, CalendarIntentService.class);
             intent.setAction(ACTION_CAL_WEEK);
@@ -95,8 +90,7 @@ public class CalendarIntentService extends IntentService {
         }
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
+    @Override protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_CAL_DAY.equals(action)) {
@@ -134,14 +128,12 @@ public class CalendarIntentService extends IntentService {
 
                 String gymname = system.system.name;
                 List<QcScheduleBean> schedules = system.schedules;
-                if (system.system == null)
-                    continue;
+                if (system.system == null) continue;
                 for (QcScheduleBean bean : schedules) {
                     String title, users;
                     if (bean.orders != null && bean.orders.size() == 1) {
                         users = bean.orders.get(0).username;
                         title = bean.course.name + "(" + bean.count + "人:" + users + ") -[健身教练助手]";
-
                     } else {
                         if (bean.orders != null) {
                             StringBuffer sb = new StringBuffer();
@@ -154,25 +146,23 @@ public class CalendarIntentService extends IntentService {
                             users = "无";
                         }
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
-
                     }
                     LogUtil.e("beforeTime:" + (long) (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime()));
 
-//                    if (bean.count > 0)
-//                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
-                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime * 60000)
-                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(), alertTime);
-                    else
-                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(), -1);
-
+                    //                    if (bean.count > 0)
+                    //                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
+                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime * 60000) {
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(),
+                            DateUtils.formatDateFromServer(bean.end).getTime(), alertTime);
+                    } else {
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(),
+                            DateUtils.formatDateFromServer(bean.end).getTime(), -1);
+                    }
                 }
-
             }
         } catch (Exception e) {
             RevenUtils.sendException("add calendar err!", "", e);
         }
-
-
     }
 
     /**
@@ -200,14 +190,12 @@ public class CalendarIntentService extends IntentService {
 
                 String gymname = system.system.name;
                 List<QcScheduleBean> schedules = system.schedules;
-                if (system.system == null)
-                    continue;
+                if (system.system == null) continue;
                 for (QcScheduleBean bean : schedules) {
                     String title, users;
                     if (bean.orders != null && bean.orders.size() == 1) {
                         users = bean.orders.get(0).username;
                         title = bean.course.name + "(" + bean.count + "人:" + users + ") -[健身教练助手]";
-
                     } else {
                         if (bean.orders != null) {
                             StringBuffer sb = new StringBuffer();
@@ -220,13 +208,15 @@ public class CalendarIntentService extends IntentService {
                             users = "无";
                         }
                         title = bean.course.name + "(" + bean.count + "人已预约) -[健身教练助手]";
-
                     }
-                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime*60000l)
-                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),alertTime);
-                    else  PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(), DateUtils.formatDateFromServer(bean.end).getTime(),-1);
+                    if (DateUtils.formatDateFromServer(bean.start).getTime() - new Date().getTime() >= alertTime * 60000l) {
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(),
+                            DateUtils.formatDateFromServer(bean.end).getTime(), alertTime);
+                    } else {
+                        PhoneFuncUtils.insertEvent(this, calid, title, users, gymname, DateUtils.formatDateFromServer(bean.start).getTime(),
+                            DateUtils.formatDateFromServer(bean.end).getTime(), -1);
+                    }
                 }
-
             }
         } catch (Exception e) {
             RevenUtils.sendException("add calendar err!", "", e);

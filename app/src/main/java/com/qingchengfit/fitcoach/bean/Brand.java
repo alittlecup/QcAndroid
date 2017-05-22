@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
@@ -20,24 +19,32 @@ import java.util.List;
  * Created by Paper on 16/4/13 2016.
  */
 public class Brand implements Parcelable {
+    public static final Creator<Brand> CREATOR = new Creator<Brand>() {
+        @Override public Brand createFromParcel(Parcel source) {
+            return new Brand(source);
+        }
+
+        @Override public Brand[] newArray(int size) {
+            return new Brand[size];
+        }
+    };
+    public boolean has_permission;
+    private String id;
+    private String name;
+    private String photo;
+    private boolean has_add_permission;
+    @SerializedName("owner") private List<User_Student> owners;
+    private String cname;
+    private int gym_count;
+    private String created_at;
+    private User_Student created_by;
+
     public Brand() {
     }
 
     public Brand(String id) {
         this.id = id;
     }
-
-    private String id;
-    private String name;
-    private String photo;
-    private boolean has_add_permission;
-    public boolean has_permission;
-    @SerializedName("owner")
-    private List<User_Student> owners;
-    private String cname;
-    private int gym_count;
-    private String created_at;
-    private User_Student created_by;
 
     private Brand(Builder builder) {
         setId(builder.id);
@@ -51,6 +58,18 @@ public class Brand implements Parcelable {
         setCreated_by(builder.created_by);
     }
 
+    protected Brand(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.photo = in.readString();
+        this.has_add_permission = in.readByte() != 0;
+        this.has_permission = in.readByte() != 0;
+        this.owners = in.createTypedArrayList(User_Student.CREATOR);
+        this.cname = in.readString();
+        this.gym_count = in.readInt();
+        this.created_at = in.readString();
+        this.created_by = in.readParcelable(User_Student.class.getClassLoader());
+    }
 
     public User_Student getCreated_by() {
         return created_by;
@@ -124,6 +143,23 @@ public class Brand implements Parcelable {
         this.name = name;
     }
 
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.photo);
+        dest.writeByte(this.has_add_permission ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.owners);
+        dest.writeString(this.cname);
+        dest.writeInt(this.gym_count);
+        dest.writeString(this.created_at);
+        dest.writeParcelable(this.created_by, flags);
+    }
+
     public static final class Builder {
         private String id;
         private String name;
@@ -187,44 +223,4 @@ public class Brand implements Parcelable {
             return new Brand(this);
         }
     }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.photo);
-        dest.writeByte(this.has_add_permission ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.owners);
-        dest.writeString(this.cname);
-        dest.writeInt(this.gym_count);
-        dest.writeString(this.created_at);
-        dest.writeParcelable(this.created_by, flags);
-    }
-
-    protected Brand(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.photo = in.readString();
-        this.has_add_permission = in.readByte() != 0;
-        this.has_permission = in.readByte() != 0;
-        this.owners = in.createTypedArrayList(User_Student.CREATOR);
-        this.cname = in.readString();
-        this.gym_count = in.readInt();
-        this.created_at = in.readString();
-        this.created_by = in.readParcelable(User_Student.class.getClassLoader());
-    }
-
-    public static final Creator<Brand> CREATOR = new Creator<Brand>() {
-        @Override public Brand createFromParcel(Parcel source) {
-            return new Brand(source);
-        }
-
-        @Override public Brand[] newArray(int size) {
-            return new Brand[size];
-        }
-    };
 }

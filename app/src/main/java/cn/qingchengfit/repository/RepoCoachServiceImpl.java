@@ -30,41 +30,45 @@ import rx.Observable;
  * Created by Paper on 2017/5/15.
  */
 
-public class RepoCoachServiceImpl implements RepoCoachService{
+public class RepoCoachServiceImpl implements RepoCoachService {
 
     @Inject QcDbHelper helper;
 
-    @Inject
-    public RepoCoachServiceImpl() {}
+    @Inject public RepoCoachServiceImpl() {
+    }
 
     /**
      * 本地存储
      */
     @Override public void createService(CoachService coachService) {
-        helper.getBriteDatabase().insert(CoachService.TABLE_NAME,CoachService.FACTORY.marshal(coachService).asContentValues());
+        helper.getBriteDatabase().insert(CoachService.TABLE_NAME, CoachService.FACTORY.marshal(coachService).asContentValues());
     }
 
     @Override public void createServices(List<CoachService> coachServices) {
         BriteDatabase.Transaction trans = helper.getBriteDatabase().newTransaction();
-        try{
+        try {
             deleteAllServices();
             coachServices.forEach(this::createService);
             trans.markSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtil.e(e.getMessage());
-        }finally {
+        } finally {
             trans.end();
         }
     }
 
     @Override public Observable<CoachService> readServiceByIdModel(String id, String model) {
-        return helper.getBriteDatabase().createQuery(CoachServiceModel.TABLE_NAME,CoachService.FACTORY.getByIdModel(id,model).statement)
-            .mapToOne(cursor -> CoachService.FACTORY.getByIdModelMapper().map(cursor)).asObservable();
+        return helper.getBriteDatabase()
+            .createQuery(CoachServiceModel.TABLE_NAME, CoachService.FACTORY.getByIdModel(id, model).statement)
+            .mapToOne(cursor -> CoachService.FACTORY.getByIdModelMapper().map(cursor))
+            .asObservable();
     }
 
     @Override public Observable<List<CoachService>> readAllServices() {
-        return helper.getBriteDatabase().createQuery(CoachServiceModel.TABLE_NAME,CoachService.FACTORY.getAllCoachService().statement)
-            .mapToList(cursor -> CoachService.FACTORY.getAllCoachServiceMapper().map(cursor)).asObservable();
+        return helper.getBriteDatabase()
+            .createQuery(CoachServiceModel.TABLE_NAME, CoachService.FACTORY.getAllCoachService().statement)
+            .mapToList(cursor -> CoachService.FACTORY.getAllCoachServiceMapper().map(cursor))
+            .asObservable();
     }
 
     @Override public void updateService(CoachService coachService) {

@@ -22,8 +22,8 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.fragment.statement.SalerChooseDialogView;
-import com.qingchengfit.fitcoach.fragment.statement.presenter.SalerChoosePresenter;
 import com.qingchengfit.fitcoach.fragment.statement.StringAdapter;
+import com.qingchengfit.fitcoach.fragment.statement.presenter.SalerChoosePresenter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -57,8 +57,7 @@ public class SalerChooseDialogFragment extends BaseDialogFragment implements Sal
     private List<StudentBean> salers = new ArrayList<>();
     private StringAdapter adapter;
 
-    @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_coach, container, false);
         unbinder = ButterKnife.bind(this, view);
         title.setText(R.string.choose_salers);

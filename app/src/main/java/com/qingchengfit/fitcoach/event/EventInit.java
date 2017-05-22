@@ -23,7 +23,7 @@ package com.qingchengfit.fitcoach.event;
 
 public class EventInit {
     public boolean show;
-    public int pos ;
+    public int pos;
 
     public EventInit(boolean show, int pos) {
         this.show = show;

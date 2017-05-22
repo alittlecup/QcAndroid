@@ -1,66 +1,65 @@
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     app:layout_scrollFlags="scroll"
     >
 
-    <FrameLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <com.qingchengfit.fitcoach.component.TagGroup
+        android:id="@+id/evaluate_tags"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:clickable="false"
+        app:atg_backgroundColor="@color/white"
+        app:atg_borderColor="@color/text_black"
+        app:atg_borderStrokeWidth="1dp"
+        app:atg_checkedBackgroundColor="@color/white"
+        app:atg_color_count="5"
+        app:atg_horizontalSpacing="8dp"
+        app:atg_isAppendMode="false"
+        app:atg_textColor="@color/text_black"
+        app:atg_verticalSpacing="8dp"
+        style="@style/TagGroup"
         >
 
-        <com.qingchengfit.fitcoach.component.TagGroup
-            android:id="@+id/evaluate_tags"
+    </com.qingchengfit.fitcoach.component.TagGroup>
 
-            style="@style/TagGroup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:clickable="false"
-            app:atg_backgroundColor="@color/white"
-            app:atg_borderColor="@color/text_black"
-            app:atg_borderStrokeWidth="1dp"
-            app:atg_checkedBackgroundColor="@color/white"
-            app:atg_color_count="5"
-            app:atg_horizontalSpacing="8dp"
-            app:atg_isAppendMode="false"
-            app:atg_textColor="@color/text_black"
-            app:atg_verticalSpacing="8dp"
-            >
+    <LinearLayout
+        android:id="@+id/no_evaluate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
-        </com.qingchengfit.fitcoach.component.TagGroup>
+      <ImageView
+          android:layout_width="120dp"
+          android:layout_height="120dp"
+          android:layout_marginTop="75dp"
+          android:src="@drawable/img_no_comment"
+          />
 
-        <LinearLayout
-            android:id="@+id/no_evaluate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone"
-            >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          android:text="还没有学员评价过您哦"
+          style="@style/Qc.TextCommonGrey"
+          />
 
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="75dp"
-                android:src="@drawable/img_no_comment"
-                />
-
-            <TextView
-                style="@style/Qc.TextCommonGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="还没有学员评价过您哦"
-                />
-
-        </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
+  </FrameLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -8,10 +8,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
-import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by

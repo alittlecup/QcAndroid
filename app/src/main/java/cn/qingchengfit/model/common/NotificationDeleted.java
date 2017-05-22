@@ -32,12 +32,8 @@ public class NotificationDeleted {
     public String commentId;
 
     public boolean contains(String id) {
-        return
-            TextUtils.equals(gymId,id) ||
-            TextUtils.equals(systemId,id) ||
-            TextUtils.equals(meetingId,id) ||
-            TextUtils.equals(checkInId,id) ||
-            TextUtils.equals(commentId,id);
+        return TextUtils.equals(gymId, id) || TextUtils.equals(systemId, id) || TextUtils.equals(meetingId, id) || TextUtils.equals(
+            checkInId, id) || TextUtils.equals(commentId, id);
     }
 
     public void add(String id, int type) {

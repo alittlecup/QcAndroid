@@ -14,7 +14,6 @@ import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import java.util.List;
 
-
 /**
  * power by
  * <p>
@@ -30,12 +29,11 @@ import java.util.List;
  */
 public class GroupBatchAdapter extends RecyclerView.Adapter<GroupBatchAdapter.BatchViewHolder> implements View.OnClickListener {
 
+    private List<QcResponseGroupDetail.GroupBatch> data;
+    private OnRecycleItemClickListener listener;
     public GroupBatchAdapter(List<QcResponseGroupDetail.GroupBatch> data) {
         this.data = data;
     }
-
-    private List<QcResponseGroupDetail.GroupBatch> data;
-    private OnRecycleItemClickListener listener;
 
     public OnRecycleItemClickListener getListener() {
         return listener;
@@ -45,48 +43,38 @@ public class GroupBatchAdapter extends RecyclerView.Adapter<GroupBatchAdapter.Ba
         this.listener = listener;
     }
 
-    @Override
-    public GroupBatchAdapter.BatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public GroupBatchAdapter.BatchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BatchViewHolder holder = new BatchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_batch, parent, false));
         holder.itemView.setOnClickListener(this);
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(GroupBatchAdapter.BatchViewHolder holder, int position) {
+    @Override public void onBindViewHolder(GroupBatchAdapter.BatchViewHolder holder, int position) {
         holder.itemView.setTag(position);
         QcResponseGroupDetail.GroupBatch batch = data.get(position);
         //holder.courseName.setText(batch.teacher.getUsername());
         //Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.teacher.getAvatar())).into(holder.img);
         holder.title.setText(batch.from_date + "至" + batch.to_date);
-        holder.view.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date))? View.VISIBLE: View.GONE);
+        holder.view.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date)) ? View.VISIBLE : View.GONE);
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return data.size();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
     public class BatchViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title)
-        TextView title;
-        @BindView(R.id.course_name)
-        TextView courseName;
-        @BindView(R.id.img)
-        ImageView img;
-        @BindView(R.id.outofdate)
-        View view;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.course_name) TextView courseName;
+        @BindView(R.id.img) ImageView img;
+        @BindView(R.id.outofdate) View view;
 
         public BatchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

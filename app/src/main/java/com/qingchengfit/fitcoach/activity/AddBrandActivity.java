@@ -77,21 +77,19 @@ public class AddBrandActivity extends BaseAcitivity {
     }
 
     @OnClick(R.id.btn) public void onComfirm() {
-        QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder()
-            .name(content.getContent())
-            .photo(uploadImg)
-            .build())
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        QcCloudClient.getApi().postApi.qcCreatBrand(new CreatBrandBody.Builder().name(content.getContent()).photo(uploadImg).build())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(qcResponsCreatBrand -> {
                 hideLoading();
                 if (qcResponsCreatBrand.status == 200) {
-                   AddBrandActivity.this.finish();
-                } else ToastUtils.showDefaultStyle(qcResponsCreatBrand.msg);
+                    AddBrandActivity.this.finish();
+                } else {
+                    ToastUtils.showDefaultStyle(qcResponsCreatBrand.msg);
+                }
             }, throwable -> {
                 hideLoading();
             });
-
-
     }
 
     @OnClick(R.id.photo_layout) public void addPhoto() {
@@ -105,7 +103,10 @@ public class AddBrandActivity extends BaseAcitivity {
 
                             hideLoading();
                             uploadImg = s;
-                            Glide.with(AddBrandActivity.this).load(PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(brandPhoto,AddBrandActivity.this));
+                            Glide.with(AddBrandActivity.this)
+                                .load(PhotoUtils.getSmall(s))
+                                .asBitmap()
+                                .into(new CircleImgWrapper(brandPhoto, AddBrandActivity.this));
                         }
                     });
                 }

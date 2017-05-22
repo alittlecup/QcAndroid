@@ -39,10 +39,10 @@ import com.qingchengfit.fitcoach.R;
  * <p>
  * <p>
  * Created by Paper on 15/9/8 2015.
- *
  */
 public class CommonInputView extends RelativeLayout {
 
+    int maxLength = 100;
     private TextView label;
     private EditText edit;
     private String str_label;
@@ -50,26 +50,14 @@ public class CommonInputView extends RelativeLayout {
     private int textColor = 0x9b9b9b;
     private String str_hint;
     private View disableView;
-
-    public boolean isNum() {
-        return isNum;
-    }
-
-    public void setIsNum(boolean isNum) {
-        this.isNum = isNum;
-    }
-
     private boolean isNum;
     private boolean canClick;
     private boolean canBeNull;
-
     private boolean showDivier;
     private boolean showRight;
     private boolean enable;
     private CharSequence str_content;
     @DrawableRes private int rightDrawable;
-    int maxLength = 100;
-
     public CommonInputView(Context context) {
         super(context);
         showDivier = true;
@@ -77,7 +65,6 @@ public class CommonInputView extends RelativeLayout {
         textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
         onFinishInflate();
     }
-
     public CommonInputView(Context context, boolean isNum, String content) {
         super(context);
         str_content = content;
@@ -109,6 +96,14 @@ public class CommonInputView extends RelativeLayout {
     public CommonInputView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
+    }
+
+    public boolean isNum() {
+        return isNum;
+    }
+
+    public void setIsNum(boolean isNum) {
+        this.isNum = isNum;
     }
 
     public void init(Context context, AttributeSet attrs) {
@@ -176,8 +171,9 @@ public class CommonInputView extends RelativeLayout {
         View divider = findViewById(R.id.commoninput_divider);
         rightview = (ImageView) findViewById(R.id.commoninput_righticon);
         disableView = findViewById(R.id.disable);
-        if (!canBeNull) label.setText(str_label);
-        else {
+        if (!canBeNull) {
+            label.setText(str_label);
+        } else {
             SpannableString s = new SpannableString(str_label + " *");
             int l = s.length();
             s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -254,8 +250,9 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public void setLabel(String s) {
-        if (!canBeNull) label.setText(s);
-        else {
+        if (!canBeNull) {
+            label.setText(s);
+        } else {
             SpannableString sj = new SpannableString(s + " *");
             int l = sj.length();
             sj.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -293,13 +290,13 @@ public class CommonInputView extends RelativeLayout {
         return edit.getText().toString().trim();
     }
 
-    public boolean isEmpty() {
-        return TextUtils.isEmpty(edit.getText());
-    }
-
     public void setContent(String c) {
         edit.setText(c);
         if (c != null) edit.setSelection(c.length() > 20 ? 20 : c.length());
+    }
+
+    public boolean isEmpty() {
+        return TextUtils.isEmpty(edit.getText());
     }
 
     @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -312,7 +309,6 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public class SavedState extends BaseSavedState {
-        String content;
         public final Creator<CommonInputView.SavedState> CREATOR = new Creator<CommonInputView.SavedState>() {
             @Override public CommonInputView.SavedState createFromParcel(Parcel in) {
                 return new CommonInputView.SavedState(in);
@@ -322,6 +318,7 @@ public class CommonInputView extends RelativeLayout {
                 return new CommonInputView.SavedState[size];
             }
         };
+        String content;
 
         public SavedState(Parcelable superState) {
             super(superState);

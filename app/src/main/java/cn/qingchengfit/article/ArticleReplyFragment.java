@@ -51,13 +51,12 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/13.
  */
-public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPresenter.MVPView,FlexibleAdapter.EndlessScrollListener{
+public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPresenter.MVPView, FlexibleAdapter.EndlessScrollListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_titile) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
-
 
     @Inject ArticleReplyPresenter presenter;
 
@@ -67,40 +66,38 @@ public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPr
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_reply, container, false);
         unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter,this);
+        delegatePresenter(presenter, this);
         initToolbar(toolbar);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         commonFlexAdapter = new CommonFlexAdapter(items);
-        commonFlexAdapter.setEndlessScrollListener(this,new ProgressItem(getContext()));
+        commonFlexAdapter.setEndlessScrollListener(this, new ProgressItem(getContext()));
         recyclerview.setAdapter(commonFlexAdapter);
-        RxBusAdd(EventRecycleClick.class)
-            .subscribe(new Action1<EventRecycleClick>() {
-                @Override public void call(EventRecycleClick eventRecycleClick) {
-                    if (commonFlexAdapter.getItem(eventRecycleClick.postion) instanceof ArticleReplyItem) {
-                        ArticleReplyItem item = (ArticleReplyItem)commonFlexAdapter.getItem(eventRecycleClick.postion);
+        RxBusAdd(EventRecycleClick.class).subscribe(new Action1<EventRecycleClick>() {
+            @Override public void call(EventRecycleClick eventRecycleClick) {
+                if (commonFlexAdapter.getItem(eventRecycleClick.postion) instanceof ArticleReplyItem) {
+                    ArticleReplyItem item = (ArticleReplyItem) commonFlexAdapter.getItem(eventRecycleClick.postion);
 
-                        switch (eventRecycleClick.viewId) {
-                            case R.id.btn_reply:
-                                try {
-                                    getFragmentManager().beginTransaction()
-                                        .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_fade_out, R.anim.slide_fade_in, R.anim.slide_right_out)
-                                        .replace(R.id.frag,
-                                            new ArticleCommentsListFragmentBuilder(item.getArticleComment().news.id).replyId(item.getArticleComment().id)
-                                                .replyName(item.getArticleComment().user.username)
-                                                .build())
-                                        .addToBackStack(null)
-                                        .commit();
-                                }catch (Exception e){
-                                    CrashUtils.sendCrash(e);
-                                }
-                                break;
-                            default://跳去文章
-                                WebActivity.startWeb(item.getArticleComment().url,getActivity());
-                                break;
-                        }
+                    switch (eventRecycleClick.viewId) {
+                        case R.id.btn_reply:
+                            try {
+                                getFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_fade_out, R.anim.slide_fade_in,
+                                        R.anim.slide_right_out)
+                                    .replace(R.id.frag, new ArticleCommentsListFragmentBuilder(item.getArticleComment().news.id).replyId(
+                                        item.getArticleComment().id).replyName(item.getArticleComment().user.username).build())
+                                    .addToBackStack(null)
+                                    .commit();
+                            } catch (Exception e) {
+                                CrashUtils.sendCrash(e);
+                            }
+                            break;
+                        default://跳去文章
+                            WebActivity.startWeb(item.getArticleComment().url, getActivity());
+                            break;
                     }
                 }
-            });
+            }
+        });
         presenter.queryReplies(1);
         return view;
     }
@@ -127,9 +124,8 @@ public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPr
     }
 
     @Override public void onArticleReplies(List<ArticleComment> list, int page) {
-        if (list != null){
-            if (page == 1)
-                items.clear();
+        if (list != null) {
+            if (page == 1) items.clear();
             for (int i = 0; i < list.size(); i++) {
                 items.add(new ArticleReplyItem(list.get(i)));
             }
@@ -146,8 +142,9 @@ public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPr
     }
 
     @Override public void onLoadMore(int i, int i1) {
-        if (commonFlexAdapter.getItem(commonFlexAdapter.getItemCount()-1) instanceof  ProgressItem)
-            commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount()-1);
+        if (commonFlexAdapter.getItem(commonFlexAdapter.getItemCount() - 1) instanceof ProgressItem) {
+            commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount() - 1);
+        }
         presenter.queryReplies(i1);
     }
 }

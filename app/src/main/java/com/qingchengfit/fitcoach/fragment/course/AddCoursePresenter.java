@@ -1,17 +1,15 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
+import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.CourseBody;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-
 import javax.inject.Inject;
-
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -41,60 +39,53 @@ public class AddCoursePresenter extends BasePresenter {
     RestRepository restRepository;
     Brand brand;
     CoachService coachService;
+    private AddCourseView view;
 
-
-    @Inject
-    public AddCoursePresenter(RestRepository restRepository, Brand brand, CoachService coachService) {
+    @Inject public AddCoursePresenter(RestRepository restRepository, Brand brand, CoachService coachService) {
         this.restRepository = restRepository;
         this.brand = brand;
         this.coachService = coachService;
     }
 
-    private AddCourseView view;
-
-
-    @Override
-    public void attachView(PView v) {
+    @Override public void attachView(PView v) {
         super.attachView(v);
-        this.view = (AddCourseView)v;
+        this.view = (AddCourseView) v;
     }
 
-    @Override
-    public void unattachView() {
+    @Override public void unattachView() {
         super.unattachView();
         view = null;
     }
 
-    public void addCourse(String staffid, CourseBody body){
-        RxRegiste(restRepository.getPost_api().qcCreateCourse(staffid,body, GymUtils.getParams(coachService,brand))
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<QcResponse>() {
-                    @Override
-                    public void call(QcResponse qcResponse) {
-                        if (ResponseConstant.checkSuccess(qcResponse)){
-                            view.onSuccess();
-                        }else {
-                            view.onFailed(qcResponse.getMsg());
-                        }
+    public void addCourse(String staffid, CourseBody body) {
+        RxRegiste(restRepository.getPost_api()
+            .qcCreateCourse(staffid, body, GymUtils.getParams(coachService, brand))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcResponse>() {
+                @Override public void call(QcResponse qcResponse) {
+                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                        view.onSuccess();
+                    } else {
+                        view.onFailed(qcResponse.getMsg());
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
 
-                    }
-                })
-        );
+                }
+            }));
     }
 
-    public void setSupportGyms(){
+    public void setSupportGyms() {
 
     }
-
 
     public interface AddCourseView extends PView {
-         void showSuitGym();
-         void onSuccess();
+        void showSuitGym();
+
+        void onSuccess();
+
         void onFailed(String s);
     }
-
 }

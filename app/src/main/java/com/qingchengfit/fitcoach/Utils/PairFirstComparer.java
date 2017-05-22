@@ -1,8 +1,6 @@
 package com.qingchengfit.fitcoach.Utils;
 
-
 import android.util.Pair;
-
 import java.util.Comparator;
 
 /**
@@ -20,9 +18,7 @@ import java.util.Comparator;
  */
 public class PairFirstComparer implements Comparator<Pair<Long, Long>> {
 
-
-    @Override
-    public int compare(Pair<Long, Long> lhs, Pair<Long, Long> rhs) {
+    @Override public int compare(Pair<Long, Long> lhs, Pair<Long, Long> rhs) {
         return lhs.first.compareTo(rhs.first);
     }
 }

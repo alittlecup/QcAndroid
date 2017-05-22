@@ -315,7 +315,7 @@ public class BodyTestFragment extends Fragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (spUpImg != null && spUpImg.isUnsubscribed()){
+        if (spUpImg != null && spUpImg.isUnsubscribed()) {
             spUpImg.unsubscribe();
         }
     }

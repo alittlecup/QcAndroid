@@ -22,10 +22,6 @@ public class RegisteBean {
     public String city;
     public String area_code;
 
-
-
-
-
     public RegisteBean() {
     }
 

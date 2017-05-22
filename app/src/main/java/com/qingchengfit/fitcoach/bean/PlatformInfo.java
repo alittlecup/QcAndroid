@@ -15,15 +15,12 @@ package com.qingchengfit.fitcoach.bean;
  */
 public class PlatformInfo {
 
+    public String platform;//android ios
+    public String version;
     public PlatformInfo(String platform, String version) {
         this.platform = platform;
         this.version = version;
     }
-
-    public String platform;//android ios
-    public String version;
-
-
 
     public String getPlatform() {
         return platform;

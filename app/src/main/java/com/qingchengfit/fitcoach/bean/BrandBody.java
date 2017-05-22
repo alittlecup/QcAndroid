@@ -22,6 +22,6 @@ package com.qingchengfit.fitcoach.bean;
  */
 
 public class BrandBody {
-        public String name;
-        public String photo;
+    public String name;
+    public String photo;
 }

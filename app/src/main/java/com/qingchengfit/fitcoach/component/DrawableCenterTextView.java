@@ -25,8 +25,7 @@ import android.widget.TextView;
  */
 public class DrawableCenterTextView extends TextView {
 
-    public DrawableCenterTextView(Context context, AttributeSet attrs,
-                                  int defStyle) {
+    public DrawableCenterTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -38,8 +37,7 @@ public class DrawableCenterTextView extends TextView {
         super(context);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         Drawable[] drawables = getCompoundDrawables();
         if (drawables != null) {
             Drawable drawableLeft = drawables[0];

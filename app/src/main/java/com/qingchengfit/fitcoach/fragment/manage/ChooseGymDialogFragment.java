@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
@@ -26,7 +27,6 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.GymItem;
@@ -63,23 +63,20 @@ import rx.schedulers.Schedulers;
  */
 public class ChooseGymDialogFragment extends DialogFragment implements FlexibleAdapter.OnItemClickListener {
 
-    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     //@BindView(R.id.toolbar) Toolbar toolbar;
     //@BindView(R.id.toolbar_title) TextView toolbarTitle;
-
-    protected List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     protected CommonFlexAdapter mAdapter;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
     private Unbinder unbinder;
     private Subscription sp;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NORMAL,R.style.LoadingDialog_Style);
+        setStyle(STYLE_NORMAL, R.style.LoadingDialog_Style);
     }
 
-
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_gym_dialog, container, false);
         unbinder = ButterKnife.bind(this, view);
         //toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
@@ -96,15 +93,13 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
         mAdapter.setMode(SelectableAdapter.MODE_SINGLE);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(
-            new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mAdapter);
         refresh();
         return view;
     }
 
-    @OnClick(R.id.close)
-    public void OnClose(){
+    @OnClick(R.id.close) public void OnClose() {
         dismissAllowingStateLoss();
     }
 
@@ -139,10 +134,8 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
             });
     }
 
-
     @Override public void onDestroyView() {
-        if (sp != null && !sp.isUnsubscribed())
-            sp.unsubscribe();
+        if (sp != null && !sp.isUnsubscribed()) sp.unsubscribe();
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -166,8 +159,7 @@ public class ChooseGymDialogFragment extends DialogFragment implements FlexibleA
                 if (brand != null) {
                     getFragmentManager().beginTransaction()
                         .replace(R.id.activity_choose_address,
-                            new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(),
-                                brand.getId()).build())
+                            new AddGymFragmentBuilder(brand.getPhoto(), brand.getName(), brand.getId()).build())
                         .addToBackStack(null)
                         .commit();
                 }

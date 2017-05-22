@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
+import cn.qingchengfit.utils.LogUtil;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.NetworkBean;
-
-import cn.qingchengfit.utils.LogUtil;
 
 /**
  * power by
@@ -28,8 +26,7 @@ public class NetWorkReciever extends BroadcastReceiver {
 
     private NetworkInfo info;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+    @Override public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             LogUtil.e("网络状态已经改变");
@@ -45,5 +42,4 @@ public class NetWorkReciever extends BroadcastReceiver {
             }
         }
     }
-
 }

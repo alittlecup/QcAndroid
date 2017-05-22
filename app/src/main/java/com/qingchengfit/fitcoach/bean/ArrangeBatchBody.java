@@ -30,5 +30,4 @@ public class ArrangeBatchBody {
     public ArrayList<TimeRepeat> time_repeats;
     public String batch_id;
     public Boolean is_free = true;
-
 }

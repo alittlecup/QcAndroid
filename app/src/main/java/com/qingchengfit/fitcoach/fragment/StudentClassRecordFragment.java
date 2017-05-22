@@ -90,10 +90,9 @@ public class StudentClassRecordFragment extends VpFragment {
     }
 
     public void setDatas(List<StatementBean> d) {
-        if (d == null || d.size() == 0)
+        if (d == null || d.size() == 0) {
             layoutNoData.setVisibility(View.VISIBLE);
-
-        else {
+        } else {
             layoutNoData.setVisibility(View.GONE);
             datas.clear();
             datas.addAll(d);

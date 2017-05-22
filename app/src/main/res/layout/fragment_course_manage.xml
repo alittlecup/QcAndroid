@@ -1,71 +1,76 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/backgroud_grey"
-                android:id="@+id/rootview"
-                tools:context="com.qingchengfit.fitcoach.fragment.CourseManageFragment">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_grey"
+    tools:context="com.qingchengfit.fitcoach.fragment.CourseManageFragment"
+    >
 
-    <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_toolbar"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:clipToPadding="false"
-        android:paddingBottom="90dp"
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:clipToPadding="false"
+      android:paddingBottom="90dp"
+      />
+
+  <LinearLayout
+      android:id="@+id/no_data"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:background="@color/white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/img_no_statment_detail"
         />
 
-    <LinearLayout
-        android:layout_marginTop="?attr/actionBarSize"
-        android:id="@+id/no_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:background="@color/white"
-        android:visibility="gone"
-        >
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/img_no_statment_detail"
-            />
+        android:text="无详细排期"
+        style="@style/Qc.TextCommonBlack"
+        />
+  </LinearLayout>
 
-        <TextView
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            android:text="无详细排期"
-            />
-    </LinearLayout>
+  <FrameLayout
+      android:id="@+id/del_layout"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_alignParentBottom="true"
+      android:background="@color/white"
+      android:visibility="gone"
 
-    <FrameLayout
-        android:id="@+id/del_layout"
+      >
+
+    <include layout="@layout/divider_grey"/>
+
+    <Button
+        android:id="@+id/btn_del"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-
-        >
-        <include layout="@layout/divider_grey"/>
-        <Button
-            android:id="@+id/btn_del"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qc_item_height"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@drawable/btn_red"
-            android:text="@string/course_del_manage"
-            />
-    </FrameLayout>
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/btn_red"
+        android:text="@string/course_del_manage"
+        />
+  </FrameLayout>
 
 </RelativeLayout>

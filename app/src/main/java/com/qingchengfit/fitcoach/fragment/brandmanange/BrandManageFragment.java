@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
@@ -42,12 +42,10 @@ public class BrandManageFragment extends BaseFragment implements BrandManageView
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     BrandManageAdapterAdapter adapter;
     List<Brand> datas = new ArrayList<>();
-    @Inject
-    BrandManagePresenter presenter;
+    @Inject BrandManagePresenter presenter;
     private boolean isLoading = false;
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         unbinder = ButterKnife.bind(this, view);
@@ -100,28 +98,22 @@ public class BrandManageFragment extends BaseFragment implements BrandManageView
         return view;
     }
 
-
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return TAG;
     }
 
-    @Override
-    public void onList(List<Brand> list) {
+    @Override public void onList(List<Brand> list) {
         datas.clear();
         datas.addAll(list);
         adapter.notifyDataSetChanged();
-        if (recyclerview != null)
-            recyclerview.setNoData(false);
+        if (recyclerview != null) recyclerview.setNoData(false);
     }
 
-    @Override
-    public void onFailed(String s) {
+    @Override public void onFailed(String s) {
         ToastUtils.show(s);
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
     }
 }

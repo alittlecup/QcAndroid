@@ -27,12 +27,11 @@ public class SpinnerBean {
         this.id = 0;
     }
 
-    public SpinnerBean(String color, String text, int id,String model) {
+    public SpinnerBean(String color, String text, int id, String model) {
         this.color = color;
         this.text = text;
         this.isTitle = false;
         this.model = model;
         this.id = id;
-
     }
 }

@@ -17,45 +17,43 @@ import java.util.Comparator;
  * Created by Paper on 15/11/25 2015.
  */
 public class QcPersonalComparator implements Comparator<Personage> {
-    @Override
-    public int compare(Personage lhs, Personage rhs) {
-//        if (TextUtils.isEmpty(rhs.getHead()))
-//            rhs.setHead("~");
+    @Override public int compare(Personage lhs, Personage rhs) {
+        //        if (TextUtils.isEmpty(rhs.getHead()))
+        //            rhs.setHead("~");
         return lhs.getHead().compareTo(rhs.getHead());
     }
 
-//    }
-//
-//    public int compare(QcStudentBean course1, QcStudentBean course2) {
-//        String o1 = course1.getUsername();
-//        String o2 = course2.getUsername();
-//        if (TextUtils.isEmpty(o1)) {
-//            o1 = "~";
-//        }
-//        if (TextUtils.isEmpty(o2)) {
-//            o2 = "~";
-//        }
-//        char c1 = o1.charAt(0);
-//        char c2 = o2.charAt(0);
-//        if (isChinese(c1) && isChinese(c2))
-//            return concatPinyinStringArray(
-//                    PinyinHelper.toHanyuPinyinStringArray(c1)).compareTo(
-//                    concatPinyinStringArray(PinyinHelper
-//                            .toHanyuPinyinStringArray(c2)));
-//        else
-//            return o1.compareTo(o2);
-//
-//    }
-//
-//    private String concatPinyinStringArray(String[] pinyinArray) {
-//        StringBuffer pinyinSbf = new StringBuffer();
-//        if ((pinyinArray != null) && (pinyinArray.length > 0)) {
-//            for (int i = 0; i < pinyinArray.length; i++) {
-//                pinyinSbf.append(pinyinArray[i]);
-//            }
-//        }
-//        return pinyinSbf.toString();
-//    }
-
+    //    }
+    //
+    //    public int compare(QcStudentBean course1, QcStudentBean course2) {
+    //        String o1 = course1.getUsername();
+    //        String o2 = course2.getUsername();
+    //        if (TextUtils.isEmpty(o1)) {
+    //            o1 = "~";
+    //        }
+    //        if (TextUtils.isEmpty(o2)) {
+    //            o2 = "~";
+    //        }
+    //        char c1 = o1.charAt(0);
+    //        char c2 = o2.charAt(0);
+    //        if (isChinese(c1) && isChinese(c2))
+    //            return concatPinyinStringArray(
+    //                    PinyinHelper.toHanyuPinyinStringArray(c1)).compareTo(
+    //                    concatPinyinStringArray(PinyinHelper
+    //                            .toHanyuPinyinStringArray(c2)));
+    //        else
+    //            return o1.compareTo(o2);
+    //
+    //    }
+    //
+    //    private String concatPinyinStringArray(String[] pinyinArray) {
+    //        StringBuffer pinyinSbf = new StringBuffer();
+    //        if ((pinyinArray != null) && (pinyinArray.length > 0)) {
+    //            for (int i = 0; i < pinyinArray.length; i++) {
+    //                pinyinSbf.append(pinyinArray[i]);
+    //            }
+    //        }
+    //        return pinyinSbf.toString();
+    //    }
 }
 

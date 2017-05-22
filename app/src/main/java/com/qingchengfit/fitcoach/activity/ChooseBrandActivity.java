@@ -37,13 +37,12 @@ import rx.schedulers.Schedulers;
 
 public class ChooseBrandActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.recycleview) RecyclerView recycleview;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
-
     protected Subscription sp;
     protected List<Brand> datas = new ArrayList<>();
     protected BrandManageAdapterAdapter adapter;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recycleview) RecyclerView recycleview;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +62,6 @@ public class ChooseBrandActivity extends AppCompatActivity {
         recycleview.setLayoutManager(new LinearLayoutManager(this));
         recycleview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recycleview.setAdapter(adapter);
-
-
     }
 
     @Override protected void onResume() {
@@ -118,8 +115,8 @@ public class ChooseBrandActivity extends AppCompatActivity {
                                     } else {
                                         if (Long.parseLong(datas.get(pos).getId()) < 0) {
                                             PreferenceUtils.setPrefString(ChooseBrandActivity.this, "initSystem", "");
-                                            Intent toGuide = new Intent(ChooseBrandActivity.this,GuideActivity.class);
-                                            toGuide.putExtra("add",true);
+                                            Intent toGuide = new Intent(ChooseBrandActivity.this, GuideActivity.class);
+                                            toGuide.putExtra("add", true);
 
                                             startActivity(toGuide);
                                             ChooseBrandActivity.this.finish();

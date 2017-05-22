@@ -24,7 +24,7 @@ import android.support.annotation.DrawableRes;
  */
 
 public class FunctionBean {
-    @DrawableRes  public int resImg;
+    @DrawableRes public int resImg;
     public String text;
     public String subname;
 
@@ -33,7 +33,6 @@ public class FunctionBean {
         text = builder.text;
         subname = builder.subname;
     }
-
 
     public static final class Builder {
         private int resImg;

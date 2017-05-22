@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -45,6 +44,5 @@ public class ClassRecordViewHolder extends RecyclerView.ViewHolder {
         itemStatementDetailPicImageView = (ImageView) itemView.findViewById(R.id.item_statement_detail_pic);
         itemStatementDetailNameTextView = (TextView) itemView.findViewById(R.id.item_statement_detail_name);
         itemStatementDetailContentTextView = (TextView) itemView.findViewById(R.id.item_statement_detail_content);
-
     }
 }

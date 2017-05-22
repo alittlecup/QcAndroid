@@ -52,10 +52,10 @@ public class SettingActivity extends BaseAcitivity implements FragmentCallBack, 
             case 5:
                 onFragmentChange(ModifyBrifeFragment.newInstance(getIntent().getStringExtra("desc")), false);
                 break;
-             case 6:
+            case 6:
                 onFragmentChange(new EditHomeFragment(), false);
                 break;
-             case 7:
+            case 7:
                 onFragmentChange(new EditResumeFragmentBuilder("").build(), false);
                 break;
 

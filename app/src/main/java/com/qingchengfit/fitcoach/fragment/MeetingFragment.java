@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivityWithShare;
@@ -22,12 +21,9 @@ import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import cn.qingchengfit.utils.DateUtils;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -36,7 +32,6 @@ import rx.schedulers.Schedulers;
  *
  */
 public class MeetingFragment extends BaseFragment {
-
 
     List<MeetingBean> mMeetingDatas = new ArrayList<>();
     private RecyclerView mRecyclerviewRecyclerView;
@@ -48,10 +43,7 @@ public class MeetingFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meeting, container, false);
         mRecyclerviewRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -63,14 +55,12 @@ public class MeetingFragment extends BaseFragment {
 
         mRefreshSwipeRefreshLayout.setColorSchemeResources(R.color.primary);
         mRefreshSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 freshData();
             }
         });
         mRefreshSwipeRefreshLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
+            @Override public void onGlobalLayout() {
                 mRefreshSwipeRefreshLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 mRefreshSwipeRefreshLayout.setRefreshing(true);
             }
@@ -82,8 +72,7 @@ public class MeetingFragment extends BaseFragment {
         mRecyclerviewRecyclerView.setAdapter(meetingAdapter);
 
         meetingAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
+            @Override public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getActivity(), WebActivityWithShare.class);
                 toWeb.putExtra("url", mMeetingDatas.get(pos).url);
                 startActivity(toWeb);
@@ -93,44 +82,42 @@ public class MeetingFragment extends BaseFragment {
     }
 
     private void freshData() {
-        HashMap<String,String> params = new HashMap<>();
-        params.put("oem",getString(R.string.oem_tag));
-        QcCloudClient.getApi().getApi.qcGetMeetingList(params).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<QcMeetingResponse>() {
-                    @Override
-                    public void onCompleted() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("oem", getString(R.string.oem_tag));
+        QcCloudClient.getApi().getApi.qcGetMeetingList(params)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<QcMeetingResponse>() {
+                @Override public void onCompleted() {
 
-                    }
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mRefreshSwipeRefreshLayout.setRefreshing(false);
-                    }
+                @Override public void onError(Throwable e) {
+                    mRefreshSwipeRefreshLayout.setRefreshing(false);
+                }
 
-                    @Override
-                    public void onNext(QcMeetingResponse qcMeetingResponse) {
-                        mMeetingDatas.clear();
-                        for (QcMeetingResponse.Meeting meeting : qcMeetingResponse.data.meetings) {
-                            MeetingBean bean = new MeetingBean();
-                            bean.title = meeting.name;
-                            bean.address = meeting.city + "  " + meeting.address;
-                            StringBuffer stringBuffer = new StringBuffer();
-                            stringBuffer.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(meeting.open_start)))
-                                    .append("至").append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(meeting.open_end)));
-                            bean.time = stringBuffer.toString();
-                            bean.img = meeting.image;
-                            bean.url = meeting.link;
-                            mMeetingDatas.add(bean);
-                        }
-                        meetingAdapter.notifyDataSetChanged();
-                        mRefreshSwipeRefreshLayout.setRefreshing(false);
+                @Override public void onNext(QcMeetingResponse qcMeetingResponse) {
+                    mMeetingDatas.clear();
+                    for (QcMeetingResponse.Meeting meeting : qcMeetingResponse.data.meetings) {
+                        MeetingBean bean = new MeetingBean();
+                        bean.title = meeting.name;
+                        bean.address = meeting.city + "  " + meeting.address;
+                        StringBuffer stringBuffer = new StringBuffer();
+                        stringBuffer.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(meeting.open_start)))
+                            .append("至")
+                            .append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(meeting.open_end)));
+                        bean.time = stringBuffer.toString();
+                        bean.img = meeting.image;
+                        bean.url = meeting.link;
+                        mMeetingDatas.add(bean);
                     }
-                });
+                    meetingAdapter.notifyDataSetChanged();
+                    mRefreshSwipeRefreshLayout.setRefreshing(false);
+                }
+            });
     }
 
-    @Override
-    protected void lazyLoad() {
+    @Override protected void lazyLoad() {
 
     }
 
@@ -164,36 +151,29 @@ public class MeetingFragment extends BaseFragment {
             this.listener = listener;
         }
 
-        @Override
-        public MeetingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            MeetingHolder holder = new MeetingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meeting, parent, false));
+        @Override public MeetingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            MeetingHolder holder =
+                new MeetingHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meeting, parent, false));
 
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(MeetingHolder holder, int position) {
+        @Override public void onBindViewHolder(MeetingHolder holder, int position) {
             holder.itemView.setTag(position);
             MeetingBean meetingBean = datas.get(position);
             holder.mTimeTextView.setText(meetingBean.time);
             holder.mAddressTextView.setText(meetingBean.address);
             holder.mTitleTextView.setText(meetingBean.title);
             Glide.with(getContext()).load(meetingBean.img).into(holder.mImgImageView);
-
         }
 
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
-            if (listener != null)
-                listener.onItemClick(v, (int) v.getTag());
+        @Override public void onClick(View v) {
+            if (listener != null) listener.onItemClick(v, (int) v.getTag());
         }
     }
-
-
 }

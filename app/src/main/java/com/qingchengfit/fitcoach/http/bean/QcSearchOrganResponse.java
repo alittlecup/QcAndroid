@@ -89,7 +89,6 @@ public class QcSearchOrganResponse extends QcResponse {
             private String photo;
             private boolean is_authenticated;
 
-
             public String getPhoto() {
                 return photo;
             }

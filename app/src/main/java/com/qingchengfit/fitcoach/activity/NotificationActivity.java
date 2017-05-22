@@ -25,13 +25,12 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
     private Observable<EventLatestNoti> mLatestOb;
     private long mLatestEvent;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         ButterKnife.bind(this);
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.notification_layout, NotificationFragment.newInstance(getIntent().getIntExtra("type",0)))
+            .replace(R.id.notification_layout, NotificationFragment.newInstance(getIntent().getIntExtra("type", 0)))
             .commit();
         //toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         //toolbar.setNavigationOnClickListener(v -> {
@@ -119,57 +118,44 @@ public class NotificationActivity extends BaseAcitivity implements FragmentCallB
 
     }
 
-
-    @Override
-    public void onFragmentChange(Fragment fragment) {
+    @Override public void onFragmentChange(Fragment fragment) {
     }
 
-
-    @Override
-    public void onToolbarMenu(@MenuRes int menu, int icon, String title) {
+    @Override public void onToolbarMenu(@MenuRes int menu, int icon, String title) {
 
     }
 
-    @Override
-    public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener) {
+    @Override public void onToolbarClickListener(Toolbar.OnMenuItemClickListener listener) {
     }
 
-    @Override
-    public void hindToolbar() {
-
-    }
-
-    @Override
-    public void showToolbar() {
+    @Override public void hindToolbar() {
 
     }
 
-    @Override
-    public void ShowLoading(String content) {
+    @Override public void showToolbar() {
 
     }
 
-    @Override
-    public void hideLoading() {
+    @Override public void ShowLoading(String content) {
 
     }
 
-    @Override
-    public void fixCount() {
+    @Override public void hideLoading() {
 
     }
 
-
-    @Override
-    public void onfinish() {
+    @Override public void fixCount() {
 
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override public void onfinish() {
+
+    }
+
+    @Override protected void onDestroy() {
         RxBus.getBus().unregister(EventNotiFresh.class.getName(), mOb);
         RxBus.getBus().unregister(EventLatestNoti.class.getName(), mLatestOb);
         super.onDestroy();
-//        App.getRefWatcher().watch(this);
+        //        App.getRefWatcher().watch(this);
     }
 }

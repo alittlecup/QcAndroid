@@ -7,19 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * power by
@@ -42,10 +39,14 @@ import butterknife.ButterKnife;
  * Created by Paper on 16/7/13.
  */
 public class BrandManageAdapterAdapter extends RecyclerView.Adapter<BrandManageAdapterAdapter.BrandManageAdapterVH>
-        implements View.OnClickListener {
+    implements View.OnClickListener {
 
     private List<Brand> datas;
     private OnRecycleItemClickListener listener;
+
+    public BrandManageAdapterAdapter(List<Brand> datas) {
+        this.datas = datas;
+    }
 
     public OnRecycleItemClickListener getListener() {
         return listener;
@@ -55,69 +56,70 @@ public class BrandManageAdapterAdapter extends RecyclerView.Adapter<BrandManageA
         this.listener = listener;
     }
 
-    public BrandManageAdapterAdapter(List<Brand> datas) {
-        this.datas = datas;
-    }
-
-    @Override
-    public BrandManageAdapterVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public BrandManageAdapterVH onCreateViewHolder(ViewGroup parent, int viewType) {
 
         BrandManageAdapterVH vh = null;
-        if (viewType == 0)
+        if (viewType == 0) {
             vh = new BrandManageAdapterVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_brand_manage, parent, false));
-        else
+        } else {
             vh = new BrandManageAdapterVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_brand_add, parent, false));
+        }
         vh.itemView.setOnClickListener(this);
         return vh;
     }
 
-    @Override
-    public void onBindViewHolder(BrandManageAdapterVH holder, int position) {
+    @Override public void onBindViewHolder(BrandManageAdapterVH holder, int position) {
         holder.itemView.setTag(position);
 
         if (Long.parseLong(datas.get(position).getId()) > 0) {
             Brand brand = datas.get(position);
-            Glide.with(holder.image.getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(holder.image, holder.image.getContext()));
-            if (!TextUtils.isEmpty(brand.getPhoto()))
-                Glide.with(holder.image.getContext()).load(PhotoUtils.getGauss(brand.getPhoto())).placeholder(R.drawable.bg_brand).into(holder.bg);
-            else                 Glide.with(holder.image.getContext()).load(R.drawable.bg_brand).placeholder(R.drawable.bg_brand).into(holder.bg);
+            Glide.with(holder.image.getContext())
+                .load(PhotoUtils.getSmall(brand.getPhoto()))
+                .asBitmap()
+                .placeholder(R.drawable.ic_default_header)
+                .into(new CircleImgWrapper(holder.image, holder.image.getContext()));
+            if (!TextUtils.isEmpty(brand.getPhoto())) {
+                Glide.with(holder.image.getContext())
+                    .load(PhotoUtils.getGauss(brand.getPhoto()))
+                    .placeholder(R.drawable.bg_brand)
+                    .into(holder.bg);
+            } else {
+                Glide.with(holder.image.getContext()).load(R.drawable.bg_brand).placeholder(R.drawable.bg_brand).into(holder.bg);
+            }
 
             holder.name.setText(brand.getName());
             String user = "";
-            if (brand.getCreated_by() != null && brand.getCreated_by().getUsername() != null)
+            if (brand.getCreated_by() != null && brand.getCreated_by().getUsername() != null) {
                 user = brand.getCreated_by().getUsername();
-            else user = "";
-            holder.brand.setText(String.format(Locale.CHINA, holder.image.getContext().getString(R.string.brand_id_creator), brand.getCname(), user));
+            } else {
+                user = "";
+            }
+            holder.brand.setText(
+                String.format(Locale.CHINA, holder.image.getContext().getString(R.string.brand_id_creator), brand.getCname(), user));
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return datas.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (Long.parseLong(datas.get(position).getId()) > 0)
+    @Override public int getItemViewType(int position) {
+        if (Long.parseLong(datas.get(position).getId()) > 0) {
             return 0;
-        else return 1;
+        } else {
+            return 1;
+        }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
     public class BrandManageAdapterVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.background)
-        ImageView bg;
-        @BindView(R.id.image)
-        ImageView image;
-        @BindView(R.id.name)
-        TextView name;
-        @BindView(R.id.brand)
-        TextView brand;
+        @BindView(R.id.background) ImageView bg;
+        @BindView(R.id.image) ImageView image;
+        @BindView(R.id.name) TextView name;
+        @BindView(R.id.brand) TextView brand;
 
         public BrandManageAdapterVH(View itemView) {
             super(itemView);

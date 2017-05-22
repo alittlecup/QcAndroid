@@ -28,6 +28,15 @@ import android.os.Parcelable;
 
 public class Personage implements Parcelable {
 
+    public static final Creator<Personage> CREATOR = new Creator<Personage>() {
+        @Override public Personage createFromParcel(Parcel source) {
+            return new Personage(source);
+        }
+
+        @Override public Personage[] newArray(int size) {
+            return new Personage[size];
+        }
+    };
     public String tag;
     public String id;
     public String username;
@@ -55,6 +64,19 @@ public class Personage implements Parcelable {
         this.area_code = area_code;
         this.avatar = avatar;
         this.gender = gender;
+    }
+
+    protected Personage(Parcel in) {
+        this.tag = in.readString();
+        this.id = in.readString();
+        this.username = in.readString();
+        this.area_code = in.readString();
+        this.phone = in.readString();
+        this.avatar = in.readString();
+        this.checkin_avatar = in.readString();
+        this.gender = in.readInt();
+        this.head = in.readString();
+        this.brand_id = in.readString();
     }
 
     public String getArea_code() {
@@ -138,9 +160,11 @@ public class Personage implements Parcelable {
     }
 
     @Override public boolean equals(Object obj) {
-        if (obj instanceof Personage){
+        if (obj instanceof Personage) {
             return ((Personage) obj).getId().equals(getId());
-        }else return false;
+        } else {
+            return false;
+        }
     }
 
     @Override public int hashCode() {
@@ -163,27 +187,4 @@ public class Personage implements Parcelable {
         dest.writeString(this.head);
         dest.writeString(this.brand_id);
     }
-
-    protected Personage(Parcel in) {
-        this.tag = in.readString();
-        this.id = in.readString();
-        this.username = in.readString();
-        this.area_code = in.readString();
-        this.phone = in.readString();
-        this.avatar = in.readString();
-        this.checkin_avatar = in.readString();
-        this.gender = in.readInt();
-        this.head = in.readString();
-        this.brand_id = in.readString();
-    }
-
-    public static final Creator<Personage> CREATOR = new Creator<Personage>() {
-        @Override public Personage createFromParcel(Parcel source) {
-            return new Personage(source);
-        }
-
-        @Override public Personage[] newArray(int size) {
-            return new Personage[size];
-        }
-    };
 }

@@ -8,13 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.adapter.StudentCardAdapter;
 import com.qingchengfit.fitcoach.bean.StudentCardBean;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,23 +33,20 @@ public class StudentCardFragment extends VpFragment {
     private StudentCardAdapter mAdapter;
     private List<StudentCardBean> mData = new ArrayList<>();
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
-//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
-//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
-//        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+        //        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+        //        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+        //        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
+        //        mData.add(new StudentCardBean("中美引力处置卡", "余额1500块", "工作室", "张三,李四,王五,毛毛,琪琪,和她妈妈到山上去", "2013-10-10至2015-12-12"));
         mAdapter = new StudentCardAdapter(mData);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
+            @Override public void onItemClick(View v, int pos) {
                 Intent toWeb = new Intent(getContext(), WebActivity.class);
-                toWeb.putExtra("url",mData.get(pos).url);
+                toWeb.putExtra("url", mData.get(pos).url);
                 startActivity(toWeb);
             }
         });
@@ -64,8 +59,7 @@ public class StudentCardFragment extends VpFragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public String getTitle() {
+    @Override public String getTitle() {
         return "会员卡";
     }
 }

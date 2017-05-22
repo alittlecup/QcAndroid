@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -18,9 +17,7 @@ import java.util.List;
  * Created by Paper on 15/8/17 2015.
  */
 public class DrawerData {
-    @SerializedName("modules")
-    public List<DrawerModule> modules;
-    @SerializedName("guide")
-    public List<DrawerGuide> guide;
+    @SerializedName("modules") public List<DrawerModule> modules;
+    @SerializedName("guide") public List<DrawerGuide> guide;
     public String qingcheng_activity_count;
 }

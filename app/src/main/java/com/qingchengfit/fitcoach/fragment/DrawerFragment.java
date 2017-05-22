@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -21,11 +24,6 @@ import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cn.qingchengfit.utils.PreferenceUtils;
 
 /**
  * power by
@@ -42,24 +40,17 @@ import cn.qingchengfit.utils.PreferenceUtils;
  */
 public class DrawerFragment extends Fragment {
     Gson gson;
-    @BindView(R.id.header_icon)
-    ImageView headerIcon;
-    @BindView(R.id.drawer_name)
-    TextView drawerName;
-    @BindView(R.id.drawer_headerview)
-    RelativeLayout drawerHeaderview;
-    @BindView(R.id.drawer_radiogroup)
-    CustomSetmentLayout drawerRadiogroup;
-    @BindView(R.id.drawer_modules)
-    LinearLayout drawerModules;
+    @BindView(R.id.header_icon) ImageView headerIcon;
+    @BindView(R.id.drawer_name) TextView drawerName;
+    @BindView(R.id.drawer_headerview) RelativeLayout drawerHeaderview;
+    @BindView(R.id.drawer_radiogroup) CustomSetmentLayout drawerRadiogroup;
+    @BindView(R.id.drawer_modules) LinearLayout drawerModules;
     private User user;
     private Unbinder unbinder;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_drawer, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         gson = new Gson();
 
         String u = PreferenceUtils.getPrefString(getContext(), "user_info", "");
@@ -71,20 +62,12 @@ public class DrawerFragment extends Fragment {
         }
         drawerName.setText(user.username);
         int gender = R.drawable.img_default_female;
-        if (user.gender == 0)
-            gender = R.drawable.img_default_male;
+        if (user.gender == 0) gender = R.drawable.img_default_male;
         if (TextUtils.isEmpty(user.avatar)) {
-            Glide.with(App.AppContex)
-                    .load(gender)
-                    .asBitmap()
-                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
+            Glide.with(App.AppContex).load(gender).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
         } else {
-            Glide.with(App.AppContex)
-                    .load(user.avatar)
-                    .asBitmap()
-                    .into(new CircleImgWrapper(headerIcon, App.AppContex));
+            Glide.with(App.AppContex).load(user.avatar).asBitmap().into(new CircleImgWrapper(headerIcon, App.AppContex));
         }
-
 
         String id = PreferenceUtils.getPrefString(getContext(), "coach", "");
         if (TextUtils.isEmpty(id)) {
@@ -98,14 +81,12 @@ public class DrawerFragment extends Fragment {
         button.setText("数据报表");
         SegmentLayout button2 = new SegmentLayout(getContext());
         button.setText("会议培训");
-//        button.setDrawables();
-
+        //        button.setDrawables();
 
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }

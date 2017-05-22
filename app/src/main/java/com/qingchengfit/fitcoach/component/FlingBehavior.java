@@ -40,7 +40,8 @@ public final class FlingBehavior extends AppBarLayout.Behavior {
     }
 
     @Override
-    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY, boolean consumed) {
+    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY,
+        boolean consumed) {
         if (velocityY > 0 && !isPositive || velocityY < 0 && isPositive) {
             velocityY = velocityY * -1;
         }

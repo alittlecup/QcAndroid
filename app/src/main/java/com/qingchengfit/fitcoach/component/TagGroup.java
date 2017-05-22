@@ -27,9 +27,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -234,16 +232,14 @@ public class TagGroup extends ViewGroup {
 
             // Set the click listener to detect the end-input event.
             setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     submitTag();
                 }
             });
         }
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
         return true;
     }
 
@@ -262,8 +258,7 @@ public class TagGroup extends ViewGroup {
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -311,12 +306,10 @@ public class TagGroup extends ViewGroup {
             width = widthSize;
         }
 
-        setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? widthSize : width,
-                heightMode == MeasureSpec.EXACTLY ? heightSize : height);
+        setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? widthSize : width, heightMode == MeasureSpec.EXACTLY ? heightSize : height);
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int parentLeft = getPaddingLeft();
         final int parentRight = r - l - getPaddingRight();
         final int parentTop = getPaddingTop();
@@ -348,8 +341,7 @@ public class TagGroup extends ViewGroup {
         }
     }
 
-    @Override
-    public Parcelable onSaveInstanceState() {
+    @Override public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SavedState ss = new SavedState(superState);
         ss.tags = getTags();
@@ -360,8 +352,7 @@ public class TagGroup extends ViewGroup {
         return ss;
     }
 
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
+    @Override public void onRestoreInstanceState(Parcelable state) {
         if (!(state instanceof SavedState)) {
             super.onRestoreInstanceState(state);
             return;
@@ -442,13 +433,6 @@ public class TagGroup extends ViewGroup {
     }
 
     /**
-     * @see #setTags(String...)
-     */
-    public void setTags(List<String> tagList) {
-        setTags(tagList.toArray(new String[tagList.size()]));
-    }
-
-    /**
      * Set the tags. It will remove all previous tags first.
      *
      * @param tags the tag list to set.
@@ -464,6 +448,13 @@ public class TagGroup extends ViewGroup {
         if (isAppendMode) {
             appendInputTag();
         }
+    }
+
+    /**
+     * @see #setTags(String...)
+     */
+    public void setTags(List<String> tagList) {
+        setTags(tagList.toArray(new String[tagList.size()]));
     }
 
     /**
@@ -555,17 +546,14 @@ public class TagGroup extends ViewGroup {
     }
 
     public float dp2px(float dp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 
     public float sp2px(float sp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
-                getResources().getDisplayMetrics());
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, getResources().getDisplayMetrics());
     }
 
-    @Override
-    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
+    @Override public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
     }
 
@@ -633,16 +621,15 @@ public class TagGroup extends ViewGroup {
      * For {@link TagGroup} save and restore state.
      */
     static class SavedState extends BaseSavedState {
-        public static final Creator<SavedState> CREATOR =
-                new Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
 
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
         int tagCount;
         String[] tags;
         int checkedPosition;
@@ -661,8 +648,7 @@ public class TagGroup extends ViewGroup {
             super(superState);
         }
 
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
+        @Override public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             tagCount = tags.length;
             dest.writeInt(tagCount);
@@ -676,8 +662,7 @@ public class TagGroup extends ViewGroup {
      * The tag view click listener for internal use.
      */
     class InternalTagClickListener implements OnClickListener {
-        @Override
-        public void onClick(View v) {
+        @Override public void onClick(View v) {
             final TagView tag = (TagView) v;
             if (isAppendMode) {
                 if (tag.mState == TagView.STATE_INPUT) {
@@ -784,7 +769,7 @@ public class TagGroup extends ViewGroup {
         /**
          * The path effect provide draw the dash border.
          */
-        private PathEffect mPathEffect = new DashPathEffect(new float[]{10, 5}, 0);
+        private PathEffect mPathEffect = new DashPathEffect(new float[] { 10, 5 }, 0);
 
         {
             mBorderPaint.setStyle(Paint.Style.STROKE);
@@ -795,13 +780,10 @@ public class TagGroup extends ViewGroup {
             mCheckedMarkerPaint.setColor(checkedMarkerColor);
         }
 
-
         public TagView(Context context, final int state, CharSequence text) {
             super(context);
             setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
-            setLayoutParams(new LayoutParams(
-                    LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT));
+            setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
             setGravity(Gravity.CENTER);
             setText(text);
@@ -817,8 +799,7 @@ public class TagGroup extends ViewGroup {
 
             // Interrupted long click event to avoid PAUSE popup.
             setOnLongClickListener(new OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
+                @Override public boolean onLongClick(View v) {
                     return state != STATE_INPUT;
                 }
             });
@@ -828,11 +809,10 @@ public class TagGroup extends ViewGroup {
 
                 // Handle the ENTER key down.
                 setOnEditorActionListener(new OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_NULL
-                                && (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
-                                && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                    @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_NULL && (event != null
+                            && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                            && event.getAction() == KeyEvent.ACTION_DOWN)) {
                             if (isInputAvailable()) {
                                 // If the input content is available, end the input and dispatch
                                 // the event, then append a new INPUT state tag.
@@ -850,8 +830,7 @@ public class TagGroup extends ViewGroup {
 
                 // Handle the BACKSPACE key down.
                 setOnKeyListener(new OnKeyListener() {
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    @Override public boolean onKey(View v, int keyCode, KeyEvent event) {
                         if (keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN) {
                             // If the input content is empty, check or remove the last NORMAL state tag.
                             if (TextUtils.isEmpty(getText().toString())) {
@@ -879,8 +858,7 @@ public class TagGroup extends ViewGroup {
 
                 // Handle the INPUT tag content changed.
                 addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                         // When the INPUT state tag changed, uncheck the checked tag if exists.
                         final TagView checkedTagView = getCheckedTag();
                         if (checkedTagView != null) {
@@ -888,12 +866,10 @@ public class TagGroup extends ViewGroup {
                         }
                     }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
                     }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+                    @Override public void afterTextChanged(Editable s) {
                     }
                 });
             }
@@ -910,11 +886,8 @@ public class TagGroup extends ViewGroup {
         public void setChecked(boolean checked) {
             isChecked = checked;
             // Make the checked mark drawing region.
-            setPadding(horizontalPadding,
-                    verticalPadding,
-                    isChecked ? (int) (horizontalPadding + getHeight() / 2.5f + CHECKED_MARKER_OFFSET)
-                            : horizontalPadding,
-                    verticalPadding);
+            setPadding(horizontalPadding, verticalPadding,
+                isChecked ? (int) (horizontalPadding + getHeight() / 2.5f + CHECKED_MARKER_OFFSET) : horizontalPadding, verticalPadding);
             invalidatePaint();
         }
 
@@ -935,8 +908,7 @@ public class TagGroup extends ViewGroup {
             requestLayout();
         }
 
-        @Override
-        protected boolean getDefaultEditable() {
+        @Override protected boolean getDefaultEditable() {
             return true;
         }
 
@@ -976,35 +948,33 @@ public class TagGroup extends ViewGroup {
             }
 
             if (isPressed) {
-//                mBackgroundPaint.setColor(pressedBackgroundColor);
+                //                mBackgroundPaint.setColor(pressedBackgroundColor);
             }
         }
 
-        @Override
-        protected void onDraw(Canvas canvas) {
-//            canvas.drawArc(mLeftCornerRectF, -180, 90, true, mBackgroundPaint);
-//            canvas.drawArc(mLeftCornerRectF, -270, 90, true, mBackgroundPaint);
-//            canvas.drawArc(mRightCornerRectF, -90, 90, true, mBackgroundPaint);
-//            canvas.drawArc(mRightCornerRectF, 0, 90, true, mBackgroundPaint);
-//            canvas.drawRect(mHorizontalBlankFillRectF, mBackgroundPaint);
-//            canvas.drawRect(mVerticalBlankFillRectF, mBackgroundPaint);
+        @Override protected void onDraw(Canvas canvas) {
+            //            canvas.drawArc(mLeftCornerRectF, -180, 90, true, mBackgroundPaint);
+            //            canvas.drawArc(mLeftCornerRectF, -270, 90, true, mBackgroundPaint);
+            //            canvas.drawArc(mRightCornerRectF, -90, 90, true, mBackgroundPaint);
+            //            canvas.drawArc(mRightCornerRectF, 0, 90, true, mBackgroundPaint);
+            //            canvas.drawRect(mHorizontalBlankFillRectF, mBackgroundPaint);
+            //            canvas.drawRect(mVerticalBlankFillRectF, mBackgroundPaint);
 
             if (isChecked) {
                 canvas.save();
                 canvas.rotate(45, mCheckedMarkerBound.centerX(), mCheckedMarkerBound.centerY());
-//                canvas.drawLine(mCheckedMarkerBound.left, mCheckedMarkerBound.centerY(),
-//                        mCheckedMarkerBound.right, mCheckedMarkerBound.centerY(), mCheckedMarkerPaint);
-//                canvas.drawLine(mCheckedMarkerBound.centerX(), mCheckedMarkerBound.top,
-//                        mCheckedMarkerBound.centerX(), mCheckedMarkerBound.bottom, mCheckedMarkerPaint);
+                //                canvas.drawLine(mCheckedMarkerBound.left, mCheckedMarkerBound.centerY(),
+                //                        mCheckedMarkerBound.right, mCheckedMarkerBound.centerY(), mCheckedMarkerPaint);
+                //                canvas.drawLine(mCheckedMarkerBound.centerX(), mCheckedMarkerBound.top,
+                //                        mCheckedMarkerBound.centerX(), mCheckedMarkerBound.bottom, mCheckedMarkerPaint);
                 canvas.restore();
             }
 
-//            canvas.drawPath(mBorderPath, mBorderPaint);
+            //            canvas.drawPath(mBorderPath, mBorderPaint);
             super.onDraw(canvas);
         }
 
-        @Override
-        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
             int left = (int) borderStrokeWidth;
             int top = (int) borderStrokeWidth;
@@ -1017,10 +987,10 @@ public class TagGroup extends ViewGroup {
             mRightCornerRectF.set(right - d, top, right, top + d);
 
             mBorderPath.reset();
-//            mBorderPath.addArc(mLeftCornerRectF, -180, 90);
-//            mBorderPath.addArc(mLeftCornerRectF, -270, 90);
-//            mBorderPath.addArc(mRightCornerRectF, -90, 90);
-//            mBorderPath.addArc(mRightCornerRectF, 0, 90);
+            //            mBorderPath.addArc(mLeftCornerRectF, -180, 90);
+            //            mBorderPath.addArc(mLeftCornerRectF, -270, 90);
+            //            mBorderPath.addArc(mRightCornerRectF, -90, 90);
+            //            mBorderPath.addArc(mRightCornerRectF, 0, 90);
 
             int l = (int) (d / 2.0f);
             mBorderPath.moveTo(left + l, top);
@@ -1035,39 +1005,34 @@ public class TagGroup extends ViewGroup {
             mBorderPath.moveTo(right, top + l);
             mBorderPath.lineTo(right, bottom - l);
 
-//            mBorderPath.moveTo(left + l, top);
-//            mBorderPath.lineTo(right - l, top);
-//
-//            mBorderPath.moveTo(left + l, bottom);
-//            mBorderPath.lineTo(right - l, bottom);
-//
-//            mBorderPath.moveTo(left, top + l);
-//            mBorderPath.lineTo(left, bottom - l);
-//
-//            mBorderPath.moveTo(right, top + l);
-//            mBorderPath.lineTo(right, bottom - l);
+            //            mBorderPath.moveTo(left + l, top);
+            //            mBorderPath.lineTo(right - l, top);
+            //
+            //            mBorderPath.moveTo(left + l, bottom);
+            //            mBorderPath.lineTo(right - l, bottom);
+            //
+            //            mBorderPath.moveTo(left, top + l);
+            //            mBorderPath.lineTo(left, bottom - l);
+            //
+            //            mBorderPath.moveTo(right, top + l);
+            //            mBorderPath.lineTo(right, bottom - l);
 
             mHorizontalBlankFillRectF.set(left, top + l, right, bottom - l);
             mVerticalBlankFillRectF.set(left + l, top, right - l, bottom);
 
             int m = (int) (h / 2.5f);
             h = bottom - top;
-            mCheckedMarkerBound.set(right - m - horizontalPadding + CHECKED_MARKER_OFFSET,
-                    top + h / 2 - m / 2,
-                    right - horizontalPadding + CHECKED_MARKER_OFFSET,
-                    bottom - h / 2 + m / 2);
+            mCheckedMarkerBound.set(right - m - horizontalPadding + CHECKED_MARKER_OFFSET, top + h / 2 - m / 2,
+                right - horizontalPadding + CHECKED_MARKER_OFFSET, bottom - h / 2 + m / 2);
 
             // Ensure the checked mark drawing region is correct across screen orientation changes.
             if (isChecked) {
-                setPadding(horizontalPadding,
-                        verticalPadding,
-                        (int) (horizontalPadding + h / 2.5f + CHECKED_MARKER_OFFSET),
-                        verticalPadding);
+                setPadding(horizontalPadding, verticalPadding, (int) (horizontalPadding + h / 2.5f + CHECKED_MARKER_OFFSET),
+                    verticalPadding);
             }
         }
 
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
+        @Override public boolean onTouchEvent(MotionEvent event) {
             if (mState == STATE_INPUT) {
                 // The INPUT tag doesn't change background color on the touch event.
                 return super.onTouchEvent(event);
@@ -1099,8 +1064,7 @@ public class TagGroup extends ViewGroup {
             return super.onTouchEvent(event);
         }
 
-        @Override
-        public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        @Override public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
             return new ZanyInputConnection(super.onCreateInputConnection(outAttrs), true);
         }
 
@@ -1113,13 +1077,12 @@ public class TagGroup extends ViewGroup {
                 super(target, mutable);
             }
 
-            @Override
-            public boolean deleteSurroundingText(int beforeLength, int afterLength) {
+            @Override public boolean deleteSurroundingText(int beforeLength, int afterLength) {
                 // magic: in latest Android, deleteSurroundingText(1, 0) will be called for backspace
                 if (beforeLength == 1 && afterLength == 0) {
                     // backspace
-                    return sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
-                            && sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+                    return sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)) && sendKeyEvent(
+                        new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
                 }
                 return super.deleteSurroundingText(beforeLength, afterLength);
             }

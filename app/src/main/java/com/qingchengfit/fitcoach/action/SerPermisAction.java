@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 public class SerPermisAction {
-    public static boolean checkAtLeastOne(String s){
+    public static boolean checkAtLeastOne(String s) {
         return CurentPermissions.newInstance().queryPermission(s);
     }
 
@@ -35,6 +35,6 @@ public class SerPermisAction {
 
     public static boolean check(String id, String prisettingCanChange) {
 
-       return CurentPermissions.newInstance().queryPermission(prisettingCanChange);
+        return CurentPermissions.newInstance().queryPermission(prisettingCanChange);
     }
 }

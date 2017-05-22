@@ -22,68 +22,57 @@ import com.qingchengfit.fitcoach.R;
  */
 public class DialogUtils {
     public static MaterialDialog instanceDelDialog(Context context, String content, MaterialDialog.SingleButtonCallback callback) {
-        return
-                new MaterialDialog.Builder(context)
-                        .content(content)
-                        .autoDismiss(true)
-                        .positiveColorRes(R.color.orange)
-                        .negativeColorRes(R.color.text_black)
-                        .negativeText(R.string.pickerview_cancel)
-                        .positiveText(R.string.pickerview_submit)
-                        .onPositive(callback)
-                        .build();
+        return new MaterialDialog.Builder(context).content(content)
+            .autoDismiss(true)
+            .positiveColorRes(R.color.orange)
+            .negativeColorRes(R.color.text_black)
+            .negativeText(R.string.pickerview_cancel)
+            .positiveText(R.string.pickerview_submit)
+            .onPositive(callback)
+            .build();
     }
 
- public static MaterialDialog instanceDelDialog(Context context,String title, String content, MaterialDialog.SingleButtonCallback callback) {
-        return
-                new MaterialDialog.Builder(context)
-                        .title(title)
-                        .content(content)
-                        .autoDismiss(true)
-                        .positiveColorRes(R.color.orange)
-                        .negativeColorRes(R.color.text_black)
-                        .negativeText(R.string.pickerview_cancel)
-                        .positiveText(R.string.pickerview_submit)
-                        .onPositive(callback)
-                        .build();
+    public static MaterialDialog instanceDelDialog(Context context, String title, String content,
+        MaterialDialog.SingleButtonCallback callback) {
+        return new MaterialDialog.Builder(context).title(title)
+            .content(content)
+            .autoDismiss(true)
+            .positiveColorRes(R.color.orange)
+            .negativeColorRes(R.color.text_black)
+            .negativeText(R.string.pickerview_cancel)
+            .positiveText(R.string.pickerview_submit)
+            .onPositive(callback)
+            .build();
     }
 
-
-    public static MaterialDialog instanceForbid(Context context,MaterialDialog.SingleButtonCallback callback){
-        return
-                new MaterialDialog.Builder(context)
-                        .content(R.string.alert_permission_forbid)
-                        .autoDismiss(false)
-                        .positiveColorRes(R.color.orange)
-                        .positiveText(R.string.common_comfirm)
-                        .onPositive(callback)
-                        .build();
+    public static MaterialDialog instanceForbid(Context context, MaterialDialog.SingleButtonCallback callback) {
+        return new MaterialDialog.Builder(context).content(R.string.alert_permission_forbid)
+            .autoDismiss(false)
+            .positiveColorRes(R.color.orange)
+            .positiveText(R.string.common_comfirm)
+            .onPositive(callback)
+            .build();
     }
 
-    public static void showAlert(Context context,String title,String content){
-       MaterialDialog.Builder builder =  new MaterialDialog.Builder(context)
-                .content(content)
-                .autoDismiss(false)
-                .positiveColorRes(R.color.orange)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                })
-                .positiveText(R.string.common_i_konw);
-        if (title != null)
-            builder.title(title);
+    public static void showAlert(Context context, String title, String content) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context).content(content)
+            .autoDismiss(false)
+            .positiveColorRes(R.color.orange)
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    dialog.dismiss();
+                }
+            })
+            .positiveText(R.string.common_i_konw);
+        if (title != null) builder.title(title);
         builder.build().show();
     }
 
-
-    public static void showAlert(Context context,String content){
-        showAlert(context,null,content);
+    public static void showAlert(Context context, String content) {
+        showAlert(context, null, content);
     }
 
-    public static void showAlert(Context context, @StringRes int content){
-        showAlert(context,null,context.getString(content));
+    public static void showAlert(Context context, @StringRes int content) {
+        showAlert(context, null, context.getString(content));
     }
-
 }

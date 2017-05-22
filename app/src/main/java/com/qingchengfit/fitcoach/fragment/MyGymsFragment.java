@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -23,15 +26,8 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import cn.qingchengfit.model.base.CoachService;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -40,14 +36,10 @@ import rx.schedulers.Schedulers;
  */
 public class MyGymsFragment extends android.support.v4.app.Fragment {
     public static final String TAG = MyGymsFragment.class.getName();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
-    @BindView(R.id.refresh_nodata)
-    SwipeRefreshLayout refreshNodata;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
+    @BindView(R.id.refresh_nodata) SwipeRefreshLayout refreshNodata;
     private GymsAdapter mGymAdapter;
     private List<CoachService> adapterData = new ArrayList<>();
     private boolean mHasPrivate = false;
@@ -56,17 +48,14 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
     public MyGymsFragment() {
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms_true, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         toolbar.setTitle("我的健身房");
         toolbar.setNavigationIcon(R.drawable.ic_actionbar_navi);
-//        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
-//        toolbar.inflateMenu(R.menu.add);
+        //        toolbar.setNavigationOnClickListener(v -> openDrawerInterface.onOpenDrawer());
+        //        toolbar.inflateMenu(R.menu.add);
         toolbar.setOnMenuItemClickListener(item -> {
             Intent intent = new Intent(getActivity(), FragActivity.class);
             intent.putExtra("type", 3);
@@ -79,60 +68,54 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         recyclerview.setAdapter(mGymAdapter);
         mGymAdapter.setListener(new OnRecycleItemClickListener() {
-            @Override
-            public void onItemClick(View v, int pos) {
-//                Intent toWeb = new Intent(getActivity(), FragActivity.class);
-//                toWeb.putExtra("host", adapterData.get(pos).url);
-//                toWeb.putExtra("id", adapterData.get(pos).id);
-//                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
-//                toWeb.putExtra("type", 5);
-//                startActivityForResult(toWeb, 404);
+            @Override public void onItemClick(View v, int pos) {
+                //                Intent toWeb = new Intent(getActivity(), FragActivity.class);
+                //                toWeb.putExtra("host", adapterData.get(pos).url);
+                //                toWeb.putExtra("id", adapterData.get(pos).id);
+                //                toWeb.putExtra("isPrivate", adapterData.get(pos).is_personal_system);
+                //                toWeb.putExtra("type", 5);
+                //                startActivityForResult(toWeb, 404);
                 Intent intent = new Intent(getActivity(), FragActivity.class);
                 intent.putExtra("id", adapterData.get(pos).id);
-//                intent.putExtra("isPrivate", adapterData.get(pos).);
-                intent.putExtra("model",adapterData.get(pos).model);
+                //                intent.putExtra("isPrivate", adapterData.get(pos).);
+                intent.putExtra("model", adapterData.get(pos).model);
                 intent.putExtra("type", 6);
                 startActivityForResult(intent, 11);
-
             }
         });
-//        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .map(qcCoachSystemDetailResponse -> {
-//                    adapterData.clear();
-//                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
-//                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
-//                        if (systemDetail.is_personal_system) {
-//                            mHasPrivate = true;
-//                            break;
-//                        } else mHasPrivate = false;
-//
-//                    }
-//                    return true;
-//                })
-//                .subscribe(aBoolean -> mGymAdapter.notifyDataSetChanged());
+        //        QcCloudClient.getApi().getApi.qcGetCoachSystemDetail(App.coachid)
+        //                .observeOn(AndroidSchedulers.mainThread())
+        //                .subscribeOn(Schedulers.io())
+        //                .map(qcCoachSystemDetailResponse -> {
+        //                    adapterData.clear();
+        //                    adapterData.addAll(qcCoachSystemDetailResponse.date.systems);
+        //                    for (QcCoachSystemDetailResponse.CoachSystemDetail systemDetail : qcCoachSystemDetailResponse.date.systems) {
+        //                        if (systemDetail.is_personal_system) {
+        //                            mHasPrivate = true;
+        //                            break;
+        //                        } else mHasPrivate = false;
+        //
+        //                    }
+        //                    return true;
+        //                })
+        //                .subscribe(aBoolean -> mGymAdapter.notifyDataSetChanged());
         freshData();
         refresh.setColorSchemeResources(R.color.primary);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 freshData();
             }
         });
         refreshNodata.setColorSchemeResources(R.color.primary);
         refreshNodata.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 freshData();
             }
         });
         return view;
-
     }
 
-    @OnClick(R.id.course_add_private)
-    public void onClickprivate() {
+    @OnClick(R.id.course_add_private) public void onClickprivate() {
         Intent intent = new Intent(getActivity(), FragActivity.class);
         if (mHasPrivate) {
             intent.putExtra("type", 2);
@@ -142,16 +125,13 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
         startActivityForResult(intent, 11);
     }
 
-    @OnClick(R.id.course_add_belong)
-    public void onClickBelong() {
+    @OnClick(R.id.course_add_belong) public void onClickBelong() {
         Intent intent = new Intent(getActivity(), FragActivity.class);
         intent.putExtra("type", 4);
         startActivityForResult(intent, 11);
     }
 
-
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         freshData();
     }
@@ -159,70 +139,64 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
     public void freshData() {
 
         QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .map(qcCoachSystemDetailResponse -> {
-                    adapterData.clear();
-                    adapterData.addAll(qcCoachSystemDetailResponse.data.services);
-                    if (adapterData.size() > 0) {
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .map(qcCoachSystemDetailResponse -> {
+                adapterData.clear();
+                adapterData.addAll(qcCoachSystemDetailResponse.data.services);
+                if (adapterData.size() > 0) {
 
-                        refresh.setVisibility(View.VISIBLE);
-                        refreshNodata.setVisibility(View.GONE);
+                    refresh.setVisibility(View.VISIBLE);
+                    refreshNodata.setVisibility(View.GONE);
+                } else {
+                    mHasPrivate = false;
+                    refresh.setVisibility(View.GONE);
+                    refreshNodata.setVisibility(View.VISIBLE);
+                }
+                for (CoachService service : qcCoachSystemDetailResponse.data.services) {
+                    if (service.model.equals("service") && service.type == 1) {
+                        mHasPrivate = true;
+                        break;
                     } else {
                         mHasPrivate = false;
-                        refresh.setVisibility(View.GONE);
-                        refreshNodata.setVisibility(View.VISIBLE);
                     }
-                    for (CoachService service : qcCoachSystemDetailResponse.data.services) {
-                        if (service.model.equals("service") && service.type ==1) {
-                            mHasPrivate = true;
-                            break;
-                        } else mHasPrivate = false;
-
-                    }
-                    if (mHasPrivate) {
-                        toolbar.getMenu().clear();
-                    } else {
-                        toolbar.getMenu().clear();
-                        toolbar.inflateMenu(R.menu.add);
-                    }
-                    return true;
-                })
-                .subscribe(aBoolean -> {
-                    mGymAdapter.notifyDataSetChanged();
-                    refresh.setRefreshing(false);
-                    refreshNodata.setRefreshing(false);
-                }, throwable -> {
-                }, () -> {
-                });
+                }
+                if (mHasPrivate) {
+                    toolbar.getMenu().clear();
+                } else {
+                    toolbar.getMenu().clear();
+                    toolbar.inflateMenu(R.menu.add);
+                }
+                return true;
+            })
+            .subscribe(aBoolean -> {
+                mGymAdapter.notifyDataSetChanged();
+                refresh.setRefreshing(false);
+                refreshNodata.setRefreshing(false);
+            }, throwable -> {
+            }, () -> {
+            });
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode > 0) {
 
         }
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
     public static class GymsVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_gym_header)
-        ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name)
-        TextView itemGymName;
-        @BindView(R.id.item_gym_phonenum)
-        TextView itemGymPhonenum;
-        @BindView(R.id.qc_identify)
-        ImageView itemIsPersonal;
-        @BindView(R.id.item_gym_brand)
-        TextView brand;
+        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
+        @BindView(R.id.item_gym_name) TextView itemGymName;
+        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
+        @BindView(R.id.qc_identify) ImageView itemIsPersonal;
+        @BindView(R.id.item_gym_brand) TextView brand;
+
         public GymsVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -231,10 +205,8 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
 
     class GymsAdapter extends RecyclerView.Adapter<GymsVH> implements View.OnClickListener {
 
-
         private List<CoachService> datas;
         private OnRecycleItemClickListener listener;
-
 
         public GymsAdapter(List datas) {
             this.datas = datas;
@@ -248,38 +220,37 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
             this.listener = listener;
         }
 
-        @Override
-        public GymsVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override public GymsVH onCreateViewHolder(ViewGroup parent, int viewType) {
             GymsVH holder = new GymsVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(GymsVH holder, int position) {
+        @Override public void onBindViewHolder(GymsVH holder, int position) {
             holder.itemView.setTag(position);
             CoachService detail = datas.get(position);
             holder.itemGymName.setText(detail.name);
             holder.itemGymPhonenum.setText(detail.courses_count + "门课程, " + detail.users_count + "名学员");
             holder.brand.setText(detail.brand_name);
-            if (detail.model.equals("service")&&detail.type==1) {
+            if (detail.model.equals("service") && detail.type == 1) {
                 holder.itemIsPersonal.setVisibility(View.GONE);
             } else {
                 holder.itemIsPersonal.setVisibility(View.VISIBLE);
             }
-            Glide.with(App.AppContex).load(PhotoUtils.getSmall(detail.photo)).asBitmap().placeholder(R.drawable.ic_default_header).error(R.drawable.ic_default_header).into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
+            Glide.with(App.AppContex)
+                .load(PhotoUtils.getSmall(detail.photo))
+                .asBitmap()
+                .placeholder(R.drawable.ic_default_header)
+                .error(R.drawable.ic_default_header)
+                .into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
-            if (listener != null)
-                listener.onItemClick(v, (int) v.getTag());
+        @Override public void onClick(View v) {
+            if (listener != null) listener.onItemClick(v, (int) v.getTag());
         }
     }
 }

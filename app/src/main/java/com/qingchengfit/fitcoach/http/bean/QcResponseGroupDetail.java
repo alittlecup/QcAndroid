@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.bean.base.Course;
-
 import java.util.List;
-
 
 /**
  * power by
@@ -21,30 +19,17 @@ import java.util.List;
  */
 public class QcResponseGroupDetail extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
-
+    @SerializedName("data") public Data data;
 
     public class Data {
-        @SerializedName("course")
-        public Course course;
-        @SerializedName("batches")
-        public List<GroupBatch> batches;
+        @SerializedName("course") public Course course;
+        @SerializedName("batches") public List<GroupBatch> batches;
     }
-
 
     public class GroupBatch {
-        @SerializedName("course")
-        public Course course;
-        @SerializedName("from_date")
-        public String from_date;
-        @SerializedName("to_date")
-        public String to_date;
-        @SerializedName("id")
-        public String id;
-
-
+        @SerializedName("course") public Course course;
+        @SerializedName("from_date") public String from_date;
+        @SerializedName("to_date") public String to_date;
+        @SerializedName("id") public String id;
     }
-
-
 }

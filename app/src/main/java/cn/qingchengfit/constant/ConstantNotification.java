@@ -30,7 +30,6 @@ import org.json.JSONObject;
 
 public class ConstantNotification {
 
-
     public static final int TYPE_FITNESS_CHECK_IN = 1;              //健身房-签到-工作人员
     public static final int TYPE_FITNESS_CHECK_OUT = 2;             //健身房-签出-工作人员
     public static final int TYPE_FITNESS_ORDER = 3;             //健身房-预约-教练
@@ -65,60 +64,52 @@ public class ConstantNotification {
      */
     public static final String GYM_NOTIFICATION_STR = "gym";
     public static final int[] GYM_NOTIFICATION = {
-        TYPE_FITNESS_ORDER,
-        TYPE_FITNESS_ORDER_CANCEL,
-        TYPE_FITNESS_SCORE,
-        TYPE_FITNESS_TEAM_ERROR,
-        TYPE_FITNESS_COACH,
-        TYPE_FITNESS_ASK_PHOTO,
-        TYPE_FITNESS_COACH_REST,
-        TYPE_FITNESS_TRAINER_CHANGED,
+        TYPE_FITNESS_ORDER, TYPE_FITNESS_ORDER_CANCEL, TYPE_FITNESS_SCORE, TYPE_FITNESS_TEAM_ERROR, TYPE_FITNESS_COACH,
+        TYPE_FITNESS_ASK_PHOTO, TYPE_FITNESS_COACH_REST, TYPE_FITNESS_TRAINER_CHANGED,
     };
     /*
        系统通知
      */
     public static final String SYSTEM_NOTIFICATION_STR = "system";
-    public static final int[] SYSTEM_NOTIFICATION = {TYPE_CLOUD_MESSAGE_COACH};
+    public static final int[] SYSTEM_NOTIFICATION = { TYPE_CLOUD_MESSAGE_COACH };
     /*
      *学习培训
      */
     public static final String STUDY_TRAIN_NOTIFICATION_STR = "meeting";
-    public static final int[] STUDY_TRAIN_NOTIFICATION ={
-        TYPE_MEETING_PAY,
-        TYPE_MEETING_TICKET,
-        TYPE_MEETING_PAY_CERTIFICATES,
-        TYPE_MEETING_SCHEDULE,
-        TYPE_MEETING_SCHEDULE_CANCEL,
-        TYPE_MEETING_CERTIFICATES,
-        TYPE_MEETING_PAY_CHECK,
-        TYPE_MEETING_PAY_CHECK_FAIL
+    public static final int[] STUDY_TRAIN_NOTIFICATION = {
+        TYPE_MEETING_PAY, TYPE_MEETING_TICKET, TYPE_MEETING_PAY_CERTIFICATES, TYPE_MEETING_SCHEDULE, TYPE_MEETING_SCHEDULE_CANCEL,
+        TYPE_MEETING_CERTIFICATES, TYPE_MEETING_PAY_CHECK, TYPE_MEETING_PAY_CHECK_FAIL
     };
     /*
      * 签到处理
      */
     public static final String CHECKIN_NOTI_STR = "checkin";
-    public static  final int[] CHECKIN_NOTIFICATION ={TYPE_FITNESS_CHECK_IN,TYPE_FITNESS_CHECK_OUT,TYPE_FITNESS_CHECK_IN_CONFIRM,TYPE_FITNESS_CHECK_OUT_CONFIRM};
+    public static final int[] CHECKIN_NOTIFICATION =
+        { TYPE_FITNESS_CHECK_IN, TYPE_FITNESS_CHECK_OUT, TYPE_FITNESS_CHECK_IN_CONFIRM, TYPE_FITNESS_CHECK_OUT_CONFIRM };
     /*
      * 收到回复
      */
     public static final String COMMENT_NOTIFICATION_STR = "comment";
-    public static final  int[] COMMENT_NOTIFICATION = {TYPE_CLOUD_COMMENT};
+    public static final int[] COMMENT_NOTIFICATION = { TYPE_CLOUD_COMMENT };
+    public static final String[] NOTISORDERS = {
+        GYM_NOTIFICATION_STR, SYSTEM_NOTIFICATION_STR, STUDY_TRAIN_NOTIFICATION_STR, CHECKIN_NOTI_STR, COMMENT_NOTIFICATION_STR
+    };
 
-    public static String getNotiQueryJson(){
-        try{
+    public static String getNotiQueryJson() {
+        try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(GYM_NOTIFICATION_STR,getArray(GYM_NOTIFICATION));
-            jsonObject.put(SYSTEM_NOTIFICATION_STR,getArray(SYSTEM_NOTIFICATION));
-            jsonObject.put(STUDY_TRAIN_NOTIFICATION_STR,getArray(STUDY_TRAIN_NOTIFICATION));
+            jsonObject.put(GYM_NOTIFICATION_STR, getArray(GYM_NOTIFICATION));
+            jsonObject.put(SYSTEM_NOTIFICATION_STR, getArray(SYSTEM_NOTIFICATION));
+            jsonObject.put(STUDY_TRAIN_NOTIFICATION_STR, getArray(STUDY_TRAIN_NOTIFICATION));
             //jsonObject.put(CHECKIN_NOTI_STR,getArray(CHECKIN_NOTIFICATION));
-            jsonObject.put(COMMENT_NOTIFICATION_STR,getArray(COMMENT_NOTIFICATION));
+            jsonObject.put(COMMENT_NOTIFICATION_STR, getArray(COMMENT_NOTIFICATION));
             return jsonObject.toString();
-        }catch (Exception e){
+        } catch (Exception e) {
             return "";
         }
     }
 
-    private static JSONArray getArray(int[] ints){
+    private static JSONArray getArray(int[] ints) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < ints.length; i++) {
             jsonArray.put(ints[i]);
@@ -126,45 +117,47 @@ public class ConstantNotification {
         return jsonArray;
     }
 
-    @DrawableRes
-    public static int getNotiDrawable(String pos){
-        switch (pos){
-            case SYSTEM_NOTIFICATION_STR:return R.drawable.vd_notification_system;
-            case STUDY_TRAIN_NOTIFICATION_STR:return R.drawable.vd_notification_meetting;
-            case CHECKIN_NOTI_STR:return R.drawable.vd_notification_checkin;
+    @DrawableRes public static int getNotiDrawable(String pos) {
+        switch (pos) {
+            case SYSTEM_NOTIFICATION_STR:
+                return R.drawable.vd_notification_system;
+            case STUDY_TRAIN_NOTIFICATION_STR:
+                return R.drawable.vd_notification_meetting;
+            case CHECKIN_NOTI_STR:
+                return R.drawable.vd_notification_checkin;
             //case COMPETITION_NOTI_STR:return R.drawable.vd_notification_competition;
-            case COMMENT_NOTIFICATION_STR:return R.drawable.vd_notification_comment;
-            default:return R.drawable.vd_notification_gym;
+            case COMMENT_NOTIFICATION_STR:
+                return R.drawable.vd_notification_comment;
+            default:
+                return R.drawable.vd_notification_gym;
         }
     }
 
-    @StringRes
-    public static int getNotiStr(int type){
-        switch (type){
-            case R.drawable.vd_notification_system:return R.string.notification_system;
-            case R.drawable.vd_notification_meetting:return R.string.notification_meetting;
+    @StringRes public static int getNotiStr(int type) {
+        switch (type) {
+            case R.drawable.vd_notification_system:
+                return R.string.notification_system;
+            case R.drawable.vd_notification_meetting:
+                return R.string.notification_meetting;
             //case R.drawable.vd_notification_checkin:return R.string.notification_checkin;
-            case R.drawable.vd_notification_comment:return R.string.notification_comment;
-            default:return R.string.notification_gym;
+            case R.drawable.vd_notification_comment:
+                return R.string.notification_comment;
+            default:
+                return R.string.notification_gym;
         }
     }
 
-    public static String getCategloreStr(int type){
-        switch (type){
-            case R.drawable.vd_notification_system:return StringUtils.array2str(SYSTEM_NOTIFICATION);
-            case R.drawable.vd_notification_meetting:return StringUtils.array2str(STUDY_TRAIN_NOTIFICATION);
+    public static String getCategloreStr(int type) {
+        switch (type) {
+            case R.drawable.vd_notification_system:
+                return StringUtils.array2str(SYSTEM_NOTIFICATION);
+            case R.drawable.vd_notification_meetting:
+                return StringUtils.array2str(STUDY_TRAIN_NOTIFICATION);
             //case R.drawable.vd_notification_checkin:return StringUtils.array2str(CHECKIN_NOTIFICATION);
-            case R.drawable.vd_notification_comment:return StringUtils.array2str(COMMENT_NOTIFICATION);
-            default: return StringUtils.array2str(GYM_NOTIFICATION);
+            case R.drawable.vd_notification_comment:
+                return StringUtils.array2str(COMMENT_NOTIFICATION);
+            default:
+                return StringUtils.array2str(GYM_NOTIFICATION);
         }
     }
-    public static final String[] NOTISORDERS = {
-        GYM_NOTIFICATION_STR,
-        SYSTEM_NOTIFICATION_STR,
-        STUDY_TRAIN_NOTIFICATION_STR,
-        CHECKIN_NOTI_STR,
-        COMMENT_NOTIFICATION_STR
-    };
-
-
 }

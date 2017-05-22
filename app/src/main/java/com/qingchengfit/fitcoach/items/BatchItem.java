@@ -21,7 +21,7 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
     QcResponseGroupDetail.GroupBatch batch;
 
-    public void setBatch(QcResponseGroupDetail.GroupBatch batch) {
+    public BatchItem(QcResponseGroupDetail.GroupBatch batch) {
         this.batch = batch;
     }
 
@@ -29,7 +29,7 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
         return batch;
     }
 
-    public BatchItem(QcResponseGroupDetail.GroupBatch batch) {
+    public void setBatch(QcResponseGroupDetail.GroupBatch batch) {
         this.batch = batch;
     }
 
@@ -43,22 +43,25 @@ public class BatchItem extends AbstractFlexibleItem<BatchItem.BatchVH> {
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BatchVH holder, int position, List payloads) {
         holder.courseName.setText(batch.course.getName());
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(batch.course.getPhoto())).error(R.drawable.img_default_course).into(holder.img);
+        Glide.with(holder.itemView.getContext())
+            .load(PhotoUtils.getSmall(batch.course.getPhoto()))
+            .error(R.drawable.img_default_course)
+            .into(holder.img);
         holder.title.setText(batch.from_date + "至" + batch.to_date);
-        holder.outofdate.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date))? View.VISIBLE: View.GONE);
+        holder.outofdate.setVisibility(DateUtils.isOutOfDate(DateUtils.formatDateFromYYYYMMDD(batch.to_date)) ? View.VISIBLE : View.GONE);
     }
 
     @Override public boolean equals(Object o) {
 
-        if (o instanceof BatchItem){
+        if (o instanceof BatchItem) {
             try {
                 return ((BatchItem) o).batch.id.equals(batch.id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 return false;
             }
-
-        }else return false;
-
+        } else {
+            return false;
+        }
     }
 
     public class BatchVH extends FlexibleViewHolder {

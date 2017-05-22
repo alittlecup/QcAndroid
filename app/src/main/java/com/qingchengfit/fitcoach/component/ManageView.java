@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -26,11 +25,6 @@ public class ManageView extends LinearLayout {
     public ManageView(Context context) {
         super(context);
         init(context);
-
-    }
-
-    private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.layout_manage,this,true);
     }
 
     public ManageView(Context context, AttributeSet attrs) {
@@ -43,9 +37,12 @@ public class ManageView extends LinearLayout {
         init(context);
     }
 
-    @Override
-    protected void onFinishInflate() {
+    private void init(Context context) {
+        LayoutInflater.from(context).inflate(R.layout.layout_manage, this, true);
+    }
+
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
-        TextView textView1 = (TextView)findViewById(R.id.text1);
+        TextView textView1 = (TextView) findViewById(R.id.text1);
     }
 }

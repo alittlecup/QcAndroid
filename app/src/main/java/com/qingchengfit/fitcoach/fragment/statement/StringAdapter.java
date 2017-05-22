@@ -42,8 +42,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringVH> 
     }
 
     @Override public StringVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        StringVH vh = new StringVH(
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_string, parent, false));
+        StringVH vh = new StringVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_string, parent, false));
         vh.itemView.setOnClickListener(this);
         return vh;
     }

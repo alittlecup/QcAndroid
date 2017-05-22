@@ -20,8 +20,7 @@ public class CustomSwipeRefreshLayout extends SwipeRefreshLayout {
         mCanChildScrollUpCallback = canChildScrollUpCallback;
     }
 
-    @Override
-    public boolean canChildScrollUp() {
+    @Override public boolean canChildScrollUp() {
         if (mCanChildScrollUpCallback != null) {
             return mCanChildScrollUpCallback.canSwipeRefreshChildScrollUp();
         }

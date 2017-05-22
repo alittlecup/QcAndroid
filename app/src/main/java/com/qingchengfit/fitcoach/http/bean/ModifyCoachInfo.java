@@ -75,7 +75,6 @@ public class ModifyCoachInfo {
         this.city = city;
     }
 
-
     public String getShort_description() {
         return short_description;
     }

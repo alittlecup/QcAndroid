@@ -55,9 +55,6 @@ import rx.schedulers.Schedulers;
  * <p>
  * <p>
  * Created by Paper on 15/8/5 2015.
- *
- *
- *
  */
 public class SplashActivity extends BaseAcitivity {
 
@@ -65,14 +62,14 @@ public class SplashActivity extends BaseAcitivity {
     @BindView(R.id.splash_indicator) CircleIndicator splashIndicator;
     List<View> imageViews = new ArrayList<>();
     @BindView(R.id.main_loading) RelativeLayout mainLoading;
+    @Inject LoginStatus loginStatus;
+    @Inject RepoCoachServiceImpl repoCoachService;
     private int[] mSplashImg = new int[] {
         R.drawable.help1, R.drawable.help2, R.drawable.help3, R.drawable.help4, R.drawable.help5,
     };
     private String[] mColors = new String[] {
         "#55b37f", "#5595b3", "#b38855", "#675Eb1", "#9e74b0"
     };
-    @Inject LoginStatus loginStatus;
-    @Inject RepoCoachServiceImpl repoCoachService;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -167,8 +164,7 @@ public class SplashActivity extends BaseAcitivity {
                     }
                 });
             });
-
-        }else {
+        } else {
             /*
              *未登录 直接进入主页
              */
@@ -177,8 +173,6 @@ public class SplashActivity extends BaseAcitivity {
             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_hold);
             SplashActivity.this.finish();
         }
-
-
     }
 
     public void goSplashViewpager() {

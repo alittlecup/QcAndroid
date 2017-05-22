@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.Utils;
 
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
-import cn.qingchengfit.model.base.CoachService;
 import java.util.HashMap;
 
 /**
@@ -20,10 +20,9 @@ import java.util.HashMap;
  */
 public class GymUtils {
 
-    public static String getCourseTypeStr(boolean isPrivate){
-        return  isPrivate?"timetables" : "schedules";
+    public static String getCourseTypeStr(boolean isPrivate) {
+        return isPrivate ? "timetables" : "schedules";
     }
-
 
     public static boolean isInBrand(CoachService gymBase) {
         return gymBase == null || gymBase.id == 0 || gymBase.model == null;
@@ -50,8 +49,7 @@ public class GymUtils {
 
     public static HashMap<String, Object> getParams(CoachService gymBase) {
         HashMap<String, Object> params = new HashMap<>();
-        if (gymBase == null)
-            return null;
+        if (gymBase == null) return null;
         params.put("id", gymBase.getId() + "");
         params.put("model", gymBase.getModel());
         return params;
@@ -69,10 +67,10 @@ public class GymUtils {
         return params;
     }
 
-    public static int getSystemEndDay(CoachService coachService){
+    public static int getSystemEndDay(CoachService coachService) {
         try {
             return DateUtils.dayNumFromToday(DateUtils.formatDateFromYYYYMMDD(coachService.system_end()));
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }

@@ -19,11 +19,10 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class ArticleReplyPresenter extends BasePresenter {
-    private MVPView view;
-
     @Inject RestRepository restRepository;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    private MVPView view;
 
     @Inject public ArticleReplyPresenter() {
     }
@@ -31,22 +30,25 @@ public class ArticleReplyPresenter extends BasePresenter {
     @Override public void attachView(PView v) {
         view = (MVPView) v;
     }
-    public void queryReplies(int page){
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("page",page);
-        RxRegiste(restRepository.getGet_api().qcQueryReplies(params)
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+    public void queryReplies(int page) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        RxRegiste(restRepository.getGet_api().qcQueryReplies(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<ArticleCommentListData>>() {
                 @Override public void call(QcResponseData<ArticleCommentListData> articleCommentListDataQcResponseData) {
-                    if (ResponseConstant.checkSuccess(articleCommentListDataQcResponseData)){
-                        view.onArticleReplies(articleCommentListDataQcResponseData.getData().comments,articleCommentListDataQcResponseData.data.current_page);
-                        view.onTotalCount(articleCommentListDataQcResponseData.data.total_count,articleCommentListDataQcResponseData.data.pages);
-
-                    }else view.onShowError(articleCommentListDataQcResponseData.getMsg());
+                    if (ResponseConstant.checkSuccess(articleCommentListDataQcResponseData)) {
+                        view.onArticleReplies(articleCommentListDataQcResponseData.getData().comments,
+                            articleCommentListDataQcResponseData.data.current_page);
+                        view.onTotalCount(articleCommentListDataQcResponseData.data.total_count,
+                            articleCommentListDataQcResponseData.data.pages);
+                    } else {
+                        view.onShowError(articleCommentListDataQcResponseData.getMsg());
+                    }
                 }
-            },new NetWorkThrowable())
-        );
+            }, new NetWorkThrowable()));
     }
+
     @Override public void unattachView() {
         super.unattachView();
         view = null;
@@ -54,6 +56,7 @@ public class ArticleReplyPresenter extends BasePresenter {
 
     public interface MVPView extends CView {
         void onArticleReplies(List<ArticleComment> list, int page);
+
         void onTotalCount(int count, int pages);
     }
 }

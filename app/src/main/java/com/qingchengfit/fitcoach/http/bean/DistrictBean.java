@@ -16,12 +16,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/18 2015.
  */
 public class DistrictBean {
-    @SerializedName("gd_city_id")
-    public int city_id;
+    @SerializedName("gd_city_id") public int city_id;
 
-    @SerializedName("code")
-    public int id;
+    @SerializedName("code") public int id;
 
-    @SerializedName("name")
-    public String name;
+    @SerializedName("name") public String name;
 }

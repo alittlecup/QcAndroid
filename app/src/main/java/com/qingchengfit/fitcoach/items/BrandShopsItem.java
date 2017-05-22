@@ -25,17 +25,15 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandShopsVH> implements FlexibleAdapter.OnItemClickListener{
-
-    public BrandShopsItem(Brand brand, List<ChosenGymItem> datas) {
-        this.brand = brand;
-        this.datas = datas;
-    }
+public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandShopsVH> implements FlexibleAdapter.OnItemClickListener {
 
     Brand brand;
     List<ChosenGymItem> datas;
     CommonFlexAdapter commonFlexAdapter;
-
+    public BrandShopsItem(Brand brand, List<ChosenGymItem> datas) {
+        this.brand = brand;
+        this.datas = datas;
+    }
 
     @Override public int getLayoutRes() {
         return R.layout.item_brand_shops;
@@ -47,17 +45,26 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, BrandShopsVH holder, int position, List payloads) {
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getGauss(brand.getPhoto())).placeholder(R.drawable.bg_brand).into(holder.imgBg);
-        Glide.with(holder.itemView.getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(holder.imgBrand,holder.itemView.getContext()));
+        Glide.with(holder.itemView.getContext())
+            .load(PhotoUtils.getGauss(brand.getPhoto()))
+            .placeholder(R.drawable.bg_brand)
+            .into(holder.imgBg);
+        Glide.with(holder.itemView.getContext())
+            .load(PhotoUtils.getSmall(brand.getPhoto()))
+            .asBitmap()
+            .placeholder(R.drawable.ic_default_header)
+            .into(new CircleImgWrapper(holder.imgBrand, holder.itemView.getContext()));
         holder.tvBrandName.setText(brand.getName());
         holder.recyclerInsert.setLayoutManager(new SmoothScrollLinearLayoutManager(holder.itemView.getContext()));
         holder.recyclerInsert.addItemDecoration(new DividerItemDecoration(holder.itemView.getContext()));
-        commonFlexAdapter = new CommonFlexAdapter(datas,this);
+        commonFlexAdapter = new CommonFlexAdapter(datas, this);
         holder.recyclerInsert.setAdapter(commonFlexAdapter);
         holder.btnManageBrand.setOnClickListener(v -> {
-                if (brand.has_permission)
-                    RxBus.getBus().post(new EventClickManageBrand(brand));
-                else ToastUtils.show("您没有该场馆权限");
+            if (brand.has_permission) {
+                RxBus.getBus().post(new EventClickManageBrand(brand));
+            } else {
+                ToastUtils.show("您没有该场馆权限");
+            }
         });
     }
 
@@ -66,7 +73,7 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
     }
 
     @Override public boolean onItemClick(int position) {
-        if (datas.size() >position && datas.get(position) instanceof ChosenGymItem) {
+        if (datas.size() > position && datas.get(position) instanceof ChosenGymItem) {
             RxBus.getBus().post(new EventChooseGym(((ChosenGymItem) datas.get(position)).coachService));
         }
         return true;
@@ -78,6 +85,7 @@ public class BrandShopsItem extends AbstractFlexibleItem<BrandShopsItem.BrandSho
         @BindView(R.id.btn_manage_brand) TextView btnManageBrand;
         @BindView(R.id.tv_brand_name) TextView tvBrandName;
         @BindView(R.id.recycler_insert) RecyclerView recyclerInsert;
+
         public BrandShopsVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

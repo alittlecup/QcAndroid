@@ -17,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import com.afollestad.materialdialogs.DialogAction;
@@ -41,7 +42,6 @@ import com.qingchengfit.fitcoach.fragment.batch.addbatch.AddBatchFragment;
 import com.qingchengfit.fitcoach.fragment.batch.details.BatchDetailFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.fragment.course.CourseListFragment;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.items.BatchItem;
@@ -76,18 +76,16 @@ public class CourseBatchDetailFragment extends VpFragment
     @BindView(R.id.preview) TextView preview;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    private DialogSheet delCourseDialog;
-    private MaterialDialog delDialog;
-
-    private int mType;
-
-    private Course mCourese;
-    private QcResponsePrivateDetail.PrivateCoach mTeacher;
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     List<AbstractFlexibleItem> mOutdateDatas = new ArrayList<>();
-    private Bundle saveState = new Bundle();
     CommonFlexAdapter mCommonFlexAdapter;
     @Inject CoachService mCoachService;
+    private DialogSheet delCourseDialog;
+    private MaterialDialog delDialog;
+    private int mType;
+    private Course mCourese;
+    private QcResponsePrivateDetail.PrivateCoach mTeacher;
+    private Bundle saveState = new Bundle();
     /**
      * 记录是否展示已过期排期
      */
@@ -116,7 +114,7 @@ public class CourseBatchDetailFragment extends VpFragment
         unbinder = ButterKnife.bind(this, view);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
         toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
-        toolbarTitle.setText(mType == Configs.TYPE_GROUP?"团课排期":"私教排期");
+        toolbarTitle.setText(mType == Configs.TYPE_GROUP ? "团课排期" : "私教排期");
         toolbar.inflateMenu(R.menu.menu_flow);
         toolbar.setOnMenuItemClickListener(item -> {
             if (dialogList == null) {
@@ -127,13 +125,14 @@ public class CourseBatchDetailFragment extends VpFragment
                 dialogList.list(flows, new AdapterView.OnItemClickListener() {
                     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         dialogList.dismiss();
-                        if (position == 0){
+                        if (position == 0) {
                             getFragmentManager().beginTransaction()
-                                .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_left_out,R.anim.slide_left_in,R.anim.slide_right_out)
+                                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in,
+                                    R.anim.slide_right_out)
                                 .replace(R.id.frag, CourseListFragment.newInstance(mType == Configs.TYPE_PRIVATE))
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        }else if (position ==1 ){
+                        } else if (position == 1) {
                             Intent toPlan = new Intent(getActivity(), FragActivity.class);
                             toPlan.putExtra("type", 8);
                             toPlan.putExtra("service", mCoachService);
@@ -143,7 +142,8 @@ public class CourseBatchDetailFragment extends VpFragment
                 });
             }
             dialogList.show();
-            return true;});
+            return true;
+        });
         if (getActivity() instanceof BatchActivity) {
             ((BatchActivity) getActivity()).getComponent().inject(this);
         } else if (getActivity() instanceof CourseActivity) {
@@ -283,7 +283,6 @@ public class CourseBatchDetailFragment extends VpFragment
         mCommonFlexAdapter.notifyDataSetChanged();
     }
 
-
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
@@ -291,8 +290,7 @@ public class CourseBatchDetailFragment extends VpFragment
 
                 CourseDetail course = data.getParcelableExtra("course");
                 if (course != null) {
-                    getFragmentManager()
-                        .beginTransaction()
+                    getFragmentManager().beginTransaction()
                         .replace(R.id.frag, AddBatchFragment.newInstance(course))
                         .addToBackStack(null)
                         .commit();
@@ -320,8 +318,7 @@ public class CourseBatchDetailFragment extends VpFragment
     @Override public boolean onItemClick(int position) {
         if (mCommonFlexAdapter.getItem(position) instanceof BatchItem) {
             QcResponseGroupDetail.GroupBatch batch = ((BatchItem) mCommonFlexAdapter.getItem(position)).getBatch();
-            getFragmentManager()
-                .beginTransaction()
+            getFragmentManager().beginTransaction()
                 .replace(R.id.frag, BatchDetailFragment.newInstance(mType, batch.id))
                 .addToBackStack(null)
                 .commit();

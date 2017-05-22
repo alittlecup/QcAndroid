@@ -17,10 +17,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TitleBean {
 
-    @SerializedName("navIcon")
-    public int navIcon;
+    @SerializedName("navIcon") public int navIcon;
 
-    @SerializedName("actionIcon")
-    public int actionIcon;
-
+    @SerializedName("actionIcon") public int actionIcon;
 }

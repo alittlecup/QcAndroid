@@ -1,7 +1,7 @@
 <LinearLayout
-    android:id="@+id/rootview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_grey"
@@ -17,9 +17,9 @@
       >
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/bg_grey"
@@ -35,7 +35,6 @@
 
     <TextView
         android:id="@+id/toolbar_titile"
-        style="@style/Qc.TextCommonBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -43,6 +42,7 @@
         android:textColor="@color/text_black"
         android:textSize="16sp"
         tools:text="自定义报表"
+        style="@style/Qc.TextCommonBlack"
         />
   </RelativeLayout>
 
@@ -73,10 +73,10 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
+      app:civ_content="@string/cardtype_all"
       app:civ_lable="@string/cardtype"
       app:civ_showright="true"
-      app:civ_content="@string/cardtype_all"
-     />
+      />
 
 
   <com.qingchengfit.fitcoach.component.CommonInputView
@@ -90,14 +90,14 @@
       />
 
   <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
-      <!--android:id="@+id/sale_menber"-->
-      <!--android:layout_width="match_parent"-->
-      <!--android:layout_height="@dimen/qc_item_height"-->
-      <!--app:civ_clickable="true"-->
-      <!--app:civ_content="@string/all"-->
-      <!--app:civ_lable="@string/sale_menber"-->
-      <!--app:civ_showright="true"-->
-      <!--/>-->
+  <!--android:id="@+id/sale_menber"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="@dimen/qc_item_height"-->
+  <!--app:civ_clickable="true"-->
+  <!--app:civ_content="@string/all"-->
+  <!--app:civ_lable="@string/sale_menber"-->
+  <!--app:civ_showright="true"-->
+  <!--/>-->
 
   <com.qingchengfit.fitcoach.component.CommonInputView
       android:id="@+id/pay_method"
@@ -116,8 +116,8 @@
       app:civ_clickable="true"
       app:civ_content="@string/all_students"
       app:civ_lable="@string/student"
-      app:civ_showright="true"
       app:civ_showdivier="false"
+      app:civ_showright="true"
       />
 
   <include layout="@layout/divider_grey"/>

@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.bigkoo.pickerview.lib.ScreenInfo;
 import com.bigkoo.pickerview.lib.WheelOptions;
 import com.qingchengfit.fitcoach.R;
-
 import java.util.ArrayList;
 
 /**
@@ -31,11 +29,11 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     public OptionsDialog(Context context) {
         super(context, R.style.ChoosePicDialogStyle);
-//        this.setWidth(LayoutParams.FILL_PARENT);
-//        this.setHeight(LayoutParams.WRAP_CONTENT);
-//        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
-//        this.setOutsideTouchable(true);
-//        this.setAnimationStyle(R.style.timepopwindow_anim_style);
+        //        this.setWidth(LayoutParams.FILL_PARENT);
+        //        this.setHeight(LayoutParams.WRAP_CONTENT);
+        //        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
+        //        this.setOutsideTouchable(true);
+        //        this.setAnimationStyle(R.style.timepopwindow_anim_style);
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(context);
         rootView = mLayoutInflater.inflate(R.layout.pw_options, null);
@@ -60,23 +58,17 @@ public class OptionsDialog extends Dialog implements OnClickListener {
         wheelOptions.setPicker(optionsItems, null, null, false);
     }
 
-    public void setPicker(ArrayList<String> options1Items,
-                          ArrayList<ArrayList<String>> options2Items, boolean linkage) {
+    public void setPicker(ArrayList<String> options1Items, ArrayList<ArrayList<String>> options2Items, boolean linkage) {
         wheelOptions.setPicker(options1Items, options2Items, null, linkage);
     }
 
-    public void setPicker(ArrayList<String> options1Items,
-                          ArrayList<ArrayList<String>> options2Items,
-                          ArrayList<ArrayList<ArrayList<String>>> options3Items,
-                          boolean linkage) {
-        wheelOptions.setPicker(options1Items, options2Items, options3Items,
-                linkage);
+    public void setPicker(ArrayList<String> options1Items, ArrayList<ArrayList<String>> options2Items,
+        ArrayList<ArrayList<ArrayList<String>>> options3Items, boolean linkage) {
+        wheelOptions.setPicker(options1Items, options2Items, options3Items, linkage);
     }
 
     /**
      * 设置选中的item位置
-     *
-     * @param option1
      */
     public void setSelectOptions(int option1) {
         wheelOptions.setCurrentItems(option1, 0, 0);
@@ -84,9 +76,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     /**
      * 设置选中的item位置
-     *
-     * @param option1
-     * @param option2
      */
     public void setSelectOptions(int option1, int option2) {
         wheelOptions.setCurrentItems(option1, option2, 0);
@@ -94,10 +83,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     /**
      * 设置选中的item位置
-     *
-     * @param option1
-     * @param option2
-     * @param option3
      */
     public void setSelectOptions(int option1, int option2, int option3) {
         wheelOptions.setCurrentItems(option1, option2, option3);
@@ -105,8 +90,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     /**
      * 设置选项的单位
-     *
-     * @param label1
      */
     public void setLabels(String label1) {
         wheelOptions.setLabels(label1, null, null);
@@ -114,9 +97,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     /**
      * 设置选项的单位
-     *
-     * @param label1
-     * @param label2
      */
     public void setLabels(String label1, String label2) {
         wheelOptions.setLabels(label1, label2, null);
@@ -124,10 +104,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     /**
      * 设置选项的单位
-     *
-     * @param label1
-     * @param label2
-     * @param label3
      */
     public void setLabels(String label1, String label2, String label3) {
         wheelOptions.setLabels(label1, label2, label3);
@@ -135,15 +111,12 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     /**
      * 设置是否循环滚动
-     *
-     * @param cyclic
      */
     public void setCyclic(boolean cyclic) {
         wheelOptions.setCyclic(cyclic);
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         String tag = (String) v.getTag();
         if (tag.equals(TAG_CANCEL)) {
             dismiss();
@@ -158,13 +131,11 @@ public class OptionsDialog extends Dialog implements OnClickListener {
         }
     }
 
-    public void setOnoptionsSelectListener(
-            OnOptionsSelectListener optionsSelectListener) {
+    public void setOnoptionsSelectListener(OnOptionsSelectListener optionsSelectListener) {
         this.optionsSelectListener = optionsSelectListener;
     }
 
-    @Override
-    public void show() {
+    @Override public void show() {
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -175,7 +146,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
         window.setWindowAnimations(R.style.ButtomDialogStyle);
         super.show();
     }
-
 
     public interface OnOptionsSelectListener {
         public void onOptionsSelect(int options1, int option2, int options3);

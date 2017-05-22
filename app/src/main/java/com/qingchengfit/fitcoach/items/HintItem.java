@@ -14,8 +14,6 @@ import java.util.List;
 
 public class HintItem extends AbstractFlexibleItem<HintItem.HintVH> {
 
-
-
     String text;
     int resBg = R.color.bg_grey;
 
@@ -41,15 +39,6 @@ public class HintItem extends AbstractFlexibleItem<HintItem.HintVH> {
         return false;
     }
 
-
-    public class HintVH extends FlexibleViewHolder {
-        @BindView(R.id.hint_text) TextView hintText;
-        public HintVH(View view, FlexibleAdapter adapter) {
-            super(view, adapter);
-            ButterKnife.bind(this, view);
-        }
-    }
-
     public static final class Builder {
         private String text;
         private int resBg;
@@ -69,6 +58,15 @@ public class HintItem extends AbstractFlexibleItem<HintItem.HintVH> {
 
         public HintItem build() {
             return new HintItem(this);
+        }
+    }
+
+    public class HintVH extends FlexibleViewHolder {
+        @BindView(R.id.hint_text) TextView hintText;
+
+        public HintVH(View view, FlexibleAdapter adapter) {
+            super(view, adapter);
+            ButterKnife.bind(this, view);
         }
     }
 }

@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bigkoo.pickerview.lib.ScreenInfo;
 import com.bigkoo.pickerview.lib.WheelTime;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,14 +38,15 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
     private View rootView; // 总的布局
     private View btnSubmit, btnCancel;
     private OnTimeSelectListener timeSelectListener;
-    private  int interval = 1;
+    private int interval = 1;
+
     public TimePeriodChooser(Context context, TimePopupWindow.Type type) {
         super(context, R.style.ChoosePicDialogStyle);
-//        this.setWidth(LayoutParams.FILL_PARENT);
-//        this.setHeight(LayoutParams.WRAP_CONTENT);
-//        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
-//        this.setOutsideTouchable(true);
-//        this.setAnimationStyle(R.style.timepopwindow_anim_style);
+        //        this.setWidth(LayoutParams.FILL_PARENT);
+        //        this.setHeight(LayoutParams.WRAP_CONTENT);
+        //        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
+        //        this.setOutsideTouchable(true);
+        //        this.setAnimationStyle(R.style.timepopwindow_anim_style);
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(context);
         rootView = mLayoutInflater.inflate(R.layout.pw_time_period, null);
@@ -82,13 +81,14 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
 
         setContentView(rootView);
     }
-    public TimePeriodChooser(Context context, TimePopupWindow.Type type,int interval) {
+
+    public TimePeriodChooser(Context context, TimePopupWindow.Type type, int interval) {
         super(context, R.style.ChoosePicDialogStyle);
-//        this.setWidth(LayoutParams.FILL_PARENT);
-//        this.setHeight(LayoutParams.WRAP_CONTENT);
-//        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
-//        this.setOutsideTouchable(true);
-//        this.setAnimationStyle(R.style.timepopwindow_anim_style);
+        //        this.setWidth(LayoutParams.FILL_PARENT);
+        //        this.setHeight(LayoutParams.WRAP_CONTENT);
+        //        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
+        //        this.setOutsideTouchable(true);
+        //        this.setAnimationStyle(R.style.timepopwindow_anim_style);
 
         LayoutInflater mLayoutInflater = LayoutInflater.from(context);
         rootView = mLayoutInflater.inflate(R.layout.pw_time_period, null);
@@ -118,17 +118,14 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        wheelTime_start.setPicker(year, month, day, hours, minute,interval);
-        wheelTime_end.setPicker(year, month, day, hours, minute,interval);
+        wheelTime_start.setPicker(year, month, day, hours, minute, interval);
+        wheelTime_end.setPicker(year, month, day, hours, minute, interval);
 
         setContentView(rootView);
     }
 
     /**
      * 设置可以选择的时间范围
-     *
-     * @param START_YEAR
-     * @param END_YEAR
      */
     public void setRange(int START_YEAR, int END_YEAR) {
         WheelTime.setSTART_YEAR(START_YEAR);
@@ -137,53 +134,52 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
 
     /**
      * 设置选中时间
-     *
-     * @param date
      */
     public void setTime(Date date, Date end) {
         Calendar calendar = Calendar.getInstance();
-        if (date == null)
+        if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
-        else
+        } else {
             calendar.setTime(date);
+        }
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        wheelTime_start.setPicker(year, month, day, hours, minute,interval);
+        wheelTime_start.setPicker(year, month, day, hours, minute, interval);
         Calendar calendar1 = Calendar.getInstance();
-        if (end == null)
+        if (end == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
-        else
+        } else {
             calendar.setTime(end);
+        }
         int year1 = calendar.get(Calendar.YEAR);
         int month1 = calendar.get(Calendar.MONTH);
         int day1 = calendar.get(Calendar.DAY_OF_MONTH);
         int hours1 = calendar.get(Calendar.HOUR_OF_DAY);
         int minute1 = calendar.get(Calendar.MINUTE);
-        wheelTime_end.setPicker(year1, month1, day1, hours1, minute1,interval);
+        wheelTime_end.setPicker(year1, month1, day1, hours1, minute1, interval);
     }
 
     /**
      * 指定选中的时间，显示选择器
-     *
      */
     public void showAtLocation() {
-//        Calendar calendar = Calendar.getInstance();
-//        if (date == null)
-//            calendar.setTimeInMillis(System.currentTimeMillis());
-//        else
-//            calendar.setTime(date);
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-//        int minute = calendar.get(Calendar.MINUTE);
-//        wheelTime_start.setPicker(year, month, day, hours, minute);
-//        wheelTime_end.setPicker(year, month, day, hours, minute);
-//        update();
-//        super.showAtLocation(parent, gravity, x, y);
+        //        Calendar calendar = Calendar.getInstance();
+        //        if (date == null)
+        //            calendar.setTimeInMillis(System.currentTimeMillis());
+        //        else
+        //            calendar.setTime(date);
+        //        int year = calendar.get(Calendar.YEAR);
+        //        int month = calendar.get(Calendar.MONTH);
+        //        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        //        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        //        int minute = calendar.get(Calendar.MINUTE);
+        //        wheelTime_start.setPicker(year, month, day, hours, minute);
+        //        wheelTime_end.setPicker(year, month, day, hours, minute);
+        //        update();
+        //        super.showAtLocation(parent, gravity, x, y);
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -195,19 +191,15 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         super.show();
     }
 
-
     /**
      * 设置是否循环滚动
-     *
-     * @param cyclic
      */
     public void setCyclic(boolean cyclic) {
         wheelTime_start.setCyclic(cyclic);
         wheelTime_end.setCyclic(cyclic);
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         String tag = (String) v.getTag();
         if (tag.equals(TAG_CANCEL)) {
             dismiss();
@@ -235,13 +227,11 @@ public class TimePeriodChooser extends Dialog implements View.OnClickListener {
         this.timeSelectListener = timeSelectListener;
     }
 
-//    public enum Type {
-//        ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN
-//    }// 四种选择模式，年月日时分，年月日，时分，月日时分
+    //    public enum Type {
+    //        ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN
+    //    }// 四种选择模式，年月日时分，年月日，时分，月日时分
 
     public interface OnTimeSelectListener {
         public void onTimeSelect(Date start, Date end);
     }
-
-
 }

@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.bean.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.List;
 
 /**
@@ -28,6 +27,15 @@ import java.util.List;
 
 public class InitBatch implements Parcelable {
 
+    public static final Creator<InitBatch> CREATOR = new Creator<InitBatch>() {
+        @Override public InitBatch createFromParcel(Parcel source) {
+            return new InitBatch(source);
+        }
+
+        @Override public InitBatch[] newArray(int size) {
+            return new InitBatch[size];
+        }
+    };
     public String course_name;
     public int capacity;
     public String from_date;
@@ -48,24 +56,6 @@ public class InitBatch implements Parcelable {
         time_repeats = builder.time_repeats;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.course_name);
-        dest.writeInt(this.capacity);
-        dest.writeString(this.from_date);
-        dest.writeString(this.to_date);
-        dest.writeString(this.teacher_phone);
-        dest.writeString(this.teacher_code_area);
-        dest.writeString(this.space_name);
-        dest.writeTypedList(this.time_repeats);
-    }
-
     public InitBatch() {
     }
 
@@ -80,17 +70,20 @@ public class InitBatch implements Parcelable {
         this.time_repeats = in.createTypedArrayList(TimeRepeat.CREATOR);
     }
 
-    public static final Creator<InitBatch> CREATOR = new Creator<InitBatch>() {
-        @Override
-        public InitBatch createFromParcel(Parcel source) {
-            return new InitBatch(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public InitBatch[] newArray(int size) {
-            return new InitBatch[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.course_name);
+        dest.writeInt(this.capacity);
+        dest.writeString(this.from_date);
+        dest.writeString(this.to_date);
+        dest.writeString(this.teacher_phone);
+        dest.writeString(this.teacher_code_area);
+        dest.writeString(this.space_name);
+        dest.writeTypedList(this.time_repeats);
+    }
 
     public static final class Builder {
         private String course_name;

@@ -54,24 +54,25 @@ public class IntentUtils {
         return it;
     }
 
-    public static Intent instancePacecle(Parcelable parcelable){
+    public static Intent instancePacecle(Parcelable parcelable) {
         Intent it = new Intent();
-        it.putExtra(RESULT,parcelable);
+        it.putExtra(RESULT, parcelable);
         return it;
     }
-    public static Parcelable getParcelable(Intent it){
+
+    public static Parcelable getParcelable(Intent it) {
         return it.getParcelableExtra(RESULT);
     }
 
-    public static Intent instanceListParcelable(ArrayList<Parcelable> arrayList){
+    public static Intent instanceListParcelable(ArrayList<Parcelable> arrayList) {
         Intent it = new Intent();
-        it.putParcelableArrayListExtra(RESULT,arrayList);
+        it.putParcelableArrayListExtra(RESULT, arrayList);
         return it;
     }
-    public static ArrayList<Parcelable> getListParcelable(Intent it){
+
+    public static ArrayList<Parcelable> getListParcelable(Intent it) {
         return it.getParcelableArrayListExtra(RESULT);
     }
-
 
     public static List<Integer> getIntegerList(Intent it) {
         return it.getIntegerArrayListExtra("list");
@@ -99,14 +100,15 @@ public class IntentUtils {
     //
     //}
 
-    public static String getIntentFromUri(Intent i,String key){
+    public static String getIntentFromUri(Intent i, String key) {
         String ret = i.getStringExtra(key);
-        if (i.getData() != null && i.getData().getHost() != null){
+        if (i.getData() != null && i.getData().getHost() != null) {
             ret = i.getData().getQueryParameter(key);
         }
-        if (ret != null)
+        if (ret != null) {
             return Uri.decode(ret);
-        else return "";
+        } else {
+            return "";
+        }
     }
-    
 }

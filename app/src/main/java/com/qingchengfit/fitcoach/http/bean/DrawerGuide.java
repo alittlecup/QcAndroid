@@ -17,13 +17,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class DrawerGuide {
 
-    @SerializedName("icon_on")
-    public String drawableOn;
-    @SerializedName("icon_off")
-    public String drawableOff;
-    @SerializedName("text")
-    public String guideText;
-    @SerializedName("url")
-    public String intentUrl;
-
+    @SerializedName("icon_on") public String drawableOn;
+    @SerializedName("icon_off") public String drawableOff;
+    @SerializedName("text") public String guideText;
+    @SerializedName("url") public String intentUrl;
 }

@@ -7,12 +7,14 @@
     android:orientation="vertical"
     >
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
       >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -22,6 +24,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         >
+
       <TextView
           android:id="@+id/tv_month"
           android:layout_width="wrap_content"
@@ -29,17 +32,20 @@
           android:text="2016年11月"
           style="@style/Qc.TextCommonBlack"
           />
+
       <ImageView
           android:layout_width="16dp"
           android:layout_height="16dp"
           android:padding="4dp"
           app:srcCompat="@drawable/ic_arrow_down"
           />
+
       <Space
           android:layout_width="0dp"
           android:layout_height="match_parent"
           android:layout_weight="1"
           />
+
       <TextView
           android:id="@+id/day_view"
           android:layout_width="wrap_content"
@@ -49,10 +55,12 @@
           android:text="日视图"
           android:textSize="13sp"
           />
+
       <Space
           android:layout_width="10dp"
           android:layout_height="match_parent"
           />
+
       <TextView
 
           android:layout_width="wrap_content"
@@ -65,10 +73,12 @@
 
           />
     </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
       <android.support.v4.view.ViewPager
           android:id="@+id/viewpager"
           android:layout_width="match_parent"
@@ -87,28 +97,32 @@
       android:layout_marginTop="48dp"
       android:background="@drawable/bg_click"
       >
+
     <TextView
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:text="@string/back_today"
-        android:gravity="center"
-        android:background="@drawable/bg_rect_back_today"
         android:layout_gravity="center"
+        android:background="@drawable/bg_rect_back_today"
+        android:gravity="center"
+        android:text="@string/back_today"
         />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/divier_linear"
         android:layout_gravity="right"
+        app:srcCompat="@drawable/divier_linear"
         />
   </FrameLayout>
+
   <LinearLayout
       android:id="@+id/bg_show"
-      android:visibility="gone"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
+      android:visibility="gone"
       >
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"

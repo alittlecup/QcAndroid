@@ -16,14 +16,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * power by
@@ -41,12 +38,9 @@ import butterknife.ButterKnife;
 public class SearchListView extends RelativeLayout {
 
     public String keyword;
-    @BindView(R.id.searchresult_btn)
-    Button searchresultBtn;
-    @BindView(R.id.searchresult_none)
-    LinearLayout searchresultNone;
-    @BindView(R.id.searchresult_rv)
-    RecyclerView searchresultRv;
+    @BindView(R.id.searchresult_btn) Button searchresultBtn;
+    @BindView(R.id.searchresult_none) LinearLayout searchresultNone;
+    @BindView(R.id.searchresult_rv) RecyclerView searchresultRv;
     SearchResultAdapter adapter;
     private List<String> strings;
 
@@ -80,11 +74,9 @@ public class SearchListView extends RelativeLayout {
 
     public void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_search_result, this, false);
-
     }
 
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this);
         searchresultRv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -95,7 +87,6 @@ public class SearchListView extends RelativeLayout {
         strings.add("必须要包含健身");
         adapter = new SearchResultAdapter(new ArrayList<>());
         searchresultRv.setAdapter(adapter);
-
     }
 
     public void setOnItemClickListener(OnRecycleItemClickListener listener) {
@@ -107,8 +98,7 @@ public class SearchListView extends RelativeLayout {
     }
 
     public static class SearchResultVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_text)
-        TextView itemText;
+        @BindView(R.id.item_text) TextView itemText;
 
         public SearchResultVH(View itemView) {
             super(itemView);
@@ -117,7 +107,6 @@ public class SearchListView extends RelativeLayout {
     }
 
     class SearchResultAdapter extends RecyclerView.Adapter<SearchResultVH> implements OnClickListener {
-
 
         private List<String> datas;
         private OnRecycleItemClickListener listener;
@@ -134,15 +123,13 @@ public class SearchListView extends RelativeLayout {
             this.listener = listener;
         }
 
-        @Override
-        public SearchResultVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override public SearchResultVH onCreateViewHolder(ViewGroup parent, int viewType) {
             SearchResultVH holder = new SearchResultVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false));
             holder.itemView.setOnClickListener(this);
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(SearchResultVH holder, int position) {
+        @Override public void onBindViewHolder(SearchResultVH holder, int position) {
             holder.itemView.setTag(position);
             String s = datas.get(position);
             if (TextUtils.isEmpty(keyword) && s.contains(s)) {
@@ -150,20 +137,17 @@ public class SearchListView extends RelativeLayout {
                 int pos = s.indexOf(keyword);
                 ss.setSpan(new ForegroundColorSpan(Color.CYAN), pos, pos + keyword.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
                 holder.itemText.setText(ss);
-            } else holder.itemText.setText(s);
+            } else {
+                holder.itemText.setText(s);
+            }
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
+        @Override public void onClick(View v) {
             listener.onItemClick(v, (int) v.getTag());
         }
     }
-
-
 }

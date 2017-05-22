@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,46 +32,36 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ModifyPhoneFragment extends BaseSettingFragment {
     public static final String TAG = ModifyPhoneFragment.class.getName();
-
-
+    @BindView(R.id.modifyphone_comfirm_btn) Button modifyphoneComfirmBtn;
+    @BindView(R.id.password) PasswordView password;
+    @BindView(R.id.checkcode) PasswordView checkcode;
+    @BindView(R.id.phone_num) PhoneEditText phoneNum;
     //private  PostMsgHandler handler;
     private Unbinder unbinder;
-    @BindView(R.id.modifyphone_comfirm_btn)
-    Button modifyphoneComfirmBtn;
-    @BindView(R.id.password) PasswordView password;
-    @BindView(R.id.checkcode)
-    PasswordView checkcode;
-    @BindView(R.id.phone_num) PhoneEditText phoneNum;
     private PostMsgHandler handler;
 
     public ModifyPhoneFragment() {
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new PostMsgHandler(getContext());
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_phone, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         fragmentCallBack.onToolbarMenu(0, 0, "更改手机号码");
         checkcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (phoneNum.checkPhoneNum()){
+            @Override public void onClick(View v) {
+                if (phoneNum.checkPhoneNum()) {
                     getCode();
                     RxBus.getBus().post(new SendSmsCode());
-
                 }
             }
         });
@@ -84,93 +72,72 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
      * 获取验证码
      */
     public void getCode() {
-        if (phoneNum.checkPhoneNum()){
-            QcCloudClient.getApi()
-                    .postApi
-                    .qcGetCode(new GetCodeBean.Builder()
-                            .area_code(phoneNum.getDistrictInt())
-                            .phone(phoneNum.getPhoneNum())
-                            .build())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<QcResponse>() {
-                        @Override
-                        public void onCompleted() {
+        if (phoneNum.checkPhoneNum()) {
+            QcCloudClient.getApi().postApi.qcGetCode(
+                new GetCodeBean.Builder().area_code(phoneNum.getDistrictInt()).phone(phoneNum.getPhoneNum()).build())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<QcResponse>() {
+                    @Override public void onCompleted() {
 
+                    }
+
+                    @Override public void onError(Throwable e) {
+
+                    }
+
+                    @Override public void onNext(QcResponse qcResponse) {
+
+                        if (qcResponse.status == ResponseResult.SUCCESS) {
+                            handler.sendEmptyMessage(0);
+                        } else {
+                            //LogUtil.d(":" + qcResponse.msg);
                         }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(QcResponse qcResponse) {
-
-                            if (qcResponse.status == ResponseResult.SUCCESS) {
-                                handler.sendEmptyMessage(0);
-                            } else {
-                                //LogUtil.d(":" + qcResponse.msg);
-                            }
-                        }
-                    });
+                    }
+                });
         }
-
-
-
     }
 
     /**
      * 确认按钮按下
      */
-    @OnClick(R.id.modifyphone_comfirm_btn)
-    public void onConfirm() {
-       if (phoneNum.checkPhoneNum() && password.checkValid() && checkcode.checkValid()) {
+    @OnClick(R.id.modifyphone_comfirm_btn) public void onConfirm() {
+        if (phoneNum.checkPhoneNum() && password.checkValid() && checkcode.checkValid()) {
 
-           fragmentCallBack.ShowLoading("请稍后");
-           QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, new ModifyPhoneNum.Builder()
-                    .phone(phoneNum.getPhoneNum())
-                   .area_code(phoneNum.getDistrictInt())
-                   .code(checkcode.getCode())
-                   .password(password.getCode())
-                   .build())
-                   .subscribeOn(Schedulers.io())
-                   .observeOn(AndroidSchedulers.mainThread())
-                   .subscribe(new Observer<QcResponse>() {
-                       @Override
-                       public void onCompleted() {
+            fragmentCallBack.ShowLoading("请稍后");
+            QcCloudClient.getApi().postApi.qcModifyPhoneNum(App.coachid, new ModifyPhoneNum.Builder().phone(phoneNum.getPhoneNum())
+                .area_code(phoneNum.getDistrictInt())
+                .code(checkcode.getCode())
+                .password(password.getCode())
+                .build()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<QcResponse>() {
+                @Override public void onCompleted() {
 
-                       }
+                }
 
-                       @Override
-                       public void onError(Throwable e) {
-                           fragmentCallBack.hideLoading();
-                           Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
-                       }
+                @Override public void onError(Throwable e) {
+                    fragmentCallBack.hideLoading();
+                    Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                }
 
-                       @Override
-                       public void onNext(QcResponse qcResponse) {
-                           fragmentCallBack.hideLoading();
-                           if (qcResponse.status == ResponseResult.SUCCESS) {
+                @Override public void onNext(QcResponse qcResponse) {
+                    fragmentCallBack.hideLoading();
+                    if (qcResponse.status == ResponseResult.SUCCESS) {
 
-                               Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
-                               handler.removeMessages(0);
-                               Intent it = new Intent(getActivity(), MainActivity.class);
-                               it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
-                               startActivity(it);
+                        Toast.makeText(App.AppContex, "修改成功,请重新登录", Toast.LENGTH_SHORT).show();
+                        handler.removeMessages(0);
+                        Intent it = new Intent(getActivity(), MainActivity.class);
+                        it.putExtra(MainActivity.ACTION, MainActivity.LOGOUT);
+                        startActivity(it);
+                    } else {
 
-                           } else {
-
-                               Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
-                           }
-                       }
-                   });
-       }
-
+                        Toast.makeText(App.AppContex, "修改失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -181,11 +148,9 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
 
         PostMsgHandler(Context c) {
             context = new WeakReference<Context>(c);
-
         }
 
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (checkcode != null) {
                 StringBuffer stringBuffer = new StringBuffer();
@@ -193,8 +158,7 @@ public class ModifyPhoneFragment extends BaseSettingFragment {
                 stringBuffer.append(getString(R.string.login_resend_msg));
 
                 checkcode.setRightText(stringBuffer.toString());
-                if (count == 60)
-                    checkcode.blockRightClick(true);
+                if (count == 60) checkcode.blockRightClick(true);
                 if (count > 0) {
                     count--;
                     handler.sendEmptyMessageDelayed(0, 1000);

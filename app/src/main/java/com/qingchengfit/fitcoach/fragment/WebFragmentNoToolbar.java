@@ -26,12 +26,13 @@ import android.view.View;
 
 public class WebFragmentNoToolbar extends com.qingchengfit.fitcoach.component.WebFragment {
     public static WebFragmentNoToolbar newInstance(String url) {
-         Bundle args = new Bundle();
+        Bundle args = new Bundle();
         args.putString("url", url);
-         WebFragmentNoToolbar fragment = new WebFragmentNoToolbar();
+        WebFragmentNoToolbar fragment = new WebFragmentNoToolbar();
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override public void initToolbar() {
         mToolbar.setVisibility(View.GONE);
         mTitle.setVisibility(View.GONE);

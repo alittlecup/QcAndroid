@@ -45,12 +45,10 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/3/15.
  */
-@FragmentWithArgs
-public class BottomStudentsFragment extends BottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener {
+@FragmentWithArgs public class BottomStudentsFragment extends BottomSheetDialogFragment implements FlexibleAdapter.OnItemClickListener {
     public static final int CHOOSE_STUDENT = 0;
     public static final int CHAT_FRIENDS = 1;
     @Arg(required = false) int type;
-
 
     @BindView(R.id.tv_stud_count) TextView tvStudCount;
     @BindView(R.id.tv_clear_all) TextView tvClearAll;
@@ -58,6 +56,7 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment implements
     List<AbstractFlexibleItem> datas = new ArrayList<>();
     CommonFlexAdapter adapter;
     Unbinder unbinder;
+    private BottomStudentsListener listener;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,32 +69,32 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment implements
         unbinder = ButterKnife.bind(this, view);
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         //recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        adapter = new CommonFlexAdapter(datas,this);
+        adapter = new CommonFlexAdapter(datas, this);
         recycleview.setAdapter(adapter);
-        if (adapter != null && tvStudCount!= null) {
+        if (adapter != null && tvStudCount != null) {
             adapter.notifyDataSetChanged();
             tvStudCount.setText(getString(R.string.qc_allotsale_select, datas.size()));
         }
         return view;
     }
 
-    public <T extends Personage>  void setDatas(List<T> qcStudentBeen){
-        if (qcStudentBeen != null){
+    public <T extends Personage> void setDatas(List<T> qcStudentBeen) {
+        if (qcStudentBeen != null) {
             datas.clear();
             for (int i = 0; i < qcStudentBeen.size(); i++) {
                 datas.add(new DelStudentItem(qcStudentBeen.get(i)));
             }
-            if (adapter != null && tvStudCount!= null) {
+            if (adapter != null && tvStudCount != null) {
                 adapter.notifyDataSetChanged();
-                tvStudCount.setText(getString(type == CHOOSE_STUDENT?R.string.qc_allotsale_select:R.string.qc_chat_friend_select, datas.size()));
+                tvStudCount.setText(
+                    getString(type == CHOOSE_STUDENT ? R.string.qc_allotsale_select : R.string.qc_chat_friend_select, datas.size()));
             }
         }
-
     }
 
     @Override public boolean onItemClick(int position) {
         adapter.removeItem(position);
-        if (adapter.getItemCount() == 0){
+        if (adapter.getItemCount() == 0) {
             dismiss();
         }
         return true;
@@ -106,19 +105,17 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment implements
         dismiss();
     }
 
-
     @Override public void dismiss() {
-
 
         super.dismiss();
     }
 
     @Override public void onDestroy() {
 
-        if (listener != null){
+        if (listener != null) {
             List<Personage> ret = new ArrayList<>();
             for (int i = 0; i < datas.size(); i++) {
-                if (datas.get(i) instanceof DelStudentItem){
+                if (datas.get(i) instanceof DelStudentItem) {
                     ret.add(((DelStudentItem) datas.get(i)).getUser());
                 }
             }
@@ -126,14 +123,11 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment implements
         }
 
         super.onDestroy();
-
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
     }
-
-    private BottomStudentsListener listener;
 
     public BottomStudentsListener getListener() {
         return listener;
@@ -143,7 +137,7 @@ public class BottomStudentsFragment extends BottomSheetDialogFragment implements
         this.listener = listener;
     }
 
-    public interface BottomStudentsListener{
+    public interface BottomStudentsListener {
         void onBottomStudents(List<Personage> list);
     }
 }

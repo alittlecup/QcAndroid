@@ -21,10 +21,10 @@ package com.qingchengfit.fitcoach.http.bean;
  * Created by Paper on 2016/12/12.
  */
 
-public class QcResponseActivities extends QcResponse{
+public class QcResponseActivities extends QcResponse {
     public Data data;
 
-    public class Data{
+    public class Data {
         public int count;
     }
 }

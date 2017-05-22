@@ -65,8 +65,8 @@ import rx.schedulers.Schedulers;
         Button btn = ((Button) view.findViewById(R.id.next_step));
         btn.setBackgroundResource(R.drawable.btn_delete);
         btn.setText("删除该场馆");
-        ((LinearLayout.LayoutParams)btn.getLayoutParams()).setMargins(0, MeasureUtils.dpToPx(16f,getResources()),0,0);
-        btn.setTextColor(ContextCompat.getColor(getContext(),R.color.red));
+        ((LinearLayout.LayoutParams) btn.getLayoutParams()).setMargins(0, MeasureUtils.dpToPx(16f, getResources()), 0, 0);
+        btn.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
         if (view instanceof LinearLayout) {
             RelativeLayout v = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.common_toolbar, null);
             Toolbar tb = (Toolbar) v.findViewById(R.id.toolbar);
@@ -93,7 +93,8 @@ import rx.schedulers.Schedulers;
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("id", ((FragActivity) getActivity()).getCoachService().getId());
                         params.put("model", ((FragActivity) getActivity()).getCoachService().getModel());
-                        Shop shop = new Shop.Builder().gd_district_id(city_code + "").gd_lat(lat).gd_lng(lng).name(gymName.getContent()).build();
+                        Shop shop =
+                            new Shop.Builder().gd_district_id(city_code + "").gd_lat(lat).gd_lng(lng).name(gymName.getContent()).build();
                         RxRegiste(QcCloudClient.getApi().postApi.qcUpdateGym(App.coachid + "", params, shop)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -101,7 +102,9 @@ import rx.schedulers.Schedulers;
                                 @Override public void call(QcResponse qcResponse) {
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
                                         getActivity().onBackPressed();
-                                    } else ToastUtils.show(qcResponse.getMsg());
+                                    } else {
+                                        ToastUtils.show(qcResponse.getMsg());
+                                    }
                                 }
                             }, new Action1<Throwable>() {
                                 @Override public void call(Throwable throwable) {

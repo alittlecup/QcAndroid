@@ -6,6 +6,8 @@
   <string name="file_provider">com.qingchengfit.fitcoach.debug.provider</string>
 
   <string name="oem_tag">coach-test</string>
-  <string name="chat_user_id_header" formatted="false">qctest_%s</string>
+  <string formatted="false"
+          name="chat_user_id_header">qctest_%s
+  </string>
 
 </resources>

@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/7/31 2015.
  */
 public class Token extends BaseBean {
-    @SerializedName("token")
-    public String token;
+    @SerializedName("token") public String token;
 }

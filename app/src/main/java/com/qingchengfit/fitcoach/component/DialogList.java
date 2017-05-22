@@ -12,12 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
-import java.util.List;
-
 import cn.qingchengfit.utils.MeasureUtils;
+import com.qingchengfit.fitcoach.R;
+import java.util.List;
 
 /**
  * power by
@@ -59,13 +56,15 @@ public class DialogList extends Dialog {
 
     public DialogList title(String title) {
         TextView textView = new TextView(context, null, R.style.Qc_TextCommonGrey);
-//        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
+        //        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
         textView.setTextColor(context.getResources().getColor(R.color.text_grey));
         textView.setTextSize(14);
-        textView.setPadding(MeasureUtils.dpToPx(30f, context.getResources()), textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
+        textView.setPadding(MeasureUtils.dpToPx(30f, context.getResources()), textView.getPaddingTop(), textView.getPaddingRight(),
+            textView.getPaddingBottom());
         textView.setText(title);
         textView.setGravity(Gravity.CENTER_VERTICAL);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.qc_item_height));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            (int) context.getResources().getDimension(R.dimen.qc_item_height));
         view.addView(textView, 0, params);
         return this;
     }
@@ -86,6 +85,7 @@ public class DialogList extends Dialog {
         view.addView(listView, params);
         return this;
     }
+
     public DialogList list(String[] list, AdapterView.OnItemClickListener listener) {
         ListView listView = new ListView(context);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.item_only_text, list);
@@ -103,8 +103,7 @@ public class DialogList extends Dialog {
         return this;
     }
 
-    @Override
-    public void show() {
+    @Override public void show() {
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -115,6 +114,4 @@ public class DialogList extends Dialog {
         window.setWindowAnimations(R.style.ButtomDialogStyle);
         super.show();
     }
-
-
 }

@@ -65,20 +65,19 @@ public class QcEvaluateResponse extends QcResponse {
             return evaluate;
         }
 
-
         //        public QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys getHomeTags() {
-//            QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys tagsEntitys = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys();
-//            List<QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity> tags = new ArrayList<>();
-//
-//            for (int i = 0; i < getTags().size(); i++) {
-//                QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity tagsEntity = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity();
-//                tagsEntity.setCount(getTags().get(i).count);
-//                tagsEntity.setName(getTags().get(i).username);
-//                tags.add(tagsEntity);
-//            }
-//            tagsEntitys.setTags(tags);
-//            return tagsEntitys;
-//        }
+        //            QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys tagsEntitys = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys();
+        //            List<QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity> tags = new ArrayList<>();
+        //
+        //            for (int i = 0; i < getTags().size(); i++) {
+        //                QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity tagsEntity = new QcMyhomeResponse.DataEntity.CoachEntity.TagsEntitys.TagsEntity();
+        //                tagsEntity.setCount(getTags().get(i).count);
+        //                tagsEntity.setName(getTags().get(i).username);
+        //                tags.add(tagsEntity);
+        //            }
+        //            tagsEntitys.setTags(tags);
+        //            return tagsEntitys;
+        //        }
         public String[] getTagArray() {
             List<String> list = new ArrayList<>();
             for (TagsEntity tag : impression) {
@@ -88,11 +87,11 @@ public class QcEvaluateResponse extends QcResponse {
                 sb.append(tag.getCount());
                 sb.append(")");
                 list.add(sb.toString());
-
             }
             String[] ret = list.toArray(new String[list.size()]);
             return ret;
         }
+
         public static class EvaluateEntity {
             /**
              * course_score : 5.0
@@ -127,8 +126,6 @@ public class QcEvaluateResponse extends QcResponse {
             public void setCoach_score(double coach_score) {
                 this.coach_score = coach_score;
             }
-
-
         }
 
         public static class TagsEntity {

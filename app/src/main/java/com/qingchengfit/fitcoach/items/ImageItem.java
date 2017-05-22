@@ -17,13 +17,12 @@ import java.util.List;
 
 public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
 
+    String imgPath;
+    String id;
     public ImageItem(String imgPath, String id) {
         this.imgPath = imgPath;
         this.id = id;
     }
-
-    String imgPath;
-    String id;
 
     public String getId() {
         return id;
@@ -43,9 +42,9 @@ public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ImageVH holder, int position, List payloads) {
         Glide.with(holder.itemView.getContext()).load(imgPath).placeholder(R.drawable.img_loadingimage).into(holder.img);
-        if(adapter.getMode() == SelectableAdapter.MODE_IDLE){
+        if (adapter.getMode() == SelectableAdapter.MODE_IDLE) {
             holder.checkbox.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.checkbox.setVisibility(View.VISIBLE);
             holder.checkbox.setChecked(adapter.isSelected(position));
         }
@@ -58,6 +57,7 @@ public class ImageItem extends AbstractFlexibleItem<ImageItem.ImageVH> {
     public class ImageVH extends FlexibleViewHolder {
         @BindView(R.id.img) ImageView img;
         @BindView(R.id.checkbox) CheckBox checkbox;
+
         public ImageVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

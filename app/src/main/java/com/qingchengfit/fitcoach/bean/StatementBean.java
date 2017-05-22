@@ -29,7 +29,8 @@ public class StatementBean {
     public StatementBean() {
     }
 
-    public StatementBean(Date date, String picture, String title, String content, boolean header, boolean bottom, boolean year,String url) {
+    public StatementBean(Date date, String picture, String title, String content, boolean header, boolean bottom, boolean year,
+        String url) {
         this.date = date;
         this.picture = picture;
         this.title = title;

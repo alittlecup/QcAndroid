@@ -13,12 +13,13 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class AccountSubItem extends AbstractFlexibleItem<AccountSubItem.AccountSubVH>
-    implements ISectionable<AccountSubItem.AccountSubVH,IHeader>{
+    implements ISectionable<AccountSubItem.AccountSubVH, IHeader> {
     private static final long serialVersionUID = 2519281529221244210L;
 
     String id;
+    private IHeader mIHeader;
 
-    public AccountSubItem(IHeader IHeader,String i) {
+    public AccountSubItem(IHeader IHeader, String i) {
         mIHeader = IHeader;
         this.id = i;
     }
@@ -31,19 +32,17 @@ public class AccountSubItem extends AbstractFlexibleItem<AccountSubItem.AccountS
         return new AccountSubVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-
     @Override public void bindViewHolder(FlexibleAdapter adapter, AccountSubVH holder, int position, List payloads) {
     }
 
     @Override public boolean equals(Object o) {
-        if (o instanceof AccountSubItem){
+        if (o instanceof AccountSubItem) {
             return ((AccountSubItem) o).id.equalsIgnoreCase(this.id);
-        }else return false;
-
+        } else {
+            return false;
+        }
     }
 
-
-    private IHeader mIHeader;
     @Override public IHeader getHeader() {
         return mIHeader;
     }

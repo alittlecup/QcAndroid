@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
-
 import java.util.List;
 
 /**
@@ -28,6 +26,15 @@ import java.util.List;
  * Created by Paper on 16/8/3.
  */
 public class SchedulePhotos implements Parcelable {
+    public static final Creator<SchedulePhotos> CREATOR = new Creator<SchedulePhotos>() {
+        @Override public SchedulePhotos createFromParcel(Parcel source) {
+            return new SchedulePhotos(source);
+        }
+
+        @Override public SchedulePhotos[] newArray(int size) {
+            return new SchedulePhotos[size];
+        }
+    };
     private String course_name;
     private String start;
     private String end;
@@ -37,6 +44,19 @@ public class SchedulePhotos implements Parcelable {
     private List<SchedulePhoto> photos;
     private Long id;
 
+    public SchedulePhotos() {
+    }
+
+    protected SchedulePhotos(Parcel in) {
+        this.course_name = in.readString();
+        this.start = in.readString();
+        this.end = in.readString();
+        this.url = in.readString();
+        this.teacher = in.readParcelable(Coach.class.getClassLoader());
+        this.shop = in.readParcelable(QcScheduleBean.Shop.class.getClassLoader());
+        this.photos = in.createTypedArrayList(SchedulePhoto.CREATOR);
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+    }
 
     public QcScheduleBean.Shop getShop() {
         return shop;
@@ -102,16 +122,11 @@ public class SchedulePhotos implements Parcelable {
         this.id = id;
     }
 
-    public SchedulePhotos() {
-    }
-
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.course_name);
         dest.writeString(this.start);
         dest.writeString(this.end);
@@ -121,27 +136,4 @@ public class SchedulePhotos implements Parcelable {
         dest.writeTypedList(this.photos);
         dest.writeValue(this.id);
     }
-
-    protected SchedulePhotos(Parcel in) {
-        this.course_name = in.readString();
-        this.start = in.readString();
-        this.end = in.readString();
-        this.url = in.readString();
-        this.teacher = in.readParcelable(Coach.class.getClassLoader());
-        this.shop = in.readParcelable(QcScheduleBean.Shop.class.getClassLoader());
-        this.photos = in.createTypedArrayList(SchedulePhoto.CREATOR);
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-    }
-
-    public static final Creator<SchedulePhotos> CREATOR = new Creator<SchedulePhotos>() {
-        @Override
-        public SchedulePhotos createFromParcel(Parcel source) {
-            return new SchedulePhotos(source);
-        }
-
-        @Override
-        public SchedulePhotos[] newArray(int size) {
-            return new SchedulePhotos[size];
-        }
-    };
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
@@ -32,7 +33,6 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.AddStudentBean;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.PostStudents;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
@@ -215,7 +215,7 @@ public class ChooseStudentActivity extends BaseAcitivity {
         //        String s = new Gson().toJson(choosenstudentBeans);
         //        LogUtil.e("student:"+s);
         ShowLoading("正在导入,请稍后...");
-        if (mCoachService == null){
+        if (mCoachService == null) {
             return;
         }
         QcCloudClient.getApi().postApi.qcAddStudents(App.coachid, new PostStudents(choosenstudentBeans), GymUtils.getParams(mCoachService))

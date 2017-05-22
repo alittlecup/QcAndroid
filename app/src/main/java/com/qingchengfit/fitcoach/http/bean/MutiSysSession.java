@@ -16,8 +16,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/22 2015.
  */
 public class MutiSysSession {
-    @SerializedName("url")
-    public String url;
-    @SerializedName("session_id")
-    public String session_id;
+    @SerializedName("url") public String url;
+    @SerializedName("session_id") public String session_id;
 }

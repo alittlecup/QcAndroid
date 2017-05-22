@@ -37,7 +37,8 @@ public class EmptyFragment extends BaseFragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout linearLayout = new LinearLayout(getContext());
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams p =
+            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         linearLayout.setLayoutParams(p);
         //linearLayout.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         //linearLayout.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -45,13 +46,14 @@ public class EmptyFragment extends BaseFragment {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         ImageView imageView = new ImageView(getContext());
         imageView.setImageResource(R.drawable.img_coming_soon);
-        linearLayout.addView(imageView,new LinearLayout.LayoutParams(MeasureUtils.dpToPx(120f,getResources()),MeasureUtils.dpToPx(120f,getResources())));
+        linearLayout.addView(imageView,
+            new LinearLayout.LayoutParams(MeasureUtils.dpToPx(120f, getResources()), MeasureUtils.dpToPx(120f, getResources())));
         TextView textView = new TextView(getContext());
         textView.setTextSize(14);
-        textView.setTextColor(CompatUtils.getColor(getContext(),R.color.text_grey));
+        textView.setTextColor(CompatUtils.getColor(getContext(), R.color.text_grey));
         textView.setText("敬请期待");
         textView.setGravity(Gravity.CENTER);
-        linearLayout.addView(new Space(getContext()),100,16);
+        linearLayout.addView(new Space(getContext()), 100, 16);
         linearLayout.addView(textView);
         return linearLayout;
     }

@@ -5,99 +5,107 @@
     android:layout_height="match_parent"
     >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:civ="http://schemas.android.com/apk/res-auto"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
-        <include layout="@layout/common_toolbar"/>
-        <TextView
-            style="@style/TextTitleHint"
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:text="@string/base_info"
-            />
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:civ="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
 
-        <TextView
-            android:id="@+id/edit_hint"
-            style="@style/TextTitleHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="@string/edit_in_chain"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/ic_circle_info"
-            android:drawablePadding="8dp"
-            />
+    <include layout="@layout/common_toolbar"/>
 
-        <include layout="@layout/divider_grey"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="@string/base_info"
+        style="@style/TextTitleHint"
+        />
 
-        <FrameLayout
-            android:id="@+id/course_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/edit_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_circle_info"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp"
+        android:text="@string/edit_in_chain"
+        style="@style/TextTitleHint"
+        />
 
-        <TextView
-            style="@style/TextTitleHint"
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:text="@string/suit_gyms"
-            />
+    <include layout="@layout/divider_grey"/>
 
-        <TextView
-            android:id="@+id/suit_gyms_hint"
-            style="@style/TextTitleHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="请在[连锁运营]中修改适用场馆"
-            android:drawableLeft="@drawable/ic_circle_info"
-            android:drawablePadding="8dp"
-            />
+    <FrameLayout
+        android:id="@+id/course_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
-        <com.qingchengfit.fitcoach.component.CommonInputView
-            android:id="@+id/suit_gyms_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            civ:civ_clickable="true"
-            civ:civ_lable="@string/suit_gyms"
-            civ:civ_showright="true"
-            />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/suit_gyms_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            />
-        <LinearLayout
-            android:id="@+id/layout_open_app"
-            android:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="请在健身房管理App中管理适用场馆"
-                />
-            <TextView
-                android:id="@+id/open_app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="打开APP"
-                android:textColor="@color/primary"
-                android:drawableBottom="@drawable/primary_under_line"
-                android:drawablePadding="4dp"
-                />
-        </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="@string/suit_gyms"
+        style="@style/TextTitleHint"
+        />
 
+    <TextView
+        android:id="@+id/suit_gyms_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_circle_info"
+        android:drawablePadding="8dp"
+        android:paddingBottom="8dp"
+        android:text="请在[连锁运营]中修改适用场馆"
+        style="@style/TextTitleHint"
+        />
 
+    <com.qingchengfit.fitcoach.component.CommonInputView
+        android:id="@+id/suit_gyms_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        civ:civ_clickable="true"
+        civ:civ_lable="@string/suit_gyms"
+        civ:civ_showright="true"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/suit_gyms_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_open_app"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:visibility="visible"
+        >
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="请在健身房管理App中管理适用场馆"
+          />
+
+      <TextView
+          android:id="@+id/open_app"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableBottom="@drawable/primary_under_line"
+          android:drawablePadding="4dp"
+          android:text="打开APP"
+          android:textColor="@color/primary"
+          />
     </LinearLayout>
+
+
+  </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -24,5 +24,4 @@ public interface GestureDetector {
     public boolean isScaling();
 
     public void setOnGestureListener(OnGestureListener listener);
-
 }

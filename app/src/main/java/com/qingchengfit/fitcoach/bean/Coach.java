@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -20,17 +19,20 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Coach implements Parcelable {
 
-    @SerializedName("username")
-    public String name;
-    @SerializedName("gender")
-    public int gender;
-    @SerializedName("phone")
-    public String phone;
-    @SerializedName("avatar")
-    public String header;
-    @SerializedName("id")
-    public String id;
+    public static final Creator<Coach> CREATOR = new Creator<Coach>() {
+        @Override public Coach createFromParcel(Parcel source) {
+            return new Coach(source);
+        }
 
+        @Override public Coach[] newArray(int size) {
+            return new Coach[size];
+        }
+    };
+    @SerializedName("username") public String name;
+    @SerializedName("gender") public int gender;
+    @SerializedName("phone") public String phone;
+    @SerializedName("avatar") public String header;
+    @SerializedName("id") public String id;
 
     public Coach(String name, int gender, String phone, String header) {
         this.name = name;
@@ -47,20 +49,6 @@ public class Coach implements Parcelable {
         id = builder.id;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeInt(this.gender);
-        dest.writeString(this.phone);
-        dest.writeString(this.header);
-        dest.writeString(this.id);
-    }
-
     protected Coach(Parcel in) {
         this.name = in.readString();
         this.gender = in.readInt();
@@ -69,17 +57,17 @@ public class Coach implements Parcelable {
         this.id = in.readString();
     }
 
-    public static final Creator<Coach> CREATOR = new Creator<Coach>() {
-        @Override
-        public Coach createFromParcel(Parcel source) {
-            return new Coach(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public Coach[] newArray(int size) {
-            return new Coach[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeInt(this.gender);
+        dest.writeString(this.phone);
+        dest.writeString(this.header);
+        dest.writeString(this.id);
+    }
 
     public static final class Builder {
         private String name;

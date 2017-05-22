@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import com.qingchengfit.fitcoach.bean.StudentBean;
-
 import java.util.Comparator;
 
 /**
@@ -19,21 +18,19 @@ import java.util.Comparator;
  */
 public class StudentCompare implements Comparator<StudentBean> {
 
+    @Override public int compare(StudentBean lhs, StudentBean rhs) {
+        //        LogUtil.e("l:" + lhs.head.charAt(0) + "  " + rhs.head.charAt(0));
+        //        if (lhs.head.charAt(0) <= rhs.head.charAt(0)) {
+        //            return -1;
+        //        } else return 1;
 
-    @Override
-    public int compare(StudentBean lhs, StudentBean rhs) {
-//        LogUtil.e("l:" + lhs.head.charAt(0) + "  " + rhs.head.charAt(0));
-//        if (lhs.head.charAt(0) <= rhs.head.charAt(0)) {
-//            return -1;
-//        } else return 1;
-
-//        if (TextUtils.equals("#", lhs.head) && TextUtils.equals("#", rhs.head)) {
-//            return 1;
-//        } else if (TextUtils.equals("#", lhs.head))
-//            return 1;
-//        else if (TextUtils.equals("#", rhs.head)) {
-//            return -1;
-//        } else
+        //        if (TextUtils.equals("#", lhs.head) && TextUtils.equals("#", rhs.head)) {
+        //            return 1;
+        //        } else if (TextUtils.equals("#", lhs.head))
+        //            return 1;
+        //        else if (TextUtils.equals("#", rhs.head)) {
+        //            return -1;
+        //        } else
         return lhs.head.compareTo(rhs.head);
     }
 }

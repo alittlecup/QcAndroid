@@ -84,14 +84,14 @@ public class SpaceListFragment extends BaseFragment implements FlexibleAdapter.O
                 getActivity().onBackPressed();
             }
         });
-        if (getArguments().getInt("type",Configs.TYPE_GROUP) == Configs.TYPE_PRIVATE){
+        if (getArguments().getInt("type", Configs.TYPE_GROUP) == Configs.TYPE_PRIVATE) {
             toolbar.inflateMenu(R.menu.menu_complete);
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     Intent ret = new Intent();
                     ArrayList<Space> spaces = new ArrayList<>();
                     List<Integer> poses = mCommonFlexAdapter.getSelectedPositions();
-                    if (poses== null || poses.size() == 0){
+                    if (poses == null || poses.size() == 0) {
                         ToastUtils.show(getString(R.string.err_at_least_one_space));
                         return true;
                     }

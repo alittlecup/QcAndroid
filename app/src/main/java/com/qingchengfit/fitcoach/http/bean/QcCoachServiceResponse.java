@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,14 +18,11 @@ import java.util.List;
  * Created by Paper on 15/12/28 2015.
  */
 public class QcCoachServiceResponse extends QcResponse {
-    @SerializedName("data")
-    public CoachServiceData data;
+    @SerializedName("data") public CoachServiceData data;
 
-    public static class CoachServiceData{
-        @SerializedName("services")
-        public List<CoachService> services;
-//        @SerializedName("gyms")
-//        public List<QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity> gyms;
-
+    public static class CoachServiceData {
+        @SerializedName("services") public List<CoachService> services;
+        //        @SerializedName("gyms")
+        //        public List<QcExperienceResponse.DataEntity.ExperiencesEntity.GymEntity> gyms;
     }
 }

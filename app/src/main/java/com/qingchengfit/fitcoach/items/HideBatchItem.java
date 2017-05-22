@@ -14,7 +14,6 @@ import java.util.List;
 
 public class HideBatchItem extends AbstractFlexibleItem<HideBatchItem.HideBatchVH> {
 
-
     @Override public int getLayoutRes() {
         return R.layout.item_hide_batch;
     }
@@ -24,7 +23,7 @@ public class HideBatchItem extends AbstractFlexibleItem<HideBatchItem.HideBatchV
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, HideBatchVH holder, int position, List payloads) {
-        holder.btnShow.setText(adapter.isSelected(position)?R.string.hide_out_batch:R.string.show_out_batch);
+        holder.btnShow.setText(adapter.isSelected(position) ? R.string.hide_out_batch : R.string.show_out_batch);
     }
 
     @Override public boolean equals(Object o) {
@@ -33,6 +32,7 @@ public class HideBatchItem extends AbstractFlexibleItem<HideBatchItem.HideBatchV
 
     public class HideBatchVH extends FlexibleViewHolder {
         @BindView(R.id.btn_show) TextView btnShow;
+
         public HideBatchVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

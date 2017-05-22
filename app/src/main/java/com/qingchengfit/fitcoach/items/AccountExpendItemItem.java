@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountExpendItemItem extends AbstractFlexibleItem<AccountExpendItemItem.AccountExpendItemVH>
-    implements IExpandable<AccountExpendItemItem.AccountExpendItemVH, AccountSubItem>
-    ,IHeader<AccountExpendItemItem.AccountExpendItemVH> {
+    implements IExpandable<AccountExpendItemItem.AccountExpendItemVH, AccountSubItem>, IHeader<AccountExpendItemItem.AccountExpendItemVH> {
 
     Card_tpl mCard_tpl;
 
@@ -29,7 +28,7 @@ public class AccountExpendItemItem extends AbstractFlexibleItem<AccountExpendIte
     public AccountExpendItemItem(Card_tpl card_tpl, int x) {
         mCard_tpl = card_tpl;
         for (int i = 0; i < x; i++) {
-            addItem(new AccountSubItem(this,card_tpl.getId()+"_"+x));
+            addItem(new AccountSubItem(this, card_tpl.getId() + "_" + x));
         }
     }
 
@@ -85,7 +84,6 @@ public class AccountExpendItemItem extends AbstractFlexibleItem<AccountExpendIte
         public AccountExpendItemVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);
-
         }
 
         @Override protected boolean isViewExpandableOnClick() {

@@ -54,10 +54,8 @@ import rx.schedulers.Schedulers;
  */
 public class SyncGymFragment extends BaseFragment {
 
-    @BindView(R.id.sync_gym_hint)
-    TextView syncGymHint;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    @BindView(R.id.sync_gym_hint) TextView syncGymHint;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
 
     @Inject RepoCoachServiceImpl repoCoachService;
 
@@ -65,70 +63,60 @@ public class SyncGymFragment extends BaseFragment {
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private SyncWaitingItemItem syncItem;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sync_gyms, container, false);
         ButterKnife.bind(this, view);
         recyclerview.setHasFixedSize(true);
         recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayoutManager.VERTICAL));
+        recyclerview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mData.clear();
         syncItem = new SyncWaitingItemItem();
         mData.add(syncItem);
         commonFlexAdapter = new CommonFlexAdapter(mData, this);
         recyclerview.setAdapter(commonFlexAdapter);
-        RxBusAdd(EventSyncDone.class)
-                .subscribe(new Action1<EventSyncDone>() {
-                    @Override
-                    public void call(EventSyncDone eventSyncDone) {
-                        Intent toMain = new Intent(getActivity(), Main2Activity.class);
-                        startActivity(toMain);
-                        getActivity().finish();
+        RxBusAdd(EventSyncDone.class).subscribe(new Action1<EventSyncDone>() {
+            @Override public void call(EventSyncDone eventSyncDone) {
+                Intent toMain = new Intent(getActivity(), Main2Activity.class);
+                startActivity(toMain);
+                getActivity().finish();
+            }
+        });
+
+        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid).subscribeOn(Schedulers.io())
+
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(qcCoachServiceResponse -> {
+                if (qcCoachServiceResponse.status == 200) {
+                    syncGymHint.setText(getString(R.string.hint_sync_gyms, qcCoachServiceResponse.data.services.size()));
+                    repoCoachService.createServices(qcCoachServiceResponse.data.services);
+                    RxBus.getBus().post(new EventLoginChange());
+                    mData.clear();
+                    for (int i = 0; i < qcCoachServiceResponse.data.services.size(); i++) {
+                        mData.add(new SyncGymItem(qcCoachServiceResponse.data.services.get(i)));
                     }
-                });
-
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-            .subscribeOn(Schedulers.io())
-
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcCoachServiceResponse -> {
-                    if (qcCoachServiceResponse.status == 200) {
-                        syncGymHint.setText(getString(R.string.hint_sync_gyms,qcCoachServiceResponse.data.services.size()));
-                        repoCoachService.createServices(qcCoachServiceResponse.data.services);
-                        RxBus.getBus().post(new EventLoginChange());
-                        mData.clear();
-                        for (int i = 0; i < qcCoachServiceResponse.data.services.size(); i++) {
-                            mData.add(new SyncGymItem(qcCoachServiceResponse.data.services.get(i)));
-                        }
-                        mData.add(syncItem);
-                        commonFlexAdapter.notifyDataSetChanged();
-                        recyclerview.scrollToPosition(mData.size());
-                        RxRegiste(rx.Observable.just("")
-                                .delay(2, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<String>() {
-                                    @Override
-                                    public void call(String s) {
-                                        syncItem.isDone =true;
-                                        commonFlexAdapter.notifyItemChanged(mData.size()-1);
-
-                                    }
-                                })
-                        );
-
-                    } else {
-                        ToastUtils.showDefaultStyle("数据同步失败");
-                    }
-                }, throwable -> {
+                    mData.add(syncItem);
+                    commonFlexAdapter.notifyDataSetChanged();
+                    recyclerview.scrollToPosition(mData.size());
+                    RxRegiste(rx.Observable.just("")
+                        .delay(2, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<String>() {
+                            @Override public void call(String s) {
+                                syncItem.isDone = true;
+                                commonFlexAdapter.notifyItemChanged(mData.size() - 1);
+                            }
+                        }));
+                } else {
                     ToastUtils.showDefaultStyle("数据同步失败");
-                }));
+                }
+            }, throwable -> {
+                ToastUtils.showDefaultStyle("数据同步失败");
+            }));
 
         return view;
-
     }
 
-    @Override
-    public String getFragmentName() {
+    @Override public String getFragmentName() {
         return SyncGymFragment.class.getName();
     }
 }

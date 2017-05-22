@@ -34,7 +34,6 @@ public class PushReciever extends PushMessageReceiver {
     /**
      * @param context
      * @param i     errorcode
-     *
      * @param s     appid
      * @param s1    userId
      * @param s2    channelId
@@ -42,46 +41,40 @@ public class PushReciever extends PushMessageReceiver {
      */
     public static String BD_CHANNELID = "bd_channelid";
     public static String BD_USERLID = "bd_userid";
-    @Override
-    public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
-        LogUtil.e("error:"+i+"   "+s + "  " + s1 + "  channelid:" + s2 + "    " + s3);
+
+    @Override public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
+        LogUtil.e("error:" + i + "   " + s + "  " + s1 + "  channelid:" + s2 + "    " + s3);
         PreferenceUtils.setPrefString(context, BD_USERLID, s1);
         PreferenceUtils.setPrefString(context, BD_CHANNELID, s2);
     }
 
-    @Override
-    public void onUnbind(Context context, int i, String s) {
+    @Override public void onUnbind(Context context, int i, String s) {
 
     }
 
-    @Override
-    public void onSetTags(Context context, int i, List<String> list, List<String> list1, String s) {
+    @Override public void onSetTags(Context context, int i, List<String> list, List<String> list1, String s) {
 
     }
 
-    @Override
-    public void onDelTags(Context context, int i, List<String> list, List<String> list1, String s) {
+    @Override public void onDelTags(Context context, int i, List<String> list, List<String> list1, String s) {
 
     }
 
-    @Override
-    public void onListTags(Context context, int i, List<String> list, String s) {
+    @Override public void onListTags(Context context, int i, List<String> list, String s) {
 
     }
 
-    @Override
-    public void onMessage(Context context, String s, String s1) {
+    @Override public void onMessage(Context context, String s, String s1) {
         LogUtil.e(s + "  " + s1);
         RxBus.getBus().post(new NewPushMsg());
     }
 
-    @Override
-    public void onNotificationClicked(Context context, String s, String s1, String s2) {
+    @Override public void onNotificationClicked(Context context, String s, String s1, String s2) {
         LogUtil.d("title:" + s + "   content:" + s1 + "   self:" + s2);
 
-        if (!TextUtils.isEmpty(s2)){
+        if (!TextUtils.isEmpty(s2)) {
             PushBean bean = new Gson().fromJson(s2, PushBean.class);
-            if (bean ==null || TextUtils.isEmpty(bean.url)){
+            if (bean == null || TextUtils.isEmpty(bean.url)) {
                 return;
             }
             if (bean.url.startsWith("http")) {
@@ -98,7 +91,7 @@ public class PushReciever extends PushMessageReceiver {
                     toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(toMain);
                 }
-            }else {
+            } else {
                 try {
                     Uri uri = Uri.parse(bean.url);
                     Intent tosb = new Intent(Intent.ACTION_VIEW, uri);
@@ -109,23 +102,17 @@ public class PushReciever extends PushMessageReceiver {
                     }
                     tosb.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(tosb);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Intent toMain = new Intent(context, Main2Activity.class);
                     toMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(toMain);
                 }
-
             }
-
         }
-
     }
 
-    @Override
-    public void onNotificationArrived(Context context, String s, String s1, String s2) {
+    @Override public void onNotificationArrived(Context context, String s, String s1, String s2) {
         LogUtil.d(" recieve title:" + s + "   content:" + s1 + "   self:" + s2);
         RxBus.getBus().post(new NewPushMsg());
     }
-
-
 }

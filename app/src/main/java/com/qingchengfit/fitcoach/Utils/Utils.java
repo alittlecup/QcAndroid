@@ -70,9 +70,8 @@ public class Utils {
     public static void openApp(Context context) {
         try {
             Intent intent = new Intent();
-            intent = context.getPackageManager().getLaunchIntentForPackage( "cn.qingchengfit.staffkit");
+            intent = context.getPackageManager().getLaunchIntentForPackage("cn.qingchengfit.staffkit");
             context.startActivity(intent);
-
         } catch (Exception e) {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse("http://fir.im/qcfit"));

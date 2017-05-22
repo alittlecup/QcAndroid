@@ -20,8 +20,8 @@ import cn.qingchengfit.items.ChooseStaffItem;
 import cn.qingchengfit.items.PositionHeaderItem;
 import cn.qingchengfit.model.base.Personage;
 import cn.qingchengfit.model.base.QcStudentBean;
-import cn.qingchengfit.utils.ListUtils;
 import cn.qingchengfit.utils.CompatUtils;
+import cn.qingchengfit.utils.ListUtils;
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
@@ -101,13 +101,12 @@ import rx.functions.Action1;
             }
         });
         //清空数据
-        RxBusAdd(EventFresh.class)
-            .subscribe(new Action1<EventFresh>() {
-                @Override public void call(EventFresh eventFresh) {
-                    adapter.notifyDataSetChanged();
-                    checkbox.setChecked(false);
-                }
-            });
+        RxBusAdd(EventFresh.class).subscribe(new Action1<EventFresh>() {
+            @Override public void call(EventFresh eventFresh) {
+                adapter.notifyDataSetChanged();
+                checkbox.setChecked(false);
+            }
+        });
         return view;
     }
 
@@ -165,8 +164,7 @@ import rx.functions.Action1;
                 DirtySender.studentList.remove(p);
             } else {
                 QcStudentBean studentBean = new QcStudentBean(p);
-                if (!DirtySender.studentList.contains(studentBean))
-                    DirtySender.studentList.add(studentBean);
+                if (!DirtySender.studentList.contains(studentBean)) DirtySender.studentList.add(studentBean);
             }
             adapter.notifyItemChanged(i);
             adapter.notifyItemChanged(adapter.getGlobalPositionOf(adapter.getExpandableOf(adapter.getItem(i))));

@@ -4,7 +4,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import java.util.List;
 
 /**
@@ -22,29 +21,26 @@ import java.util.List;
  */
 public class ImagesAdapter extends PagerAdapter {
     List<View> views;
+
     public ImagesAdapter(List<View> vs) {
         views = vs;
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return views.size();
     }
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object ;
+    @Override public boolean isViewFromObject(View view, Object object) {
+        return view == object;
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(views.get(position), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    @Override public Object instantiateItem(ViewGroup container, int position) {
+        container.addView(views.get(position),
+            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return views.get(position);
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    @Override public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(views.get(position));
-
     }
 }

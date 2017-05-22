@@ -18,6 +18,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import com.bigkoo.pickerview.TimeDialogWindow;
@@ -44,7 +45,6 @@ import com.qingchengfit.fitcoach.component.TimePeriodChooser;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;
-import cn.qingchengfit.model.base.CoachService;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,6 +75,8 @@ import javax.inject.Inject;
 @FragmentWithArgs public class SingleBatchFragment extends BaseFragment implements SingleBatchPresenter.MVPView {
     public static final int RESULT_COURSE = 11;
     public static final int RESULT_ACCOUNT = 12;
+    @Arg public boolean mIsPrivate;
+    @Arg public String mSingleBatchid;
     @BindView(R.id.img) ImageView img;
     //@BindView(R.id.img_layout) FrameLayout imgLayout;
     //@BindView(R.id.img_foot) ImageView imgFoot;
@@ -90,10 +92,6 @@ import javax.inject.Inject;
     @BindView(R.id.course_date) CommonInputView courseDate;
     @BindView(R.id.course_time) CommonInputView courseTime;
     @BindView(R.id.btn_del) TextView btnDel;
-
-    @Arg public boolean mIsPrivate;
-    @Arg public String mSingleBatchid;
-
     @Inject SingleBatchPresenter mSingleBatchPresenter;
     @BindView(R.id.root_scroll) ScrollView rootScroll;
     @Inject CoachService coachService;

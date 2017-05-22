@@ -26,22 +26,19 @@ import java.util.HashMap;
 public class CurentPermissions {
 
     public static CurentPermissions cur;
+    public HashMap<String, Boolean> permissionList = new HashMap<>();
 
     public static CurentPermissions newInstance() {
-        if (cur == null)
-            cur = new CurentPermissions();
+        if (cur == null) cur = new CurentPermissions();
         return cur;
     }
 
-    public HashMap<String,Boolean> permissionList = new HashMap<>();
-
-    public boolean queryPermission(String key){
-        if (permissionList.keySet().contains(key))
+    public boolean queryPermission(String key) {
+        if (permissionList.keySet().contains(key)) {
             return permissionList.get(key);
-        else return false;
+        } else {
+            return false;
+        }
         //return true;
     }
-
-
-
 }

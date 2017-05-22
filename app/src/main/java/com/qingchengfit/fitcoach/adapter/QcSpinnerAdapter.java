@@ -7,14 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.LoopView;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.LoopView;
+import java.util.List;
 
 /**
  * power by
@@ -36,23 +33,19 @@ public class QcSpinnerAdapter extends BaseAdapter {
         this.datas = d;
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return datas.size();
     }
 
-    @Override
-    public Object getItem(int position) {
+    @Override public Object getItem(int position) {
         return datas.get(position);
     }
 
-    @Override
-    public long getItemId(int position) {
+    @Override public long getItemId(int position) {
         return position;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
@@ -89,10 +82,8 @@ public class QcSpinnerAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @BindView(R.id.spinner_icon)
-        ImageView spinnerIcon;
-        @BindView(R.id.spinner_tv)
-        TextView spinnerTv;
+        @BindView(R.id.spinner_icon) ImageView spinnerIcon;
+        @BindView(R.id.spinner_tv) TextView spinnerTv;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

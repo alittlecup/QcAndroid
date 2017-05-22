@@ -4,17 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
-
+import java.util.List;
 
 /**
  * power by
@@ -39,37 +35,30 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 public class JacketAddItem extends AbstractFlexibleItem<JacketAddItem.JacketAddVH> {
     public JacketAddItem() {
         setDraggable(false);
-
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
-    @Override
-    public JacketAddVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
-        return  new JacketAddVH(inflater.inflate(getLayoutRes(),parent,false),adapter);
+    @Override public JacketAddVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+        return new JacketAddVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, JacketAddVH holder, int position, List payloads) {
+    @Override public void bindViewHolder(FlexibleAdapter adapter, JacketAddVH holder, int position, List payloads) {
 
     }
 
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_jacket_add;
     }
 
     public static class JacketAddVH extends FlexibleViewHolder {
-        @BindView(R.id.add_img)
-        TextView addImg;
+        @BindView(R.id.add_img) TextView addImg;
+
         public JacketAddVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
-            ButterKnife.bind(this,view);
-
+            ButterKnife.bind(this, view);
         }
     }
-
 }

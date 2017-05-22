@@ -46,7 +46,7 @@ import com.qingchengfit.fitcoach.R;
  * 只用在schedules页面
  */
 public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
-//public class PagerSlidingTabStrip extends CustomVpScrollView implements ViewPager.OnPageChangeListener {
+    //public class PagerSlidingTabStrip extends CustomVpScrollView implements ViewPager.OnPageChangeListener {
     /**
      * system arrtributes
      */
@@ -99,6 +99,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
      * page change listener
      */
     private ViewPager.OnPageChangeListener mOnPageChangeListener;
+    private int mLastPosition;
 
     public PagerSlidingTabStrip(Context context) {
         this(context, null);
@@ -187,8 +188,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
         savedState.currentPosition = mCurrentPosition;
         return savedState;
     }
-
-    private int mLastPosition;
 
     @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         mLastPosition = mCurrentPosition;
@@ -421,7 +420,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView implements ViewPa
         }
 
         mScrollOffset = mTabsContainer.getChildAt(position).getWidth();
-        int newScrollX = mTabsContainer.getChildAt(position - position%7).getLeft();
+        int newScrollX = mTabsContainer.getChildAt(position - position % 7).getLeft();
         if (newScrollX != mLastScrollX) {
             mLastScrollX = newScrollX;
             smoothScrollTo(newScrollX, 0);

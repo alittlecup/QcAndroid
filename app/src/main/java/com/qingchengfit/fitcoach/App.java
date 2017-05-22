@@ -44,7 +44,6 @@ import rx.plugins.RxJavaPlugins;
 //import com.qingchengfit.fitcoach.di.ApplicationModule;
 //import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
 
-
 /**
  * power by
  * <p>
@@ -58,9 +57,14 @@ import rx.plugins.RxJavaPlugins;
  * <p>
  * Created by Paper on 15/7/29 2015.
  */
-public class App extends Application implements HasDispatchingActivityInjector,HasDispatchingSupportFragmentInjector {
-    @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
-    @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
+public class App extends Application implements HasDispatchingActivityInjector, HasDispatchingSupportFragmentInjector {
+    public static Context AppContex;
+    public static boolean canXwalk;
+    public static boolean gMainAlive = false;
+    public static User gUser;
+    public static int coachid;
+    public static DiskLruCache diskLruCache;
+    public static boolean gCanReload = false;
     // 数据接收的 URL
     final String SA_SERVER_URL = "http://qingchengfit.cloud.sensorsdata.cn:8006/sa?token=2f79f21494c6f970";
     // 配置分发的 URL
@@ -71,16 +75,10 @@ public class App extends Application implements HasDispatchingActivityInjector,H
     //   SensorsDataAPI.DebugMode.DEBUG_AND_TRACK - 打开 Debug 模式，校验数据，并将数据导入到 Sensors Analytics 中
     // 注意！请不要在正式发布的 App 中使用 Debug 模式！
     final SensorsDataAPI.DebugMode SA_DEBUG_MODE = SensorsDataAPI.DebugMode.DEBUG_OFF;
-
-    public static Context AppContex;
-    public static boolean canXwalk;
-    public static boolean gMainAlive = false;
-    public static User gUser;
-    public static int coachid;
-    public static DiskLruCache diskLruCache;
-    public static boolean gCanReload = false;
-
+    @Inject DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+    @Inject DispatchingAndroidInjector<android.support.v4.app.Fragment> dispatchingFragmentInjector;
     private String KEY_DEX2_SHA1 = "XXDSDSFHALJFDKLASF";
+    private ApplicationLike tinkerApplicationLike;
 
     public static void setgUser(User ser) {
         gUser = ser;
@@ -89,10 +87,8 @@ public class App extends Application implements HasDispatchingActivityInjector,H
     public static String getCurProcessName(Context context) {
         try {
             int pid = android.os.Process.myPid();
-            ActivityManager mActivityManager = (ActivityManager) context
-                    .getSystemService(Context.ACTIVITY_SERVICE);
-            for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
-                    .getRunningAppProcesses()) {
+            ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager.getRunningAppProcesses()) {
                 if (appProcess.pid == pid) {
                     return appProcess.processName;
                 }
@@ -102,10 +98,9 @@ public class App extends Application implements HasDispatchingActivityInjector,H
         }
         return null;
     }
-    private ApplicationLike tinkerApplicationLike;
+
     //
-    @Override
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
         tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
         //开始检查是否有补丁，这里配置的是每隔访问3小时服务器是否有更新。
@@ -119,17 +114,15 @@ public class App extends Application implements HasDispatchingActivityInjector,H
         }
         try {
             FIR.init(this);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         AppContex = getApplicationContext();
-        if (!BuildConfig.DEBUG)
-            CrashHandler.getInstance().init(this);
+        if (!BuildConfig.DEBUG) CrashHandler.getInstance().init(this);
         ToastUtils.init(this);
 
         //初始化神策
-        SensorsDataAPI.sharedInstance(
-            this,                               // 传入 Context
+        SensorsDataAPI.sharedInstance(this,                               // 传入 Context
             SA_SERVER_URL,                      // 数据接收的 URL
             SA_CONFIGURE_URL,                   // 配置分发的 URL
             SA_DEBUG_MODE);
@@ -140,47 +133,39 @@ public class App extends Application implements HasDispatchingActivityInjector,H
 
         }
 
-
-
         String u = PreferenceUtils.getPrefString(this, "user_info", "");
         if (!TextUtils.isEmpty(u)) {
             gUser = new Gson().fromJson(u, User.class);
-
         }
-
-
 
         Configs.APP_ID = getString(R.string.wechat_code);
         String id = PreferenceUtils.getPrefString(this, "coach", "");
-        String session_id =  PreferenceUtils.getPrefString(this, "session_id", "");
+        String session_id = PreferenceUtils.getPrefString(this, "session_id", "");
 
         if (TextUtils.isEmpty(id)) {
         } else {
             Coach coach = new Gson().fromJson(id, Coach.class);
             App.coachid = Integer.parseInt(coach.id);
-
         }
-        AppComponent appComponent = DaggerAppComponent.builder()
-            .appModule(new AppModule.Builder()
-                .app(this)
+        AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule.Builder().app(this)
                 .gymWrapper(new GymWrapper.Builder().build())
-                .loginStatus(new LoginStatus.Builder().loginUser(gUser == null? new Staff():Staff.formatFromUser(gUser,App.coachid+"")).session(session_id).userId(gUser == null?"":gUser.getId()).build())
+            .loginStatus(new LoginStatus.Builder().loginUser(gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))
+                .session(session_id)
+                .userId(gUser == null ? "" : gUser.getId())
+                .build())
                 .build())
             .build();
         appComponent.inject(this);
 
         ToastUtils.init(this);
         RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
-            @Override
-            public void handleError(Throwable e) {
+            @Override public void handleError(Throwable e) {
                 if (e != null) {
                     LogUtil.e("rxError:" + e.getMessage() + e.getCause());
                     e.printStackTrace();
                 }
             }
         });
-
-
     }
 
     private void setupWebView() {
@@ -192,18 +177,10 @@ public class App extends Application implements HasDispatchingActivityInjector,H
         }
     }
 
-
-
-    @Override
-    protected void attachBaseContext(Context base) {
+    @Override protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-
     }
-
-
-
-
 
     public void finishActivity() {
 

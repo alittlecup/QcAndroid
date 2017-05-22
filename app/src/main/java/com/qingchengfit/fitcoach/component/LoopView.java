@@ -40,29 +40,23 @@ public class LoopView extends Drawable {
         mWhitePain.setAntiAlias(true);
         mWhitePain.setStyle(Paint.Style.FILL);
         mWhitePain.setColor(Color.WHITE);
-
     }
 
-
-    @Override
-    public void draw(Canvas canvas) {
+    @Override public void draw(Canvas canvas) {
         Rect rect = getBounds();
         canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 2, mPaint);
         canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2 - 4, mWhitePain);
     }
 
-    @Override
-    public void setAlpha(int alpha) {
+    @Override public void setAlpha(int alpha) {
 
     }
 
-    @Override
-    public void setColorFilter(ColorFilter colorFilter) {
+    @Override public void setColorFilter(ColorFilter colorFilter) {
 
     }
 
-    @Override
-    public int getOpacity() {
+    @Override public int getOpacity() {
         return 0;
     }
 }

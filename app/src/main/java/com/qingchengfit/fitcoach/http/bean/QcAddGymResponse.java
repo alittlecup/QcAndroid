@@ -16,12 +16,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/18 2015.
  */
 public class QcAddGymResponse extends QcResponse {
-    @SerializedName("data")
-    public AddGymData data;
-
+    @SerializedName("data") public AddGymData data;
 
     public static class AddGymData {
-        @SerializedName("gym")
-        public AddGymBean gym;
+        @SerializedName("gym") public AddGymBean gym;
     }
 }

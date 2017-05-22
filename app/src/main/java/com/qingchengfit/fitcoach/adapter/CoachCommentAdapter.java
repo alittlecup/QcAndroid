@@ -4,14 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
-
 import com.qingchengfit.fitcoach.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip;
 import com.qingchengfit.fitcoach.fragment.course.CoachCommentDetailFragment;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * power by
@@ -32,62 +29,53 @@ public class CoachCommentAdapter extends FragmentStatePagerAdapter implements Pa
     FragmentManager fm;
     List<CourseTeacher> mCoaches = new ArrayList<>();
 
-//    public CoachCommentAdapter(FragmentManager fm, ArrayList<Fragment> fs, List<Coach> coaches) {
-//        super(fm);
-//        this.fragments = fs;
-//        this.fm = fm;
-//        this.mCoaches = coaches;
-//
-//    }
-  public CoachCommentAdapter(FragmentManager fm, List<CourseTeacher> coaches) {
+    //    public CoachCommentAdapter(FragmentManager fm, ArrayList<Fragment> fs, List<Coach> coaches) {
+    //        super(fm);
+    //        this.fragments = fs;
+    //        this.fm = fm;
+    //        this.mCoaches = coaches;
+    //
+    //    }
+    public CoachCommentAdapter(FragmentManager fm, List<CourseTeacher> coaches) {
         super(fm);
         this.fm = fm;
         this.mCoaches = coaches;
-
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment) super.instantiateItem(container,
-                position);
+    @Override public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
         return fragment;
     }
 
-
-    @Override
-    public Fragment getItem(int position) {
-        return  CoachCommentDetailFragment.newInstance(mCoaches.get(position));
+    @Override public Fragment getItem(int position) {
+        return CoachCommentDetailFragment.newInstance(mCoaches.get(position));
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return mCoaches.size();
     }
 
-    @Override
-    public int getItemPosition(Object object) {
+    @Override public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
 
-//    public CharSequence getPageTitle(int position) {
-//        Fragment f = fragments.get(position);
-//        if (f instanceof TitleFragment) {
-//            return ((TitleFragment) f).getTitle();
-//        } else return "";
-//
-//    }
+    //    public CharSequence getPageTitle(int position) {
+    //        Fragment f = fragments.get(position);
+    //        if (f instanceof TitleFragment) {
+    //            return ((TitleFragment) f).getTitle();
+    //        } else return "";
+    //
+    //    }
 
-    @Override
-    public String getTextStr(int position) {
+    @Override public String getTextStr(int position) {
         return mCoaches.get(position).getUser().name;
     }
 
-    @Override
-    public boolean getShowRed(int position) {
+    @Override public boolean getShowRed(int position) {
         return false;
     }
 
-//    @Override
+    //    @Override
     public String getHeaderUrl(int position) {
         return mCoaches.get(position).getUser().header;
     }

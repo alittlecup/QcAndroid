@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -22,14 +20,19 @@ import java.util.List;
  */
 public class Measure implements Parcelable {
 
-    @SerializedName("weight")
-    public String weight;
-    @SerializedName("waistline")
-    public String waistline;
-    @SerializedName("height")
-    public String height;
-    @SerializedName("hipline")
-    public String hipline;
+    public static final Creator<Measure> CREATOR = new Creator<Measure>() {
+        @Override public Measure createFromParcel(Parcel source) {
+            return new Measure(source);
+        }
+
+        @Override public Measure[] newArray(int size) {
+            return new Measure[size];
+        }
+    };
+    @SerializedName("weight") public String weight;
+    @SerializedName("waistline") public String waistline;
+    @SerializedName("height") public String height;
+    @SerializedName("hipline") public String hipline;
     @SerializedName("circumference_of_left_calf") //小腿
     public String circumference_of_left_calf;
     @SerializedName("circumference_of_right_calf") //小腿
@@ -38,52 +41,17 @@ public class Measure implements Parcelable {
     public String circumference_of_left_thigh;
     @SerializedName("circumference_of_right_thigh") //大腿
     public String circumference_of_right_thigh;
-    @SerializedName("bmi")
-    public String bmi;
-    @SerializedName("body_fat_rate")
-    public String body_fat_rate;
-    @SerializedName("circumference_of_left_upper")
-    public String circumference_of_left_upper;
-    @SerializedName("circumference_of_right_upper")
-    public String circumference_of_right_upper;
-    @SerializedName("circumference_of_chest")
-    public String circumference_of_chest;
-    @SerializedName("photos")
-    public List<AddBodyTestBean.Photo> photos;
-    @SerializedName("extra")
-    public List<QcBodyTestTemplateRespone.Extra> extra;
-    @SerializedName("created_at")
-    public String created_at;
-    @SerializedName("id")
-    public String id;
+    @SerializedName("bmi") public String bmi;
+    @SerializedName("body_fat_rate") public String body_fat_rate;
+    @SerializedName("circumference_of_left_upper") public String circumference_of_left_upper;
+    @SerializedName("circumference_of_right_upper") public String circumference_of_right_upper;
+    @SerializedName("circumference_of_chest") public String circumference_of_chest;
+    @SerializedName("photos") public List<AddBodyTestBean.Photo> photos;
+    @SerializedName("extra") public List<QcBodyTestTemplateRespone.Extra> extra;
+    @SerializedName("created_at") public String created_at;
+    @SerializedName("id") public String id;
 
     public Measure() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.weight);
-        dest.writeString(this.waistline);
-        dest.writeString(this.height);
-        dest.writeString(this.hipline);
-        dest.writeString(this.circumference_of_left_calf);
-        dest.writeString(this.circumference_of_right_calf);
-        dest.writeString(this.circumference_of_left_thigh);
-        dest.writeString(this.circumference_of_right_thigh);
-        dest.writeString(this.bmi);
-        dest.writeString(this.body_fat_rate);
-        dest.writeString(this.circumference_of_left_upper);
-        dest.writeString(this.circumference_of_right_upper);
-        dest.writeString(this.circumference_of_chest);
-        dest.writeTypedList(this.photos);
-        dest.writeTypedList(this.extra);
-        dest.writeString(this.created_at);
-        dest.writeString(this.id);
     }
 
     protected Measure(Parcel in) {
@@ -106,15 +74,27 @@ public class Measure implements Parcelable {
         this.id = in.readString();
     }
 
-    public static final Creator<Measure> CREATOR = new Creator<Measure>() {
-        @Override
-        public Measure createFromParcel(Parcel source) {
-            return new Measure(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public Measure[] newArray(int size) {
-            return new Measure[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.weight);
+        dest.writeString(this.waistline);
+        dest.writeString(this.height);
+        dest.writeString(this.hipline);
+        dest.writeString(this.circumference_of_left_calf);
+        dest.writeString(this.circumference_of_right_calf);
+        dest.writeString(this.circumference_of_left_thigh);
+        dest.writeString(this.circumference_of_right_thigh);
+        dest.writeString(this.bmi);
+        dest.writeString(this.body_fat_rate);
+        dest.writeString(this.circumference_of_left_upper);
+        dest.writeString(this.circumference_of_right_upper);
+        dest.writeString(this.circumference_of_chest);
+        dest.writeTypedList(this.photos);
+        dest.writeTypedList(this.extra);
+        dest.writeString(this.created_at);
+        dest.writeString(this.id);
+    }
 }

@@ -29,55 +29,47 @@ public class BaseAcitivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     private LoadingDialog loadingDialog;
     private MaterialDialog mAlert;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         try {
             AndroidInjection.inject(this);
-        }catch (Exception e){
+        } catch (Exception e) {
             LogUtil.e("not find in AppCompot ");
         }
         super.onCreate(savedInstanceState);
     }
 
-
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-
     }
 
-
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
     }
 
     public void showLoading() {
-        if (loadingDialog == null)
-            loadingDialog = new LoadingDialog(this);
-        if (loadingDialog.isShowing())
-            loadingDialog.dismiss();
+        if (loadingDialog == null) loadingDialog = new LoadingDialog(this);
+        if (loadingDialog.isShowing()) loadingDialog.dismiss();
         loadingDialog.show();
     }
 
     public void hideLoading() {
-        if (loadingDialog != null)
-            loadingDialog.dismiss();
+        if (loadingDialog != null) loadingDialog.dismiss();
     }
+
     public void showAlert(int res) {
         showAlert(getString(res));
     }
 
     public void showAlert(String res) {
         if (mAlert == null) ;
-        mAlert = new MaterialDialog.Builder(this).positiveText(R.string.common_i_konw)
-            .autoDismiss(true)
-            .canceledOnTouchOutside(true)
-            .build();
+        mAlert =
+            new MaterialDialog.Builder(this).positiveText(R.string.common_i_konw).autoDismiss(true).canceledOnTouchOutside(true).build();
         if (mAlert.isShowing()) mAlert.dismiss();
         //if (StringUtils.isEmpty(title)) {
         //    mAlert.setTitle(title);
@@ -87,6 +79,4 @@ public class BaseAcitivity extends AppCompatActivity {
         mAlert.setContent(res);
         mAlert.show();
     }
-
-
 }

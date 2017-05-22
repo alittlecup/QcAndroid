@@ -2,20 +2,16 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class CoachHomeActivity extends BaseAcitivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coach_home);
         ButterKnife.bind(this);
@@ -23,7 +19,6 @@ public class CoachHomeActivity extends BaseAcitivity {
     }
 
     private void initActionbar() {
-
 
     }
 }

@@ -65,12 +65,13 @@ public class CommonNoDataItem extends AbstractFlexibleItem<CommonNoDataItem.Comm
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, CommonNodataVH holder, int position, List payloads) {
-        holder.itemView.setMinimumHeight(MeasureUtils.getScreenHeight(holder.itemView.getResources())-MeasureUtils.dpToPx(120f,holder.itemView.getResources()));
+        holder.itemView.setMinimumHeight(
+            MeasureUtils.getScreenHeight(holder.itemView.getResources()) - MeasureUtils.dpToPx(120f, holder.itemView.getResources()));
         holder.img.setImageResource(imgRes);
         holder.hint.setText(hintStr);
-        if (cn.qingchengfit.utils.StringUtils.isEmpty(titleStr)){
+        if (cn.qingchengfit.utils.StringUtils.isEmpty(titleStr)) {
             holder.tvTitle.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.tvTitle.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(titleStr);
         }

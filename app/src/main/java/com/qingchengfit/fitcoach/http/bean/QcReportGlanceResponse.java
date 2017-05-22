@@ -18,40 +18,24 @@ import com.google.gson.annotations.SerializedName;
  */
 public class QcReportGlanceResponse extends QcResponse {
 
+    @SerializedName("data") public System data;
 
-    @SerializedName("data")
-    public System data;
-
-
-    public static class glanceservice{
-        @SerializedName("service")
-        public CoachService service;
-        @SerializedName("stat")
-        public System stat;
+    public static class glanceservice {
+        @SerializedName("service") public CoachService service;
+        @SerializedName("stat") public System stat;
     }
 
     public static class System {
-        @SerializedName("week")
-        public UseData week;
-        @SerializedName("today")
-        public UseData today;
-        @SerializedName("month")
-        public UseData month;
+        @SerializedName("week") public UseData week;
+        @SerializedName("today") public UseData today;
+        @SerializedName("month") public UseData month;
     }
-
 
     public static class UseData {
-        @SerializedName("from_date")
-        public String from_date;
-        @SerializedName("to_date")
-        public String to_date;
-        @SerializedName("user_count")
-        public int user_count;
-        @SerializedName("order_count")
-        public int order_count;
-        @SerializedName("course_count")
-        public int course_count;
+        @SerializedName("from_date") public String from_date;
+        @SerializedName("to_date") public String to_date;
+        @SerializedName("user_count") public int user_count;
+        @SerializedName("order_count") public int order_count;
+        @SerializedName("course_count") public int course_count;
     }
-
-
 }

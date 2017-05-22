@@ -17,8 +17,5 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
  * Created by Paper on 16/2/23 2016.
  */
 public class QcResponseSystenInit extends QcResponse {
-    @SerializedName("data")
-    public InitCoachService data;
-
-
+    @SerializedName("data") public InitCoachService data;
 }

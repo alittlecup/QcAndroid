@@ -78,6 +78,4 @@ public class ScreenInfo {
         density = metric.density;
         densityDpi = metric.densityDpi;
     }
-
-
 }

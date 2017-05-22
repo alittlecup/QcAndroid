@@ -11,11 +11,10 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,13 +40,13 @@ public class CourseChoosePresenter extends BasePresenter {
 
     StatementUsecase usecase;
     CourseChooseView view;
+    @Inject LoginStatus loginStatus;
+    @Inject GymWrapper gymWrapper;
     private RestRepository restRepository;
     private List<CourseTypeSample> mAllCourse = new ArrayList<>();
     private List<CourseTypeSample> mPrivateCourse = new ArrayList<>();
     private List<CourseTypeSample> mGroupCourse = new ArrayList<>();
     private int mType = -1;
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
 
     @Inject public CourseChoosePresenter(StatementUsecase usecase, RestRepository restRepository) {
         this.usecase = usecase;
@@ -94,7 +93,7 @@ public class CourseChoosePresenter extends BasePresenter {
                 view.onCourseList(mAllCourse);
             } else if (mType == Configs.TYPE_PRIVATE) {
                 view.onCourseList(mPrivateCourse);
-            } else{
+            } else {
                 view.onCourseList(mGroupCourse);
             }
         } else {
@@ -146,8 +145,7 @@ public class CourseChoosePresenter extends BasePresenter {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CourseTypeSamples>>() {
-                @Override
-                public void call(QcResponseData<CourseTypeSamples> courseTypeSamplesQcResponseData) {
+                @Override public void call(QcResponseData<CourseTypeSamples> courseTypeSamplesQcResponseData) {
                     if (ResponseConstant.checkSuccess(courseTypeSamplesQcResponseData)) {
                         mAllCourse = courseTypeSamplesQcResponseData.data.courses;
                         mPrivateCourse.clear();

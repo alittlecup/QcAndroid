@@ -40,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Created by Paper on 2016/12/9.
  */
 
-@FragmentWithArgs  public class GymChooseCourseFragment extends BottomListFragment {
+@FragmentWithArgs public class GymChooseCourseFragment extends BottomListFragment {
     @Arg String id;
     @Arg String model;
 
@@ -53,13 +53,13 @@ import rx.schedulers.Schedulers;
         HashMap<String, String> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);
-        QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid+"", prams)
+        QcCloudClient.getApi().getApi.qcGetCoursesAll(App.coachid + "", prams)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseCourseList>() {
                 @Override public void call(QcResponseCourseList qcResponse) {
                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data != null && qcResponse.data.courses != null){
+                        if (qcResponse.data != null && qcResponse.data.courses != null) {
                             mDatas.clear();
                             mDatas.add(new SimpleTextItemItem("全部课程"));
                             for (int i = 0; i < qcResponse.data.courses.size(); i++) {
@@ -81,10 +81,12 @@ import rx.schedulers.Schedulers;
 
     @Override public boolean onItemClick(int position) {
 
-        if (mDatas.get(position) instanceof ChooseCourseItem){
-            RxBus.getBus().post(new EventChooseCourse.Builder().courseId(((ChooseCourseItem) mDatas.get(position)).mCourse.getId()
-            ).courseName(((ChooseCourseItem) mDatas.get(position)).mCourse.getName()).build());
-        }else if (mDatas.get(position) instanceof SimpleTextItemItem){
+        if (mDatas.get(position) instanceof ChooseCourseItem) {
+            RxBus.getBus()
+                .post(new EventChooseCourse.Builder().courseId(((ChooseCourseItem) mDatas.get(position)).mCourse.getId())
+                    .courseName(((ChooseCourseItem) mDatas.get(position)).mCourse.getName())
+                    .build());
+        } else if (mDatas.get(position) instanceof SimpleTextItemItem) {
             RxBus.getBus().post(new EventChooseCourse.Builder().courseId("").courseName("全部课程").build());
         }
         dismiss();

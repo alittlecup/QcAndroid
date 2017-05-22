@@ -36,15 +36,10 @@ import rx.schedulers.Schedulers;
  */
 public class RecordComfirmFragment extends VpFragment {
 
-
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
-    @BindView(R.id.record_confirm_none)
-    RelativeLayout recordConfirmNone;
-    @BindView(R.id.record_comfirm_no_img)
-    ImageView recordComfirmNoImg;
-    @BindView(R.id.record_comfirm_no_txt)
-    TextView recordComfirmNoTxt;
+    @BindView(R.id.recyclerview) RecyclerView recyclerview;
+    @BindView(R.id.record_confirm_none) RelativeLayout recordConfirmNone;
+    @BindView(R.id.record_comfirm_no_img) ImageView recordComfirmNoImg;
+    @BindView(R.id.record_comfirm_no_txt) TextView recordComfirmNoTxt;
     private RecordComfirmAdapter adapter;
     private List<QcCertificatesReponse.DataEntity.CertificatesEntity> datas;
     private Unbinder unbinder;
@@ -52,19 +47,16 @@ public class RecordComfirmFragment extends VpFragment {
     public RecordComfirmFragment() {
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_record_comfirm, container, false);
-        unbinder=ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         lazyLoad();
         return view;
     }
 
     protected void lazyLoad() {
-//        if (!isPrepared || isVisible)
-//            return;
+        //        if (!isPrepared || isVisible)
+        //            return;
         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerview.setHasFixedSize(true);
         recyclerview.setNestedScrollingEnabled(true);
@@ -72,72 +64,61 @@ public class RecordComfirmFragment extends VpFragment {
 
         QcCloudClient.getApi().getApi.qcGetCertificates(App.coachid)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(qcCertificatesReponse -> {
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(qcCertificatesReponse -> {
 
-                    if (recyclerview != null) {
-                        if (qcCertificatesReponse.getData().getCertificates() != null && qcCertificatesReponse.getData().getCertificates().size() > 0) {
-                            recordConfirmNone.setVisibility(View.GONE);
-                            recyclerview.setVisibility(View.VISIBLE);
-                            adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
-                            adapter.setListener((v, pos) -> {
-                                String photo = adapter.datas.get(pos).getPhoto();
-                                if (!TextUtils.isEmpty(photo)) {
-                                    GalleryPhotoViewDialog dialog = new GalleryPhotoViewDialog(getContext());
-                                    dialog.setImage(photo);
-                                    dialog.show();
-                                }
-                                //显示图片
-//                                ComfirmDetailFragment fragment =
-//                                        ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
-//
-//                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
-//                                        .show(fragment).addToBackStack("").commit();
-                            });
-                            recyclerview.setAdapter(adapter);
-                        } else {
-                            recyclerview.setVisibility(View.GONE);
-                            recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
-                            recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
-                            recordConfirmNone.setVisibility(View.VISIBLE);
+            if (recyclerview != null) {
+                if (qcCertificatesReponse.getData().getCertificates() != null
+                    && qcCertificatesReponse.getData().getCertificates().size() > 0) {
+                    recordConfirmNone.setVisibility(View.GONE);
+                    recyclerview.setVisibility(View.VISIBLE);
+                    adapter = new RecordComfirmAdapter(qcCertificatesReponse.getData().getCertificates());
+                    adapter.setListener((v, pos) -> {
+                        String photo = adapter.datas.get(pos).getPhoto();
+                        if (!TextUtils.isEmpty(photo)) {
+                            GalleryPhotoViewDialog dialog = new GalleryPhotoViewDialog(getContext());
+                            dialog.setImage(photo);
+                            dialog.show();
                         }
+                        //显示图片
+                        //                                ComfirmDetailFragment fragment =
+                        //                                        ComfirmDetailFragment.newInstance(qcCertificatesReponse.getData().getCertificates().get(pos).getId());
+                        //
+                        //                                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.myhome_fraglayout, fragment)
+                        //                                        .show(fragment).addToBackStack("").commit();
+                    });
+                    recyclerview.setAdapter(adapter);
+                } else {
+                    recyclerview.setVisibility(View.GONE);
+                    recordComfirmNoImg.setImageResource(R.drawable.img_no_certificate);
+                    recordComfirmNoTxt.setText("您还没有添加任何资质认证请在设置页面中添加");
+                    recordConfirmNone.setVisibility(View.VISIBLE);
                     }
-                }, throwable -> {
-                }, () -> {
-                });
+            }
+        }, throwable -> {
+        }, () -> {
+        });
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
-
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @Override
-    public String getTitle() {
+    @Override public String getTitle() {
         return "资质认证";
     }
 
-
     public static class RecordComfirmVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.recordcomfirm_title)
-        TextView recordcomfirmTitle;
-        @BindView(R.id.recordcomfirm_subtitle)
-        TextView recordcomfirmSubtitle;
-        @BindView(R.id.recordcomfirm_time)
-        TextView recordcomfirmTime;
-        @BindView(R.id.recordcomfirm_date)
-        TextView recordcomfirmDate;
-        @BindView(R.id.img)
-        ImageView recordImg;
-        @BindView(R.id.recordcomfirm_comfirm)
-        ImageView img;
+        @BindView(R.id.recordcomfirm_title) TextView recordcomfirmTitle;
+        @BindView(R.id.recordcomfirm_subtitle) TextView recordcomfirmSubtitle;
+        @BindView(R.id.recordcomfirm_time) TextView recordcomfirmTime;
+        @BindView(R.id.recordcomfirm_date) TextView recordcomfirmDate;
+        @BindView(R.id.img) ImageView recordImg;
+        @BindView(R.id.recordcomfirm_comfirm) ImageView img;
 
         public RecordComfirmVH(View itemView) {
             super(itemView);
@@ -162,22 +143,18 @@ public class RecordComfirmFragment extends VpFragment {
             this.listener = listener;
         }
 
-        @Override
-        public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            RecordComfirmVH holder = new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, parent, false));
-
+        @Override public RecordComfirmVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            RecordComfirmVH holder =
+                new RecordComfirmVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recordcomfirm, parent, false));
 
             return holder;
         }
 
-        @Override
-        public void onBindViewHolder(RecordComfirmVH holder, int position) {
+        @Override public void onBindViewHolder(RecordComfirmVH holder, int position) {
             holder.itemView.setTag(position);
             holder.recordImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null)
-                        listener.onItemClick(v,position);
+                @Override public void onClick(View v) {
+                    if (listener != null) listener.onItemClick(v, position);
                 }
             });
             QcCertificatesReponse.DataEntity.CertificatesEntity certificatesEntity = datas.get(position);
@@ -185,10 +162,12 @@ public class RecordComfirmFragment extends VpFragment {
             holder.recordcomfirmSubtitle.setText("发证单位:" + certificatesEntity.getOrganization().getName());
             if (certificatesEntity.getIs_authenticated()) {
                 holder.img.setVisibility(View.VISIBLE);
-            } else
+            } else {
                 holder.img.setVisibility(View.INVISIBLE);
+            }
 
-            holder.recordcomfirmDate.setText("发证日期:" + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
+            holder.recordcomfirmDate.setText(
+                "发证日期:" + DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
             if (TextUtils.isEmpty(certificatesEntity.getPhoto())) {
                 holder.recordImg.setVisibility(View.GONE);
@@ -209,10 +188,9 @@ public class RecordComfirmFragment extends VpFragment {
                     Calendar c = Calendar.getInstance(Locale.getDefault());
                     c.setTime(d);
 
-
-                    if (c.get(Calendar.YEAR) == 3000)
+                    if (c.get(Calendar.YEAR) == 3000) {
                         holder.recordcomfirmTime.setText("长期有效");
-                    else {
+                    } else {
                         sb.append(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getEnd())));
                         holder.recordcomfirmTime.setText(sb.toString());
                     }
@@ -220,20 +198,14 @@ public class RecordComfirmFragment extends VpFragment {
             } else {
                 holder.recordcomfirmTime.setText("长期有效");
             }
-
-
         }
 
-
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
 
-        @Override
-        public void onClick(View v) {
+        @Override public void onClick(View v) {
             listener.onItemClick(v, (int) v.getTag());
         }
     }
-
 }

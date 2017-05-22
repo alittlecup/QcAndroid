@@ -27,18 +27,12 @@ public class BrandDetailPresenter extends BasePresenter {
 
     private BrandDetailView view;
 
-
-
-
-    @Override
-    public void attachView(PView v) {
-        this.view = (BrandDetailView)v;
+    @Override public void attachView(PView v) {
+        this.view = (BrandDetailView) v;
     }
 
-    @Override
-    public void unattachView() {
+    @Override public void unattachView() {
         super.unattachView();
         this.view = null;
     }
-
 }

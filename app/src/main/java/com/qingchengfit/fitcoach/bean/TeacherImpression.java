@@ -23,23 +23,20 @@ import android.os.Parcelable;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/7/29.
  */
-public class TeacherImpression implements Parcelable,Cloneable {
+public class TeacherImpression implements Parcelable, Cloneable {
+    public static final Creator<TeacherImpression> CREATOR = new Creator<TeacherImpression>() {
+        @Override public TeacherImpression createFromParcel(Parcel source) {
+            return new TeacherImpression(source);
+        }
+
+        @Override public TeacherImpression[] newArray(int size) {
+            return new TeacherImpression[size];
+        }
+    };
     public String comment;
     public int count;
 
-
     public TeacherImpression() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.comment);
-        dest.writeInt(this.count);
     }
 
     protected TeacherImpression(Parcel in) {
@@ -47,15 +44,12 @@ public class TeacherImpression implements Parcelable,Cloneable {
         this.count = in.readInt();
     }
 
-    public static final Creator<TeacherImpression> CREATOR = new Creator<TeacherImpression>() {
-        @Override
-        public TeacherImpression createFromParcel(Parcel source) {
-            return new TeacherImpression(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public TeacherImpression[] newArray(int size) {
-            return new TeacherImpression[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.comment);
+        dest.writeInt(this.count);
+    }
 }

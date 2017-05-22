@@ -109,9 +109,6 @@ public class MyhomeViewPager extends ViewPager {
     //    return ViewCompat.canScrollVertically(scrollView, 1);
     //}
 
-
-
-
     public MyhomeViewPager(Context context) {
         super(context);
     }
@@ -120,9 +117,7 @@ public class MyhomeViewPager extends ViewPager {
         super(context, attrs);
     }
 
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         int height = 0;
@@ -135,6 +130,4 @@ public class MyhomeViewPager extends ViewPager {
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
-
 }

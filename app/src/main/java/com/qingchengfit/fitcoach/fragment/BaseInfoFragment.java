@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
@@ -12,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
@@ -23,13 +24,8 @@ import com.qingchengfit.fitcoach.bean.BriefInfo;
 import com.qingchengfit.fitcoach.component.RecyclerViewInScroll;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.http.bean.QcMyhomeResponse;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,8 +37,7 @@ public class BaseInfoFragment extends VpFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_COACH = "coach";
     private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.baseinfo_recyclerview)
-    RecyclerViewInScroll baseinfoRecyclerview;
+    @BindView(R.id.baseinfo_recyclerview) RecyclerViewInScroll baseinfoRecyclerview;
 
     // TODO: Rename and change types of parameters
     private String mCoachInfo;
@@ -66,8 +61,7 @@ public class BaseInfoFragment extends VpFragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mCoachInfo = getArguments().getString(ARG_COACH);
@@ -76,25 +70,20 @@ public class BaseInfoFragment extends VpFragment {
         datas = new ArrayList<>();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_info, container, false);
-        unbinder=ButterKnife.bind(this, view);
-//        isPrepared = true;
+        unbinder = ButterKnife.bind(this, view);
+        //        isPrepared = true;
         lazyLoad();
         return view;
     }
 
-
     protected void lazyLoad() {
-//        if (!isPrepared || !isVisible) {
-//            return;
-//        }
-        if (TextUtils.isEmpty(mCoachInfo))
-            return;
+        //        if (!isPrepared || !isVisible) {
+        //            return;
+        //        }
+        if (TextUtils.isEmpty(mCoachInfo)) return;
         QcMyhomeResponse.DataEntity.CoachEntity coachEntity = gson.fromJson(mCoachInfo, QcMyhomeResponse.DataEntity.CoachEntity.class);
-
 
         datas.clear();
         datas.add(new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机", coachEntity.getPhone()));
@@ -110,30 +99,30 @@ public class BaseInfoFragment extends VpFragment {
             BriefInfo briefInfo = briefInfos.get(i);
             if (TextUtils.isEmpty(briefInfo.getImg())) {
                 datas.add(new BaseInfoBean(0, "text", briefInfo.getText()));
-            } else datas.add(new BaseInfoBean(0, "img", briefInfo.getImg()));
-
+            } else {
+                datas.add(new BaseInfoBean(0, "img", briefInfo.getImg()));
+            }
         }
         BaseInfoAdapter adapter = new BaseInfoAdapter(datas);
         baseinfoRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         baseinfoRecyclerview.setAdapter(adapter);
 
         baseinfoRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (!ViewCompat.canScrollVertically(recyclerView, -1)) {
                         canScrollup = false;
-                    } else canScrollup = true;
+                    } else {
+                        canScrollup = true;
+                    }
                 }
             }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-
     }
 
     public boolean isCanScrollup() {
@@ -144,28 +133,21 @@ public class BaseInfoFragment extends VpFragment {
         this.canScrollup = canScrollup;
     }
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @Override
-    public String getTitle() {
+    @Override public String getTitle() {
         return "基本信息";
     }
 
-
     public static class BaseInfoVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.baseinfo_item_icon)
-        ImageView itemImg;
-        @BindView(R.id.baseinfo_item_label)
-        TextView itemLabel;
-        @BindView(R.id.baseinfo_item_content)
-        TextView itemContent;
-        @BindView(R.id.item_divider)
-        View itemDivider;
+        @BindView(R.id.baseinfo_item_icon) ImageView itemImg;
+        @BindView(R.id.baseinfo_item_label) TextView itemLabel;
+        @BindView(R.id.baseinfo_item_content) TextView itemContent;
+        @BindView(R.id.item_divider) View itemDivider;
 
         public BaseInfoVH(View itemView) {
             super(itemView);
@@ -181,23 +163,23 @@ public class BaseInfoFragment extends VpFragment {
             this.datas = datas;
         }
 
-        @Override
-        public BaseInfoVH onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == 0)
+        @Override public BaseInfoVH onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == 0) {
                 return new BaseInfoVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_baseinfo, parent, false));
-            else
+            } else {
                 return new BaseInfoVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_baseinfo_brife, parent, false));
+            }
         }
 
-        @Override
-        public void onBindViewHolder(BaseInfoVH holder, int position) {
+        @Override public void onBindViewHolder(BaseInfoVH holder, int position) {
             if (position < 3) {
                 holder.itemImg.setImageResource(datas.get(position).icon);
                 holder.itemLabel.setText(datas.get(position).label);
-                if (TextUtils.isEmpty(datas.get(position).content))
+                if (TextUtils.isEmpty(datas.get(position).content)) {
                     holder.itemContent.setText(getString(R.string.myhome_data_none));
-                else
+                } else {
                     holder.itemContent.setText(datas.get(position).content);
+                }
             } else {
                 if (position == 3) {
                     holder.itemDivider.setVisibility(View.VISIBLE);
@@ -219,17 +201,16 @@ public class BaseInfoFragment extends VpFragment {
             }
         }
 
-        @Override
-        public int getItemViewType(int position) {
-            if (position < 3)
+        @Override public int getItemViewType(int position) {
+            if (position < 3) {
                 return 0;
-            else return 1;
+            } else {
+                return 1;
+            }
         }
 
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return datas.size();
         }
     }
-
 }

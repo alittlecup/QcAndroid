@@ -24,8 +24,7 @@ import android.os.Parcelable;
  * //
  * //Created by yangming on 16/12/2.
  *
- *      学员推荐人
- *
+ * 学员推荐人
  */
 
 public class StudentReferrerBean extends Personage implements Parcelable {

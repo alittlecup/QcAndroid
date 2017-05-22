@@ -19,19 +19,18 @@ import com.umeng.analytics.MobclickAgent;
 public class RevenUtils {
 
     public static void sendException(String reason, String tag, Throwable e) {
-//        String rawDsn = "http://e808f33e682c4b10963a41a03a6733fb:6eb9bfd0f4ea4ed48d2488774779df6e@cloudsentry.qingchengfit.cn/3";
-//        Raven raven = RavenFactory.ravenInstance(new Dsn(rawDsn));
-//
-//        EventBuilder eventBuilder = new EventBuilder()
-//                .setMessage(reason)
-//                .setLevel(Event.Level.ERROR)
-//                .setPlatform(PhoneInfoUtils.getHandSetInfo())
-//                .setLogger(tag)
-//                .addSentryInterface(new ExceptionInterface(e));
-//
-//        raven.runBuilderHelpers(eventBuilder);
-//        raven.sendEvent(eventBuilder.build());
+        //        String rawDsn = "http://e808f33e682c4b10963a41a03a6733fb:6eb9bfd0f4ea4ed48d2488774779df6e@cloudsentry.qingchengfit.cn/3";
+        //        Raven raven = RavenFactory.ravenInstance(new Dsn(rawDsn));
+        //
+        //        EventBuilder eventBuilder = new EventBuilder()
+        //                .setMessage(reason)
+        //                .setLevel(Event.Level.ERROR)
+        //                .setPlatform(PhoneInfoUtils.getHandSetInfo())
+        //                .setLogger(tag)
+        //                .addSentryInterface(new ExceptionInterface(e));
+        //
+        //        raven.runBuilderHelpers(eventBuilder);
+        //        raven.sendEvent(eventBuilder.build());
         MobclickAgent.reportError(App.AppContex, reason);
     }
-
 }

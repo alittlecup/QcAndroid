@@ -5,7 +5,6 @@ import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import java.util.ArrayList;
 
-
 /**
  * power by
  * <p/>
@@ -21,8 +20,12 @@ import java.util.ArrayList;
  */
 public interface AddBatchView extends PView {
     void onSuccess();
+
     void onFailed();
+
     void checkOk();
+
     void checkFailed(String s);
+
     void onTemplete(ArrayList<Rule> rules, ArrayList<TimeRepeat> time_repeats, int maxuer);
 }

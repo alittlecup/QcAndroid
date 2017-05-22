@@ -65,9 +65,8 @@ import rx.functions.Action1;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/13.
  */
-@FragmentWithArgs
-public class ArticleCommentsListFragment extends BaseFragment
-    implements ArticleCommentsPresenter.MVPView, FlexibleAdapter.EndlessScrollListener,FlexibleAdapter.OnItemClickListener {
+@FragmentWithArgs public class ArticleCommentsListFragment extends BaseFragment
+    implements ArticleCommentsPresenter.MVPView, FlexibleAdapter.EndlessScrollListener, FlexibleAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_titile) TextView toolbarTitile;
@@ -79,11 +78,11 @@ public class ArticleCommentsListFragment extends BaseFragment
     @BindView(R.id.input_et) EditText inputEt;
     @BindView(R.id.btn_send) Button btnSend;
     LinearLayoutManager linearLayoutManager;
+    @Arg String newsId;
+    @Arg(required = false) String replyId;
+    @Arg(required = false) String replyName;
     private List<AbstractFlexibleItem> items = new ArrayList<>();
     private CommonFlexAdapter commonFlexAdapter;
-    @Arg String newsId ;
-    @Arg(required = false) String replyId ;
-    @Arg(required = false) String replyName;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,29 +92,29 @@ public class ArticleCommentsListFragment extends BaseFragment
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_comments, container, false);
         unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter,this);
+        delegatePresenter(presenter, this);
         initToolbar(toolbar);
-         linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
+        linearLayoutManager = new SmoothScrollLinearLayoutManager(getContext());
         recyclerview.setLayoutManager(linearLayoutManager);
-        commonFlexAdapter = new CommonFlexAdapter(items,this);
+        commonFlexAdapter = new CommonFlexAdapter(items, this);
         commonFlexAdapter.setEndlessScrollListener(this, new ProgressItem(getContext()));
         recyclerview.setAdapter(commonFlexAdapter);
 
         presenter.queryCommenList(newsId, 1);
         RxTextView.textChangeEvents(inputEt).subscribe(new Action1<TextViewTextChangeEvent>() {
             @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
-                btnSend.setEnabled (textViewTextChangeEvent.text().toString().trim().length() > 0);
+                btnSend.setEnabled(textViewTextChangeEvent.text().toString().trim().length() > 0);
             }
         });
         inputEt.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(inputEt.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(inputEt.getViewTreeObserver(), this);
                 if (TextUtils.isEmpty(replyId)) {
                     inputEt.setHint("评论：");
                     inputEt.requestFocus();
                     AppUtils.showKeyboard(getContext(), inputEt);
-                }else {
-                    inputEt.setHint("回复"+replyName+":");
+                } else {
+                    inputEt.setHint("回复" + replyName + ":");
                     inputEt.requestFocus();
                     AppUtils.showKeyboard(getContext(), inputEt);
                 }
@@ -148,11 +147,11 @@ public class ArticleCommentsListFragment extends BaseFragment
     @Override public void onAddCommentSuccess() {
         inputEt.setText("");
         AppUtils.hideKeyboard(getActivity());
-        presenter.queryCommenList(newsId,1);
+        presenter.queryCommenList(newsId, 1);
     }
 
     @Override public void onCommentTotal(int count, int pages) {
-        tvTotalCount.setText(getString(R.string.all_comments_count,count));
+        tvTotalCount.setText(getString(R.string.all_comments_count, count));
         commonFlexAdapter.setEndlessPageSize(pages);
     }
 
@@ -167,8 +166,7 @@ public class ArticleCommentsListFragment extends BaseFragment
             }
 
             commonFlexAdapter.notifyDataSetChanged();
-            if (curPage == 1)
-                linearLayoutManager.scrollToPosition(0);
+            if (curPage == 1) linearLayoutManager.scrollToPosition(0);
         }
     }
 
@@ -177,31 +175,32 @@ public class ArticleCommentsListFragment extends BaseFragment
     }
 
     @Override public void onLoadMore(int i, int i1) {
-        if (commonFlexAdapter.getItem(commonFlexAdapter.getItemCount()-1) instanceof  ProgressItem)
-            commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount()-1);
+        if (commonFlexAdapter.getItem(commonFlexAdapter.getItemCount() - 1) instanceof ProgressItem) {
+            commonFlexAdapter.removeItem(commonFlexAdapter.getItemCount() - 1);
+        }
         presenter.queryCommenList(newsId, i1);
     }
-
 
     /**
      * 发送评论
      */
     @OnClick(R.id.btn_send) public void onViewClicked() {
-        presenter.addComment(newsId,replyId,inputEt.getText().toString().trim());
+        presenter.addComment(newsId, replyId, inputEt.getText().toString().trim());
     }
 
     @Override public boolean onItemClick(int i) {
-        if (commonFlexAdapter.getItem(i) instanceof  ArticleCommentItem){
+        if (commonFlexAdapter.getItem(i) instanceof ArticleCommentItem) {
             ArticleComment articleComment = ((ArticleCommentItem) commonFlexAdapter.getItem(i)).getComment();
-            if (articleComment.user != null){
-                inputEt.setHint("回复"+articleComment.user.getUsername()+"：");
+            if (articleComment.user != null) {
+                inputEt.setHint("回复" + articleComment.user.getUsername() + "：");
                 replyId = articleComment.id;
                 inputEt.requestFocus();
-                AppUtils.showKeyboard(getContext(),inputEt);
+                AppUtils.showKeyboard(getContext(), inputEt);
             }
         }
         return false;
     }
+
     @Override public void onDetach() {
         Intent ret = new Intent();
         if (getActivity() != null && getActivity().getIntent() != null && getActivity().getIntent().getData() != null) {

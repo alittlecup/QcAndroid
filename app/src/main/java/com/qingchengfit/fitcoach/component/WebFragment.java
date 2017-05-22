@@ -99,31 +99,32 @@ import static com.qingchengfit.fitcoach.R.id.webview;
  * Created by Paper on 2016/11/29.
  */
 
-public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback,
-    GestureDetector.OnGestureListener {
+public class WebFragment extends BaseFragment
+    implements CustomSwipeRefreshLayout.CanChildScrollUpCallback, GestureDetector.OnGestureListener {
 
     @BindView(R.id.toobar_action) public TextView mToobarActionTextView;
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.toolbar_titile) public TextView mTitle;
     @BindView(webview) public WebView mWebviewWebView;
+    @BindView(R.id.guide_to_wechat_layout) public RelativeLayout guideToWechatLayout;
+    public String mCurUrl;
     @BindView(R.id.refresh) protected CustomSwipeRefreshLayout mRefreshSwipeRefreshLayout;
     @BindView(R.id.refresh_network) Button mRefresh;
     @BindView(R.id.no_newwork) LinearLayout mNoNetwork;
     @BindView(R.id.webview_root) RelativeLayout webviewRoot;
     @BindView(R.id.copy_link_to_wechat) TextView copyLinkToWechat;
     @BindView(R.id.go_to_how) Button goToHow;
-    @BindView(R.id.guide_to_wechat_layout) public RelativeLayout guideToWechatLayout;
     @BindView(R.id.close_guide) ImageView closeGuide;
+    GestureDetectorCompat gestureDetectorCompat;
     private CookieManager cookieManager;
     private IWXAPI msgApi;
     private ChoosePictureFragmentDialog choosePictureFragmentDialog;
     private ValueCallback<Uri> mValueCallback;
     private ValueCallback<Uri[]> mValueCallbackNew;
     private String sessionid;
-    public String mCurUrl;
     private DialogSheet sheet;
-    GestureDetectorCompat gestureDetectorCompat;
     private boolean isTouchWebView;
+    private boolean touchBig;
 
     public static WebFragment newInstance(String url) {
 
@@ -137,7 +138,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) mCurUrl = getArguments().getString("url");
-        gestureDetectorCompat = new GestureDetectorCompat(getContext(),this);
+        gestureDetectorCompat = new GestureDetectorCompat(getContext(), this);
     }
 
     @Nullable @Override
@@ -289,9 +290,6 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         }
     }
 
-
-
-
     private void initWebSetting() {
         WebStorage webStorage = WebStorage.getInstance();
         WebSettings webSetting = mWebviewWebView.getSettings();
@@ -327,8 +325,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
     }
 
     public void initCookie(String url) {
-        if (getContext() == null)
-            return;
+        if (getContext() == null) return;
         sessionid = PreferenceUtils.getPrefString(getContext(), "session_id", "");
 
         if (sessionid != null) {
@@ -378,7 +375,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
             }
         });
 
-        if (getTouchBig()){
+        if (getTouchBig()) {
             mWebviewWebView.setOnTouchListener(new View.OnTouchListener() {
                 @Override public boolean onTouch(View v, MotionEvent event) {
 
@@ -452,8 +449,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         });
     }
 
-    private boolean touchBig;
-    protected boolean getTouchBig(){
+    protected boolean getTouchBig() {
         return touchBig;
     }
 
@@ -500,7 +496,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                 if (getActivity() instanceof WebActivity) {
                     if (!isTouchWebView && (hit == null || hit.getExtra() == null)) {
                         return super.shouldOverrideUrlLoading(view, url);
-                    }else {
+                    } else {
                         ((WebActivity) getActivity()).onNewWeb(url);
                         isTouchWebView = false;
                     }
@@ -554,8 +550,9 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         if (hr.getType() == WebView.HitTestResult.IMAGE_TYPE) {
             SingleImageShowFragment.newInstance(hr.getExtra()).show(getFragmentManager(), "");
             return true;
-        }else return false;
-
+        } else {
+            return false;
+        }
     }
 
     @Override public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
@@ -568,6 +565,70 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
 
     @Override public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //if (requestCode == RESULT_LOGIN) {
+            //    RxBus.getBus().post(new EventFreshUnloginAd());
+            //    initCookie(mCurUrl);
+            //    if (mWebviewWebView != null) mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('login');");
+            //} else
+            if (requestCode == 99) {
+                if (mWebviewWebView != null) {
+                    mWebviewWebView.loadUrl(
+                        "javascript:window.nativeLinkWeb.runCallback('" + data.getStringExtra("web_action") + "','" + data.getStringExtra(
+                            "json") + "');");
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    public void downloadFile(String url, String mime) {
+        try {
+            DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setMimeType(mime);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES,
+                MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+            //request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_PICTURES,
+            //    MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+            request.allowScanningByMediaScanner();
+            downloadManager.enqueue(request);
+            ToastUtils.show("文件已下载");
+        } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * 相应非Http schema
+     */
+    public void handleSchema(String s) {
+        try {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(s));
+            startActivity(i);
+        } catch (Exception e) {
+
+        }
+    }
+
+    public boolean canGoBack() {
+        if (mWebviewWebView != null) {
+            if (mWebviewWebView.canGoBack()) {
+                mWebviewWebView.goBack();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public class JsInterface {
@@ -696,8 +757,7 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
         }
 
         @JavascriptInterface public void goNativePath(String s) {
-            goNativePath(s,"");
-
+            goNativePath(s, "");
         }
 
         @JavascriptInterface public void goNativePath(final String s, String params) {
@@ -721,7 +781,6 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                         } catch (Exception e) {
 
                         }
-
                     } else {
                         try {
                             Uri uri = Uri.parse(s);
@@ -739,69 +798,6 @@ public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayou
                     }
                 }
             });
-        }
-    }
-
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            //if (requestCode == RESULT_LOGIN) {
-            //    RxBus.getBus().post(new EventFreshUnloginAd());
-            //    initCookie(mCurUrl);
-            //    if (mWebviewWebView != null) mWebviewWebView.loadUrl("javascript:window.nativeLinkWeb.runCallback('login');");
-            //} else
-                if (requestCode == 99) {
-                if (mWebviewWebView != null) {
-                    mWebviewWebView.loadUrl(
-                        "javascript:window.nativeLinkWeb.runCallback('" + data.getStringExtra("web_action") + "','" + data.getStringExtra(
-                            "json") + "');");
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public void downloadFile(String url, String mime) {
-        try {
-            DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-            request.setMimeType(mime);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
-            //request.setDestinationInExternalFilesDir(getActivity(), Environment.DIRECTORY_PICTURES,
-            //    MD5.genTimeStamp() + "." + MimeTypeMap.getFileExtensionFromUrl(url));
-            request.allowScanningByMediaScanner();
-            downloadManager.enqueue(request);
-            ToastUtils.show("文件已下载");
-        } catch (Exception e) {
-
-        }
-    }
-
-    /**
-     * 相应非Http schema
-     */
-    public void handleSchema(String s) {
-        try {
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(s));
-            startActivity(i);
-        } catch (Exception e) {
-
-        }
-    }
-
-    public boolean canGoBack() {
-        if (mWebviewWebView != null) {
-            if (mWebviewWebView.canGoBack()) {
-                mWebviewWebView.goBack();
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
         }
     }
 }

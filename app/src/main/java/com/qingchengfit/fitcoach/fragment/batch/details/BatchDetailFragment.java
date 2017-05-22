@@ -18,6 +18,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.ToastUtils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -38,7 +39,6 @@ import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.CourseManageFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +78,20 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     @BindView(R.id.text1) TextView text1;
     @BindView(R.id.layout_batch_loop) LinearLayout layoutBatchLoop;
+    ArrangeBatchBody body = new ArrangeBatchBody();
+    @Inject CoachService coachService;
     private int mType;
     private String mId;
     private ArrayList<Rule> mCurRules;
     private int mMaxuser;
-    ArrangeBatchBody body = new ArrangeBatchBody();
-    @Inject CoachService coachService;
+    private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override public boolean onMenuItemClick(MenuItem item) {
+            body.batch_id = mId;
+            showLoading();
+            presenter.checkBatch(App.coachid + "", mType, body);
+            return false;
+        }
+    };
 
     public static BatchDetailFragment newInstance(int type, String id) {
 
@@ -102,15 +110,6 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
             mId = getArguments().getString("id");
         }
     }
-
-    private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
-        @Override public boolean onMenuItemClick(MenuItem item) {
-            body.batch_id = mId;
-            showLoading();
-            presenter.checkBatch(App.coachid + "", mType, body);
-            return false;
-        }
-    };
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -138,8 +137,6 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
         }
         return view;
     }
-
-
 
     @Override public String getFragmentName() {
         return BatchDetailFragment.class.getName();

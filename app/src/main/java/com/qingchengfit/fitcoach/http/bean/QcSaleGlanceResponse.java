@@ -17,33 +17,22 @@ import java.util.List;
  * Created by Paper on 15/10/14 2015.
  */
 public class QcSaleGlanceResponse extends QcResponse {
-    @SerializedName("data")
-    public System data;
+    @SerializedName("data") public System data;
 
     public static class ReportData {
-        @SerializedName("systems")
-        public List<System> systems;
+        @SerializedName("systems") public List<System> systems;
     }
 
     public static class System {
-        @SerializedName("week")
-        public UseData week;
-        @SerializedName("today")
-        public UseData today;
-        @SerializedName("month")
-        public UseData month;
-        @SerializedName("system")
-        public QcCoachSystem system;
+        @SerializedName("week") public UseData week;
+        @SerializedName("today") public UseData today;
+        @SerializedName("month") public UseData month;
+        @SerializedName("system") public QcCoachSystem system;
     }
 
-
     public static class UseData {
-        @SerializedName("from_date")
-        public String from_date;
-        @SerializedName("to_date")
-        public String to_date;
-        @SerializedName("total_cost")
-        public int total_cost;
-
+        @SerializedName("from_date") public String from_date;
+        @SerializedName("to_date") public String to_date;
+        @SerializedName("total_cost") public int total_cost;
     }
 }

@@ -2,10 +2,8 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -23,64 +21,26 @@ import java.util.List;
  */
 public class QcResponseCourse extends QcResponse {
 
-    @SerializedName("data")
-    public Courses data;
-
-    public class Courses {
-        @SerializedName("shop")
-        public Shop shop;
-        @SerializedName("service")
-        public CoachService service;
-    }
-
-    public class Shop {
-        @SerializedName("private_url")
-        public String private_url;
-        @SerializedName("team_url")
-        public String team_url;
-        @SerializedName("user_count")
-        public int user_count;
-        @SerializedName("courses_count")
-        public int courses_count;
-        @SerializedName("team_count")
-        public int team_count;
-        @SerializedName("courses")
-        public List<Course> courses;
-    }
-
+    @SerializedName("data") public Courses data;
 
     public static class Course implements Parcelable {
-        @SerializedName("id")
-        public int id;
-        @SerializedName("name")
-        public String name;
-        @SerializedName("image_url")
-        public String image_url;
-        @SerializedName("photo")
-        public String photo;
-        @SerializedName("is_private")
-        public boolean is_private;
-        @SerializedName("course_count")
-        public int course_count;
-        @SerializedName("length")
-        public int length;
+        public static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
+            @Override public Course createFromParcel(Parcel source) {
+                return new Course(source);
+            }
 
-        @SerializedName("service_count")
-        public int service_count;
-
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(this.id);
-            dest.writeString(this.name);
-            dest.writeString(this.photo);
-            dest.writeByte(is_private ? (byte) 1 : (byte) 0);
-        }
+            @Override public Course[] newArray(int size) {
+                return new Course[size];
+            }
+        };
+        @SerializedName("id") public int id;
+        @SerializedName("name") public String name;
+        @SerializedName("image_url") public String image_url;
+        @SerializedName("photo") public String photo;
+        @SerializedName("is_private") public boolean is_private;
+        @SerializedName("course_count") public int course_count;
+        @SerializedName("length") public int length;
+        @SerializedName("service_count") public int service_count;
 
         public Course() {
         }
@@ -92,16 +52,29 @@ public class QcResponseCourse extends QcResponse {
             this.is_private = in.readByte() != 0;
         }
 
-        public static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
-            @Override
-            public Course createFromParcel(Parcel source) {
-                return new Course(source);
-            }
+        @Override public int describeContents() {
+            return 0;
+        }
 
-            @Override
-            public Course[] newArray(int size) {
-                return new Course[size];
-            }
-        };
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.id);
+            dest.writeString(this.name);
+            dest.writeString(this.photo);
+            dest.writeByte(is_private ? (byte) 1 : (byte) 0);
+        }
+    }
+
+    public class Courses {
+        @SerializedName("shop") public Shop shop;
+        @SerializedName("service") public CoachService service;
+    }
+
+    public class Shop {
+        @SerializedName("private_url") public String private_url;
+        @SerializedName("team_url") public String team_url;
+        @SerializedName("user_count") public int user_count;
+        @SerializedName("courses_count") public int courses_count;
+        @SerializedName("team_count") public int team_count;
+        @SerializedName("courses") public List<Course> courses;
     }
 }

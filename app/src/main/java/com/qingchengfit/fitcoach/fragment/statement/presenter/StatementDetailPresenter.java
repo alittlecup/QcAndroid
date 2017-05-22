@@ -7,9 +7,9 @@ import cn.qingchengfit.network.errors.NetWorkThrowable;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
 import com.qingchengfit.fitcoach.di.BasePresenter;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.fragment.statement.StatementDetailView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import java.util.Collections;
 import javax.inject.Inject;
@@ -31,9 +31,9 @@ import rx.functions.Action1;
 public class StatementDetailPresenter extends BasePresenter {
 
     @Inject StatementUsecase usecase;
-    private StatementDetailView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    private StatementDetailView view;
 
     @Inject public StatementDetailPresenter(StatementUsecase usecase) {
         this.usecase = usecase;

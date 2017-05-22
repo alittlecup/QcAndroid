@@ -26,26 +26,22 @@ import javax.inject.Inject;
  */
 public class BrandManagePresenter extends BasePresenter {
 
-
     private BrandManageView view;
 
-    @Inject
-    public BrandManagePresenter() {
+    @Inject public BrandManagePresenter() {
 
     }
 
-    @Override
-    public void attachView(PView v) {
-        this.view = (BrandManageView)v;
+    @Override public void attachView(PView v) {
+        this.view = (BrandManageView) v;
     }
 
-    @Override
-    public void unattachView() {
+    @Override public void unattachView() {
         super.unattachView();
         this.view = null;
     }
 
-    public void queryBrands(){
+    public void queryBrands() {
         //RxRegiste(useCase.getBrandList(new Action1<QcResponseData<BrandsResponse>>() {
         //    @Override
         //    public void call(QcResponseData<BrandsResponse> qcResponseBrands) {

@@ -26,8 +26,8 @@ import java.util.List;
  */
 
 public class QcResponseSpaces extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
+
     public static class Data {
         @SerializedName("spaces") public List<Space> spaces;
     }

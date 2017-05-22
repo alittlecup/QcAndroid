@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -48,7 +49,6 @@ import com.qingchengfit.fitcoach.component.AlphabetView;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystem;
 import com.qingchengfit.fitcoach.http.bean.QcStudentBean;
@@ -186,7 +186,7 @@ public class MyStudentFragment extends BaseFragment {
         //默认刷新
         refresh.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
-                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(),this);
+                CompatUtils.removeGlobalLayout(refresh.getViewTreeObserver(), this);
                 refresh.setRefreshing(true);
             }
         });
@@ -237,7 +237,6 @@ public class MyStudentFragment extends BaseFragment {
                     }
                 });
         }
-
     }
 
     @Override public void onHiddenChanged(boolean hidden) {
@@ -262,9 +261,8 @@ public class MyStudentFragment extends BaseFragment {
      * 从通讯录读取学员
      */
     private void addStudentFromContact() {
-        Intent to =new Intent(getContext(), ChooseStudentActivity.class);
-        if (getActivity() instanceof FragActivity)
-            to.putExtra("service",((FragActivity) getActivity()).getCoachService());
+        Intent to = new Intent(getContext(), ChooseStudentActivity.class);
+        if (getActivity() instanceof FragActivity) to.putExtra("service", ((FragActivity) getActivity()).getCoachService());
         startActivityForResult(to, 400);
     }
 
@@ -448,8 +446,8 @@ public class MyStudentFragment extends BaseFragment {
     @OnClick(R.id.student_add) public void onAddstudent() {
         Intent intent = new Intent(getActivity(), FragActivity.class);
         intent.putExtra("type", 7);
-        if (getActivity() instanceof FragActivity){
-            intent.putExtra("service",((FragActivity) getActivity()).getCoachService());
+        if (getActivity() instanceof FragActivity) {
+            intent.putExtra("service", ((FragActivity) getActivity()).getCoachService());
         }
         MyStudentFragment.this.startActivityForResult(intent, 405);
     }
@@ -556,8 +554,8 @@ public class MyStudentFragment extends BaseFragment {
             Glide.with(App.AppContex)
                 .load(PhotoUtils.getSmall(studentBean.headerPic))
                 .asBitmap()
-                .placeholder(studentBean.gender?R.drawable.default_student_male:R.drawable.default_student_female)
-                .error(studentBean.gender?R.drawable.default_student_male:R.drawable.default_student_female)
+                .placeholder(studentBean.gender ? R.drawable.default_student_male : R.drawable.default_student_female)
+                .error(studentBean.gender ? R.drawable.default_student_male : R.drawable.default_student_female)
                 .into(new CircleImgWrapper(holder.itemStudentHeader, getContext()));
         }
 

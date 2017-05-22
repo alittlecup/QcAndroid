@@ -32,13 +32,12 @@ import com.qingchengfit.fitcoach.R;
  */
 
 public class CalenderPopWindow {
-    private View viewContent;
     public PopupWindow mPopupWindow;
+    private View viewContent;
     private Context mContext;
     private View.OnClickListener r;
     private View.OnClickListener g;
     private View.OnClickListener p;
-
 
     private CalenderPopWindow(Builder builder) {
         mContext = builder.mContext;
@@ -60,22 +59,22 @@ public class CalenderPopWindow {
 
     public void show(View view, int x, int y) {
         int vw = view.getMeasuredWidth();
-        if (mPopupWindow != null){
+        if (mPopupWindow != null) {
             viewContent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int xoffset = 0;
-            if (x-150 < vw/2)
+            if (x - 150 < vw / 2) {
                 viewContent.setBackgroundResource(R.drawable.bg_timeline_card);
-            else {
+            } else {
                 viewContent.setBackgroundResource(R.drawable.bg_timeline_card_right);
-                xoffset = MeasureUtils.dpToPx(150f,mContext.getResources());
+                xoffset = MeasureUtils.dpToPx(150f, mContext.getResources());
             }
 
-            mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY,x-xoffset, y+ MeasureUtils.dpToPx(52f,mContext.getResources()));
-
+            mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, x - xoffset, y + MeasureUtils.dpToPx(52f, mContext.getResources()));
         }
     }
-    public void setDismiss(PopupWindow.OnDismissListener dismiss){
-        if (mPopupWindow != null){
+
+    public void setDismiss(PopupWindow.OnDismissListener dismiss) {
+        if (mPopupWindow != null) {
             mPopupWindow.setOnDismissListener(dismiss);
         }
     }

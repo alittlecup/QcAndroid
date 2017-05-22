@@ -1,355 +1,357 @@
 <android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/refresh"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <ScrollView
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/backgroud_grey"
+      >
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroud_grey"
+        android:orientation="vertical"
+        tools:context="com.qingchengfit.fitcoach.fragment.ModifyInfoFragment"
         >
 
-        <LinearLayout
+      <RelativeLayout
+          android:id="@+id/modifyinfo_header_layout"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:text="头像"
+            style="@style/Qc.TextCommonGrey"
+
+            />
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroud_grey"
+            android:layout_height="@dimen/qc_divider_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_white"
+            >
+
+        </View>
+
+        <ImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/modifyinfo_header_pic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            />
+      </RelativeLayout>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/mofifyinfo_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="姓名"
+          >
+
+
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+
+            android:id="@+id/comple_gender_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:text="性别"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_divider_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_white"
+            >
+
+        </View>
+
+        <RadioGroup
+            android:id="@+id/comple_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal"
+            >
+
+          <RadioButton
+              android:id="@+id/comple_gender_male"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:button="@drawable/radio_selector"
+              android:checked="true"
+              android:text="@string/gender_male"
+              />
+
+          <Space
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              />
+
+          <RadioButton
+              android:id="@+id/comple_gender_female"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:button="@drawable/radio_selector"
+              android:text="@string/gender_female"
+
+              />
+        </RadioGroup>
+
+      </RelativeLayout>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/mofifyinfo_city"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="城市"
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/mofifyinfo_wechat"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="微信"
+          >
+
+
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:id="@+id/mofifyinfo_weibo"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_lable="微博"
+          >
+      </com.qingchengfit.fitcoach.component.CommonInputView>
+
+
+      <RelativeLayout
+          android:id="@+id/modifyinfo_sign_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+            android:id="@+id/modifyinfo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qc_item_height"
+            android:text="个性签名"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <EditText
+            android:id="@+id/modifyinfo_sign_et"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/modifyinfo_label"
+            android:background="@color/transparent"
+            android:gravity="top"
+            android:maxLength="144"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+
+      </RelativeLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/divider_grey"
+          >
+      </View>
+
+      <RelativeLayout
+          android:id="@+id/modifyinfo_brief"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginTop="20dp"
+          android:background="@color/white"
+          android:gravity="center|left"
+          android:visibility="gone"
+
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="自我介绍"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <ImageView
+            android:id="@+id/modifyinfo_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/modifyinfo_right_arrow"
+            android:text="编辑"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/divider_grey"
+            >
+        </View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_grey"
+            >
+        </View>
+      </RelativeLayout>
+
+      <Button
+          android:id="@+id/modifyinfo_comfirm"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_margin="@dimen/activity_horizontal_margin"
+          android:layout_marginBottom="50dp"
+          android:text="保存"
+          />
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/backgroud_grey"
+          android:visibility="gone"
+          >
+
+
+        <LinearLayout
+            android:id="@+id/modifyinfo_inputpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="137dp"
+            android:background="@color/white"
             android:orientation="vertical"
-            tools:context="com.qingchengfit.fitcoach.fragment.ModifyInfoFragment">
+            android:paddingBottom="@dimen/qc_item_height"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            >
 
-            <RelativeLayout
-                android:id="@+id/modifyinfo_header_layout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                >
-
-                <TextView
-
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="15dp"
-                    android:text="头像"
-
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_white"
-                    >
-
-                </View>
-
-                <ImageView
-                    android:id="@+id/modifyinfo_header_pic"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:scaleType="fitXY"
-                    />
-            </RelativeLayout>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/mofifyinfo_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_lable="姓名"
-                >
+          <EditText
+              android:id="@+id/modifyinfo_name"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              android:hint="姓名"
+              android:maxLength="16"
+              />
 
 
-            </com.qingchengfit.fitcoach.component.CommonInputView>
+          <EditText
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                >
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              android:hint="城市"
+              android:maxLength="16"
+              />
 
-                <TextView
-
-                    android:id="@+id/comple_gender_label"
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="15dp"
-                    android:text="性别"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/qc_divider_height"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_white"
-                    >
-
-                </View>
-
-                <RadioGroup
-                    android:id="@+id/comple_gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal"
-                    >
-
-                    <RadioButton
-                        android:id="@+id/comple_gender_male"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radio_selector"
-                        android:checked="true"
-                        android:text="@string/gender_male"
-                        />
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="match_parent"/>
-
-                    <RadioButton
-                        android:id="@+id/comple_gender_female"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radio_selector"
-                        android:text="@string/gender_female"
-
-                        />
-                </RadioGroup>
-
-            </RelativeLayout>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/mofifyinfo_city"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_clickable="true"
-                app:civ_lable="城市"
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/mofifyinfo_wechat"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_lable="微信"
-                >
-
-
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:id="@+id/mofifyinfo_weibo"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:visibility="gone"
-                app:civ_lable="微博"
-                >
-            </com.qingchengfit.fitcoach.component.CommonInputView>
-
-
-            <RelativeLayout
-                android:id="@+id/modifyinfo_sign_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                >
-
-                <TextView
-                    android:id="@+id/modifyinfo_label"
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qc_item_height"
-                    android:text="个性签名"
-                    />
-
-                <EditText
-                    android:id="@+id/modifyinfo_sign_et"
-                    style="@style/Qc.TextCommonBlack"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_below="@id/modifyinfo_label"
-                    android:background="@color/transparent"
-                    android:gravity="top"
-                    android:maxLength="144"
-                    />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider_grey"
-                >
-            </View>
-
-            <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/modifyinfo_brief"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_marginTop="20dp"
-                android:background="@color/white"
-                android:gravity="center|left"
-
-                >
-
-                <TextView
-                    style="@style/Qc.TextCommonGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:text="自我介绍"
-                    />
-
-                <ImageView
-                    android:id="@+id/modifyinfo_right_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/ic_arrow_right"
-                    />
-
-                <TextView
-                    style="@style/Qc.TextCommonBlack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/modifyinfo_right_arrow"
-                    android:text="编辑"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/divider_grey"
-                    >
-                </View>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/divider_grey"
-                    >
-                </View>
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/modifyinfo_comfirm"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="50dp"
-                android:text="保存"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/backgroud_grey"
-                android:visibility="gone"
-                >
-
-
-                <LinearLayout
-                    android:id="@+id/modifyinfo_inputpan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="137dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/qc_item_height"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    >
-
-                    <EditText
-                        android:id="@+id/modifyinfo_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/qc_item_height"
-                        android:hint="姓名"
-                        android:maxLength="16"
-                        />
-
-
-                    <EditText
-
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/qc_item_height"
-                        android:hint="城市"
-                        android:maxLength="16"
-                        />
-
-                    <EditText
-                        android:id="@+id/modifyinfo_desc"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/qc_item_height"
-                        android:layout_marginLeft="5dp"
-                        android:background="@color/transparent"
-                        android:hint="简介"
-                        android:maxLength="16"
-                        />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignTop="@id/modifyinfo_inputpan"
-                    android:background="@color/divider_grey"
-                    >
-
-                </View>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignBottom="@id/modifyinfo_inputpan"
-                    android:background="@color/divider_grey"
-                    >
-
-                </View>
-
-                <Button
-                    android:layout_width="300dp"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/modifyinfo_inputpan"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/login_comfirm"
-                    />
-
-            </RelativeLayout>
-
+          <EditText
+              android:id="@+id/modifyinfo_desc"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/qc_item_height"
+              android:layout_marginLeft="5dp"
+              android:background="@color/transparent"
+              android:hint="简介"
+              android:maxLength="16"
+              />
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignTop="@id/modifyinfo_inputpan"
+            android:background="@color/divider_grey"
+            >
 
-    </ScrollView>
+        </View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/modifyinfo_inputpan"
+            android:background="@color/divider_grey"
+            >
+
+        </View>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/modifyinfo_inputpan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_comfirm"
+            />
+
+      </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+  </ScrollView>
 
 </android.support.v4.widget.SwipeRefreshLayout>
 

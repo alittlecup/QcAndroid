@@ -22,5 +22,5 @@ package com.marcohc.robotocalendar;
  */
 
 public class EventCalendarDay {
-    
+
 }

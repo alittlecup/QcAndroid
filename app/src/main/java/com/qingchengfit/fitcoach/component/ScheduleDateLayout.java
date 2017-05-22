@@ -7,14 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
-
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.component.CustomSetmentLayout.onSegmentChangeListener;
+import java.util.Date;
 
 /**
  * power by
@@ -33,12 +30,9 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
 
     public SegmentListener segmentListener;
     public TouchUpListener listener;
-    @BindView(R.id.weekday)
-    TextView weekday;
-    @BindView(R.id.date)
-    TextView date;
-    @BindView(R.id.indicator)
-    TextView indicator;
+    @BindView(R.id.weekday) TextView weekday;
+    @BindView(R.id.date) TextView date;
+    @BindView(R.id.indicator) TextView indicator;
     private Date Viewdate;
 
     public ScheduleDateLayout(Context context) {
@@ -70,19 +64,14 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
         setOnClickListener(this);
     }
 
-
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
-
-
     }
 
-    @Override
-    public void onViewAdded(View child) {
+    @Override public void onViewAdded(View child) {
         super.onViewAdded(child);
-//        segmentImg.setImageDrawable(drawables[0]);
-//       segmentText.setText(text);
+        //        segmentImg.setImageDrawable(drawables[0]);
+        //       segmentText.setText(text);
 
     }
 
@@ -90,13 +79,11 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
         onCheckChange(isCheck);
     }
 
-    @Override
-    public void onCheckChange(boolean isChecked) {
+    @Override public void onCheckChange(boolean isChecked) {
         if (isChecked) {
             weekday.setTextColor(Color.argb(255, 255, 255, 255));
             date.setTextColor(Color.argb(255, 255, 255, 255));
             indicator.setVisibility(VISIBLE);
-
         } else {
             weekday.setTextColor(Color.argb(153, 255, 255, 255));
             date.setTextColor(Color.argb(153, 255, 255, 255));
@@ -109,13 +96,9 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
         date.setText(d);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onTouchUp(v);
-        if (segmentListener != null)
-            segmentListener.onSegmentClick(v);
-
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onTouchUp(v);
+        if (segmentListener != null) segmentListener.onSegmentClick(v);
     }
 
     public Date getViewdate() {
@@ -132,6 +115,5 @@ public class ScheduleDateLayout extends LinearLayout implements onSegmentChangeL
 
     public interface SegmentListener {
         void onSegmentClick(View v);
-
     }
 }

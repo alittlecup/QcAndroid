@@ -2,7 +2,6 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -19,7 +18,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/15 2015.
  */
 public class QcCoachRespone extends QcResponse {
-
 
     /**
      * data : {"coach":{"username":"黄三三","phone":"15123358198","weixin":"哈哈哈","description":"","city":"北京市","short_description":"我不是教练","gender":0,"id":2,"avatar":"http://zoneke-img.b0.upaiyun.com//2015/9/1442461927.jpg.jpg"}}
@@ -85,8 +83,12 @@ public class QcCoachRespone extends QcResponse {
                 if (gd_district != null && gd_district.province != null && gd_district.city != null) {
                     if (gd_district.city.name.startsWith(gd_district.province.name)) {
                         return gd_district.city.name;
-                    } else return gd_district.province.name + gd_district.city.name;
-                } else return "";
+                    } else {
+                        return gd_district.province.name + gd_district.city.name;
+                    }
+                } else {
+                    return "";
+                }
             }
 
             public String getUsername() {
@@ -120,8 +122,6 @@ public class QcCoachRespone extends QcResponse {
             public void setDescription(String description) {
                 this.description = description;
             }
-
-
 
             public String getShort_description() {
                 return short_description;
@@ -157,27 +157,19 @@ public class QcCoachRespone extends QcResponse {
             }
 
             public static class DistrictEntity implements Parcelable {
-                @SerializedName("province")
-                public ProvinceBean province;
-                @SerializedName("city")
-                public CityBean city;
-                @SerializedName("code")
-                public String id;
-                @SerializedName("name")
-                public String name;
+                public static final Parcelable.Creator<DistrictEntity> CREATOR = new Parcelable.Creator<DistrictEntity>() {
+                    public DistrictEntity createFromParcel(Parcel source) {
+                        return new DistrictEntity(source);
+                    }
 
-                @Override
-                public int describeContents() {
-                    return 0;
-                }
-
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeParcelable(this.province, flags);
-                    dest.writeParcelable(this.city, flags);
-                    dest.writeString(this.id);
-                    dest.writeString(this.name);
-                }
+                    public DistrictEntity[] newArray(int size) {
+                        return new DistrictEntity[size];
+                    }
+                };
+                @SerializedName("province") public ProvinceBean province;
+                @SerializedName("city") public CityBean city;
+                @SerializedName("code") public String id;
+                @SerializedName("name") public String name;
 
                 public DistrictEntity() {
                 }
@@ -189,18 +181,17 @@ public class QcCoachRespone extends QcResponse {
                     this.name = in.readString();
                 }
 
-                public static final Parcelable.Creator<DistrictEntity> CREATOR = new Parcelable.Creator<DistrictEntity>() {
-                    public DistrictEntity createFromParcel(Parcel source) {
-                        return new DistrictEntity(source);
-                    }
+                @Override public int describeContents() {
+                    return 0;
+                }
 
-                    public DistrictEntity[] newArray(int size) {
-                        return new DistrictEntity[size];
-                    }
-                };
+                @Override public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeParcelable(this.province, flags);
+                    dest.writeParcelable(this.city, flags);
+                    dest.writeString(this.id);
+                    dest.writeString(this.name);
+                }
             }
-
-
         }
     }
 }

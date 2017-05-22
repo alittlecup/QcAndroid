@@ -24,7 +24,7 @@ import cn.qingchengfit.model.base.CoachService;
  */
 
 public class EventGoPreview {
-    public  CoachService mCoachService;
+    public CoachService mCoachService;
 
     public EventGoPreview(CoachService coachService) {
         mCoachService = coachService;

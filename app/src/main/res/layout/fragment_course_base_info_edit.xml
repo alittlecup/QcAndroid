@@ -1,91 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:civ="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     >
 
-    <RelativeLayout
-        android:id="@+id/header_layout"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
+  <RelativeLayout
+      android:id="@+id/header_layout"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="@string/course_picture"
-            />
-
-        <ImageView
-            android:id="@+id/header_img"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            app:srcCompat="@drawable/ic_camera_alt_black_24dp"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_right"
-            />
-    </RelativeLayout>
-
-    <include layout="@layout/divider_grey_left_right"/>
-
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/course_name"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        civ:civ_lable="@string/name_call"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="@string/course_picture"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/course_length"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        civ:civ_inputnum="true"
-        civ:civ_lable="@string/time_long_min"
-        />
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/single_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        civ:civ_inputnum="true"
-        civ:civ_lable="单节可约人数"
+    <ImageView
+        android:id="@+id/header_img"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:srcCompat="@drawable/ic_camera_alt_black_24dp"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/course_min_count"
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        civ:civ_inputnum="true"
-        civ:civ_lable="@string/course_min_num"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_right"
         />
+  </RelativeLayout>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
-        android:id="@+id/default_course_plan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        civ:civ_clickable="true"
-        civ:civ_lable="@string/default_course_plan"
-        />
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/course_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      civ:civ_lable="@string/name_call"
+      />
+
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/course_length"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      civ:civ_inputnum="true"
+      civ:civ_lable="@string/time_long_min"
+      />
+
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/single_count"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      civ:civ_inputnum="true"
+      civ:civ_lable="单节可约人数"
+      />
+
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/course_min_count"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      civ:civ_inputnum="true"
+      civ:civ_lable="@string/course_min_num"
+      />
+
+  <com.qingchengfit.fitcoach.component.CommonInputView
+      android:id="@+id/default_course_plan"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      civ:civ_clickable="true"
+      civ:civ_lable="@string/default_course_plan"
+      />
 </LinearLayout>

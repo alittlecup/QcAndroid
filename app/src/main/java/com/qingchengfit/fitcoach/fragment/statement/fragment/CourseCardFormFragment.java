@@ -56,8 +56,7 @@ public class CourseCardFormFragment extends BaseFragment {
     }
 
     @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-        Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course_card_form, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (getArguments() != null) {
@@ -67,34 +66,26 @@ public class CourseCardFormFragment extends BaseFragment {
                     CourseCardForm g = gs.get(i);
                     switch (g.card_type) {
                         case Configs.CATEGORY_VALUE:
-                            valueServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
-                            valueCourseIncome.setText(
-                                StringUtils.getBalance(getContext(), g.course_income, Configs.CATEGORY_VALUE));
+                            valueServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
+                            valueCourseIncome.setText(StringUtils.getBalance(getContext(), g.course_income, Configs.CATEGORY_VALUE));
                             valueRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(g.real_income)));
                             break;
                         case Configs.CATEGORY_TIMES:
-                            timesServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
-                            timesCourseIncome.setText(
-                                StringUtils.getBalance(getContext(), g.course_income, Configs.CATEGORY_TIMES));
+                            timesServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
+                            timesCourseIncome.setText(StringUtils.getBalance(getContext(), g.course_income, Configs.CATEGORY_TIMES));
                             timesRealIncomes.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(g.real_income)));
                             break;
                         case Configs.CATEGORY_DATE:
-                            dataServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
+                            dataServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
 
                             break;
                         case 0:
-                            onlineServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
-                            onlineCourseIncome.setText(
-                                StringUtils.getBalance(getContext(), g.course_income, Configs.CATEGORY_VALUE));
+                            onlineServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
+                            onlineCourseIncome.setText(StringUtils.getBalance(getContext(), g.course_income, Configs.CATEGORY_VALUE));
                             onlineRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(g.real_income)));
                             break;
                         default:
-                            totalServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
+                            totalServerNum.setText(String.format(Locale.CHINA, getString(R.string.menber_times), g.server_count));
                             totalRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(g.real_income)));
                             break;
                     }

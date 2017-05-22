@@ -49,5 +49,6 @@
       app:civ_showright="true"
       app:civ_text_color="@color/text_black"
       />
+
   <include layout="@layout/divider_grey"/>
 </LinearLayout>

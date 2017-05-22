@@ -34,7 +34,6 @@ public class BriefInfo {
         this.text = text;
     }
 
-
     public String getImg() {
         return img;
     }
@@ -42,5 +41,4 @@ public class BriefInfo {
     public void setImg(String img) {
         this.img = img;
     }
-
 }

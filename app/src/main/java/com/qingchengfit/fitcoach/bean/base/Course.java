@@ -25,6 +25,15 @@ import android.os.Parcelable;
  */
 
 public class Course implements Parcelable {
+    public static final Creator<Course> CREATOR = new Creator<Course>() {
+        @Override public Course createFromParcel(Parcel source) {
+            return new Course(source);
+        }
+
+        @Override public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
     public String id;
     public String name;
     public int length;
@@ -44,6 +53,14 @@ public class Course implements Parcelable {
         setCapacity(builder.capacity);
     }
 
+    protected Course(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.length = in.readInt();
+        this.is_private = in.readByte() != 0;
+        this.photo = in.readString();
+        this.capacity = in.readInt();
+    }
 
     public int getCapacity() {
         return capacity;
@@ -57,12 +74,12 @@ public class Course implements Parcelable {
         return length;
     }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
     public void setLength(float length) {
         this.length = (int) length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public String getId() {
@@ -95,6 +112,19 @@ public class Course implements Parcelable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeInt(this.length);
+        dest.writeByte(this.is_private ? (byte) 1 : (byte) 0);
+        dest.writeString(this.photo);
+        dest.writeInt(this.capacity);
     }
 
     public static final class Builder {
@@ -147,36 +177,4 @@ public class Course implements Parcelable {
             return new Course(this);
         }
     }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeInt(this.length);
-        dest.writeByte(this.is_private ? (byte) 1 : (byte) 0);
-        dest.writeString(this.photo);
-        dest.writeInt(this.capacity);
-    }
-
-    protected Course(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.length = in.readInt();
-        this.is_private = in.readByte() != 0;
-        this.photo = in.readString();
-        this.capacity = in.readInt();
-    }
-
-    public static final Creator<Course> CREATOR = new Creator<Course>() {
-        @Override public Course createFromParcel(Parcel source) {
-            return new Course(source);
-        }
-
-        @Override public Course[] newArray(int size) {
-            return new Course[size];
-        }
-    };
 }

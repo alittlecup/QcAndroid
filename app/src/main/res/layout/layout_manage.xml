@@ -5,91 +5,91 @@
 
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:orientation="horizontal"
     android:background="@color/white"
+    android:orientation="horizontal"
     >
 
-    <RelativeLayout
-        android:id="@+id/layout1"
-        android:layout_width="0dp"
+  <RelativeLayout
+      android:id="@+id/layout1"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
-
-        <TextView
-            android:id="@+id/text1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            tools:text="123123"
-            />
-
-        <ImageView
-            android:id="@+id/down1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/text1"
-            android:src="@drawable/ic_arrow_down"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/divider_grey"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
-
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            tools:text="123123"
-            />
-
-        <ImageView
-            android:id="@+id/down2"
-
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/text2"
-            android:src="@drawable/ic_arrow_down"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/divider_grey"
-            />
-    </RelativeLayout>
+        android:gravity="center_vertical"
+        tools:text="123123"
+        />
 
     <ImageView
-        android:id="@+id/delete"
-        android:layout_width="@dimen/qc_item_height"
-        android:layout_height="@dimen/qc_item_height"
-        android:layout_gravity="center_vertical"
-        android:scaleType="center"
-        android:src="@drawable/ic_item_delete"
+        android:id="@+id/down1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/text1"
+        android:src="@drawable/ic_arrow_down"
         />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/layout2"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        tools:text="123123"
+        />
+
+    <ImageView
+        android:id="@+id/down2"
+
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/text2"
+        android:src="@drawable/ic_arrow_down"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+
+  <ImageView
+      android:id="@+id/delete"
+      android:layout_width="@dimen/qc_item_height"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_gravity="center_vertical"
+      android:scaleType="center"
+      android:src="@drawable/ic_item_delete"
+      />
 </LinearLayout>
 
 

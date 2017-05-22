@@ -73,7 +73,7 @@ import static android.graphics.Color.WHITE;
         unbinder = ButterKnife.bind(this, view);
         tvTitle.setText(title);
         tvGymName.setText(content);
-        tvGymName.setVisibility(TextUtils.isEmpty(content)?View.GONE:View.VISIBLE);
+        tvGymName.setVisibility(TextUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
         try {
             mBitmapSoftReference = new SoftReference<Bitmap>(encodeAsBitmap(url));
             imgQrCode.setImageBitmap(mBitmapSoftReference.get());

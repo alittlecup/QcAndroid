@@ -28,25 +28,11 @@ import uk.co.senab.photoview.PhotoViewAttacher.OnMatrixChangedListener;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;
 import uk.co.senab.photoview.PhotoViewAttacher.OnViewTapListener;
 
-
-public class PhotoView extends ImageView implements IPhotoView{
+public class PhotoView extends ImageView implements IPhotoView {
 
     private final PhotoViewAttacher mAttacher;
 
     private ScaleType mPendingScaleType;
-
-
-    public OnPhotoTapListener getmOnViewTapListener() {
-        return mOnPhotoTapListener;
-    }
-
-    public void setmOnViewTapListener(OnPhotoTapListener mOnViewTapListener) {
-        this.mOnPhotoTapListener = mOnViewTapListener;
-        if (null != mAttacher){
-            mAttacher.setOnPhotoTapListener(mOnViewTapListener);
-        }
-    }
-
     private OnPhotoTapListener mOnPhotoTapListener;
 
     public PhotoView(Context context) {
@@ -66,126 +52,120 @@ public class PhotoView extends ImageView implements IPhotoView{
             setScaleType(mPendingScaleType);
             mPendingScaleType = null;
         }
+    }
 
+    public OnPhotoTapListener getmOnViewTapListener() {
+        return mOnPhotoTapListener;
+    }
+
+    public void setmOnViewTapListener(OnPhotoTapListener mOnViewTapListener) {
+        this.mOnPhotoTapListener = mOnViewTapListener;
+        if (null != mAttacher) {
+            mAttacher.setOnPhotoTapListener(mOnViewTapListener);
+        }
     }
 
     /**
      * @deprecated use {@link #setRotationTo(float)}
      */
-    @Override
-    public void setPhotoViewRotation(float rotationDegree) {
-        mAttacher.setRotationTo(rotationDegree);
-    }
-    
-    @Override
-    public void setRotationTo(float rotationDegree) {
+    @Override public void setPhotoViewRotation(float rotationDegree) {
         mAttacher.setRotationTo(rotationDegree);
     }
 
-    @Override
-    public void setRotationBy(float rotationDegree) {
+    @Override public void setRotationTo(float rotationDegree) {
+        mAttacher.setRotationTo(rotationDegree);
+    }
+
+    @Override public void setRotationBy(float rotationDegree) {
         mAttacher.setRotationBy(rotationDegree);
     }
 
-    @Override
-    public boolean canZoom() {
+    @Override public boolean canZoom() {
         return mAttacher.canZoom();
     }
 
-    @Override
-    public RectF getDisplayRect() {
+    @Override public RectF getDisplayRect() {
         return mAttacher.getDisplayRect();
     }
 
-    @Override
-    public Matrix getDisplayMatrix() {
+    @Override public Matrix getDisplayMatrix() {
         return mAttacher.getDrawMatrix();
     }
 
-    @Override
-    public boolean setDisplayMatrix(Matrix finalRectangle) {
+    @Override public boolean setDisplayMatrix(Matrix finalRectangle) {
         return mAttacher.setDisplayMatrix(finalRectangle);
     }
 
-    @Override
-    @Deprecated
-    public float getMinScale() {
+    @Override @Deprecated public float getMinScale() {
         return getMinimumScale();
     }
 
-    @Override
-    public float getMinimumScale() {
-        return mAttacher.getMinimumScale();
-    }
-
-    @Override
-    @Deprecated
-    public float getMidScale() {
-        return getMediumScale();
-    }
-
-    @Override
-    public float getMediumScale() {
-        return mAttacher.getMediumScale();
-    }
-
-    @Override
-    @Deprecated
-    public float getMaxScale() {
-        return getMaximumScale();
-    }
-
-    @Override
-    public float getMaximumScale() {
-        return mAttacher.getMaximumScale();
-    }
-
-    @Override
-    public float getScale() {
-        return mAttacher.getScale();
-    }
-
-    @Override
-    public ScaleType getScaleType() {
-        return mAttacher.getScaleType();
-    }
-
-    @Override
-    public void setAllowParentInterceptOnEdge(boolean allow) {
-        mAttacher.setAllowParentInterceptOnEdge(allow);
-    }
-
-    @Override
-    @Deprecated
-    public void setMinScale(float minScale) {
+    @Override @Deprecated public void setMinScale(float minScale) {
         setMinimumScale(minScale);
     }
 
-    @Override
-    public void setMinimumScale(float minimumScale) {
+    @Override public float getMinimumScale() {
+        return mAttacher.getMinimumScale();
+    }
+
+    @Override public void setMinimumScale(float minimumScale) {
         mAttacher.setMinimumScale(minimumScale);
     }
 
-    @Override
-    @Deprecated
-    public void setMidScale(float midScale) {
+    @Override @Deprecated public float getMidScale() {
+        return getMediumScale();
+    }
+
+    @Override @Deprecated public void setMidScale(float midScale) {
         setMediumScale(midScale);
     }
 
-    @Override
-    public void setMediumScale(float mediumScale) {
+    @Override public float getMediumScale() {
+        return mAttacher.getMediumScale();
+    }
+
+    @Override public void setMediumScale(float mediumScale) {
         mAttacher.setMediumScale(mediumScale);
     }
 
-    @Override
-    @Deprecated
-    public void setMaxScale(float maxScale) {
+    @Override @Deprecated public float getMaxScale() {
+        return getMaximumScale();
+    }
+
+    @Override @Deprecated public void setMaxScale(float maxScale) {
         setMaximumScale(maxScale);
     }
 
-    @Override
-    public void setMaximumScale(float maximumScale) {
+    @Override public float getMaximumScale() {
+        return mAttacher.getMaximumScale();
+    }
+
+    @Override public void setMaximumScale(float maximumScale) {
         mAttacher.setMaximumScale(maximumScale);
+    }
+
+    @Override public float getScale() {
+        return mAttacher.getScale();
+    }
+
+    @Override public void setScale(float scale) {
+        mAttacher.setScale(scale);
+    }
+
+    @Override public ScaleType getScaleType() {
+        return mAttacher.getScaleType();
+    }
+
+    @Override public void setScaleType(ScaleType scaleType) {
+        if (null != mAttacher) {
+            mAttacher.setScaleType(scaleType);
+        } else {
+            mPendingScaleType = scaleType;
+        }
+    }
+
+    @Override public void setAllowParentInterceptOnEdge(boolean allow) {
+        mAttacher.setAllowParentInterceptOnEdge(allow);
     }
 
     @Override
@@ -197,106 +177,74 @@ public class PhotoView extends ImageView implements IPhotoView{
         }
     }
 
-    @Override
-    public void setImageResource(int resId) {
+    @Override public void setImageResource(int resId) {
         super.setImageResource(resId);
         if (null != mAttacher) {
             mAttacher.update();
         }
     }
 
-    @Override
-    public void setImageURI(Uri uri) {
+    @Override public void setImageURI(Uri uri) {
         super.setImageURI(uri);
         if (null != mAttacher) {
             mAttacher.update();
         }
     }
 
-    @Override
-    public void setOnMatrixChangeListener(OnMatrixChangedListener listener) {
+    @Override public void setOnMatrixChangeListener(OnMatrixChangedListener listener) {
         mAttacher.setOnMatrixChangeListener(listener);
     }
 
-    @Override
-    public void setOnLongClickListener(OnLongClickListener l) {
+    @Override public void setOnLongClickListener(OnLongClickListener l) {
         mAttacher.setOnLongClickListener(l);
     }
 
-    @Override
-    public void setOnPhotoTapListener(OnPhotoTapListener listener) {
-        mAttacher.setOnPhotoTapListener(listener);
-    }
-
-    @Override
-    public OnPhotoTapListener getOnPhotoTapListener() {
+    @Override public OnPhotoTapListener getOnPhotoTapListener() {
         return mAttacher.getOnPhotoTapListener();
     }
 
-    @Override
-    public void setOnViewTapListener(OnViewTapListener listener) {
-        mAttacher.setOnViewTapListener(listener);
+    @Override public void setOnPhotoTapListener(OnPhotoTapListener listener) {
+        mAttacher.setOnPhotoTapListener(listener);
     }
 
-    @Override
-    public OnViewTapListener getOnViewTapListener() {
+    @Override public OnViewTapListener getOnViewTapListener() {
         return mAttacher.getOnViewTapListener();
     }
 
-    @Override
-    public void setScale(float scale) {
-        mAttacher.setScale(scale);
+    @Override public void setOnViewTapListener(OnViewTapListener listener) {
+        mAttacher.setOnViewTapListener(listener);
     }
 
-    @Override
-    public void setScale(float scale, boolean animate) {
+    @Override public void setScale(float scale, boolean animate) {
         mAttacher.setScale(scale, animate);
     }
 
-    @Override
-    public void setScale(float scale, float focalX, float focalY, boolean animate) {
+    @Override public void setScale(float scale, float focalX, float focalY, boolean animate) {
         mAttacher.setScale(scale, focalX, focalY, animate);
     }
 
-    @Override
-    public void setScaleType(ScaleType scaleType) {
-        if (null != mAttacher) {
-            mAttacher.setScaleType(scaleType);
-        } else {
-            mPendingScaleType = scaleType;
-        }
-    }
-
-    @Override
-    public void setZoomable(boolean zoomable) {
+    @Override public void setZoomable(boolean zoomable) {
         mAttacher.setZoomable(zoomable);
     }
 
-    @Override
-    public Bitmap getVisibleRectangleBitmap() {
+    @Override public Bitmap getVisibleRectangleBitmap() {
         return mAttacher.getVisibleRectangleBitmap();
     }
 
-    @Override
-    public void setZoomTransitionDuration(int milliseconds) {
+    @Override public void setZoomTransitionDuration(int milliseconds) {
         mAttacher.setZoomTransitionDuration(milliseconds);
     }
 
-    @Override
-    public IPhotoView getIPhotoViewImplementation() {
+    @Override public IPhotoView getIPhotoViewImplementation() {
         return mAttacher;
     }
 
-    @Override
-    public void setOnDoubleTapListener(GestureDetector.OnDoubleTapListener newOnDoubleTapListener) {
+    @Override public void setOnDoubleTapListener(GestureDetector.OnDoubleTapListener newOnDoubleTapListener) {
         mAttacher.setOnDoubleTapListener(newOnDoubleTapListener);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+    @Override protected void onDetachedFromWindow() {
         mAttacher.cleanup();
         super.onDetachedFromWindow();
     }
-
-
 }

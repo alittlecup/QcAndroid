@@ -32,6 +32,10 @@ public class UpyunService extends IntentService {
     private static final String FILE_PATH = "upload_filepath";
     private Subscription spUpImg;
 
+    public UpyunService() {
+        super("upyunservice");
+    }
+
     public static void uploadPic(Context context, String filePaht) {
         LogUtil.e("uploadpic");
         Intent it = new Intent(context, UpyunService.class);
@@ -39,18 +43,12 @@ public class UpyunService extends IntentService {
         context.startService(it);
     }
 
-    public UpyunService() {
-        super("upyunservice");
-    }
-
     @Override public void onDestroy() {
         super.onDestroy();
-        if (spUpImg != null&& spUpImg.isUnsubscribed())
-            spUpImg.unsubscribe();
+        if (spUpImg != null && spUpImg.isUnsubscribed()) spUpImg.unsubscribe();
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
+    @Override protected void onHandleIntent(Intent intent) {
         LogUtil.e("handle intent");
         if (intent.getExtras() != null) {
             String filepath = intent.getExtras().getString(FILE_PATH);
@@ -58,14 +56,14 @@ public class UpyunService extends IntentService {
                 //File file = new File(filepath);
                 //String filename = UUID.randomUUID().toString();
 
-                spUpImg = UpYunClient.rxUpLoad("header/",FILE_PATH)
+                spUpImg = UpYunClient.rxUpLoad("header/", FILE_PATH)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
-                            if (TextUtils.isEmpty(s)){
+                            if (TextUtils.isEmpty(s)) {
                                 ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
-                            }else {
+                            } else {
                                 RxBus.getBus().post(new UpYunResult(s));
                             }
                         }
@@ -74,11 +72,11 @@ public class UpyunService extends IntentService {
                 //boolean issuccees = UpYunClient.upLoadImg("/header/", filename, file);
                 //if (issuccees) {
                 //    图片上传成功
-                    //LogUtil.e("chengogn");
+                //LogUtil.e("chengogn");
 
                 //} else {
-                    //图片上传失败
-                    //ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
+                //图片上传失败
+                //ToastUtils.show(R.drawable.ic_share_fail, "图片上传失败!");
                 //}
 
             }

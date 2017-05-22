@@ -54,8 +54,7 @@ public class SaleCardTypeFragment extends BaseFragment {
     }
 
     @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-        Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sale_card_form, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (getArguments() != null) {
@@ -65,31 +64,25 @@ public class SaleCardTypeFragment extends BaseFragment {
                     SaleCardForm t = type.get(i);
                     switch (t.card_type) {
                         case Configs.CATEGORY_DATE:
-                            dataTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
-                            dataCharge.setText(
-                                StringUtils.getBalance(getContext(), t.charge, Configs.CATEGORY_DATE));
+                            dataTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            dataCharge.setText(StringUtils.getBalance(getContext(), t.charge, Configs.CATEGORY_DATE));
                             dataRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(t.real_income)));
                             break;
                         case Configs.CATEGORY_TIMES:
-                            timesTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
-                            timesCharge.setText(
-                                StringUtils.getBalance(getContext(), t.charge, Configs.CATEGORY_TIMES));
+                            timesTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            timesCharge.setText(StringUtils.getBalance(getContext(), t.charge, Configs.CATEGORY_TIMES));
                             timesRealIncomes.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(t.real_income)));
 
                             break;
                         case Configs.CATEGORY_VALUE:
-                            valueTradeTimes.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            valueTradeTimes.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
                             //                            valueCharge.setText(StringUtils.getBalance(getContext(), t.charge, Configs.CATEGORY_VALUE));
                             valueCharge.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(t.charge)));
                             valueRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(t.real_income)));
 
                             break;
                         default:
-                            totalServerNum.setText(
-                                String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
+                            totalServerNum.setText(String.format(Locale.CHINA, getString(R.string.trade_unit), t.trade_count));
                             totalRealIncome.setText(String.format(Locale.CHINA, "¥%s", StringUtils.getFloatDot2(t.real_income)));
 
                             break;

@@ -36,13 +36,11 @@ import com.qingchengfit.fitcoach.R;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/25.
  */
-@FragmentWithArgs
-public class UnloginAdPhotoFragment extends Fragment {
+@FragmentWithArgs public class UnloginAdPhotoFragment extends Fragment {
 
     @Arg int resImg;
     @Arg int resTitle;
     @Arg int resContent;
-
 
     @BindView(R.id.img) ImageView img;
     @BindView(R.id.tv1) TextView tv1;

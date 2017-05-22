@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.SearchInterface;
 import com.qingchengfit.fitcoach.fragment.SearchFragment;
@@ -26,28 +25,23 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
 
     private FragmentManager mFragmentManager;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         int type = getIntent().getIntExtra("type", SearchFragment.TYPE_GYM);
         mFragmentManager = getSupportFragmentManager();
         mFragmentManager.beginTransaction()
-                .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", type)))
-                .commit();
-
+            .replace(R.id.search_fraglayout, SearchFragment.newInstance(getIntent().getIntExtra("type", type)))
+            .commit();
     }
 
-
-    @Override
-    public void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth) {
+    @Override public void onSearchResult(int result, long id, String name, String address, String pic, boolean isAuth) {
         Intent it = new Intent();
         it.putExtra("id", id);
         it.putExtra("username", name);
-        it.putExtra("address",address);
-        it.putExtra("pic",pic);
-        it.putExtra("isauth",isAuth);
+        it.putExtra("address", address);
+        it.putExtra("pic", pic);
+        it.putExtra("isauth", isAuth);
         setResult(result, it);
         this.finish();
     }

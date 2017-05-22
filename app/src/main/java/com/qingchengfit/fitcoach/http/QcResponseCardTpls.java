@@ -24,10 +24,11 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2016/12/2.
  */
-public class QcResponseCardTpls extends QcResponse{
+public class QcResponseCardTpls extends QcResponse {
 
     public Data data;
-    public class Data{
+
+    public class Data {
         public List<Card_tpl> card_tpls;
     }
 }

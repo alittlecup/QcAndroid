@@ -17,11 +17,9 @@ import com.qingchengfit.fitcoach.bean.Brand;
  * Created by Paper on 16/2/23 2016.
  */
 public class QcResponsCreatBrand extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
     public static class Data {
-        @SerializedName("brand")
-        public Brand brand;
+        @SerializedName("brand") public Brand brand;
     }
 }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 
@@ -29,21 +28,17 @@ public class ToastUtils {
     public static Toast gToast;
 
     public static void show(@DrawableRes int img, String content) {
-        if (App.AppContex == null)
-            return;
-        if (gToast != null)
-            gToast.cancel();
+        if (App.AppContex == null) return;
+        if (gToast != null) gToast.cancel();
         gToast = Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT);
         gToast.setGravity(Gravity.CENTER, 0, -100);
-        View view = LayoutInflater.from(App.AppContex)
-                .inflate(R.layout.toastview, null, false);
+        View view = LayoutInflater.from(App.AppContex).inflate(R.layout.toastview, null, false);
         TextView tv = (TextView) view.findViewById(R.id.toast_tv);
         ImageView imageView = (ImageView) view.findViewById(R.id.toast_img);
         gToast.setView(view);
         tv.setText(content);
         imageView.setImageResource(img);
         gToast.show();
-
     }
 
     public static void show(String content) {
@@ -53,5 +48,4 @@ public class ToastUtils {
     public static void showDefaultStyle(String content) {
         Toast.makeText(App.AppContex, content, Toast.LENGTH_SHORT).show();
     }
-
 }

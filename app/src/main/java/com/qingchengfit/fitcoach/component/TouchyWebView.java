@@ -40,8 +40,7 @@ public class TouchyWebView extends WebView {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    @Override public boolean onTouchEvent(MotionEvent event) {
 
         //Check is required to prevent crash
         if (MotionEventCompat.findPointerIndex(event, 0) == -1) {
@@ -57,9 +56,9 @@ public class TouchyWebView extends WebView {
         return super.onTouchEvent(event);
     }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event){
-//        requestDisallowInterceptTouchEvent(true);
-//        return super.onTouchEvent(event);
-//    }
+    //    @Override
+    //    public boolean onTouchEvent(MotionEvent event){
+    //        requestDisallowInterceptTouchEvent(true);
+    //        return super.onTouchEvent(event);
+    //    }
 }

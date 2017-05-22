@@ -23,10 +23,9 @@ public class AddBatchCourse {
     public String to_date;
     public List<WeekTime> time_repeats;
 
-    public static class WeekTime{
+    public static class WeekTime {
         public int weekday;
         public String start;
         public String end;
-
     }
 }

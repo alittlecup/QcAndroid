@@ -15,12 +15,10 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * Created by Paper on 15/12/26 2015.
  */
-public class OneExperienceResponse extends QcResponse{
-    @SerializedName("data")
-    public ExpData data;
+public class OneExperienceResponse extends QcResponse {
+    @SerializedName("data") public ExpData data;
 
-    public static class ExpData{
-        @SerializedName("experience")
-        public QcExperienceResponse.DataEntity.ExperiencesEntity experience;
+    public static class ExpData {
+        @SerializedName("experience") public QcExperienceResponse.DataEntity.ExperiencesEntity experience;
     }
 }

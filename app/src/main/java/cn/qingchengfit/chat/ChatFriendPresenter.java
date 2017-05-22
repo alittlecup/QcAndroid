@@ -20,38 +20,37 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class ChatFriendPresenter extends BasePresenter {
-    private MVPView view;
-
     @Inject RestRepository restRepository;
+    private MVPView view;
 
     @Inject public ChatFriendPresenter() {
     }
 
-    public void queryChatFriend(){
+    public void queryChatFriend() {
         RxRegiste(restRepository.getGet_api().qcQueryChatFriends()
             .subscribeOn(Schedulers.computation())
             .flatMap(new Func1<QcResponseData<ChatFriendsData>, Observable<Pair<List<ChatGym>, List<Staff>>>>() {
-                @Override public Observable<Pair<List<ChatGym>,List<Staff>>> call(QcResponseData<ChatFriendsData> chatFriendsDataQcResponseData) {
+                @Override
+                public Observable<Pair<List<ChatGym>, List<Staff>>> call(QcResponseData<ChatFriendsData> chatFriendsDataQcResponseData) {
                     List<ChatGym> chatGyms = chatFriendsDataQcResponseData.getData().gyms;
                     List<Staff> staffs = new ArrayList<Staff>();
-                    if (chatGyms != null){
+                    if (chatGyms != null) {
                         for (int i = 0; i < chatGyms.size(); i++) {
                             ChatGym g = chatGyms.get(i);
-                            if (g.staffs != null){
+                            if (g.staffs != null) {
                                 for (int j = 0; j < g.staffs.size(); j++) {
-                                    if (!staffs.contains(g.staffs.get(j)))
-                                        staffs.add(g.staffs.get(j));
+                                    if (!staffs.contains(g.staffs.get(j))) staffs.add(g.staffs.get(j));
                                 }
                             }
-                            if (g.coaches != null){
+                            if (g.coaches != null) {
                                 for (int j = 0; j < g.coaches.size(); j++) {
-                                    if (!staffs.contains(g.coaches.get(j)))
-                                        staffs.add(g.coaches.get(j));
+                                    if (!staffs.contains(g.coaches.get(j))) staffs.add(g.coaches.get(j));
                                 }
                             }
                         }
                     }
-                    return Observable.just(new Pair<List<ChatGym>, List<Staff>>(chatGyms,staffs)).observeOn(AndroidSchedulers.mainThread());
+                    return Observable.just(new Pair<List<ChatGym>, List<Staff>>(chatGyms, staffs))
+                        .observeOn(AndroidSchedulers.mainThread());
                 }
             })
             .subscribe(new Action1<Pair<List<ChatGym>, List<Staff>>>() {
@@ -59,8 +58,7 @@ public class ChatFriendPresenter extends BasePresenter {
                     view.onGymList(listListPair.first);
                     view.onUserList(listListPair.second);
                 }
-            }, new NetWorkThrowable())
-        );
+            }, new NetWorkThrowable()));
     }
 
     @Override public void attachView(PView v) {
@@ -74,7 +72,7 @@ public class ChatFriendPresenter extends BasePresenter {
 
     public interface MVPView extends CView {
         void onUserList(List<Staff> staffs);
-        void onGymList(List<ChatGym> gyms);
 
+        void onGymList(List<ChatGym> gyms);
     }
 }

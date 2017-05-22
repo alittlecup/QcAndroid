@@ -44,11 +44,14 @@ public class LoginStatus {
         setUserId(builder.userId);
     }
 
-    public boolean isLogined(){
-        if (TextUtils.isEmpty(session) || loginUser == null){
+    public boolean isLogined() {
+        if (TextUtils.isEmpty(session) || loginUser == null) {
             return false;
-        }else return true;
+        } else {
+            return true;
+        }
     }
+
     public Staff getLoginUser() {
         return loginUser;
     }
@@ -61,7 +64,11 @@ public class LoginStatus {
         return session;
     }
 
-    public String getUserId(){
+    public void setSession(String session) {
+        this.session = session;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
@@ -69,7 +76,7 @@ public class LoginStatus {
         this.userId = userId;
     }
 
-    public void logout(Context context){
+    public void logout(Context context) {
         App.coachid = 0;
         session = "";
         loginUser = null;
@@ -82,20 +89,20 @@ public class LoginStatus {
         RxBus.getBus().post(new EventLoginChange());
     }
 
-    public String staff_id(){
-        if (loginUser!= null)
+    public String staff_id() {
+        if (loginUser != null) {
             return loginUser.getId();
-        else return "";
-    }
-
-    public void setSession(String session) {
-        this.session = session;
+        } else {
+            return "";
+        }
     }
 
     public String staff_name() {
-        if (loginUser!= null)
+        if (loginUser != null) {
             return loginUser.getUsername();
-        else return "";
+        } else {
+            return "";
+        }
     }
 
     public static final class Builder {

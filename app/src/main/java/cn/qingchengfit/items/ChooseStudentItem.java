@@ -23,18 +23,21 @@ import eu.davidea.flexibleadapter.utils.Utils;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
-public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.ChooseStudentVH> implements IFilterable,ISectionable<ChooseStudentItem.ChooseStudentVH,AlphabetHeaderItem> {
-    private QcStudentBean user ;
+public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.ChooseStudentVH>
+    implements IFilterable, ISectionable<ChooseStudentItem.ChooseStudentVH, AlphabetHeaderItem> {
+    private QcStudentBean user;
 
     private AlphabetHeaderItem headerItem;
 
-    public ChooseStudentItem(QcStudentBean user ,AlphabetHeaderItem item) {
+    public ChooseStudentItem(QcStudentBean user, AlphabetHeaderItem item) {
         this.user = user;
         this.headerItem = item;
     }
-    public String getId(){
+
+    public String getId() {
         return user.getId();
     }
+
     public QcStudentBean getUser() {
         return user;
     }
@@ -51,38 +54,40 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
         return new ChooseStudentVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-
-
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {
-        holder.itemPersonGender.setImageResource(user.getGender()==0?R.drawable.ic_gender_signal_male:R.drawable.ic_gender_signal_female);
+        holder.itemPersonGender.setImageResource(
+            user.getGender() == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
         if (adapter.hasSearchText()) {
-            Utils.highlightText(holder.itemView.getContext(),holder.itemPersonName,user.getUsername(),adapter.getSearchText(),
-                ContextCompat.getColor(holder.itemView.getContext(),R.color.red));
-    Utils.highlightText(holder.itemView.getContext(),holder.itemPersonPhonenum,user.getPhone(),adapter.getSearchText(),
-                ContextCompat.getColor(holder.itemView.getContext(),R.color.red));
-
-        }else {
+            Utils.highlightText(holder.itemView.getContext(), holder.itemPersonName, user.getUsername(), adapter.getSearchText(),
+                ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
+            Utils.highlightText(holder.itemView.getContext(), holder.itemPersonPhonenum, user.getPhone(), adapter.getSearchText(),
+                ContextCompat.getColor(holder.itemView.getContext(), R.color.red));
+        } else {
             holder.itemPersonName.setText(user.getUsername());
             holder.itemPersonPhonenum.setText(user.getPhone());
         }
-        holder.itemPersonDesc.setText(holder.itemView.getContext().getString(R.string.sales_sb,user.getSellersStr()));
+        holder.itemPersonDesc.setText(holder.itemView.getContext().getString(R.string.sales_sb, user.getSellersStr()));
         BusinessUtils.studentStatus(holder.status, user.status);
         holder.cb.setChecked(adapter.isSelected(position));
-        Glide.with(holder.itemView.getContext()).load(user.getAvatar()).asBitmap().placeholder(user.gender().equals("0")?R.drawable.default_manage_male:R.drawable.default_manager_female).into(new CircleImgWrapper(holder.itemPersonHeader,holder.itemView.getContext()));
+        Glide.with(holder.itemView.getContext())
+            .load(user.getAvatar())
+            .asBitmap()
+            .placeholder(user.gender().equals("0") ? R.drawable.default_manage_male : R.drawable.default_manager_female)
+            .into(new CircleImgWrapper(holder.itemPersonHeader, holder.itemView.getContext()));
     }
 
     @Override public boolean equals(Object o) {
         if (o == null) return false;
-        if (o instanceof ChooseStudentItem){
+        if (o instanceof ChooseStudentItem) {
             return ((ChooseStudentItem) o).getId().equals(this.getId());
-        }else if (o instanceof QcStudentBean){
+        } else if (o instanceof QcStudentBean) {
             return ((QcStudentBean) o).getId().equals(this.getId());
-        }return false;
+        }
+        return false;
     }
 
     @Override public boolean filter(String constraint) {
-        if (constraint == null || constraint.equals(""))
-            return true;
+        if (constraint == null || constraint.equals("")) return true;
         return user.username().contains(constraint) || user.getPhone().contains(constraint);
     }
 
@@ -93,8 +98,6 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
     @Override public void setHeader(AlphabetHeaderItem header) {
         this.headerItem = header;
     }
-
-
 
     public class ChooseStudentVH extends FlexibleViewHolder {
         @BindView(R.id.cb) CheckBox cb;
@@ -110,6 +113,5 @@ public class ChooseStudentItem extends AbstractFlexibleItem<ChooseStudentItem.Ch
             super(view, adapter);
             ButterKnife.bind(this, view);
         }
-
     }
 }

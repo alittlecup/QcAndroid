@@ -1,69 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_grey"
-              android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
     >
 
-    <include layout="@layout/common_toolbar"/>
+  <include layout="@layout/common_toolbar"/>
 
-    <ScrollView
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="@string/add_plan_name"
+          />
 
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                app:civ_lable="@string/add_plan_name"
-                />
+      <include layout="@layout/divider_grey"/>
 
-            <include layout="@layout/divider_grey"/>
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:civ_clickable="true"
+          app:civ_lable="@string/add_plan_type"
+          />
 
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:civ_clickable="true"
-                app:civ_lable="@string/add_plan_type"
-                />
+      <include layout="@layout/divider_grey"/>
 
-            <include layout="@layout/divider_grey"/>
+      <com.qingchengfit.fitcoach.component.CommonInputView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:civ_clickable="true"
+          app:civ_lable="@string/add_plan_action"
+          />
 
-            <com.qingchengfit.fitcoach.component.CommonInputView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:civ_clickable="true"
-                app:civ_lable="@string/add_plan_action"
-                />
+      <include layout="@layout/divider_grey"/>
 
-            <include layout="@layout/divider_grey"/>
+      <com.qingchengfit.fitcoach.component.RecyclerViewInScroll
+          android:id="@+id/courseplan_actions"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
 
-            <com.qingchengfit.fitcoach.component.RecyclerViewInScroll
-                android:id="@+id/courseplan_actions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:layout_marginTop="20dp"
+          android:text="@string/login_comfirm"
+          />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qc_item_height"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="20dp"
-                android:text="@string/login_comfirm"
-                />
-
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+  </ScrollView>
 
 
 </LinearLayout>

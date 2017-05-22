@@ -37,23 +37,21 @@ import rx.schedulers.Schedulers;
 public class QcDbHelper extends SQLiteOpenHelper {
     private BriteDatabase briteDatabase;
 
-    public BriteDatabase getBriteDatabase() {
-        return briteDatabase;
-    }
-
-    @Inject
-    public QcDbHelper(App context,LoginStatus loginStatus) {
-        super(context, loginStatus.getUserId()+"trainer.db", null, 1);
+    @Inject public QcDbHelper(App context, LoginStatus loginStatus) {
+        super(context, loginStatus.getUserId() + "trainer.db", null, 1);
 
         SqlBrite sqlBrite;
         sqlBrite = SqlBrite.create(new SqlBrite.Logger() {
-            @Override
-            public void log(String message) {
-                LogUtil.d("db"+message);
+            @Override public void log(String message) {
+                LogUtil.d("db" + message);
             }
         });
         briteDatabase = sqlBrite.wrapDatabaseHelper(this, Schedulers.io());
         briteDatabase.setLoggingEnabled(BuildConfig.DEBUG);
+    }
+
+    public BriteDatabase getBriteDatabase() {
+        return briteDatabase;
     }
 
     @Override public void onCreate(SQLiteDatabase db) {
@@ -64,5 +62,4 @@ public class QcDbHelper extends SQLiteOpenHelper {
     @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
 }

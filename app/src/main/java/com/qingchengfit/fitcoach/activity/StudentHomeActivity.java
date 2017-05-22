@@ -96,7 +96,6 @@ public class StudentHomeActivity extends BaseAcitivity {
     private Observable<Object> mObserveRefresh;
     private int mGender = 0;
 
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_home);
@@ -148,7 +147,7 @@ public class StudentHomeActivity extends BaseAcitivity {
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         //if (mModel.equalsIgnoreCase("service") && mModelType == 1) {
-            getMenuInflater().inflate(R.menu.menu_delete, menu);
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
         //}
 
         return super.onCreateOptionsMenu(menu);
@@ -171,7 +170,7 @@ public class StudentHomeActivity extends BaseAcitivity {
             .callback(new MaterialDialog.ButtonCallback() {
                 @Override public void onPositive(MaterialDialog dialog) {
                     super.onPositive(dialog);
-                    QcCloudClient.getApi().postApi.qcDelStudent(App.coachid+"",mStudentShipId, getParams())
+                    QcCloudClient.getApi().postApi.qcDelStudent(App.coachid + "", mStudentShipId, getParams())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(new Subscriber<QcResponse>() {
@@ -200,7 +199,7 @@ public class StudentHomeActivity extends BaseAcitivity {
     }
 
     public void initBaseInfo() {
-        QcCloudClient.getApi().getApi.qcGetStudentInfo(App.coachid+"",mStudentShipId, getParams())
+        QcCloudClient.getApi().getApi.qcGetStudentInfo(App.coachid + "", mStudentShipId, getParams())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(new Subscriber<StudentInfoResponse>() {
@@ -227,8 +226,7 @@ public class StudentHomeActivity extends BaseAcitivity {
                         Glide.with(App.AppContex).load(R.drawable.ic_gender_signal_female).into(mGenderImageView);
                     }
                     List<BaseInfoBean> beans = new ArrayList<BaseInfoBean>();
-                    BaseInfoBean phone = new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机",
-                         user.phone );
+                    BaseInfoBean phone = new BaseInfoBean(R.drawable.ic_baseinfo_phone, "手机", user.phone);
                     String birthDay;
                     if (TextUtils.isEmpty(user.date_of_birth)) {
                         birthDay = "暂无";
@@ -435,14 +433,14 @@ public class StudentHomeActivity extends BaseAcitivity {
         //LogUtil.e("privateurl:" + privateUrl);
         //if (!TextUtils.isEmpty(privateUrl)) {
 
-            goWeb(Configs.Server +Configs.SCHEDULE_PRIVATE +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId);
+        goWeb(Configs.Server + Configs.SCHEDULE_PRIVATE + "?id=" + mModelId + "&model=" + mModel + "&student_id=" + mStudentId);
         //}
     }
 
     public void goGroup() {
         //LogUtil.e("gourpUrl:" + gourpUrl);
         //if (!TextUtils.isEmpty(gourpUrl)) {
-            goWeb(Configs.Server+ Configs.SCHEDULE_GROUP +"?id="+mModelId+"&model="+mModel+"&student_id="+mStudentId );
+        goWeb(Configs.Server + Configs.SCHEDULE_GROUP + "?id=" + mModelId + "&model=" + mModel + "&student_id=" + mStudentId);
         //}
     }
 

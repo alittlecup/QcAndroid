@@ -38,13 +38,12 @@ import eu.davidea.flexibleadapter.utils.Utils;
  */
 
 public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecoration {
+    private static final int[] ATTRS = new int[] {
+        android.R.attr.listDivider
+    };
     private Drawable mDivider;
     private int mSectionOffset;
     private boolean mDrawOver = false, withOffset = false;
-
-    private static final int[] ATTRS = new int[]{
-        android.R.attr.listDivider
-    };
 
     /**
      * Default Android divider will be used.
@@ -73,8 +72,7 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
      *
      * @since 5.0.0-b6
      */
-    public DividerItemDecorationChatChooseInGym(@NonNull Context context, @DrawableRes int resId,
-        @IntRange(from = 0) int sectionOffset) {
+    public DividerItemDecorationChatChooseInGym(@NonNull Context context, @DrawableRes int resId, @IntRange(from = 0) int sectionOffset) {
         if (resId > 0) mDivider = ContextCompat.getDrawable(context, resId);
         mSectionOffset = (int) (context.getResources().getDisplayMetrics().density * sectionOffset);
     }
@@ -103,15 +101,13 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
         return withDrawOver(drawOver);
     }
 
-    @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mDivider != null && !mDrawOver) {
             draw(c, parent);
         }
     }
 
-    @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    @Override public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mDivider != null && mDrawOver) {
             draw(c, parent);
         }
@@ -127,8 +123,7 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
-            int top = child.getBottom() + params.bottomMargin +
-                Math.round(ViewCompat.getTranslationY(child));
+            int top = child.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
             int bottom = top + mDivider.getIntrinsicHeight() + 1;
 
             mDivider.setBounds(left, top, right, bottom);
@@ -141,8 +136,7 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
      * @since 5.0.0-b6
      * @deprecated Use Constructor instead.
      */
-    @Deprecated
-    public void setSectionGapWidth(@IntRange(from = 0) int gap) {
+    @Deprecated public void setSectionGapWidth(@IntRange(from = 0) int gap) {
         if (gap < 0) {
             throw new IllegalArgumentException("Invalid section gap width [<0]: " + gap);
         }
@@ -153,7 +147,7 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
      * Applies the physical offset between items, of the same size of the divider previously set.
      *
      * @param withOffset true to leave space between items, false divider will be drawn overlapping
-     *                   the items
+     * the items
      * @return this DividerItemDecoration instance so the call can be chained
      * @since 5.0.0-b8
      */
@@ -165,18 +159,16 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
     /**
      * @since 5.0.0-b4
      */
-    @SuppressWarnings({"ConstantConditions", "unchecked", "SuspiciousNameCombination"})
-    @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView recyclerView, RecyclerView.State state) {
+    @SuppressWarnings({ "ConstantConditions", "unchecked", "SuspiciousNameCombination" }) @Override public void getItemOffsets(Rect outRect,
+        View view, RecyclerView recyclerView, RecyclerView.State state) {
         int offset = (mDivider != null && withOffset ? mDivider.getIntrinsicHeight() : 0);
         if (mSectionOffset > 0 && recyclerView.getAdapter() instanceof FlexibleAdapter) {
             FlexibleAdapter flexibleAdapter = (FlexibleAdapter) recyclerView.getAdapter();
             int position = recyclerView.getChildAdapterPosition(view);
 
             //Only ISectionable items can finish with a gap and only if next item is a IHeader item
-            if (flexibleAdapter.getItem(position) instanceof ISectionable &&
-                (flexibleAdapter.isHeader(flexibleAdapter.getItem(position + 1)) ||
-                    position >= recyclerView.getAdapter().getItemCount() - 1)) {
+            if (flexibleAdapter.getItem(position) instanceof ISectionable && (flexibleAdapter.isHeader(
+                flexibleAdapter.getItem(position + 1)) || position >= recyclerView.getAdapter().getItemCount() - 1)) {
 
                 offset += mSectionOffset;
             }
@@ -187,5 +179,4 @@ public class DividerItemDecorationChatChooseInGym extends RecyclerView.ItemDecor
             outRect.set(0, 0, offset, 0);
         }
     }
-
 }

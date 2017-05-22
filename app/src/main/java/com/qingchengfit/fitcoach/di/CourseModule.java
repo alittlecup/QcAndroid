@@ -1,9 +1,8 @@
 package com.qingchengfit.fitcoach.di;
 
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -27,8 +26,7 @@ import dagger.Provides;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/11/17.
  */
-@Module
-public class CourseModule {
+@Module public class CourseModule {
 
     CoachService coachService;
     Brand brand;
@@ -40,18 +38,15 @@ public class CourseModule {
         restRepository = builder.restRepository;
     }
 
-    @Provides
-    CoachService provideService(){
+    @Provides CoachService provideService() {
         return this.coachService;
     }
 
-    @Provides
-    public Brand getBrand() {
+    @Provides public Brand getBrand() {
         return brand;
     }
 
-    @Provides
-    public RestRepository getRestRepository() {
+    @Provides public RestRepository getRestRepository() {
         return restRepository;
     }
 

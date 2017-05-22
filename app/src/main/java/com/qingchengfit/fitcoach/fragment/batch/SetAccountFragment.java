@@ -18,9 +18,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qingchengfit.widgets.DialogList;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.widgets.DialogList;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.FragActivity;
@@ -31,7 +32,6 @@ import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.QcResponseCardTpls;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.items.AccountExpendItemItem;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -109,7 +109,7 @@ public class SetAccountFragment extends BaseFragment {
             count.setContent(getArguments().getInt("o", 8) + "");
             swNeedPay.setChecked(!getArguments().getBoolean("isfree", true));
             layoutPayDetail.setVisibility(swNeedPay.isChecked() ? View.VISIBLE : View.GONE);
-            noAccountHint.setVisibility(swNeedPay.isChecked() ?  View.GONE:View.VISIBLE );
+            noAccountHint.setVisibility(swNeedPay.isChecked() ? View.GONE : View.VISIBLE);
         }
 
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));

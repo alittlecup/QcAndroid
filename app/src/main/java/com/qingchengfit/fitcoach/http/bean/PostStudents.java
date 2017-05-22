@@ -18,7 +18,6 @@ import java.util.List;
 public class PostStudents {
     public List<AddStudentBean> users;
 
-
     public PostStudents(List<AddStudentBean> users) {
         this.users = users;
     }

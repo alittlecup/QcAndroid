@@ -32,16 +32,14 @@ public class RecyclerViewInScroll extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent e) {
-//        if (!ViewCompat.canScrollVertically(this, -1)) {
-//            return false;
-//        } else return true;
+    @Override public boolean onInterceptTouchEvent(MotionEvent e) {
+        //        if (!ViewCompat.canScrollVertically(this, -1)) {
+        //            return false;
+        //        } else return true;
         return super.onInterceptTouchEvent(e);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    @Override public boolean onTouchEvent(MotionEvent ev) {
         final int action = MotionEventCompat.getActionMasked(ev);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -56,6 +54,5 @@ public class RecyclerViewInScroll extends RecyclerView {
                 break;
         }
         return super.onTouchEvent(ev);
-
     }
 }

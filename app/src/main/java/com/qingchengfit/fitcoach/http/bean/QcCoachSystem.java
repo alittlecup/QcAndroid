@@ -16,17 +16,10 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/10/13 2015.
  */
 public class QcCoachSystem {
-    @SerializedName("name")
-    public String name;
-    @SerializedName("url")
-    public String url;
-    @SerializedName("color")
-    public String color;
-    @SerializedName("cname")
-    public String cname;
-    @SerializedName("id")
-    public int id;
-    @SerializedName("is_personal_system")
-    public boolean is_personal_system;
-
+    @SerializedName("name") public String name;
+    @SerializedName("url") public String url;
+    @SerializedName("color") public String color;
+    @SerializedName("cname") public String cname;
+    @SerializedName("id") public int id;
+    @SerializedName("is_personal_system") public boolean is_personal_system;
 }

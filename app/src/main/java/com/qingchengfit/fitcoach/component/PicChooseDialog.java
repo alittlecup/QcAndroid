@@ -9,13 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-
+import cn.qingchengfit.utils.ChoosePicUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-
 import java.io.File;
-
-import cn.qingchengfit.utils.ChoosePicUtils;
 
 /**
  * power by
@@ -38,7 +35,8 @@ public class PicChooseDialog extends Dialog {
         super(context, R.style.ChoosePicDialogStyle);
         view = getLayoutInflater().inflate(R.layout.dialog_pic_choose, null);
         this.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        view.findViewById(R.id.choosepic_camera).setOnClickListener(view1 -> ChoosePicUtils.choosePicFromCamera(context, Uri.fromFile(new File(Configs.CameraPic))));
+        view.findViewById(R.id.choosepic_camera)
+            .setOnClickListener(view1 -> ChoosePicUtils.choosePicFromCamera(context, Uri.fromFile(new File(Configs.CameraPic))));
         view.findViewById(R.id.choosepic_galley).setOnClickListener(view1 -> ChoosePicUtils.choosePicFromGalley(context));
     }
 
@@ -47,9 +45,7 @@ public class PicChooseDialog extends Dialog {
         this.setContentView(layout);
     }
 
-
-    @Override
-    public void show() {
+    @Override public void show() {
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         window.getDecorView().setPadding(0, 0, 0, 0);

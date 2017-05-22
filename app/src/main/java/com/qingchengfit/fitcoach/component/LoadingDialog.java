@@ -9,10 +9,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.LoadingPointerView;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.widgets.LoadingPointerView;
 import com.qingchengfit.fitcoach.R;
-
 
 /**
  * power by
@@ -39,20 +38,17 @@ public class LoadingDialog extends Dialog {
         this.setCanceledOnTouchOutside(false);
         this.setCancelable(true);
         this.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                if (context instanceof android.app.Activity){
+            @Override public void onCancel(DialogInterface dialog) {
+                if (context instanceof android.app.Activity) {
                     ((Activity) context).onBackPressed();
                 }
             }
         });
         pointer = ButterKnife.findById(this, R.id.pointer);
         rotate = AnimationUtils.loadAnimation(context, R.anim.loading_rotate);
-
     }
 
-    @Override
-    public void show() {
+    @Override public void show() {
         Window window = this.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams lp = window.getAttributes();
@@ -63,8 +59,7 @@ public class LoadingDialog extends Dialog {
         super.show();
     }
 
-    @Override
-    public void dismiss() {
+    @Override public void dismiss() {
         rotate.cancel();
         super.dismiss();
     }

@@ -16,12 +16,9 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/8/17 2015.
  */
 public class DrawerModule {
-    @SerializedName("url")
-    public String url;
+    @SerializedName("url") public String url;
 
-    @SerializedName("text")
-    public String text;
+    @SerializedName("text") public String text;
 
-    @SerializedName("title")
-    public String title;
+    @SerializedName("title") public String title;
 }

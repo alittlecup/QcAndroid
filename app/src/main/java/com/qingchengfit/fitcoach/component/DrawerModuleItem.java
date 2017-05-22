@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
 
 /**
@@ -37,8 +36,7 @@ public class DrawerModuleItem extends FrameLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected void onFinishInflate() {
+    @Override protected void onFinishInflate() {
         super.onFinishInflate();
         title = (TextView) findViewById(R.id.drawer_module_title);
         count = (TextView) findViewById(R.id.drawer_module_count);
@@ -51,6 +49,4 @@ public class DrawerModuleItem extends FrameLayout {
     public void setCount(String c) {
         count.setText(c);
     }
-
-
 }

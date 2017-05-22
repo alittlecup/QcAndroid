@@ -3,12 +3,10 @@ package com.qingchengfit.fitcoach.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.BaseInfoBean;
-
 import java.util.List;
 
 /**
@@ -32,14 +30,13 @@ public class BaseInfoAdapter extends RecyclerView.Adapter<BaseInfoViewHolder> {
         this.datas = datas;
     }
 
-    @Override
-    public BaseInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseInfoViewHolder holder = new BaseInfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_baseinfo, parent, false));
+    @Override public BaseInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseInfoViewHolder holder =
+            new BaseInfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_baseinfo, parent, false));
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(BaseInfoViewHolder holder, int position) {
+    @Override public void onBindViewHolder(BaseInfoViewHolder holder, int position) {
         if (datas != null && datas.size() > position) {
             BaseInfoBean baseInfoBean = datas.get(position);
             holder.title.setText(baseInfoBean.label);
@@ -48,8 +45,7 @@ public class BaseInfoAdapter extends RecyclerView.Adapter<BaseInfoViewHolder> {
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return datas.size();
     }
 }

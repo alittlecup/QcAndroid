@@ -18,36 +18,24 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/2/23 2016.
  */
 public class Rule implements Parcelable {
-    @SerializedName("from_number")
-    public int from_number;
-    @SerializedName("to_number")
-    public int to_number;
-    @SerializedName("cost")
-    public String cost;
+    public static final Creator<Rule> CREATOR = new Creator<Rule>() {
+        @Override public Rule createFromParcel(Parcel source) {
+            return new Rule(source);
+        }
+
+        @Override public Rule[] newArray(int size) {
+            return new Rule[size];
+        }
+    };
+    @SerializedName("from_number") public int from_number;
+    @SerializedName("to_number") public int to_number;
+    @SerializedName("cost") public String cost;
     public String card_tpl_name;
-    @SerializedName("card_tpl_id")
-    public String card_tpl_id;
+    @SerializedName("card_tpl_id") public String card_tpl_id;
     public String channel;
     public OnlineLimit limits;
 
-
     public Rule() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.from_number);
-        dest.writeInt(this.to_number);
-        dest.writeString(this.cost);
-        dest.writeString(this.card_tpl_name);
-        dest.writeString(this.card_tpl_id);
-        dest.writeString(this.channel);
-        dest.writeParcelable(this.limits, flags);
     }
 
     protected Rule(Parcel in) {
@@ -60,15 +48,17 @@ public class Rule implements Parcelable {
         this.limits = in.readParcelable(OnlineLimit.class.getClassLoader());
     }
 
-    public static final Creator<Rule> CREATOR = new Creator<Rule>() {
-        @Override
-        public Rule createFromParcel(Parcel source) {
-            return new Rule(source);
-        }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-        @Override
-        public Rule[] newArray(int size) {
-            return new Rule[size];
-        }
-    };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.from_number);
+        dest.writeInt(this.to_number);
+        dest.writeString(this.cost);
+        dest.writeString(this.card_tpl_name);
+        dest.writeString(this.card_tpl_id);
+        dest.writeString(this.channel);
+        dest.writeParcelable(this.limits, flags);
+    }
 }

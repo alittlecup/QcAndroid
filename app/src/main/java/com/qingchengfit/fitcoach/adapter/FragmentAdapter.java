@@ -26,43 +26,36 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     List<Fragment> fragments;
     FragmentManager fm;
 
-
     public FragmentAdapter(FragmentManager fm, ArrayList<Fragment> fs) {
         super(fm);
         this.fragments = fs;
         this.fm = fm;
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        Fragment fragment = (Fragment) super.instantiateItem(container,
-                position);
+    @Override public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
         return fragment;
     }
 
-
-    @Override
-    public Fragment getItem(int position) {
+    @Override public Fragment getItem(int position) {
         return fragments.get(position);
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return fragments.size();
     }
 
-    @Override
-    public int getItemPosition(Object object) {
+    @Override public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
         Fragment f = fragments.get(position);
         if (f instanceof VpFragment) {
             return ((VpFragment) f).getTitle();
-        } else return "";
-
+        } else {
+            return "";
+        }
     }
 }
 

@@ -93,10 +93,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     public static final int FINISH = 2;
     public static final int NOTIFICATION = 1;
     public static final int INIT = 3;
-
+    public int ordersCount;
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.tabview) TabView tabview;
-
     /**
      * 退出弹窗提示
      */
@@ -104,17 +103,23 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     @BindView(R.id.order_studnet) View orderStudnet;
     @BindView(R.id.web_position) View webPosition;
     @BindView(R.id.tv_noti_count) TextView tvNotiCount;
-
     @Inject LoginStatus loginStatus;
     @Inject RepoCoachServiceImpl repoCoachService;
+    AsyncDownloader mDownloadThread;
     private Gson gson;
     private Date mChooseDate;
-
     private GuideWindow gw;
-
     private Subscription spOrders;
-    public int ordersCount;
     private Observable<EventInit> obPopWinEvent;
+    private Snackbar NonetworkSnack;
+    private Observable mMainObservabel;
+    private Observable mNetworkObservabel;
+    private MaterialDialog updateDialog;
+    private MaterialDialog downloadDialog;
+    private String url;
+    private File newAkp;
+    private int mGwShowNum = 0;
+    private boolean isShowFindRed = true;
 
     public Date getChooseDate() {
         return mChooseDate;
@@ -124,22 +129,10 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         mChooseDate = chooseDate;
     }
 
-    private Snackbar NonetworkSnack;
-    private Observable mMainObservabel;
-    private Observable mNetworkObservabel;
-    private MaterialDialog updateDialog;
-    private MaterialDialog downloadDialog;
-    private String url;
-    private File newAkp;
-    AsyncDownloader mDownloadThread;
-    private int mGwShowNum = 0;
-    private boolean isShowFindRed = true;
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
-
 
         RxPermissions.getInstance(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
             @Override public void call(Boolean aBoolean) {
@@ -173,8 +166,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 }
             })
             .build();
-       changeLogin();
-
+        changeLogin();
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -220,7 +212,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                     PreferenceUtils.setPrefBoolean(Main2Activity.this, "guide_3", true);
                 }
 
-                if (position ==  2) {
+                if (position == 2) {
                     tabview.setPointStatu(2, false);
                     isShowFindRed = false;
                 }
@@ -233,8 +225,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         viewpager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
                 CompatUtils.removeGlobalLayout(viewpager.getViewTreeObserver(), this);
-
-
             }
         });
 
@@ -251,7 +241,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         }
     }
 
-    public void changeLogin(){
+    public void changeLogin() {
 
     }
 
@@ -272,56 +262,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             return viewpager.getCurrentItem();
         } else {
             return -1;
-        }
-    }
-
-    public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
-        private int[] mIconSelect = {
-            R.drawable.ic_tabbar_schedule_active, R.drawable.ic_tabbar_manage_active, R.drawable.ic_tabbar_discover_active,
-            R.drawable.vd_tab_noti_activte, R.drawable.ic_tabbar_account_active
-        };
-        private int[] mIconNormal = {
-            R.drawable.ic_tabbar_schedule_normal, R.drawable.ic_tabbar_manage_normal, R.drawable.ic_tabbar_discover_normal,
-            R.drawable.vd_tab_noti_nomal, R.drawable.ic_tabbar_account_normal
-        };
-        private Context context;
-
-        MainPagerAdapter(FragmentManager fm, Context context) {
-            super(fm);
-            this.context = context;
-        }
-
-        @Override public Fragment getItem(int position) {
-            if (position == 0) {
-                 return new UnLoginHomeFragment();
-            } else if (position == 1) {
-                return new UnloginManageFragment();
-            } else if (position == 2) {
-                return MainWebFragment.newInstance(Configs.Server + "mobile/coach/discover/");
-            } else if (position == 3) {
-                return new MainMsgFragment();
-            } else {
-                return new MineFragmentFragment();
-            }
-        }
-
-        @Override public CharSequence getPageTitle(int position) {
-            return "";
-        }
-
-        @Override public int getCount() {
-            return 5;
-        }
-
-        @Override public int[] onIconSelect(int position) {
-            int icon[] = new int[2];
-            icon[0] = mIconSelect[position];
-            icon[1] = mIconNormal[position];
-            return icon;
-        }
-
-        @Override public String onTextSelect(int position) {
-            return context.getResources().getStringArray(R.array.home_tab)[position];
         }
     }
 
@@ -465,8 +405,8 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     }
 
     public void freshNotiCount(int count) {
-        tvNotiCount.setVisibility(count > 0 ? View.VISIBLE:View.GONE);
-        tvNotiCount.setText(count > 99 ?"…":Integer.toString(count));
+        tvNotiCount.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+        tvNotiCount.setText(count > 99 ? "…" : Integer.toString(count));
     }
 
     private void initUser() {
@@ -488,7 +428,6 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 e.printStackTrace();
             }
         }
-
     }
 
     /**
@@ -545,6 +484,67 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             //        }
             //    }
             //}
+        }
+    }
+
+    public void install(Context context, File file) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+        grantUriPermission(getApplicationContext().getPackageName(), uri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        i.setDataAndType(uri, "application/vnd.android.package-archive");
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        context.startActivity(i);
+    }
+
+    public class MainPagerAdapter extends FragmentPagerAdapter implements TabView.OnItemIconTextSelectListener {
+        private int[] mIconSelect = {
+            R.drawable.ic_tabbar_schedule_active, R.drawable.ic_tabbar_manage_active, R.drawable.ic_tabbar_discover_active,
+            R.drawable.vd_tab_noti_activte, R.drawable.ic_tabbar_account_active
+        };
+        private int[] mIconNormal = {
+            R.drawable.ic_tabbar_schedule_normal, R.drawable.ic_tabbar_manage_normal, R.drawable.ic_tabbar_discover_normal,
+            R.drawable.vd_tab_noti_nomal, R.drawable.ic_tabbar_account_normal
+        };
+        private Context context;
+
+        MainPagerAdapter(FragmentManager fm, Context context) {
+            super(fm);
+            this.context = context;
+        }
+
+        @Override public Fragment getItem(int position) {
+            if (position == 0) {
+                return new UnLoginHomeFragment();
+            } else if (position == 1) {
+                return new UnloginManageFragment();
+            } else if (position == 2) {
+                return MainWebFragment.newInstance(Configs.Server + "mobile/coach/discover/");
+            } else if (position == 3) {
+                return new MainMsgFragment();
+            } else {
+                return new MineFragmentFragment();
+            }
+        }
+
+        @Override public CharSequence getPageTitle(int position) {
+            return "";
+        }
+
+        @Override public int getCount() {
+            return 5;
+        }
+
+        @Override public int[] onIconSelect(int position) {
+            int icon[] = new int[2];
+            icon[0] = mIconSelect[position];
+            icon[1] = mIconNormal[position];
+            return icon;
+        }
+
+        @Override public String onTextSelect(int position) {
+            return context.getResources().getStringArray(R.array.home_tab)[position];
         }
     }
 
@@ -621,16 +621,5 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    public void install(Context context, File file) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-        grantUriPermission(getApplicationContext().getPackageName(), uri,
-            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        i.setDataAndType(uri, "application/vnd.android.package-archive");
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        context.startActivity(i);
     }
 }

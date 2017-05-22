@@ -9,10 +9,8 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.qingchengfit.fitcoach.R;
-
 import cn.qingchengfit.utils.LogUtil;
+import com.qingchengfit.fitcoach.R;
 
 /**
  * power by
@@ -28,9 +26,9 @@ import cn.qingchengfit.utils.LogUtil;
  * Created by Paper on 15/10/20 2015.
  */
 public class AlphabetView extends LinearLayout {
-    public static String[] alphabetStrings = new String[]{
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V"
-            , "W", "X", "Y", "Z", "#"
+    public static String[] alphabetStrings = new String[] {
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "#"
     };
     public static String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     public int height;
@@ -60,7 +58,7 @@ public class AlphabetView extends LinearLayout {
         this.setOrientation(VERTICAL);
         this.setBackgroundResource(R.color.white);
         requestDisallowInterceptTouchEvent(true);
-//        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)getLayoutParams();
+        //        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)getLayoutParams();
 
         for (int i = 0; i < alphabetStrings.length; i++) {
             TextView textView = new TextView(getContext());
@@ -68,39 +66,35 @@ public class AlphabetView extends LinearLayout {
             textView.setTextSize(12);
             textView.setTextColor(Color.BLACK);
             textView.setGravity(Gravity.CENTER);
-//            textView.setPadding(10, 0, 10, 0);
+            //            textView.setPadding(10, 0, 10, 0);
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(5, 0, 5, 0);
             addView(textView, layoutParams);
         }
-
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    @Override protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         height = getMeasuredHeight() - getPaddingTop();
         cellHeight = height / alphabetStrings.length;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
+    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
         return true;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    @Override public boolean onTouchEvent(MotionEvent event) {
 
         float y = event.getY() - getPaddingTop();
         switch (MotionEventCompat.getActionMasked(event)) {
             case MotionEvent.ACTION_DOWN:
-//                return true;
-//            case MotionEvent.ACTION_UP:
+                //                return true;
+                //            case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_MOVE:
                 int position = (int) y / cellHeight;
-                if (position < 0)
-                    position = 0;
+                if (position < 0) position = 0;
                 if (position < alphabetStrings.length && onAlphabetChange != null) {
                     onAlphabetChange.onChange(position, alphabetStrings[position]);
                     LogUtil.d("move:" + position + "  " + alphabetStrings[position]);
@@ -108,13 +102,10 @@ public class AlphabetView extends LinearLayout {
                 return true;
         }
 
-
         return super.onTouchEvent(event);
-
     }
 
     public interface OnAlphabetChange {
         void onChange(int position, String s);
     }
-
 }

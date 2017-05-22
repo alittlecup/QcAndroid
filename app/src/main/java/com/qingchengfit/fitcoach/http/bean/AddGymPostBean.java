@@ -16,22 +16,14 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/18 2015.
  */
 public class AddGymPostBean {
-    @SerializedName("name")
-    public String name;
-    @SerializedName("district_id")
-    public int district_id;
-    @SerializedName("contact")
-    public String contact;
-    @SerializedName("description")
-    public String description;
-    @SerializedName("id")
-    public String id;
-    @SerializedName("brand_name")
-    public String brand_name;
-    @SerializedName("photo")
-    public String photo;
-    @SerializedName("district")
-    public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
+    @SerializedName("name") public String name;
+    @SerializedName("district_id") public int district_id;
+    @SerializedName("contact") public String contact;
+    @SerializedName("description") public String description;
+    @SerializedName("id") public String id;
+    @SerializedName("brand_name") public String brand_name;
+    @SerializedName("photo") public String photo;
+    @SerializedName("district") public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
 
     public AddGymPostBean(String name, int city, String contact, String description, String brand_name) {
         this.name = name;
@@ -40,5 +32,4 @@ public class AddGymPostBean {
         this.contact = contact;
         this.description = description;
     }
-
 }

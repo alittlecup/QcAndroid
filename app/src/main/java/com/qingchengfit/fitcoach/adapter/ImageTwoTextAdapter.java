@@ -7,17 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * power by
@@ -33,12 +30,14 @@ import butterknife.ButterKnife;
  * Created by Paper on 15/12/28 2015.
  */
 
-public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapter.ImageTwoTextVH>
-        implements View.OnClickListener {
-
+public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapter.ImageTwoTextVH> implements View.OnClickListener {
 
     private List<ImageTwoTextBean> datas;
     private OnRecycleItemClickListener listener;
+
+    public ImageTwoTextAdapter(List<ImageTwoTextBean> datas) {
+        this.datas = datas;
+    }
 
     public OnRecycleItemClickListener getListener() {
         return listener;
@@ -56,25 +55,20 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
         this.datas = datas;
     }
 
-    public ImageTwoTextAdapter(List<ImageTwoTextBean> datas) {
-        this.datas = datas;
-    }
-
-    @Override
-    public ImageTwoTextVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public ImageTwoTextVH onCreateViewHolder(ViewGroup parent, int viewType) {
         ImageTwoTextVH vh = null;
-        if (viewType == 0)
+        if (viewType == 0) {
             vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
-        else if (viewType == 1)
+        } else if (viewType == 1) {
             vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add, parent, false));
-        else
+        } else {
             vh = new ImageTwoTextVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gym, parent, false));
+        }
         vh.itemView.setOnClickListener(this);
         return vh;
     }
 
-    @Override
-    public void onBindViewHolder(ImageTwoTextVH holder, int position) {
+    @Override public void onBindViewHolder(ImageTwoTextVH holder, int position) {
         holder.itemView.setTag(position);
         ImageTwoTextBean bean = datas.get(position);
         holder.itemGymName.setText(bean.text1);
@@ -83,63 +77,57 @@ public class ImageTwoTextAdapter extends RecyclerView.Adapter<ImageTwoTextAdapte
             holder.itemGymPhonenum.setVisibility(View.GONE);
             holder.qcIdentify.setVisibility(View.GONE);
             holder.itemGymHeader.setVisibility(View.GONE);
-
         } else {
-            if (TextUtils.isEmpty(bean.text2))
+            if (TextUtils.isEmpty(bean.text2)) {
                 holder.itemGymPhonenum.setVisibility(View.GONE);
-            else {
+            } else {
                 holder.itemGymPhonenum.setVisibility(View.VISIBLE);
                 holder.itemGymPhonenum.setText(bean.text2);
             }
 
             Glide.with(App.AppContex).load(bean.imgUrl).asBitmap().into(new CircleImgWrapper(holder.itemGymHeader, App.AppContex));
-            if (bean.showIcon)
+            if (bean.showIcon) {
                 holder.qcIdentify.setVisibility(View.VISIBLE);
-            else holder.qcIdentify.setVisibility(View.GONE);
+            } else {
+                holder.qcIdentify.setVisibility(View.GONE);
+            }
             if (bean.showRight) {
                 holder.itemRight.setVisibility(View.VISIBLE);
                 if (bean.rightIcon != 0) {
                     holder.itemRight.setImageResource(bean.rightIcon);
                     holder.itemGymName.setTextColor(App.AppContex.getResources().getColor(R.color.primary));
                 }
-            } else holder.itemRight.setVisibility(View.GONE);
-
+            } else {
+                holder.itemRight.setVisibility(View.GONE);
+            }
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    @Override public int getItemViewType(int position) {
         return datas.get(position).type;
     }
 
-    @Override
-    public int getItemCount() {
-        if (datas != null)
+    @Override public int getItemCount() {
+        if (datas != null) {
             return datas.size();
-        else return 0;
+        } else {
+            return 0;
+        }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
     public static class ImageTwoTextVH extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_gym_header)
-        ImageView itemGymHeader;
-        @BindView(R.id.item_gym_name)
-        TextView itemGymName;
-        @BindView(R.id.item_is_personal)
-        TextView itemIsPersonal;
-        @BindView(R.id.qc_identify)
-        ImageView qcIdentify;
-        @BindView(R.id.item_gym_phonenum)
-        TextView itemGymPhonenum;
-        @BindView(R.id.item_right)
-        ImageView itemRight;
-        @BindView(R.id.item_gym_brand)
-        TextView itemBrand;
+        @BindView(R.id.item_gym_header) ImageView itemGymHeader;
+        @BindView(R.id.item_gym_name) TextView itemGymName;
+        @BindView(R.id.item_is_personal) TextView itemIsPersonal;
+        @BindView(R.id.qc_identify) ImageView qcIdentify;
+        @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
+        @BindView(R.id.item_right) ImageView itemRight;
+        @BindView(R.id.item_gym_brand) TextView itemBrand;
+
         public ImageTwoTextVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

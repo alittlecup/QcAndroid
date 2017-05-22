@@ -1,16 +1,13 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import android.text.TextUtils;
-
 import com.qingchengfit.fitcoach.bean.BriefInfo;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 /**
  * power by
@@ -30,8 +27,6 @@ public class HTMLUtils {
     /**
      * 用pull将规定格式xml解析成list
      *
-     * @param s
-     * @return
      * @throws Exception
      */
 
@@ -59,17 +54,15 @@ public class HTMLUtils {
                         isImg = false;
                     } else if ("img".equals(parser.getName())) {
                         isImg = true;
-                        if (parser.getAttributeCount() > 0)
-                            breif.setImg(parser.getAttributeValue(0));
-
+                        if (parser.getAttributeCount() > 0) breif.setImg(parser.getAttributeValue(0));
                     }
 
                     break;
                 case XmlPullParser.TEXT:
                     if (isImg) {
-//                        String img = parser.getText();
-//                        String img_out = img.substring(6, img.length() - 2);
-//                        breif.setImg(img_out);
+                        //                        String img = parser.getText();
+                        //                        String img_out = img.substring(6, img.length() - 2);
+                        //                        breif.setImg(img_out);
                     } else {
                         String content = parser.getText();
                         breif.setText(content);
@@ -87,9 +80,6 @@ public class HTMLUtils {
 
     /**
      * 将数据转化成html字符串
-     *
-     * @param list
-     * @return
      */
 
     public static String toHTML(List<BriefInfo> list) {
@@ -107,6 +97,4 @@ public class HTMLUtils {
         }
         return sb.toString();
     }
-
-
 }

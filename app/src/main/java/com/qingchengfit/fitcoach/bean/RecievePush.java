@@ -16,6 +16,5 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 15/9/25 2015.
  */
 public class RecievePush {
-    @SerializedName("url")
-    public String url;
+    @SerializedName("url") public String url;
 }

@@ -21,11 +21,11 @@ public class WebFragment extends Fragment {
 
     public static WebFragment newInstance(String baseUrl) {
         WebFragment fragment;
-//        if (App.canXwalk) {
-//            fragment = new XWalkFragment();
-//        } else {
-            fragment = new OriginWebFragment();
-//        }
+        //        if (App.canXwalk) {
+        //            fragment = new XWalkFragment();
+        //        } else {
+        fragment = new OriginWebFragment();
+        //        }
         Bundle args = new Bundle();
         args.putString(BASE_URL, baseUrl);
         fragment.setArguments(args);
@@ -34,11 +34,11 @@ public class WebFragment extends Fragment {
 
     public static WebFragment newInstance(String baseUrl, boolean isTitle) {
         WebFragment fragment;
-//        if (App.canXwalk) {
-//            fragment = new XWalkFragment();
-//        } else {
+        //        if (App.canXwalk) {
+        //            fragment = new XWalkFragment();
+        //        } else {
         fragment = new OriginWebFragment();
-//        }
+        //        }
         Bundle args = new Bundle();
         args.putBoolean("isTitle", isTitle);
         args.putString(BASE_URL, baseUrl);
@@ -53,5 +53,4 @@ public class WebFragment extends Fragment {
     public Boolean canGoBack() {
         return false;
     }
-
 }

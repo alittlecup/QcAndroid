@@ -71,7 +71,6 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
     @BindView(R.id.search_clear) ImageView searchClear;
     @BindView(R.id.layout_alphabet) AlphabetLessView layoutAlphabet;
 
-
     @Inject ChatFriendPresenter presenter;
 
     private CommonFlexAdapter adapter;
@@ -83,10 +82,11 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chatfriend_all_choose, container, false);
         unbinder = ButterKnife.bind(this, view);
-        delegatePresenter(presenter,this);
+        delegatePresenter(presenter, this);
 
         etSearch.setHint(R.string.search_hint);
-        etSearch.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(),R.drawable.ic_search_24dp_grey),null,null,null);
+        etSearch.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_search_24dp_grey), null,
+            null, null);
         searchClear.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 etSearch.setText("");
@@ -100,25 +100,23 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
         recyclerview.setAdapter(adapter);
         presenter.queryChatFriend();
         showLoading();
-        RxTextView.textChangeEvents(etSearch)
-            .subscribe(new Action1<TextViewTextChangeEvent>() {
-                @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
-                    if (textViewTextChangeEvent.text().length() > 0){
-                        searchClear.setVisibility(View.VISIBLE);
-                        localFilter(textViewTextChangeEvent.text().toString());
-                    }else {
-                        searchClear.setVisibility(View.GONE);
+        RxTextView.textChangeEvents(etSearch).subscribe(new Action1<TextViewTextChangeEvent>() {
+            @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
+                if (textViewTextChangeEvent.text().length() > 0) {
+                    searchClear.setVisibility(View.VISIBLE);
+                    localFilter(textViewTextChangeEvent.text().toString());
+                } else {
+                    searchClear.setVisibility(View.GONE);
 
-                        presenter.queryChatFriend();
-                    }
+                    presenter.queryChatFriend();
                 }
-            });
-        RxBusAdd(EventFresh.class)
-            .subscribe(new Action1<EventFresh>() {
-                @Override public void call(EventFresh eventFresh) {
-                    adapter.notifyDataSetChanged();
-                }
-            });
+            }
+        });
+        RxBusAdd(EventFresh.class).subscribe(new Action1<EventFresh>() {
+            @Override public void call(EventFresh eventFresh) {
+                adapter.notifyDataSetChanged();
+            }
+        });
         return view;
     }
 
@@ -153,23 +151,21 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
     @Override public boolean onItemClick(int i) {
         if (adapter.getItem(i) instanceof ChatGymItem) {
             getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_right_in,R.anim.slide_fade_out,R.anim.slide_fade_in,R.anim.slide_right_out)
-                .add(R.id.chat_friend_frag,new ChatChooseInGymFragmentBuilder(((ChatGymItem)adapter.getItem(i)).getChatGym()).build())
+                .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_fade_out, R.anim.slide_fade_in, R.anim.slide_right_out)
+                .add(R.id.chat_friend_frag, new ChatChooseInGymFragmentBuilder(((ChatGymItem) adapter.getItem(i)).getChatGym()).build())
                 .addToBackStack(null)
                 .commit();
-        }else if (adapter.getItem(i) instanceof ChooseStaffItem){
+        } else if (adapter.getItem(i) instanceof ChooseStaffItem) {
             adapter.toggleSelection(i);
             adapter.notifyItemChanged(i);
             Personage p = ((ChooseStaffItem) adapter.getItem(i)).getStaff();
-            if (DirtySender.studentList.contains(p)){
+            if (DirtySender.studentList.contains(p)) {
                 DirtySender.studentList.remove(p);
-            }else {
+            } else {
                 QcStudentBean studentBean = new QcStudentBean(p);
-                if (!DirtySender.studentList.contains(studentBean))
-                    DirtySender.studentList.add(studentBean);
+                if (!DirtySender.studentList.contains(studentBean)) DirtySender.studentList.add(studentBean);
             }
             RxBus.getBus().post(new EventChoosePerson());
-
         }
         return false;
     }
@@ -194,8 +190,8 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
         }
         layoutAlphabet.setVisibility(View.VISIBLE);
         for (int i = 0; i < originData.size(); i++) {
-            if (!"abcdefghijklmnopqrstuvwxyz".contains(ChineseCharToEn.getFirstLetter(originData.get(i).getUsername())) || StringUtils.isEmpty(
-                originData.get(i).getHead())) {
+            if (!"abcdefghijklmnopqrstuvwxyz".contains(ChineseCharToEn.getFirstLetter(originData.get(i).getUsername()))
+                || StringUtils.isEmpty(originData.get(i).getHead())) {
                 originData.get(i).setHead("~");
             }
         }
@@ -210,7 +206,7 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
                 itemA = new AlphabetHeaderItem(TextUtils.equals(header, "~") ? "#" : header.toUpperCase());
                 layoutAlphabet.addElement(header, i);
             }
-            items.add(new ChooseStaffItem(a,itemA));
+            items.add(new ChooseStaffItem(a, itemA));
         }
         layoutAlphabet.init();
 
@@ -222,8 +218,5 @@ public class ChatFriendAllChooseFragment extends BaseFragment implements ChatFri
             }
         }
         adapter.notifyDataSetChanged();
-
     }
-
-
 }

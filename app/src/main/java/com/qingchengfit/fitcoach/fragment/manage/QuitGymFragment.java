@@ -11,14 +11,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import cn.qingchengfit.model.base.CoachService;
-
 
 /**
  * power by
@@ -41,37 +40,33 @@ import cn.qingchengfit.model.base.CoachService;
  * Created by Paper on 2016/12/26.
  */
 
-@FragmentWithArgs
-public class QuitGymFragment extends DialogFragment {
+@FragmentWithArgs public class QuitGymFragment extends DialogFragment {
 
     @Arg CoachService mCoachService;
 
+    @BindView(R.id.gym_avatar) ImageView gymAvatar;
+    @BindView(R.id.title) TextView title;
+    @BindView(R.id.content) TextView content;
+    private View.OnClickListener mOnClickListener;
 
-    @BindView(R.id.gym_avatar)
-    ImageView gymAvatar;
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.content)
-    TextView content;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
         setStyle(STYLE_NORMAL, R.style.LoadingDialog_Style);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quit_gym, container, false);
         ButterKnife.bind(this, view);
-        Glide.with(getContext()).load(mCoachService.getPhoto()).asBitmap().placeholder(R.drawable.ic_default_header).into(new CircleImgWrapper(gymAvatar,getContext()));
-        title.setText("确定退出"+mCoachService.getBrand_name()+" · "+mCoachService.getName()+"?");
+        Glide.with(getContext())
+            .load(mCoachService.getPhoto())
+            .asBitmap()
+            .placeholder(R.drawable.ic_default_header)
+            .into(new CircleImgWrapper(gymAvatar, getContext()));
+        title.setText("确定退出" + mCoachService.getBrand_name() + " · " + mCoachService.getName() + "?");
         content.setText("退出后将无法恢复,\n需由该健身房工作人员添加");
         return view;
     }
-
-    private View.OnClickListener mOnClickListener;
 
     public View.OnClickListener getOnClickListener() {
         return mOnClickListener;
@@ -81,14 +76,13 @@ public class QuitGymFragment extends DialogFragment {
         mOnClickListener = onClickListener;
     }
 
-    @OnClick({R.id.cancel, R.id.comfirm})
-    public void onClick(View view) {
+    @OnClick({ R.id.cancel, R.id.comfirm }) public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel:
                 dismiss();
                 break;
             case R.id.comfirm:
-                if (mOnClickListener != null){
+                if (mOnClickListener != null) {
                     mOnClickListener.onClick(view);
                 }
                 dismiss();

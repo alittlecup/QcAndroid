@@ -31,6 +31,7 @@ public class CitiesChooser {
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
     private OptionsDialog pwOptions;
     private OnCityChoosenListener onCityChoosenListener;
+
     public CitiesChooser(Context context) {
         pwOptions = new OptionsDialog(context);
         Gson gson = new Gson();
@@ -38,27 +39,33 @@ public class CitiesChooser {
         for (int i = 0; i < citiesData.provinces.size(); i++) {
             ProvinceBean provinceBean = citiesData.provinces.get(i);
             String provinceName = "";
-            if (provinceBean.name.length() >5){
+            if (provinceBean.name.length() > 5) {
                 provinceName = provinceBean.name.substring(0, 4).concat("...");
-            }else provinceName = provinceBean.name;
+            } else {
+                provinceName = provinceBean.name;
+            }
             options1Items.add(provinceName);
             ArrayList<String> citynames = new ArrayList<>();
             ArrayList<ArrayList<String>> option3 = new ArrayList<ArrayList<String>>();
             for (int j = 0; j < provinceBean.cities.size(); j++) {
                 CityBean cityBean = provinceBean.cities.get(j);
                 String cityName = "";
-                if (cityBean.name.length() > 5){
-                    cityName = cityBean.name.substring(0,4).concat("...");
-                }else cityName = cityBean.name;
+                if (cityBean.name.length() > 5) {
+                    cityName = cityBean.name.substring(0, 4).concat("...");
+                } else {
+                    cityName = cityBean.name;
+                }
 
                 citynames.add(cityName);
                 ArrayList<String> district = new ArrayList<>();
                 for (int k = 0; k < cityBean.districts.size(); k++) {
                     DistrictBean districtBean = cityBean.districts.get(k);
                     String dName = "";
-                    if (districtBean.name.length() > 5){
-                        dName = districtBean.name.substring(0,4).concat("...");
-                    }else dName = districtBean.name;
+                    if (districtBean.name.length() > 5) {
+                        dName = districtBean.name.substring(0, 4).concat("...");
+                    } else {
+                        dName = districtBean.name;
+                    }
 
                     district.add(dName);
                 }
@@ -71,27 +78,28 @@ public class CitiesChooser {
         pwOptions.setLabels("", "", "");
         pwOptions.setSelectOptions(0, 0, 0);
         pwOptions.setOnoptionsSelectListener(new OptionsDialog.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int i, int i1, int i2) {
+            @Override public void onOptionsSelect(int i, int i1, int i2) {
                 if (onCityChoosenListener != null) {
                     if (options2Items.get(i).get(i1).startsWith(options1Items.get(i))) {
-                        onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
-                    } else
-                        onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                        onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2),
+                            citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                    } else {
+                        onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1),
+                            options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                    }
                 }
             }
         });
-
     }
 
     public void setOnCityChoosenListener(OnCityChoosenListener onCityChoosenListener) {
         this.onCityChoosenListener = onCityChoosenListener;
-
     }
 
     public void show(View v) {
         pwOptions.show();
     }
+
     public void show(int distrcitid) {
         pwOptions.show();
     }
@@ -100,10 +108,7 @@ public class CitiesChooser {
         pwOptions.hide();
     }
 
-
-
     public interface OnCityChoosenListener {
         void onCityChoosen(String provice, String city, String district, int id);
     }
-
 }

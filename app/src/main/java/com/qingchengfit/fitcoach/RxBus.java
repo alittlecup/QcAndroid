@@ -1,12 +1,10 @@
 package com.qingchengfit.fitcoach;
 
 import android.support.annotation.NonNull;
-
+import cn.qingchengfit.utils.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-
-import cn.qingchengfit.utils.LogUtil;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
@@ -31,19 +29,19 @@ public class RxBus {
 
     public static RxBus getBus() {
         if (_RxBus == null) {
-//      synchronized (_RxBus){
-//        if (_RxBus==null){
+            //      synchronized (_RxBus){
+            //        if (_RxBus==null){
             _RxBus = new RxBus();
-//        }
-//      }
+            //        }
+            //      }
 
         }
         return _RxBus;
     }
 
-//    public void send(Object o) {
-//        _bus.onNext(o);
-//    }
+    //    public void send(Object o) {
+    //        _bus.onNext(o);
+    //    }
 
     public Observable<Object> toObserverable() {
         return _bus;
@@ -102,8 +100,6 @@ public class RxBus {
                 LogUtil.d(TAG, "[unregister]subjectMapper: " + subjectMapper);
             }
         }
-
-
     }
 
     public void post(@NonNull String content) {
@@ -114,11 +110,9 @@ public class RxBus {
         post(o.getClass().getName(), o);
     }
 
-    @SuppressWarnings("unchecked")
-    public void post(@NonNull Object tag, @NonNull Object content) {
+    @SuppressWarnings("unchecked") public void post(@NonNull Object tag, @NonNull Object content) {
         List<Subject> subjectList = subjectMapper.get(tag);
-        if (subjectList == null)
-            return;
+        if (subjectList == null) return;
 
         if (subjectList.size() > 0) {
             for (Subject subject : subjectList) {

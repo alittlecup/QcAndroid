@@ -9,15 +9,12 @@ import android.os.Parcelable;
 
 public class District implements Parcelable {
 
-
     public static final Creator<District> CREATOR = new Creator<District>() {
-        @Override
-        public District createFromParcel(Parcel in) {
+        @Override public District createFromParcel(Parcel in) {
             return new District(in);
         }
 
-        @Override
-        public District[] newArray(int size) {
+        @Override public District[] newArray(int size) {
             return new District[size];
         }
     };
@@ -80,13 +77,11 @@ public class District implements Parcelable {
         this.name = name;
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    @Override public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(code);
         parcel.writeString(name);
     }

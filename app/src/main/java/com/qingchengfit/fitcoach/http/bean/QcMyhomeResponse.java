@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,6 @@ import java.util.List;
  * Created by Paper on 15/9/12 2015.
  */
 public class QcMyhomeResponse extends QcResponse {
-
 
     /**
      * data : {"coach":{"username":"小碗","city":"北京","description":"","tags":{"tags":[{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]},"weixin":"","evaluate":{"evaluate":{"course_score":4.7,"total_count":3658,"coach_score":4.8}},"phone":"13501200175","short_description":"我是一名健身教练","id":5}}
@@ -96,7 +93,6 @@ public class QcMyhomeResponse extends QcResponse {
                     sb.append(tag.getCount());
                     sb.append(")");
                     list.add(sb.toString());
-
                 }
                 String[] ret = list.toArray(new String[list.size()]);
                 return ret;
@@ -130,8 +126,12 @@ public class QcMyhomeResponse extends QcResponse {
                 if (district != null && district.province != null && district.city != null) {
                     if (district.province.name.equalsIgnoreCase(district.city.name)) {
                         return district.city.name;
-                    } else return district.province.name + district.city.name;
-                } else return "";
+                    } else {
+                        return district.province.name + district.city.name;
+                    }
+                } else {
+                    return "";
+                }
             }
 
             public String getCity() {
@@ -199,15 +199,10 @@ public class QcMyhomeResponse extends QcResponse {
             }
 
             public static class DistrictEntity {
-                @SerializedName("province")
-                public ProvinceBean province;
-                @SerializedName("city")
-                public CityBean city;
-                @SerializedName("id")
-                public String id;
-                @SerializedName("name")
-                public String name;
-
+                @SerializedName("province") public ProvinceBean province;
+                @SerializedName("city") public CityBean city;
+                @SerializedName("id") public String id;
+                @SerializedName("name") public String name;
             }
 
             public static class EvaluateEntity implements Parcelable {
@@ -263,13 +258,11 @@ public class QcMyhomeResponse extends QcResponse {
                     this.coach_score = coach_score;
                 }
 
-                @Override
-                public int describeContents() {
+                @Override public int describeContents() {
                     return 0;
                 }
 
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
+                @Override public void writeToParcel(Parcel dest, int flags) {
                     dest.writeDouble(this.course_score);
                     dest.writeInt(this.total_count);
                     dest.writeDouble(this.coach_score);
@@ -318,69 +311,62 @@ public class QcMyhomeResponse extends QcResponse {
                     this.name = name;
                 }
 
-                @Override
-                public int describeContents() {
+                @Override public int describeContents() {
                     return 0;
                 }
 
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
+                @Override public void writeToParcel(Parcel dest, int flags) {
                     dest.writeString(this.count);
                     dest.writeString(this.name);
                 }
             }
 
-
-//            public static class TagsEntitys implements Parcelable {
-//                public static final Parcelable.Creator<TagsEntitys> CREATOR = new Parcelable.Creator<TagsEntitys>() {
-//                    public TagsEntitys createFromParcel(Parcel source) {
-//                        return new TagsEntitys(source);
-//                    }
-//
-//                    public TagsEntitys[] newArray(int size) {
-//                        return new TagsEntitys[size];
-//                    }
-//                };
-//                /**
-//                 * tags : [{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]
-//                 */
-//
-//                private List<TagsEntity> tags;
-//
-//                public TagsEntitys() {
-//                }
-//
-//                protected TagsEntitys(Parcel in) {
-//                    this.tags = new ArrayList<TagsEntity>();
-//                    in.readList(this.tags, List.class.getClassLoader());
-//                }
-//
-//                public List<TagsEntity> getTags() {
-//                    return tags;
-//                }
-//
-//                public void setTags(List<TagsEntity> tags) {
-//                    this.tags = tags;
-//                }
-//
-//
-//
-//                @Override
-//                public int describeContents() {
-//                    return 0;
-//                }
-//
-//                @Override
-//                public void writeToParcel(Parcel dest, int flags) {
-//                    dest.writeList(this.tags);
-//                }
-//
-//
-//            }
-
-
-
-
+            //            public static class TagsEntitys implements Parcelable {
+            //                public static final Parcelable.Creator<TagsEntitys> CREATOR = new Parcelable.Creator<TagsEntitys>() {
+            //                    public TagsEntitys createFromParcel(Parcel source) {
+            //                        return new TagsEntitys(source);
+            //                    }
+            //
+            //                    public TagsEntitys[] newArray(int size) {
+            //                        return new TagsEntitys[size];
+            //                    }
+            //                };
+            //                /**
+            //                 * tags : [{"count":"1.2k","username":"减脂"},{"count":"902","username":"增肌"}]
+            //                 */
+            //
+            //                private List<TagsEntity> tags;
+            //
+            //                public TagsEntitys() {
+            //                }
+            //
+            //                protected TagsEntitys(Parcel in) {
+            //                    this.tags = new ArrayList<TagsEntity>();
+            //                    in.readList(this.tags, List.class.getClassLoader());
+            //                }
+            //
+            //                public List<TagsEntity> getTags() {
+            //                    return tags;
+            //                }
+            //
+            //                public void setTags(List<TagsEntity> tags) {
+            //                    this.tags = tags;
+            //                }
+            //
+            //
+            //
+            //                @Override
+            //                public int describeContents() {
+            //                    return 0;
+            //                }
+            //
+            //                @Override
+            //                public void writeToParcel(Parcel dest, int flags) {
+            //                    dest.writeList(this.tags);
+            //                }
+            //
+            //
+            //            }
         }
     }
 }

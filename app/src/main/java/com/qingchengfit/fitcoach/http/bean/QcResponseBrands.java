@@ -2,9 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.bean.Brand;
-
 import java.util.List;
-
 
 /**
  * power by
@@ -21,14 +19,9 @@ import java.util.List;
  */
 public class QcResponseBrands extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
     public class Data {
-        @SerializedName("brands")
-        public List<Brand> brands;
-
+        @SerializedName("brands") public List<Brand> brands;
     }
-
-
 }

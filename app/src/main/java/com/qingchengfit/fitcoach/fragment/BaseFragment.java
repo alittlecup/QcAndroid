@@ -42,17 +42,19 @@ import rx.Subscription;
  */
 public abstract class BaseFragment extends Fragment {
 
+    public Unbinder unbinder;
     // 标志位，标志已经初始化完成
     protected boolean isVisible;
-    boolean isPrepared;
-    public Unbinder unbinder;
-    private List<PresenterDelegate> delegates = new ArrayList<>();
-    protected  boolean isInit = false;
+    protected boolean isInit = false;
     protected boolean isLazyLoad = true;
+    boolean isPrepared;
+    List<Subscription> sps = new ArrayList<>();
+    private List<PresenterDelegate> delegates = new ArrayList<>();
+    private List<Pair<String, Observable>> observables = new ArrayList<>();
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater,container,savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
         ////判断是否懒加载
         //if (isLazyLoad) {
         //    //处于完全可见、没被初始化的状态，调用onCreateViewLazy显示内容
@@ -73,9 +75,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
-
 
     @Override public void onAttach(Context context) {
         try {
@@ -154,10 +154,6 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-
-
-
-
     protected void onVisible() {
         lazyLoad();
     }
@@ -179,8 +175,6 @@ public abstract class BaseFragment extends Fragment {
     protected void onInVisible() {
     }
 
-    private List<Pair<String, Observable>> observables = new ArrayList<>();
-
     @Override public void onDestroyView() {
         if (getActivity() != null) {
             AppUtils.hideKeyboard(getActivity());
@@ -194,8 +188,6 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
         if (unbinder != null) unbinder.unbind();
     }
-
-    List<Subscription> sps = new ArrayList<>();
 
     public void unattachView() {
         for (int i = 0; i < sps.size(); i++) {
@@ -223,24 +215,29 @@ public abstract class BaseFragment extends Fragment {
 
     protected void router(Fragment fragment) {
         String tag = UUID.randomUUID().toString();
-        if (fragment instanceof BaseFragment){
+        if (fragment instanceof BaseFragment) {
             tag = ((BaseFragment) fragment).getFragmentName();
         }
-        router(getLayoutRes(), fragment,tag, R.anim.slide_hold, R.anim.slide_hold);
+        router(getLayoutRes(), fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
     }
-    protected void router(Fragment fragment,String tag) {
-        router(getLayoutRes(), fragment,tag, R.anim.slide_hold, R.anim.slide_hold);
+
+    protected void router(Fragment fragment, String tag) {
+        router(getLayoutRes(), fragment, tag, R.anim.slide_hold, R.anim.slide_hold);
     }
 
     public int getLayoutRes() {
         return 0;
     }
 
-    protected void router(int res, Fragment fragment, String tag,int resIn, int resOut) {
+    protected void router(int res, Fragment fragment, String tag, int resIn, int resOut) {
         Fragment fragment1 = getChildFragmentManager().findFragmentByTag(tag);
-        if (fragment1 != null){
+        if (fragment1 != null) {
             getChildFragmentManager().beginTransaction().show(fragment1).commitAllowingStateLoss();
-        }else
-            getChildFragmentManager().beginTransaction().setCustomAnimations(resIn, resOut).replace(res, fragment).commitAllowingStateLoss();
+        } else {
+            getChildFragmentManager().beginTransaction()
+                .setCustomAnimations(resIn, resOut)
+                .replace(res, fragment)
+                .commitAllowingStateLoss();
+        }
     }
 }

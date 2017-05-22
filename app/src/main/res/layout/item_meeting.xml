@@ -1,59 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical"
 
     >
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="20dp"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/meeting_title"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+
+        android:textSize="16sp"
+        tools:text="ChinaFit健身大会会议系统哈哈哈"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/meeting_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:id="@+id/meeting_title"
-            style="@style/Qc.TextCommonBlack"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-
-            android:singleLine="true"
-            android:textSize="16sp"
-            tools:text="ChinaFit健身大会会议系统哈哈哈"
-            />
-
-        <TextView
-            android:id="@+id/meeting_time"
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            tools:text="ChinaFit健身大会"
-            />
-
-        <TextView
-            android:id="@+id/meeting_address"
-            style="@style/Qc.TextCommonGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            tools:text="ChinaFit健身大会"
-            />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/meeting_img"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="4dp"
+        tools:text="ChinaFit健身大会"
+        style="@style/Qc.TextCommonGrey"
         />
+
+    <TextView
+        android:id="@+id/meeting_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        tools:text="ChinaFit健身大会"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/meeting_img"
+      android:layout_width="65dp"
+      android:layout_height="65dp"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      />
 
 </RelativeLayout>

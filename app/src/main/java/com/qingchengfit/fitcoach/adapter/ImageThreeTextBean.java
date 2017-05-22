@@ -3,7 +3,6 @@ package com.qingchengfit.fitcoach.adapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
-
 import java.util.HashMap;
 
 /**
@@ -26,7 +25,15 @@ public class ImageThreeTextBean implements Parcelable {
     public static final String TAG_COURSE = "courseid";
     public static final String TAG_LENGTH = "length";
     public static final String TAG_COURSETYPE = "coursetype";
+    public static final Creator<ImageThreeTextBean> CREATOR = new Creator<ImageThreeTextBean>() {
+        @Override public ImageThreeTextBean createFromParcel(Parcel in) {
+            return new ImageThreeTextBean(in);
+        }
 
+        @Override public ImageThreeTextBean[] newArray(int size) {
+            return new ImageThreeTextBean[size];
+        }
+    };
     public String imgUrl;
     public String text1;
     public String text2;
@@ -34,10 +41,10 @@ public class ImageThreeTextBean implements Parcelable {
     public boolean showIcon;
     public boolean showRight;
     public int type = 0;//默认为0
-    @DrawableRes
-    public int rightIcon;
-    public HashMap<String,String> tags = new HashMap<>();
-    public ImageThreeTextBean(String imgUrl, String text1, String text2,String text3) {
+    @DrawableRes public int rightIcon;
+    public HashMap<String, String> tags = new HashMap<>();
+
+    public ImageThreeTextBean(String imgUrl, String text1, String text2, String text3) {
         this.imgUrl = imgUrl;
         this.text1 = text1;
         this.text2 = text2;
@@ -74,8 +81,7 @@ public class ImageThreeTextBean implements Parcelable {
         rightIcon = in.readInt();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(imgUrl);
         dest.writeString(text1);
         dest.writeString(text2);
@@ -86,20 +92,7 @@ public class ImageThreeTextBean implements Parcelable {
         dest.writeInt(rightIcon);
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
-
-    public static final Creator<ImageThreeTextBean> CREATOR = new Creator<ImageThreeTextBean>() {
-        @Override
-        public ImageThreeTextBean createFromParcel(Parcel in) {
-            return new ImageThreeTextBean(in);
-        }
-
-        @Override
-        public ImageThreeTextBean[] newArray(int size) {
-            return new ImageThreeTextBean[size];
-        }
-    };
 }

@@ -1,6 +1,5 @@
 package com.bigkoo.pickerview.lib;
 
-
 /**
  * Numeric Wheel adapter.
  */
@@ -40,8 +39,9 @@ public class NumericWheelAdapter implements WheelAdapter {
     public NumericWheelAdapter(int minValue, int maxValue) {
         this(minValue, maxValue, null);
     }
-    public NumericWheelAdapter(int minValue, int maxValue,int interval) {
-        this(minValue, maxValue,interval, null);
+
+    public NumericWheelAdapter(int minValue, int maxValue, int interval) {
+        this(minValue, maxValue, interval, null);
     }
 
     /**
@@ -49,36 +49,34 @@ public class NumericWheelAdapter implements WheelAdapter {
      *
      * @param minValue the wheel min value
      * @param maxValue the wheel max value
-     * @param format   the format string
+     * @param format the format string
      */
-    public NumericWheelAdapter(int minValue, int maxValue,int interval, String format) {
+    public NumericWheelAdapter(int minValue, int maxValue, int interval, String format) {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.format = format;
         this.interval = interval;
     }
+
     public NumericWheelAdapter(int minValue, int maxValue, String format) {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.format = format;
     }
 
-    @Override
-    public String getItem(int index) {
+    @Override public String getItem(int index) {
         if (index >= 0 && index < getItemsCount()) {
-            int value = minValue + index*interval;
+            int value = minValue + index * interval;
             return format != null ? String.format(format, value) : Integer.toString(value);
         }
         return null;
     }
 
-    @Override
-    public int getItemsCount() {
-        return (maxValue - minValue + 1)/interval;
+    @Override public int getItemsCount() {
+        return (maxValue - minValue + 1) / interval;
     }
 
-    @Override
-    public int getMaximumLength() {
+    @Override public int getMaximumLength() {
         int max = Math.max(Math.abs(maxValue), Math.abs(minValue));
         int maxLen = Integer.toString(max).length();
         if (minValue < 0) {

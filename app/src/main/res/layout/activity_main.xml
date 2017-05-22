@@ -3,50 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/main_drawerlayout"
+    tools:context=".MainActivity"
+    >
+
+  <android.support.v4.widget.DrawerLayout
+      android:id="@+id/main_drawerlayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fitsSystemWindows="true"
+      >
+
+    <FrameLayout
+        android:id="@+id/main_fraglayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+        android:scrollbars="none"
         >
-        <FrameLayout
-            android:id="@+id/main_fraglayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            >
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="304dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:clickable="true"
-            >
-            <include layout="@layout/layout_drawer"
-                >
-            </include>
-        </FrameLayout>
-        <!--&lt;!&ndash;<android.support.design.widget.NavigationView&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/main_navi"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="300dp"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_gravity="start"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:menu="@menu/drawer_menu"&ndash;&gt;-->
+    </FrameLayout>
 
-            <!--&lt;!&ndash;>&ndash;&gt;-->
-        <!--</android.support.design.widget.NavigationView>-->
-    </android.support.v4.widget.DrawerLayout>
+    <FrameLayout
+        android:layout_width="304dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:clickable="true"
+        >
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/float_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
-        <!-->-->
+      <include layout="@layout/layout_drawer"
+          >
+      </include>
+    </FrameLayout>
+    <!--&lt;!&ndash;<android.support.design.widget.NavigationView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/main_navi"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="300dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_gravity="start"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:menu="@menu/drawer_menu"&ndash;&gt;-->
 
-    <!--</android.support.design.widget.FloatingActionButton>-->
+    <!--&lt;!&ndash;>&ndash;&gt;-->
+    <!--</android.support.design.widget.NavigationView>-->
+  </android.support.v4.widget.DrawerLayout>
+
+  <!--<android.support.design.widget.FloatingActionButton-->
+  <!--android:id="@+id/float_btn"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:layout_alignParentBottom="true"-->
+  <!--android:layout_alignParentRight="true"-->
+  <!--android:layout_margin="@dimen/activity_horizontal_margin"-->
+  <!-->-->
+
+  <!--</android.support.design.widget.FloatingActionButton>-->
 
 </RelativeLayout>

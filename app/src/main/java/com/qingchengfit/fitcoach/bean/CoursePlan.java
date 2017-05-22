@@ -26,12 +26,21 @@ import java.util.List;
  * Created by Paper on 16/8/3.
  */
 public class CoursePlan implements Parcelable {
-    private String name;
-    private List<String> tags;
-    private Long id;
+    public static final Creator<CoursePlan> CREATOR = new Creator<CoursePlan>() {
+        @Override public CoursePlan createFromParcel(Parcel source) {
+            return new CoursePlan(source);
+        }
+
+        @Override public CoursePlan[] newArray(int size) {
+            return new CoursePlan[size];
+        }
+    };
     public String url;
     public int type;//1.个人 2.所属 3.会议
     public Brand brand;
+    private String name;
+    private List<String> tags;
+    private Long id;
 
     private CoursePlan(Builder builder) {
         setName(builder.name);
@@ -39,6 +48,14 @@ public class CoursePlan implements Parcelable {
         setId(builder.id);
         url = builder.url;
         type = builder.type;
+    }
+
+    protected CoursePlan(Parcel in) {
+        this.name = in.readString();
+        this.tags = in.createStringArrayList();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.url = in.readString();
+        this.type = in.readInt();
     }
 
     public String getUrl() {
@@ -76,21 +93,36 @@ public class CoursePlan implements Parcelable {
     public List<String> getTags() {
         return tags;
     }
- public String getTagsStr() {
-     if (tags != null && tags.size() >0){
-         String ret ="";
-         for (int i = 0; i < tags.size(); i++) {
-             if (i < tags.size() -1)
-                 ret = ret.concat(tags.get(i)).concat(Configs.SEPARATOR);
-             else ret = ret.concat(tags.get(i));
-         }
-         return ret;
-     }return "";
-
-    }
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public String getTagsStr() {
+        if (tags != null && tags.size() > 0) {
+            String ret = "";
+            for (int i = 0; i < tags.size(); i++) {
+                if (i < tags.size() - 1) {
+                    ret = ret.concat(tags.get(i)).concat(Configs.SEPARATOR);
+                } else {
+                    ret = ret.concat(tags.get(i));
+                }
+            }
+            return ret;
+        }
+        return "";
+    }
+
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeStringList(this.tags);
+        dest.writeValue(this.id);
+        dest.writeString(this.url);
+        dest.writeInt(this.type);
     }
 
     public static final class Builder {
@@ -132,34 +164,4 @@ public class CoursePlan implements Parcelable {
             return new CoursePlan(this);
         }
     }
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeStringList(this.tags);
-        dest.writeValue(this.id);
-        dest.writeString(this.url);
-        dest.writeInt(this.type);
-    }
-
-    protected CoursePlan(Parcel in) {
-        this.name = in.readString();
-        this.tags = in.createStringArrayList();
-        this.id = (Long) in.readValue(Long.class.getClassLoader());
-        this.url = in.readString();
-        this.type = in.readInt();
-    }
-
-    public static final Creator<CoursePlan> CREATOR = new Creator<CoursePlan>() {
-        @Override public CoursePlan createFromParcel(Parcel source) {
-            return new CoursePlan(source);
-        }
-
-        @Override public CoursePlan[] newArray(int size) {
-            return new CoursePlan[size];
-        }
-    };
 }

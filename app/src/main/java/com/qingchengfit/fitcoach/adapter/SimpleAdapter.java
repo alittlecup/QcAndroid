@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.bean.BodyTestBean;
-
 import java.util.List;
 
 /**
@@ -41,30 +39,26 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
         this.listener = listener;
     }
 
-    @Override
-    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        SimpleViewHolder holder = new SimpleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple, parent, false));
+    @Override public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        SimpleViewHolder holder =
+            new SimpleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple, parent, false));
         holder.itemView.setOnClickListener(this);
         return holder;
     }
 
-    @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
+    @Override public void onBindViewHolder(SimpleViewHolder holder, int position) {
         holder.itemView.setTag(position);
         if (datas != null && datas.size() > position) {
             holder.tv.setText(datas.get(position).data);
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return datas.size();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
     public class SimpleViewHolder extends RecyclerView.ViewHolder {

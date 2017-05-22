@@ -7,7 +7,6 @@ import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * power by
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -30,6 +29,15 @@ import java.util.List;
  */
 public class CourseDetail extends Course implements Cloneable {
 
+    public static final Creator<CourseDetail> CREATOR = new Creator<CourseDetail>() {
+        @Override public CourseDetail createFromParcel(Parcel source) {
+            return new CourseDetail(source);
+        }
+
+        @Override public CourseDetail[] newArray(int size) {
+            return new CourseDetail[size];
+        }
+    };
     private List<String> photos;
     private int min_users;
     private List<CourseDetailTeacher> teachers;
@@ -44,6 +52,27 @@ public class CourseDetail extends Course implements Cloneable {
     private int schedule_count;
     private String edit_url;
     private boolean random_show_photos;
+
+    protected CourseDetail(Parcel in) {
+        super(in);
+        this.photos = in.createStringArrayList();
+        this.min_users = in.readInt();
+        this.teachers = in.createTypedArrayList(CourseDetailTeacher.CREATOR);
+        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
+        this.course_score = (Float) in.readValue(Float.class.getClassLoader());
+        this.service_score = (Float) in.readValue(Float.class.getClassLoader());
+        this.teacher_score = (Float) in.readValue(Float.class.getClassLoader());
+        this.description = in.readString();
+        this.impressions = in.createTypedArrayList(TeacherImpression.CREATOR);
+        this.plan = in.readParcelable(CoursePlan.class.getClassLoader());
+        this.permission = in.readInt();
+        this.schedule_count = in.readInt();
+        this.edit_url = in.readString();
+        this.random_show_photos = in.readByte() != 0;
+    }
+
+    public CourseDetail() {
+    }
 
     public boolean isRandom_show_photos() {
         return random_show_photos;
@@ -60,7 +89,9 @@ public class CourseDetail extends Course implements Cloneable {
                 ret = ret.concat(shops.get(i).name).concat(i == shops.size() - 1 ? "" : Configs.SEPARATOR);
             }
             return ret;
-        } else return "";
+        } else {
+            return "";
+        }
     }
 
     public String getShopId() {
@@ -70,7 +101,9 @@ public class CourseDetail extends Course implements Cloneable {
                 ret = ret.concat(shops.get(i).id).concat(i == shops.size() - 1 ? "" : ",");
             }
             return ret;
-        } else return "";
+        } else {
+            return "";
+        }
     }
 
     public List<String> getShopIdList() {
@@ -111,16 +144,16 @@ public class CourseDetail extends Course implements Cloneable {
         return course_score;
     }
 
+    public void setCourse_score(Float course_score) {
+        this.course_score = course_score;
+    }
+
     public int getSchedule_count() {
         return schedule_count;
     }
 
     public void setSchedule_count(int schedule_count) {
         this.schedule_count = schedule_count;
-    }
-
-    public void setCourse_score(Float course_score) {
-        this.course_score = course_score;
     }
 
     public Float getService_score() {
@@ -216,37 +249,5 @@ public class CourseDetail extends Course implements Cloneable {
         dest.writeInt(this.schedule_count);
         dest.writeString(this.edit_url);
         dest.writeByte(this.random_show_photos ? (byte) 1 : (byte) 0);
-    }
-
-
-    protected CourseDetail(Parcel in) {
-        super(in);
-        this.photos = in.createStringArrayList();
-        this.min_users = in.readInt();
-        this.teachers = in.createTypedArrayList(CourseDetailTeacher.CREATOR);
-        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
-        this.course_score = (Float) in.readValue(Float.class.getClassLoader());
-        this.service_score = (Float) in.readValue(Float.class.getClassLoader());
-        this.teacher_score = (Float) in.readValue(Float.class.getClassLoader());
-        this.description = in.readString();
-        this.impressions = in.createTypedArrayList(TeacherImpression.CREATOR);
-        this.plan = in.readParcelable(CoursePlan.class.getClassLoader());
-        this.permission = in.readInt();
-        this.schedule_count = in.readInt();
-        this.edit_url = in.readString();
-        this.random_show_photos = in.readByte() != 0;
-    }
-
-    public static final Creator<CourseDetail> CREATOR = new Creator<CourseDetail>() {
-        @Override public CourseDetail createFromParcel(Parcel source) {
-            return new CourseDetail(source);
-        }
-
-        @Override public CourseDetail[] newArray(int size) {
-            return new CourseDetail[size];
-        }
-    };
-
-    public CourseDetail() {
     }
 }

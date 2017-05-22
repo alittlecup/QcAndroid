@@ -7,37 +7,37 @@ import android.text.TextUtils;
  */
 
 public class PhotoUtils {
-    public static String getSmall(String url){
-        if (TextUtils.isEmpty(url))
-            return "";
+    public static String getSmall(String url) {
+        if (TextUtils.isEmpty(url)) return "";
         if (!url.contains("!")) {
             return url + "!120x120";
-        }else{
-            try{
-                return url.split("!")[0] +"!120x120";
-            }catch (Exception e){
+        } else {
+            try {
+                return url.split("!")[0] + "!120x120";
+            } catch (Exception e) {
                 return url;
             }
         }
-
     }
- public static String getMiddle(String url){
-        if (TextUtils.isEmpty(url))
-            return "";
+
+    public static String getMiddle(String url) {
+        if (TextUtils.isEmpty(url)) return "";
         if (!url.contains("!")) {
             return url + "!middle";
-        } else return url;
-
+        } else {
+            return url;
+        }
     }
 
     public static String getGauss(String photo) {
-        if (photo.contains("zoneke-img")){
-            if (photo.contains("!")){
+        if (photo.contains("zoneke-img")) {
+            if (photo.contains("!")) {
                 return photo.split("!")[0].concat("!gaussblur");
-            }else {
+            } else {
                 return photo.concat("!gaussblur");
             }
-        }else
+        } else {
             return photo;
+        }
     }
 }

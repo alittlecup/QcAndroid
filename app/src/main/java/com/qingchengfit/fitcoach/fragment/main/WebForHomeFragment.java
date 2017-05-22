@@ -43,6 +43,8 @@ import com.tencent.smtt.sdk.WebViewClient;
  */
 
 public class WebForHomeFragment extends WebFragment {
+    private int pageLv = 0;
+
     public static WebForHomeFragment newInstance(String url) {
 
         Bundle args = new Bundle();
@@ -51,7 +53,7 @@ public class WebForHomeFragment extends WebFragment {
         fragment.setArguments(args);
         return fragment;
     }
-    private  int pageLv = 0;
+
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -59,14 +61,18 @@ public class WebForHomeFragment extends WebFragment {
         mToolbar.inflateMenu(R.menu.personal_home);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_edit){
+                if (item.getItemId() == R.id.action_edit) {
                     Intent toSetting = new Intent(getContext(), SettingActivity.class);
-                    toSetting.putExtra("to",6);
+                    toSetting.putExtra("to", 6);
                     startActivity(toSetting);
-                }else if (item.getItemId() == R.id.action_share){
+                } else if (item.getItemId() == R.id.action_share) {
                     if (App.gUser != null) {
-                        ShareDialogFragment.newInstance(getString(R.string.sb_trainer_home,App.gUser.getUsername()),getString(R.string.check_sb_course_and_more,App.gUser.getUsername()),App.gUser.avatar,mCurUrl).show(getFragmentManager(),"");
-                    }else ToastUtils.show("用户信息丢失");
+                        ShareDialogFragment.newInstance(getString(R.string.sb_trainer_home, App.gUser.getUsername()),
+                            getString(R.string.check_sb_course_and_more, App.gUser.getUsername()), App.gUser.avatar, mCurUrl)
+                            .show(getFragmentManager(), "");
+                    } else {
+                        ToastUtils.show("用户信息丢失");
+                    }
                 }
 
                 return true;
@@ -106,9 +112,11 @@ public class WebForHomeFragment extends WebFragment {
                 if (mCurUrl != null && url != null && url.equals(mCurUrl)) {
                     mWebviewWebView.goBack();
                     return true;
-                }else pageLv++;
-                if (pageLv >1){
-                    WebActivity.startWeb(url,getContext());
+                } else {
+                    pageLv++;
+                }
+                if (pageLv > 1) {
+                    WebActivity.startWeb(url, getContext());
                     return true;
                 }
                 initCookie(url);

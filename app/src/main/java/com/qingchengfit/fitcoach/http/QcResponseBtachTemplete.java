@@ -21,19 +21,13 @@ import java.util.ArrayList;
  */
 public class QcResponseBtachTemplete extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
     public class Data {
-        @SerializedName("max_users")
-        public int max_users;
+        @SerializedName("max_users") public int max_users;
 
-        @SerializedName("time_repeats")
-        public ArrayList<TimeRepeat> time_repeats;
+        @SerializedName("time_repeats") public ArrayList<TimeRepeat> time_repeats;
 
-        @SerializedName("rule")
-        public ArrayList<Rule> rule;
-
+        @SerializedName("rule") public ArrayList<Rule> rule;
     }
-
 }

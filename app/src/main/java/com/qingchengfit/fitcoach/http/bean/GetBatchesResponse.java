@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -18,26 +17,18 @@ import java.util.List;
  * Created by Paper on 16/1/9 2016.
  */
 public class GetBatchesResponse extends QcResponse {
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
-    public static class Data{
-        @SerializedName("total_count")
-        public int total_count;
-        @SerializedName("current_page")
-        public int current_page;
-        @SerializedName("pages")
-        public int pages;
-        @SerializedName("batches")
-        public List<Batch> batches;
+    public static class Data {
+        @SerializedName("total_count") public int total_count;
+        @SerializedName("current_page") public int current_page;
+        @SerializedName("pages") public int pages;
+        @SerializedName("batches") public List<Batch> batches;
     }
 
-    public static class Batch{
-        @SerializedName("from_date")
-        public String from_date;
-        @SerializedName("to_date")
-        public String to_date;
-        @SerializedName("id")
-        public String id;
+    public static class Batch {
+        @SerializedName("from_date") public String from_date;
+        @SerializedName("to_date") public String to_date;
+        @SerializedName("id") public String id;
     }
 }

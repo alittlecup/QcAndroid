@@ -123,7 +123,6 @@ public class QcCertificateDetailResponse {
             private boolean is_hidden; //是否隐藏
             private boolean will_expired; //是否有有效期
 
-
             public boolean is_hidden() {
                 return is_hidden;
             }

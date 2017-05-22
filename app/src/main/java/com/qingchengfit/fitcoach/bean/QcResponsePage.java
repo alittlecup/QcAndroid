@@ -25,7 +25,8 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 public class QcResponsePage extends QcResponse {
     public DataPage data;
-    public class DataPage{
+
+    public class DataPage {
         public int total_count;
         public int current_page;
         public int pages;

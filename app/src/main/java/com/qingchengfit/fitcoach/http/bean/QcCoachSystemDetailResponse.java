@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,32 +18,21 @@ import java.util.List;
  */
 public class QcCoachSystemDetailResponse extends QcResponse {
 
-    @SerializedName("data")
-    public Data date;
+    @SerializedName("data") public Data date;
 
     public static class Data {
-        @SerializedName("systems")
-        public List<CoachSystemDetail> systems;
+        @SerializedName("systems") public List<CoachSystemDetail> systems;
     }
 
     public static class CoachSystemDetail {
-        @SerializedName("name")
-        public String name;
-        @SerializedName("url")
-        public String url;
-        @SerializedName("color")
-        public String color;
-        @SerializedName("photo")
-        public String photo;
-        @SerializedName("address")
-        public String address;
-        @SerializedName("users_count")
-        public int users_count;
-        @SerializedName("courses_count")
-        public int courses_count;
-        @SerializedName("id")
-        public int id;
-        @SerializedName("is_personal_system")
-        public boolean is_personal_system;
+        @SerializedName("name") public String name;
+        @SerializedName("url") public String url;
+        @SerializedName("color") public String color;
+        @SerializedName("photo") public String photo;
+        @SerializedName("address") public String address;
+        @SerializedName("users_count") public int users_count;
+        @SerializedName("courses_count") public int courses_count;
+        @SerializedName("id") public int id;
+        @SerializedName("is_personal_system") public boolean is_personal_system;
     }
 }

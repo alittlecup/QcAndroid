@@ -12,7 +12,7 @@ import android.view.ViewTreeObserver;
  */
 
 public class CompatUtils {
-    public static boolean less21(){
+    public static boolean less21() {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
     }
 
@@ -20,23 +20,24 @@ public class CompatUtils {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return context.getResources().getColor(res, null);
-        }else return context.getResources().getColor(res);
+        } else {
+            return context.getResources().getColor(res);
+        }
     }
 
-    public static void setBg(View view, Drawable drawable){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+    public static void setBg(View view, Drawable drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(drawable);
-        else view.setBackgroundDrawable(drawable);
+        } else {
+            view.setBackgroundDrawable(drawable);
+        }
     }
 
-    public static void removeGlobalLayout(ViewTreeObserver viewTreeObserver, ViewTreeObserver.OnGlobalLayoutListener layoutListener){
+    public static void removeGlobalLayout(ViewTreeObserver viewTreeObserver, ViewTreeObserver.OnGlobalLayoutListener layoutListener) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             viewTreeObserver.removeOnGlobalLayoutListener(layoutListener);
-        }else {
+        } else {
             viewTreeObserver.removeGlobalOnLayoutListener(layoutListener);
         }
-
     }
-
-
 }

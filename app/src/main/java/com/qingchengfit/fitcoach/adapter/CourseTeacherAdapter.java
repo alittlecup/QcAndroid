@@ -6,18 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cn.qingchengfit.widgets.RatingBarVectorFix;
 
 /**
  * power by
@@ -39,8 +36,7 @@ import cn.qingchengfit.widgets.RatingBarVectorFix;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 16/8/5.
  */
-public class CourseTeacherAdapter extends RecyclerView.Adapter<CourseTeacherAdapter.CourseTeacherVH>
-        implements View.OnClickListener {
+public class CourseTeacherAdapter extends RecyclerView.Adapter<CourseTeacherAdapter.CourseTeacherVH> implements View.OnClickListener {
 
     private List<CourseDetailTeacher> datas;
     private OnRecycleItemClickListener listener;
@@ -57,47 +53,42 @@ public class CourseTeacherAdapter extends RecyclerView.Adapter<CourseTeacherAdap
         this.listener = listener;
     }
 
-    @Override
-    public CourseTeacherVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        CourseTeacherVH vh = new CourseTeacherVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_course_teacher_horizon, parent, false));
+    @Override public CourseTeacherVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        CourseTeacherVH vh =
+            new CourseTeacherVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_course_teacher_horizon, parent, false));
         vh.itemView.setOnClickListener(this);
         return vh;
     }
 
-    @Override
-    public void onBindViewHolder(CourseTeacherVH holder, int position) {
+    @Override public void onBindViewHolder(CourseTeacherVH holder, int position) {
         holder.itemView.setTag(position);
         CourseDetailTeacher teacher = datas.get(position);
         holder.name.setText(teacher.username);
-        Glide.with(holder.itemView.getContext()).load(teacher.avatar).asBitmap().placeholder(R.drawable.ic_default_head_nogender).into(new CircleImgWrapper(holder.header,holder.itemView.getContext()));
+        Glide.with(holder.itemView.getContext())
+            .load(teacher.avatar)
+            .asBitmap()
+            .placeholder(R.drawable.ic_default_head_nogender)
+            .into(new CircleImgWrapper(holder.header, holder.itemView.getContext()));
         holder.rateStar.setRating(teacher.score);
-
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return datas.size();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (listener != null)
-            listener.onItemClick(v, (int) v.getTag());
+    @Override public void onClick(View v) {
+        if (listener != null) listener.onItemClick(v, (int) v.getTag());
     }
 
     public class CourseTeacherVH extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.header)
-        ImageView header;
-        @BindView(R.id.name)
-        TextView name;
-        @BindView(R.id.rate_star)
-        RatingBarVectorFix rateStar;
+        @BindView(R.id.header) ImageView header;
+        @BindView(R.id.name) TextView name;
+        @BindView(R.id.rate_star) RatingBarVectorFix rateStar;
 
         public CourseTeacherVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

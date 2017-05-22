@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -30,7 +31,6 @@ import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
-import cn.qingchengfit.model.base.CoachService;
 import java.util.Calendar;
 import java.util.Date;
 import rx.functions.Action1;
@@ -121,10 +121,10 @@ public class ScheduleWeekFragment extends BaseFragment {
                 btn1.setEnabled(true);
                 btn2.setEnabled(true);
                 btn3.setEnabled(true);
-                RxBus.getBus().post(new EventInit(false,2));
+                RxBus.getBus().post(new EventInit(false, 2));
                 //获取当前fragment
-                Fragment f = (Fragment) adapter.instantiateItem(viewpager,viewpager.getCurrentItem());
-                if (f instanceof ScheduleOneWeekFragment){
+                Fragment f = (Fragment) adapter.instantiateItem(viewpager, viewpager.getCurrentItem());
+                if (f instanceof ScheduleOneWeekFragment) {
                     ((ScheduleOneWeekFragment) f).setPause(true);
                 }
                 bgShow.setVisibility(View.VISIBLE);
@@ -134,8 +134,8 @@ public class ScheduleWeekFragment extends BaseFragment {
 
             @Override public void onMenuCollapsed() {
                 bgShow.setVisibility(View.GONE);
-                Fragment f = (Fragment) adapter.instantiateItem(viewpager,viewpager.getCurrentItem());
-                if (f instanceof ScheduleOneWeekFragment){
+                Fragment f = (Fragment) adapter.instantiateItem(viewpager, viewpager.getCurrentItem());
+                if (f instanceof ScheduleOneWeekFragment) {
                     ((ScheduleOneWeekFragment) f).setPause(false);
                 }
                 btnBackToday.setVisibility(View.VISIBLE);
@@ -175,7 +175,8 @@ public class ScheduleWeekFragment extends BaseFragment {
                 toWeb.putExtra("url", sb.toString());
                 startActivityForResult(toWeb, 404);
             }
-        },throwable -> {});
+        }, throwable -> {
+        });
 
         RxBusAdd(EventMonthChange.class).subscribe(new Action1<EventMonthChange>() {
             @Override public void call(EventMonthChange eventMonthChange) {
@@ -208,11 +209,11 @@ public class ScheduleWeekFragment extends BaseFragment {
             //new ChooseGymForPermissionFragmentBuilder(v, ((MainScheduleFragment) getParentFragment()).getCoachService()).build()
             //    .show(getFragmentManager(), "");
             CoachService c = ((MainScheduleFragment) getParentFragment()).getCoachService();
-            if (c != null){
+            if (c != null) {
                 RxBus.getBus().post(new EventScheduleAction(c, v));
-            }else
-                new ChooseGymForPermissionFragmentBuilder(v, null).build()
-                    .show(getFragmentManager(), "");
+            } else {
+                new ChooseGymForPermissionFragmentBuilder(v, null).build().show(getFragmentManager(), "");
+            }
         }
     }
 
@@ -276,16 +277,16 @@ public class ScheduleWeekFragment extends BaseFragment {
 
         private int p = 0;
 
+        public ScheduleWeekAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
         public int getPostion() {
             return p;
         }
 
         public void setPostion(int postion) {
             this.p = postion;
-        }
-
-        public ScheduleWeekAdapter(FragmentManager fm) {
-            super(fm);
         }
 
         @Override public Fragment getItem(int position) {

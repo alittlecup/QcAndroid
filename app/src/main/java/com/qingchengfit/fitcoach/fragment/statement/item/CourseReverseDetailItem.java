@@ -42,21 +42,19 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
         return order;
     }
 
-    @Override
-    public CourseReverseVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
+    @Override public CourseReverseVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {
         return new CourseReverseVH(inflater.inflate(getLayoutRes(), parent, false), adapter);
     }
 
-    @Override
-    public void bindViewHolder(FlexibleAdapter adapter, CourseReverseVH holder, int position, List payloads) {
+    @Override public void bindViewHolder(FlexibleAdapter adapter, CourseReverseVH holder, int position, List payloads) {
 
         Glide.with(holder.itemView.getContext())
-                .load(PhotoUtils.getSmall(order.user.avatar))
-                .asBitmap()
-                .into(new CircleImgWrapper(holder.itemPersonalHeader, holder.itemView.getContext()));
+            .load(PhotoUtils.getSmall(order.user.avatar))
+            .asBitmap()
+            .into(new CircleImgWrapper(holder.itemPersonalHeader, holder.itemView.getContext()));
         holder.itemPersonalName.setText(order.user.username());
         holder.itemPersonalGender.setImageResource(
-                order.user.gender() == 1 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
+            order.user.gender() == 1 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
         holder.itemPersonPhone.setText(order.user.phone());
         holder.tvStudentStatus.setText(setStatus(order.status));
         holder.textReverseTime.setText(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(order.created_at)));
@@ -145,13 +143,11 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
         return sb;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         return false;
     }
 
-    @Override
-    public int getLayoutRes() {
+    @Override public int getLayoutRes() {
         return R.layout.item_reserve_report;
     }
 

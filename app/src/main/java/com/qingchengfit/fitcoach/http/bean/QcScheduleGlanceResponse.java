@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,11 +18,9 @@ import java.util.List;
  */
 public class QcScheduleGlanceResponse extends QcResponse {
 
-    @SerializedName("data")
-    public Dates data;
+    @SerializedName("data") public Dates data;
 
     public static class Dates {
-        @SerializedName("dates")
-        public List<String> dates;
+        @SerializedName("dates") public List<String> dates;
     }
 }

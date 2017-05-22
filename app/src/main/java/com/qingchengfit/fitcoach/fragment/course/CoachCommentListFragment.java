@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
@@ -22,7 +23,6 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,9 +132,11 @@ public class CoachCommentListFragment extends BaseFragment {
                         //adapter = new CoachCommentAdapter(getFragmentManager(), coaches);
                         //viewpager.setAdapter(adapter);
                         //strip.setViewPager(viewpager);
-                        if (coaches.size() >0)
-                            getChildFragmentManager().beginTransaction().replace(R.id.layout_comment_detail,CoachCommentDetailFragment.newInstance(coaches.get(0))).commit();
-
+                        if (coaches.size() > 0) {
+                            getChildFragmentManager().beginTransaction()
+                                .replace(R.id.layout_comment_detail, CoachCommentDetailFragment.newInstance(coaches.get(0)))
+                                .commit();
+                        }
                     } else {
                         noDataLayout.setVisibility(View.VISIBLE);
                         img.setImageResource(R.drawable.no_teacher);

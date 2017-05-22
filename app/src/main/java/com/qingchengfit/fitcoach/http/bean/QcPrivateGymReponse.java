@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,29 +18,20 @@ import java.util.List;
  */
 public class QcPrivateGymReponse extends QcResponse {
 
-    @SerializedName("data")
-    public Data data;
+    @SerializedName("data") public Data data;
 
     public static class Data {
-        @SerializedName("system")
-        public System system;
+        @SerializedName("system") public System system;
     }
 
     public static class System {
-        @SerializedName("open_time")
-        public List<OpenTime> openTimes;
-        @SerializedName("name")
-        public String name;
+        @SerializedName("open_time") public List<OpenTime> openTimes;
+        @SerializedName("name") public String name;
     }
 
     public static class OpenTime {
-        @SerializedName("start")
-        public String start;
-        @SerializedName("end")
-        public String end;
-        @SerializedName("day")
-        public int day;
+        @SerializedName("start") public String start;
+        @SerializedName("end") public String end;
+        @SerializedName("day") public int day;
     }
-
-
 }

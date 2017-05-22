@@ -1,7 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -19,11 +18,9 @@ import java.util.List;
  */
 public class QcCoachSystemResponse extends QcResponse {
 
-    @SerializedName("data")
-    public Data date;
+    @SerializedName("data") public Data date;
 
     public static class Data {
-        @SerializedName("systems")
-        public List<QcCoachSystem> systems;
+        @SerializedName("systems") public List<QcCoachSystem> systems;
     }
 }

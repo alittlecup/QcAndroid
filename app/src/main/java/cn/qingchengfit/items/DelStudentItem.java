@@ -20,9 +20,7 @@ import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
 public class DelStudentItem extends AbstractFlexibleItem<DelStudentItem.ChooseStudentVH> {
-    private Personage user ;
-
-
+    private Personage user;
 
     public DelStudentItem(Personage user) {
         this.user = user;
@@ -36,7 +34,6 @@ public class DelStudentItem extends AbstractFlexibleItem<DelStudentItem.ChooseSt
         this.user = user;
     }
 
-
     @Override public int getLayoutRes() {
         return R.layout.item_student_delete;
     }
@@ -46,29 +43,33 @@ public class DelStudentItem extends AbstractFlexibleItem<DelStudentItem.ChooseSt
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ChooseStudentVH holder, int position, List payloads) {
-        holder.itemPersonGender.setImageResource(user.getGender()==0?R.drawable.ic_gender_signal_male:R.drawable.ic_gender_signal_female);
+        holder.itemPersonGender.setImageResource(
+            user.getGender() == 0 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
         holder.itemPersonName.setText(user.getUsername());
         holder.itemPersonPhonenum.setText(user.getPhone());
 
-        if (user instanceof QcStudentBean){
+        if (user instanceof QcStudentBean) {
             holder.status.setVisibility(View.VISIBLE);
             holder.itemPersonDesc.setVisibility(View.VISIBLE);
-            BusinessUtils.studentStatus(holder.status, ((QcStudentBean)user).status);
-            holder.itemPersonDesc.setText(holder.itemView.getContext().getString(R.string.sales_sb,((QcStudentBean)user).getSellersStr()));
-        }else {
+            BusinessUtils.studentStatus(holder.status, ((QcStudentBean) user).status);
+            holder.itemPersonDesc.setText(
+                holder.itemView.getContext().getString(R.string.sales_sb, ((QcStudentBean) user).getSellersStr()));
+        } else {
             holder.itemPersonDesc.setVisibility(View.GONE);
             holder.status.setVisibility(View.GONE);
         }
-        Glide.with(holder.itemView.getContext()).load(user.getAvatar()).asBitmap().placeholder(user.getGender()==0?R.drawable.default_manage_male:R.drawable.default_manager_female).into(new CircleImgWrapper(holder.itemPersonHeader,holder.itemView.getContext()));
-
+        Glide.with(holder.itemView.getContext())
+            .load(user.getAvatar())
+            .asBitmap()
+            .placeholder(user.getGender() == 0 ? R.drawable.default_manage_male : R.drawable.default_manager_female)
+            .into(new CircleImgWrapper(holder.itemPersonHeader, holder.itemView.getContext()));
     }
 
     @Override public boolean equals(Object o) {
         return false;
     }
 
-
-    public class ChooseStudentVH extends FlexibleViewHolder{
+    public class ChooseStudentVH extends FlexibleViewHolder {
         @BindView(R.id.del) ImageView del;
         @BindView(R.id.item_person_header) ImageView itemPersonHeader;
         @BindView(R.id.item_person_header_loop) RelativeLayout itemPersonHeaderLoop;
@@ -86,7 +87,7 @@ public class DelStudentItem extends AbstractFlexibleItem<DelStudentItem.ChooseSt
 
         @Override public void onClick(View view) {
             super.onClick(view);
-            if (mAdapter.mItemClickListener != null){
+            if (mAdapter.mItemClickListener != null) {
                 mAdapter.mItemClickListener.onItemClick(getAdapterPosition());
             }
         }
