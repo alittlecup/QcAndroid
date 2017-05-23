@@ -100,6 +100,12 @@ public class Staff extends Personage implements Parcelable {
         this.count = count;
     }
 
+    public static Staff formatFromUser(User user,String coachId){
+        Staff staff = new Staff(user.username,user.phone,user.avatar,user.gender);
+        staff.setId(coachId);
+        return staff;
+    }
+
     @Override public int describeContents() {
         return 0;
     }
@@ -122,21 +128,5 @@ public class Staff extends Personage implements Parcelable {
         this.count = in.readLong();
         this.position_str = in.readString();
         this.user_id = in.readString();
-    }
-
-    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
-        @Override public Staff createFromParcel(Parcel source) {
-            return new Staff(source);
-        }
-
-        @Override public Staff[] newArray(int size) {
-            return new Staff[size];
-        }
-    };
-
-    public static Staff formatFromUser(User user,String coachId){
-        Staff staff = new Staff(user.username,user.phone,user.avatar,user.gender);
-        staff.setId(coachId);
-        return staff;
     }
 }

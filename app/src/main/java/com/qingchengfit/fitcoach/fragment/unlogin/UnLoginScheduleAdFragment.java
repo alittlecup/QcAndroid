@@ -15,7 +15,6 @@ import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import javax.inject.Inject;

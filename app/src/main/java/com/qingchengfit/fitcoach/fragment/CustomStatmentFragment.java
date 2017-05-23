@@ -8,7 +8,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.AdapterView;
+=======
+>>>>>>> f_course_report
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +20,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+<<<<<<< HEAD
 import cn.qingchengfit.widgets.DialogList;
+=======
+>>>>>>> f_course_report
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.qingchengfit.fitcoach.R;
@@ -32,6 +38,10 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
+<<<<<<< HEAD
+=======
+
+>>>>>>> f_course_report
 
 /**
  * A simple {@link Fragment} subclass.
@@ -148,6 +158,7 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     try {
       date = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
     } catch (Exception e) {
+<<<<<<< HEAD
 
     }
 
@@ -183,6 +194,43 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     } catch (Exception e) {
 
     }
+=======
+
+    }
+
+    pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
+  }
+
+  @OnClick(R.id.custom_statment_start) public void onClickStart() {
+
+    if (pwTime == null) {
+      pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
+    }
+    pwTime.setRange(1900, 2100);
+    pwTime.setOnTimeSelectListener(new TimeDialogWindow.OnTimeSelectListener() {
+      @Override public void onTimeSelect(Date date) {
+        try {
+          Date end = DateUtils.formatDateFromYYYYMMDD(customStatmentEnd.getContent());
+
+          //                    if (date.getTime() - end.getTime() > 0) {
+          //                        ToastUtils.show(R.drawable.ic_share_fail, "开始时间不能晚于结束时间");
+          //                    } else {
+          pwTime.dismiss();
+          customStatmentStart.setContent(DateUtils.Date2YYYYMMDD(date));
+          presenter.selectStartTime(customStatmentStart.getContent());
+          //                    }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+    });
+    Date date = new Date();
+    try {
+      date = DateUtils.formatDateFromYYYYMMDD(customStatmentStart.getContent());
+    } catch (Exception e) {
+
+    }
+>>>>>>> f_course_report
 
     pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
   }

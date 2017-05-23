@@ -39,16 +39,16 @@ import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
 import com.qingchengfit.fitcoach.fragment.statement.RxNetWorkEvent;
-import com.qingchengfit.fitcoach.fragment.statement.model.SaleCardForm;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.SaleCardTypeFragment;
 import com.qingchengfit.fitcoach.fragment.statement.SaleCardTypeView;
-import com.qingchengfit.fitcoach.fragment.statement.presenter.SaleDetailPresenter;
-import com.qingchengfit.fitcoach.fragment.statement.model.SaleFilter;
 import com.qingchengfit.fitcoach.fragment.statement.SaleFilterActivity;
-import com.qingchengfit.fitcoach.fragment.statement.model.SaleTradeForm;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.SaleCardTypeFragment;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.SaleTradeTypeFormFragment;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseSaleDetail;
+import com.qingchengfit.fitcoach.fragment.statement.model.SaleCardForm;
+import com.qingchengfit.fitcoach.fragment.statement.model.SaleFilter;
+import com.qingchengfit.fitcoach.fragment.statement.model.SaleTradeForm;
+import com.qingchengfit.fitcoach.fragment.statement.presenter.SaleDetailPresenter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,6 +62,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
 
 /**
  * A simple {@link Fragment} subclass.

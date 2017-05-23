@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportOrder;
@@ -51,12 +52,12 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
     public void bindViewHolder(FlexibleAdapter adapter, CourseReverseVH holder, int position, List payloads) {
 
         Glide.with(holder.itemView.getContext())
-                .load(PhotoUtils.getSmall(order.user.avatar))
-                .asBitmap()
-                .into(new CircleImgWrapper(holder.itemPersonalHeader, holder.itemView.getContext()));
+            .load(PhotoUtils.getSmall(order.user.avatar))
+            .asBitmap()
+            .into(new CircleImgWrapper(holder.itemPersonalHeader, holder.itemView.getContext()));
         holder.itemPersonalName.setText(order.user.username());
         holder.itemPersonalGender.setImageResource(
-                order.user.gender() == 1 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
+            order.user.gender() == 1 ? R.drawable.ic_gender_signal_male : R.drawable.ic_gender_signal_female);
         holder.itemPersonPhone.setText(order.user.phone());
         holder.tvStudentStatus.setText(setStatus(order.status));
         holder.textReverseTime.setText(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(order.created_at)));
@@ -69,12 +70,12 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
                 holder.textReportReverseIncome.setText("－－");
                 holder.textReportReverseFact.setText("－－");
             } else {
-                holder.textReportReverseIncome.setText(String.valueOf(order.total_price) + setIncomeUnit(order.card.card_type));
-                holder.textReportReverseFact.setText("¥" + order.total_real_price);
+                holder.textReportReverseIncome.setText(StringUtils.getFloatDot2(order.total_price) + setIncomeUnit(order.card.card_type));
+                holder.textReportReverseFact.setText("¥" + StringUtils.getFloatDot2(order.total_real_price));
             }
         } else {
-            holder.textReportReverseIncome.setText(String.valueOf(order.total_price) + "元");
-            holder.textReportReverseFact.setText("¥" + order.total_real_price);
+            holder.textReportReverseIncome.setText(StringUtils.getFloatDot2(order.total_price) + "元");
+            holder.textReportReverseFact.setText("¥" + StringUtils.getFloatDot2(order.total_real_price));
         }
     }
 
@@ -157,18 +158,30 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
 
     class CourseReverseVH extends FlexibleViewHolder {
 
-        @BindView(R.id.item_personal_header) ImageView itemPersonalHeader;
-        @BindView(R.id.item_personal_name) TextView itemPersonalName;
-        @BindView(R.id.item_personal_gender) ImageView itemPersonalGender;
-        @BindView(R.id.tv_referrer_count) TextView tvReferrerCount;
-        @BindView(R.id.tv_student_status) TextView tvStudentStatus;
-        @BindView(R.id.item_person_phone) TextView itemPersonPhone;
-        @BindView(R.id.text_reverse_time) TextView textReverseTime;
-        @BindView(R.id.text_pay_way) TextView textPayWay;
-        @BindView(R.id.text_report_reverse_number) TextView textReportReverseNumber;
-        @BindView(R.id.text_report_reverse_income) TextView textReportReverseIncome;
-        @BindView(R.id.text_report_reverse_fact) TextView textReportReverseFact;
-        @BindView(R.id.img_pay_way) ImageView imgPayWay;
+        @BindView(R.id.item_personal_header)
+        ImageView itemPersonalHeader;
+        @BindView(R.id.item_personal_name)
+        TextView itemPersonalName;
+        @BindView(R.id.item_personal_gender)
+        ImageView itemPersonalGender;
+        @BindView(R.id.tv_referrer_count)
+        TextView tvReferrerCount;
+        @BindView(R.id.tv_student_status)
+        TextView tvStudentStatus;
+        @BindView(R.id.item_person_phone)
+        TextView itemPersonPhone;
+        @BindView(R.id.text_reverse_time)
+        TextView textReverseTime;
+        @BindView(R.id.text_pay_way)
+        TextView textPayWay;
+        @BindView(R.id.text_report_reverse_number)
+        TextView textReportReverseNumber;
+        @BindView(R.id.text_report_reverse_income)
+        TextView textReportReverseIncome;
+        @BindView(R.id.text_report_reverse_fact)
+        TextView textReportReverseFact;
+        @BindView(R.id.img_pay_way)
+        ImageView imgPayWay;
 
         public CourseReverseVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
