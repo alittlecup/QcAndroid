@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import com.qingchengfit.fitcoach.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by

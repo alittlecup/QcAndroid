@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.Utils;
 
 import cn.qingchengfit.utils.DateUtils;
 import com.qingchengfit.fitcoach.bean.Brand;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import java.util.HashMap;
 
 /**

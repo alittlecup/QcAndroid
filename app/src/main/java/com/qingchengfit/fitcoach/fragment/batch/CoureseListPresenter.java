@@ -6,7 +6,7 @@ import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 

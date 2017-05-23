@@ -14,7 +14,7 @@ import com.qingchengfit.fitcoach.bean.TeacherImpression;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseDetail;
 import java.util.List;

@@ -11,7 +11,7 @@ lt application files
 # Generated files
 bin/
 gen/
-
+app/app-tinker
 # Gradle files
 .gradle/
 build/

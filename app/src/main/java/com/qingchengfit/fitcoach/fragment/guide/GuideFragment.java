@@ -91,11 +91,7 @@ public class GuideFragment extends BaseFragment {
         toolbarTitle.setText("新建健身房");
         RxBusAdd(EventToolbar.class).subscribe(eventToolbar -> toolbarTitle.setText(eventToolbar.title));
 
-        //String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
-        //if (initStr == null || initStr.isEmpty()) {
         initBean = new CoachInitBean();
-        //}
-        //else initBean = gson.fromJson(initStr, CoachInitBean.class);
         if (isAddBrannd) {
             getChildFragmentManager().beginTransaction().replace(R.id.guide_frag, new GuideSetBrandFragment()).commit();
             return view;
@@ -113,7 +109,6 @@ public class GuideFragment extends BaseFragment {
                                 if (qcResponse.data != null && qcResponse.data.brands.size() > 0) {
                                     Intent toChooseBrand = new Intent(getActivity(), ChooseBrandActivity.class);
                                     startActivityForResult(toChooseBrand,11);
-                                    //getActivity().finish();
                                 }else {
                                     getChildFragmentManager().beginTransaction()
                                         .replace(R.id.guide_frag, new GuideSetBrandFragment())

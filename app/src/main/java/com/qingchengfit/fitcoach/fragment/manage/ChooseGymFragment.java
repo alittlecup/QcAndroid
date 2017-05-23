@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.CoachService;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.activity.BrandManageActivity;
 import com.qingchengfit.fitcoach.activity.ChooseBrandActivity;
@@ -28,7 +29,6 @@ import com.qingchengfit.fitcoach.event.EventChooseGym;
 import com.qingchengfit.fitcoach.event.EventClickManageBrand;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
 import com.qingchengfit.fitcoach.items.AddCardStyleItem;
@@ -41,6 +41,7 @@ import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -73,6 +74,7 @@ import rx.schedulers.Schedulers;
 
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
 
+    @Inject GymWrapper gymWrapper;
     private List<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
@@ -104,7 +106,7 @@ import rx.schedulers.Schedulers;
          */
         RxBusAdd(EventChooseGym.class)
             .subscribe(eventChooseGym -> {
-                RxBus.getBus().post(eventChooseGym.getCoachService());
+                gymWrapper.setCoachService(eventChooseGym.getCoachService());
                 getActivity().onBackPressed();
             });
         /**
@@ -181,13 +183,11 @@ import rx.schedulers.Schedulers;
 
     @Override public boolean onItemClick(int position) {
         if (mAdapter.getItem(position) instanceof GymItem) {
-            RxBus.getBus().post(((GymItem) mAdapter.getItem(position)).coachService);
+            gymWrapper.setCoachService(((GymItem) mAdapter.getItem(position)).coachService);
             getActivity().onBackPressed();
         } else if (mAdapter.getItem(position) instanceof AddCardStyleItem) {
             Intent goBrands = new Intent(getActivity(), ChooseBrandActivity.class);
             startActivityForResult(goBrands, 1);
-            //Intent guide = new Intent(getActivity(), GuideActivity.class);
-            //startActivity(guide);
         }
         return true;
     }

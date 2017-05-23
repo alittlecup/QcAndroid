@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment.batch;
 
 
 import com.anbillon.qcmvplib.PView;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 
 /**
  * power by

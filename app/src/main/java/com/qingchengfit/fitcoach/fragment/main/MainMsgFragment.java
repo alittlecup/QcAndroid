@@ -24,6 +24,7 @@ import cn.qingchengfit.constant.ConstantNotification;
 import cn.qingchengfit.constant.DirtySender;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.items.SystemMsgItem;
 import cn.qingchengfit.model.common.NotificationDeleted;
 import cn.qingchengfit.model.common.NotificationMsg;
@@ -60,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 import tencent.tls.platform.TLSErrInfo;
 
 /**
@@ -103,6 +105,7 @@ public class MainMsgFragment extends BaseFragment
     private int unReadNoti = 0;
     private NotificationDeleted notificationDeleted = new NotificationDeleted();
     ConversationFragment conversationFragment = new ConversationFragment();
+
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String ds = PreferenceUtils.getPrefString(getContext(), loginStatus.staff_id() + "dele_noti", "");
@@ -114,85 +117,103 @@ public class MainMsgFragment extends BaseFragment
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_msg, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initToolbar(toolbar);
+
         delegatePresenter(presenter, this);
         recyclerview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recyclerview.addItemDecoration(new QcLeftRightDivider(getContext(),0,R.layout.item_system_msg,15,15));
+        recyclerview.addItemDecoration(new QcLeftRightDivider(getContext(), 0, R.layout.item_system_msg, 15, 15));
         recyclerview.setNestedScrollingEnabled(false);
         adapter = new CommonFlexAdapter(items, this);
         recyclerview.setAdapter(adapter);
-
-
-
         refresh.setNestedScrollingEnabled(false);
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
-                refresh();
-                if (loginProcessor != null && !loginProcessor.isLogin()){
-                    loginProcessor.sientInstall();
-                }
-            }
-        });
+        refresh.setOnRefreshListener(() -> refresh());
+        RxBusAdd(EventLoginChange.class).observeOn(AndroidSchedulers.mainThread()).subscribe(eventLoginChange -> changeLogin());
+        changeLogin();
         return view;
     }
 
-    public void loginIM(){
-        if (loginStatus.isLogined()){
-                MyApplication myApplication = new MyApplication(getActivity().getApplication());
-                addConversation.setVisibility(View.VISIBLE);
-                try {
-                    Constant.setAccountType(BuildConfig.DEBUG?12162:12165);
-                    Constant.setSdkAppid(BuildConfig.DEBUG?1400029014:1400029022);
-                    Constant.setXiaomiPushAppid(BuildConfig.DEBUG?"2882303761517418101":"2882303761517418101");
-                    Constant.setBussId(BuildConfig.DEBUG? 611:605);
-                    Constant.setXiaomiPushAppkey("5361741818101");
-                    Constant.setHuaweiBussId(612);
-                    if (loginProcessor== null ||  !loginProcessor.isLogin() || conversationFragment == null) {
-                        loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
-                            getString(R.string.chat_user_id_header, loginStatus.getUserId()), Uri.parse(Configs.Server).getHost(), this);
-                        loginProcessor.sientInstall();
-                    }else {
-                        if (getChildFragmentManager().findFragmentByTag("chat") == null){
-                            onLoginSuccess();
-                        }else {
-                            getChildFragmentManager().beginTransaction().show(getChildFragmentManager().findFragmentByTag("chat")).commitAllowingStateLoss();
-                        }
+    private void changeLogin() {
+        initToolbar(toolbar);
+        if (loginStatus.isLogined()) {
+            addConversation.setVisibility(View.VISIBLE);
+            refresh();
+        } else {
+            if (adapter != null) {
+                adapter.clear();
+                adapter.addItem(new CommonNoDataItem(R.drawable.vd_no_notifications, "", "暂无消息"));
+            }
+            addConversation.setVisibility(View.GONE);
+            if (getChildFragmentManager().findFragmentByTag("chat") != null) {
+                getChildFragmentManager().beginTransaction()
+                    .hide(getChildFragmentManager().findFragmentByTag("chat"))
+                    .commitAllowingStateLoss();
+            }
+        }
+    }
+
+    public void loginIM() {
+        if (loginStatus.isLogined()) {
+            MyApplication myApplication = new MyApplication(getActivity().getApplication());
+            addConversation.setVisibility(View.VISIBLE);
+            try {
+                Constant.setAccountType(BuildConfig.DEBUG ? 12162 : 12165);
+                Constant.setSdkAppid(BuildConfig.DEBUG ? 1400029014 : 1400029022);
+                Constant.setXiaomiPushAppid(BuildConfig.DEBUG ? "2882303761517418101" : "2882303761517418101");
+                Constant.setBussId(BuildConfig.DEBUG ? 611 : 605);
+                Constant.setXiaomiPushAppkey("5361741818101");
+                Constant.setHuaweiBussId(612);
+                if (loginProcessor == null || !loginProcessor.isLogin() || conversationFragment == null) {
+                    loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
+                        getString(R.string.chat_user_id_header, loginStatus.getUserId()), Uri.parse(Configs.Server).getHost(), this);
+                    loginProcessor.sientInstall();
+                } else {
+                    if (getChildFragmentManager().findFragmentByTag("chat") == null) {
+                        onLoginSuccess();
+                    } else {
+                        getChildFragmentManager().beginTransaction()
+                            .show(getChildFragmentManager().findFragmentByTag("chat"))
+                            .commitAllowingStateLoss();
                     }
-
-
-                } catch (Exception e) {
-                    LogUtil.e(e.getMessage());
-                    ToastUtils.show(e.getMessage());
                 }
-            }else addConversation.setVisibility(View.GONE);
+            } catch (Exception e) {
+                LogUtil.e(e.getMessage());
+                ToastUtils.show(e.getMessage());
+            }
+        } else {
+            addConversation.setVisibility(View.GONE);
+        }
     }
 
     @Override public void onResume() {
         super.onResume();
-        //获取通知
-        refresh();
     }
 
-    public void refresh(){
+    public void refresh() {
         if (loginStatus.isLogined()) {
             presenter.querySimpleList(ConstantNotification.getNotiQueryJson());
             loginIM();
+        } else {
+            refresh.setRefreshing(false);
         }
     }
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         toolbarTitile.setText(R.string.title_msg);
-        toolbar.inflateMenu(R.menu.menu_clear_noti);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override public boolean onMenuItemClick(MenuItem item) {
-                presenter.clearNoti(null);
-                conversationFragment.setAllMessageRead();
-                if (getActivity() instanceof Main2Activity) {
-                    ((Main2Activity) getActivity()).freshNotiCount(0);
+        if (loginStatus.isLogined()) {
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_clear_noti);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override public boolean onMenuItemClick(MenuItem item) {
+                    presenter.clearNoti(null);
+                    conversationFragment.setAllMessageRead();
+                    if (getActivity() instanceof Main2Activity) {
+                        ((Main2Activity) getActivity()).freshNotiCount(0);
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }else {
+            toolbar.getMenu().clear();
+        }
     }
 
     @Override public String getFragmentName() {
@@ -221,7 +242,7 @@ public class MainMsgFragment extends BaseFragment
                 }).show();
             }
         });
-        getChildFragmentManager().beginTransaction().replace(R.id.frame_chat, conversationFragment,"chat").commitAllowingStateLoss();
+        getChildFragmentManager().beginTransaction().replace(R.id.frame_chat, conversationFragment, "chat").commitAllowingStateLoss();
         if (getActivity() instanceof Main2Activity) {
             ((Main2Activity) getActivity()).freshNotiCount(getUnredCount());
         }
@@ -230,9 +251,8 @@ public class MainMsgFragment extends BaseFragment
 
     @Override public void onLoginFailed(TLSErrInfo tlsErrInfo) {
 
-       ToastUtils.show(tlsErrInfo.ErrCode + "  "+tlsErrInfo.Msg);
+        ToastUtils.show("聊天系统登录失败：请重新打开应用  " + tlsErrInfo.ErrCode + "  " + tlsErrInfo.Msg);
     }
-
 
     @OnClick(R.id.fab_add_conversation) public void addCoversation() {
         Intent toChooseStaffs = new Intent(getContext(), ChooseActivity.class);
@@ -251,19 +271,19 @@ public class MainMsgFragment extends BaseFragment
                     }
 
                     @Override public void onCreateFailed(int i, String s) {
-                        LogUtil.e("code:"+i +"  "+s);
-                        ToastUtils.show("code:"+i +"  "+s);
+                        LogUtil.e("code:" + i + "  " + s);
+                        ToastUtils.show("code:" + i + "  " + s);
                     }
                 });
                 List<String> ret = data.getStringArrayListExtra("ids");
-                if (ret == null || ret.size() == 0 ){
+                if (ret == null || ret.size() == 0) {
                     ToastUtils.show("您没有选择除自己以外的任何人");
                     return;
                 }
                 DirtySender.studentList.clear();
                 addConversationProcessor.creaetGroupWithName(ret);
             }
-        }else {
+        } else {
             if (requestCode == ChooseActivity.CONVERSATION_FRIEND) {
                 DirtySender.studentList.clear();
             }
@@ -287,12 +307,11 @@ public class MainMsgFragment extends BaseFragment
         refresh.setRefreshing(false);
         unReadNoti = 0;
         if (list != null) {
-            Collections.sort(list,new NotificationCompartor());
+            Collections.sort(list, new NotificationCompartor());
             items.clear();
             for (int i = 0; i < list.size(); i++) {
                 NotificationMsg msg = list.get(i).notification != null ? list.get(i).notification : null;
-                if (list.get(i).unread > 0)
-                    unReadNoti++;
+                if (list.get(i).unread > 0) unReadNoti++;
                 if (msg == null || (msg.getId() != null && notificationDeleted.contains(Long.toString(msg.getId())))) {
                     //如果被删除 就不展示
                 } else {
@@ -304,12 +323,13 @@ public class MainMsgFragment extends BaseFragment
 
             try {
                 //判断是否要填充空页面
-                if (adapter.getItemCount() + conversationFragment.getTotalItemCount() == 0){
-                    adapter.addItem(new CommonNoDataItem(R.drawable.vd_no_notifications,"您可以点击右下角按钮发起会话","暂无消息"));
+                if (adapter.getItemCount() + conversationFragment.getTotalItemCount() == 0) {
+                    adapter.addItem(new CommonNoDataItem(R.drawable.vd_no_notifications, "您可以点击右下角按钮发起会话", "暂无消息"));
                     divider.setVisibility(View.GONE);
-                }else divider.setVisibility(View.VISIBLE);
-
-            }catch (Exception e){
+                } else {
+                    divider.setVisibility(View.VISIBLE);
+                }
+            } catch (Exception e) {
 
             }
         }
@@ -326,9 +346,9 @@ public class MainMsgFragment extends BaseFragment
                 Intent toNoti = new Intent(getActivity(), NotificationActivity.class);
                 toNoti.putExtra("type", type);
                 startActivity(toNoti);
-            }else {
+            } else {
                 presenter.clearNoti(ConstantNotification.getCategloreStr(R.drawable.vd_notification_comment));
-                ContainerActivity.router("/replies",getContext());
+                ContainerActivity.router("/replies", getContext());
             }
         }
         return false;
@@ -355,6 +375,7 @@ public class MainMsgFragment extends BaseFragment
             }).show();
         }
     }
+
     private void checkNoInfo() {
         try {
 
@@ -371,12 +392,12 @@ public class MainMsgFragment extends BaseFragment
 
         }
     }
-    public int getUnredCount(){
+
+    public int getUnredCount() {
         try {
-            return unReadNoti + (int)conversationFragment.getTotalUnreadNum();
-        }catch (Exception e){
+            return unReadNoti + (int) conversationFragment.getTotalUnreadNum();
+        } catch (Exception e) {
             return 0;
         }
-
     }
 }

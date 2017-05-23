@@ -23,7 +23,7 @@
 //import com.qingchengfit.fitcoach.bean.base.Course;
 //import com.qingchengfit.fitcoach.fragment.BaseFragment;
 //import com.qingchengfit.fitcoach.http.ResponseConstant;
-//import com.qingchengfit.fitcoach.http.bean.CoachService;
+//import cn.qingchengfit.model.base.CoachService;
 //
 //import java.util.ArrayList;
 //import java.util.List;

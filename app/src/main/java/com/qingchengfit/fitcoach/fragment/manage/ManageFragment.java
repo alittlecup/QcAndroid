@@ -17,17 +17,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
-import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.Utils.Utils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
-import com.qingchengfit.fitcoach.activity.GuideActivity;
-import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
@@ -40,8 +40,6 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
-import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
@@ -89,10 +87,14 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @BindView(R.id.gym_info_layout) LinearLayout gymInfoLayout;
     @BindView(R.id.shop_img) ImageView shopImg;
     @BindView(R.id.gym_layout) LinearLayout gymLayout;
+
+
     @Inject GymWrapper gymWrapper;
+    @Inject RepoCoachServiceImpl repoCoachService;
+
+
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
-    private CoachService mCoachService;
     private DialogList dialogList;
     private QuitGymFragment quiteGym;
     private Gson gson = new Gson();
@@ -100,6 +102,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manange, container, false);
         unbinder = ButterKnife.bind(this, view);
+        mData.clear();
         mData.add(new DailyWorkItem(
             new FunctionBean.Builder().resImg(R.drawable.moudule_service_private).text("私教排期").build()));
         mData.add(new DailyWorkItem(
@@ -175,39 +178,12 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         recyclerview2.setHasFixedSize(true);
         recyclerview2.setNestedScrollingEnabled(false);
         recyclerview2.setAdapter(adapter2);
+
         RxBusAdd(CoachService.class).subscribe(new Action1<CoachService>() {
             @Override public void call(CoachService coachService) {
                 if (coachService != null) {
-                    mCoachService = coachService;
-                    PreferenceUtils.setPrefLong(getContext(), "coachservice_id", mCoachService.getId());
-                    ((Main2Activity) getActivity()).setCoachService(mCoachService);
-                    title.setText(coachService.name);
-                    Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
-                    nameBrand.setText(coachService.brand_name);
-                    addressPhone.setText(coachService.getName());
-                    gymWrapper.setCoachService(coachService);
-
-                    HashMap<String, Object> params = new HashMap<String, Object>();
-                    params.put("id", mCoachService.getId());
-                    params.put("model", mCoachService.getModel());
-                    RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<QcResponsePermission>() {
-                            @Override public void call(QcResponsePermission qcResponsePermission) {
-                                if (ResponseConstant.checkSuccess(qcResponsePermission)) {
-                                    String ps = gson.toJson(qcResponsePermission.data,QcResponsePermission.Data.class);
-                                    PreferenceUtils.setPrefString(getContext(),App.coachid+"permission",ps);
-                                    updatePermission(qcResponsePermission.data);
-                                } else {
-                                    cn.qingchengfit.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
-                                }
-                            }
-                        }, new Action1<Throwable>() {
-                            @Override public void call(Throwable throwable) {
-                                cn.qingchengfit.utils.ToastUtils.show("权限更新失败");
-                            }
-                        }));
+                    PreferenceUtils.setPrefLong(getContext(), "coachservice_id", gymWrapper.getCoachService().getId());
+                    setGymInfo(coachService);
                 }
             }
         },throwable -> {});
@@ -216,15 +192,37 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             QcResponsePermission.Data d = gson.fromJson(s,QcResponsePermission.Data.class);
             updatePermission(d);
         }
-        initView();
-        getServer();
+        if (!isInit)
+            getServer();
+        isInit = true;
         return view;
     }
 
-    public void setCoachService(CoachService mCoachService) {
-        this.mCoachService = mCoachService;
-        gymWrapper.setCoachService(mCoachService);
+    private void setGymInfo(CoachService coachService){
+        title.setText(coachService.name);
+        Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
+        nameBrand.setText(coachService.brand_name);
+        addressPhone.setText(coachService.getName());
+        HashMap<String, Object> params = gymWrapper.getParams();
+        RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcResponsePermission>() {
+                @Override public void call(QcResponsePermission qcResponsePermission) {
+                    if (ResponseConstant.checkSuccess(qcResponsePermission)) {
+                        String ps = gson.toJson(qcResponsePermission.data,QcResponsePermission.Data.class);
+                        PreferenceUtils.setPrefString(getContext(),App.coachid+"permission",ps);
+                        updatePermission(qcResponsePermission.data);
+                    } else {
+                        cn.qingchengfit.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
+                    }
+                }
+            }, throwable -> {
+                cn.qingchengfit.utils.ToastUtils.show("权限更新失败");
+            }));
     }
+
+
 
     public void updatePermission(QcResponsePermission.Data data){
         CurentPermissions.newInstance().permissionList.clear();
@@ -237,85 +235,27 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
     @Override public void onResume() {
         super.onResume();
-        if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCurrrentPage() == 1) getServer();
     }
 
     public void getServer() {
-        RxRegiste(QcCloudClient.getApi().getApi.qcGetCoachService(App.coachid)
-            .subscribeOn(Schedulers.io())
+        long curCoachId = PreferenceUtils.getPrefLong(getContext(), "coachservice_id",0l);
+        repoCoachService.readAllServices()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<QcCoachServiceResponse>() {
-                @Override public void call(QcCoachServiceResponse qcResponse) {
-                    if (ResponseConstant.checkSuccess(qcResponse)) {
-                        if (qcResponse.data.services == null || qcResponse.data.services.size() == 0) {
-                            Intent toGuide = new Intent(getActivity(), GuideActivity.class);
-                            startActivity(toGuide);
-                            getActivity().finish();
-                            return;
+            .subscribe(coachServices -> {
+                if (coachServices.size() > 0){
+                    gymWrapper.setCoachService(coachServices.get(0));
+                    for (CoachService s:coachServices) {
+                        if (s.getId() == curCoachId){
+                            gymWrapper.setCoachService(s);
+                            break;
                         }
-                        if (qcResponse.data.services != null && qcResponse.data.services.size() > 0) {
-                            if (getActivity() instanceof Main2Activity && ((Main2Activity) getActivity()).getCoachService() != null) {
-                                CoachService coachService = ((Main2Activity) getActivity()).getCoachService();
-                                for (int i = 0; i < qcResponse.data.services.size(); i++) {
-                                    if (coachService.id == qcResponse.data.services.get(i).id && coachService.model.equalsIgnoreCase(
-                                        qcResponse.data.services.get(i).model)) {
-                                        mCoachService = qcResponse.data.services.get(i);
-                                        break;
-                                    }
-                                }
-                            } else {
-                                int pos = 0;
-                                long serviceid = PreferenceUtils.getPrefLong(getContext(), "coachservice_id", 0);
-                                for (int i = 0; i < qcResponse.data.services.size(); i++) {
-                                    if (serviceid == qcResponse.data.services.get(i).getId()) {
-                                        pos = i;
-                                        break;
-                                    }
-                                }
-                                mCoachService = qcResponse.data.services.get(pos);
-                            }
-                            gymWrapper.setCoachService(mCoachService);
-                            HashMap<String, Object> params = new HashMap<String, Object>();
-                            params.put("id", mCoachService.getId());
-                            params.put("model", mCoachService.getModel());
-                            RxRegiste(QcCloudClient.getApi().getApi.qcGetPermission(App.coachid + "", params)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<QcResponsePermission>() {
-                                    @Override public void call(QcResponsePermission qcResponsePermission) {
-                                        if (ResponseConstant.checkSuccess(qcResponsePermission)) {
-                                            String ps = gson.toJson(qcResponsePermission.data,QcResponsePermission.Data.class);
-                                            PreferenceUtils.setPrefString(getContext(),App.coachid+"permission",ps);
-                                            updatePermission(qcResponsePermission.data);
-                                        } else {
-                                            cn.qingchengfit.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
-                                        }
-                                    }
-                                }, throwable -> {
-                                    cn.qingchengfit.utils.ToastUtils.show("权限更新失败");
-                                }));
-                            initView();
-                        } else {
-                            ToastUtils.show("服务器错误");
-                        }
-                    } else {
-                        ToastUtils.show("服务器错误");
                     }
+                }else {//无场馆状态
+                    ToastUtils.show("无场馆");
                 }
-            }, new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    ToastUtils.show("服务器错误");
-                }
-            }));
-    }
 
-    public void initView() {
-        if (mCoachService != null) {
-            title.setText(mCoachService.name);
-            addressPhone.setText(mCoachService.getName());
-            nameBrand.setText(mCoachService.getBrand_name());
-            Glide.with(getContext()).load(mCoachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
-        }
+            });
+
     }
 
     @Override protected void lazyLoad() {
@@ -338,7 +278,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
 
                         Intent toGuide = new Intent(getActivity(), CourseActivity.class);
                         toGuide.putExtra("to", CourseActivity.TO_GROUP_BATCH);
-                        toGuide.putExtra("service", mCoachService);
+                        toGuide.putExtra("service", gymWrapper.getCoachService());
                         startActivity(toGuide);
                     } else {
                         showAlert(getString(R.string.sorry_no_permission));
@@ -350,7 +290,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                         || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PRISETTING)) {
 
                         Intent toCourse = new Intent(getActivity(), CourseActivity.class);
-                        toCourse.putExtra("service", mCoachService);
+                        toCourse.putExtra("service", gymWrapper.getCoachService());
                         toCourse.putExtra("to", CourseActivity.TO_PRIVATE_BATCH);
                         startActivity(toCourse);
                     } else {
@@ -362,7 +302,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                         || CurentPermissions.newInstance().queryPermission(PermissionServerUtils.PERSONAL_MANAGE_MEMBERS)) {
                         Intent toStudent = new Intent(getActivity(), FragActivity.class);
                         toStudent.putExtra("type", 9);
-                        toStudent.putExtra("service", mCoachService);
+                        toStudent.putExtra("service", gymWrapper.getCoachService());
                         startActivity(toStudent);
                     } else {
                         showAlert(getString(R.string.sorry_no_permission));
@@ -375,7 +315,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     }
                     Intent toCourseStatement = new Intent(getActivity(), FragActivity.class);
                     toCourseStatement.putExtra("type", 0);
-                    toCourseStatement.putExtra("service", mCoachService);
+                    toCourseStatement.putExtra("service", gymWrapper.getCoachService());
                     startActivity(toCourseStatement);
                     break;
                 case R.drawable.ic_sale_statement:
@@ -385,7 +325,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     }
                     Intent tosale = new Intent(getActivity(), FragActivity.class);
                     tosale.putExtra("type", 1);
-                    tosale.putExtra("service", mCoachService);
+                    tosale.putExtra("service", gymWrapper.getCoachService());
                     startActivity(tosale);
 
                     break;
@@ -396,7 +336,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     }
                     Intent toPlan = new Intent(getActivity(), FragActivity.class);
                     toPlan.putExtra("type", 8);
-                    toPlan.putExtra("service", mCoachService);
+                    toPlan.putExtra("service", gymWrapper.getCoachService());
                     startActivity(toPlan);
                     break;
                 default:
@@ -409,7 +349,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         switch (view.getId()) {
             case R.id.change_gym:
                 Intent toGym = new Intent(getActivity(), PopFromBottomActivity.class);
-                toGym.putExtra("service", mCoachService);
+                toGym.putExtra("service", gymWrapper.getCoachService());
                 startActivity(toGym);
                 break;
             case R.id.title:
@@ -420,8 +360,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     @OnClick(R.id.renewal) public void onClick() {
-        if (mCoachService != null) {
-            RxRegiste(QcCloudClient.getApi().getApi.qcStaffPmission(App.coachid + "", GymUtils.getParams(mCoachService))
+        if (gymWrapper.getCoachService() != null) {
+            RxRegiste(QcCloudClient.getApi().getApi.qcStaffPmission(App.coachid + "", GymUtils.getParams(gymWrapper.getCoachService()))
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponsePermission>() {
                     @Override public void call(QcResponsePermission qcResponsePermission) {
@@ -432,7 +372,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                         && qcResponsePermission.data.permissions.get(i).value
                                         ){
                                         Intent toEdit = new Intent(getContext(), FragActivity.class);
-                                        toEdit.putExtra("service", mCoachService);
+                                        toEdit.putExtra("service", gymWrapper.getCoachService());
                                         toEdit.putExtra("type", 13);
                                         startActivity(toEdit);
                                         return;
@@ -459,7 +399,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         if (dialogList == null) {
             dialogList = new DialogList(getContext());
             ArrayList<String> flows = new ArrayList<>();
-            flows.add("退出" + mCoachService.getBrand_name() + " · " + mCoachService.getName());
+            flows.add("离职退出该场馆");
             dialogList.list(flows, this);
         }
         dialogList.show();
@@ -470,11 +410,11 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             dialogList.dismiss();
 
             if (quiteGym == null) {
-                quiteGym = new QuitGymFragmentBuilder(mCoachService).build();
+                quiteGym = new QuitGymFragmentBuilder(gymWrapper.getCoachService()).build();
                 quiteGym.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
                         showLoading();
-                        RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid + "", GymUtils.getParams(mCoachService))
+                        RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid + "", GymUtils.getParams(gymWrapper.getCoachService()))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
@@ -483,8 +423,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                 @Override public void call(QcResponse qcResponse) {
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
-                                        ((Main2Activity) getActivity()).setCoachService(null);
                                         cn.qingchengfit.utils.ToastUtils.show("退出健身房成功！");
+                                        //// TODO: 2017/5/17 判断逻辑 退出场馆后的状态
                                         getServer();
                                     } else {
                                         cn.qingchengfit.utils.ToastUtils.show(qcResponse.getMsg());

@@ -44,7 +44,7 @@ import com.qingchengfit.fitcoach.component.TimePeriodChooser;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

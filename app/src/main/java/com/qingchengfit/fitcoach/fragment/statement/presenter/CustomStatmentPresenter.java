@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.model.base.QcStudentBean;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.DateUtils;
@@ -9,15 +10,16 @@ import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
-import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
 import com.qingchengfit.fitcoach.fragment.statement.CustomStatementView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
+
+
 
 /**
  * power by

@@ -55,6 +55,11 @@ public class MainWebFragment extends WebFragment {
 
     }
 
+    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //可见，但还没被初始化
+    }
+
     @Override protected void onVisible() {
         if (isLoaded && mRefreshSwipeRefreshLayout!= null){
             mRefreshSwipeRefreshLayout.setRefreshing(false);

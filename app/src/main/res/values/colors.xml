@@ -6,7 +6,8 @@
     <color name="primary_dark">#0c9020</color>
     <color name="primary_light">#1ED982</color>
     <color name="colorPrimarytrans">#110db14b</color>
-
+    <color name="colorPrimary">#0db14b</color>
+    <color name="colorPrimaryDark">#0c9020</color>
 
 
     <color name="backgroud_grey">#f4f4f4</color>

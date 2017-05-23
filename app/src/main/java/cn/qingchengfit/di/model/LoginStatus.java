@@ -2,11 +2,14 @@ package cn.qingchengfit.di.model;
 
 import android.content.Context;
 import android.text.TextUtils;
+import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.baidu.android.pushservice.PushManager;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
+import com.qingchengfit.fitcoach.RxBus;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 /**
@@ -72,9 +75,11 @@ public class LoginStatus {
         loginUser = null;
         PushManager.stopWork(context.getApplicationContext());
         MiPushClient.unregisterPush(context.getApplicationContext());
+        AppData.clear(context);
         PreferenceUtils.setPrefString(context, Configs.PREFER_SESSION, "");
         PreferenceUtils.setPrefString(context, "user_info", "");
         PreferenceUtils.setPrefString(context, "coach", "");
+        RxBus.getBus().post(new EventLoginChange());
     }
 
     public String staff_id(){

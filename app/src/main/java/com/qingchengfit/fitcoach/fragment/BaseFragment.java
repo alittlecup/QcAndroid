@@ -1,11 +1,17 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import butterknife.Unbinder;
 import cn.qingchengfit.utils.AppUtils;
 import com.anbillon.qcmvplib.PView;
@@ -17,6 +23,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import rx.Observable;
 import rx.Subscription;
 
@@ -40,11 +47,40 @@ public abstract class BaseFragment extends Fragment {
     boolean isPrepared;
     public Unbinder unbinder;
     private List<PresenterDelegate> delegates = new ArrayList<>();
+    protected  boolean isInit = false;
+    protected boolean isLazyLoad = true;
+
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater,container,savedInstanceState);
+        ////判断是否懒加载
+        //if (isLazyLoad) {
+        //    //处于完全可见、没被初始化的状态，调用onCreateViewLazy显示内容
+        //    if (getUserVisibleHint() && !isInit) {
+        //        lazyLoad();
+        //        isInit = true;
+        //    } else {
+        //        //进行懒加载
+        //
+        //    }
+        //} else {
+        //    //不需要懒加载，开门江山，调用onCreateViewLazy正常加载显示内容即可
+        //    lazyLoad();
+        //    isInit = true;
+        //}
+        //return container;
+    }
+
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
 
     @Override public void onAttach(Context context) {
-        try{
+        try {
             AndroidSupportInjection.inject(this);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         super.onAttach(context);
@@ -77,18 +113,50 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()) {
-            isVisible = true;
-            onVisible();
-        } else {
-            isVisible = false;
-            onInVisible();
+        if (getView() != null) {
+            if (getUserVisibleHint()) {
+                isVisible = true;
+                onVisible();
+            } else {
+                isVisible = false;
+                onInVisible();
+            }
         }
     }
+
+    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter && nextAnim > 0) {
+            Animation animation = AnimationUtils.loadAnimation(getActivity(), nextAnim);
+            if (animation != null) {
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override public void onAnimationEnd(Animation animation) {
+                        onFinishAnimation();
+                    }
+
+                    @Override public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+            }
+            return animation;
+        } else {
+            return super.onCreateAnimation(transit, enter, nextAnim);
+        }
+    }
+
+    protected void onFinishAnimation() {
+
+    }
+
+
+
+
 
     protected void onVisible() {
         lazyLoad();
@@ -103,9 +171,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showAlert(String res) {
-       if (getActivity() instanceof BaseAcitivity){
-           ((BaseAcitivity) getActivity()).showAlert(res);
-       }
+        if (getActivity() instanceof BaseAcitivity) {
+            ((BaseAcitivity) getActivity()).showAlert(res);
+        }
     }
 
     protected void onInVisible() {
@@ -113,8 +181,7 @@ public abstract class BaseFragment extends Fragment {
 
     private List<Pair<String, Observable>> observables = new ArrayList<>();
 
-    @Override
-    public void onDestroyView() {
+    @Override public void onDestroyView() {
         if (getActivity() != null) {
             AppUtils.hideKeyboard(getActivity());
         }
@@ -125,8 +192,7 @@ public abstract class BaseFragment extends Fragment {
         }
         unattachView();
         super.onDestroyView();
-        if (unbinder != null)
-            unbinder.unbind();
+        if (unbinder != null) unbinder.unbind();
     }
 
     List<Subscription> sps = new ArrayList<>();
@@ -138,9 +204,9 @@ public abstract class BaseFragment extends Fragment {
         for (int i = 0; i < observables.size(); i++) {
             RxBus.getBus().unregister(observables.get(i).first, observables.get(i).second);
         }
-
     }
-    public String getFragmentName(){
+
+    public String getFragmentName() {
         return "fragment";
     }
 
@@ -155,4 +221,26 @@ public abstract class BaseFragment extends Fragment {
         return ob;
     }
 
+    protected void router(Fragment fragment) {
+        String tag = UUID.randomUUID().toString();
+        if (fragment instanceof BaseFragment){
+            tag = ((BaseFragment) fragment).getFragmentName();
+        }
+        router(getLayoutRes(), fragment,tag, R.anim.slide_hold, R.anim.slide_hold);
+    }
+    protected void router(Fragment fragment,String tag) {
+        router(getLayoutRes(), fragment,tag, R.anim.slide_hold, R.anim.slide_hold);
+    }
+
+    public int getLayoutRes() {
+        return 0;
+    }
+
+    protected void router(int res, Fragment fragment, String tag,int resIn, int resOut) {
+        Fragment fragment1 = getChildFragmentManager().findFragmentByTag(tag);
+        if (fragment1 != null){
+            getChildFragmentManager().beginTransaction().show(fragment1).commitAllowingStateLoss();
+        }else
+            getChildFragmentManager().beginTransaction().setCustomAnimations(resIn, resOut).replace(res, fragment).commitAllowingStateLoss();
+    }
 }

@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
-import com.qingchengfit.fitcoach.http.bean.CoachService;
+import cn.qingchengfit.model.base.CoachService;
 
 import javax.inject.Inject;
 
