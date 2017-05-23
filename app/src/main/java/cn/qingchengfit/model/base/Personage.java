@@ -176,14 +176,4 @@ public class Personage implements Parcelable {
         this.head = in.readString();
         this.brand_id = in.readString();
     }
-
-    public static final Creator<Personage> CREATOR = new Creator<Personage>() {
-        @Override public Personage createFromParcel(Parcel source) {
-            return new Personage(source);
-        }
-
-        @Override public Personage[] newArray(int size) {
-            return new Personage[size];
-        }
-    };
 }

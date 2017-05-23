@@ -90,6 +90,12 @@ public class Staff extends Personage implements Parcelable {
         this.count = count;
     }
 
+    public static Staff formatFromUser(User user,String coachId){
+        Staff staff = new Staff(user.username,user.phone,user.avatar,user.gender);
+        staff.setId(coachId);
+        return staff;
+    }
+
     @Override public int describeContents() {
         return 0;
     }
@@ -123,10 +129,4 @@ public class Staff extends Personage implements Parcelable {
             return new Staff[size];
         }
     };
-
-    public static Staff formatFromUser(User user,String coachId){
-        Staff staff = new Staff(user.username,user.phone,user.avatar,user.gender);
-        staff.setId(coachId);
-        return staff;
-    }
 }

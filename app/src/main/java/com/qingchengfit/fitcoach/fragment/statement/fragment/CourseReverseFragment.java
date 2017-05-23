@@ -17,6 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import cn.qingchengfit.widgets.RatingBarVectorFix;
@@ -126,7 +127,7 @@ import javax.inject.Inject;
       textReportReverseFact.setText("－－");
     } else {
       setInCome(schedule);
-      textReportReverseFact.setText("¥" + schedule.total_real_price);
+      textReportReverseFact.setText("¥" + StringUtils.getFloatDot2(schedule.total_real_price));
     }
     Glide.with(getContext())
         .load(PhotoUtils.getSmall(schedule.teacher.avatar))
@@ -149,12 +150,12 @@ import javax.inject.Inject;
   }
 
   private void setInCome(CourseReportSchedule schedule) {
-    if (!TextUtils.isEmpty(schedule.total_account)) {
+    if (schedule.total_account != 0) {
       if (schedule.total_times != 0) {
         textReportReverseIncome.setText(
-            getSb(schedule.total_account + "元+" + schedule.total_times + "次"));
+            getSb(StringUtils.getFloatDot2(schedule.total_account) + "元+" + schedule.total_times + "次"));
       } else {
-        textReportReverseIncome.setText(getSb(schedule.total_account + "元"));
+        textReportReverseIncome.setText(getSb(StringUtils.getFloatDot2(schedule.total_account) + "元"));
       }
     } else if (schedule.total_times != 0) {
       textReportReverseIncome.setText(getSb(schedule.total_times + "次"));

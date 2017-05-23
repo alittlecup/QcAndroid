@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.StringUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportOrder;
@@ -69,12 +70,12 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
                 holder.textReportReverseIncome.setText("－－");
                 holder.textReportReverseFact.setText("－－");
             } else {
-                holder.textReportReverseIncome.setText(String.valueOf(order.total_price) + setIncomeUnit(order.card.card_type));
-                holder.textReportReverseFact.setText("¥" + order.total_real_price);
+                holder.textReportReverseIncome.setText(StringUtils.getFloatDot2(order.total_price) + setIncomeUnit(order.card.card_type));
+                holder.textReportReverseFact.setText("¥" + StringUtils.getFloatDot2(order.total_real_price));
             }
         } else {
-            holder.textReportReverseIncome.setText(String.valueOf(order.total_price) + "元");
-            holder.textReportReverseFact.setText("¥" + order.total_real_price);
+            holder.textReportReverseIncome.setText(StringUtils.getFloatDot2(order.total_price) + "元");
+            holder.textReportReverseFact.setText("¥" + StringUtils.getFloatDot2(order.total_real_price));
         }
     }
 

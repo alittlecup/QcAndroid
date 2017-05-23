@@ -10,7 +10,7 @@ import cn.qingchengfit.model.base.Staff;
 
 public class CourseCoach extends Staff {
 
-    public int score;
+    public float score;
 
     @Override public int describeContents() {
         return 0;
@@ -18,7 +18,7 @@ public class CourseCoach extends Staff {
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.score);
+        dest.writeFloat(this.score);
     }
 
     public CourseCoach() {
@@ -26,11 +26,10 @@ public class CourseCoach extends Staff {
 
     protected CourseCoach(Parcel in) {
         super(in);
-        this.score = in.readInt();
+        this.score = in.readFloat();
     }
 
-    public static final Parcelable.Creator<CourseCoach>
-        CREATOR = new Parcelable.Creator<CourseCoach>() {
+    public static final Creator<CourseCoach> CREATOR = new Creator<CourseCoach>() {
         @Override public CourseCoach createFromParcel(Parcel source) {
             return new CourseCoach(source);
         }

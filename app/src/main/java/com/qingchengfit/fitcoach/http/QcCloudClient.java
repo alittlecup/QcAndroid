@@ -470,6 +470,10 @@ public class QcCloudClient {
         @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCourses(@Path("id") String coach_id,
             @QueryMap HashMap<String, String> params, @Query("is_private") int is_private);
 
+        //获取健身房全部课程列表
+        @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseData<CourseTypeSamples>> qcGetAllCourses(@Path("id") String coach_id,
+            @QueryMap HashMap<String, Object> params);
+
         @GET("/api/v2/coaches/{id}/courses/?&show_all=1") rx.Observable<QcResponseCourseList> qcGetCoursesAll(@Path("id") String coach_id,
             @QueryMap HashMap<String, String> params);
 

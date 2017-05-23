@@ -30,6 +30,7 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -472,23 +473,16 @@ public class StatementDetailFragment extends BaseFragment
     for (int i = 0; i < mAllSchedule.size(); i++) {
       QcResponseStatementDetail.StatamentSchedule statamentSchedule = mAllSchedule.get(i);
 
-      if ((mFilter.course_type < 0
-          || (mFilter.course_type == Configs.TYPE_PRIVATE
-          && statamentSchedule.course.is_private())
-          || (mFilter.course_type == Configs.TYPE_GROUP
-          && !statamentSchedule.course.is_private())
-          || mFilter.course == null
+      if ((mFilter.course_type < 0 || mFilter.course_type == 99 || ((mFilter.course_type == Configs.TYPE_PRIVATE && statamentSchedule.course.is_private()) || (mFilter.course_type == Configs.TYPE_GROUP
+          && !statamentSchedule.course.is_private())))
+          && (mFilter.course == null
           || mFilter.course.getId() == null
-          || (mFilter.course.getId().equalsIgnoreCase(statamentSchedule.course.getId())))
-          && (mFilter.coach == null
+          || (mFilter.course.getId().equalsIgnoreCase(statamentSchedule.course.getId()))) && (mFilter.coach == null
           || mFilter.coach.id == null
-          || (TextUtils.equals(mFilter.coach.id, statamentSchedule.teacher.id)))
-          && (mFilter.student == null || (statamentSchedule.getUsersIds()
-          .contains(mFilter.student.id)))
-          && (DateUtils.formatDateFromYYYYMMDD(mFilter.start).getTime()
-          <= DateUtils.formatDateFromServer(statamentSchedule.start).getTime())
-          && ((DateUtils.formatDateFromYYYYMMDD(mFilter.end).getTime() + DateUtils.DAY_TIME)
-          > DateUtils.formatDateFromServer(statamentSchedule.end).getTime())) {
+          || (TextUtils.equals(mFilter.coach.id, statamentSchedule.teacher.id))) && (mFilter.student == null
+          || (statamentSchedule.getUsersIds().contains(mFilter.student.id))) && (DateUtils.formatDateFromYYYYMMDD(mFilter.start)
+          .getTime() <= DateUtils.formatDateFromServer(statamentSchedule.start).getTime()) && ((DateUtils.formatDateFromYYYYMMDD(
+          mFilter.end).getTime() + DateUtils.DAY_TIME) > DateUtils.formatDateFromServer(statamentSchedule.end).getTime())) {
         statementBeans.add(statamentSchedule);
 
         /**
@@ -674,6 +668,7 @@ public class StatementDetailFragment extends BaseFragment
     @BindView(R.id.item_statement_time_shop) TextView itemStatementDetailContent;
     @BindView(R.id.item_card_cost) TextView itemUsers;
     @BindView(R.id.text_real_income) TextView textRealIncome;
+    @BindView(R.id.image_course_type) ImageView imageCourseType;
 
     public StatementDetailVH(View itemView) {
       super(itemView);
@@ -731,6 +726,8 @@ public class StatementDetailFragment extends BaseFragment
         holder.itemStatementDetailBottomdivier.setVisibility(View.GONE);
       }
 
+      holder.imageCourseType.setImageResource(bean.course.is_private ? R.drawable.ic_course_private_conner : R.drawable.ic_course_group_conner);
+
       holder.itemStatementDetailName.setText(bean.course.getName() + "-" + bean.teacher.username);
       holder.itemStatementDetailContent.setText(DateUtils.getTimeHHMM(date)
           + "-"
@@ -761,7 +758,7 @@ public class StatementDetailFragment extends BaseFragment
           .load(PhotoUtils.getSmall(bean.course.getPhoto()))
           .asBitmap()
           .into(new CircleImgWrapper(holder.itemStatementDetailPic, getContext()));
-      holder.textRealIncome.setText("¥" + bean.total_real_price);
+      holder.textRealIncome.setText("¥" + StringUtils.getFloatDot2(bean.total_real_price));
     }
 
     @Override public int getItemCount() {
