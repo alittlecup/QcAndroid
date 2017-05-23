@@ -51,7 +51,7 @@ import com.qingchengfit.fitcoach.bean.PayEvent;
 import com.qingchengfit.fitcoach.bean.PlatformInfo;
 import com.qingchengfit.fitcoach.bean.ShareBean;
 import com.qingchengfit.fitcoach.bean.ToolbarAction;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.fragment.SingleImageShowFragment;
 import com.tencent.mm.sdk.modelpay.PayReq;

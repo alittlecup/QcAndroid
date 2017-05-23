@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.event.EventChoosePerson;
 import com.qingchengfit.fitcoach.event.EventFresh;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

@@ -9,7 +9,7 @@ import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import java.util.List;
 import javax.inject.Inject;

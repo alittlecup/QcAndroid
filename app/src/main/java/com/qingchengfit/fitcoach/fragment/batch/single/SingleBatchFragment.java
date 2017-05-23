@@ -42,7 +42,7 @@ import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;
 import java.util.ArrayList;

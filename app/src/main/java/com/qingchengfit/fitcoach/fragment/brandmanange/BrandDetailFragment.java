@@ -33,7 +33,7 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcReponseBrandDetailShops;

@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.MeetingFragment;
 

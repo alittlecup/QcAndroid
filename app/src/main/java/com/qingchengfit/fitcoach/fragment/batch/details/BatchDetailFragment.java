@@ -36,7 +36,7 @@ import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.CourseManageFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;

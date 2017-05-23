@@ -30,7 +30,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;

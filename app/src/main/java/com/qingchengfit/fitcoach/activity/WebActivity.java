@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.WindowManager;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.WebFragment;
 

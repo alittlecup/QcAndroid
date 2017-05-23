@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CalenderPopWindow;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;

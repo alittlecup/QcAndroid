@@ -1,8 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.model.base.DistrictEntity;
 
 /**
  * power by
@@ -156,42 +154,6 @@ public class QcCoachRespone extends QcResponse {
                 this.avatar = avatar;
             }
 
-            public static class DistrictEntity implements Parcelable {
-                public static final Parcelable.Creator<DistrictEntity> CREATOR = new Parcelable.Creator<DistrictEntity>() {
-                    public DistrictEntity createFromParcel(Parcel source) {
-                        return new DistrictEntity(source);
-                    }
-
-                    public DistrictEntity[] newArray(int size) {
-                        return new DistrictEntity[size];
-                    }
-                };
-                @SerializedName("province") public ProvinceBean province;
-                @SerializedName("city") public CityBean city;
-                @SerializedName("code") public String id;
-                @SerializedName("name") public String name;
-
-                public DistrictEntity() {
-                }
-
-                protected DistrictEntity(Parcel in) {
-                    this.province = in.readParcelable(ProvinceBean.class.getClassLoader());
-                    this.city = in.readParcelable(CityBean.class.getClassLoader());
-                    this.id = in.readString();
-                    this.name = in.readString();
-                }
-
-                @Override public int describeContents() {
-                    return 0;
-                }
-
-                @Override public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeParcelable(this.province, flags);
-                    dest.writeParcelable(this.city, flags);
-                    dest.writeString(this.id);
-                    dest.writeString(this.name);
-                }
-            }
         }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Space;
 import android.widget.TextView;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.MeasureUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 
 /**

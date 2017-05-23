@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.CmBean;
 import com.qingchengfit.fitcoach.bean.RxbusBatchLooperConfictEvent;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

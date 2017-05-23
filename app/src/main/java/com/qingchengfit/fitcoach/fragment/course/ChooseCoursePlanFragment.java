@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcAllCoursePlanResponse;

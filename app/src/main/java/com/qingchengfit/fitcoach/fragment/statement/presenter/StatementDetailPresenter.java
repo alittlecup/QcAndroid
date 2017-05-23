@@ -1,12 +1,12 @@
 package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.Utils.StatementCompare;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.fragment.statement.StatementDetailView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;

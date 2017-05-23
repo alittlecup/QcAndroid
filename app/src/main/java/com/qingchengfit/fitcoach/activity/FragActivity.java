@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.AppUtils;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.AddBelongGymFragment;

@@ -2,13 +2,13 @@ package cn.qingchengfit.chat;
 
 import android.util.Pair;
 import cn.qingchengfit.chat.model.ChatGym;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.responese.ChatFriendsData;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import com.anbillon.qcmvplib.CView;
 import com.anbillon.qcmvplib.PView;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import java.util.ArrayList;
 import java.util.List;

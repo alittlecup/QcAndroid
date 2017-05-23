@@ -31,6 +31,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;

@@ -23,6 +23,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.utils.BusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.DialogList;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;

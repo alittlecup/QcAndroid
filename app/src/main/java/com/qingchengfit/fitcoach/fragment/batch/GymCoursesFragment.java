@@ -26,7 +26,7 @@ import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.adapter.ImageThreeTextBean;
 import com.qingchengfit.fitcoach.bean.RxAddCourse;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.batch.list.CourseBatchDetailFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourse;
 import java.util.ArrayList;

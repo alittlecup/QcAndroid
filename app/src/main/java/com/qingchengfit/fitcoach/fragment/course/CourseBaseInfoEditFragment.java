@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import javax.inject.Inject;

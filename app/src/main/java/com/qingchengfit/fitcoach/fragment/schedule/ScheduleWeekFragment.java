@@ -30,7 +30,7 @@ import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.Calendar;
 import java.util.Date;
 import rx.functions.Action1;

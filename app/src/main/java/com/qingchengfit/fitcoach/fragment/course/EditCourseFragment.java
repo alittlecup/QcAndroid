@@ -30,7 +30,7 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.CourseBody;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrandShops;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;

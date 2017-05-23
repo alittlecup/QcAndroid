@@ -214,17 +214,6 @@ public class QcCloudClient {
             }
         }).addNetworkInterceptor(interceptor).readTimeout(3, TimeUnit.MINUTES).build();
         Gson customGsonInstance = new GsonBuilder().enableComplexMapKeySerialization()
-            //                .setExclusionStrategies(new ExclusionStrategy() {
-            //                    @Override
-            //                    public boolean shouldSkipField(FieldAttributes f) {
-            //                        return f.getDeclaringClass().equals(RealmObject.class);
-            //                    }
-            //
-            //                    @Override
-            //                    public boolean shouldSkipClass(Class<?> clazz) {
-            //                        return false;
-            //                    }
-            //                })
             .create();
         Retrofit getApiAdapter = new Retrofit.Builder().baseUrl(Configs.Server)
             .client(client)

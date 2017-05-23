@@ -15,7 +15,7 @@ import cn.qingchengfit.widgets.RatingBarVectorFix;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseShopComment;
 import com.qingchengfit.fitcoach.items.ShopCommentItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

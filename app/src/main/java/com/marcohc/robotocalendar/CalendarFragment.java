@@ -11,7 +11,7 @@ import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.component.DatePicker;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import java.util.Calendar;
 import java.util.Date;

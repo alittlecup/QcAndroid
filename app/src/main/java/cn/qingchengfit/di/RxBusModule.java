@@ -1,9 +1,7 @@
-//package com.qingchengfit.fitcoach.di;
+//package cn.qingchengfit.di;
 //
 //
-//import com.qingchengfit.fitcoach.App;
-//
-//import javax.inject.Singleton;
+//import com.qingchengfit.fitcoach.RxBus;
 //
 //import dagger.Module;
 //import dagger.Provides;
@@ -20,19 +18,11 @@
 // * <p/>
 // * <p/>
 // * Created by Paper on 15/6/16 2015.
-// */
-//
+//// */
 //@Module
-//public class ApplicationModule {
-//    App app;
-//
-//    public ApplicationModule(App app) {
-//        this.app = app;
-//    }
-//
-//    @Singleton
+//public class RxBusModule {
 //    @Provides
-//    public App getApp() {
-//        return app;
+//    RxBus getRxBus() {
+//        return RxBus.getBus();
 //    }
 //}

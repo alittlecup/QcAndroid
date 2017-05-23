@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;

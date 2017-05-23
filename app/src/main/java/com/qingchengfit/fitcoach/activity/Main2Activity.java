@@ -34,7 +34,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.BuildConfig;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;

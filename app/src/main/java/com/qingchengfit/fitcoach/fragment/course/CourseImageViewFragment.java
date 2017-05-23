@@ -15,7 +15,7 @@ import cn.qingchengfit.utils.DateUtils;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SchedulePhoto;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.Locale;
 import uk.co.senab.photoview.PhotoView;
 

@@ -15,7 +15,7 @@ import butterknife.OnClick;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.ScanBody;
 import com.qingchengfit.fitcoach.http.QcCloudClient;

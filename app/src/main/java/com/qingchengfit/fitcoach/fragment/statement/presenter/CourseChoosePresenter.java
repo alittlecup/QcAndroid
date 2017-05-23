@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcResponseData;
@@ -9,7 +10,6 @@ import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;

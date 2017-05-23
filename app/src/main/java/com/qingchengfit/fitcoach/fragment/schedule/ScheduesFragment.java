@@ -45,7 +45,7 @@ import com.qingchengfit.fitcoach.component.DatePicker;
 import com.qingchengfit.fitcoach.component.PagerSlidingTabStrip;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleAction;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ScheduleListFragment;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;

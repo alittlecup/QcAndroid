@@ -95,7 +95,7 @@
     -keep class com.qingchengfit.fitcoach.http.QcCloudClient{
     *;
     }
-    -keep class com.qingchengfit.fitcoach.di.**{*;}
+    -keep class cn.qingchengfit.di.**{*;}
 
 #realm
 -keep class io.realm.annotations.RealmModule

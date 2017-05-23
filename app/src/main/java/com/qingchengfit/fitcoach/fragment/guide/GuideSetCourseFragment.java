@@ -25,7 +25,7 @@ import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventChooseImage;
 import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import java.util.ArrayList;

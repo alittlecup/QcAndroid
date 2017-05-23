@@ -17,6 +17,7 @@ import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;

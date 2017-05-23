@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.utils.AppUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.FragmentCallBack;
 import com.qingchengfit.fitcoach.fragment.ModifyBrifeFragment;

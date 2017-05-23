@@ -12,7 +12,7 @@ import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.adapter.BrandManageAdapterAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

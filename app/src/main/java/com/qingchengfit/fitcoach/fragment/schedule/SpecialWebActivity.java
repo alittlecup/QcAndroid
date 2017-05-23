@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.ShareDialogFragment;

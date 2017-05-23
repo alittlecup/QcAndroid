@@ -11,7 +11,7 @@ import cn.qingchengfit.utils.DateUtils;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;

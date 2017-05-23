@@ -17,7 +17,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.BusinessUtils;
 import com.qingchengfit.fitcoach.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

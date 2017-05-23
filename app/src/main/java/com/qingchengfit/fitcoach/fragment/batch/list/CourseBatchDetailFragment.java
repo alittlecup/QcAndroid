@@ -45,7 +45,7 @@ import com.qingchengfit.fitcoach.fragment.course.CourseListFragment;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupDetail;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateDetail;
 import com.qingchengfit.fitcoach.items.BatchItem;
-import com.qingchengfit.fitcoach.items.CommonNoDataItem;
+import cn.qingchengfit.items.CommonNoDataItem;
 import com.qingchengfit.fitcoach.items.HideBatchItem;
 import com.qingchengfit.fitcoach.items.HintItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;

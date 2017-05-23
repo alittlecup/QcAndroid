@@ -24,6 +24,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;

@@ -20,7 +20,7 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.FlexableListFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.WebActivity;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.EmptyFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Context;
+import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

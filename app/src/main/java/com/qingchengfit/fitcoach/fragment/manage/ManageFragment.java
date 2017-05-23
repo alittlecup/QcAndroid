@@ -36,7 +36,7 @@ import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;

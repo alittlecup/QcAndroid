@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.batch.details;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
@@ -8,7 +9,6 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;
 import com.qingchengfit.fitcoach.bean.Brand;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;

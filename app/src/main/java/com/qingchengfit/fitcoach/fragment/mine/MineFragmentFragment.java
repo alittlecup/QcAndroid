@@ -29,7 +29,7 @@ import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.SpecialWebActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;

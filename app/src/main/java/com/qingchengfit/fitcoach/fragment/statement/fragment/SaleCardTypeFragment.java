@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.utils.StringUtils;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.statement.model.SaleCardForm;
 import java.util.ArrayList;
 import java.util.List;

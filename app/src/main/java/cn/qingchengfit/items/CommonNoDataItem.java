@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.items;
+package cn.qingchengfit.items;
 
 import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;

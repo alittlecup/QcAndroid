@@ -36,7 +36,7 @@ import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.bean.base.InitBatch;
 import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;
 import com.qingchengfit.fitcoach.items.BatchCircleItem;

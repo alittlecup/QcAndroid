@@ -18,7 +18,7 @@ CREATE TABLE CoachService (
   phone TEXT,
   address TEXT,
   can_trial INTEGER AS Boolean DEFAULT 0,
-  gd_district TEXT AS com.qingchengfit.fitcoach.http.bean.QcCoachRespone.DataEntity.CoachEntity.DistrictEntity
+  gd_district TEXT AS cn.qingchengfit.model.base.DistrictEntity
 );
 
 getAllCoachService:

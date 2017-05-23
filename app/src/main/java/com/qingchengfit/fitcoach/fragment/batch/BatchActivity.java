@@ -2,12 +2,12 @@ package com.qingchengfit.fitcoach.fragment.batch;
 
 import android.os.Bundle;
 import butterknife.ButterKnife;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.di.DaggerCourseComponent;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.di.CourseComponent;
 import com.qingchengfit.fitcoach.di.CourseModule;
-import com.qingchengfit.fitcoach.di.DaggerCourseComponent;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.RestRepository;
 

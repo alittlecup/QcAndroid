@@ -6,7 +6,7 @@ import butterknife.Unbinder;
 import com.anbillon.qcmvplib.PView;
 import com.anbillon.qcmvplib.Presenter;
 import com.anbillon.qcmvplib.PresenterDelegate;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.List;

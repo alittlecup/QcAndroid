@@ -23,7 +23,7 @@ import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.QcResponseSpaces;
 import com.qingchengfit.fitcoach.bean.Space;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.items.SpaceItem;

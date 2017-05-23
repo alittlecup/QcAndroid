@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;

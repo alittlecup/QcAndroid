@@ -32,6 +32,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;

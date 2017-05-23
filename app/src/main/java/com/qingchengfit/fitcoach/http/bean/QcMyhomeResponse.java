@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.google.gson.annotations.SerializedName;
+import cn.qingchengfit.model.base.DistrictEntity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,12 +198,7 @@ public class QcMyhomeResponse extends QcResponse {
                 this.id = id;
             }
 
-            public static class DistrictEntity {
-                @SerializedName("province") public ProvinceBean province;
-                @SerializedName("city") public CityBean city;
-                @SerializedName("id") public String id;
-                @SerializedName("name") public String name;
-            }
+
 
             public static class EvaluateEntity implements Parcelable {
                 public static final Parcelable.Creator<EvaluateEntity> CREATOR = new Parcelable.Creator<EvaluateEntity>() {

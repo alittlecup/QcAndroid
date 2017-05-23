@@ -7,6 +7,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import cn.qingchengfit.di.DaggerAppComponent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
@@ -17,7 +18,6 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.di.AppComponent;
 import com.qingchengfit.fitcoach.di.AppModule;
-import com.qingchengfit.fitcoach.di.DaggerAppComponent;
 import com.qingchengfit.fitcoach.http.bean.Coach;
 import com.qingchengfit.fitcoach.http.bean.User;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
@@ -32,17 +32,17 @@ import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
-//import com.qingchengfit.fitcoach.di.ApplicationComponet;
+//import cn.qingchengfit.di.ApplicationComponet;
 
-//import com.qingchengfit.fitcoach.di.ApplicationModule;
+//import cn.qingchengfit.di.ApplicationModule;
 
-//import com.qingchengfit.fitcoach.di.ApplicationComponet;
+//import cn.qingchengfit.di.ApplicationComponet;
 
 //import rx.plugins.RxJavaErrorHandler;
 
-//import com.qingchengfit.fitcoach.di.ApplicationComponet;
-//import com.qingchengfit.fitcoach.di.ApplicationModule;
-//import com.qingchengfit.fitcoach.di.DaggerApplicationComponet;
+//import cn.qingchengfit.di.ApplicationComponet;
+//import cn.qingchengfit.di.ApplicationModule;
+//import cn.qingchengfit.di.DaggerApplicationComponet;
 
 /**
  * power by

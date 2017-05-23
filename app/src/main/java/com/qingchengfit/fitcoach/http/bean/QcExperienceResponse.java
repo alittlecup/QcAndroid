@@ -3,6 +3,7 @@ package com.qingchengfit.fitcoach.http.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import cn.qingchengfit.model.base.DistrictEntity;
 import java.util.List;
 
 /**
@@ -334,7 +335,7 @@ public class QcExperienceResponse extends QcResponse {
                 private long id;
                 private String name;
                 private String photo;
-                private QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
+                private DistrictEntity district;
                 private boolean is_authenticated;
                 private String address;
                 private String brand_name;
@@ -346,7 +347,7 @@ public class QcExperienceResponse extends QcResponse {
                     this.id = in.readLong();
                     this.name = in.readString();
                     this.photo = in.readString();
-                    this.district = in.readParcelable(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity.class.getClassLoader());
+                    this.district = in.readParcelable(DistrictEntity.class.getClassLoader());
                     this.is_authenticated = in.readByte() != 0;
                     this.address = in.readString();
                     this.brand_name = in.readString();
@@ -377,11 +378,11 @@ public class QcExperienceResponse extends QcResponse {
                     this.brand_name = brand_name;
                 }
 
-                public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity getDistrict() {
+                public DistrictEntity getDistrict() {
                     return district;
                 }
 
-                public void setDistrict(QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district) {
+                public void setDistrict(DistrictEntity district) {
                     this.district = district;
                 }
 

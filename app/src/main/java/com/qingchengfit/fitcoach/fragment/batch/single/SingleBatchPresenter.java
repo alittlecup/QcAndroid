@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.batch.single;
 
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
 import com.anbillon.qcmvplib.CView;
@@ -12,7 +13,6 @@ import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.SingleBatch;
 import com.qingchengfit.fitcoach.bean.SingleBatchBody;
 import com.qingchengfit.fitcoach.bean.Space;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;

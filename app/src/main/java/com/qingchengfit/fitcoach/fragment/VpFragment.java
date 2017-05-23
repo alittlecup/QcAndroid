@@ -1,5 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
+import cn.qingchengfit.views.fragments.BaseFragment;
+
 /**
  * power by
  * <p>

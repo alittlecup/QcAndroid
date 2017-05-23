@@ -21,7 +21,7 @@ import cn.qingchengfit.model.base.CoachService;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.BaseAcitivity;
+import cn.qingchengfit.views.activity.BaseAcitivity;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.PhoneFuncUtils;

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.DistrictEntity;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -23,7 +24,7 @@ public class AddGymPostBean {
     @SerializedName("id") public String id;
     @SerializedName("brand_name") public String brand_name;
     @SerializedName("photo") public String photo;
-    @SerializedName("district") public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity district;
+    @SerializedName("district") public DistrictEntity district;
 
     public AddGymPostBean(String name, int city, String contact, String description, String brand_name) {
         this.name = name;

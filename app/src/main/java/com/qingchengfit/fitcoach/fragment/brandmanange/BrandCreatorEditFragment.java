@@ -22,7 +22,7 @@ import com.qingchengfit.fitcoach.activity.BrandManageActivity;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.ChangeBrandCreatorBody;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.GetCodeBean;

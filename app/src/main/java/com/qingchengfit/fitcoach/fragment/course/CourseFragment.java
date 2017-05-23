@@ -20,7 +20,7 @@ import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
 import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 
 /**

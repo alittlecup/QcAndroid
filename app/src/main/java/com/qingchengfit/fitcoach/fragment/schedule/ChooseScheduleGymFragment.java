@@ -29,7 +29,7 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.fragment.AddGymFragmentBuilder;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.items.AddBatchCircleItem;

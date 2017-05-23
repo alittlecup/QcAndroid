@@ -31,6 +31,7 @@ import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.IntentUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RecycleViewWithNoImg;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;

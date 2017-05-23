@@ -24,7 +24,7 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.bean.EventStep;
 import com.qingchengfit.fitcoach.event.EventToolbar;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;

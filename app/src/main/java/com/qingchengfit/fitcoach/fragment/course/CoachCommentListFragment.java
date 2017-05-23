@@ -21,7 +21,7 @@ import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.adapter.CoachCommentAdapter;
 import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CourseTeacher;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponseCourseTeacher;
 import java.util.ArrayList;

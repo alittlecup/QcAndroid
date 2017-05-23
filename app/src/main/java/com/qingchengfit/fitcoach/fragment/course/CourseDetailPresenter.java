@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
 import android.support.annotation.StringRes;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.model.base.CoachService;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.R;
@@ -12,7 +13,6 @@ import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
 import com.qingchengfit.fitcoach.bean.TeacherImpression;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;

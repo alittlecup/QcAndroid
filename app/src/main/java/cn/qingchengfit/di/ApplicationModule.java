@@ -1,12 +1,12 @@
-//package com.qingchengfit.fitcoach.di;
+//package cn.qingchengfit.di;
 //
-//import android.content.Context;
 //
-//import com.qingchengfit.fitcoach.RxBus;
+//import com.qingchengfit.fitcoach.App;
 //
 //import javax.inject.Singleton;
 //
-//import dagger.Component;
+//import dagger.Module;
+//import dagger.Provides;
 //
 ///**
 // * power by
@@ -21,13 +21,18 @@
 // * <p/>
 // * Created by Paper on 15/6/16 2015.
 // */
-//@Singleton
-//@Component(modules = {ApplicationModule.class, RxBusModule.class})
-//public interface ApplicationComponet {
 //
-//    void inject(Context context);
+//@Module
+//public class ApplicationModule {
+//    App app;
 //
-//    RxBus getRxBus();
+//    public ApplicationModule(App app) {
+//        this.app = app;
+//    }
 //
-//
+//    @Singleton
+//    @Provides
+//    public App getApp() {
+//        return app;
+//    }
 //}

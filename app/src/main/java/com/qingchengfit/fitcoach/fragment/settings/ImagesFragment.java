@@ -24,7 +24,7 @@ import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
-import com.qingchengfit.fitcoach.items.CommonNoDataItem;
+import cn.qingchengfit.items.CommonNoDataItem;
 import com.qingchengfit.fitcoach.items.ImageItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;

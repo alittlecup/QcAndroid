@@ -50,7 +50,7 @@ import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.component.TouchyWebView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -425,27 +425,6 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         //        });
     }
 
-    /**
-     * 编辑基本信息
-     */
-    @OnClick(R.id.edit_base_info) public void editBaseInfo() {
-        if (mCourseDetail.getShops().size() > 1) {
-            StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
-            return;
-        }
-
-        if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
-            || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
-            PermissionServerUtils.PRISETTING_CAN_CHANGE)) {
-
-            getFragmentManager().beginTransaction()
-                .replace(R.id.frag, EditCourseFragment.newInstance(mCourseDetail))
-                .addToBackStack(getFragmentName())
-                .commit();
-        } else {
-            showAlert(R.string.sorry_no_permission);
-        }
-    }
 
     /**
      * 编辑基本信息

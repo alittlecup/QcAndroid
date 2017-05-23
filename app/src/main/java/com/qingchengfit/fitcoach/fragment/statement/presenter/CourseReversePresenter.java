@@ -1,12 +1,12 @@
 package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
+import cn.qingchengfit.di.BasePresenter;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportDetail;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import javax.inject.Inject;
