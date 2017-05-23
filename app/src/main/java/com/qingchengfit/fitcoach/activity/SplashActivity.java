@@ -125,9 +125,9 @@ public class SplashActivity extends BaseAcitivity {
                                         if (qcCoachServiceResponse.data == null
                                             || qcCoachServiceResponse.data.services == null
                                             || qcCoachServiceResponse.data.services.size() == 0) {
-                                            //无场馆  仍然让进入
-                                            Intent toGym = new Intent(SplashActivity.this, GuideActivity.class);
-                                            startActivity(toGym);
+                                            repoCoachService.deleteAllServices();
+                                            Intent toMain = new Intent(SplashActivity.this, Main2Activity.class);
+                                            startActivity(toMain);
                                             SplashActivity.this.finish();
                                         } else {
                                             PreferenceUtils.setPrefString(App.AppContex, App.coachid + "systems",

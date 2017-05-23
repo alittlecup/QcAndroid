@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.views.fragments.LazyloadFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -36,7 +38,8 @@ import javax.inject.Inject;
 public class UnloginManageFragment extends LazyloadFragment {
     ManageFragment manageFragment;
     HomeBannerFragment homeBannerFragment;
-
+    @Inject LoginStatus loginStatus;
+    @Inject RepoCoachServiceImpl repoCoachService;
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         manageFragment = new ManageFragment();
@@ -48,7 +51,6 @@ public class UnloginManageFragment extends LazyloadFragment {
 
     }
 
-    @Inject LoginStatus loginStatus;
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_unlogin_home, container, false);
         RxBusAdd(EventLoginChange.class).delay(500, TimeUnit.MILLISECONDS).subscribe(eventLoginChange -> changeView());
@@ -59,10 +61,20 @@ public class UnloginManageFragment extends LazyloadFragment {
         changeView();
     }
 
-    public void changeView(){
-        if (loginStatus.isLogined()){
-            router(manageFragment);
-        }else {
+
+    public void changeView() {
+        if (loginStatus.isLogined()) {
+            RxRegiste(repoCoachService.readAllServices().observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+                if (coachServices.size() == 0) {
+                    //无场馆
+                    router(homeBannerFragment);
+                } else {
+                    //有场馆
+                    router(manageFragment);
+                }
+            }));
+
+        } else {
             router(homeBannerFragment);
         }
     }

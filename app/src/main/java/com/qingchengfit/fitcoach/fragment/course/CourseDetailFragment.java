@@ -431,7 +431,6 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
             return;
         }
 
-
         if (mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "", PermissionServerUtils.PRISETTING_CAN_CHANGE)
             || !mCourseDetail.is_private() && SerPermisAction.check(coachService.getId() + "",
             PermissionServerUtils.PRISETTING_CAN_CHANGE)) {
