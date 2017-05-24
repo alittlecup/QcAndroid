@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.event.EventLoginChange;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
@@ -20,7 +21,9 @@ import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -79,6 +82,17 @@ public class HomeBannerFragment extends BaseFragment {
             btnLogin.setVisibility(View.VISIBLE);
         }else btnLogin.setVisibility(View.GONE);
 
+        RxBusAdd(EventLoginChange.class).delay(500, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(eventLoginChange -> {
+                if (btnLogin == null)
+                    return;
+                if (btnLogin != null) {
+                    if (!loginStatus.isLogined()) {
+                        btnLogin.setVisibility(View.VISIBLE);
+                    } else btnLogin.setVisibility(View.GONE);
+                }
+        });
 
         return view;
     }

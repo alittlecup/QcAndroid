@@ -21,6 +21,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.ArticleCommentItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.responese.ArticleComment;
@@ -34,6 +35,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.items.CommonNoDataItem;
@@ -84,7 +86,7 @@ public class ArticleCommentsListFragment extends BaseFragment
     @Arg String newsId ;
     @Arg(required = false) String replyId ;
     @Arg(required = false) String replyName;
-
+    @Inject LoginStatus loginStatus;
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
@@ -101,7 +103,7 @@ public class ArticleCommentsListFragment extends BaseFragment
         commonFlexAdapter.setEndlessScrollListener(this, new ProgressItem(getContext()));
         recyclerview.setAdapter(commonFlexAdapter);
 
-        presenter.queryCommenList(newsId, 1);
+        //presenter.queryCommenList(newsId, 1);
         RxTextView.textChangeEvents(inputEt).subscribe(new Action1<TextViewTextChangeEvent>() {
             @Override public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
                 btnSend.setEnabled (textViewTextChangeEvent.text().toString().trim().length() > 0);
@@ -121,7 +123,21 @@ public class ArticleCommentsListFragment extends BaseFragment
                 }
             }
         });
+        if (loginStatus.isLogined())
+            presenter.queryCommenList(newsId, 1);
+        else {
+            startActivityForResult(new Intent(getActivity(), LoginActivity.class),1);
+        }
         return view;
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if (loginStatus.isLogined()){
+                presenter.queryCommenList(newsId, 1);
+            }else getActivity().finish();
+        }
     }
 
     @Override public void initToolbar(@NonNull Toolbar tobar) {

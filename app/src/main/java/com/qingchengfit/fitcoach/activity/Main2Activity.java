@@ -22,6 +22,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
@@ -115,6 +116,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private Subscription spOrders;
     public int ordersCount;
     private Observable<EventInit> obPopWinEvent;
+    private Observable<EventLoginChange> obLoginChange;
 
     public Date getChooseDate() {
         return mChooseDate;
@@ -174,7 +176,12 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
             })
             .build();
        changeLogin();
-
+        obLoginChange = RxBus.getBus().register(EventLoginChange.class);
+        obLoginChange.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<EventLoginChange>() {
+            @Override public void call(EventLoginChange eventLoginChange) {
+                changeLogin();
+            }
+        });
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -191,7 +198,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         Boolean isInit = PreferenceUtils.getPrefBoolean(this, "guide_3", false);
                         if (!isInit && (gw == null || !gw.isShowing())) {
                             if (gw == null) gw = new GuideWindow(this, "使用「课程排期」安排课程", GuideWindow.UP);
-                            if (tabview != null && tabview.getChildCount() > 1) {
+                            if (tabview != null && tabview.getChildCount() > 1 && loginStatus.isLogined()) {
                                 gw.show(tabview.getChildAt(1));
                             }
                         }
@@ -252,7 +259,12 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     }
 
     public void changeLogin(){
-
+        if (loginStatus.isLogined()){
+            initUser();
+            initBDPush();
+        }else {
+            freshNotiCount(0);
+        }
     }
 
     private void setupVp() {
@@ -358,6 +370,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
         RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
         RxBus.getBus().unregister(EventInit.class.getName(), obPopWinEvent);
+        RxBus.getBus().unregister(EventLoginChange.class.getName(), obLoginChange);
     }
 
     private void initBDPush() {

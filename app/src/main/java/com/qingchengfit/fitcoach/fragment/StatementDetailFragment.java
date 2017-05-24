@@ -168,6 +168,7 @@ public class StatementDetailFragment extends BaseFragment
     }
     curCalendar = Calendar.getInstance();
     start = DateUtils.Date2YYYYMMDD(new Date());
+    mFilter.course_type = -1;
     switch (mDividerType) {
       case 0:
         end = start;
@@ -314,7 +315,7 @@ public class StatementDetailFragment extends BaseFragment
 
   public void freshDate() {
     showLoading();
-
+    //presenter.queryStatementDetail(start, end, course_id, course_extra, teacher_id, mChooseShopId);
     presenter.queryStatementDetail(start, end);
   }
 
@@ -473,7 +474,7 @@ public class StatementDetailFragment extends BaseFragment
     for (int i = 0; i < mAllSchedule.size(); i++) {
       QcResponseStatementDetail.StatamentSchedule statamentSchedule = mAllSchedule.get(i);
 
-      if ((mFilter.course_type < 0 || mFilter.course_type == 99 || ((mFilter.course_type == Configs.TYPE_PRIVATE && statamentSchedule.course.is_private()) || (mFilter.course_type == Configs.TYPE_GROUP
+      if ((mFilter.course_type == -1 || mFilter.course_type == 99 || ((mFilter.course_type == -2 && statamentSchedule.course.is_private()) || (mFilter.course_type == -3
           && !statamentSchedule.course.is_private())))
           && (mFilter.course == null
           || mFilter.course.getId() == null

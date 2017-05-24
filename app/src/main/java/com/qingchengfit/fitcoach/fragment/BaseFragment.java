@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.UUID;
 import rx.Observable;
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * power by
@@ -47,6 +48,7 @@ public abstract class BaseFragment extends Fragment {
     boolean isPrepared;
     public Unbinder unbinder;
     private List<PresenterDelegate> delegates = new ArrayList<>();
+    private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     protected  boolean isInit = false;
     protected boolean isLazyLoad = true;
 

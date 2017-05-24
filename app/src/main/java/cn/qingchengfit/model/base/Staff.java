@@ -129,4 +129,14 @@ public class Staff extends Personage implements Parcelable {
         this.position_str = in.readString();
         this.user_id = in.readString();
     }
+
+    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
+        @Override public Staff createFromParcel(Parcel source) {
+            return new Staff(source);
+        }
+
+        @Override public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
 }

@@ -23,6 +23,7 @@ import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import com.qingchengfit.fitcoach.fragment.mine.MineFragmentFragment;
+import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import com.qingchengfit.fitcoach.fragment.statement.CardTypeChooseDialogFragment;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.BaseDialogFragment;
 import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseChooseDialogFragment;
@@ -88,6 +89,7 @@ import dagger.multibindings.IntoMap;
     AppComponent.RegisterFragmentModule.class,
     AppComponent.UnLoginScheduleAdFragmentModule.class,
     AppComponent.ChooseGymFragmentModule.class,
+    AppComponent.MainScheduleFragmentModule.class,
 })
  public interface AppComponent {
     void inject(App app);
@@ -401,5 +403,13 @@ import dagger.multibindings.IntoMap;
     @Module(subcomponents = ChooseGymFragmentSubcomponent.class) abstract class ChooseGymFragmentModule {
         @Binds @IntoMap @FragmentKey(ChooseGymFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseGymFragmentSubcomponent.Builder builder);
+    }
+
+    @Subcomponent() public interface MainScheduleFragmentSubcomponent extends AndroidInjector<MainScheduleFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MainScheduleFragment> {}
+    }
+    @Module(subcomponents = MainScheduleFragmentSubcomponent.class) abstract class MainScheduleFragmentModule {
+        @Binds @IntoMap @FragmentKey(MainScheduleFragment.class)
+        abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(MainScheduleFragmentSubcomponent.Builder builder);
     }
 }

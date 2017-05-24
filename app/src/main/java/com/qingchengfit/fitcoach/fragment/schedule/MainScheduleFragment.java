@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.widgets.GuideWindow;
@@ -30,6 +31,7 @@ import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import java.util.Date;
+import javax.inject.Inject;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -72,6 +74,7 @@ public class MainScheduleFragment extends BaseFragment {
     private ScheduesFragment scheduesFragment;
     private GuideWindow gd1;
     private GuideWindow gd2;
+    @Inject LoginStatus loginStatus;
 
     public CoachService getCoachService() {
         return mCoachService;
@@ -135,6 +138,8 @@ public class MainScheduleFragment extends BaseFragment {
         return view;
     }
     public void setVisible(){
+        if (!loginStatus.isLogined())
+            return;
         if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_1", false)) {
             if (gd1 == null) gd1 = new GuideWindow(getContext(), getString(R.string.hint_order_self), GuideWindow.DOWN);
             gd1.show(studentOrder);

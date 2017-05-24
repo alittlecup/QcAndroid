@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class QcDbHelper extends SQLiteOpenHelper {
-    private BriteDatabase briteDatabase;
+    private static BriteDatabase briteDatabase;
 
     public BriteDatabase getBriteDatabase() {
         return briteDatabase;

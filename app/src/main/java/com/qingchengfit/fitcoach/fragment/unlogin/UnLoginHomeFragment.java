@@ -77,7 +77,7 @@ public class UnLoginHomeFragment extends BaseFragment {
                 RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                     if (coachServices.size() == 0) {
                         //无场馆
-                        router(homeBannerFragment, "banner1");
+                        router(homeBannerFragment, null);
                     } else {
                         //有场馆
                         router(mainScheduleFragment);
@@ -86,7 +86,7 @@ public class UnLoginHomeFragment extends BaseFragment {
             //}
         } else {
             //未登录
-            router(homeBannerFragment,"banner1");
+            router(homeBannerFragment,null);
         }
     }
 

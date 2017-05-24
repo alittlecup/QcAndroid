@@ -80,7 +80,6 @@ import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
 import com.qingchengfit.fitcoach.http.bean.QcCoachServiceResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemDetailResponse;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
-import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcEvaluateResponse;
 import com.qingchengfit.fitcoach.http.bean.QcExperienceResponse;
@@ -135,11 +134,13 @@ import com.qingchengfit.fitcoach.http.bean.RegisteBean;
 import com.qingchengfit.fitcoach.http.bean.StudentCarsResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentCourseResponse;
 import com.qingchengfit.fitcoach.http.bean.StudentInfoResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -189,8 +190,11 @@ public class QcCloudClient {
                 LogUtil.d(message);
             }
         });
+        File cacheFile = new File(App.AppContex.getExternalCacheDir(),"http_cache");
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 20); //100Mb
         interceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         OkHttpClient client = new OkHttpClient.Builder()
+            .cache(cache)
             .addNetworkInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -206,6 +210,8 @@ public class QcCloudClient {
                             .build();
                     } else {
                         request = request.newBuilder()
+                            .addHeader("max-age","5")
+                            .addHeader("Cache-Control","public")
                             .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
                             .addHeader("User-Agent", " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(
                                 R.string.oem_tag) + "  QingchengApp/Trainer")
@@ -279,6 +285,7 @@ public class QcCloudClient {
     public interface GetApi {
         //获取token
         //@GET("/api/csrftoken/") QcResponToken qcGetToken();
+
         @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
         @POST("/api/users/{id}/") rx.Observable<QcResponUserInfo> qcGetUserInfo(@Path("id") String id);
 

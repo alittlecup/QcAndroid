@@ -1,5 +1,6 @@
 package cn.qingchengfit.network.errors;
 
+import cn.qingchengfit.utils.LogUtil;
 import rx.functions.Action1;
 
 /**
@@ -25,6 +26,6 @@ import rx.functions.Action1;
 
 public class NetWorkThrowable implements Action1<Throwable> {
     @Override public void call(Throwable throwable) {
-
+        LogUtil.e(throwable.getMessage());
     }
 }

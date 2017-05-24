@@ -20,7 +20,6 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.DialogList;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
@@ -86,9 +85,9 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
             if (filterBean.course != null) allCourse.setContent(filterBean.course.getName());
             if (filterBean.student != null) allStudent.setContent(filterBean.student.username);
             if (filterBean.course == null ) {
-                if (filterBean.course_type < 0) allCourse.setContent(getString(R.string.all_course));
-                if (filterBean.course_type == Configs.TYPE_PRIVATE) allCourse.setContent(getString(R.string.all_course_private));
-                if (filterBean.course_type == Configs.TYPE_GROUP) allCourse.setContent(getString(R.string.all_course_group));
+                if (filterBean.course_type == -1) allCourse.setContent(getString(R.string.all_course));
+                if (filterBean.course_type == -2) allCourse.setContent(getString(R.string.all_course_private));
+                if (filterBean.course_type == -3) allCourse.setContent(getString(R.string.all_course_group));
             }
         } else {
             filterBean = new ClassStatmentFilterBean();
@@ -104,14 +103,16 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
                         filterBean.course = null;
                         allCourse.setContent(getString(R.string.all_course));
                     } else if (type == -2) {
-                        filterBean.course_type = Configs.TYPE_PRIVATE;
+                        filterBean.course_type = -2;
+                        filterBean.course = null;
                         allCourse.setContent(getString(R.string.all_course_private));
                     } else if (type == -3) {
-                        filterBean.course_type = Configs.TYPE_GROUP;
+                        filterBean.course_type = -3;
+                        filterBean.course = null;
                         allCourse.setContent(getString(R.string.all_course_group));
                     }
                 } else {
-                    filterBean.course_type = 99;
+                    filterBean.course_type = course.is_private?-2:-3;
                     filterBean.course = course;
                     allCourse.setContent(course.getName());
                 }

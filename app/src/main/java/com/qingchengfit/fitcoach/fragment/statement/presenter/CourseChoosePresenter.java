@@ -11,11 +11,10 @@ import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.di.BasePresenter;
 import com.qingchengfit.fitcoach.fragment.statement.CourseChooseView;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
-import com.qingchengfit.fitcoach.http.bean.QcCourseResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,7 +141,7 @@ public class CourseChoosePresenter extends BasePresenter {
         params.put("key", "course_all");
         params.put("method", "get");
         RxRegiste(restRepository.getGet_api()
-            .qcGetSystemCourses(App.coachid, gymWrapper.getParams())
+            .qcGetAllCourses(App.coachid+"", gymWrapper.getParams())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Action1<QcResponseData<CourseTypeSamples>>() {

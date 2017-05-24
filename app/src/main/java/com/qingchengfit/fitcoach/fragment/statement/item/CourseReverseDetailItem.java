@@ -105,17 +105,20 @@ public class CourseReverseDetailItem extends AbstractFlexibleItem<CourseReverseD
                 drawable = R.drawable.ic_credit_pay_yellow;
                 holder.textPayWay.setText(order.card.card_name + " ( ID:" + order.card.id + ")");
                 break;
-            case "ONLINE":
-                drawable = R.drawable.ic_pay_online;
-                holder.textPayWay.setText("在线支付");
-                break;
-            case "WEIXIN":
-                drawable = R.drawable.ic_pay_wechat;
-                holder.textPayWay.setText("微信支付");
-                break;
             case "FREE":
                 drawable = R.drawable.ic_payment_free;
                 holder.textPayWay.setText("无需结算");
+                break;
+            case "ONLINE":
+                //drawable = R.drawable.ic_pay_online;
+                //holder.textPayWay.setText("在线支付");
+                //break;
+            case "WEIDONG":
+            case "WEIXIN":
+            case "WEIXIN_QRCODE":
+            default:
+                drawable = R.drawable.ic_pay_wechat;
+                holder.textPayWay.setText("微信支付");
                 break;
         }
         holder.imgPayWay.setImageResource(drawable);
