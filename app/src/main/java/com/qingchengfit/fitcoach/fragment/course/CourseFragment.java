@@ -16,11 +16,11 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.views.FragmentAdapter;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
-import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 
 /**

@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
-import com.qingchengfit.fitcoach.bean.base.Shop;
+import cn.qingchengfit.model.base.Shop;
 import java.util.List;
 
 /**

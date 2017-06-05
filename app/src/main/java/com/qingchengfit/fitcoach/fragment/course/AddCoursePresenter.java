@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.fragment.course;
 
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import com.anbillon.qcmvplib.PView;
-import com.qingchengfit.fitcoach.Utils.GymUtils;
-import com.qingchengfit.fitcoach.bean.Brand;
+import cn.qingchengfit.utils.GymUtils;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import com.qingchengfit.fitcoach.http.bean.CourseBody;

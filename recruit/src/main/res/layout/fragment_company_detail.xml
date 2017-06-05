@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-            android:background="@color/bg_grey"
+              android:background="@color/bg_grey"
+              android:orientation="vertical"
     >
+
+  <include layout="@layout/common_simple_toolbar"/>
   <include layout="@layout/layout_recruit_gym_info"/>
   <Space
       android:layout_width="match_parent"
       android:layout_height="@dimen/activity_vertical_margin"
       />
-  <TableLayout
+
+  <android.support.design.widget.TabLayout
+      android:id="@+id/recruit_gym_tab"
       android:layout_width="match_parent"
       android:layout_height="50dp"
       android:background="@color/white"
-      >
-  </TableLayout>
+      />
   <android.support.v4.view.ViewPager
       android:id="@+id/vp"
       android:layout_width="match_parent"

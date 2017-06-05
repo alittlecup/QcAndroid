@@ -10,7 +10,7 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/choose_gym"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -18,15 +18,15 @@
       app:civ_clickable="true"
       app:civ_lable="选择健身房"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/choose_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_lable="姓名 :"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
   <RelativeLayout
       android:layout_width="match_parent"

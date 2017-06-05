@@ -101,32 +101,32 @@
       >
 
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_lable="@string/gym_add_course_name"
         >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
 
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_time"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_inputnum="true"
         app:civ_lable="@string/gym_add_course_time"
         >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_capacity"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_inputnum="true"
         app:civ_lable="单节课可约人数"
         >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
   </LinearLayout>
 
   <include layout="@layout/divider_grey"/>

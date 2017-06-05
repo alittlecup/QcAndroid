@@ -13,25 +13,25 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addgym_brand"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="健身房品牌"
       app:civ_nonnull="true"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addgym_name"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_lable="场馆名"
       app:civ_nonnull="true"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addgym_contact"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -39,9 +39,9 @@
       app:civ_lable="联系方式"
       app:civ_nonnull="true"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addgym_city"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -49,7 +49,7 @@
       app:civ_lable="城市"
       app:civ_nonnull="true"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
   <LinearLayout
       android:id="@+id/decript_layout"

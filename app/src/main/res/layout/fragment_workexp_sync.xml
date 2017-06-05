@@ -88,16 +88,16 @@
         android:layout_marginTop="10dp"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/workexpedit_start_time"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
         app:civ_lable="入职时间"
         >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/workexpedit_start_end"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -105,9 +105,9 @@
         app:civ_lable="离职时间"
         >
 
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/workexpedit_city"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -115,17 +115,17 @@
         app:civ_lable="城市"
         >
 
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
 
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/workexpedit_position"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         app:civ_clickable="true"
         app:civ_lable="职位"
         >
-    </com.qingchengfit.fitcoach.component.CommonInputView>
+    </cn.qingchengfit.widgets.CommonInputView>
 
     <LinearLayout
         android:id="@+id/workexpedit_expe_layout"

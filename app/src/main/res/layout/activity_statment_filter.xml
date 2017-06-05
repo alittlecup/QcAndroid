@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rootview"
     >
 
   <RelativeLayout
@@ -18,9 +18,9 @@
       >
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/bg_grey"
@@ -36,7 +36,6 @@
 
     <TextView
         android:id="@+id/toolbar_titile"
-        style="@style/Qc.TextCommonBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -44,10 +43,11 @@
         android:textColor="@color/text_black"
         android:textSize="16sp"
         tools:text="自定义报表"
+        style="@style/Qc.TextCommonBlack"
         />
   </RelativeLayout>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/start_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -57,7 +57,7 @@
       app:civ_showright="true"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/end_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -67,7 +67,7 @@
       app:civ_showright="true"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/all_course"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -79,15 +79,15 @@
 
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/all_student"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
       app:civ_clickable="true"
       app:civ_content="@string/all_students"
       app:civ_lable="@string/student"
-      app:civ_showright="true"
       app:civ_showdivier="false"
+      app:civ_showright="true"
 
       />
 

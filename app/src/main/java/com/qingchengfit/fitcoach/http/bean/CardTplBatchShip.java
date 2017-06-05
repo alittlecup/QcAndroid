@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.qingchengfit.fitcoach.bean.base.Card_tpl;
+import cn.qingchengfit.model.base.Card_tpl;
 
 /**
  * power by

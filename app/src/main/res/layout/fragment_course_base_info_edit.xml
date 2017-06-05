@@ -51,14 +51,14 @@
 
   <include layout="@layout/divider_grey_left_right"/>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       civ:civ_lable="@string/name_call"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_length"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
       civ:civ_lable="@string/time_long_min"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/single_count"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
       civ:civ_lable="单节可约人数"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/course_min_count"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
       civ:civ_lable="@string/course_min_num"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/default_course_plan"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.GuideWindow;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -26,7 +27,6 @@ import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import java.util.Date;
@@ -82,7 +82,7 @@ public class MainScheduleFragment extends BaseFragment {
         scheduleWeekFragment = new ScheduleWeekFragment();
         scheduesFragment = new ScheduesFragmentBuilder(new Date().getTime()).build();
 
-        router(isWeekView ? scheduleWeekFragment : scheduesFragment);
+        stuff(isWeekView ? scheduleWeekFragment : scheduesFragment);
         setVisible();
     }
 

@@ -13,12 +13,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.views.FragmentAdapter;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
-import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.ArrayList;
 import javax.inject.Inject;
 

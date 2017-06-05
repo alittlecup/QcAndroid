@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.User;
 import com.google.gson.annotations.SerializedName;
 
 /**

@@ -10,14 +10,19 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.item.RecruitPositionItem;
 import cn.qingchengfit.recruit.model.Job;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.VpFragment;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
+import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -39,14 +44,29 @@ import java.util.List;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/5/23.
  */
-public class RecruitPositionsFragment extends BaseFragment {
+public class RecruitPositionsFragment extends VpFragment {
 
     @BindView(R2.id.recycleview) RecyclerView recycleview;
     CommonFlexAdapter commonFlexAdapter;
     List<AbstractFlexibleItem> items = new ArrayList<>();
+    Object listener;
+    ProgressItem progressItem;
+
+    @Inject public RecruitPositionsFragment() {
+    }
+
+    @Override public String getTitle() {
+        return "招聘职位";
+    }
+
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        commonFlexAdapter = new CommonFlexAdapter(items,this);
+        progressItem = new ProgressItem(getContext());
+        commonFlexAdapter = new CommonFlexAdapter(items, listener);
+        if (listener instanceof FlexibleAdapter.EndlessScrollListener) {
+            commonFlexAdapter.setEndlessScrollListener((FlexibleAdapter.EndlessScrollListener) listener, progressItem)
+                .setEndlessScrollThreshold(6);
+        }
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,14 +77,49 @@ public class RecruitPositionsFragment extends BaseFragment {
         return view;
     }
 
-    public void setData(List<Job> datas){
+    public void setTotalCount(int totalCount) {
+        if (commonFlexAdapter != null) commonFlexAdapter.setEndlessTargetCount(totalCount);
+    }
+
+    public void setData(List<Job> datas) {
         commonFlexAdapter.clear();
-        if (datas != null){
-            for (Job j:datas) {
+        if (datas != null) {
+            for (Job j : datas) {
                 commonFlexAdapter.addItem(generatItem(j));
             }
         }
-        if (datas.size() == 0) commonFlexAdapter.addItem(new CommonNoDataItem(getNoDataRes(),getNoDataStr()));
+        if (datas.size() == 0) commonFlexAdapter.addItem(new CommonNoDataItem(getNoDataRes(), getNoDataStr()));
+    }
+
+    public void stopLoadMore() {
+        if (commonFlexAdapter == null) return;
+        commonFlexAdapter.onLoadMoreComplete(null);
+    }
+
+    public void addData(List<Job> datas) {
+        if (commonFlexAdapter == null) return;
+        List<IFlexible> items = new ArrayList<>();
+        for (Job j : datas) {
+            items.add(generatItem(j));
+        }
+        commonFlexAdapter.onLoadMoreComplete(items);
+    }
+
+    public Object getListener() {
+        return listener;
+    }
+
+    public void setListener(Object listener) {
+        this.listener = listener;
+        if (commonFlexAdapter != null) commonFlexAdapter.addListener(listener);
+    }
+
+    public IFlexible getItem(int pos) {
+        if (commonFlexAdapter != null && pos < commonFlexAdapter.getItemCount()) {
+            return commonFlexAdapter.getItem(pos);
+        } else {
+            return null;
+        }
     }
 
     @Override public String getFragmentName() {
@@ -75,13 +130,15 @@ public class RecruitPositionsFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    protected AbstractFlexibleItem generatItem(Job job){
-        return null;
+    protected AbstractFlexibleItem generatItem(Job job) {
+        return new RecruitPositionItem(job);
     }
-    protected int getNoDataRes(){
+
+    protected int getNoDataRes() {
         return 0;
     }
-    protected String getNoDataStr(){
+
+    protected String getNoDataStr() {
         return "";
     }
 }

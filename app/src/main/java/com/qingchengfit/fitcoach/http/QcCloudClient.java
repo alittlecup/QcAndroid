@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http;
 
 import android.support.annotation.Nullable;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.body.ClearNotiBody;
 import cn.qingchengfit.model.body.PostCommentBody;
 import cn.qingchengfit.model.responese.ArticleCommentListData;
@@ -27,7 +28,6 @@ import com.qingchengfit.fitcoach.bean.QcResponseSystenInit;
 import com.qingchengfit.fitcoach.bean.ScanBody;
 import com.qingchengfit.fitcoach.bean.SingleBatchBody;
 import com.qingchengfit.fitcoach.bean.SyncExpBody;
-import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseReportDetail;
 import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeSamples;

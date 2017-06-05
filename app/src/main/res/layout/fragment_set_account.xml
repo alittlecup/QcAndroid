@@ -10,7 +10,7 @@
 
   <include layout="@layout/common_toolbar"/>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/count"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             android:orientation="vertical"
             >
 
-          <com.qingchengfit.fitcoach.component.CommonInputView
+          <cn.qingchengfit.widgets.CommonInputView
               android:id="@+id/pay_online_money"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
 
       </cn.qingchengfit.widgets.ExpandedLayout>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_who"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
 
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/limit_num"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

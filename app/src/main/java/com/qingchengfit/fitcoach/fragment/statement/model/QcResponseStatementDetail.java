@@ -2,11 +2,11 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.model.base.Staff;
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.bean.StudentBean;
-import com.qingchengfit.fitcoach.bean.base.Shop;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
+import cn.qingchengfit.model.base.Course;
 import com.qingchengfit.fitcoach.Configs;
-import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;

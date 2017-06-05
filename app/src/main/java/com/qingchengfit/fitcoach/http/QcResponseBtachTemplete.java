@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.http;
 
+import cn.qingchengfit.model.base.TimeRepeat;
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.bean.Rule;
-import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import java.util.ArrayList;
 

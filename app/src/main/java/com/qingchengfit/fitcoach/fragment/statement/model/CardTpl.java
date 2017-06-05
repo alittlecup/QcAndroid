@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-import com.qingchengfit.fitcoach.bean.base.CardTplOption;
+import cn.qingchengfit.model.base.CardTplOption;
 import com.qingchengfit.fitcoach.http.bean.QcScheduleBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,15 @@ import java.util.List;
  * Created by Paper on 16/2/23 2016.
  */
 public class CardTpl implements Parcelable {
+    public static final Creator<CardTpl> CREATOR = new Creator<CardTpl>() {
+        @Override public CardTpl createFromParcel(Parcel source) {
+            return new CardTpl(source);
+        }
+
+        @Override public CardTpl[] newArray(int size) {
+            return new CardTpl[size];
+        }
+    };
     public String name;
     public String type_name;
     public int type; //1 是储值卡 2次卡 3期限卡
@@ -53,6 +62,30 @@ public class CardTpl implements Parcelable {
         this.description = description;
         this.id = id;
         this.limit = limit;
+    }
+
+    protected CardTpl(Parcel in) {
+        this.name = in.readString();
+        this.type_name = in.readString();
+        this.type = in.readInt();
+        this.tpl_type = in.readInt();
+        this.description = in.readString();
+        this.costs = in.createStringArrayList();
+        this.isChoosen = in.readByte() != 0;
+        this.id = in.readString();
+        this.limit = in.readString();
+        this.color = in.readString();
+        this.is_limit = in.readByte() != 0;
+        this.month_times = in.readInt();
+        this.day_times = in.readInt();
+        this.week_times = in.readInt();
+        this.pre_times = in.readInt();
+        this.buy_limit = in.readInt();
+        this.is_enable = in.readByte() != 0;
+        this.gymid = in.readString();
+        this.gymModel = in.readString();
+        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
+        this.options = in.createTypedArrayList(CardTplOption.CREATOR);
     }
 
     @Override public boolean equals(Object o) {
@@ -251,38 +284,4 @@ public class CardTpl implements Parcelable {
         dest.writeTypedList(this.shops);
         dest.writeTypedList(this.options);
     }
-
-    protected CardTpl(Parcel in) {
-        this.name = in.readString();
-        this.type_name = in.readString();
-        this.type = in.readInt();
-        this.tpl_type = in.readInt();
-        this.description = in.readString();
-        this.costs = in.createStringArrayList();
-        this.isChoosen = in.readByte() != 0;
-        this.id = in.readString();
-        this.limit = in.readString();
-        this.color = in.readString();
-        this.is_limit = in.readByte() != 0;
-        this.month_times = in.readInt();
-        this.day_times = in.readInt();
-        this.week_times = in.readInt();
-        this.pre_times = in.readInt();
-        this.buy_limit = in.readInt();
-        this.is_enable = in.readByte() != 0;
-        this.gymid = in.readString();
-        this.gymModel = in.readString();
-        this.shops = in.createTypedArrayList(QcScheduleBean.Shop.CREATOR);
-        this.options = in.createTypedArrayList(CardTplOption.CREATOR);
-    }
-
-    public static final Creator<CardTpl> CREATOR = new Creator<CardTpl>() {
-        @Override public CardTpl createFromParcel(Parcel source) {
-            return new CardTpl(source);
-        }
-
-        @Override public CardTpl[] newArray(int size) {
-            return new CardTpl[size];
-        }
-    };
 }

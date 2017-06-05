@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.views.VpFragment;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;

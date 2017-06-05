@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.di;
 
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.http.RestRepository;
 import dagger.Module;
 import dagger.Provides;

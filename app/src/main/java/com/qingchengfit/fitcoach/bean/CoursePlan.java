@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.Brand;
 import com.qingchengfit.fitcoach.Configs;
 import java.util.List;
 

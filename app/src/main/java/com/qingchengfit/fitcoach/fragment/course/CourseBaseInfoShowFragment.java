@@ -12,10 +12,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.Locale;
 
 /**

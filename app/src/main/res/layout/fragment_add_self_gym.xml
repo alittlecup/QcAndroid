@@ -12,15 +12,15 @@
   <include layout="@layout/common_toolbar">
   </include>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addselfgym_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:civ_lable="健身房名称"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/addselfgym_time"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
       app:civ_clickable="true"
       app:civ_lable="营业时间"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
   <Button
       android:id="@+id/addselfgym_comfirm"

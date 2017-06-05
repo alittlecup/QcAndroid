@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.http;
 
-import com.qingchengfit.fitcoach.bean.base.Card_tpl;
+import cn.qingchengfit.model.base.Card_tpl;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import java.util.List;
 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <color name="colorSetBg">#838B86</color>
+  <color name="divider_white">#eeeeee</color>
+  <color name="divider_grey">#dddddd</color>
+  <color name="text_black">#333333</color>
+  <color name="text_light">#ccc</color>
+
+  <color name="bg_grey">#f4f4f4</color>
+  <color name="toolbar">#4e4e4e</color>
+  <color name="most_black">#222222</color>
+  <color name="bg_white">#ffffff</color>
+
+
+  <color name="text_dark">#333333</color>
+  <color name="text_warm">#888888</color>
+  <color name="text_grey">#bbbbbb</color>
+  <color name="text_hint">#cccccc</color>
+
+
+  <!--common color-->
+  <color name="white">#ffffff</color>
+  <color name="half_white">#55ffffff</color>
+  <color name="dark_white">#cfcfcf</color>
+  <color name="cyan">#00BFBF</color>
+  <color name="transparent">#00ffffff</color>
+  <color name="halftransparent">#33ffffff</color>
+  <color name="halftransparent_grey">#99000000</color>
+  <color name="halftrans_background">#33000000</color>
+  <color name="grey">#555555</color>
+  <color name="warm_grey">#999999</color>
+
+  <color name="less_grey">#dddddd</color>
+  <color name="orange">#e08f00</color>
+  <color name="red">#ff5151</color>
+  <color name="green">#1faf50</color>
+  <color name="blue">#2ab6f6</color>
+  <color name="purple">#ba68c8</color>
+  <color name="text_color_gray">#6a6a6a</color>
+  <color name="signin_new_color">#e5955d</color>
+  <color name="qc_bg_arrow">#bbbbbb</color>
+
+  <color name="qc_text_black">#333333</color>
+  <color name="qc_text_grey">#9d9d9d</color>
+  <color name="qc_text_grey_trans">#559d9d9d</color>
+  <color name="qc_snackbar_bg">#F9944E</color>
+
+  <color name="qc_allotsale_green">#0DB14B</color>
+  <color name="qc_allotsale_search_bg">#fafafa</color>
+
+  <color name="qc_student_status_0">#6eb8f1</color>
+  <color name="qc_student_status_1">#F9944e</color>
+  <color name="qc_student_status_2">#0Db14b</color>
+
+  <color name="grey_student_info">#777777</color>
+
+
+  <color name="reddish_orange">#f9601e</color>
+  <color name="orange_yellow">#fc9e00</color>
+  <color name="golden_yellow">#fbc822</color>
+  <color name="turquoise_blue">#01a6be</color>
+  <color name="seafoam_blue">#70cbd8</color>
+  <color name="light_teal">#84d7e3</color>
+  <color name="azure">#08a5f0</color>
+  <color name="lightblue">#53c2f0</color>
+  <color name="lightblue_two">#90d2ee</color>
+  <color name="iris">#5061c8</color>
+  <color name="perrywinkle">#8a95d9</color>
+  <color name="light_blue_grey">#b7beec</color>
+
+
+  <color name="pinkish_grey">#bbbbbb</color>
+  <color name="warm_grey_2">#888888</color>
+
+  <color name="greyish_brown">#555555</color>
+
+  <color name="grey_blue">#6a7fa4</color>
+
+  <color name="pinkish_grey_two">#cccccc</color>
+  <color name="white_three">#ffffff</color>
+  <color name="pastel_red">#ea6161</color>
+  <color name="white_two">#f4f4f4</color>
+  <color name="shamrock_green">#0db14b</color>
+  <color name="black">#000000</color>
+
+  <!-- Fonts -->
+  <color name="month_title">@color/text_black</color>
+  <color name="day_of_week_color">@color/text_black</color>
+  <color name="day_of_month">@color/most_black</color>
+  <color name="current_day_of_month">@color/white</color>
+  <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
+  <color name="half_red">#1aea6161</color>
+</resources>

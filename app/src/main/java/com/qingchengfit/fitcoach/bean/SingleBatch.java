@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.bean;
 
-import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
+import cn.qingchengfit.model.base.TimeRepeat;
 import com.qingchengfit.fitcoach.http.bean.CardTplBatchShip;
 import java.util.List;
 

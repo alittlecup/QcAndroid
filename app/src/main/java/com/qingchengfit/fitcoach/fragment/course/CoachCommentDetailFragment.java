@@ -11,13 +11,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.qingchengfit.utils.StringUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import co.hkm.soltag.TagContainerLayout;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.BusinessUtils;
 import com.qingchengfit.fitcoach.bean.CourseTeacher;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import cn.qingchengfit.views.fragments.BaseFragment;
 
 /**
  * power by

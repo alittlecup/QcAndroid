@@ -3,7 +3,7 @@ package com.qingchengfit.fitcoach.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import com.qingchengfit.fitcoach.fragment.VpFragment;
+import cn.qingchengfit.views.VpFragment;
 import java.util.List;
 
 /**

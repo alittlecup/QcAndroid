@@ -93,18 +93,6 @@ public class ModifyBodyTestFragment extends Fragment {
     public ModifyBodyTestFragment() {
     }
 
-    //    public static ModifyBodyTestFragment newInstance(Measure measure) {
-    //
-    //        Bundle args = new Bundle();
-    //        args.putParcelable("measure", measure);
-    //        ModifyBodyTestFragment fragment = new ModifyBodyTestFragment();
-    //        fragment.setArguments(args);
-    //        return fragment;
-    //    }
-
-    /**
-     * @return
-     */
     public static ModifyBodyTestFragment newInstance(String measureid, String model, String modelid, String studentid) {
 
         Bundle args = new Bundle();
@@ -182,15 +170,7 @@ public class ModifyBodyTestFragment extends Fragment {
                                 choosePictureFragmentDialog.dismiss();
                                 if (isSuccess) {
                                     ShowLoading("正在上传图片...");
-                                    //Observable.create(new Observable.OnSubscribe<String>() {
-                                    //    @Override
-                                    //    public void call(Subscriber<? super String> subscriber) {
-                                    //        String upImg = UpYunClient.upLoadImg("course/", new File(filePath));
-                                    //        subscriber.onNext(upImg);
-                                    //    }
-                                    //})
-
-                                    spUpImg = UpYunClient.rxUpLoad("course/", filePath)
+                                    spUpImg = UpYunClient.rxUpLoad("/course/", filePath)
 
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribeOn(Schedulers.io())

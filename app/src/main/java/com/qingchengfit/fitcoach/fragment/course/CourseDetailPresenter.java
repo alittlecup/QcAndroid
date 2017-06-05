@@ -2,14 +2,14 @@ package com.qingchengfit.fitcoach.fragment.course;
 
 import android.support.annotation.StringRes;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.CoachService;
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.utils.GymUtils;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.PermissionServerUtils;
 import com.qingchengfit.fitcoach.Utils.Utils;
 import com.qingchengfit.fitcoach.action.SerPermisAction;
-import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CourseDetailTeacher;
 import com.qingchengfit.fitcoach.bean.TeacherImpression;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="education_degree">
+    <item>不限</item>
     <item>中专及以下</item>
     <item>高中</item>
     <item>大专</item>

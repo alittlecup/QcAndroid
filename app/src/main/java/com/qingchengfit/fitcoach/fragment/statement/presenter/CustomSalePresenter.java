@@ -2,11 +2,11 @@ package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.utils.DateUtils;
-import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.fragment.statement.CustomSaleView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
 import com.qingchengfit.fitcoach.fragment.statement.model.CardTpls;
@@ -35,7 +35,8 @@ public class CustomSalePresenter extends BasePresenter {
     @Inject StatementUsecase usecase;
 
     CustomSaleView customSaleView;
-
+    @Inject LoginStatus loginStatus;
+    @Inject GymWrapper gymWrapper;
     private String startTime, endTime;
     private String selectId;
     private String selectModel;
@@ -43,9 +44,6 @@ public class CustomSalePresenter extends BasePresenter {
     private String courseName;
     private String shopid = "0";
     private Subscription spCards;
-
-    @Inject LoginStatus loginStatus;
-    @Inject GymWrapper gymWrapper;
 
     @Inject public CustomSalePresenter(StatementUsecase usecase) {
         this.usecase = usecase;

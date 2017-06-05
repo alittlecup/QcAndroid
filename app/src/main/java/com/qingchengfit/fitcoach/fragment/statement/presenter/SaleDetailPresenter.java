@@ -2,10 +2,10 @@ package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
-import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Utils.SaleCompare;
 import com.qingchengfit.fitcoach.fragment.statement.SaleCardTypeView;
@@ -37,9 +37,9 @@ public class SaleDetailPresenter extends BasePresenter {
 
     @Inject RestRepository mRestRepository;
     @Inject StatementUsecase usecase;
-    private SaleCardTypeView view;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
+    private SaleCardTypeView view;
 
     @Inject public SaleDetailPresenter(StatementUsecase usecase) {
         this.usecase = usecase;

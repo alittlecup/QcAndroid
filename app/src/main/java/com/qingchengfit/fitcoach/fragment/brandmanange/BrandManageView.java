@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.brandmanange;
 
-import com.anbillon.qcmvplib.PView;
-import com.qingchengfit.fitcoach.bean.Brand;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.model.base.Brand;
 import java.util.List;
 
 /**

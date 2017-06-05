@@ -2,8 +2,8 @@ package com.qingchengfit.fitcoach.fragment.batch.addbatch;
 
 import android.content.Intent;
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
-import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.bean.ArrangeBatchBody;

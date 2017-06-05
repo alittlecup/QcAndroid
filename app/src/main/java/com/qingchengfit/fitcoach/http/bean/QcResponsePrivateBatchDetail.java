@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.TimeRepeat;
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
-import com.qingchengfit.fitcoach.bean.base.Course;
-import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import java.util.List;
 
 /**

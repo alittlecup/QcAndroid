@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.statement;
 
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.di.PView;
 import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import java.util.List;
 

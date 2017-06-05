@@ -18,6 +18,7 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.GuideWindow;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
@@ -29,7 +30,6 @@ import com.qingchengfit.fitcoach.activity.Main2Activity;
 import com.qingchengfit.fitcoach.activity.SettingActivity;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.SpecialWebActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
@@ -70,12 +70,11 @@ public class MineFragmentFragment extends BaseFragment {
     @BindView(R.id.layout_my_orders) LinearLayout layoutMyOrders;
     @BindView(R.id.btn_login) Button btnLogin;
     @BindView(R.id.layout_login) LinearLayout layoutLogin;
+    @Inject LoginStatus loginStatus;
     private Unbinder unbinder;
     private QcCoachRespone.DataEntity.CoachEntity user;
     private Subscription sp1;
     private GuideWindow gd1;
-
-    @Inject LoginStatus loginStatus;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);

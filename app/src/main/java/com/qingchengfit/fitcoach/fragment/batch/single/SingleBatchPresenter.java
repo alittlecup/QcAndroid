@@ -1,12 +1,12 @@
 package com.qingchengfit.fitcoach.fragment.batch.single;
 
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.DateUtils;
-import com.anbillon.qcmvplib.CView;
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.utils.GymUtils;
 import com.qingchengfit.fitcoach.App;
-import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.bean.Coach;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.Rule;

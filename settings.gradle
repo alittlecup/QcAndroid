@@ -1,7 +1,1 @@
-include ':app', ':fir-sdk-1.3.7', ':recruit'
-//include ':paperbaselibrary'
-//include ':core'
-//include ':commons'
-//include ':crosswalkwebview144334317arm'
-//include ':crosswalkwebview15443867arm'
-//include ':crosswalkwebview15443867arm'
+include ':app', ':fir-sdk-1.3.7', ':recruit', ':widgets', ':atest'

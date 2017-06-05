@@ -24,7 +24,7 @@
         android:id="@+id/layout_course"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/coach"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -34,7 +34,7 @@
         app:civ_text_color="@color/text_black"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/space"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -46,7 +46,7 @@
 
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/account_type"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
@@ -63,7 +63,7 @@
 
     <include layout="@layout/divider_grey_margin"/>
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
 
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/course_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

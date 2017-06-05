@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.bean;
 
-import com.qingchengfit.fitcoach.http.bean.User;
+import cn.qingchengfit.model.base.User;
 
 /**
  * power by

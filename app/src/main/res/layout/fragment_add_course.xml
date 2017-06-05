@@ -37,7 +37,7 @@
         style="@style/TextTitleHint"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/btn_suit_gyms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,8 +1,8 @@
 package com.qingchengfit.fitcoach.fragment.batch.addbatch;
 
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.model.base.TimeRepeat;
 import com.qingchengfit.fitcoach.bean.Rule;
-import com.qingchengfit.fitcoach.bean.base.TimeRepeat;
 import java.util.ArrayList;
 
 /**

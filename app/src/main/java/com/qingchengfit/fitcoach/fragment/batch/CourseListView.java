@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.di.PView;
 import com.qingchengfit.fitcoach.http.bean.QcResponseGroupCourse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePrivateCourse;
 import java.util.List;

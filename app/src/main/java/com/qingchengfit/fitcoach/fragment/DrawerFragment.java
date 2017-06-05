@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -23,7 +24,6 @@ import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.CustomSetmentLayout;
 import com.qingchengfit.fitcoach.component.SegmentLayout;
 import com.qingchengfit.fitcoach.http.bean.Coach;
-import com.qingchengfit.fitcoach.http.bean.User;
 
 /**
  * power by

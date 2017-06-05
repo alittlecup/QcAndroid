@@ -96,7 +96,7 @@
 
   <include layout="@layout/divider_grey_left_right"/>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gym_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
 
   <include layout="@layout/divider_grey_left_right"/>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gym_address"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

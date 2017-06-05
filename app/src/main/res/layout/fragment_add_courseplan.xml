@@ -21,7 +21,7 @@
         android:orientation="vertical"
         >
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_lable="@string/add_plan_name"
@@ -29,7 +29,7 @@
 
       <include layout="@layout/divider_grey"/>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -39,7 +39,7 @@
 
       <include layout="@layout/divider_grey"/>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:layout_marginTop="@dimen/activity_vertical_margin"

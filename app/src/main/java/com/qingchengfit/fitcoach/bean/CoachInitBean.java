@@ -2,10 +2,10 @@ package com.qingchengfit.fitcoach.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.qingchengfit.fitcoach.bean.base.Course;
-import com.qingchengfit.fitcoach.bean.base.InitBatch;
-import com.qingchengfit.fitcoach.bean.base.Shop;
-import com.qingchengfit.fitcoach.bean.base.User;
+import cn.qingchengfit.model.base.Course;
+import cn.qingchengfit.model.base.InitBatch;
+import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.model.base.User;
 import java.util.List;
 
 /**

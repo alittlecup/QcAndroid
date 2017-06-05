@@ -1,9 +1,9 @@
 package com.qingchengfit.fitcoach.fragment.batch;
 
 import android.content.Intent;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
 import cn.qingchengfit.model.base.CoachService;
-import com.anbillon.qcmvplib.PView;
-import com.anbillon.qcmvplib.Presenter;
 import javax.inject.Inject;
 
 /**

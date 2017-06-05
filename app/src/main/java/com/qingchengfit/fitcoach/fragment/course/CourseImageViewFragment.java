@@ -12,10 +12,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.bean.SchedulePhoto;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import java.util.Locale;
 import uk.co.senab.photoview.PhotoView;
 

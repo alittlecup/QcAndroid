@@ -2,13 +2,13 @@
 //
 //import android.content.Intent;
 //
-//import com.anbillon.qcmvplib.PView;
-//import com.anbillon.qcmvplib.Presenter;
+//import cn.qingchengfit.di.PView;
+//import cn.qingchengfit.di.Presenter;
 //import com.qingchengfit.fitcoach.Configs;
 //import com.qingchengfit.fitcoach.http.ResponseConstant;
 //import cn.qingchengfit.model.base.CoachService;
 //import com.qingchengfit.fitcoach.http.bean.FixBatchBean;
-//import com.qingchengfit.fitcoach.http.bean.QcResponse;
+//import cn.qingchengfit.network.response.QcResponse;
 //
 //import javax.inject.Inject;
 //

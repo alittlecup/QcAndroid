@@ -23,7 +23,7 @@
         >
 
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/test_date"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
           app:civ_lable="体测日期"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/height"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
           app:civ_lable="身高(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/weight"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
 
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/bmi"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
           app:civ_lable="BMI(kg/m^2)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/body_fat_rate"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
 
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/left_upper"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
           app:civ_lable="上臂围(左)(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/right_upper"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
           app:civ_lable="上臂围(右)(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/chest"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
           app:civ_lable="胸围(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/waistline"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
 
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/hipline"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
 
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/left_thigh"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
           app:civ_lable="大腿围(左)(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/right_thigh"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
           app:civ_lable="大腿围(右)(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/left_calf"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
           app:civ_lable="小腿围(左)(cm)"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/right_calf"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

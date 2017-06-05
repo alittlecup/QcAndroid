@@ -7,10 +7,10 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import cn.qingchengfit.di.DaggerAppComponent;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -18,31 +18,21 @@ import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.component.DiskLruCache;
 import com.qingchengfit.fitcoach.di.AppComponent;
 import com.qingchengfit.fitcoach.di.AppModule;
+import com.qingchengfit.fitcoach.di.DaggerAppComponent;
 import com.qingchengfit.fitcoach.http.bean.Coach;
-import com.qingchengfit.fitcoach.http.bean.User;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.tencent.tinker.loader.app.ApplicationLike;
 import com.tinkerpatch.sdk.TinkerPatch;
 import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasDispatchingActivityInjector;
-import dagger.android.support.HasDispatchingSupportFragmentInjector;
+import dagger.android.HasActivityInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import im.fir.sdk.FIR;
 import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 
-//import cn.qingchengfit.di.ApplicationComponet;
 
-//import cn.qingchengfit.di.ApplicationModule;
-
-//import cn.qingchengfit.di.ApplicationComponet;
-
-//import rx.plugins.RxJavaErrorHandler;
-
-//import cn.qingchengfit.di.ApplicationComponet;
-//import cn.qingchengfit.di.ApplicationModule;
-//import cn.qingchengfit.di.DaggerApplicationComponet;
 
 /**
  * power by
@@ -57,7 +47,7 @@ import rx.plugins.RxJavaPlugins;
  * <p>
  * Created by Paper on 15/7/29 2015.
  */
-public class App extends Application implements HasDispatchingActivityInjector, HasDispatchingSupportFragmentInjector {
+public class App extends Application implements HasActivityInjector, HasSupportFragmentInjector {
     public static Context AppContex;
     public static boolean canXwalk;
     public static boolean gMainAlive = false;

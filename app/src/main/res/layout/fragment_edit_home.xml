@@ -7,7 +7,7 @@
     android:orientation="vertical"
     >
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/btn_base_info"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -19,7 +19,7 @@
       app:civ_text_color="@color/text_black"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/btn_pics"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -31,7 +31,7 @@
       app:civ_text_color="@color/text_black"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/btn_personal_intro"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

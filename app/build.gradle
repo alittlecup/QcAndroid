@@ -124,22 +124,22 @@ android {
     internal {
       minSdkVersion 16
     }
-    joinfit {
-      minSdkVersion 16
-    }
-    suisheng {
-      applicationIdSuffix ".vmsfit"
-      minSdkVersion 16
-    }
-    s567go {
-      minSdkVersion 16
-    }
-    eptc {
-      minSdkVersion 16
-    }
-    gravity {
-      minSdkVersion 16
-    }
+    //    joinfit {
+    //      minSdkVersion 16
+    //    }
+    //    suisheng {
+    //      applicationIdSuffix ".vmsfit"
+    //      minSdkVersion 16
+    //    }
+    //    s567go {
+    //      minSdkVersion 16
+    //    }
+    //    eptc {
+    //      minSdkVersion 16
+    //    }
+    //    gravity {
+    //      minSdkVersion 16
+    //    }
   }
 
   buildTypes {
@@ -159,16 +159,17 @@ android {
 
 repositories {
   jcenter()
-  mavenCentral()
   maven() {
-    url uri('../repo')
+    url "http://maven.aliyun.com/nexus/content/groups/public/"
   }
+  mavenCentral()
   maven() {
     url uri('../../repo')
   }
   maven() {
-    url "https://jitpack.io"
+    url uri('./repo')
   }
+  maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -187,7 +188,7 @@ dependencies {
   compile files('libs/pushservice-4.5.3.48.jar')
   compile files('libs/pinyin4j-2.5.0.jar')
   compile files('libs/pushservice-4.5.6.88.jar')
-  compile project(path: ':fir-sdk-1.3.7')
+  //  compile project(path: ':fir-sdk-1.3.7')
 
   compile files('libs/tbs_sdk_v1.5.1.1047_25436_obfs_20160303_165058.jar')
   compile files('libs/pushservice-5.2.0.12.jar')

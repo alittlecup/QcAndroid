@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'maven'
+def libs = rootProject.ext.libraries;
 
 android {
   compileSdkVersion 25
@@ -36,8 +37,15 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
   compile 'cn.qingchegfit.widgets:widgets:latest.integration'
-  compile 'com.android.support:appcompat-v7:25.2.0'
+  compile "com.google.dagger:dagger:${libs.dagger}"
+  compile "com.google.dagger:dagger-android:${libs.dagger}"
+  compile "com.google.dagger:dagger-android-support:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
+  annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
   testCompile 'junit:junit:4.12'
+
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+  compile 'com.jakewharton:butterknife:8.4.0'
 }
 
 

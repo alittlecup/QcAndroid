@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.User;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -22,7 +23,7 @@ import com.google.gson.annotations.SerializedName;
     @SerializedName("avatar") public String avatar;
     @SerializedName("gender") public String gender;
     @SerializedName("head") public String head;
-    @SerializedName("user") public com.qingchengfit.fitcoach.bean.base.User user;
+    @SerializedName("user") public User user;
     public String date_of_birth;
     public String address;
     public String joined_at;

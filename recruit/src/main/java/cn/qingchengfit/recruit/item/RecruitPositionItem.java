@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -25,6 +26,14 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
         this.job = job;
     }
 
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_recruit_position;
     }
@@ -35,11 +44,17 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, RecruitPositionVH holder, int position, List payloads) {
         holder.tvPositionName.setText(job.name);
-        if (job.gym != null){
-            holder.tvGymInfo.setText(job.gym.getDistrictStr()+" · "+job.gym.getName());
-            PhotoUtils.small(holder.imgGym,job.gym.getPhoto());
-        } else holder.tvGymInfo.setText("");
-        holder.tvSalary.setText((int)job.min_salary/1000 +"-"+(int)job.max_salary/1000+"K");
+        if (job.gym != null) {
+            holder.tvGymInfo.setText(job.gym.getAddressStr() + " · " + job.gym.name);
+            PhotoUtils.small(holder.imgGym, job.gym.photo);
+        } else {
+            holder.tvGymInfo.setText("");
+        }
+        holder.tvSalary.setText((int) job.min_salary / 1000 + "-" + (int) job.max_salary / 1000 + "K");
+        holder.tvGender.setText(RecruitBusinessUtils.getGender(job.gender));
+        holder.tvHeight.setText(RecruitBusinessUtils.getHeight(job.min_height, job.max_height));
+        holder.tvAge.setText(RecruitBusinessUtils.getAge(job.min_age, job.max_age));
+        holder.tvWorkYear.setText(RecruitBusinessUtils.getWorkYear(job.min_work_year, job.max_work_year));
     }
 
     @Override public boolean equals(Object o) {
@@ -52,6 +67,10 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
         @BindView(R2.id.tv_salary) TextView tvSalary;
         @BindView(R2.id.tv_gym_info) TextView tvGymInfo;
         @BindView(R2.id.layout_limit) LinearLayout layoutLimit;
+        @BindView(R2.id.tv_work_year) TextView tvWorkYear;
+        @BindView(R2.id.tv_gender) TextView tvGender;
+        @BindView(R2.id.tv_age) TextView tvAge;
+        @BindView(R2.id.tv_height) TextView tvHeight;
         public RecruitPositionVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

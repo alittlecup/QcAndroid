@@ -46,7 +46,7 @@
         />
   </RelativeLayout>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/start_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -55,9 +55,9 @@
       app:civ_showright="true"
 
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/end_day"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -66,9 +66,9 @@
       app:civ_showright="true"
 
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/card_type"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -79,7 +79,7 @@
       />
 
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/trade_type"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -89,7 +89,7 @@
       app:civ_showright="true"
       />
 
-  <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
+  <!--<cn.qingchengfit.widgets.CommonInputView-->
   <!--android:id="@+id/sale_menber"-->
   <!--android:layout_width="match_parent"-->
   <!--android:layout_height="@dimen/qc_item_height"-->
@@ -99,7 +99,7 @@
   <!--app:civ_showright="true"-->
   <!--/>-->
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/pay_method"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -109,7 +109,7 @@
       app:civ_showright="true"
       />
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/student"
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"

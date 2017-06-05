@@ -1,9 +1,9 @@
 package com.qingchengfit.fitcoach.fragment.batch.details;
 
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.model.base.Course;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
-import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import java.util.List;
 

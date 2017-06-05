@@ -2,16 +2,16 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.content.Intent;
 import android.view.View;
+import cn.qingchengfit.model.base.Brand;
+import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.utils.PreferenceUtils;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.Utils.IntentUtils;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcResponseBrands;
-import com.qingchengfit.fitcoach.http.bean.User;
 import java.util.Locale;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

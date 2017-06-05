@@ -159,14 +159,14 @@
       <!--</View>-->
       <!--</RelativeLayout>-->
 
-      <!--<com.qingchengfit.fitcoach.component.CommonInputView-->
+      <!--<cn.qingchengfit.widgets.CommonInputView-->
       <!--android:id="@+id/recordedit_host"-->
       <!--android:layout_width="match_parent"-->
       <!--android:layout_height="@dimen/qc_item_height"-->
       <!--app:civ_clickable="true"-->
       <!--app:civ_lable="@string/recordedit_host_organization"-->
       <!-->-->
-      <!--</com.qingchengfit.fitcoach.component.CommonInputView>-->
+      <!--</cn.qingchengfit.widgets.CommonInputView>-->
       <include layout="@layout/divider_grey"/>
 
       <include
@@ -176,16 +176,16 @@
           android:layout_marginTop="10dp"
           />
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/record_edit_name"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_lable="@string/recordedit_name"
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/recordedit_date"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -193,7 +193,7 @@
           app:civ_lable="@string/recordedit_certificate_date"
           app:civ_showdivier="false"
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
       <include layout="@layout/divider_grey"/>
 
@@ -240,7 +240,7 @@
             />
       </RelativeLayout>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/recordedit_score"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -249,7 +249,7 @@
           app:civ_lable="@string/recordedit_score"
           app:civ_showdivier="false"
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
       <include layout="@layout/divider_grey"/>
 
@@ -297,16 +297,16 @@
             />
       </RelativeLayout>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/recordedit_certificat_name"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_lable="证书名称"
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/recordedit_datestart"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -315,9 +315,9 @@
           app:civ_lable="@string/recordedit_certificat_timestart"
 
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/recordedit_dateoff"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -326,7 +326,7 @@
           app:civ_lable="@string/recordedit_certificat_timeend"
 
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
 
       <!--<View-->

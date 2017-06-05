@@ -2,13 +2,14 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     >
 
+  <include layout="@layout/common_simple_toolbar"/>
   <android.support.v4.widget.NestedScrollView
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
@@ -21,6 +22,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical"
         >
 
@@ -34,6 +36,7 @@
           >
 
         <TextView
+            android:id="@+id/tv_position_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -42,6 +45,7 @@
             />
 
         <TextView
+            android:id="@+id/tv_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red"
@@ -49,18 +53,83 @@
             style="@style/QcTextStyleLargeDark"
             />
       </LinearLayout>
-      <!--todo 福利和要求-->
-      <FrameLayout
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_demands"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="70dp"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
           />
 
-      <FrameLayout
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_welfare"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
           />
 
       <include layout="@layout/layout_recruit_gym_info"/>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_position_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="104dp"
+          android:background="@drawable/bg_click"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:id="@+id/img_created_by"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
+            />
+
+        <android.support.v4.widget.Space
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/tv_created_by"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="星健身798店"
+              style="@style/QcTextStyleLargeDark"
+              />
+
+          <android.support.v4.widget.Space
+              android:layout_width="wrap_content"
+              android:layout_height="2dp"
+              />
+
+          <TextView
+              android:id="@+id/tv_position_crated_at"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="星健身798店"
+              style="@style/QcTextStyleMediumWarm"
+              />
+        </LinearLayout>
+      </LinearLayout>
     </LinearLayout>
   </android.support.v4.widget.NestedScrollView>
 
@@ -71,6 +140,7 @@
       >
 
     <LinearLayout
+        android:id="@+id/btn_starred"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -93,17 +163,23 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_contact_him"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:background="@drawable/btn_blue"
         android:text="与TA沟通"
+        android:textColor="@color/white"
         />
 
     <Button
+        android:id="@+id/btn_send_resume"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:background="@drawable/btn_green"
         android:text="投递简历"
+        android:textColor="@color/white"
         />
 
   </LinearLayout>

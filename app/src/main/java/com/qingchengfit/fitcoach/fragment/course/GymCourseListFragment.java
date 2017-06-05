@@ -20,7 +20,7 @@
 //import com.qingchengfit.fitcoach.R;
 //import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 //import com.qingchengfit.fitcoach.activity.ChooseActivity;
-//import com.qingchengfit.fitcoach.bean.base.Course;
+//import cn.qingchengfit.model.base.Course;
 //import com.qingchengfit.fitcoach.fragment.BaseFragment;
 //import com.qingchengfit.fitcoach.http.ResponseConstant;
 //import cn.qingchengfit.model.base.CoachService;

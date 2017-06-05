@@ -13,7 +13,7 @@
   <include layout="@layout/common_toolbar">
   </include>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_gym"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -21,36 +21,36 @@
       app:civ_clickable="true"
       app:civ_lable="选择健身房"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_start"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="开始日期"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_end"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="结束日期"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_course"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="选择课程"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/custom_statment_student"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

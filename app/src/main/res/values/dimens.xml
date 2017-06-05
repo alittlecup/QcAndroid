@@ -7,7 +7,6 @@
   <dimen name="qc_edit_drawable_padding">15dp</dimen>
   <dimen name="qc_notification_size">78.5dp</dimen>
   <dimen name="qc_dialog_height">200dp</dimen>
-  <dimen name="qc_actionbar_height">44dp</dimen>
 
 
   <!-- dateTitleLayout -->

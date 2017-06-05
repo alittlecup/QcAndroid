@@ -60,9 +60,9 @@ public class UnloginManageFragment extends LazyloadFragment {
 
     public void changeView() {
         if (loginStatus.isLogined()) {
-            router(manageFragment);
+            stuff(manageFragment);
         } else {
-            router(homeBannerFragment);
+            stuff(homeBannerFragment);
         }
     }
 

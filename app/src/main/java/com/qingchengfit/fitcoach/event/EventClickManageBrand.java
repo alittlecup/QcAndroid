@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.event;
 
-import com.qingchengfit.fitcoach.bean.Brand;
+import cn.qingchengfit.model.base.Brand;
 
 /**
  * power by
@@ -26,15 +26,15 @@ import com.qingchengfit.fitcoach.bean.Brand;
 public class EventClickManageBrand {
     Brand brand;
 
+    public EventClickManageBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     public Brand getBrand() {
         return brand;
     }
 
     public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public EventClickManageBrand(Brand brand) {
         this.brand = brand;
     }
 }

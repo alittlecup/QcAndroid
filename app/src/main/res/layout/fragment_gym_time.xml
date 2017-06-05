@@ -11,68 +11,68 @@
   <include layout="@layout/common_toolbar">
   </include>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_mon"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周一"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_tus"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周二"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_wen"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周三"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_thu"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周四"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_fri"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周五"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_sat"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周六"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
-  <com.qingchengfit.fitcoach.component.CommonInputView
+  <cn.qingchengfit.widgets.CommonInputView
       android:id="@+id/gymtime_sun"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:civ_clickable="true"
       app:civ_lable="周日"
       >
-  </com.qingchengfit.fitcoach.component.CommonInputView>
+  </cn.qingchengfit.widgets.CommonInputView>
 
   <Button
       android:id="@+id/gymtime_comfirm"

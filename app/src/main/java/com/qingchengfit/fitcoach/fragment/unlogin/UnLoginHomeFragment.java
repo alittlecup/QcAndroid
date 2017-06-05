@@ -8,8 +8,8 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import com.qingchengfit.fitcoach.R;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import java.util.List;
 import javax.inject.Inject;
@@ -77,16 +77,16 @@ public class UnLoginHomeFragment extends BaseFragment {
             RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                 if (coachServices.size() == 0) {
                     //无场馆
-                    router(homeBannerFragment, "banner1");
+                    stuff(homeBannerFragment, "banner1");
                 } else {
                     //有场馆
-                    router(mainScheduleFragment);
+                    stuff(mainScheduleFragment);
                 }
             }));
             //}
         } else {
             //未登录
-            router(homeBannerFragment, "banner1");
+            stuff(homeBannerFragment, "banner1");
         }
     }
 

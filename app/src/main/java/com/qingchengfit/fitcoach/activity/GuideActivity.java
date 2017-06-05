@@ -2,11 +2,11 @@ package com.qingchengfit.fitcoach.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.utils.PreferenceUtils;
-import com.google.gson.Gson;
 import cn.qingchengfit.views.activity.BaseAcitivity;
+import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.bean.Brand;
 import com.qingchengfit.fitcoach.bean.CoachInitBean;
 import com.qingchengfit.fitcoach.fragment.guide.GuideFragment;
 

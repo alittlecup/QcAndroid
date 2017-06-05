@@ -61,7 +61,7 @@
             />
       </RelativeLayout>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/mofifyinfo_name"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -69,7 +69,7 @@
           >
 
 
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
       <RelativeLayout
           android:layout_width="match_parent"
@@ -136,16 +136,16 @@
 
       </RelativeLayout>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/mofifyinfo_city"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           app:civ_clickable="true"
           app:civ_lable="城市"
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/mofifyinfo_wechat"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
@@ -153,16 +153,16 @@
           >
 
 
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
-      <com.qingchengfit.fitcoach.component.CommonInputView
+      <cn.qingchengfit.widgets.CommonInputView
           android:id="@+id/mofifyinfo_weibo"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:visibility="gone"
           app:civ_lable="微博"
           >
-      </com.qingchengfit.fitcoach.component.CommonInputView>
+      </cn.qingchengfit.widgets.CommonInputView>
 
 
       <RelativeLayout

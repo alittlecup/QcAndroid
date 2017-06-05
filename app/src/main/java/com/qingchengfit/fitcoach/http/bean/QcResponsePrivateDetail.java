@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.model.base.Course;
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.bean.base.Course;
 import java.util.List;
 
 /**

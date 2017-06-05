@@ -30,6 +30,7 @@ import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.MeasureUtils;
 import cn.qingchengfit.utils.StringUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.RatingBarVectorFix;
 import co.hkm.soltag.TagContainerLayout;
 import com.afollestad.materialdialogs.DialogAction;
@@ -50,7 +51,6 @@ import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.ScaleWidthWrapper;
 import com.qingchengfit.fitcoach.component.TouchyWebView;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.manage.StaffAppFragmentFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +106,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.layout_toolbar) RelativeLayout layoutToolbar;
     @BindView(R.id.edit_jacket) TextView editJacket;
+    boolean isJumped = false;
     private CourseDetail mCourseDetail;
     private ViewPaperEndlessAdapter viewpageradapter;
 
@@ -425,7 +426,6 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
         //        });
     }
 
-
     /**
      * 编辑基本信息
      */
@@ -455,8 +455,6 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
     @Override public void onDestroyView() {
         super.onDestroyView();
     }
-
-    boolean isJumped = false;
 
     @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

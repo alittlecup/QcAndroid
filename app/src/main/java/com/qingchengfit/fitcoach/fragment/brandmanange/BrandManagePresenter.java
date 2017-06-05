@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.brandmanange;
 
 import cn.qingchengfit.di.BasePresenter;
-import com.anbillon.qcmvplib.PView;
+import cn.qingchengfit.di.PView;
 import javax.inject.Inject;
 
 /**

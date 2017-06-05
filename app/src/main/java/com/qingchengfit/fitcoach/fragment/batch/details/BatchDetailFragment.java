@@ -19,7 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.model.base.Course;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -34,9 +36,7 @@ import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.Rule;
 import com.qingchengfit.fitcoach.bean.Space;
-import com.qingchengfit.fitcoach.bean.base.Course;
 import com.qingchengfit.fitcoach.component.CommonInputView;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.CourseManageFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
@@ -284,9 +284,9 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
 
     @OnClick(R.id.del_batch) public void delBatch() {
         if ((mType == Configs.TYPE_GROUP && !CurentPermissions.newInstance()
-            .queryPermission(com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mType
+            .queryPermission(PermissionServerUtils.TEAMARRANGE_CALENDAR_CAN_DELETE)) || (mType
             == Configs.TYPE_PRIVATE && !CurentPermissions.newInstance()
-            .queryPermission(com.qingchengfit.fitcoach.bean.base.PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
+            .queryPermission(PermissionServerUtils.PRIARRANGE_CALENDAR_CAN_DELETE))) {
             showAlert(R.string.sorry_no_permission);
             return;
         }

@@ -60,7 +60,7 @@
         style="@style/TextTitleHint"
         />
 
-    <com.qingchengfit.fitcoach.component.CommonInputView
+    <cn.qingchengfit.widgets.CommonInputView
         android:id="@+id/suit_gyms_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,10 +1,10 @@
 package com.qingchengfit.fitcoach.fragment.statement.presenter;
 
 import cn.qingchengfit.di.BasePresenter;
+import cn.qingchengfit.di.PView;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.responese.QcResponseData;
-import com.anbillon.qcmvplib.PView;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.fragment.statement.SalerChooseDialogView;
 import com.qingchengfit.fitcoach.fragment.statement.StatementUsecase;
