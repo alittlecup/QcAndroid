@@ -1,10 +1,12 @@
-package com.qingchengfit.fitcoach.fragment;
+package cn.qingchengfit.views.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -13,13 +15,16 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import butterknife.Unbinder;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.di.CView;
+import cn.qingchengfit.di.PView;
+import cn.qingchengfit.di.Presenter;
+import cn.qingchengfit.di.PresenterDelegate;
 import cn.qingchengfit.utils.AppUtils;
-import com.anbillon.qcmvplib.PView;
-import com.anbillon.qcmvplib.Presenter;
-import com.anbillon.qcmvplib.PresenterDelegate;
-import com.qingchengfit.fitcoach.BaseAcitivity;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.widgets.R;
 import dagger.android.support.AndroidSupportInjection;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,16 +45,27 @@ import rx.Subscription;
  * <p>
  * Created by Paper on 15/9/22 2015.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements CView {
 
     public Unbinder unbinder;
     // 标志位，标志已经初始化完成
     protected boolean isVisible;
-    boolean isPrepared;
-    public Unbinder unbinder;
-    private List<PresenterDelegate> delegates = new ArrayList<>();
     protected  boolean isInit = false;
     protected boolean isLazyLoad = true;
+    protected boolean isPrepared;
+    List<Subscription> sps = new ArrayList<>();
+    private List<PresenterDelegate> delegates = new ArrayList<>();
+    private List<Pair<String, Observable>> observables = new ArrayList<>();
+    private FragmentManager.FragmentLifecycleCallbacks childrenCB = new FragmentManager.FragmentLifecycleCallbacks() {
+
+        @Override public void onFragmentViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+            super.onFragmentViewCreated(fm, f, v, savedInstanceState);
+            onChildViewCreated(fm, f, v, savedInstanceState);
+        }
+    };
+
+    protected void onChildViewCreated(FragmentManager fm, Fragment f, View v, Bundle savedInstanceState) {
+    }
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,10 +74,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
     }
-
 
     @Override public void onAttach(Context context) {
         try {
@@ -140,10 +156,6 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-
-
-
-
     protected void onVisible() {
         lazyLoad();
     }
@@ -165,9 +177,8 @@ public abstract class BaseFragment extends Fragment {
     protected void onInVisible() {
     }
 
-    private List<Pair<String, Observable>> observables = new ArrayList<>();
-
     @Override public void onDestroyView() {
+        getChildFragmentManager().unregisterFragmentLifecycleCallbacks(childrenCB);
         if (getActivity() != null) {
             AppUtils.hideKeyboard(getActivity());
         }
@@ -180,8 +191,6 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
         if (unbinder != null) unbinder.unbind();
     }
-
-    List<Subscription> sps = new ArrayList<>();
 
     public void unattachView() {
         for (int i = 0; i < sps.size(); i++) {

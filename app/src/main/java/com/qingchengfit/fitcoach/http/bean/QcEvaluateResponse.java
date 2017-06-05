@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.ArrayList;
 import java.util.List;
 

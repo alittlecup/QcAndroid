@@ -23,12 +23,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.items.ArticleCommentItem;
+import cn.qingchengfit.items.CommonNoDataItem;
 import cn.qingchengfit.items.ProgressItem;
 import cn.qingchengfit.model.responese.ArticleComment;
 import cn.qingchengfit.presenters.ArticleCommentsPresenter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -37,8 +39,6 @@ import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
-import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.items.CommonNoDataItem;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -80,14 +80,12 @@ import rx.functions.Action1;
     @BindView(R.id.input_et) EditText inputEt;
     @BindView(R.id.btn_send) Button btnSend;
     LinearLayoutManager linearLayoutManager;
-
-    private List<AbstractFlexibleItem> items = new ArrayList<>();
-    private CommonFlexAdapter commonFlexAdapter;
-
     @Arg String newsId ;
     @Arg(required = false) String replyId ;
     @Arg(required = false) String replyName;
     @Inject LoginStatus loginStatus;
+    private List<AbstractFlexibleItem> items = new ArrayList<>();
+    private CommonFlexAdapter commonFlexAdapter;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

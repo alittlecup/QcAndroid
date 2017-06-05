@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.model.base.CoachService;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -34,7 +35,7 @@ import rx.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyGymsFragment extends android.support.v4.app.Fragment {
+public class MyGymsFragment extends BaseFragment {
     public static final String TAG = MyGymsFragment.class.getName();
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
@@ -46,6 +47,10 @@ public class MyGymsFragment extends android.support.v4.app.Fragment {
     private Unbinder unbinder;
 
     public MyGymsFragment() {
+    }
+
+    @Override public String getFragmentName() {
+        return MyGymsFragment.class.getName();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -11,9 +11,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.component.CommonInputView;
 import com.qingchengfit.fitcoach.component.TimePeriodChooser;
 import java.util.Date;
 

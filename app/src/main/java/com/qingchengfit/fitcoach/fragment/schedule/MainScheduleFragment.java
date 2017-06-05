@@ -14,8 +14,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.GuideWindow;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -26,10 +28,10 @@ import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import java.util.Date;
+import javax.inject.Inject;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -65,7 +67,7 @@ public class MainScheduleFragment extends BaseFragment {
     @BindView(R.id.schedule_notification_layout) RelativeLayout scheduleNotificationLayout;
     @BindView(R.id.schedule_frag) FrameLayout scheduleFrag;
     @BindView(R.id.view_p) View viewP;
-
+    @Inject LoginStatus loginStatus;
     private CoachService mCoachService;
     private boolean isWeekView;
     private ScheduleWeekFragment scheduleWeekFragment;
@@ -82,7 +84,7 @@ public class MainScheduleFragment extends BaseFragment {
         scheduleWeekFragment = new ScheduleWeekFragment();
         scheduesFragment = new ScheduesFragmentBuilder(new Date().getTime()).build();
 
-        router(isWeekView ? scheduleWeekFragment : scheduesFragment);
+        stuff(isWeekView ? scheduleWeekFragment : scheduesFragment);
         setVisible();
     }
 

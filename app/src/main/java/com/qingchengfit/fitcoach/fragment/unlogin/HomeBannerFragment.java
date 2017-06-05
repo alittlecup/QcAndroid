@@ -13,14 +13,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.views.FragmentAdapter;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
-import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by

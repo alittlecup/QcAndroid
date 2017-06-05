@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.fragment;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.activity.OpenDrawerInterface;
 
 /**
@@ -17,7 +17,7 @@ import com.qingchengfit.fitcoach.activity.OpenDrawerInterface;
  * <p>
  * Created by Paper on 15/10/11 2015.
  */
-public class MainBaseFragment extends Fragment {
+public class MainBaseFragment extends BaseFragment {
 
     protected OpenDrawerInterface openDrawerInterface;
 

@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.http.bean;
 
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.List;
 
 /**
@@ -90,16 +91,16 @@ public class QcNotificationResponse extends QcResponse {
             return msgs;
         }
 
+        public void setMsgs(List<MsgsEntity> msgs) {
+            this.msgs = msgs;
+        }
+
         public List<MsgsEntity> getNotifications() {
             return notifications;
         }
 
         public void setNotifications(List<MsgsEntity> notifications) {
             this.notifications = notifications;
-        }
-
-        public void setMsgs(List<MsgsEntity> msgs) {
-            this.msgs = msgs;
         }
 
         public static class MsgsEntity {
@@ -120,6 +121,8 @@ public class QcNotificationResponse extends QcResponse {
             private String photo;
             private String created_at;
             private boolean is_read;
+            private String description;
+            private int id;
 
             public String getDescription() {
                 return description;
@@ -128,9 +131,6 @@ public class QcNotificationResponse extends QcResponse {
             public void setDescription(String description) {
                 this.description = description;
             }
-
-            private String description;
-            private int id;
 
             public boolean is_read() {
                 return is_read;

@@ -14,11 +14,11 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
-import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 

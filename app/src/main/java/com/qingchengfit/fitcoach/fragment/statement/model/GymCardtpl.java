@@ -1,6 +1,5 @@
 package com.qingchengfit.fitcoach.fragment.statement.model;
 
-import com.google.gson.annotations.SerializedName;
 import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

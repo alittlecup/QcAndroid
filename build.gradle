@@ -40,33 +40,14 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-//        classpath "com.android.databinding:dataBinder:1.0-rc1"
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
-
-        //        classpath 'com.mcxiaoke.gradle:packer:1.0.4'
-//        classpath "com.github.piasy:okbuck-gradle-plugin:0.3.0"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
         classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:${TINKERPATCH_VERSION}") {
             changing = true
         }
     }
 }
-
-//apply plugin: 'com.github.piasy.okbuck-gradle-plugin'//使用buck编译
-//okbuck {
-//    target "android-23"
-//    keystoreDir ".okbuck/keystore"
-//    signConfigName "release"
-//    overwrite true
-//    resPackages = [
-//            'paperbaselibrary': 'com.paper.paperbaselibrary',
-//            'app': 'com.qingchengfit.fitcoach',
-//    ]
-//}
 
 
 allprojects {

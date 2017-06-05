@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import cn.qingchengfit.model.base.DistrictEntity;
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.List;
 
 /**

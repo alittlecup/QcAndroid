@@ -99,6 +99,10 @@ import rx.functions.Action1;
         FragmentArgs.inject(this);
     }
 
+    @Override public String getFragmentName() {
+        return ScheduesFragment.class.getName();
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedues, container, false);
         unbinder = ButterKnife.bind(this, view);

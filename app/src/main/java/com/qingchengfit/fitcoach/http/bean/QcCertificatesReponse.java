@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.List;
 
 /**

@@ -60,6 +60,10 @@ public class MyCoursePlanFragment extends BaseFragment {
 
     }
 
+    @Override public String getFragmentName() {
+        return MyCoursePlanFragment.class.getName();
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_gyms, container, false);

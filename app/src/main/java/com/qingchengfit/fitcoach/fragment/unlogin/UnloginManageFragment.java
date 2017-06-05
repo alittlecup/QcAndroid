@@ -67,15 +67,15 @@ public class UnloginManageFragment extends LazyloadFragment {
             RxRegiste(repoCoachService.readAllServices().observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
                 if (coachServices.size() == 0) {
                     //无场馆
-                    router(homeBannerFragment,null);
+                    stuff(homeBannerFragment, null);
                 } else {
                     //有场馆
-                    router(manageFragment);
+                    stuff(manageFragment);
                 }
             }));
 
         } else {
-            router(homeBannerFragment,null);
+            stuff(homeBannerFragment, null);
         }
     }
 

@@ -2,6 +2,7 @@ package com.qingchengfit.fitcoach.http.bean;
 
 import android.support.annotation.Nullable;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.bean.Card;
 import java.util.List;

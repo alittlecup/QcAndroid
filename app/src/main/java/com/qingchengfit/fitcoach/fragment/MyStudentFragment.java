@@ -267,6 +267,10 @@ public class MyStudentFragment extends BaseFragment {
         startActivityForResult(to, 400);
     }
 
+    @Override public String getFragmentName() {
+        return MyStudentFragment.class.getName();
+    }
+
     /**
      * 初始化搜索组件
      */

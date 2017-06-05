@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.model.base.DistrictEntity;
+import cn.qingchengfit.network.response.QcResponse;
 
 /**
  * power by

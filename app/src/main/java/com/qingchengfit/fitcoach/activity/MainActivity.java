@@ -27,12 +27,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.NetWorkUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.views.activity.BaseAcitivity;
+import cn.qingchengfit.views.fragments.BaseFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
@@ -68,7 +70,6 @@ import com.qingchengfit.fitcoach.http.bean.PushBody;
 import com.qingchengfit.fitcoach.http.bean.QcCoachSystemResponse;
 import com.qingchengfit.fitcoach.http.bean.QcDrawerResponse;
 import com.qingchengfit.fitcoach.http.bean.QcMeetingResponse;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcSchedulesResponse;
 import com.qingchengfit.fitcoach.http.bean.ResponseResult;
 import com.qingchengfit.fitcoach.reciever.PushReciever;
@@ -686,6 +687,7 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         });
 
         /**
+         *
          * load cache
          */
         String cache = PreferenceUtils.getPrefString(App.AppContex, App.coachid + "drawer_info", "");
@@ -703,12 +705,12 @@ public class MainActivity extends BaseAcitivity implements OpenDrawerInterface {
         }
     }
 
-    public void changeFragment(Fragment fragment) {
+    public void changeFragment(BaseFragment fragment) {
         mainDrawerlayout.closeDrawers();
         if (topFragment != fragment) {
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            if (mFragmentManager.getFragments() == null || !mFragmentManager.getFragments().contains(fragment)) {
-                fragmentTransaction.add(R.id.main_fraglayout, fragment);
+            if (mFragmentManager.findFragmentByTag(fragment.getFragmentName()) == null) {
+                fragmentTransaction.add(R.id.main_fraglayout, fragment, fragment.getFragmentName());
             }
             if (topFragment != null) fragmentTransaction.hide(topFragment);
 

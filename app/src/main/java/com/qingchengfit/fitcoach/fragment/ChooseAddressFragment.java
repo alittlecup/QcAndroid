@@ -15,6 +15,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonInputView;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -33,7 +34,6 @@ import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.bean.EventAddress;
 import com.qingchengfit.fitcoach.component.CitiesChooser;
-import com.qingchengfit.fitcoach.component.CommonInputView;
 
 /**
  * power by

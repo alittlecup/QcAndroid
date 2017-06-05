@@ -24,10 +24,17 @@ android {
 }
 repositories {
   jcenter()
+  maven() {
+    url "http://maven.aliyun.com/nexus/content/groups/public/"
+  }
   mavenCentral()
   maven() {
     url uri('../../repo')
   }
+  maven() {
+    url uri('./repo')
+  }
+  maven { url "https://jitpack.io" }
 }
 
 
@@ -44,8 +51,8 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
   testCompile 'junit:junit:4.12'
 
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-  compile 'com.jakewharton:butterknife:8.4.0'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  compile 'com.jakewharton:butterknife:8.6.0'
 }
 
 

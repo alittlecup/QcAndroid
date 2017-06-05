@@ -2,8 +2,8 @@ package com.qingchengfit.fitcoach.fragment.statement.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import cn.qingchengfit.model.base.Shop;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
-import com.qingchengfit.fitcoach.bean.base.Shop;
 
 /**
  * Created by fb on 2017/5/16.
@@ -11,6 +11,15 @@ import com.qingchengfit.fitcoach.bean.base.Shop;
 
 public class CourseReportSchedule implements Parcelable {
 
+    public static final Creator<CourseReportSchedule> CREATOR = new Creator<CourseReportSchedule>() {
+        @Override public CourseReportSchedule createFromParcel(Parcel source) {
+            return new CourseReportSchedule(source);
+        }
+
+        @Override public CourseReportSchedule[] newArray(int size) {
+            return new CourseReportSchedule[size];
+        }
+    };
     public String id;
     public Shop shop;
     public String count;
@@ -22,24 +31,6 @@ public class CourseReportSchedule implements Parcelable {
     public float total_account;
     public CourseTypeSample course;
     public CourseCoach teacher;
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeParcelable(this.shop, flags);
-        dest.writeString(this.count);
-        dest.writeString(this.score);
-        dest.writeFloat(this.total_real_price);
-        dest.writeString(this.start);
-        dest.writeInt(this.total_times);
-        dest.writeInt(this.order_count);
-        dest.writeFloat(this.total_account);
-        dest.writeParcelable(this.course, flags);
-        dest.writeParcelable(this.teacher, flags);
-    }
 
     public CourseReportSchedule() {
     }
@@ -58,14 +49,21 @@ public class CourseReportSchedule implements Parcelable {
         this.teacher = in.readParcelable(CourseCoach.class.getClassLoader());
     }
 
-    public static final Creator<CourseReportSchedule> CREATOR =
-        new Creator<CourseReportSchedule>() {
-            @Override public CourseReportSchedule createFromParcel(Parcel source) {
-                return new CourseReportSchedule(source);
-            }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-            @Override public CourseReportSchedule[] newArray(int size) {
-                return new CourseReportSchedule[size];
-            }
-        };
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeParcelable(this.shop, flags);
+        dest.writeString(this.count);
+        dest.writeString(this.score);
+        dest.writeFloat(this.total_real_price);
+        dest.writeString(this.start);
+        dest.writeInt(this.total_times);
+        dest.writeInt(this.order_count);
+        dest.writeFloat(this.total_account);
+        dest.writeParcelable(this.course, flags);
+        dest.writeParcelable(this.teacher, flags);
+    }
 }

@@ -1,6 +1,6 @@
 package com.qingchengfit.fitcoach.bean;
 
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
+import cn.qingchengfit.network.response.QcResponse;
 
 /**
  * power by

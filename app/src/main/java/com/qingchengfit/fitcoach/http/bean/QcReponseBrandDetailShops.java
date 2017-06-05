@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.http.bean;
 
 import cn.qingchengfit.model.base.Shop;
+import cn.qingchengfit.network.response.QcResponse;
 import java.util.List;
 
 /**

@@ -44,6 +44,10 @@ public class MeetingFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Override public String getFragmentName() {
+        return MeetingFragment.class.getName();
+    }
+
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meeting, container, false);

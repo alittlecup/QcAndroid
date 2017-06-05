@@ -57,4 +57,8 @@ public class DataStatementFragment extends MainBaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @Override public String getFragmentName() {
+        return DataStatementFragment.class.getName();
+    }
 }

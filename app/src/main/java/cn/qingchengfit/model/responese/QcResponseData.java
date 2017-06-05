@@ -1,9 +1,10 @@
 package cn.qingchengfit.model.responese;
 
+import cn.qingchengfit.network.response.QcResponse;
 import com.google.gson.annotations.SerializedName;
-import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
 /**
+ *
  * Created by yangming on 16/9/20.
  */
 
