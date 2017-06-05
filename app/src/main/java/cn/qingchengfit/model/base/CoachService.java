@@ -41,7 +41,7 @@ public class CoachService implements Parcelable, CoachServiceModel {
     @SerializedName("has_permission") public boolean has_permission = true;
     @SerializedName("gd_district") public QcCoachRespone.DataEntity.CoachEntity.DistrictEntity gd_district;
     public String system_end;
-    private String gym_id;
+    public String gym_id;
 
     private CoachService(Builder builder) {
         setModel(builder.model);

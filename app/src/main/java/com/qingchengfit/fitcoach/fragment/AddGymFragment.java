@@ -89,7 +89,7 @@ public class AddGymFragment extends GuideSetGymFragment {
                         if (ResponseConstant.checkSuccess(qcResponse)) {
                             // TODO: 16/11/16 新建成功
                             //getActivity().onBackPressed();
-                            searchListener.onSearchResult(100, qcResponse.data.gym_id,qcResponse.data.name,qcResponse.data.brand_name,qcResponse.data.photo,false);
+                            searchListener.onSearchResult(100, Long.parseLong(qcResponse.data.gym_id),qcResponse.data.name,qcResponse.data.brand_name,qcResponse.data.photo,false);
                         } else ToastUtils.showDefaultStyle(qcResponse.msg);
                     }
                 }, new Action1<Throwable>() {
