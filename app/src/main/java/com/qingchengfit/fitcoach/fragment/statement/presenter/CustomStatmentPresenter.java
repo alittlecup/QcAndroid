@@ -193,7 +193,7 @@ public class CustomStatmentPresenter implements Presenter {
                 bean.course_type = -3;
                 bean.course = null;
             }
-        }
+        }else bean.course_type = -1;
 
         fragmentManager.beginTransaction()
             .add(layout,

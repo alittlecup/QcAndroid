@@ -20,7 +20,6 @@ import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.widgets.DialogList;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
-import com.qingchengfit.fitcoach.Configs;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.bean.CourseTypeSample;
@@ -50,6 +49,7 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
     private Observable<CourseTypeSample> ObCourse;
     private String mStart;
     private String mEnd;
+    private CourseChooseDialogFragment fragment;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +84,11 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
             }
             if (filterBean.course != null) allCourse.setContent(filterBean.course.getName());
             if (filterBean.student != null) allStudent.setContent(filterBean.student.username);
+            if (filterBean.course == null ) {
+                if (filterBean.course_type == -1) allCourse.setContent(getString(R.string.all_course));
+                if (filterBean.course_type == -2) allCourse.setContent(getString(R.string.all_course_private));
+                if (filterBean.course_type == -3) allCourse.setContent(getString(R.string.all_course_group));
+            }
         } else {
             filterBean = new ClassStatmentFilterBean();
         }
@@ -98,14 +103,16 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
                         filterBean.course = null;
                         allCourse.setContent(getString(R.string.all_course));
                     } else if (type == -2) {
-                        filterBean.course_type = Configs.TYPE_PRIVATE;
+                        filterBean.course_type = -2;
+                        filterBean.course = null;
                         allCourse.setContent(getString(R.string.all_course_private));
                     } else if (type == -3) {
-                        filterBean.course_type = Configs.TYPE_GROUP;
+                        filterBean.course_type = -3;
+                        filterBean.course = null;
                         allCourse.setContent(getString(R.string.all_course_group));
                     }
                 } else {
-                    filterBean.course_type = 99;
+                    filterBean.course_type = course.is_private?-2:-3;
                     filterBean.course = course;
                     allCourse.setContent(course.getName());
                 }
@@ -117,9 +124,14 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
         });
     }
 
-    @OnClick({
-        R.id.start_day, R.id.end_day, R.id.all_student, R.id.generate, R.id.all_course
-    }) public void onClick(View view) {
+    private void initView(){
+        allCourse.setContent(getString(R.string.all_course));
+        allStudent.setContent(getString(R.string.all_students));
+    }
+
+    @OnClick({ R.id.start_day, R.id.end_day
+        , R.id.all_student, R.id.generate, R.id.all_course })
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_day:
                 if (pwTime == null) pwTime = new TimeDialogWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
@@ -146,7 +158,9 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
                     date = DateUtils.formatDateFromYYYYMMDD(startDay.getContent());
                 } catch (Exception e) {
                 }
-                pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
+                if (!pwTime.isShowing()) {
+                    pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, date);
+                }
                 break;
             case R.id.end_day:
                 if (pwTime == null) pwTime = new TimeDialogWindow(this, TimePopupWindow.Type.YEAR_MONTH_DAY);
@@ -174,14 +188,17 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
                     dateend = DateUtils.formatDateFromYYYYMMDD(endDay.getContent());
                 } catch (Exception e) {
                 }
-                pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, dateend);
+                if (!pwTime.isShowing()) {
+                    pwTime.showAtLocation(rootview, Gravity.BOTTOM, 0, 0, dateend);
+                }
                 break;
             case R.id.all_student://选择学员
                 List<String> users = new ArrayList<>();
                 users.add(getString(R.string.all_students));
                 users.addAll(BusinessUtils.students2strs(mFilterUsers));
                 new DialogList(this).list(users, new AdapterView.OnItemClickListener() {
-                    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (position == 0) {
                             allStudent.setContent(getString(R.string.all_students));
                             filterBean.student = null;
@@ -194,8 +211,9 @@ public class StatmentFilterActivity extends AppCompatActivity implements ClassSt
 
                 break;
             case R.id.all_course:
-                CourseChooseDialogFragment fragment = CourseChooseDialogFragment.newInstance(mFilterCourse);
-                fragment.show(getSupportFragmentManager(), "");
+                fragment = CourseChooseDialogFragment.newInstance(mFilterCourse);
+                if (!fragment.isVisible())
+                    fragment.show(getSupportFragmentManager(), "");
                 break;
             case R.id.generate://生成
                 if (DateUtils.formatDateFromYYYYMMDD(startDay.getContent()).getTime() > DateUtils.formatDateFromYYYYMMDD(

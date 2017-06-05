@@ -46,9 +46,13 @@ public class RepoCoachServiceImpl implements RepoCoachService {
 
     @Override public void createServices(List<CoachService> coachServices) {
         BriteDatabase.Transaction trans = helper.getBriteDatabase().newTransaction();
-        try {
-            deleteAllServices();
-            coachServices.forEach(this::createService);
+
+        try{
+
+            helper.getBriteDatabase().delete(CoachService.TABLE_NAME,null);
+            for (CoachService coacheService : coachServices) {
+                helper.getBriteDatabase().insert(CoachService.TABLE_NAME,CoachService.FACTORY.marshal(coacheService).asContentValues());
+            }
             trans.markSuccessful();
         } catch (Exception e) {
             LogUtil.e(e.getMessage());

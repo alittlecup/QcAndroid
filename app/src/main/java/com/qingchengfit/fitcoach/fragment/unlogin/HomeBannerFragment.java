@@ -13,12 +13,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.views.FragmentAdapter;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
+import com.qingchengfit.fitcoach.adapter.FragmentAdapter;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
@@ -54,7 +54,7 @@ public class HomeBannerFragment extends BaseFragment {
         R.drawable.img_guide1, R.drawable.img_guide3, R.drawable.img_guide4,
     };
     private int[] titles = new int[] {
-        R.string.str_guide_title_2, R.string.str_guide_title_3, R.string.str_guide_title_4,
+         R.string.str_guide_title_2, R.string.str_guide_title_3, R.string.str_guide_title_4,
     };
     private int[] contents = new int[] {
         R.string.str_guide_content_1, R.string.str_guide_content_2, R.string.str_guide_content_3, R.string.str_guide_content_4,
@@ -65,38 +65,50 @@ public class HomeBannerFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         list.clear();
         for (int i = 0; i < 3; i++) {
-            list.add(new UnloginAdPhotoFragmentBuilder(contents[i], imgs[i], titles[i]).build());
+            list.add(new UnloginAdPhotoFragmentBuilder(contents[i],imgs[i],titles[i] ).build());
         }
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_banner, container, false);
         unbinder = ButterKnife.bind(this, view);
-        viewPaperAdapter = new FragmentAdapter(getChildFragmentManager(), list);
+        viewPaperAdapter = new FragmentAdapter(getChildFragmentManager(),list);
         vp.setAdapter(viewPaperAdapter);
         splashIndicator.setViewPager(vp);
         if (!loginStatus.isLogined()) {
             btnLogin.setVisibility(View.VISIBLE);
-        } else {
-            btnLogin.setVisibility(View.GONE);
-        }
+        }else btnLogin.setVisibility(View.GONE);
+
+        RxBusAdd(EventLoginChange.class).delay(500, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(eventLoginChange -> {
+                if (btnLogin == null)
+                    return;
+                if (btnLogin != null) {
+                    if (!loginStatus.isLogined()) {
+                        btnLogin.setVisibility(View.VISIBLE);
+                    } else btnLogin.setVisibility(View.GONE);
+                }
+        });
 
         return view;
     }
 
     @Override protected void onVisible() {
         super.onVisible();
+
     }
 
     /**
      * 注册
      */
-    @OnClick(R.id.btn_use_now) public void onClickUseNow() {
+    @OnClick(R.id.btn_use_now)
+    public void onClickUseNow(){
         if (!loginStatus.isLogined()) {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
             toLogin.putExtra("isRegiste", 1);
             startActivity(toLogin);
-        } else {
+        }else {
             startActivity(new Intent(getActivity(), GuideActivity.class));
         }
     }
@@ -104,11 +116,13 @@ public class HomeBannerFragment extends BaseFragment {
     /**
      * 立即登录
      */
-    @OnClick(R.id.btn_login) public void onLogin() {
+    @OnClick(R.id.btn_login)
+    public void onLogin(){
         Intent toLogin = new Intent(getActivity(), LoginActivity.class);
         toLogin.putExtra("isRegiste", 0);
         startActivity(toLogin);
     }
+
 
     @Override public String getFragmentName() {
         return HomeBannerFragment.class.getName();

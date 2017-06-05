@@ -2,6 +2,8 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.amap.api.services.route.District;
+import com.qingchengfit.fitcoach.http.bean.User;
 
 /**
  * //  ┏┓　　　┏┓
@@ -27,15 +29,6 @@ import android.os.Parcelable;
 
 public class Staff extends Personage implements Parcelable {
 
-    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
-        @Override public Staff createFromParcel(Parcel source) {
-            return new Staff(source);
-        }
-
-        @Override public Staff[] newArray(int size) {
-            return new Staff[size];
-        }
-    };
     public String gd_district_id;//地区id
     public District gd_district;//地区
     public StaffPosition postion;//
@@ -43,10 +36,11 @@ public class Staff extends Personage implements Parcelable {
     public String position_str;
     public String user_id;
 
+
+
     public Staff() {
     }
-
-    public Staff(User user, String staffid) {
+    public Staff(User user,String staffid) {
         this.username = user.username;
         this.avatar = user.avatar;
         this.gender = user.gender;
@@ -56,26 +50,8 @@ public class Staff extends Personage implements Parcelable {
 
     public Staff(String username, String phone, String avatar, int gender) {
         super(username, phone, avatar, gender);
-    }
-
-    public Staff(String username, String phone, String avatar, String area_code, int gender) {
-        super(username, phone, avatar, area_code, gender);
-    }
-
-    protected Staff(Parcel in) {
-        super(in);
-        this.gd_district_id = in.readString();
-        this.gd_district = in.readParcelable(District.class.getClassLoader());
-        this.postion = in.readParcelable(StaffPosition.class.getClassLoader());
-        this.count = in.readLong();
-        this.position_str = in.readString();
-        this.user_id = in.readString();
-    }
-
-    public static Staff formatFromUser(User user, String coachId) {
-        Staff staff = new Staff(user.username, user.phone, user.avatar, user.gender);
-        staff.setId(coachId);
-        return staff;
+    }public Staff(String username, String phone, String avatar,String area_code, int gender) {
+        super(username, phone, avatar, area_code,gender);
     }
 
     public StudentReferrerBean toReferrerBean() {
@@ -108,12 +84,12 @@ public class Staff extends Personage implements Parcelable {
         return postion;
     }
 
-    public void setPostion(StaffPosition postion) {
-        this.postion = postion;
-    }
-
     public String getPosition_str() {
         return position_str;
+    }
+
+    public void setPostion(StaffPosition postion) {
+        this.postion = postion;
     }
 
     public long getCount() {
@@ -122,6 +98,12 @@ public class Staff extends Personage implements Parcelable {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public static Staff formatFromUser(User user,String coachId){
+        Staff staff = new Staff(user.username,user.phone,user.avatar,user.gender);
+        staff.setId(coachId);
+        return staff;
     }
 
     @Override public int describeContents() {
@@ -136,5 +118,31 @@ public class Staff extends Personage implements Parcelable {
         dest.writeLong(this.count);
         dest.writeString(this.position_str);
         dest.writeString(this.user_id);
+    }
+
+    protected Staff(Parcel in) {
+        super(in);
+        this.gd_district_id = in.readString();
+        this.gd_district = in.readParcelable(District.class.getClassLoader());
+        this.postion = in.readParcelable(StaffPosition.class.getClassLoader());
+        this.count = in.readLong();
+        this.position_str = in.readString();
+        this.user_id = in.readString();
+    }
+
+    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
+        @Override public Staff createFromParcel(Parcel source) {
+            return new Staff(source);
+        }
+
+        @Override public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
+
+    public static Staff formatFromUser(User user,String coachId){
+        Staff staff = new Staff(user.username,user.phone,user.avatar,user.gender);
+        staff.setId(coachId);
+        return staff;
     }
 }

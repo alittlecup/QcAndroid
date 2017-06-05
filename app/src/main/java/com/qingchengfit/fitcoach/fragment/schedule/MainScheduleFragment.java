@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.GuideWindow;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.Configs;
@@ -27,6 +26,7 @@ import com.qingchengfit.fitcoach.event.EventGoPreview;
 import com.qingchengfit.fitcoach.event.EventInit;
 import com.qingchengfit.fitcoach.event.EventScheduleService;
 import com.qingchengfit.fitcoach.event.EventScheduleView;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.bean.QcNotificationResponse;
 import java.util.Date;
@@ -82,7 +82,7 @@ public class MainScheduleFragment extends BaseFragment {
         scheduleWeekFragment = new ScheduleWeekFragment();
         scheduesFragment = new ScheduesFragmentBuilder(new Date().getTime()).build();
 
-        stuff(isWeekView ? scheduleWeekFragment : scheduesFragment);
+        router(isWeekView ? scheduleWeekFragment : scheduesFragment);
         setVisible();
     }
 
@@ -134,8 +134,9 @@ public class MainScheduleFragment extends BaseFragment {
 
         return view;
     }
-
-    public void setVisible() {
+    public void setVisible(){
+        if (!loginStatus.isLogined())
+            return;
         if (!PreferenceUtils.getPrefBoolean(getContext(), "guide_1", false)) {
             if (gd1 == null) gd1 = new GuideWindow(getContext(), getString(R.string.hint_order_self), GuideWindow.DOWN);
             gd1.show(studentOrder);
@@ -145,10 +146,11 @@ public class MainScheduleFragment extends BaseFragment {
         }
     }
 
-    public void setInvisible() {
+    public void setInvisible(){
         if (gd1 != null && gd1.isShowing()) gd1.dismiss();
         if (gd2 != null && gd2.isShowing()) gd2.dismiss();
     }
+
 
     private void goStudentPreview(CoachService coachService) {
         Intent toStudnet = new Intent(getActivity(), SpecialWebActivity.class);

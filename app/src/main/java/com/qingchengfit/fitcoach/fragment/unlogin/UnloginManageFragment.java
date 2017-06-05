@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.views.fragments.LazyloadFragment;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.fragment.manage.ManageFragment;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -37,7 +39,7 @@ public class UnloginManageFragment extends LazyloadFragment {
     ManageFragment manageFragment;
     HomeBannerFragment homeBannerFragment;
     @Inject LoginStatus loginStatus;
-
+    @Inject RepoCoachServiceImpl repoCoachService;
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         manageFragment = new ManageFragment();
@@ -46,6 +48,7 @@ public class UnloginManageFragment extends LazyloadFragment {
 
     @Override protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
+
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,11 +61,21 @@ public class UnloginManageFragment extends LazyloadFragment {
         changeView();
     }
 
+
     public void changeView() {
         if (loginStatus.isLogined()) {
-            stuff(manageFragment);
+            RxRegiste(repoCoachService.readAllServices().observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+                if (coachServices.size() == 0) {
+                    //无场馆
+                    router(homeBannerFragment,null);
+                } else {
+                    //有场馆
+                    router(manageFragment);
+                }
+            }));
+
         } else {
-            stuff(homeBannerFragment);
+            router(homeBannerFragment,null);
         }
     }
 

@@ -10,23 +10,9 @@ import cn.qingchengfit.model.base.Staff;
 
 public class CourseCoach extends Staff {
 
-    public static final Parcelable.Creator<CourseCoach> CREATOR = new Parcelable.Creator<CourseCoach>() {
-        @Override public CourseCoach createFromParcel(Parcel source) {
-            return new CourseCoach(source);
-        }
-
-        @Override public CourseCoach[] newArray(int size) {
-            return new CourseCoach[size];
-        }
-    };
-    public int score;
+    public float score;
 
     public CourseCoach() {
-    }
-
-    protected CourseCoach(Parcel in) {
-        super(in);
-        this.score = in.readInt();
     }
 
     @Override public int describeContents() {
@@ -35,6 +21,21 @@ public class CourseCoach extends Staff {
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.score);
+        dest.writeFloat(this.score);
     }
+
+    protected CourseCoach(Parcel in) {
+        super(in);
+        this.score = in.readFloat();
+    }
+
+    public static final Creator<CourseCoach> CREATOR = new Creator<CourseCoach>() {
+        @Override public CourseCoach createFromParcel(Parcel source) {
+            return new CourseCoach(source);
+        }
+
+        @Override public CourseCoach[] newArray(int size) {
+            return new CourseCoach[size];
+        }
+    };
 }

@@ -64,6 +64,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */

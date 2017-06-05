@@ -108,6 +108,8 @@ public class MineFragmentFragment extends BaseFragment {
 
             queryData();
         } else {
+            if (gd1 != null )
+                gd1.dismiss();
             toolbar.getMenu().clear();
             layoutLogin.setVisibility(View.VISIBLE);
         }

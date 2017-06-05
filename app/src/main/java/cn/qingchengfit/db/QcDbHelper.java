@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class QcDbHelper extends SQLiteOpenHelper {
-    private BriteDatabase briteDatabase;
+    private static BriteDatabase briteDatabase;
 
     @Inject public QcDbHelper(App context, LoginStatus loginStatus) {
         super(context, loginStatus.getUserId() + "trainer.db", null, 1);

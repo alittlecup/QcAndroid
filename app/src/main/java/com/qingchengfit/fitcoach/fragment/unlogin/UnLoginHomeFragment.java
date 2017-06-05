@@ -8,8 +8,8 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.schedule.MainScheduleFragment;
 import java.util.List;
 import javax.inject.Inject;
@@ -57,36 +57,36 @@ public class UnLoginHomeFragment extends BaseFragment {
 
     @Override protected void onInVisible() {
         super.onInVisible();
-        if (mainScheduleFragment.isVisible()) {
+        if (mainScheduleFragment.isVisible()){
             mainScheduleFragment.setInvisible();
         }
     }
 
     @Override protected void onVisible() {
         super.onVisible();
-        if (mainScheduleFragment.isVisible()) {
+        if (mainScheduleFragment.isVisible()){
             mainScheduleFragment.setVisible();
         }
     }
 
-    private void changeLogin() {
+    private void changeLogin(){
         if (loginStatus.isLogined()) {
             //已登录
             //if (spGetService == null) {
-            spGetService = repoCoachService.readAllServices();
-            RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
-                if (coachServices.size() == 0) {
-                    //无场馆
-                    stuff(homeBannerFragment, "banner1");
-                } else {
-                    //有场馆
-                    stuff(mainScheduleFragment);
-                }
-            }));
+                spGetService = repoCoachService.readAllServices();
+                RxRegiste(spGetService.observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
+                    if (coachServices.size() == 0) {
+                        //无场馆
+                        router(homeBannerFragment, null);
+                    } else {
+                        //有场馆
+                        router(mainScheduleFragment);
+                    }
+                }));
             //}
         } else {
             //未登录
-            stuff(homeBannerFragment, "banner1");
+            router(homeBannerFragment,null);
         }
     }
 

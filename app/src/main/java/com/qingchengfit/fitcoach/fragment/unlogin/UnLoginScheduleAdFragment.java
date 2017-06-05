@@ -13,12 +13,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.event.EventLoginChange;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.R;
 import com.qingchengfit.fitcoach.activity.GuideActivity;
 import com.qingchengfit.fitcoach.activity.LoginActivity;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * power by
@@ -60,6 +62,14 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
         } else {
             btnLogin.setVisibility(View.GONE);
         }
+        RxBusAdd(EventLoginChange.class).observeOn(AndroidSchedulers.mainThread()).subscribe(eventLoginChange -> {
+            if (!loginStatus.isLogined()) {
+                btnLogin.setVisibility(View.VISIBLE);
+            } else {
+                btnLogin.setVisibility(View.GONE);
+            }
+        });
+
         return view;
     }
 
@@ -75,7 +85,7 @@ public class UnLoginScheduleAdFragment extends BaseFragment {
             Intent toLogin = new Intent(getActivity(), LoginActivity.class);
             toLogin.putExtra("isRegiste", 1);
             startActivity(toLogin);
-        } else {
+        }else {
             startActivity(new Intent(getActivity(), GuideActivity.class));
         }
     }

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.AppUtils;
@@ -73,6 +74,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import retrofit2.http.HEAD;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -82,6 +84,8 @@ import rx.schedulers.Schedulers;
 
 import static com.qingchengfit.fitcoach.App.diskLruCache;
 import static com.qingchengfit.fitcoach.http.QcCloudClient.getApi;
+
+
 
 public class Main2Activity extends BaseAcitivity implements WebActivityInterface {
 
@@ -111,6 +115,10 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     private GuideWindow gw;
     private Subscription spOrders;
     private Observable<EventInit> obPopWinEvent;
+
+    private Observable<EventLoginChange> obLoginChange;
+
+
     private Snackbar NonetworkSnack;
     private Observable mMainObservabel;
     private Observable mNetworkObservabel;
@@ -166,7 +174,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                 }
             })
             .build();
-        changeLogin();
+
+       changeLogin();
+        obLoginChange = RxBus.getBus().register(EventLoginChange.class);
+        obLoginChange.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<EventLoginChange>() {
+            @Override public void call(EventLoginChange eventLoginChange) {
+                changeLogin();
+            }
+        });
 
         App.gMainAlive = true;//main是否存活,为推送
         if (getIntent() != null && getIntent().getIntExtra(ACTION, -1) == NOTIFICATION) {
@@ -183,7 +198,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
                         Boolean isInit = PreferenceUtils.getPrefBoolean(this, "guide_3", false);
                         if (!isInit && (gw == null || !gw.isShowing())) {
                             if (gw == null) gw = new GuideWindow(this, "使用「课程排期」安排课程", GuideWindow.UP);
-                            if (tabview != null && tabview.getChildCount() > 1) {
+                            if (tabview != null && tabview.getChildCount() > 1 && loginStatus.isLogined()) {
                                 gw.show(tabview.getChildAt(1));
                             }
                         }
@@ -241,8 +256,14 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         }
     }
 
-    public void changeLogin() {
 
+    public void changeLogin(){
+        if (loginStatus.isLogined()){
+            initUser();
+            initBDPush();
+        }else {
+            freshNotiCount(0);
+        }
     }
 
     private void setupVp() {
@@ -298,6 +319,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         RxBus.getBus().unregister(RxBus.OPEN_DRAWER, mMainObservabel);
         RxBus.getBus().unregister(NetworkBean.class.getName(), mNetworkObservabel);
         RxBus.getBus().unregister(EventInit.class.getName(), obPopWinEvent);
+        RxBus.getBus().unregister(EventLoginChange.class.getName(), obLoginChange);
     }
 
     private void initBDPush() {

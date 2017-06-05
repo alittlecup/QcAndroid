@@ -145,7 +145,7 @@ public class QcResponseStatementDetail extends QcResponse {
         @SerializedName("total_account") public float total_account;
         @SerializedName("total_times") public float total_times;
         @SerializedName("shop") public Shop shop;
-        public String total_real_price;
+        public float total_real_price;
 
         public List<String> getUsersIds() {
             List<String> ret = new ArrayList<>();

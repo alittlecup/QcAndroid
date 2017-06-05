@@ -188,7 +188,6 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             QcResponsePermission.Data d = gson.fromJson(s, QcResponsePermission.Data.class);
             updatePermission(d);
         }
-        //if (!isInit)
         getServer();
         isInit = true;
         return view;
