@@ -184,7 +184,6 @@ public class QcCloudClient {
 
     public QcCloudClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-
             @Override
             public void log(String message) {
                 LogUtil.d(message);
@@ -198,18 +197,16 @@ public class QcCloudClient {
             .addNetworkInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
-
-
                     Request request = chain.request();
                     if (!request.method().equalsIgnoreCase("GET")) {
                         String token = getApi.qcGetToken().execute().body().data.token;
-                        request = request.newBuilder()
+                        request = request.newBuilder().addHeader("Connection", "close")
                             .addHeader("X-CSRFToken", token)
                             .addHeader("Cookie", "csrftoken=" + token + ";sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))
                             .addHeader("User-Agent", " FitnessTrainerAssistant/" + AppUtils.getAppVer(App.AppContex) + " Android  OEM:" + App.AppContex.getString(R.string.oem_tag) + "  QingchengApp/Trainer")
                             .build();
                     } else {
-                        request = request.newBuilder()
+                        request = request.newBuilder().addHeader("Connection", "close")
                             .addHeader("max-age","5")
                             .addHeader("Cache-Control","public")
                             .addHeader("Cookie", "sessionid=" + PreferenceUtils.getPrefString(App.AppContex, Configs.PREFER_SESSION, ""))

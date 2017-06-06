@@ -1,5 +1,6 @@
 package com.qingchengfit.fitcoach.bean;
 
+import cn.qingchengfit.model.base.CoachService;
 import com.google.gson.annotations.SerializedName;
 import com.qingchengfit.fitcoach.http.bean.QcResponse;
 
@@ -17,8 +18,7 @@ import com.qingchengfit.fitcoach.http.bean.QcResponse;
  * Created by Paper on 16/2/23 2016.
  */
 public class QcResponseSystenInit extends QcResponse {
-    @SerializedName("data")
-    public InitCoachService data;
+    @SerializedName("data") public CoachService data;
 
 
 }

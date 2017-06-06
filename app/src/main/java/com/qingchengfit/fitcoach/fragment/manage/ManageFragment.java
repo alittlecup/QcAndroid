@@ -17,14 +17,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.GymWrapper;
+import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.RxBus;
 import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.Utils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
@@ -250,7 +251,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                         }
                     }
                 }else {//无场馆状态
-                    ToastUtils.show("无场馆");
+                    RxBus.getBus().post(new EventLoginChange());
                 }
 
             });
@@ -423,7 +424,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                     hideLoading();
                                     if (ResponseConstant.checkSuccess(qcResponse)) {
                                         cn.qingchengfit.utils.ToastUtils.show("退出健身房成功！");
-                                        //// TODO: 2017/5/17 判断逻辑 退出场馆后的状态
+                                        repoCoachService.deleteServiceByIdModel(gymWrapper.id(), gymWrapper.model());
                                         getServer();
                                     } else {
                                         cn.qingchengfit.utils.ToastUtils.show(qcResponse.getMsg());

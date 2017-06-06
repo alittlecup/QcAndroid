@@ -61,13 +61,11 @@
   <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
   <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-
-  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.GET_TASKS" />
-  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-  <uses-permission android:name="android.permission.READ_LOGS" />
-  <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+  <uses-permission android:name="android.permission.READ_LOGS"/>
+  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
   <!-- 适配Android N系统必需的ContentProvider写权限声明，写权限包含应用包名 -->
   <uses-permission android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"/>
@@ -76,13 +74,14 @@
       android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.baidu.push.example"
       android:protectionLevel="normal"
       />
-  <permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE" android:protectionLevel="signature" />
-  <!--这里com.tencent.imsdk改成app的包名-->
-  <uses-permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE" />
-  <!--这里com.tencent.imsdk改成app的包名-->
+  <permission
+      android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"
+      android:protectionLevel="signature"
+      />
+  <!-- 这里com.tencent.imsdk改成app的包名 -->
+  <uses-permission android:name="${APP_PACKAGE}.permission.MIPUSH_RECEIVE"/>
 
-
-
+  <!-- 这里com.tencent.imsdk改成app的包名 -->
   <application
       android:name=".App"
       android:allowBackup="true"
@@ -194,7 +193,9 @@
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
+
         <data android:scheme="sdksample"/>
       </intent-filter>
     </activity>
@@ -336,162 +337,188 @@
     <service android:name="com.amap.api.location.APSService"/>
 
     <!-- 腾讯IM -->
-    <!--  消息收发service -->
+    <!-- 消息收发service -->
     <service
         android:name="com.tencent.qalsdk.service.QalService"
         android:exported="false"
-        android:process=":QALSERVICE" >
+        android:process=":QALSERVICE"
+        >
     </service>
-    <!--  消息收发辅助service -->
+    <!-- 消息收发辅助service -->
     <service
         android:name="com.tencent.qalsdk.service.QalAssistService"
         android:exported="false"
-        android:process=":QALSERVICE" >
+        android:process=":QALSERVICE"
+        >
     </service>
-    <!--  离线消息广播接收器 -->
+    <!-- 离线消息广播接收器 -->
     <receiver
         android:name="com.tencent.qalsdk.QALBroadcastReceiver"
-        android:exported="false">
+        android:exported="false"
+        >
       <intent-filter>
-        <action android:name="com.tencent.qalsdk.broadcast.qal" />
+        <action android:name="com.tencent.qalsdk.broadcast.qal"/>
       </intent-filter>
     </receiver>
-    <!--  系统消息广播接收器 -->
+    <!-- 系统消息广播接收器 -->
     <receiver
-        android:name="com.tencent.qalsdk.core.NetConnInfoCenter"  android:process=":QALSERVICE">
+        android:name="com.tencent.qalsdk.core.NetConnInfoCenter"
+        android:process=":QALSERVICE"
+        >
       <intent-filter>
-        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
       </intent-filter>
       <intent-filter>
-        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
       </intent-filter>
       <intent-filter>
-        <action android:name="android.intent.action.TIME_SET" />
+        <action android:name="android.intent.action.TIME_SET"/>
       </intent-filter>
       <intent-filter>
-        <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+        <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
       </intent-filter>
     </receiver>
 
-    <!--小米推送相关注册-->
+    <!-- 小米推送相关注册 -->
     <service
+        android:name="com.xiaomi.push.service.XMPushService"
         android:enabled="true"
         android:process=":pushservice"
-        android:name="com.xiaomi.push.service.XMPushService"/>
+        />
     <service
         android:name="com.xiaomi.push.service.XMJobService"
         android:enabled="true"
         android:exported="false"
         android:permission="android.permission.BIND_JOB_SERVICE"
-        android:process=":pushservice" />
-    <!--注：此service必须在小米推送SDK3.0.1版本以后（包括3.0.1版本）加入-->
+        android:process=":pushservice"
+        />
+    <!-- 注：此service必须在小米推送SDK3.0.1版本以后（包括3.0.1版本）加入 -->
     <service
+        android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
         android:enabled="true"
         android:exported="true"
-        android:name="com.xiaomi.mipush.sdk.PushMessageHandler" />
-    <service android:enabled="true"
-             android:name="com.xiaomi.mipush.sdk.MessageHandleService" />
-    <!--注：此service必须在小米推送SDK2.2.5版本以后（包括2.2.5版本）加入-->
+        />
+    <service
+        android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+        android:enabled="true"
+        />
+    <!-- 注：此service必须在小米推送SDK2.2.5版本以后（包括2.2.5版本）加入 -->
     <receiver
+        android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
         android:exported="true"
-        android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver" >
+        >
       <intent-filter>
-        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-        <category android:name="android.intent.category.DEFAULT" />
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+
+        <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </receiver>
     <receiver
+        android:name="com.xiaomi.push.service.receivers.PingReceiver"
         android:exported="false"
         android:process=":pushservice"
-        android:name="com.xiaomi.push.service.receivers.PingReceiver" >
+        >
       <intent-filter>
-        <action android:name="com.xiaomi.push.PING_TIMER" />
+        <action android:name="com.xiaomi.push.PING_TIMER"/>
       </intent-filter>
     </receiver>
     <receiver
+        android:name="com.tencent.qcloud.timchat.chatutils.MiPushMessageReceiver"
         android:exported="true"
-        android:name="com.tencent.qcloud.timchat.chatutils.MiPushMessageReceiver">'
-      <!--这里com.tencent.imsdk.MiPushMessageReceiver改成app中定义的完整类名-->
+        >
+      '
+      <!-- 这里com.tencent.imsdk.MiPushMessageReceiver改成app中定义的完整类名 -->
       <intent-filter>
-        <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+        <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE"/>
       </intent-filter>
       <intent-filter>
-        <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+        <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED"/>
       </intent-filter>
       <intent-filter>
-        <action android:name="com.xiaomi.mipush.ERROR" />
+        <action android:name="com.xiaomi.mipush.ERROR"/>
       </intent-filter>
     </receiver>
 
-    <!--华为推送相关-->
+    <!-- 华为推送相关 -->
 
     <receiver
         android:name="com.huawei.android.pushagent.PushEventReceiver"
-        android:process=":pushservice" >
+        android:process=":pushservice"
+        >
       <intent-filter>
-        <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL" />
-        <action android:name="com.huawei.intent.action.PUSH" />
-        <action android:name="com.huawei.intent.action.PUSH_ON" />
-        <action android:name="com.huawei.android.push.PLUGIN" />
+        <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL"/>
+        <action android:name="com.huawei.intent.action.PUSH"/>
+        <action android:name="com.huawei.intent.action.PUSH_ON"/>
+        <action android:name="com.huawei.android.push.PLUGIN"/>
       </intent-filter>
     </receiver>
     <receiver
         android:name="com.huawei.android.pushagent.PushBootReceiver"
-        android:process=":pushservice" >
+        android:process=":pushservice"
+        >
       <intent-filter>
-        <action android:name="com.huawei.android.push.intent.REGISTER" />
+        <action android:name="com.huawei.android.push.intent.REGISTER"/>
       </intent-filter>
+
       <meta-data
           android:name="CS_cloud_version"
-          android:value="\u0032\u0037\u0030\u0035" />
+          android:value="\u0032\u0037\u0030\u0035"
+          />
     </receiver>
 
-
-    <!--华为推送-->
+    <!-- 华为推送 -->
     <receiver
         android:name="com.huawei.android.pushagent.PushEventReceiver"
-        android:process=":pushservice" >
+        android:process=":pushservice"
+        >
       <intent-filter>
-        <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL" />
-        <action android:name="com.huawei.intent.action.PUSH" />
-        <action android:name="com.huawei.intent.action.PUSH_ON" />
-        <action android:name="com.huawei.android.push.PLUGIN" />
+        <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL"/>
+        <action android:name="com.huawei.intent.action.PUSH"/>
+        <action android:name="com.huawei.intent.action.PUSH_ON"/>
+        <action android:name="com.huawei.android.push.PLUGIN"/>
       </intent-filter>
     </receiver>
     <receiver
         android:name="com.huawei.android.pushagent.PushBootReceiver"
-        android:process=":pushservice" >
+        android:process=":pushservice"
+        >
       <intent-filter>
-        <action android:name="com.huawei.android.push.intent.REGISTER" />
+        <action android:name="com.huawei.android.push.intent.REGISTER"/>
       </intent-filter>
+
       <meta-data
           android:name="CS_cloud_version"
-          android:value="\u0032\u0037\u0030\u0035" />
+          android:value="\u0032\u0037\u0030\u0035"
+          />
     </receiver>
 
     <!-- PushSDK:Push服务 -->
     <service
         android:name="com.huawei.android.pushagent.PushService"
-        android:process=":pushservice" >
+        android:process=":pushservice"
+        >
     </service>
 
-    <receiver android:name="com.tencent.qcloud.timchat.chatutils.HwPushMessageReceiver" >
+    <receiver android:name="com.tencent.qcloud.timchat.chatutils.HwPushMessageReceiver">
       <intent-filter>
-        <!-- 必须,用于接收token-->
-        <action android:name="com.huawei.android.push.intent.REGISTRATION" />
-        <!-- 必须，用于接收消息-->
-        <action android:name="com.huawei.android.push.intent.RECEIVE" />
-        <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调-->
-        <action android:name="com.huawei.android.push.intent.CLICK" />
-        <!-- 可选，查看push通道是否连接，不查看则不需要-->
-        <action android:name="com.huawei.intent.action.PUSH_STATE" />
+
+        <!-- 必须,用于接收token -->
+        <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
+        <!-- 必须，用于接收消息 -->
+        <action android:name="com.huawei.android.push.intent.RECEIVE"/>
+        <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+        <action android:name="com.huawei.android.push.intent.CLICK"/>
+        <!-- 可选，查看push通道是否连接，不查看则不需要 -->
+        <action android:name="com.huawei.intent.action.PUSH_STATE"/>
         <!-- 可选，标签、地理位置上报回应，不上报则不需要 -->
-        <action android:name="com.huawei.android.push.plugin.RESPONSE" />
+        <action android:name="com.huawei.android.push.plugin.RESPONSE"/>
       </intent-filter>
-      <meta-data android:name="CS_cloud_ablitity" android:value="successRateAnalytics"/>
+
+      <meta-data
+          android:name="CS_cloud_ablitity"
+          android:value="successRateAnalytics"
+          />
     </receiver>
-
-
 
     <activity
         android:name=".activity.TextInputActivity"
@@ -620,13 +647,14 @@
       <intent-filter>
         <action android:name="${APP_PACKAGE}"/>
         <action android:name="android.intent.action.VIEW"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+
         <data
             android:host="choose"
             android:scheme="qccoach"
             />
-
       </intent-filter>
     </activity>
     <activity
@@ -644,66 +672,79 @@
         android:name=".activity.PopFromBottomActivity"
         android:theme="@style/AppThemeLightBottom"
         />
-    <activity android:name="cn.qingchengfit.views.container.ContainerActivity"
-              android:screenOrientation="portrait"
+    <activity
+        android:name="cn.qingchengfit.views.container.ContainerActivity"
+        android:screenOrientation="portrait"
         >
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <action android:name="cn.qingchengfit.staffkit"/>
+
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
+
         <data
             android:host="news"
             android:scheme="qccoach"
             />
       </intent-filter>
     </activity>
-
     <activity
         android:name="com.tencent.qcloud.timchat.ui.qcchat.ChatActivity"
         android:launchMode="singleTask"
-        android:theme="@style/QcChatStyle"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustResize" />
-    <!--<activity android:name=".ui.AddFriendActivity" />-->
+        android:theme="@style/QcChatStyle"
+        android:windowSoftInputMode="adjustResize"
+        />
+    <!-- <activity android:name=".ui.AddFriendActivity" /> -->
 
-    <activity android:name="com.tencent.qcloud.timchat.ui.VideoActivity" />
-    <activity android:name="com.tencent.qcloud.timchat.ui.qcchat.DeleteMemberActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity android:name="com.tencent.qcloud.timchat.ui.VideoActivity"/>
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.qcchat.DeleteMemberActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-    <activity android:name="com.tencent.qcloud.timchat.ui.ImageViewActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.ImageViewActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-
-    <activity android:name="com.tencent.qcloud.timchat.ui.ImagePreviewActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.ImagePreviewActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-    <activity android:name="com.tencent.qcloud.timchat.ui.MessageNotifySettingActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.MessageNotifySettingActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-
-    <activity android:name="com.tencent.qcloud.timchat.ui.GroupMemberActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.GroupMemberActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-    <activity android:name="com.tencent.qcloud.timchat.ui.SetGroupNameActivity"
-              android:theme="@style/QcChatStyle"
-              tools:replace="android:theme"
+    <activity
+        android:name="com.tencent.qcloud.timchat.ui.SetGroupNameActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
         />
-    <activity android:name=".fragment.statement.StatmentFilterActivity"
+    <activity
+        android:name=".fragment.statement.StatmentFilterActivity"
+        android:theme="@style/QcChatStyle"
+        tools:replace="android:theme"
+        />
+    <activity
+        android:name=".fragment.statement.SaleFilterActivity"
         android:theme="@style/QcChatStyle"
         tools:replace="android:theme"
         />
 
-    <activity android:name=".fragment.statement.SaleFilterActivity"
-        android:theme="@style/QcChatStyle"
-        tools:replace="android:theme"
-        />
-
+    <service
+        android:name=".service.FreshIntentService"
+        android:exported="false"
+        >
+    </service>
   </application>
 
 </manifest>

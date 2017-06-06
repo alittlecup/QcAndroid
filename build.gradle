@@ -2,13 +2,16 @@
 
 ext {
     configuration = [
-        package          : "cn.qingchengfit.staffkit",
-        buildToolsVersion: "25.0.2",
-        compileVersion   : 24,
-        minSdk           : 15,
-        targetSdk        : 24,
-        version_code     : 67, //缝10必更
-        version_name     : "0.67",
+        package             : "cn.qingchengfit.staffkit",
+        buildToolsVersion   : "25.0.2",
+        compileVersion      : 24,
+        minSdk              : 15,
+        targetSdk           : 24,
+        version_code        : 67, //缝10必更
+        version_name        : "0.67",
+        trainer_version_code: 153,
+        trainer_version_name: "1.5.3"
+
     ]
 
     libraries = [supportVersion  : "25.2.0",
@@ -33,9 +36,6 @@ buildscript {
         maven(){
             url uri('./repo')
         }
-//        maven {
-//            url 'http://maven.oschina.net/content/groups/public/'
-//        }
     }
 
     dependencies {

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="84dp"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     >
 
 
@@ -44,8 +44,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/divier_linear_nomargin"
         android:layout_centerVertical="true"
+        android:divider="@drawable/divier_linear_nomargin"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:showDividers="middle"
@@ -63,23 +63,23 @@
 
             <TextView
                 android:id="@+id/item_statement_detail_day"
-                style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="0dp"
                 android:textSize="28sp"
                 tools:text="11"
+                style="@style/Qc.TextCommonBlack"
                 />
 
             <TextView
                 android:id="@+id/item_statement_detail_month"
-                style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-5dp"
                 android:paddingBottom="3dp"
                 android:textSize="12sp"
                 tools:text="5月"
+                style="@style/Qc.TextCommonGrey"
                 />
 
         </LinearLayout>
@@ -96,20 +96,20 @@
 
             <TextView
                 android:id="@+id/item_statement_detail_name"
-                style="@style/Qc.TextCommonBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:textSize="17sp"
                 tools:text="@string/test_long"
+                style="@style/Qc.TextCommonBlack"
                 />
 
             <TextView
                 android:id="@+id/item_statement_time_shop"
-                style="@style/Qc.TextCommonGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="5月"
+                style="@style/Qc.TextCommonGrey"
                 />
 
             <LinearLayout
@@ -120,34 +120,33 @@
 
                 <TextView
                     android:id="@+id/item_card_cost"
-                    style="@style/Qc.TextCommonGrey"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLines="1"
                     tools:text="5月ada"
+                    style="@style/Qc.TextCommonGrey"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="实收:"
                     android:gravity="right"
                     android:maxLines="1"
+                    android:text="实收:"
                     />
 
                 <TextView
                     android:id="@+id/text_real_income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    tools:text="20"
-                    android:textColor="@color/text_orange"
-                    android:drawablePadding="6dp"
                     android:layout_marginLeft="4dp"
+                    android:drawablePadding="6dp"
+                    android:gravity="right"
                     android:maxLines="1"
-                    android:drawableRight="@drawable/ic_smallarrow_right"
                     android:paddingRight="5dp"
+                    android:textColor="@color/text_orange"
+                    tools:text="20"
                     />
 
             </LinearLayout>
@@ -160,9 +159,9 @@
         android:id="@+id/item_statement_detail_pic"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="75dp"
         android:background="@color/white"
-        android:layout_centerVertical="true"
         android:scaleType="fitXY"
         tools:src="@drawable/head"
         />
@@ -171,8 +170,9 @@
         android:id="@+id/image_course_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@drawable/ic_course_group_conner"
         android:layout_alignBottom="@id/item_statement_detail_pic"
-        android:layout_alignRight="@id/item_statement_detail_pic"/>
+        android:layout_alignRight="@id/item_statement_detail_pic"
+        tools:src="@drawable/ic_course_group_conner"
+        />
 
 </RelativeLayout>

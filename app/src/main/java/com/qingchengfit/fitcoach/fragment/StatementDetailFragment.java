@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,18 +44,18 @@ import com.qingchengfit.fitcoach.bean.CourseTypeSample;
 import com.qingchengfit.fitcoach.bean.StudentBean;
 import com.qingchengfit.fitcoach.component.CircleIndicator;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseReverseFragmentBuilder;
-import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseCardForm;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseCardFormFragment;
-import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseTypeFormFragment;
-import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeform;
-import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
 import com.qingchengfit.fitcoach.fragment.statement.RxNetWorkEvent;
-import com.qingchengfit.fitcoach.fragment.statement.presenter.StatementDetailPresenter;
 import com.qingchengfit.fitcoach.fragment.statement.StatementDetailView;
 import com.qingchengfit.fitcoach.fragment.statement.StatmentFilterActivity;
 import com.qingchengfit.fitcoach.fragment.statement.TypeUtils;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseCardFormFragment;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseReverseFragmentBuilder;
+import com.qingchengfit.fitcoach.fragment.statement.fragment.CourseTypeFormFragment;
+import com.qingchengfit.fitcoach.fragment.statement.model.ClassStatmentFilterBean;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseCardForm;
+import com.qingchengfit.fitcoach.fragment.statement.model.CourseTypeform;
+import com.qingchengfit.fitcoach.fragment.statement.model.QcResponseStatementDetail;
+import com.qingchengfit.fitcoach.fragment.statement.presenter.StatementDetailPresenter;
 import com.tencent.qcloud.timchat.widget.CircleImgWrapper;
 import com.tencent.qcloud.timchat.widget.PhotoUtils;
 import java.util.ArrayList;
@@ -720,7 +721,8 @@ public class StatementDetailFragment extends BaseFragment
         holder.itemStatementDetailDay.setVisibility(View.INVISIBLE);
         holder.itemStatementDetailMonth.setVisibility(View.INVISIBLE);
       }
-
+      holder.textRealIncome.setCompoundDrawablesWithIntrinsicBounds(null, null,
+          ContextCompat.getDrawable(getContext(), R.drawable.ic_smallarrow_right), null);
       holder.imageCourseType.setImageResource(bean.course.is_private ? R.drawable.ic_course_private_conner : R.drawable.ic_course_group_conner);
 
       if (position == getItemCount() - 1) {
