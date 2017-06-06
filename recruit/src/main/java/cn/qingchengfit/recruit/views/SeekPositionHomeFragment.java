@@ -9,6 +9,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -90,6 +91,13 @@ public class SeekPositionHomeFragment extends BaseFragment
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_share);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                router.resumeMarketHome();
+                return false;
+            }
+        });
         toolbarTitile.setText("求职招聘");
     }
 

@@ -51,6 +51,7 @@ import com.qingchengfit.fitcoach.activity.NotificationActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.tencent.qcloud.sdk.Constant;
 import com.tencent.qcloud.timchat.MyApplication;
+import com.tencent.qcloud.timchat.common.AppData;
 import com.tencent.qcloud.timchat.ui.qcchat.AddConversationProcessor;
 import com.tencent.qcloud.timchat.ui.qcchat.ConversationFragment;
 import com.tencent.qcloud.timchat.ui.qcchat.LoginProcessor;
@@ -160,24 +161,15 @@ public class MainMsgFragment extends BaseFragment
                 Constant.setBussId(BuildConfig.DEBUG ? 611 : 605);
                 Constant.setXiaomiPushAppkey("5361741818101");
                 Constant.setHuaweiBussId(612);
-                if (loginProcessor == null || !loginProcessor.isLogin() || conversationFragment == null) {
-                    loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
-                        getString(R.string.chat_user_id_header, loginStatus.getUserId()), Uri.parse(Configs.Server).getHost(), this);
-                    loginProcessor.sientInstall();
-                } else {
-                    if (getChildFragmentManager().findFragmentByTag("chat") == null) {
-                        onLoginSuccess();
-                    } else {
-                        getChildFragmentManager().beginTransaction()
-                            .show(getChildFragmentManager().findFragmentByTag("chat"))
-                            .commitAllowingStateLoss();
-                    }
-                }
+                loginProcessor = new LoginProcessor(getActivity().getApplicationContext(),
+                    getString(R.string.chat_user_id_header, loginStatus.getUserId()), Uri.parse(Configs.Server).getHost(), this);
+                loginProcessor.sientInstall();
             } catch (Exception e) {
                 LogUtil.e(e.getMessage());
                 ToastUtils.show(e.getMessage());
             }
         } else {
+            AppData.clear(getContext());
             addConversation.setVisibility(View.GONE);
         }
     }

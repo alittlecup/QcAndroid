@@ -6,6 +6,8 @@ apply plugin: 'com.squareup.sqldelight'
 //def buildNumber = "1"
 //apply plugin: 'packer'                     //版本管理 多渠道打包
 def libs = rootProject.ext.libraries;
+def cfg = rootProject.ext.configuration;
+
 def getDate() {
   def date = new Date()
   def formattedDate = date.format('yyyyMMddHHmm')
@@ -56,8 +58,8 @@ android {
     minSdkVersion 15
     targetSdkVersion 24
     multiDexEnabled true
-    versionCode 152
-    versionName "1.5.2"
+    versionCode cfg.trainer_version_code
+    versionName cfg.trainer_version_name
     jackOptions {
       enabled false
     }

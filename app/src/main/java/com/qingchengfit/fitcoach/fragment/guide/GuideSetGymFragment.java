@@ -16,11 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.qingchengfit.model.base.Brand;
-import cn.qingchengfit.model.base.Shop;
 import cn.qingchengfit.utils.PreferenceUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
@@ -80,9 +76,11 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.gym_address) protected CommonInputView gymAddress;
     @BindView(R.id.hint) protected TextView hint;
     @BindView(R.id.layout_brand) protected LinearLayout layoutBrand;
+
     protected double lat;
     protected double lng;
     protected int city_code;
+    @Inject RepoCoachServiceImpl repoCoachService;
     private Unbinder unbinder;
     private String addressStr;
     private String gymNameStr;
@@ -96,6 +94,7 @@ import rx.schedulers.Schedulers;
         View view = inflater.inflate(R.layout.fragment_guide_setgym, container, false);
         unbinder = ButterKnife.bind(GuideSetGymFragment.this, view);
 
+
         Glide.with(getContext())
             .load(PhotoUtils.getSmall(brandImgUrl))
             .asBitmap()
@@ -104,23 +103,16 @@ import rx.schedulers.Schedulers;
         brandName.setText(brandNameStr);
         String initStr = PreferenceUtils.getPrefString(getContext(), "initSystem", "");
         CoachInitBean initBean;
-        if (initStr == null || initStr.isEmpty()) {
+        if (initStr == null || initStr.isEmpty())
             initBean = new CoachInitBean();
-        } else {
-            initBean = new Gson().fromJson(initStr, CoachInitBean.class);
-        }
+        else initBean = new Gson().fromJson(initStr, CoachInitBean.class);
 
-        if (initBean.shop != null) {
+        if (initBean.shop != null){
             gymName.setContent(initBean.shop.name);
             gymNameStr = initBean.shop.name;
             gymAddress.setContent(initBean.shop.address);
             addressStr = initBean.shop.address;
-            Glide.with(getContext())
-                .load(PhotoUtils.getSmall(initBean.shop.photo))
-                .asBitmap()
-                .placeholder(R.drawable.ic_default_header)
-                .error(R.drawable.ic_default_header)
-                .into(new CircleImgWrapper(gymImg, getContext()));
+            Glide.with(getContext()).load(PhotoUtils.getSmall(initBean.shop.photo)).asBitmap().placeholder(R.drawable.ic_default_header).error(R.drawable.ic_default_header).into(new CircleImgWrapper(gymImg, getContext()));
         }
 
         RxBus.getBus().post(new EventStep.Builder().step(0).build());
@@ -143,10 +135,7 @@ import rx.schedulers.Schedulers;
                     .subscribe(new Action1<String>() {
                         @Override public void call(String s) {
                             hideLoading();
-                            Glide.with(getContext())
-                                .load(PhotoUtils.getSmall(s))
-                                .asBitmap()
-                                .into(new CircleImgWrapper(gymImg, getContext()));
+                            Glide.with(getContext()).load(PhotoUtils.getSmall(s)).asBitmap().into(new CircleImgWrapper(gymImg, getContext()));
                             imgUrl = s;
                         }
                     }, new Action1<Throwable>() {
@@ -213,7 +202,7 @@ import rx.schedulers.Schedulers;
             ToastUtils.showDefaultStyle(getString(R.string.err_write_address));
             return;
         }
-        if (gymName.isEmpty()) {
+        if (gymName.isEmpty() ) {
             ToastUtils.showDefaultStyle(getString(R.string.err_write_gym_name));
             return;
         }
@@ -228,29 +217,34 @@ import rx.schedulers.Schedulers;
             gymNameStr = gymName.getContent();
             RxBus.getBus().post(new CoachInitBean());
             showLoading();
-            RxRegiste(QcCloudClient.getApi().postApi.qcInit(((GuideFragment) getParentFragment()).getInitBean())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            RxRegiste(QcCloudClient.getApi().postApi
+                .qcInit(((GuideFragment) getParentFragment()).getInitBean())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponseSystenInit>() {
-                    @Override public void call(QcResponseSystenInit qcResponse) {
+                    @Override
+                    public void call(QcResponseSystenInit qcResponse) {
                         hideLoading();
                         if (qcResponse.status == 200) {
+                            repoCoachService.createService((CoachService) qcResponse.data);
                             PreferenceUtils.setPrefString(getContext(), "initSystem", "");
+                            PreferenceUtils.setPrefLong(getContext(), "coachservice_id", qcResponse.data.getId());
+                            RxBus.getBus().post(qcResponse.data);
+                            RxBus.getBus().post(new EventLoginChange());
                             Intent toMain = new Intent(getActivity(), Main2Activity.class);
                             toMain.putExtra(Main2Activity.ACTION, Main2Activity.INIT);
                             toMain.putExtra("service", qcResponse.data);
                             startActivity(toMain);
                             getActivity().finish();
-                        } else {
-                            ToastUtils.showDefaultStyle(qcResponse.msg);
-                        }
+                        } else ToastUtils.showDefaultStyle(qcResponse.msg);
                     }
                 }, new Action1<Throwable>() {
-                    @Override public void call(Throwable throwable) {
+                    @Override
+                    public void call(Throwable throwable) {
                         hideLoading();
                         ToastUtils.showDefaultStyle("创建场馆失败!");
                     }
                 }));
+
         }
     }
 
@@ -262,10 +256,7 @@ import rx.schedulers.Schedulers;
                 Brand brand = (Brand) IntentUtils.getParcelable(data);
                 brandImgUrl = brand.getPhoto();
                 brandNameStr = brand.getName();
-                Glide.with(getContext())
-                    .load(PhotoUtils.getSmall(brand.getPhoto()))
-                    .asBitmap()
-                    .into(new CircleImgWrapper(brandImg, getContext()));
+                Glide.with(getContext()).load(PhotoUtils.getSmall(brand.getPhoto())).asBitmap().into(new CircleImgWrapper(brandImg, getContext()));
                 brandName.setText(brand.getName());
                 if (getParentFragment() instanceof GuideFragment) {
                     ((GuideFragment) getParentFragment()).initBean.brand_id = brand.getId();

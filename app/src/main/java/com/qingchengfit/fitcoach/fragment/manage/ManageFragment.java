@@ -18,29 +18,29 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.model.base.CoachService;
-import cn.qingchengfit.model.base.PermissionServerUtils;
-import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
-import cn.qingchengfit.utils.GymUtils;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
+import com.qingchengfit.fitcoach.Utils.GymUtils;
 import com.qingchengfit.fitcoach.Utils.Utils;
 import com.qingchengfit.fitcoach.activity.FragActivity;
 import com.qingchengfit.fitcoach.activity.PopFromBottomActivity;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import com.qingchengfit.fitcoach.bean.CurentPermissions;
 import com.qingchengfit.fitcoach.bean.FunctionBean;
+import com.qingchengfit.fitcoach.bean.base.PermissionServerUtils;
 import com.qingchengfit.fitcoach.component.CircleImgWrapper;
 import com.qingchengfit.fitcoach.component.DialogList;
 import com.qingchengfit.fitcoach.component.ItemDecorationAlbumColumns;
+import com.qingchengfit.fitcoach.fragment.BaseFragment;
 import com.qingchengfit.fitcoach.fragment.course.CourseActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
+import com.qingchengfit.fitcoach.http.bean.QcResponse;
 import com.qingchengfit.fitcoach.http.bean.QcResponsePermission;
 import com.qingchengfit.fitcoach.items.DailyWorkItem;
 import com.qingchengfit.fitcoach.items.ManageWorkItem;
@@ -88,8 +88,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @BindView(R.id.shop_img) ImageView shopImg;
     @BindView(R.id.gym_layout) LinearLayout gymLayout;
 
+
     @Inject GymWrapper gymWrapper;
     @Inject RepoCoachServiceImpl repoCoachService;
+
 
     private CommonFlexAdapter mAdapter;
     private Unbinder unbinder;
@@ -101,8 +103,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         View view = inflater.inflate(R.layout.fragment_manange, container, false);
         unbinder = ButterKnife.bind(this, view);
         mData.clear();
-        mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.moudule_service_private).text("私教排期").build()));
-        mData.add(new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.moudule_service_group).text("团课排期").build()));
+        mData.add(new DailyWorkItem(
+            new FunctionBean.Builder().resImg(R.drawable.moudule_service_private).text("私教排期").build()));
+        mData.add(new DailyWorkItem(
+            new FunctionBean.Builder().resImg(R.drawable.moudule_service_group).text("团课排期").build()));
         mData.add(
             new DailyWorkItem(new FunctionBean.Builder().resImg(R.drawable.ic_users_student).text(getString(R.string.student)).build()));
         mData.add(new DailyWorkItem(
@@ -149,9 +153,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                             Intent i = new Intent(Intent.ACTION_VIEW);
                             i.setData(Uri.parse("http://fir.im/qcfit"));
                             startActivity(i);
-                        } catch (Exception e2) {
+                        }catch (Exception e2){
 
                         }
+
                     }
                 }
                 return true;
@@ -181,11 +186,10 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                     setGymInfo(coachService);
                 }
             }
-        }, throwable -> {
-        });
-        String s = PreferenceUtils.getPrefString(getContext(), App.coachid + "permission", "");
-        if (s != null && !s.isEmpty()) {
-            QcResponsePermission.Data d = gson.fromJson(s, QcResponsePermission.Data.class);
+        },throwable -> {});
+        String s = PreferenceUtils.getPrefString(getContext(),App.coachid+"permission","");
+        if (s!= null && !s.isEmpty()){
+            QcResponsePermission.Data d = gson.fromJson(s,QcResponsePermission.Data.class);
             updatePermission(d);
         }
         getServer();
@@ -193,7 +197,7 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
         return view;
     }
 
-    private void setGymInfo(CoachService coachService) {
+    private void setGymInfo(CoachService coachService){
         title.setText(coachService.name);
         Glide.with(getContext()).load(coachService.photo).asBitmap().into(new CircleImgWrapper(shopImg, getContext()));
         nameBrand.setText(coachService.brand_name);
@@ -205,8 +209,8 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             .subscribe(new Action1<QcResponsePermission>() {
                 @Override public void call(QcResponsePermission qcResponsePermission) {
                     if (ResponseConstant.checkSuccess(qcResponsePermission)) {
-                        String ps = gson.toJson(qcResponsePermission.data, QcResponsePermission.Data.class);
-                        PreferenceUtils.setPrefString(getContext(), App.coachid + "permission", ps);
+                        String ps = gson.toJson(qcResponsePermission.data,QcResponsePermission.Data.class);
+                        PreferenceUtils.setPrefString(getContext(),App.coachid+"permission",ps);
                         updatePermission(qcResponsePermission.data);
                     } else {
                         cn.qingchengfit.utils.ToastUtils.show("权限更新失败 :" + qcResponsePermission.getMsg());
@@ -217,11 +221,15 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
             }));
     }
 
-    public void updatePermission(QcResponsePermission.Data data) {
+
+
+    public void updatePermission(QcResponsePermission.Data data){
         CurentPermissions.newInstance().permissionList.clear();
         for (int i = 0; i < data.permissions.size(); i++) {
-            CurentPermissions.newInstance().permissionList.put(data.permissions.get(i).key, data.permissions.get(i).value);
+            CurentPermissions.newInstance().permissionList.put(data.permissions.get(i).key,
+                data.permissions.get(i).value);
         }
+
     }
 
     @Override public void onResume() {
@@ -229,20 +237,24 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     }
 
     public void getServer() {
-        long curCoachId = PreferenceUtils.getPrefLong(getContext(), "coachservice_id", 0l);
-        repoCoachService.readAllServices().observeOn(AndroidSchedulers.mainThread()).subscribe(coachServices -> {
-            if (coachServices.size() > 0) {
-                gymWrapper.setCoachService(coachServices.get(0));
-                for (CoachService s : coachServices) {
-                    if (s.getId() == curCoachId) {
-                        gymWrapper.setCoachService(s);
-                        break;
+        long curCoachId = PreferenceUtils.getPrefLong(getContext(), "coachservice_id",0l);
+        repoCoachService.readAllServices()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(coachServices -> {
+                if (coachServices.size() > 0){
+                    gymWrapper.setCoachService(coachServices.get(0));
+                    for (CoachService s:coachServices) {
+                        if (s.getId() == curCoachId){
+                            gymWrapper.setCoachService(s);
+                            break;
+                        }
                     }
+                }else {//无场馆状态
+                    RxBus.getBus().post(new EventLoginChange());
                 }
-            } else {//无场馆状态
-                ToastUtils.show("无场馆");
-            }
-        });
+
+            });
+
     }
 
     @Override protected void lazyLoad() {
@@ -349,16 +361,15 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @OnClick(R.id.renewal) public void onClick() {
         if (gymWrapper.getCoachService() != null) {
             RxRegiste(QcCloudClient.getApi().getApi.qcStaffPmission(App.coachid + "", GymUtils.getParams(gymWrapper.getCoachService()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<QcResponsePermission>() {
                     @Override public void call(QcResponsePermission qcResponsePermission) {
-                        if (ResponseConstant.checkSuccess(qcResponsePermission)) {
-                            if (qcResponsePermission.data.permissions != null && qcResponsePermission.data.permissions.size() > 0) {
+                        if (ResponseConstant.checkSuccess(qcResponsePermission)){
+                            if (qcResponsePermission.data.permissions != null && qcResponsePermission.data.permissions.size() > 0){
                                 for (int i = 0; i < qcResponsePermission.data.permissions.size(); i++) {
-                                    if (qcResponsePermission.data.permissions.get(i).key.equalsIgnoreCase(
-                                        PermissionServerUtils.STUDIO_LIST_CAN_CHANGE) && qcResponsePermission.data.permissions.get(
-                                        i).value) {
+                                    if (qcResponsePermission.data.permissions.get(i).key.equalsIgnoreCase(PermissionServerUtils.STUDIO_LIST_CAN_CHANGE)
+                                        && qcResponsePermission.data.permissions.get(i).value
+                                        ){
                                         Intent toEdit = new Intent(getContext(), FragActivity.class);
                                         toEdit.putExtra("service", gymWrapper.getCoachService());
                                         toEdit.putExtra("type", 13);
@@ -367,18 +378,17 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                                     }
                                 }
                                 cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
-                            } else {
-                                cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
-                            }
-                        } else {
-                            cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
-                        }
+
+                            }else cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
+                        }else  cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
+
                     }
                 }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
                         cn.qingchengfit.utils.ToastUtils.show(getString(R.string.alert_permission_forbid));
                     }
-                }));
+                })
+            );
             //StaffAppFragmentFragment.newInstance().show(getFragmentManager(), "");
 
         }
@@ -403,29 +413,28 @@ public class ManageFragment extends BaseFragment implements FlexibleAdapter.OnIt
                 quiteGym.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
                         showLoading();
-                        RxRegiste(
-                            QcCloudClient.getApi().postApi.qcQuitGym(App.coachid + "", GymUtils.getParams(gymWrapper.getCoachService()))
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<QcResponse>() {
-                                    @Override public void call(QcResponse qcResponse) {
-                                        hideLoading();
-                                        if (ResponseConstant.checkSuccess(qcResponse)) {
-                                            cn.qingchengfit.utils.ToastUtils.show("退出健身房成功！");
-                                            //// TODO: 2017/5/17 判断逻辑 退出场馆后的状态
-                                            getServer();
-                                        } else {
-                                            cn.qingchengfit.utils.ToastUtils.show(qcResponse.getMsg());
-                                        }
+                        RxRegiste(QcCloudClient.getApi().postApi.qcQuitGym(App.coachid + "", GymUtils.getParams(gymWrapper.getCoachService()))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<QcResponse>() {
+                                @Override public void call(QcResponse qcResponse) {
+                                    hideLoading();
+                                    if (ResponseConstant.checkSuccess(qcResponse)) {
+                                        cn.qingchengfit.utils.ToastUtils.show("退出健身房成功！");
+                                        repoCoachService.deleteServiceByIdModel(gymWrapper.id(), gymWrapper.model());
+                                        getServer();
+                                    } else {
+                                        cn.qingchengfit.utils.ToastUtils.show(qcResponse.getMsg());
                                     }
-                                }, new Action1<Throwable>() {
-                                    @Override public void call(Throwable throwable) {
-                                        hideLoading();
-                                        cn.qingchengfit.utils.ToastUtils.show("error!");
-                                    }
-                                }));
+                                }
+                            }, new Action1<Throwable>() {
+                                @Override public void call(Throwable throwable) {
+                                    hideLoading();
+                                    cn.qingchengfit.utils.ToastUtils.show("error!");
+                                }
+                            }));
                     }
                 });
             }

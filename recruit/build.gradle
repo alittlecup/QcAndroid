@@ -43,7 +43,9 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+//  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+  compile project(path: ':widgets')
+
   compile "com.google.dagger:dagger:${libs.dagger}"
   compile "com.google.dagger:dagger-android:${libs.dagger}"
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"

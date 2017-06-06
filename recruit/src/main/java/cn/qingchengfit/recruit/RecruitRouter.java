@@ -7,6 +7,7 @@ import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
+import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.router.InnerRouter;
 import javax.inject.Inject;
@@ -47,11 +48,13 @@ public class RecruitRouter extends InnerRouter {
         return R.id.frag_recruit;
     }
 
+
+
+    /**
+     * 求职版主页
+     */
     public void home() {
-        getFragmentManager().beginTransaction()
-            .setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold)
-            .replace(getFragId(), new SeekPositionHomeFragment())
-            .commit();
+        init(new SeekPositionHomeFragment());
     }
 
     public void goJobDetail(Job job) {
@@ -80,5 +83,20 @@ public class RecruitRouter extends InnerRouter {
 
     public void myJobFair() {
 
+    }
+
+    /**
+     * 人才市场 人才浏览 或者叫 招聘版主页
+     */
+    public void resumeMarketHome(){
+        getFragmentManager().beginTransaction()
+            .setCustomAnimations(
+                cn.qingchengfit.widgets.R.anim.card_flip_right_in,
+                cn.qingchengfit.widgets.R.anim.card_flip_right_out,
+                cn.qingchengfit.widgets.R.anim.card_flip_left_in,
+                cn.qingchengfit.widgets.R.anim.card_flip_left_out)
+            .replace(getFragId(),new ResumeMarketHomeFragment())
+            .addToBackStack(null)
+            .commit();
     }
 }

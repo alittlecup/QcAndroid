@@ -84,6 +84,7 @@ public class RepoCoachServiceImpl implements RepoCoachService {
     }
 
     @Override public void deleteServiceByIdModel(String id, String model) {
+        helper.getBriteDatabase().delete(CoachService.TABLE_NAME, "id = ? and model = ?", id, model);
     }
 
     @Override public void deleteAllServices() {

@@ -136,8 +136,8 @@
     <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.2.2" level="project" />
     <orderEntry type="library" exported="" name="dagger-android-2.11" level="project" />
     <orderEntry type="library" exported="" name="rxpermissions-0.7.0" level="project" />
-    <orderEntry type="library" exported="" name="runtime-0.6.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="rules-0.5" level="project" />
+    <orderEntry type="library" exported="" name="runtime-0.6.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.6" level="project" />
     <orderEntry type="library" exported="" name="adapter-rxjava-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />

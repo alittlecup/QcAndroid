@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -721,7 +722,8 @@ public class StatementDetailFragment extends BaseFragment
         holder.itemStatementDetailDay.setVisibility(View.INVISIBLE);
         holder.itemStatementDetailMonth.setVisibility(View.INVISIBLE);
       }
-
+      holder.textRealIncome.setCompoundDrawablesWithIntrinsicBounds(null, null,
+          ContextCompat.getDrawable(getContext(), R.drawable.ic_smallarrow_right), null);
       holder.imageCourseType.setImageResource(bean.course.is_private ? R.drawable.ic_course_private_conner : R.drawable.ic_course_group_conner);
 
       if (position == getItemCount() - 1) {
