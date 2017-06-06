@@ -18,6 +18,7 @@ import com.qingchengfit.fitcoach.fragment.RegisterFragment;
 import com.qingchengfit.fitcoach.fragment.SaleDetailFragment;
 import com.qingchengfit.fitcoach.fragment.StatementDetailFragment;
 import com.qingchengfit.fitcoach.fragment.SyncGymFragment;
+import com.qingchengfit.fitcoach.fragment.guide.GuideSetGymFragment;
 import com.qingchengfit.fitcoach.fragment.main.MainMsgFragment;
 import com.qingchengfit.fitcoach.fragment.main.SettingFragment;
 import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragment;
@@ -87,15 +88,163 @@ import dagger.multibindings.IntoMap;
     AppComponent.SettingFragmentModule.class,
     AppComponent.LoginFragmentModule.class,
     AppComponent.RegisterFragmentModule.class,
-    AppComponent.UnLoginScheduleAdFragmentModule.class,
-    AppComponent.ChooseGymFragmentModule.class,
-    AppComponent.MainScheduleFragmentModule.class,
-})
- public interface AppComponent {
+    AppComponent.UnLoginScheduleAdFragmentModule.class, AppComponent.ChooseGymFragmentModule.class,
+    AppComponent.MainScheduleFragmentModule.class, AppComponent.GuideSetGymFragmentModule.class,
+}) public interface AppComponent {
     void inject(App app);
 
     @Subcomponent() public interface ConversationFriendsFragmentSubcomponent extends AndroidInjector<ConversationFriendsFragment> {
         @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ConversationFriendsFragment> {
+        }
+    }
+
+    @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SplashActivity> {
+        }
+    }
+
+    @Subcomponent() public interface ChatChooseInGymFragmentSubcomponent extends AndroidInjector<ChatChooseInGymFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChatChooseInGymFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ChatFriendAllChooseFragmentSubcomponent extends AndroidInjector<ChatFriendAllChooseFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChatFriendAllChooseFragment> {
+        }
+    }
+
+    @Subcomponent() public interface MainMsgFragmentSubcomponent extends AndroidInjector<MainMsgFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MainMsgFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ContainerSubcomponent extends AndroidInjector<ContainerActivity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ContainerActivity> {
+        }
+    }
+
+    @Subcomponent() public interface ArticleReplyFragmentSubcomponent extends AndroidInjector<ArticleReplyFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ArticleReplyFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ArticleCommentsListFragmentSubcomponent extends AndroidInjector<ArticleCommentsListFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ArticleCommentsListFragment> {
+        }
+    }
+
+    @Subcomponent() public interface CourseChooseDialogFragmentSubcomponent extends AndroidInjector<CourseChooseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseChooseDialogFragment> {
+        }
+    }
+
+    @Subcomponent() public interface CourseReverseFragmentSubcomponent extends AndroidInjector<CourseReverseFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseReverseFragment> {
+        }
+    }
+
+    @Subcomponent() public interface SaleDetailFragmentSubcomponent extends AndroidInjector<SaleDetailFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SaleDetailFragment> {
+        }
+    }
+
+    @Subcomponent() public interface SalerChooseDialogFragmentSubcomponent extends AndroidInjector<SalerChooseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SalerChooseDialogFragment> {
+        }
+    }
+
+    @Subcomponent() public interface StatementDetailFragmentSubcomponent extends AndroidInjector<StatementDetailFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StatementDetailFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ManageFragmentSubcomponent extends AndroidInjector<ManageFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ManageFragment> {
+        }
+    }
+
+    @Subcomponent() public interface CustomStatmentFragmentSubcomponent extends AndroidInjector<CustomStatmentFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomStatmentFragment> {
+        }
+    }
+
+    @Subcomponent() public interface BaseDialogFragmentSubcomponent extends AndroidInjector<BaseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BaseDialogFragment> {
+        }
+    }
+
+    @Subcomponent() public interface CustomSaleFragmentSubcomponent extends AndroidInjector<CustomSaleFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomSaleFragment> {
+        }
+    }
+
+    @Subcomponent() public interface CardTypeChooseDialogFragmentSubcomponent extends AndroidInjector<CardTypeChooseDialogFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardTypeChooseDialogFragment> {
+        }
+    }
+
+    @Subcomponent() public interface Main2Subcomponent extends AndroidInjector<Main2Activity> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<Main2Activity> {
+        }
+    }
+
+    @Subcomponent() public interface UnLoginHomeFragmentSubcomponent extends AndroidInjector<UnLoginHomeFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnLoginHomeFragment> {
+        }
+    }
+
+    @Subcomponent() public interface HomeBannerFragmentSubcomponent extends AndroidInjector<HomeBannerFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<HomeBannerFragment> {
+        }
+    }
+
+    @Subcomponent() public interface UnloginManageFragmentSubcomponent extends AndroidInjector<UnloginManageFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnloginManageFragment> {
+        }
+    }
+
+    @Subcomponent() public interface MineFragmentFragmentSubcomponent extends AndroidInjector<MineFragmentFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MineFragmentFragment> {
+        }
+    }
+
+    @Subcomponent() public interface SyncGymFragmentSubcomponent extends AndroidInjector<SyncGymFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SyncGymFragment> {
+        }
+    }
+
+    @Subcomponent() public interface SettingFragmentSubcomponent extends AndroidInjector<SettingFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SettingFragment> {
+        }
+    }
+
+    @Subcomponent() public interface RegisterFragmentSubcomponent extends AndroidInjector<RegisterFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RegisterFragment> {
+        }
+    }
+
+    @Subcomponent() public interface LoginFragmentSubcomponent extends AndroidInjector<LoginFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<LoginFragment> {
+        }
+    }
+
+    @Subcomponent() public interface UnLoginScheduleAdFragmentSubcomponent extends AndroidInjector<UnLoginScheduleAdFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnLoginScheduleAdFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ChooseGymFragmentSubcomponent extends AndroidInjector<ChooseGymFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymFragment> {
+        }
+    }
+
+    @Subcomponent() public interface MainScheduleFragmentSubcomponent extends AndroidInjector<MainScheduleFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MainScheduleFragment> {
+        }
+    }
+
+    @Subcomponent() public interface GuideSetGymFragmentSubcomponent extends AndroidInjector<GuideSetGymFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<GuideSetGymFragment> {
         }
     }
 
@@ -105,19 +254,9 @@ import dagger.multibindings.IntoMap;
             ConversationFriendsFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SplashActivity> {
-        }
-    }
-
     @Module(subcomponents = SplashSubcomponent.class) abstract class SplashModule {
         @Binds @IntoMap @ActivityKey(SplashActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(SplashSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface ChatChooseInGymFragmentSubcomponent extends AndroidInjector<ChatChooseInGymFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChatChooseInGymFragment> {
-        }
     }
 
     @Module(subcomponents = ChatChooseInGymFragmentSubcomponent.class) abstract class ChatChooseInGymFragmentModule {
@@ -126,20 +265,10 @@ import dagger.multibindings.IntoMap;
             ChatChooseInGymFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface ChatFriendAllChooseFragmentSubcomponent extends AndroidInjector<ChatFriendAllChooseFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChatFriendAllChooseFragment> {
-        }
-    }
-
     @Module(subcomponents = ChatFriendAllChooseFragmentSubcomponent.class) abstract class ChatFriendAllChooseFragmentModule {
         @Binds @IntoMap @FragmentKey(ChatFriendAllChooseFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             ChatFriendAllChooseFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface MainMsgFragmentSubcomponent extends AndroidInjector<MainMsgFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MainMsgFragment> {
-        }
     }
 
     @Module(subcomponents = MainMsgFragmentSubcomponent.class) abstract class MainMsgFragmentModule {
@@ -147,19 +276,9 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(MainMsgFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface ContainerSubcomponent extends AndroidInjector<ContainerActivity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ContainerActivity> {
-        }
-    }
-
     @Module(subcomponents = ContainerSubcomponent.class) abstract class ContainerModule {
         @Binds @IntoMap @ActivityKey(ContainerActivity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(ContainerSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface ArticleReplyFragmentSubcomponent extends AndroidInjector<ArticleReplyFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ArticleReplyFragment> {
-        }
     }
 
     @Module(subcomponents = ArticleReplyFragmentSubcomponent.class) abstract class ArticleReplyFragmentModule {
@@ -168,22 +287,10 @@ import dagger.multibindings.IntoMap;
             ArticleReplyFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface ArticleCommentsListFragmentSubcomponent extends AndroidInjector<ArticleCommentsListFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ArticleCommentsListFragment> {
-        }
-    }
-
     @Module(subcomponents = ArticleCommentsListFragmentSubcomponent.class) abstract class ArticleCommentsListFragmentModule {
         @Binds @IntoMap @FragmentKey(ArticleCommentsListFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             ArticleCommentsListFragmentSubcomponent.Builder builder);
-    }
-
-
-
-    @Subcomponent() public interface CourseChooseDialogFragmentSubcomponent extends AndroidInjector<CourseChooseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseChooseDialogFragment> {
-        }
     }
 
     @Module(subcomponents = CourseChooseDialogFragmentSubcomponent.class) abstract class CourseChooseDialogFragmentModule {
@@ -192,20 +299,10 @@ import dagger.multibindings.IntoMap;
             CourseChooseDialogFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface CourseReverseFragmentSubcomponent extends AndroidInjector<CourseReverseFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CourseReverseFragment> {
-        }
-    }
-
     @Module(subcomponents = CourseReverseFragmentSubcomponent.class) abstract class CourseReverseFragmentModule {
         @Binds @IntoMap @FragmentKey(CourseReverseFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             CourseReverseFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface SaleDetailFragmentSubcomponent extends AndroidInjector<SaleDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SaleDetailFragment> {
-        }
     }
 
     @Module(subcomponents = SaleDetailFragmentSubcomponent.class) abstract class SaleDetailFragmentModule {
@@ -214,20 +311,10 @@ import dagger.multibindings.IntoMap;
             SaleDetailFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface SalerChooseDialogFragmentSubcomponent extends AndroidInjector<SalerChooseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SalerChooseDialogFragment> {
-        }
-    }
-
     @Module(subcomponents = SalerChooseDialogFragmentSubcomponent.class) abstract class SalerChooseDialogFragmentModule {
         @Binds @IntoMap @FragmentKey(SalerChooseDialogFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             SalerChooseDialogFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface StatementDetailFragmentSubcomponent extends AndroidInjector<StatementDetailFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<StatementDetailFragment> {
-        }
     }
 
     @Module(subcomponents = StatementDetailFragmentSubcomponent.class) abstract class StatementDetailFragmentModule {
@@ -236,22 +323,9 @@ import dagger.multibindings.IntoMap;
             StatementDetailFragmentSubcomponent.Builder builder);
     }
 
-
-
-
-    @Subcomponent() public interface ManageFragmentSubcomponent extends AndroidInjector<ManageFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ManageFragment> {
-        }
-    }
-
     @Module(subcomponents = ManageFragmentSubcomponent.class) abstract class ManageFragmentModule {
         @Binds @IntoMap @FragmentKey(ManageFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ManageFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface CustomStatmentFragmentSubcomponent extends AndroidInjector<CustomStatmentFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomStatmentFragment> {
-        }
     }
 
     @Module(subcomponents = CustomStatmentFragmentSubcomponent.class) abstract class CustomStatmentFragmentModule {
@@ -260,20 +334,10 @@ import dagger.multibindings.IntoMap;
             CustomStatmentFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface BaseDialogFragmentSubcomponent extends AndroidInjector<BaseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<BaseDialogFragment> {
-        }
-    }
-
     @Module(subcomponents = BaseDialogFragmentSubcomponent.class) abstract class BaseDialogFragmentModule {
         @Binds @IntoMap @FragmentKey(BaseDialogFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             BaseDialogFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface CustomSaleFragmentSubcomponent extends AndroidInjector<CustomSaleFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CustomSaleFragment> {
-        }
     }
 
     @Module(subcomponents = CustomSaleFragmentSubcomponent.class) abstract class CustomSaleFragmentModule {
@@ -282,30 +346,15 @@ import dagger.multibindings.IntoMap;
             CustomSaleFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface CardTypeChooseDialogFragmentSubcomponent extends AndroidInjector<CardTypeChooseDialogFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<CardTypeChooseDialogFragment> {
-        }
-    }
-
     @Module(subcomponents = CardTypeChooseDialogFragmentSubcomponent.class) abstract class CardTypeChooseDialogFragmentModule {
         @Binds @IntoMap @FragmentKey(CardTypeChooseDialogFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             CardTypeChooseDialogFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface Main2Subcomponent extends AndroidInjector<Main2Activity> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<Main2Activity> {
-        }
-    }
-
     @Module(subcomponents = Main2Subcomponent.class) abstract class Main2Module {
         @Binds @IntoMap @ActivityKey(Main2Activity.class)
         abstract AndroidInjector.Factory<? extends Activity> bindYourFragmentInjectorFactory(Main2Subcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface UnLoginHomeFragmentSubcomponent extends AndroidInjector<UnLoginHomeFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnLoginHomeFragment> {
-        }
     }
 
     @Module(subcomponents = UnLoginHomeFragmentSubcomponent.class) abstract class UnLoginHomeFragmentModule {
@@ -314,20 +363,10 @@ import dagger.multibindings.IntoMap;
             UnLoginHomeFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface HomeBannerFragmentSubcomponent extends AndroidInjector<HomeBannerFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<HomeBannerFragment> {
-        }
-    }
-
     @Module(subcomponents = HomeBannerFragmentSubcomponent.class) abstract class HomeBannerFragmentModule {
         @Binds @IntoMap @FragmentKey(HomeBannerFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             HomeBannerFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface UnloginManageFragmentSubcomponent extends AndroidInjector<UnloginManageFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnloginManageFragment> {
-        }
     }
 
     @Module(subcomponents = UnloginManageFragmentSubcomponent.class) abstract class UnloginManageFragmentModule {
@@ -336,20 +375,10 @@ import dagger.multibindings.IntoMap;
             UnloginManageFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface MineFragmentFragmentSubcomponent extends AndroidInjector<MineFragmentFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MineFragmentFragment> {
-        }
-    }
-
     @Module(subcomponents = MineFragmentFragmentSubcomponent.class) abstract class MineFragmentFragmentModule {
         @Binds @IntoMap @FragmentKey(MineFragmentFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
             MineFragmentFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface SyncGymFragmentSubcomponent extends AndroidInjector<SyncGymFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SyncGymFragment> {
-        }
     }
 
     @Module(subcomponents = SyncGymFragmentSubcomponent.class) abstract class SyncGymFragmentModule {
@@ -357,30 +386,14 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SyncGymFragmentSubcomponent.Builder builder);
     }
 
-
-
-    @Subcomponent() public interface SettingFragmentSubcomponent extends AndroidInjector<SettingFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<SettingFragment> {
-        }
-    }
-
     @Module(subcomponents = SettingFragmentSubcomponent.class) abstract class SettingFragmentModule {
         @Binds @IntoMap @FragmentKey(SettingFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(SettingFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface RegisterFragmentSubcomponent extends AndroidInjector<RegisterFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RegisterFragment> {
-        }
-    }
     @Module(subcomponents = RegisterFragmentSubcomponent.class) abstract class RegisterFragmentModule {
         @Binds @IntoMap @FragmentKey(RegisterFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(RegisterFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface LoginFragmentSubcomponent extends AndroidInjector<LoginFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<LoginFragment> {
-        }
     }
 
     @Module(subcomponents = LoginFragmentSubcomponent.class) abstract class LoginFragmentModule {
@@ -388,16 +401,9 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(LoginFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface UnLoginScheduleAdFragmentSubcomponent extends AndroidInjector<UnLoginScheduleAdFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<UnLoginScheduleAdFragment> {}
-    }
     @Module(subcomponents = UnLoginScheduleAdFragmentSubcomponent.class) abstract class UnLoginScheduleAdFragmentModule {
         @Binds @IntoMap @FragmentKey(UnLoginScheduleAdFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(UnLoginScheduleAdFragmentSubcomponent.Builder builder);
-    }
-
-    @Subcomponent() public interface ChooseGymFragmentSubcomponent extends AndroidInjector<ChooseGymFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ChooseGymFragment> {}
     }
 
     @Module(subcomponents = ChooseGymFragmentSubcomponent.class) abstract class ChooseGymFragmentModule {
@@ -405,9 +411,6 @@ import dagger.multibindings.IntoMap;
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(ChooseGymFragmentSubcomponent.Builder builder);
     }
 
-    @Subcomponent() public interface MainScheduleFragmentSubcomponent extends AndroidInjector<MainScheduleFragment> {
-        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<MainScheduleFragment> {}
-    }
     @Module(subcomponents = MainScheduleFragmentSubcomponent.class) abstract class MainScheduleFragmentModule {
         @Binds @IntoMap @FragmentKey(MainScheduleFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(MainScheduleFragmentSubcomponent.Builder builder);

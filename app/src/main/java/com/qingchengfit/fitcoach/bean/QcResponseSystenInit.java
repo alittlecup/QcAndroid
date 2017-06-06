@@ -18,8 +18,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Paper on 16/2/23 2016.
  */
 public class QcResponseSystenInit extends QcResponse {
-    @SerializedName("data")
-    public CoachService data;
+    @SerializedName("data") public CoachService data;
 
 
 }
