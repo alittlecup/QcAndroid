@@ -27,6 +27,9 @@ repositories {
   maven() {
     url "http://maven.aliyun.com/nexus/content/groups/public/"
   }
+  maven {
+    url "https://s3.amazonaws.com/repo.commonsware.com"
+  }
   mavenCentral()
   maven() {
     url uri('../../repo')
@@ -45,8 +48,12 @@ dependencies {
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-  compile 'com.jakewharton:butterknife:8.4.0'
   compile project(path: ':recruit')
   compile project(path: ':widgets')
+
+  compile 'com.jakewharton:butterknife:8.4.0'
+  compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+  compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
 }

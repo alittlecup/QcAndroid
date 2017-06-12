@@ -22,20 +22,7 @@ android {
     }
   }
 }
-repositories {
-  jcenter()
-  maven() {
-    url "http://maven.aliyun.com/nexus/content/groups/public/"
-  }
-  mavenCentral()
-  maven() {
-    url uri('../../repo')
-  }
-  maven() {
-    url uri('./repo')
-  }
-  maven { url "https://jitpack.io" }
-}
+
 
 
 dependencies {
@@ -55,6 +42,8 @@ dependencies {
 
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
   compile 'com.jakewharton:butterknife:8.6.0'
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+  compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
 }
 
 

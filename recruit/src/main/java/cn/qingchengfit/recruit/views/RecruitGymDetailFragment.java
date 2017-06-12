@@ -3,7 +3,6 @@ package cn.qingchengfit.recruit.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -11,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -23,6 +23,7 @@ import cn.qingchengfit.recruit.presenter.RecruitGymDetailPresenter;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.FragmentAdapter;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.PagerSlidingTabImageStrip;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -53,7 +54,7 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
     @BindView(R2.id.tv_gym_name) TextView tvGymName;
     @BindView(R2.id.tv_address) TextView tvAddress;
     @BindView(R2.id.img_right) ImageView imgRight;
-    @BindView(R2.id.recruit_gym_tab) TabLayout tab;
+    @BindView(R2.id.recruit_gym_tab) PagerSlidingTabImageStrip tab;
     @BindView(R2.id.vp) ViewPager vp;
     ArrayList<Fragment> fragments = new ArrayList<>();
     RecruitPositionsInGymFragment positionsFragment;
@@ -74,11 +75,11 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gym = getArguments().getParcelable("gym");
+        descFragment = RecruitGymDescFragmentBuilder.newRecruitGymDescFragment(gym);
         positionsFragment = new RecruitPositionsInGymFragment();
-        descFragment = RecruitGymDescFragment.newInstance("场馆描述");
         fragments.add(descFragment);
         fragments.add(positionsFragment);
-        gym = getArguments().getParcelable("gym");
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,7 +89,16 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
         delegatePresenter(presenter, this);
         initToolbar(toolbar);
         vp.setAdapter(new FragmentAdapter(getChildFragmentManager(), fragments));
-        tab.setupWithViewPager(vp);
+        tab.setShouldExpand(true);
+        tab.setViewPager(vp);
+        tab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                if (tab != null) {
+                    tab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    tab.notifyDataSetChanged();
+                }
+            }
+        });
         onGym(gym);
         presenter.queryGymDetail(gym.id);
         return view;
@@ -112,7 +122,7 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
         PhotoUtils.small(imgGym, service.photo);
         tvGymName.setText(service.name);
         tvAddress.setText(service.getAddressStr());
-        if (descFragment != null) descFragment.setDesc("健身房描述");
+        if (descFragment != null && descFragment.isAdded()) descFragment.setDesc(service);
     }
 
     @Override public void onJobList(List<Job> jobs, int page, int totalCount) {

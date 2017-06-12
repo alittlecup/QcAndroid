@@ -11,6 +11,7 @@ import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.network.GetApi;
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
+import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.utils.LogUtil;
 import java.util.HashMap;
@@ -55,6 +56,23 @@ public class SeekPositionPresenter extends BasePresenter {
             }));
     }
 
+    public void queryIndex() {
+        RxRegiste(restRepository.createPostApi(GetApi.class)
+            .queryJobsIndex()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcDataResponse<JobListIndex>>() {
+                @Override public void call(QcDataResponse<JobListIndex> jobListIndexQcDataResponse) {
+                    view.onJobsIndex(jobListIndexQcDataResponse.data.completion, jobListIndexQcDataResponse.data.fair_count,
+                        jobListIndexQcDataResponse.data.avatar, jobListIndexQcDataResponse.data.fair_banner);
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+                    view.onShowError(throwable.getMessage());
+                }
+            }));
+    }
+
     /**
      * 查询职位详情
      */
@@ -75,7 +93,6 @@ public class SeekPositionPresenter extends BasePresenter {
                     view.onShowError(throwable.getMessage());
                 }
             }));
-
     }
 
     /**
@@ -164,5 +181,7 @@ public class SeekPositionPresenter extends BasePresenter {
         void unStarOk();
 
         void sendResumeOk();
+
+        void onJobsIndex(Number completed, int fair_count, String avatar, String fiar_banner);
     }
 }

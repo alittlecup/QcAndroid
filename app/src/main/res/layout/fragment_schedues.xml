@@ -103,7 +103,7 @@
           app:srcCompat="@drawable/divier_linear"
           />
 
-      <com.qingchengfit.fitcoach.component.PagerSlidingTabStrip
+      <cn.qingchengfit.widgets.PagerSlidingTabStrip
           android:id="@+id/schedule_tab"
           android:layout_width="match_parent"
           android:layout_height="46dp"

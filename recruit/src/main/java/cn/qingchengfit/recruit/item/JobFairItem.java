@@ -28,6 +28,7 @@ public class JobFairItem extends AbstractFlexibleItem<JobFairItem.JobFairVH> {
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, JobFairVH holder, int position, List payloads) {
         holder.tvTitle.setText("赛普稀里哗啦呼呼呼呼呼呼");
+        holder.imgBg.setBackgroundResource(R.color.toolbar);
     }
 
     @Override public boolean equals(Object o) {

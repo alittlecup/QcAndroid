@@ -9,6 +9,8 @@ import cn.qingchengfit.model.base.Brand;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.router.BaseRouter;
+import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -44,11 +46,13 @@ public class TestApp extends Application implements HasActivityInjector, HasSupp
         super.onCreate();
         ToastUtils.init(this);
         Staff staff = new Staff("纸团", "15123358198", "", 1);
-        staff.setId("3288");
+        staff.setId("7060");
+        PreferenceUtils.setPrefString(this, "session_id", "kiousgmexiti37vzi9y9w4k29tltrw7c");
+        LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
         AppComponent component = DaggerAppComponent.builder()
             .testModule(new TestModule.Builder().app(this)
                 .gymWrapper(new GymWrapper.Builder().brand(new Brand("1")).build())
-                .loginStatus(new LoginStatus.Builder().userId("7060").loginUser(staff).session("j5u2hsbjtfy8oi180ftpzabwam2upnjv").build())
+                .loginStatus(new LoginStatus.Builder().userId("7060").loginUser(staff).session("kiousgmexiti37vzi9y9w4k29tltrw7c").build())
                 .router(new BaseRouter())
                 .restRepository(new QcRestRepository(this, "http://192.168.8.201:7000/", "qingcheng-test"))
                 .build())

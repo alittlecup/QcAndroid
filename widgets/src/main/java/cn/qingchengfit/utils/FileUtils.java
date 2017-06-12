@@ -51,6 +51,27 @@ public class FileUtils {
         }
         return file;
     }
+
+    public static File getTmpImageFileName(Context context, String name) {
+        File file;
+        if(context.getExternalCacheDir() != null) {
+            String path = context.getExternalCacheDir().getAbsolutePath();
+            file = new File(path + File.separator + name + ".png");
+        } else {
+            file = new File(context.getCacheDir().getAbsolutePath() + File.separator + name + ".png");
+        }
+
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+                file.deleteOnExit();
+            } catch (IOException var4) {
+                ;
+            }
+        }
+
+        return file;
+    }
     public static File getTmpImageFile(Context context,String plus) {
         File file;
         if (context.getExternalCacheDir() != null) {
@@ -90,29 +111,29 @@ public class FileUtils {
         return file;
     }
 
-//    public static void saveInput2File(InputStream input,){
-//        try {
-//            File file = new File(getCacheDir(), "cacheFileAppeal.srl");
-//            OutputStream output = new FileOutputStream(file);
-//            try {
-//                try {
-//                    byte[] buffer = new byte[4 * 1024]; // or other buffer size
-//                    int read;
-//
-//                    while ((read = input.read(buffer)) != -1) {
-//                        output.write(buffer, 0, read);
-//                    }
-//                    output.flush();
-//                } finally {
-//                    output.close();
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace(); // handle exception, define IOException and others
-//            }
-//        } finally {
-//            input.close();
-//        }
-//    }
+    //    public static void saveInput2File(InputStream input,){
+    //        try {
+    //            File file = new File(getCacheDir(), "cacheFileAppeal.srl");
+    //            OutputStream output = new FileOutputStream(file);
+    //            try {
+    //                try {
+    //                    byte[] buffer = new byte[4 * 1024]; // or other buffer size
+    //                    int read;
+    //
+    //                    while ((read = input.read(buffer)) != -1) {
+    //                        output.write(buffer, 0, read);
+    //                    }
+    //                    output.flush();
+    //                } finally {
+    //                    output.close();
+    //                }
+    //            } catch (Exception e) {
+    //                e.printStackTrace(); // handle exception, define IOException and others
+    //            }
+    //        } finally {
+    //            input.close();
+    //        }
+    //    }
 
     public static void saveCache(String key, String value) {
         if (TextUtils.isEmpty(value))
@@ -122,7 +143,7 @@ public class FileUtils {
 
         File f1 = new File(path);
 
-//        if (f1.exists()) {
+        //        if (f1.exists()) {
         try {
             if (!f1.exists())
                 f1.createNewFile();
@@ -140,7 +161,7 @@ public class FileUtils {
 
             e.printStackTrace();
         }
-//    }
+        //    }
     }
 
     public static String readCache(String key) {
@@ -198,7 +219,7 @@ public class FileUtils {
 
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                    Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 
                 return getDataColumn(context, contentUri, null, null);
             }
@@ -219,7 +240,7 @@ public class FileUtils {
 
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{
-                        split[1]
+                    split[1]
                 };
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
@@ -254,7 +275,7 @@ public class FileUtils {
         StringBuilder stringBuilder = new StringBuilder();
         try {
             BufferedReader bf = new BufferedReader(new InputStreamReader(
-                    context.getAssets().open(fileName)));
+                context.getAssets().open(fileName)));
             String line;
             while ((line = bf.readLine()) != null) {
                 stringBuilder.append(line);
@@ -276,17 +297,17 @@ public class FileUtils {
      * @return The value of the _data column, which is typically a file path.
      */
     public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+        String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
-                column
+            column
         };
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+                null);
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(index);

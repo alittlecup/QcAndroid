@@ -72,4 +72,8 @@ public class PhotoUtils {
     public static void small(ImageView v, String url) {
         origin(v, getSmall(url), R.drawable.img_loadingimage, R.drawable.img_loadingimage);
     }
+
+    public static void middle(ImageView v, String url) {
+        origin(v, getMiddle(url), R.drawable.img_loadingimage, R.drawable.img_loadingimage);
+    }
 }

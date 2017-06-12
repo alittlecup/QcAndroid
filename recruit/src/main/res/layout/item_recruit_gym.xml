@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_gym_info"
+    android:layout_width="match_parent"
+    android:layout_height="104dp"
+    android:background="@drawable/bg_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <ImageView
+      android:id="@+id/img_gym"
+      android:layout_width="64dp"
+      android:layout_height="64dp"
+      android:scaleType="centerCrop"
+      />
+
+  <android.support.v4.widget.Space
+      android:layout_width="@dimen/activity_horizontal_margin"
+      android:layout_height="match_parent"
+      />
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/tv_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="星健身798店"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="星健身798店"
+        style="@style/QcTextStyleMediumWarm"
+        />
+
+    <TextView
+        android:id="@+id/tv_has_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:drawablePadding="8dp"
+        android:text="有未处理的简历"
+        android:textColor="@color/red"
+        style="@style/QcTextStyleMediumWarm"
+        />
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/img_right"
+      android:layout_width="14dp"
+      android:layout_height="24dp"
+      app:srcCompat="@drawable/vd_chevron_right_text_hint_7x12dp"
+      />
+</LinearLayout>

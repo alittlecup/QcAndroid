@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="108dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:id="@+id/img_gym"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_certificate_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/img_gym"
+        android:layout_toRightOf="@id/img_gym"
+        android:textStyle="bold"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_certificate_organization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_certificate_name"
+        android:layout_toEndOf="@id/img_gym"
+        android:layout_toRightOf="@id/img_gym"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_certificate_organization_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_certificate_organization"
+        android:layout_toEndOf="@id/img_gym"
+        android:layout_toRightOf="@id/img_gym"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/img_gym"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleSmallGrey"
+        />
+
+    <ImageView
+        android:id="@+id/img_qc_comfirm"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/img_gym"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/vd_recruit_jobintro_education"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/layout_resume_certificate"/>
+
+  <include layout="@layout/layout_data_sync_from"/>
+</LinearLayout>

@@ -73,6 +73,8 @@ public class RecruitPositionDetailFragment extends BaseFragment implements SeekP
     @BindView(R2.id.tv_position_crated_at) TextView tvPositionCratedAt;
     @Inject RecruitRouter router;
     @Inject SeekPositionPresenter presenter;
+    @BindView(R2.id.tv_position_desc) TextView tvPositionDesc;
+    @BindView(R2.id.tv_position_require) TextView tvPositionRequire;
     private Job job;
 
     public static RecruitPositionDetailFragment newInstance(Job job) {
@@ -143,10 +145,22 @@ public class RecruitPositionDetailFragment extends BaseFragment implements SeekP
             rvWelfare.setAdapter(welfareAdapter);
         }
         //职位描述
+        tvPositionDesc.setText(job.description);
+        tvPositionRequire.setText(job.requirement);
+        //场馆人员信息
+        getChildFragmentManager().beginTransaction()
+            .replace(R.id.frag_gym_menber_info,
+                RecruitGymMemberInfoFragmentBuilder.newRecruitGymMemberInfoFragment(job.gym.member_count, job.gym.staff_count, job.gym.area,
+                    job.gym.coach_count))
+            .commit();
+        //场馆设施
+        getChildFragmentManager().beginTransaction()
+            .replace(R.id.frag_gym_equipment, RecruitGymEquipmentFragmentBuilder.newRecruitGymEquipmentFragment(job.gym))
+            .commit();
 
         //创建者信息
         if (job.created_by != null && job.created_at != null) {
-            //PhotoUtils.small(imgCreatedBy,);
+            PhotoUtils.small(imgCreatedBy, job.created_by.avatar);
             tvCreatedBy.setText(job.created_by.username + "（" + job.created_by.position + "）");
             tvPositionCratedAt.setText(DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(job.created_at)) + " 发布此职位");
         }
@@ -168,6 +182,10 @@ public class RecruitPositionDetailFragment extends BaseFragment implements SeekP
      * 发送简历成功
      */
     @Override public void sendResumeOk() {
+
+    }
+
+    @Override public void onJobsIndex(Number completed, int fair_count, String avatar, String fiar_banner) {
 
     }
 

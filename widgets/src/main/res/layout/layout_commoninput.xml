@@ -20,8 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        style="@style/Qc.TextCommonGrey"
-        ></TextView>
+        style="@style/QcTextStyleStandardDark"
+        tools:text="标签"
+        />
 
     <ImageView
         android:id="@+id/commoninput_righticon"
@@ -43,10 +44,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="@color/transparent"
         android:focusable="true"
-        android:gravity="right|center_vertical"
+        android:gravity="end|center_vertical"
         android:inputType="number"
         android:maxLength="25"
         android:minWidth="30dp"
@@ -67,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/qc_item_height"
         android:background="@color/half_white"
+        tools:visibility="gone"
         />
   </RelativeLayout>
 

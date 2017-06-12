@@ -93,6 +93,7 @@ public class RecruitPositionsFragment extends VpFragment {
 
     public void stopLoadMore() {
         if (commonFlexAdapter == null) return;
+        commonFlexAdapter.removeItem(commonFlexAdapter.getGlobalPositionOf(progressItem));
         commonFlexAdapter.onLoadMoreComplete(null);
     }
 

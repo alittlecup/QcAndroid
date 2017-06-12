@@ -39,7 +39,7 @@ public class RecruitActivity extends BaseAcitivity implements HasSupportFragment
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit);
-        router.home();
+        router.resumeHome();
     }
 
     @Override public AndroidInjector<Fragment> supportFragmentInjector() {

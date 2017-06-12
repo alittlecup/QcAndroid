@@ -116,4 +116,19 @@
     <attr format="string" name="civ_hint"/>
 
   </declare-styleable>
+
+  <declare-styleable name="PagerSlidingTabStrip">
+    <attr format="color" name="pst_text_color"/>
+    <attr format="dimension" name="pst_text_size"/>
+    <attr format="color" name="pst_text_highlight_color"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="CompatTextView">
+    <attr format="reference" name="drawableStart"/>
+    <attr format="reference" name="drawableTop"/>
+    <attr format="reference" name="drawableEnd"/>
+    <attr format="reference" name="drawableBottom"/>
+  </declare-styleable>
+
 </resources>

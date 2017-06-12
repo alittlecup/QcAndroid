@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="30dp"
+      android:gravity="center"
+      android:text="场馆设备: "
+      style="@style/QcTextStyleXsGrey"
+      />
+
+  <com.google.android.flexbox.FlexboxLayout
+      android:id="@+id/flexlayout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+</LinearLayout>

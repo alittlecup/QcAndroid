@@ -4,6 +4,7 @@ import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.network.response.GymWrap;
 import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobIndexWrap;
+import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import java.util.HashMap;
 import retrofit2.http.GET;
@@ -36,8 +37,11 @@ public interface GetApi {
 
     @GET("/api/user/jobs/") rx.Observable<QcDataResponse<JobListWrap>> queryJobList(@Query("page") int page);
 
-    //求职招聘主页
+
     @GET("/api/user/job/index/") rx.Observable<QcDataResponse<JobIndexWrap>> queryJobIndex(@QueryMap HashMap<String, Object> hashMap);
+
+    //求职招聘主页
+    @GET("/api/user/job/list/index/") rx.Observable<QcDataResponse<JobListIndex>> queryJobsIndex();
 
     //职位详情
     @GET("/api/user/jobs/{job_id}/") rx.Observable<QcDataResponse<JobDetailWrap>> queryJobDetail(@Path("job_id") String jobid);

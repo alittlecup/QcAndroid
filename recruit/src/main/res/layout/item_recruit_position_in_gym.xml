@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_click"
     android:gravity="center_vertical"
     android:minHeight="88dp"
     android:orientation="horizontal"
@@ -137,6 +138,16 @@
           />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_has_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:drawablePadding="8dp"
+        android:text="有未处理的简历"
+        android:textColor="@color/red"
+        style="@style/QcTextStyleStandardDark"
+        />
   </LinearLayout>
 
   <android.support.v4.widget.Space

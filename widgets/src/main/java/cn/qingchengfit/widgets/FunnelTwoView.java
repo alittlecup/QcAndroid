@@ -381,7 +381,7 @@ public class FunnelTwoView extends View
             } else {
                 rate = String.valueOf((int) ((datas.get(2) / datas.get(1)) * 100)) + "%";
             }
-            count = new StringBuilder().append("跟进").append(String.valueOf(datas.get(1).intValue()))
+            count = new StringBuilder().append("接洽").append(String.valueOf(datas.get(1).intValue()))
                     .append("人")
                     .toString();
         }

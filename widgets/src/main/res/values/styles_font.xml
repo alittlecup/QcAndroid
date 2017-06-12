@@ -100,4 +100,5 @@
     <item name="android:textSize">8sp</item>
     <item name="android:textColor">@color/text_grey</item>
   </style>
+  z
 </resources>

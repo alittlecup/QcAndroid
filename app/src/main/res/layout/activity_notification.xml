@@ -14,7 +14,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       ></FrameLayout>
-  <!--<com.qingchengfit.fitcoach.component.PagerSlidingTabImageStrip-->
+  <!--<cn.qingchengfit.widgets.PagerSlidingTabImageStrip-->
   <!--android:id="@+id/strip"-->
   <!--android:layout_width="match_parent"-->
   <!--android:layout_height="45dp"-->
