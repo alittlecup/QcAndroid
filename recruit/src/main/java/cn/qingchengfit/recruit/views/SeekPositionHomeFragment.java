@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +27,8 @@ import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.RecruitPositionItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
+import cn.qingchengfit.support.animator.FlipAnimation;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -71,6 +75,10 @@ public class SeekPositionHomeFragment extends BaseFragment
     @BindView(R2.id.qft_salary) QcFilterToggle qftSalary;
     @BindView(R2.id.qft_demand) QcFilterToggle qftDemand;
     @BindView(R2.id.frag_recruit_filter) FrameLayout fragRecruitFilter;
+    @BindView(R2.id.img_my_resume) ImageView imgMyResume;
+    @BindView(R2.id.tv_resume_completed) TextView tvResumeCompleted;
+    @BindView(R2.id.img_my_job_fair) ImageView imgMyJobFair;
+    @BindView(R2.id.tv_job_fair) TextView tvJobFair;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -89,9 +97,45 @@ public class SeekPositionHomeFragment extends BaseFragment
         return view;
     }
 
+    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (nextAnim == R.anim.card_flip_left_in
+            || nextAnim == R.anim.card_flip_right_in
+            || nextAnim == R.anim.card_flip_left_out
+            || nextAnim == R.anim.card_flip_right_out) {
+
+            Animation animation;
+            if (nextAnim == R.anim.card_flip_left_in) {
+                animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+            } else if (nextAnim == R.anim.card_flip_right_in) {
+                animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+            } else if (nextAnim == R.anim.card_flip_left_out) {
+                animation = FlipAnimation.create(FlipAnimation.LEFT, enter, 300);
+            } else {
+                animation = FlipAnimation.create(FlipAnimation.RIGHT, enter, 300);
+            }
+
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override public void onAnimationEnd(Animation animation) {
+                    onFinishAnimation();
+                }
+
+                @Override public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            return animation;
+        } else {
+            return super.onCreateAnimation(transit, enter, nextAnim);
+        }
+    }
+
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
-        toolbar.inflateMenu(R.menu.menu_share);
+        toolbar.inflateMenu(R.menu.menu_i_publish_job);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 router.resumeMarketHome();
@@ -106,6 +150,7 @@ public class SeekPositionHomeFragment extends BaseFragment
         listFragment.listener = this;
         listFragment.setListener(this);
         stuff(listFragment);
+        positionPresenter.queryIndex();
     }
 
     //子fragment加载完成
@@ -143,6 +188,21 @@ public class SeekPositionHomeFragment extends BaseFragment
 
     @Override public void sendResumeOk() {
 
+    }
+
+    /**
+     * 简历 和 招聘会信息
+     *
+     * @param completed 完善度
+     * @param fair_count 招聘会数量
+     * @param avatar 头像
+     * @param fiar_banner 招聘会banner
+     */
+    @Override public void onJobsIndex(Number completed, int fair_count, String avatar, String fiar_banner) {
+        PhotoUtils.small(imgMyResume, avatar);
+        PhotoUtils.small(imgMyJobFair, fiar_banner);
+        tvResumeCompleted.setText("简历完善度" + completed + "%");
+        tvJobFair.setText(fair_count + "场进行中");
     }
 
     @Override public void onGym(Gym service) {

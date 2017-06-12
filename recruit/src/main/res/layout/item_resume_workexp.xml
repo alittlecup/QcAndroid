@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="108dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ImageView
+        android:id="@+id/img_gym"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_gym_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/img_gym"
+        android:layout_toRightOf="@id/img_gym"
+        android:textStyle="bold"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_gym_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gym_brand"
+        android:layout_toEndOf="@id/img_gym"
+        android:layout_toRightOf="@id/img_gym"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gym_position"
+        android:layout_toEndOf="@id/img_gym"
+        android:layout_toRightOf="@id/img_gym"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleLargeDark"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/img_gym"
+        tools:text="@string/app_name"
+        style="@style/QcTextStyleSmallGrey"
+        />
+
+    <ImageView
+        android:id="@+id/img_qc_comfirm"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/img_gym"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/vd_recruit_jobintro_education"
+        />
+  </RelativeLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      android:padding="@dimen/activity_horizontal_margin"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        style="@style/QcTextStyleMediumWarm"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="以下数据同步自："
+          style="@style/QcTextStyleMediumWarm"
+          />
+
+      <cn.qingchengfit.support.widgets.CompatTextView
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="青橙健身"
+          app:drawableStart="@drawable/vd_qc_comfirm"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_group_menber_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@drawable/bg_grey_top_divider"
+        android:divider="@drawable/divider_linearlayout_horizon"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
+
+      <View
+          android:id="@+id/indicator"
+          android:layout_width="4dp"
+          android:layout_height="match_parent"
+          android:background="@color/red"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_group_count"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          tools:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_group_menber"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          tools:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_private_menber_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@drawable/bg_grey_top_divider"
+        android:divider="@drawable/divider_linearlayout_horizon"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
+
+      <View
+          android:layout_width="4dp"
+          android:layout_height="match_parent"
+          android:background="@color/blue"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_private_count"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          tools:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_private_menber"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          tools:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_sale_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@drawable/bg_grey_top_divider"
+        android:divider="@drawable/divider_linearlayout_horizon"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
+
+      <View
+          android:layout_width="4dp"
+          android:layout_height="match_parent"
+          android:background="@color/blue"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:id="@+id/tv_sale"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          tools:text="团课"
+          style="@style/QcTextStyleMediumDark"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          tools:text=""
+          style="@style/QcTextStyleMediumDark"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+    <!--todo  教练评分-->
+
+  </LinearLayout>
+</LinearLayout>

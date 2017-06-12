@@ -35,6 +35,13 @@ import javax.inject.Inject;
 
 public class RecruitRouter extends InnerRouter {
 
+    public static final int RESULT_POSISTION_NAME = 2001;
+    public static final int RESULT_POSISTION_DESC = 2003;
+    public static final int RESULT_POSISTION_DEMANDS = 2004;
+    public static final int RESULT_POSISTION_REQUIRE = 2005;
+
+
+
     @Inject RecruitActivity activity;
 
     @Inject public RecruitRouter() {
@@ -85,18 +92,22 @@ public class RecruitRouter extends InnerRouter {
 
     }
 
+    public void toJobFairDetail() {
+
+    }
     /**
      * 人才市场 人才浏览 或者叫 招聘版主页
      */
     public void resumeMarketHome(){
         getFragmentManager().beginTransaction()
-            .setCustomAnimations(
-                cn.qingchengfit.widgets.R.anim.card_flip_right_in,
-                cn.qingchengfit.widgets.R.anim.card_flip_right_out,
-                cn.qingchengfit.widgets.R.anim.card_flip_left_in,
-                cn.qingchengfit.widgets.R.anim.card_flip_left_out)
+            .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out, R.anim.card_flip_left_in, R.anim.card_flip_left_out)
             .replace(getFragId(),new ResumeMarketHomeFragment())
             .addToBackStack(null)
             .commit();
     }
+
+    public void resumeHome() {
+
+    }
+
 }

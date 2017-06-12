@@ -52,6 +52,7 @@
         tools:text="星健身798店"
         style="@style/QcTextStyleMediumWarm"
         />
+
   </LinearLayout>
   <ImageView
       android:id="@+id/img_right"

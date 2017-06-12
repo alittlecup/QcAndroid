@@ -95,63 +95,43 @@
     <orderEntry type="jdk" jdkName="Android API 25 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="dagger-2.11" level="project" />
-    <orderEntry type="library" exported="" name="smooth-app-bar-layout-25.2.0.0" level="project" />
     <orderEntry type="library" exported="" name="jsr305-3.0.1" level="project" />
-    <orderEntry type="library" exported="" name="design-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="transition-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="cardview-v7-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="design-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="transition-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="constraint-layout-solver-1.0.0-alpha8" level="project" />
+    <orderEntry type="library" exported="" name="cardview-v7-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="flexible-adapter-5.0.0-rc1" level="project" />
     <orderEntry type="library" exported="" name="SensorsAnalyticsSDK-1.6.36" level="project" />
     <orderEntry type="library" exported="" name="flexbox-0.3.0-alpha3" level="project" />
     <orderEntry type="library" exported="" name="library-1.1.4" level="project" />
-    <orderEntry type="library" exported="" name="support-v13-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="constraint-layout-1.0.0-alpha8" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.0" level="project" />
-    <orderEntry type="library" exported="" name="support-core-utils-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-fragment-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v13-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="support-core-utils-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="support-fragment-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="gravitysnaphelper-1.1" level="project" />
     <orderEntry type="library" exported="" name="core-0.8.5.5" level="project" />
     <orderEntry type="library" exported="" name="dagger-android-2.11" level="project" />
     <orderEntry type="library" exported="" name="rxpermissions-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.6.0" level="project" />
     <orderEntry type="library" exported="" name="runtime-0.6.1" level="project" />
-    <orderEntry type="library" exported="" name="percent-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="percent-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="dagger-android-support-2.11" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-25.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-compat-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="rxbinding-0.4.0" level="project" />
-    <orderEntry type="library" exported="" name="support-media-compat-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-media-compat-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="sqlbrite-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-8.6.0" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-25.2.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-25.3.0" level="project" />
-    <orderEntry type="library" exported="" name="support-vector-drawable-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="annotation-3.0.2" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-25.3.0" level="project" />
+    <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-25.3.0" level="project" />
-    <orderEntry type="library" exported="" name="animated-vector-drawable-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-25.3.0" level="project" />
     <orderEntry type="module" module-name="recruit" exported="" />
     <orderEntry type="module" module-name="widgets" exported="" />
-    <orderEntry type="library" exported="" scope="TEST" name="runner-0.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="espresso-idling-resource-2.2.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-library-1.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-integration-1.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.2.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="exposed-instrumentation-api-publish-0.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="rules-0.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
-    <orderEntry type="library" exported="" name="hugo-annotations-1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="analytics-6.1.0" level="project" />
-    <orderEntry type="library" exported="" name="retrofit-2.0.2" level="project" />
-    <orderEntry type="library" exported="" name="converter-gson-2.0.2" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.6.1" level="project" />
-    <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
-    <orderEntry type="library" exported="" name="rxjava-1.1.6" level="project" />
-    <orderEntry type="library" exported="" name="adapter-rxjava-2.0.2" level="project" />
-    <orderEntry type="library" exported="" name="okio-1.11.0" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-3.6.0" level="project" />
-    <orderEntry type="library" exported="" name="Bughd_android_sdk_v1.3.7" level="project" />
-    <orderEntry type="library" exported="" name="logging-interceptor-3.6.0" level="project" />
   </component>
 </module>

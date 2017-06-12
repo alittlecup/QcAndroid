@@ -2,7 +2,7 @@ package com.qingchengfit.fitcoach.fragment.statement.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import cn.qingchengfit.widgets.BottomListFragment;
+import cn.qingchengfit.views.fragments.BottomListFragment;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -14,7 +14,9 @@ import com.qingchengfit.fitcoach.fragment.statement.item.ChooseStudentItem;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcAllStudentResponse;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import java.util.HashMap;
+import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -48,7 +50,7 @@ import rx.schedulers.Schedulers;
         FragmentArgs.inject(this);
     }
 
-    @Override public void loadData() {
+    @Override public void loadData(List<AbstractFlexibleItem> ds) {
         HashMap<String, Object> prams = new HashMap<>();
         prams.put("id", id);
         prams.put("model", model);

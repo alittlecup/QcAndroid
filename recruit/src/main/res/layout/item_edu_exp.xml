@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/bg_click"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    >
+
+  <TextView
+      android:id="@+id/tv_university_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textStyle="bold"
+      tools:text="大学名称"
+      style="@style/QcTextStyleLargeDark"
+      />
+
+  <TextView
+      android:id="@+id/tv_degree"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_university_name"
+      android:textStyle="bold"
+      tools:text="大学名称"
+      style="@style/QcTextStyleStandardWarm"
+      />
+
+  <TextView
+      android:id="@+id/tv_period"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBaseline="@id/tv_university_name"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:textStyle="bold"
+      tools:text="大学名称"
+      style="@style/QcTextStyleSmallWarm"
+      />
+
+</RelativeLayout>

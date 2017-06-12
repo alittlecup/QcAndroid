@@ -177,7 +177,9 @@ repositories {
 dependencies {
 
   compile 'org.glassfish:javax.annotation:10.0-b28'
-  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
+  compile project(path: ':widgets')
+
+  //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
   compile 'cn.qingchegfit.chat:chat:latest.integration'
   compile 'cn.qingchegfit.chat:sdk:latest.integration'
   compile 'cn.qingchegfit.chat:tsl:latest.integration'
@@ -215,19 +217,18 @@ dependencies {
   compile 'me.gujun.android.taggroup:library:1.4@aar'
   compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 
-  compile 'com.hannesdorfmann.fragmentargs:annotation:3.0.2'
   compile 'com.github.badoualy:stepper-indicator:1.0.6'
   compile 'com.hkm.taglib:tag:1.6.0'
   compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
   compile 'com.upyun:upyun-android-sdk:1.0.3'
-//  compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
-  annotationProcessor 'com.hannesdorfmann.fragmentargs:processor:3.0.2'
   debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
   releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
-
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  compile 'com.jakewharton:butterknife:8.6.0'
   annotationProcessor "com.google.dagger:dagger-compiler:${libs.dagger}"
   annotationProcessor "com.google.dagger:dagger-android-processor:${libs.dagger}"
-
+  annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
+  compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
 }
 
 apply from: 'tinkerpatch.gradle'

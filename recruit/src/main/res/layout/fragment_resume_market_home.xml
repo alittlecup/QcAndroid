@@ -35,7 +35,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_jobfairs"
             android:layout_width="match_parent"
-            android:layout_height="106dp"
+            android:layout_height="110dp"
             android:background="@color/white"
             android:clipToPadding="false"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -135,6 +135,7 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           />
+
 
     </FrameLayout>
 

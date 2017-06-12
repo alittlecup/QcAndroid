@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="6dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="12dp"
+    >
+
+  <include layout="@layout/hightlight_vertial_line_primary"/>
+
+  <TextView
+      android:id="@+id/tv_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:text="基本信息"
+      style="@style/QcTextStyleLargeDark"
+      />
+
+  <android.support.v4.widget.Space
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      />
+
+  <cn.qingchengfit.support.widgets.CompatTextView
+      android:id="@+id/btn_edit"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:drawablePadding="@dimen/little"
+      android:gravity="center_vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:text="@string/cm_edit"
+      android:textColor="?colorPrimary"
+      app:drawableStart="@drawable/vd_edit_primary_20dp"
+      style="@style/QcTextStyleLargeDark"
+      />
+</LinearLayout>

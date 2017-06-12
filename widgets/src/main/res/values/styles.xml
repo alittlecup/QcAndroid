@@ -137,14 +137,6 @@
     <item name="android:maxHeight">8dp</item>
   </style>
 
-  <style name="QcFilterStyle">
-    <item name="ft_vc_drawable_on">@drawable/vd_filter_arrow_up</item>
-    <item name="ft_vc_drawable_off">@drawable/vd_filter_arrow_down</item>
-    <item name="ft_color_on">@color/text_black</item>
-    <item name="ft_color_off">@color/text_black</item>
-    <item name="ft_text_size">13sp</item>
-  </style>
-
 
   <style name="Translucent_NoTitle" parent="android:style/Theme.Dialog">
     <item name="android:background">#00000000</item>

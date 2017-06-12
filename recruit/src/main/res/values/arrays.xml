@@ -9,4 +9,34 @@
     <item>硕士</item>
     <item>博士</item>
   </string-array>
+  <string-array name="work_exp">
+    <item>不限</item>
+    <item>0年</item>
+    <item>1年</item>
+    <item>2年</item>
+    <item>3年</item>
+    <item>4年</item>
+    <item>5年</item>
+    <item>6年</item>
+    <item>7年</item>
+    <item>8年</item>
+    <item>9年</item>
+    <item>10年</item>
+    <item>10年以上</item>
+  </string-array>
+  <string-array name="gender">
+    <item>不限</item>
+    <item>男性</item>
+    <item>女性</item>
+  </string-array>
+  <string-array name="resume_items">
+    <item>基本信息</item>
+    <item>求职意向</item>
+    <item>照片展示</item>
+    <item>工作经历</item>
+    <item>学习培训</item>
+    <item>教育经历</item>
+    <item>自我描述</item>
+  </string-array>
+
 </resources>

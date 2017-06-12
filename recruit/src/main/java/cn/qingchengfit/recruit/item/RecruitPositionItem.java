@@ -1,8 +1,10 @@
 package cn.qingchengfit.recruit.item;
 
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -71,6 +73,8 @@ public class RecruitPositionItem extends AbstractFlexibleItem<RecruitPositionIte
         @BindView(R2.id.tv_gender) TextView tvGender;
         @BindView(R2.id.tv_age) TextView tvAge;
         @BindView(R2.id.tv_height) TextView tvHeight;
+        @Nullable @BindView(R2.id.cb_position) CheckBox checkBox;
+        @Nullable @BindView(R2.id.tv_has_undo) TextView tv_has_todo;
         public RecruitPositionVH(View view, FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);

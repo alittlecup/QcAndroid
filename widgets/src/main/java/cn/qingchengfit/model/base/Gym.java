@@ -2,6 +2,7 @@ package cn.qingchengfit.model.base;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.util.List;
 
 /**
  * power by
@@ -26,7 +27,7 @@ import android.os.Parcelable;
  * Could 上的gym结构
  */
 public class Gym implements Parcelable {
-    public static final Parcelable.Creator<Gym> CREATOR = new Parcelable.Creator<Gym>() {
+    public static final Creator<Gym> CREATOR = new Creator<Gym>() {
         @Override public Gym createFromParcel(Parcel source) {
             return new Gym(source);
         }
@@ -46,7 +47,11 @@ public class Gym implements Parcelable {
     public DistrictEntity gd_district;
     public Long gd_lng;
     public Long gd_lat;
-    public String facilities;
+    public List<String> facilities;
+    public int staff_count;
+    public int member_count;
+    public int coach_count;
+    public String area;
 
     public Gym() {
     }
@@ -63,7 +68,11 @@ public class Gym implements Parcelable {
         this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
         this.gd_lng = (Long) in.readValue(Long.class.getClassLoader());
         this.gd_lat = (Long) in.readValue(Long.class.getClassLoader());
-        this.facilities = in.readString();
+        this.facilities = in.createStringArrayList();
+        this.staff_count = in.readInt();
+        this.member_count = in.readInt();
+        this.coach_count = in.readInt();
+        this.area = in.readString();
     }
 
     public String getAddressStr() {
@@ -96,6 +105,10 @@ public class Gym implements Parcelable {
         dest.writeParcelable(this.gd_district, flags);
         dest.writeValue(this.gd_lng);
         dest.writeValue(this.gd_lat);
-        dest.writeString(this.facilities);
+        dest.writeStringList(this.facilities);
+        dest.writeInt(this.staff_count);
+        dest.writeInt(this.member_count);
+        dest.writeInt(this.coach_count);
+        dest.writeString(this.area);
     }
 }

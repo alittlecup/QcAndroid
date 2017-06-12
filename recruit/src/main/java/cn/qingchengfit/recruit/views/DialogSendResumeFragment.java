@@ -1,16 +1,11 @@
 package cn.qingchengfit.recruit.views;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -20,7 +15,6 @@ import butterknife.Unbinder;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.utils.LogUtil;
-import cn.qingchengfit.utils.MeasureUtils;
 
 /**
  * power by
@@ -80,20 +74,20 @@ public class DialogSendResumeFragment extends DialogFragment {
         unbinder.unbind();
     }
 
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = dialog.getWindow();
-        window.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.CENTER;
-        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        wlp.height = MeasureUtils.dpToPx(200f, getResources());
-        window.setAttributes(wlp);
-        window.setWindowAnimations(R.style.ButtomDialogStyle);
-        return dialog;
-    }
+    //@NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    //    Dialog dialog = super.onCreateDialog(savedInstanceState);
+    //    dialog.setCanceledOnTouchOutside(true);
+    //    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    //    Window window = dialog.getWindow();
+    //    window.getDecorView().setPadding(0, 0, 0, 0);
+    //    WindowManager.LayoutParams wlp = window.getAttributes();
+    //    wlp.gravity = Gravity.CENTER;
+    //    wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    //    wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    //    window.setAttributes(wlp);
+    //    window.setWindowAnimations(R.style.ButtomDialogStyle);
+    //    return dialog;
+    //}
 
     /**
      * 查看简历

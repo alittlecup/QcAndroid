@@ -67,7 +67,8 @@ public class Job implements Parcelable {
     public boolean published;
     public List<String> welfare;
     public Gym gym;
-    public String description;
+    public String description; //职位描述
+    public String requirement; //职位描述
     public Created_by created_by;
     public String created_at;
 
@@ -138,6 +139,7 @@ public class Job implements Parcelable {
         };
         public String username;
         public String position;
+        public String avatar;
 
         public Created_by() {
         }
@@ -145,6 +147,7 @@ public class Job implements Parcelable {
         protected Created_by(Parcel in) {
             this.username = in.readString();
             this.position = in.readString();
+            this.avatar = in.readString();
         }
 
         @Override public int describeContents() {
@@ -154,6 +157,7 @@ public class Job implements Parcelable {
         @Override public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.username);
             dest.writeString(this.position);
+            dest.writeString(this.avatar);
         }
     }
 }
