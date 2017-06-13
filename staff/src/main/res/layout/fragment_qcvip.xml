@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/webview_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <cn.qingchengfit.staffkit.views.custom.CustomSwipeRefreshLayout
+      android:id="@+id/refresh"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <FrameLayout
+          android:id="@+id/fl_common_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+        <include
+            layout="@layout/common_toolbar"
+            android:visibility="visible"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/schedule_notification_layout"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            >
+
+          <ImageView
+              android:id="@+id/schedule_notification"
+              android:layout_width="19dp"
+              android:layout_height="19dp"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/activity_horizontal_margin"
+              android:src="@drawable/ic_actionbar_notification"
+              android:visibility="gone"
+              />
+
+          <TextView
+              android:id="@+id/schedule_notification_count"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="9dp"
+              android:layout_marginTop="11dp"
+              android:background="@drawable/bg_notification"
+              android:gravity="center"
+              android:textColor="@color/white"
+              android:textSize="11sp"
+              android:visibility="gone"
+              tools:text="99"
+              />
+
+        </RelativeLayout>
+      </FrameLayout>
+
+      <com.tencent.smtt.sdk.WebView
+          android:id="@+id/webview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="none"
+          />
+    </LinearLayout>
+
+  </cn.qingchengfit.staffkit.views.custom.CustomSwipeRefreshLayout>
+
+  <LinearLayout
+      android:id="@+id/no_newwork"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/img_no_network"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="网络连接失败"
+        style="@style/Qc.TextCommonGrey"
+        />
+
+    <Button
+        android:id="@+id/refresh_network"
+        android:layout_width="130dp"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginTop="20dp"
+        android:text="重 试"
+        />
+  </LinearLayout>
+
+</RelativeLayout>

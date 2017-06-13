@@ -29,15 +29,16 @@ public class Brand implements Parcelable {
         }
     };
     public boolean has_permission;
-    private String id;
-    private String name;
-    private String photo;
-    private boolean has_add_permission;
-    @SerializedName("owner") private List<User_Student> owners;
-    private String cname;
-    private int gym_count;
-    private String created_at;
-    private User_Student created_by;
+    public String id;
+    public String name;
+    public String photo;
+    public boolean has_add_permission;
+    public boolean has_delete_permission;
+    @SerializedName("owner") public List<User_Student> owners;
+    public String cname;
+    public int gym_count;
+    public String created_at;
+    public User_Student created_by;
 
     public Brand() {
     }
@@ -59,16 +60,33 @@ public class Brand implements Parcelable {
     }
 
     protected Brand(Parcel in) {
+        this.has_permission = in.readByte() != 0;
         this.id = in.readString();
         this.name = in.readString();
         this.photo = in.readString();
         this.has_add_permission = in.readByte() != 0;
-        this.has_permission = in.readByte() != 0;
+        this.has_delete_permission = in.readByte() != 0;
         this.owners = in.createTypedArrayList(User_Student.CREATOR);
         this.cname = in.readString();
         this.gym_count = in.readInt();
         this.created_at = in.readString();
         this.created_by = in.readParcelable(User_Student.class.getClassLoader());
+    }
+
+    public boolean isHas_permission() {
+        return has_permission;
+    }
+
+    public void setHas_permission(boolean has_permission) {
+        this.has_permission = has_permission;
+    }
+
+    public boolean isHas_delete_permission() {
+        return has_delete_permission;
+    }
+
+    public void setHas_delete_permission(boolean has_delete_permission) {
+        this.has_delete_permission = has_delete_permission;
     }
 
     public User_Student getCreated_by() {
@@ -148,11 +166,12 @@ public class Brand implements Parcelable {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
         dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.photo);
         dest.writeByte(this.has_add_permission ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.has_delete_permission ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.owners);
         dest.writeString(this.cname);
         dest.writeInt(this.gym_count);

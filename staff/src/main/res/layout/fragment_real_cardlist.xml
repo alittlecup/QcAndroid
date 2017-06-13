@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <android.support.design.widget.CoordinatorLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_grey"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        >
+
+      <RelativeLayout
+          android:id="@+id/rl_balance_short"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:gravity="center_vertical"
+          android:minHeight="48dp"
+          app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"
+          >
+
+        <ImageView
+            android:id="@+id/img_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/ic_balance"
+            />
+
+        <TextView
+            android:id="@+id/text_balance_enough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/img_balance"
+            android:text="余额不足"
+            android:textColor="@color/qc_text_black"
+            />
+
+
+        <ImageView
+            android:id="@+id/icon_balance_into"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="2.5dp"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+        <TextView
+            android:id="@+id/text_balance_cards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@+id/icon_balance_into"
+            android:textColor="@color/qc_text_black"
+            tools:text="330张"
+            />
+
+
+      </RelativeLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="12dp"
+          android:background="@color/divider_grey"
+          />
+
+      <FrameLayout
+          android:id="@+id/frame_student_operation"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_scrollFlags="scroll|enterAlways"
+          />
+
+
+      <include layout="@layout/layout_card_filter"/>
+
+      <include layout="@layout/divider_grey"/>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+            android:id="@+id/cardcount_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="会员卡总数:"
+            android:textSize="12dp"
+            />
+
+        <TextView
+            android:id="@+id/cards_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/cardcount_lable"
+            android:layout_toRightOf="@id/cardcount_lable"
+            android:textColor="@color/qc_text_black"
+            android:textSize="12dp"
+            tools:text="123123"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+      </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+      <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+          android:id="@+id/recycleview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:rn_drawable="@drawable/no_realcard"
+          app:rn_hint="暂无会员卡"
+          />
+
+      <View
+          android:id="@+id/card_list_shadow"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:alpha="0.4"
+          android:background="@color/qc_text_black"
+          android:visibility="gone"
+          />
+    </FrameLayout>
+  </android.support.design.widget.CoordinatorLayout>
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab_add_card"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right|end|bottom"
+      android:layout_marginBottom="@dimen/activity_horizontal_margin"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      app:backgroundTint="@color/colorPrimary"
+      app:elevation="4dp"
+      app:fabSize="normal"
+      app:rippleColor="@color/dard_green"
+      app:srcCompat="@drawable/ic_add_card"
+      />
+
+</FrameLayout>

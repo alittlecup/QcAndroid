@@ -1,0 +1,74 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
+
+
+  <cn.qingchengfit.widgets.PhoneEditText
+      android:id="@+id/login_phone"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      />
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <cn.qingchengfit.widgets.PasswordView
+      android:id="@+id/pw_view"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      app:pw_mode="true"
+      />
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <ToggleButton
+        android:id="@+id/forgetpw_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_weight="1"
+        android:background="@color/transparent"
+        android:gravity="center_vertical|start"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:textColor="@color/text_black"
+        android:textOff="验证码登录"
+        android:textOn="密码登录"
+        android:textSize="@dimen/btn_font"
+        >
+    </ToggleButton>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_weight="1"
+        android:background="@color/toolbar"
+        android:orientation="horizontal"
+        android:text="@string/login_btn_label"
+        >
+    </Button>
+  </LinearLayout>
+
+
+</LinearLayout>
+

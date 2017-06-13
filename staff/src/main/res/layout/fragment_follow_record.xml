@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/cardnum"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingStart="@dimen/activity_horizontal_margin"
+      android:text="15条跟进记录"
+      android:visibility="gone"
+
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+
+      android:id="@+id/recycleview"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:background="@color/bg_grey"
+
+
+      />
+
+  <!--<Button-->
+  <!--android:id="@+id/add_follow"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="@dimen/qc_item_height"-->
+  <!--android:layout_alignParentBottom="true"-->
+  <!--android:text="添加跟进记录"-->
+  <!--/>-->
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      >
+
+    <cn.qingchengfit.staffkit.views.custom.ChatInputView
+        android:id="@+id/chat_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        />
+
+    <View
+        android:id="@+id/disable_input"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/halftransparent_grey"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+  </FrameLayout>
+
+</LinearLayout>

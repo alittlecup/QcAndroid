@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.qingchengfit.staffkit.views.custom.MyDrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <android.support.design.widget.CoordinatorLayout
+      android:id="@+id/scroll_root"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/myhome_appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_grey"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        >
+
+      <include layout="@layout/common_toolbar"/>
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/ll_add_stu"
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:layout_marginBottom="12dp"
+          android:background="@color/white"
+          android:gravity="left|center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          app:layout_scrollFlags="scroll"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_add"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:text="@string/qc_allotsale_sale_detail_add_stud"
+            android:textColor="@color/green"
+            style="@style/Qc.TextCommonGrey"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/layout_fliter"/>
+
+      <include layout="@layout/divider_grey"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/smrv_sale"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:rn_drawable="@drawable/no_dayoff"
+        app:rn_hint="你暂时没有学员"
+        />
+
+    <include
+        layout="@layout/dialog_alpha_tip"
+        android:visibility="gone"
+        />
+
+    <cn.qingchengfit.widgets.AlphabetView
+        android:id="@+id/alphabetview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="end"
+        android:layout_marginRight="8dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        />
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+  </android.support.design.widget.CoordinatorLayout>
+</cn.qingchengfit.staffkit.views.custom.MyDrawerLayout>

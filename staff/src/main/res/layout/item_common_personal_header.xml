@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data></data>
+
+  <RelativeLayout
+      android:id="@+id/item_person_header_loop"
+      android:layout_width="47dp"
+      android:layout_height="47dp"
+      >
+
+    <ImageView
+        android:id="@+id/item_person_header"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+  </RelativeLayout>
+</layout>

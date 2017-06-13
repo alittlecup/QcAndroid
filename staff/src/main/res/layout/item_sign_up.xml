@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    >
+
+  <ImageView
+      android:id="@+id/image_sign_head"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      tools:src="@drawable/ic_default_head_nogender"
+      />
+
+  <TextView
+      android:id="@+id/text_sign_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_toRightOf="@id/image_sign_head"
+      android:textColor="@color/qc_text_black"
+      android:textSize="15dp"
+      tools:text="毛云涛"
+      />
+
+  <ImageView
+      android:id="@+id/img_sign_gender"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@id/text_sign_name"
+      android:layout_marginLeft="6dp"
+      android:layout_toRightOf="@id/text_sign_name"
+      tools:src="@drawable/ic_gender_signal_male"
+      />
+
+  <ImageView
+      android:id="@+id/image_arrow_right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_alignTop="@id/text_sign_name"
+      android:src="@drawable/ic_arrow_right"
+      />
+
+  <TextView
+      android:id="@+id/text_sign_phone"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/text_sign_name"
+      android:layout_marginLeft="15dp"
+      android:layout_marginTop="3dp"
+      android:layout_toRightOf="@id/image_sign_head"
+      android:textSize="13sp"
+      tools:text="187071966666"
+      />
+
+  <TextView
+      android:id="@+id/text_sign_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/text_sign_phone"
+      android:layout_marginLeft="15dp"
+      android:layout_marginTop="3dp"
+      android:layout_toRightOf="@id/image_sign_head"
+      android:textSize="13sp"
+      tools:text="报名时间：2017-02-20  16:26"
+      />
+
+  <TextView
+      android:id="@+id/text_sign_cost"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/text_sign_time"
+      android:layout_marginLeft="15dp"
+      android:layout_marginTop="3dp"
+      android:layout_toRightOf="@id/image_sign_head"
+      android:textSize="13sp"
+      tools:text="报名费用：500元"
+      />
+
+  <cn.qingchengfit.widgets.AutoLineGroup
+      android:id="@+id/ll_sign_group"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@id/text_sign_cost"
+      android:layout_below="@id/text_sign_cost"
+      android:layout_marginRight="48dp"
+      android:layout_marginTop="3dp"
+      android:layout_toRightOf="@id/image_sign_head"
+      />
+
+</RelativeLayout>

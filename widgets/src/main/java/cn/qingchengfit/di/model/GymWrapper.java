@@ -79,7 +79,7 @@ public class GymWrapper {
 
     public String id() {
         if (coachService != null) {
-            return Long.toString(coachService.id);
+            return coachService.id;
         } else {
             return "";
         }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:divider="@drawable/divier_linear"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    >
+
+  <cn.qingchengfit.widgets.QcToggleButton
+      android:id="@+id/tg_sort_alphabet"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      app:qc_color_off="@color/text_black"
+      app:qc_color_on="@color/colorPrimary"
+      app:qc_text="最新注册"
+      app:qc_text_size="@dimen/common_font"
+      app:qc_vc_drawable="@drawable/vector_list_order_register"
+      />
+
+  <cn.qingchengfit.widgets.QcToggleButton
+      android:id="@+id/tg_sort_regist"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      app:qc_checked="true"
+      app:qc_color_off="@color/text_black"
+      app:qc_color_on="@color/colorPrimary"
+      app:qc_text="字母排序"
+      app:qc_text_size="@dimen/common_font"
+      app:qc_vc_drawable="@drawable/vector_list_order_register"
+      />
+
+  <cn.qingchengfit.widgets.QcToggleButton
+      android:id="@+id/tg_filter"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      app:qc_color_off="@color/text_black"
+      app:qc_color_on="@color/colorPrimary"
+      app:qc_text="@string/filter"
+      app:qc_text_size="@dimen/common_font"
+      app:qc_vc_drawable="@drawable/vector_list_filter_normal"
+      />
+</LinearLayout>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical"
+    >
+
+
+  <LinearLayout
+      android:id="@+id/searchview"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/toolbar"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="5dp"
+      android:visibility="visible"
+      >
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        >
+
+      <EditText
+          android:id="@+id/searchview_et"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/bg_searchview"
+          android:drawableLeft="@drawable/ic_search_black"
+          android:hint="输入学员名字或者手机号"
+          android:imeOptions="actionDone"
+          android:lines="1"
+          android:maxLength="11"
+          android:paddingLeft="16dp"
+          />
+
+      <ImageView
+          android:id="@+id/searchview_clear"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical|right"
+          android:layout_marginRight="10dp"
+          android:src="@drawable/ic_cross_blace"
+          android:visibility="gone"
+          />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/searchview_cancle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:background="@color/transparent"
+        android:text="@string/pickerview_cancel"
+        />
+  </LinearLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_discrib"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+
+      <ImageView
+          android:id="@+id/img_describ"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_marginTop="32dp"
+          android:scaleType="fitXY"
+          app:srcCompat="@drawable/vector_search"
+          />
+
+      <TextView
+          android:id="@+id/tv_describ"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="搜索学员"
+          />
+    </LinearLayout>
+  </FrameLayout>
+</LinearLayout>

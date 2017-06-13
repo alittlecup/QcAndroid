@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <include layout="@layout/layout_detail_head"/>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:background="@color/divider_grey"
+      />
+
+  <android.support.design.widget.TabLayout
+      android:id="@+id/tab"
+      android:layout_width="match_parent"
+      android:layout_height="44dp"
+      android:background="@color/white"
+      app:tabGravity="center"
+      app:tabIndicatorColor="@color/colorPrimary"
+      app:tabIndicatorHeight="3dp"
+      app:tabSelectedTextColor="@color/colorPrimary"
+      app:tabTextAppearance="@style/Qc.TextCommonGrey"
+      app:tabTextColor="@color/text_grey"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:layout_alignBottom="@id/tab"
+      android:background="@color/divider_grey"
+      />
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/student"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+    <Button
+        android:id="@+id/buycard"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:text="购买会员卡"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/orderbtn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:divider="@drawable/divier_linear"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        >
+
+      <Button
+          android:id="@+id/order_group"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:text="代约团课"
+          />
+
+      <Button
+          android:id="@+id/order_private"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:text="代约私教"
+          />
+    </LinearLayout>
+  </FrameLayout>
+
+
+</LinearLayout>

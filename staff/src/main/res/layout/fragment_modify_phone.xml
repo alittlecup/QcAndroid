@@ -1,0 +1,91 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:pw_mode="true"
+        app:pw_show_left="false"
+        />
+
+    <include
+        layout="@layout/divider_white"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        >
+    </include>
+
+    <cn.qingchengfit.widgets.PhoneEditText
+        android:id="@+id/phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        app:phone_show_icon="false"
+        />
+
+    <include
+        layout="@layout/divider_white"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        >
+    </include>
+
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/check_code"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        app:pw_mode="false"
+        app:pw_show_left="false"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"></include>
+
+  <Button
+      android:id="@+id/modifyphone_comfirm_btn"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:text="@string/login_comfirm"
+      />
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:text="注：请您联系场馆管理员修改场馆相应工作人员手机号，否则将无法同步您的场馆"
+      android:textColor="@color/red"
+      style="@style/Qc.TextCommonBlack"
+      />
+</LinearLayout>

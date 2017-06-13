@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:background="@color/white"
+      android:minHeight="83dp"
+      android:orientation="vertical"
+      android:paddingBottom="8dp"
+      android:paddingTop="8dp"
+
+      >
+
+    <ImageView
+        android:id="@+id/item_noti_unread"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/red_dot"
+        />
+
+    <ImageView
+        android:id="@+id/item_noti_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/item_noti_unread"
+        android:scaleType="centerCrop"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="28dp"
+        android:layout_toRightOf="@id/item_noti_icon"
+        android:orientation="vertical"
+        >
+
+      <TextView
+
+          android:id="@+id/item_noti_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="14sp"
+          android:textStyle="bold"
+          tools:text="哈哈哈"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/item_noti_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:lineSpacingExtra="4dp"
+          tools:text="@string/test_short"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/item_noti_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12月10日"
+            android:textSize="12sp"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <TextView
+            android:id="@+id/item_noti_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="中美引力工作室"
+            android:textSize="12sp"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+      </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/icon_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+</FrameLayout>

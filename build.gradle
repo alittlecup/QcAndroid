@@ -45,6 +45,7 @@ buildscript {
         classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:${TINKERPATCH_VERSION}") {
             changing = true
         }
+      classpath 'com.antfortune.freeline:gradle:0.8.7'
     }
 }
 
@@ -59,8 +60,11 @@ allprojects {
         url "https://s3.amazonaws.com/repo.commonsware.com"
       }
         mavenCentral()
-        maven(){
+      maven() {
             url uri('../repo')
+      }
+      maven() {
+        url uri('../../repo')
         }
         maven(){
             url uri('./repo')

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_grey"
+        android:orientation="vertical"
+        android:paddingBottom="25dp"
+        >
+
+
+      <include layout="@layout/layout_detail_head"/>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:paddingLeft="15dp"
+          android:paddingTop="15dp"
+          android:text="报名信息 "
+          android:textColor="@color/qc_text_black"
+          android:textSize="16sp"
+          />
+
+      <TextView
+          android:id="@+id/text_sign_joined"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:paddingLeft="15dp"
+          android:paddingTop="10dp"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="15sp"
+          tools:text="报名时间：2017-02-20 16:26"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:text="报名费用："
+            android:textColor="@color/qc_text_grey"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/text_sign_info_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:textSize="15sp"
+            tools:text="500元"
+            />
+      </LinearLayout>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          >
+
+        <TextView
+            android:id="@+id/group_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:text="所在分组："
+            android:textColor="@color/qc_text_grey"
+            android:textSize="15sp"
+            />
+
+        <cn.qingchengfit.widgets.AutoLineGroup
+            android:id="@+id/ll_sign_info_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/group_title"
+            android:layout_toRightOf="@+id/group_title"
+            />
+      </RelativeLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="15dp"
+          android:background="@color/white"
+          android:orientation="vertical"
+          android:paddingBottom="8dp"
+          >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:text="TA的出勤"
+            android:textColor="@color/qc_text_black"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="3dp"
+            android:text="(每天00:00更新数据)"
+            android:textColor="@color/qc_text_grey"
+            android:textSize="12sp"
+            />
+
+      </LinearLayout>
+
+      <FrameLayout
+          android:id="@+id/personal_count_frag"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

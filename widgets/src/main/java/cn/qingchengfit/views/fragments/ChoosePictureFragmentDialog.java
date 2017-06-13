@@ -172,7 +172,7 @@ public class ChoosePictureFragmentDialog extends DialogFragment {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == Activity.RESULT_OK) {
                 Uri resultUri = result.getUri();
-                RxBus.getBus().post(new EventChooseImage(FileUtil.getFilePath(getContext(), resultUri), getArguments().getInt("r", 0)));
+                RxBus.getBus().post(new EventChooseImage(FileUtils.getFilePath(getContext(), resultUri), getArguments().getInt("r", 0)));
                 dismissAllowingStateLoss();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();

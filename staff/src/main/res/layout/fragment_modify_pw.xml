@@ -1,0 +1,127 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/qc_item_height"-->
+    <!--&gt;-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/modifyphone_phone"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/qc_item_height"-->
+    <!--android:background="@color/transparent"-->
+    <!--android:hint="请输入手机号"-->
+    <!--android:inputType="number"-->
+    <!--/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/modifyphone_getcode_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:drawableLeft="@drawable/checkcode_line"-->
+    <!--android:drawablePadding="5dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:text="@string/login_getcode"-->
+
+    <!--/>-->
+
+    <!--</RelativeLayout>-->
+    <cn.qingchengfit.widgets.PhoneEditText
+        android:id="@+id/phone_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:phone_show_icon="false"
+        />
+
+    <include
+        layout="@layout/divider_white"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        >
+    </include>
+
+    <cn.qingchengfit.widgets.PasswordView
+        android:id="@+id/checkcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pw_mode="false"
+        app:pw_show_left="false"
+        />
+
+    <include
+        layout="@layout/divider_white"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        >
+    </include>
+
+    <EditText
+        android:id="@+id/modifypw_new_pw"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/transparent"
+        android:hint="新密码"
+        android:inputType="textPassword"
+        android:maxLength="16"
+        />
+
+    <include
+        layout="@layout/divider_white"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        >
+    </include>
+
+    <EditText
+        android:id="@+id/modifypw_comfirm_pw"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/transparent"
+        android:hint="确认新密码"
+        android:inputType="textPassword"
+        android:maxLength="16"
+
+        />
+
+  </LinearLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      >
+  </include>
+
+  <Button
+      android:id="@+id/modifypw_comfirm_btn"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:text="@string/login_comfirm"
+      />
+
+</LinearLayout>

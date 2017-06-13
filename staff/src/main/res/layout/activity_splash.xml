@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/splash_viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/colorPrimary"
+      >
+  </android.support.v4.view.ViewPager>
+
+  <RelativeLayout
+
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_alignParentBottom="true"
+      android:background="@color/bg_grey"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/splash_login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/login_btn_label"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/splash_registe_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="@string/registe_indicat_label"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        />
+
+    <cn.qingchengfit.staffkit.views.custom.CircleIndicator
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/splash_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ci_drawable="@drawable/splash_indicator_doc"
+        />
+  </RelativeLayout>
+
+
+  <RelativeLayout
+      android:id="@+id/main_loading"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_background"
+        android:layerType="software"
+        >
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:gravity="center_horizontal"
+          android:orientation="vertical"
+          >
+
+        <!--<ImageView-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="100dp"-->
+        <!--/>-->
+
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="175dp"
+            android:src="@drawable/loading_logo"
+
+            />
+
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="114dp"
+          android:layout_height="15dp"
+          android:layout_alignParentBottom="true"
+          android:layout_centerHorizontal="true"
+          android:layout_marginBottom="30dp"
+          android:src="@drawable/loading_company"
+          />
+    </RelativeLayout>
+
+  </RelativeLayout>
+
+</RelativeLayout>

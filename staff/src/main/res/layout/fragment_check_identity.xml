@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <TextView
+      android:id="@+id/ret_hint"
+      android:layout_width="match_parent"
+      android:layout_height="30dp"
+      android:background="@color/bg_red"
+      android:drawablePadding="8dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:text="为了保证安全，请先进行身份验证"
+      android:textColor="@color/red"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:background="@color/white"
+      >
+
+    <ImageView
+        android:id="@+id/su_avatar"
+        android:layout_width="80.5dp"
+        android:layout_height="80.5dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/bg_rect"
+        android:padding="0.5dp"
+        android:scaleType="fitXY"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/su_avatar"
+        android:layout_toRightOf="@id/su_avatar"
+        android:orientation="vertical"
+
+        >
+
+      <TextView
+          android:id="@+id/su_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawablePadding="@dimen/little"
+          tools:text="Kent"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/su_phone"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="15123358198"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+    </LinearLayout>
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:id="@+id/send_hint"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:text="向xxxxx发送短信"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <TextView
+        android:id="@+id/send_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rect_prime"
+        android:gravity="center"
+        android:minWidth="80dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="发送"
+        android:textColor="@color/colorPrimary"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/check_code"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_hint="请输入验证码"
+      app:civ_inputnum="true"
+      app:civ_lable="@string/phone_code"
+      />
+
+  <Button
+
+      android:id="@+id/btn_next"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:enabled="false"
+      android:text="@string/next_step"
+      />
+
+</LinearLayout>

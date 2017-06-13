@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+
+    <LinearLayout
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/item_schedule_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="13dp"
+          android:paddingTop="0dp"
+          android:textColor="@color/most_black"
+          tools:text="9:00"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/item_schedule_done"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="2.5dp"
+          android:background="@drawable/bg_rect"
+          android:padding="2dp"
+          android:text="已完成"
+          android:textColor="#bbbbbb"
+          android:textSize="11sp"
+          />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_schedule_status"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="28dp"
+        tools:src="@drawable/ic_schedule_hook"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_timeline_card"
+        android:paddingBottom="15dp"
+        android:paddingTop="0dp"
+        >
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="13dp"
+          android:orientation="vertical"
+          >
+
+        <TextView
+            android:id="@+id/item_schedule_classname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/most_black"
+            android:textStyle="bold"
+            tools:text="Gravity"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <TextView
+            android:id="@+id/item_schedule_gymname"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/ic_course_location"
+            android:drawablePadding="5dp"
+            android:maxLines="1"
+            android:textColor="@color/text_black"
+            tools:text="中美引力工作室"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <TextView
+            android:id="@+id/item_schedule_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/ic_course_people"
+            android:drawablePadding="5dp"
+            android:maxLength="20"
+            android:textColor="@color/text_black"
+            tools:text="共报名5人"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <TextView
+            android:id="@+id/item_schedule_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableLeft="@drawable/ic_clock"
+            android:drawablePadding="5dp"
+            android:maxLength="20"
+            android:textColor="@color/text_black"
+            tools:text="共报名5人"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+        <TextView
+            android:id="@+id/item_schedule_conflict"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawablePadding="5dp"
+            android:maxLength="20"
+            android:textColor="@color/red"
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:text="事件冲突:xxxxxx"
+            style="@style/Qc.TextCommonGrey"
+            />
+
+
+      </LinearLayout>
+
+      <ImageView
+          android:id="@+id/item_schedule_classpic"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:scaleType="fitXY"
+          tools:src="@drawable/test_img"
+          />
+    </RelativeLayout>
+  </LinearLayout>
+
+
+</FrameLayout>

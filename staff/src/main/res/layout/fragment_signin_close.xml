@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+  <ImageView
+      android:layout_width="168dp"
+      android:layout_height="144dp"
+      android:layout_marginTop="80dp"
+      app:srcCompat="@drawable/ic_sign_in_nodata"
+      />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/little"
+      android:text="请先开启入场签到功能"
+      android:textColor="@color/text_black"
+      />
+
+  <Button
+      android:id="@+id/btn_open"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="50dp"
+      android:text="开启入场签到"
+      />
+</LinearLayout>

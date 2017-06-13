@@ -1,0 +1,14 @@
+<resources>
+
+
+  <string name="wechat_code">wx2beb386a0021ed3f</string>
+  <string name="baidu_api">K95Se5Q3mxpxqxR93XCom9fS</string>
+  <string name="oem">staff-test</string>
+  <string name="oem_tag">@string/oem</string>
+  <string formatted="false"
+          name="chat_user_id_header">qctest_%s
+  </string>
+  <string name="gd_api">ca7aad8b4ae0af94a9aa4d2b973deb92</string>
+
+
+</resources>

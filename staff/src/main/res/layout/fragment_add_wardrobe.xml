@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:civ="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:civ="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:orientation="vertical"
+      >
+
+    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        android:id="@+id/wardrobe_no"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        civ:civ_lable="@string/wardrobe_no"
+        civ:civ_nonnull="true"
+        />
+
+    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        android:id="@+id/wardrobe_district"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        civ:civ_clickable="true"
+        civ:civ_lable="@string/wardrobe_district"
+        civ:civ_nonnull="true"
+        civ:civ_showdivier="false"
+        civ:civ_showright="true"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <include layout="@layout/divider_grey_margin"/>
+
+    <TextView
+        android:id="@+id/btn_del"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="删除该更衣柜"
+        android:textColor="@color/red"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+  </LinearLayout>
+
+  <View
+      android:id="@+id/permisson_dendy"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      />
+</FrameLayout>

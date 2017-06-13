@@ -47,24 +47,34 @@ dependencies {
   compile "com.android.support:cardview-v7:${libs.supportVersion}"
   compile "com.android.support:design:${libs.supportVersion}"
   compile "com.android.support:percent:${libs.supportVersion}"
+
+  compile("com.squareup.retrofit2:retrofit:${libs.retrofit}") {
+    exclude module: 'okhttp'
+  }
+  compile "com.squareup.retrofit2:adapter-rxjava:${libs.retrofit}"
+  compile "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
+  compile "com.squareup.okhttp3:okhttp:${libs.okhttp}"
+  compile "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
+  compile "io.reactivex:rxandroid:${libs.rxandroid}"
+  compile "io.reactivex:rxjava:${libs.rxjava}"
+  compile "com.jakewharton.rxbinding:rxbinding:${libs.rxbind}"
+  compile "com.jakewharton:butterknife:${libs.butterknife}"
+  annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
+
+  compile 'com.google.code.gson:gson:2.7'
+  compile 'com.nineoldandroids:library:2.4.0'
+  compile 'com.github.chrisbanes:PhotoView:1.2.6'
+
   compile "eu.davidea:flexible-adapter:5.0.0-rc1"
   compile "com.github.bumptech.glide:glide:3.7.0"
-  annotationProcessor "com.jakewharton:butterknife-compiler:8.6.0"
-  compile "com.jakewharton:butterknife:8.6.0"
-  compile "com.squareup.okhttp3:logging-interceptor:3.6.0"
-  compile "com.squareup.okhttp3:okhttp:3.6.0"
+
   compile "com.squareup.sqlbrite:sqlbrite:0.7.0"
-  compile "com.jakewharton.rxbinding:rxbinding:0.4.0"
-  compile "io.reactivex:rxandroid:1.2.1"
-  compile "io.reactivex:rxjava:1.1.6"
-  compile "com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar"
-  compile "com.squareup.retrofit2:adapter-rxjava:2.0.2"
-  compile "com.squareup.retrofit2:converter-gson:2.0.2"
+  compile "com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar"
   compile("com.github.afollestad.material-dialogs:core:0.8.5.5@aar") {
     transitive = true
   }
   compile "com.umeng.analytics:analytics:latest.integration"
-  compile "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:1.6.36"
+  compile "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration"
   //  compile "me.henrytao:smooth-app-bar-layout:${libs.supportVersion}.0"
   compile "com.google.android:flexbox:0.3.0-alpha3"
   compile "com.github.rubensousa:gravitysnaphelper:1.1"
@@ -72,10 +82,9 @@ dependencies {
   compile files("libs/Bughd_android_sdk_v1.3.7.jar")
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
   compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
-}
-
-task count << {
-  4.times { println "$it" }
+  compile 'com.getbase:floatingactionbutton:1.10.0' //fab
+  compile 'com.theartofdev.edmodo:android-image-cropper:2.4.5' //裁剪图片
+  compile 'com.commonsware.cwac:cam2:0.7.6' //拍照
 }
 
 group "cn.qingchegfit.widgets"

@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.Log;
@@ -86,19 +87,6 @@ public class AppUtils {
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
-    public boolean isAppOnForeground(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
-        if (tasksInfo.size() > 0) {
-
-            // 应用程序位于堆栈的顶层
-            if (TextUtils.equals(tasksInfo.get(0).topActivity.getPackageName(), context.getPackageName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void doSendSMSTo(Context context, String phoneNumber) {
         if (PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
             Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phoneNumber));
@@ -129,6 +117,19 @@ public class AppUtils {
     public static void hideKeyboardFore(Context context) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public boolean isAppOnForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
+        if (tasksInfo.size() > 0) {
+
+            // 应用程序位于堆栈的顶层
+            if (TextUtils.equals(tasksInfo.get(0).topActivity.getPackageName(), context.getPackageName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

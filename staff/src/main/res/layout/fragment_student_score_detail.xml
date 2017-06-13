@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="120dp"
+      android:background="@drawable/ic_student_score_detail_bg"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/user_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          tools:text="陈驰远"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="1dp"
+          android:text="@string/current_score"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          />
+
+      <TextView
+          android:id="@+id/score"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="-12dp"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="48sp"
+          tools:text="222"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_student_score_sub"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_marginRight="16dp"
+          android:background="@drawable/selector_student_score_operation"
+          android:clickable="true"
+          android:gravity="center"
+          android:orientation="vertical"
+          >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/vector_student_score_subtract"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="扣除积分"
+            android:textColor="@color/white"
+            android:textSize="@dimen/min_font"
+
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_student_score_plus"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:background="@drawable/selector_student_score_operation"
+          android:clickable="true"
+          android:gravity="center"
+          android:orientation="vertical"
+          >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/vector_student_score_plus"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="增加积分"
+            android:textColor="@color/white"
+            android:textSize="@dimen/min_font"
+            />
+      </LinearLayout>
+    </LinearLayout>
+  </RelativeLayout>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="33dp"
+      android:text="@string/score_change_history"
+      style="@style/TextTitleHint"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      android:id="@+id/recycleview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      rv:rn_drawable="@drawable/schedules_no_data"
+
+      />
+</LinearLayout>

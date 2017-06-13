@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorPrimary">#1faf50</color>
+  <color name="colorPrimaryDark">@color/cyan</color>
+  <color name="colorAccent">@color/colorPrimary</color>
+  <color name="colorPrimaryDisable">#b7e7ca</color>
+  <color name="colorSetBg">#838B86</color>
+  <color name="divider_white">#eeeeee</color>
+  <color name="divider_grey">#dddddd</color>
+  <color name="text_grey">@color/warm_grey</color>
+  <color name="bg_grey">#f4f4f4</color>
+  <color name="toolbar">#4e4e4e</color>
+  <color name="most_black">#222222</color>
+
+  <!--  calendar Fonts -->
+  <color name="month_title">@color/text_black</color>
+  <color name="day_of_week_color">@color/text_black</color>
+  <color name="day_of_month">@color/most_black</color>
+  <color name="current_day_of_month">@color/white</color>
+  <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
+  <color name="line">#CC0000</color>
+  <color name="ring">#669900</color>
+  <color name="circle">#e6e7e8</color>
+  <color name="calendar_background">#FFFFFF</color>
+
+  <color name="wheel_timebtn_nor">#54a3fa</color>
+  <color name="wheel_timebtn_pre">#CCCCCC</color>
+  <color name="text_orange">#f9944e</color>
+  <color name="colorPrimarytrans">#111faf50</color>
+  <color name="text_link">#6EB8F1</color>
+  <color name="bg_orange">#33f9944e</color>
+
+  <!--common color-->
+  <color name="white">#ffffff</color>
+  <color name="half_white">#55ffffff</color>
+  <color name="text_black">#666666</color>
+  <color name="dark_white">#cfcfcf</color>
+  <color name="cyan">#00BFBF</color>
+  <color name="transparent">#00ffffff</color>
+  <color name="halftransparent">#33ffffff</color>
+  <color name="halftransparent_grey">#99000000</color>
+  <color name="halftrans_background">#33000000</color>
+  <color name="grey">#555555</color>
+  <color name="warm_grey">#9b9b9b</color>
+  <color name="less_grey">#dddddd</color>
+  <color name="orange">#e08f00</color>
+  <color name="red">#ff5151</color>
+  <color name="green">#66bb6a</color>
+  <color name="blue">#2ab6f6</color>
+  <color name="purple">#ba68c8</color>
+  <color name="grey_student_info">#777777</color>
+
+</resources>

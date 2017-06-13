@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/sw_balance_enough"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginTop="12dp"
+      app:sw_lable="会员卡余额不足通知"
+      app:sw_showdivier="true"
+      app:sw_text_color="@color/qc_text_black"
+      />
+
+
+  <TextView
+      android:id="@+id/text_open_notify_tips"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:paddingBottom="16dp"
+      android:paddingTop="5dp"
+      android:text="您的名下会员收到提醒短信提醒后，App将同时发送系统通知给您"
+      android:textSize="12dp"
+      />
+
+
+  <RelativeLayout
+      android:id="@+id/setting_fix_checkin"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:id="@+id/text_check_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:text="@string/home_fix_checkin"
+        android:textColor="@color/qc_text_black"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+</LinearLayout>

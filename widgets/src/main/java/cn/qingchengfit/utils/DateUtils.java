@@ -80,6 +80,26 @@ public class DateUtils {
         return stringBuffer.toString();
     }
 
+    public static String date2YYMM(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
+        String dateStr = formatter.format(date);
+        String[] dateArr = dateStr.split(" ");
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(dateArr[0]).append("T").append(dateArr[1]);
+        return stringBuffer.toString();
+    }
+
+    public static Date YYMM2date(String s) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
+        Date date = null;
+        try {
+            date = formatter.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     public static String getChineseMonth(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月", Locale.CHINA);
         return formatter.format(date);

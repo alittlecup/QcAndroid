@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      android:id="@+id/recycle_bind_student"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="visible"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      app:rn_drawable="@drawable/no_dayoff"
+      app:rn_hint="你暂时没有学员"
+      />
+
+</LinearLayout>

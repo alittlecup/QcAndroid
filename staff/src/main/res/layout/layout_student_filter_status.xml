@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:gravity="center_vertical|left"
+      android:text="会员状态"
+      android:textColor="@color/qc_text_black"
+      android:textSize="14sp"
+      />
+
+  <cn.qingchengfit.widgets.QcRadioGroup
+      android:id="@+id/qrg_status"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:layout_marginTop="10dp"
+      android:gravity="left|center_vertical"
+      android:orientation="horizontal"
+      >
+
+    <cn.qingchengfit.widgets.CheckBoxButton
+        android:id="@+id/tv_student_filter_status_0"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="@dimen/min_font"
+        app:cb_background_normal="@drawable/shape_bg_rect_grey_corner4"
+        app:cb_background_select="@drawable/bg_rect_allot_green"
+        app:cb_hook_icon_location="left"
+        app:cb_hook_icon_select="@drawable/selector_student_checkbtn_bg"
+        app:cb_select="false"
+        app:cb_text_content="新注册"
+        app:cb_text_normal_color="@color/qc_text_grey"
+        app:cb_text_select_color="@color/qc_theme_green"
+        />
+
+    <cn.qingchengfit.widgets.CheckBoxButton
+        android:id="@+id/tv_student_filter_status_1"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="@dimen/min_font"
+        app:cb_background_normal="@drawable/shape_bg_rect_grey_corner4"
+        app:cb_background_select="@drawable/bg_rect_allot_green"
+        app:cb_hook_icon_location="left"
+        app:cb_hook_icon_select="@drawable/selector_student_checkbtn_bg"
+        app:cb_select="false"
+        app:cb_text_content="已接洽"
+        app:cb_text_normal_color="@color/qc_text_grey"
+        app:cb_text_select_color="@color/qc_theme_green"
+        />
+
+    <cn.qingchengfit.widgets.CheckBoxButton
+        android:id="@+id/tv_student_filter_status_2"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="@dimen/min_font"
+        app:cb_background_normal="@drawable/shape_bg_rect_grey_corner4"
+        app:cb_background_select="@drawable/bg_rect_allot_green"
+        app:cb_hook_icon_location="left"
+        app:cb_hook_icon_select="@drawable/selector_student_checkbtn_bg"
+        app:cb_select="false"
+        app:cb_text_content="会员"
+        app:cb_text_normal_color="@color/qc_text_grey"
+        app:cb_text_select_color="@color/qc_theme_green"
+        />
+
+  </cn.qingchengfit.widgets.QcRadioGroup>
+</LinearLayout>

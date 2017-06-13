@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#8cb5ba"
+      >
+
+    <ImageView
+        android:id="@+id/iv_signin_item_student_face"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_border_white"
+        android:padding="0.5dp"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_weight="1"
+        android:orientation="vertical"
+
+        >
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+
+          >
+
+        <TextView
+            android:id="@+id/tv_signin_item_student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陈驰元"
+            android:textColor="@color/white"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <ImageView
+            android:id="@+id/iv_signin_item_student_gender"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_gender_signal_female"
+            />
+      </LinearLayout>
+
+
+      <TextView
+          android:id="@+id/tv_signin_item_student_phone"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="2dp"
+          android:text="手机:"
+          android:textColor="@color/white"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+    </LinearLayout>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="13dp"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="13dp"
+          android:text="@string/sign_in_untreated_ka"
+          android:textSize="@dimen/common_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_signin_card"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_weight="1"
+          android:background="?android:attr/selectableItemBackground"
+          android:drawablePadding="8dp"
+          android:drawableRight="@drawable/ic_arrow_right"
+          android:gravity="center_vertical|right"
+          android:text="@string/sign_in_untreated_choose_card"
+          android:textSize="@dimen/common_font"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sign_in_balance_less"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fef1e8"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="会员卡余额不足,"
+          android:textColor="@color/text_color_gray"
+          android:textSize="@dimen/min_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_sign_in_charge"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingBottom="12dp"
+          android:paddingLeft="6dp"
+          android:paddingRight="40dp"
+          android:paddingTop="12dp"
+          android:text="立即充值"
+          android:textColor="#fa9a58"
+          android:textSize="@dimen/min_font"
+          />
+    </LinearLayout>
+
+    <include
+        layout="@layout/divider_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_signin_manual_locker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="13dp"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="13dp"
+          android:text="@string/sign_in_untreated_gui"
+          android:textSize="@dimen/common_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_signin_locker"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:layout_weight="1"
+          android:background="?android:attr/selectableItemBackground"
+          android:drawablePadding="8dp"
+          android:drawableRight="@drawable/ic_arrow_right"
+          android:gravity="center_vertical|right"
+          android:text="@string/sign_in_untreated_choose"
+          android:textSize="@dimen/common_font"
+          />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:id="@+id/ll_signin_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        >
+
+      <TextView
+          android:id="@+id/tv_signin_item_confirm"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="13dp"
+          android:layout_marginTop="13dp"
+          android:drawablePadding="3dp"
+          android:gravity="center"
+          android:text="@string/sign_in_untreated_confirm"
+          android:textColor="#0DB14B"
+          android:textSize="@dimen/common_font"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+  </LinearLayout>
+
+  <include
+      layout="@layout/divider_grey_margin"
+      android:id="@+id/margin"
+      />
+
+  <LinearLayout
+      android:id="@+id/course_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      >
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp"
+        android:background="#8cb5ba"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_signin_course"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"
+          android:text="@string/sign_in_untreated_class"
+          android:textSize="@dimen/common_font"
+          />
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview_signin_course"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          android:layout_marginTop="10dp"
+          >
+
+      </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+</LinearLayout>

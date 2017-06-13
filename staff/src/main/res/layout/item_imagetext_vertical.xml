@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="106dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription"
+    >
+
+  <!--<TextView-->
+  <!--android:id="@+id/text"-->
+  <!--android:layout_width="wrap_content"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--android:gravity="center"-->
+  <!--android:layout_gravity="center"-->
+  <!--tools:text="安排课程"-->
+  <!--android:drawablePadding="13dp"-->
+  <!--android:drawableTop="@drawable/ic_test"-->
+  <!--/>-->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="106dp"
+      android:layout_gravity="center"
+      android:background="?android:attr/selectableItemBackground"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/activity_horizontal_margin"
+      android:paddingTop="@dimen/activity_vertical_margin"
+
+      >
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        tools:src="@drawable/ic_test"
+        />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/text_black"
+        tools:text="安排课程"
+        />
+  </LinearLayout>
+</FrameLayout>

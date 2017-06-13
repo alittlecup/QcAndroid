@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <LinearLayout
+      android:id="@+id/wid"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_gravity="center_horizontal"
+      android:background="@color/white"
+      android:divider="@drawable/divier_linear_vectail"
+      android:orientation="vertical"
+      android:showDividers="middle|end"
+      >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="70dp"
+        >
+
+      <TextView
+          android:layout_width="50dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:gravity="center"
+          android:text="1."
+          android:textSize="17sp"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/webview_student_guide_1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:paddingLeft="50dp"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:text="@string/webview_student_guide_1"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/copy_link_to_wechat"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/webview_student_guide_1"
+          android:paddingLeft="50dp"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:text="复制链接到剪切板"
+          android:textColor="@color/text_link"
+          />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        >
+
+      <TextView
+          android:layout_width="50dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:gravity="center"
+          android:text="2."
+          android:textSize="17sp"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/step_2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:paddingLeft="50dp"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:text="将链接添加到健身房微信公众号的菜单栏"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/step_2"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:scaleType="centerInside"
+          android:src="@drawable/img_link_to_wechat"
+          />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/go_to_how"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:text="微信菜单配置详细教程 >"
+        android:textColor="@color/colorPrimary"
+
+        />
+  </LinearLayout>
+
+
+  <Button
+      android:id="@+id/btn_done"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="我已完成上述步骤"
+
+      />
+
+
+</LinearLayout>

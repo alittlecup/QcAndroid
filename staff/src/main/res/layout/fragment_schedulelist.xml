@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    >
+
+  <View
+      android:id="@+id/schedule_timeline"
+      android:layout_width="2dp"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="75dp"
+      android:background="@color/divider_grey"
+      android:visibility="gone"
+      >
+  </View>
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      android:id="@+id/schedule_rv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:rn_drawable="@drawable/schedules_no_data"
+      app:rn_hint="暂无日程"
+      />
+
+
+</FrameLayout>

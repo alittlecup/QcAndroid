@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -109,6 +108,58 @@ public class FileUtils {
             }
         }
         return file;
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT) public static String getFilePath(Context context, Uri uri) {
+        boolean isKitKat = Build.VERSION.SDK_INT >= 19;
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            String docId;
+            String[] split;
+            String type;
+            if (isExternalStorageDocument(uri)) {
+                docId = DocumentsContract.getDocumentId(uri);
+                split = docId.split(":");
+                type = split[0];
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            } else {
+                if (isDownloadsDocument(uri)) {
+                    docId = DocumentsContract.getDocumentId(uri);
+                    Uri split1 =
+                        ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId).longValue());
+                    return getDataColumn(context, split1, (String) null, (String[]) null);
+                }
+
+                if (isMediaDocument(uri)) {
+                    docId = DocumentsContract.getDocumentId(uri);
+                    split = docId.split(":");
+                    type = split[0];
+                    Uri contentUri = null;
+                    if ("image".equals(type)) {
+                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("video".equals(type)) {
+                        contentUri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("audio".equals(type)) {
+                        contentUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    }
+
+                    String selection = "_id=?";
+                    String[] selectionArgs = new String[] { split[1] };
+                    return getDataColumn(context, contentUri, "_id=?", selectionArgs);
+                }
+            }
+        } else {
+            if ("content".equalsIgnoreCase(uri.getScheme())) {
+                return getDataColumn(context, uri, (String) null, (String[]) null);
+            }
+
+            if ("file".equalsIgnoreCase(uri.getScheme())) {
+                return uri.getPath();
+            }
+        }
+
+        return null;
     }
 
     //    public static void saveInput2File(InputStream input,){

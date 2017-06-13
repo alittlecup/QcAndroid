@@ -1,0 +1,28 @@
+CREATE TABLE Card (
+  id TEXT PRIMARY KEY,
+  color  TEXT,
+  card_tpl_id   TEXT,
+  type_name   TEXT,
+  balance   REAL,
+  bundleusers  TEXT,
+  description  TEXT,
+  name  TEXT,
+  check_valid INTEGER AS Integer,
+  valid_from  TEXT,
+  valid_to  TEXT,
+  type  INTEGER AS Integer,
+  brand_id  TEXT,
+  is_locked  INTEGER AS Integer,
+  is_active  INTEGER AS Integer,
+  supportids  TEXT,
+  price  REAL,
+  card_no TEXT,
+  start  TEXT,
+  endAt  TEXT,
+  total_account  REAL,
+  total_times  REAL
+);
+
+select_all:
+SELECT *
+FROM Card;

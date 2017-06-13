@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_root"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    >
+
+  <TextView
+      android:id="@+id/wardrobe_id"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="10dp"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      tools:text="D60"
+      />
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="100dp"
+        android:textSize="12sp"
+        tools:text="xxxxxx"
+        />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="100dp"
+        android:textSize="12sp"
+        tools:text="xxxxxx"
+
+        />
+
+    <TextView
+        android:id="@+id/period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="100dp"
+        android:textSize="12sp"
+        tools:text="xxxxxx"
+
+        />
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/long_time_tag"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_marginEnd="4dp"
+      android:layout_marginRight="4dp"
+      android:layout_marginTop="4dp"
+      android:background="@drawable/bg_rect_oringe"
+      android:paddingBottom="4dp"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp"
+      android:paddingTop="4dp"
+      android:text="长期"
+      android:textColor="@color/white"
+      android:textSize="10sp"
+      android:visibility="gone"
+      />
+</RelativeLayout>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+
+    tools:context="cn.qingchengfit.staffkit.MainActivity"
+    >
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="@dimen/qc_item_height"
+      android:background="@color/bg_grey"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.TabView
+      android:id="@+id/tabview"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_alignParentBottom="true"
+      app:item_padding="7dp"
+      app:text_normal_color="@color/text_grey"
+      app:text_select_color="@color/text_black"
+      app:text_size="12sp"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_alignParentBottom="true"
+      android:orientation="horizontal"
+      >
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.9"
+        />
+
+    <TextView
+        android:id="@+id/tv_noti_count"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/bg_notification"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:visibility="gone"
+        tools:text="99"
+        tools:visibility="visible"
+        />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        />
+  </LinearLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="@dimen/qc_item_height"
+      android:background="@color/divider_grey"
+      />
+
+  <FrameLayout
+      android:id="@+id/layout_brands"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="@dimen/qc_item_height"
+      android:layout_marginTop="?attr/actionBarSize"
+      android:alpha="0"
+      android:background="@color/halftransparent_grey"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+
+    <FrameLayout
+        android:id="@+id/frag_choose_brand"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:scaleY="0"
+        android:transformPivotY="0dp"
+        />
+
+  </FrameLayout>
+</RelativeLayout>

@@ -1,0 +1,833 @@
+<resources>
+
+
+  <string name="fir_token_beta">194a7a7976904a110a45f5a34a614323</string>
+  <string name="fir_token_release">f60e7b4d8b237b271ef3a7741372f220</string>
+  <string name="wechat_code">wx2beb386a0021ed3f</string>
+  <string name="baidu_api">TDeYYG56GALnVbGcTYQCPyOe</string>
+  <string name="baidu_api_debug">K95Se5Q3mxpxqxR93XCom9fS</string>
+  <string name="oem">staff-qingcheng</string>
+  <string name="qc_action">cn.qingchengfit.staffkit</string>
+  <string name="oem_tag">staff-qingcheng</string>
+  <string formatted="false" name="chat_user_id_header">qc_%s</string>
+  <string name="gd_api">f4dad2850900bb268ab40748c90fb73f</string>
+
+
+  <string name="separator">、</string>
+  <string name="app_name">健身房管理</string>
+  <string name="gym_label">场馆</string>
+  <string name="action_settings">Settings</string>
+  <string name="common_written">已填写</string>
+  <string name="common_city">城市</string>
+  <string name="common_address">详细地址</string>
+  <string name="common_comfirm">确定</string>
+  <string name="common_cancel">取消</string>
+  <string name="common_complete">完成</string>
+  <string name="common_name">名称</string>
+  <string name="common_nextstep">下一步</string>
+  <string name="common_time_length">时长</string>
+  <string name="common_min">分钟</string>
+  <string name="course_time_length">时长%s分钟</string>
+  <string name="common_please_choose">请选择</string>
+  <string name="common_please_write">请填写</string>
+  <string name="common_un_setting">未设置</string>
+  <string name="common_have_setting">已设置</string>
+  <string name="common_wait">请稍后&#8230;</string>
+  <string name="common_del">删除</string>
+  <string name="mark">备注</string>
+  <string name="start_day">开始日期</string>
+  <string name="end_day">结束日期</string>
+  <string name="name">姓名</string>
+  <string name="gender">性别</string>
+  <string name="phone">手机</string>
+  <string name="type">类型</string>
+  <string name="name_call">名称</string>
+  <string name="instruction">说明</string>
+  <string name="logout">退出登录</string>
+  <string name="course_type_private">私教课</string>
+  <string name="course_type_group">团课</string>
+  <string name="no_limit">不限</string>
+  <string name="edit">编辑</string>
+  <string name="everyday">每天</string>
+  <string name="everyweek">每周</string>
+  <string name="everymonth">每月</string>
+
+  <string name="attendance_private_course">私教</string>
+
+
+  //引导页
+  <string name="title_setting_gym">设置健身房</string>
+  <string name="guide_write_gym_brand_hint">填写健身房品牌</string>
+  <string name="guide_write_gym_venues_name">场馆名称</string>
+  <string name="guide_write_gym_address">地址</string>
+  <string name="guide_write_gym_phone">联系方式</string>
+  <string name="guide_write_gym_descript">描述您的健身房</string>
+  <string name="title_write_gym_descript">描述您的健身房</string>
+  <string name="title_write_address">填写地址</string>
+  <string name="title_choose_site">选择场地</string>
+  <string name="title_add_new_site">添加新场地</string>
+  <string name="title_choose_coach">选择教练</string>
+  <string name="title_brand">添加健身房品牌</string>
+  <string name="brand">品牌名</string>
+
+  <string name="titile_manage_course">安排课程</string>
+  <string name="course_picture">课程图片</string>
+  <string name="course_type">课程类型</string>
+  <string name="course_length">时长(分钟)</string>
+  <string name="course_coach">课程教练</string>
+  <string name="course_place">场地</string>
+  <string name="course_account_type">结算方式</string>
+  <string name="course_batch">课程排期</string>
+  <string name="course_add_week_time">+课程周期</string>
+  <string name="course_choose_coach">选择教练</string>
+  <string name="course_add_new_coach">添加新教练</string>
+  <string name="titie_set_account_type">设置结算方式</string>
+  <string name="course_order_student_count">单节课可约人数</string>
+  <string name="course_default_value_card">默认储值卡</string>
+  <string name="course_default_time_card">默认次卡</string>
+  <string name="course_default_year_card">默认年卡</string>
+  <string name="course_default_place">默认场地</string>
+  <string name="course_useable_card_type">可用会员卡种类</string>
+  <string name="course_add_new_card_type">+添加会员卡种类</string>
+  <string name="title_add_card_type">添加会员卡种类</string>
+  <string name="title_gym_detail">健身房详情</string>
+  <string name="guide_complete">恭喜您已经完成基本设置\n会员可以开始约课了</string>
+  <string name="student_page_preview">会员端页面</string>
+  <string name="guide_link_wechat">如何将会员页对接到微信公众账号?</string>
+  <string name="gym_deadline">有效期至: </string>
+  <string name="gym_renewal">续费</string>
+  <string name="gym_outdate_promot">您的系统还有%d天过期</string>
+  <string name="gym_renewal_contact">系统续费请联系:\n青橙科技  010&#8211;1234567</string>
+  <string name="card_unit_value">(元/人)</string>
+  <string name="card_unit_times">(次/人)</string>
+  <string name="card_content_lable">1对%d单价</string>
+  <string name="site_name">场地名称</string>
+  <string name="site_count">可容纳人数</string>
+  <string name="site_usage">场地用途</string>
+
+  //登录注册
+  <string name="login_btn_label">登录</string>
+  <string name="registe_indicat_label">注册</string>
+  <string name="gender_male">男</string>
+  <string name="gender_female">女</string>
+  <string name="login_getcode">获取验证码</string>
+  <string name="login_comfirm">确&#160;&#160;定</string>
+  <string name="logint_phonenum_hint">手机号</string>
+  <string name="login_checkcode_hint">手机验证码</string>
+  <string name="login_password_hint">密码</string>
+  <string name="login_err_no_account">请输入您的手机号码</string>
+  <string name="login_err_no_checkcode">请输入验证码</string>
+  <string name="login_resend_msg">%d秒后重新发送</string>
+
+  //设置页面
+  <string name="header">头像</string>
+  <string name="title_fix_self_info">编辑个人资料</string>
+  <string name="label_username">用户名</string>
+  <string name="fix_succees">修改成功</string>
+
+  //main页面
+  <string name="home_order_today">今日预约</string>
+  <string name="home_order_tomorrow">明日预约</string>
+  <string name="home_newadd_today">今日新增会员</string>
+  <string name="home_fix_pw">修改密码</string>
+  <string name="home_fix_phone">修改手机号</string>
+  <string name="home_fix_checkin">签到/签出通知</string>
+  <string name="home_fix_notify">消息推送设置</string>
+  <string name="home_about_us">关于我们</string>
+  <string name="home_report">意见反馈</string>
+  <string name="home_share">分享给朋友</string>
+  <string name="home_update">版本更新</string>
+
+
+  <!-- 报表页面-->
+  <string name="statement_title">数据报表</string>
+  <string name="statement_order">课程报表</string>
+  <string name="statement_sale">销售报表</string>
+  <string name="statement_signin">签到报表</string>
+  <string name="statement_no_detail">无报表信息</string>
+  <string name="statement_change_filter">更改筛选条件</string>
+  <string name="statement_order_all">全部课程报表</string>
+
+  <!--签到页面-->
+  <string name="search_hint">会员姓名/手机号</string>
+  <string name="search_sms_hint">搜索短信内容/收件人</string>
+  <string name="signin_record">签到记录</string>
+  <string name="filter">筛选</string>
+  <string name="signin_time">签到%d次</string>
+  <string name="signin_chest">输入该会员使用的更衣柜号</string>
+  <string name="signin_comfirm">确认签到</string>
+  <!-- 卡模板-->
+  <string name="cardtype_all">全部类型</string>
+  <string name="cardtype_value">储值类型</string>
+  <string name="cardtype_times">次卡类型</string>
+  <string name="cardtype_date">期限类型</string>
+
+  <string name="cardtype_all_all">全部会员卡</string>
+  <string name="all_cardtype_value">全部储值类型</string>
+  <string name="all_cardtype_times">全部次卡类型</string>
+  <string name="all_cardtype_date">全部期限类型</string>
+  <string name="cardtype_del">删除该会员卡种类</string>
+  <string name="title_cardtype_detail">会员卡种类详情</string>
+  <string name="title_cardtype_add">添加会员卡种类</string>
+  <string name="title_cardtype_edit">编辑会员卡种类</string>
+  <string name="title_cardtype_edit_desc">编辑简介</string>
+  <string name="cardtype_limit_total">共计可上</string>
+  <string name="cardtype_limit_class">节课</string>
+  <string name="real_income">实收</string>
+  <string name="valid_date_count">有效期天数(天)</string>
+  <string name="edit_intro">编辑说明</string>
+  <string name="charge_value">充值(元)</string>
+  <string name="charge_times">充值(次)</string>
+  <string name="charge_day">充值(天)</string>
+
+  <string name="alert_endtime_greater_starttime">结束时间不能早于结束时间</string>
+  <string name="alert_batch_greater_three_month">课程排期时间不能超过三个月</string>
+  <string name="choose_time">选择时间</string>
+  <string name="choose_week">选择星期</string>
+
+  <!-- 时间选择器-->
+  <string name="pickerview_cancel">取消</string>
+  <string name="pickerview_submit">确定</string>
+  <string name="pickerview_year">年</string>
+  <string name="pickerview_month">月</string>
+  <string name="pickerview_day">日</string>
+  <string name="pickerview_hours">时</string>
+  <string name="pickerview_minutes">分</string>
+  <string name="pickerview_seconds">秒</string>
+  <string name="login_pw_again">确认登录密码</string>
+  <string name="login_setpw">设置登录密码</string>
+  <string name="login_checkcode">手机验证码</string>
+  <string name="support_type">支持类型</string>
+  <string name="title_add_card_standard">添加规格</string>
+  <string name="student_name">会员卡名称</string>
+  <string name="student_card_status">会员卡状态</string>
+  <string name="student_card_status_all">全部状态</string>
+  <string name="celar_filter">清除选项</string>
+  <string name="filter_student_card">筛选会员卡</string>
+  <string name="add_offday">+ 添加请假</string>
+  <string name="studentcard_offday_record">会员卡请假记录</string>
+  <string name="resume_card">恢复该会员卡</string>
+  <string name="unregiste_card">停卡</string>
+  <string name="spend_money">扣费</string>
+  <string name="charge">充值</string>
+  <string name="check_spend_list">查看消费记录</string>
+  <string name="option_choose">选填</string>
+  <string name="save">保存</string>
+  <string name="common_i_konw">知道了</string>
+  <string name="next_step">下一步</string>
+  <string name="start_time">开始时间</string>
+  <string name="end_time">结束时间</string>
+
+  <string name="week1">星期一</string>
+  <string name="week2">星期二</string>
+  <string name="week3">星期三</string>
+  <string name="week4">星期四</string>
+  <string name="week5">星期五</string>
+  <string name="week6">星期六</string>
+  <string name="week7">星期日</string>
+  <string name="every">每个</string>
+
+
+  <string name="unit_yuan">元</string>
+  <string name="unit_time">次</string>
+  <string name="unit_day">天</string>
+
+
+  <string name="wechat_scan">微信扫码支付</string>
+  <string name="wechat_pay">微信支付</string>
+  <string name="cash_pay">现金支付</string>
+  <string name="credit_pay">刷卡支付</string>
+  <string name="transit_pay">转账支付</string>
+  <string name="other">其他</string>
+  <string name="birthday">生日</string>
+  <string name="address">地址</string>
+  <string name="registe_date">注册日期</string>
+
+  <!--停卡文案-->
+  <string name="unregiste_title">是否确认停卡</string>
+  <string name="unregiste_text">停卡后：\n1. 会员无法继续使用该会员卡；\n2. 默认列表不展示已停卡的会员卡；\n3. 停卡后可手动恢复会员卡；</string>
+  <string name="unregiste_Comfirm">确认停卡</string>
+
+
+  <!--排课-->
+  <string name="add_private_batch">+ 添加私教排期</string>
+  <string name="add_group_batch">+ 添加团课排期</string>
+  <string name="private_teacher_num">%d名私教</string>
+  <string name="group_category_num">%d种私教</string>
+  <string name="add_batch">+ 添加排期</string>
+  <string name="belong_to_gyms">所属场馆</string>
+  <string name="set_rest">设置休息</string>
+  <string name="help_order_group">代约团课</string>
+  <string name="help_order_private">代约私教</string>
+  <string name="all_gyms">全部场馆</string>
+  <string name="exit_double_click">双击退出</string>
+  <string name="is_latest_version">已经是最新版本!</string>
+  <string name="new_version">新版本</string>
+  <string name="update">更新</string>
+  <string name="next_time">下次</string>
+  <string name="choose_gym">选择场馆</string>
+
+  <string name="home_tab_gyms">我的健身房</string>
+  <string name="home_tab_setting">设置</string>
+  <string name="home_tab_special">发现</string>
+  <string name="home_tab_home">连锁管理</string>
+  <string name="home_tab_gym">健身房</string>
+  <string name="add_gym">添加场馆</string>
+  <string name="search_coach_hint">输入姓名和手机号查找教练</string>
+  <string name="add_student">添加学员</string>
+  <string name="title_change_phone">修改手机号</string>
+  <string name="title_fix_checkin">设置签到/签出通知</string>
+  <string name="copy_download_link">下载链接已复制</string>
+  <string name="no_saler">无销售</string>
+  <string name="test_long">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</string>
+  <string name="test_short">哈哈哈</string>
+  <string name="choose_brand">选择品牌</string>
+  <string name="no_more_loading">已经没有更多数据</string>
+  <string name="student_card">会员卡</string>
+  <string name="str_space">场 地</string>
+  <string name="str_share_app">我发现了一个特别好用的[健身房管理app]，推荐使用</string>
+  <string name="err_net">网络错误</string>
+  <string name="renewal_price_4800">¥4800\n/店/年</string>
+  <string name="renewal_price_2800">¥2800\n/店/年</string>
+  <string name="renewal_price">/店/年</string>
+  <string name="no_permission_brand">只能由品牌创建人%s添加场馆</string>
+  <string name="webview_student_guide_1">复制会员端页面链接</string>
+  <string name="fix_realcard_num">修改实体卡号</string>
+  <string name="fix_bundle_students">修改绑定会员</string>
+  <string name="copy_link">复制链接</string>
+  <string name="course_no_batch">无有效排期</string>
+  <string name="pls_choose_atleast_one">请至少选择一位学员</string>
+  <string name="down_trainer_app_hint">添加成功后，系统将自动短信通知教练下载［健身教练助手APP］</string>
+  <string name="trainer_app_apk">健身教练助手.apk</string>
+  <string name="hint_brand_whitout_gym">该品牌下无可用场馆</string>
+  <string name="hint_longin_web">请登录［网页端］管理工作人员身份权限</string>
+  <string name="toast_no_gym_permission">您没有该场馆权限</string>
+  <string name="realcard_num">实体卡号</string>
+  <string name="course">课程</string>
+  <string name="coach">教练</string>
+  <string name="student">会员</string>
+  <string name="all_course">全部课程</string>
+  <string name="all_students">全部学员</string>
+  <string name="all_coach">全部教练</string>
+  <string name="generate_statment">生成报表</string>
+  <string name="all_group_course">全部团课</string>
+  <string name="all_private_course">全部私教</string>
+  <string name="label_card_type">卡类型</string>
+  <string name="server_count">服务人次</string>
+  <string name="course_income">课程收入</string>
+  <string name="real_income_long">实际收入</string>
+  <string name="total_count">共计</string>
+  <string name="form_null">- -</string>
+  <string name="course_num">节数</string>
+  <string name="statment_detail">/报表明细/</string>
+  <string name="trade_type">交易类型</string>
+  <string name="trade_times">交易笔数</string>
+  <string name="new_buy_card">新购卡</string>
+  <string name="present">赠送</string>
+  <string name="registe_send">注册送卡</string>
+  <string name="refund">扣费</string>
+  <string name="out_excel_hint">请填写邮件标题及您的邮箱地址\n提交后，报表将在10分钟内发送到您的邮箱</string>
+  <string name="title_edit_email">编辑邮件标题</string>
+  <string name="out_excel">导出Excel</string>
+  <string name="cardtype">会员卡种类</string>
+  <string name="pay_method">支付方式</string>
+  <string name="all">全部</string>
+  <string name="sale_menber">销售人员</string>
+  <string name="menber_times">%d人次</string>
+  <string name="course_unit">%d节</string>
+  <string name="trade_unit">%d笔</string>
+  <string name="return_money">退款</string>
+  <string name="choose_student">选择学员</string>
+  <string name="short_person_count">等%d人</string>
+  <string name="all_course_private">所有私教</string>
+  <string name="all_course_group">所有团课</string>
+  <string name="all_pay_method">所有支付方式</string>
+  <string name="all_saler">所有销售</string>
+  <string formatted="false" name="brand_id_creator">品牌ID: %s    创建人: %s </string>
+  <string formatted="false" name="choose_brand_content">品牌ID: %s    创建人: %s </string>
+  <string name="create_time">"创建时间: "</string>
+  <string name="brand_id">"品牌ID: "</string>
+  <string name="phone_colon">"手机: "</string>
+  <string name="creator_colon">"创建人: "</string>
+  <string name="contact_gm">请联系青橙客服\n 010-59789319</string>
+  <string name="brand_logo">品牌LOGO</string>
+  <string name="qingcheng_gm_phone">010-59789319</string>
+  <string name="input_check_code">输入收到的验证码</string>
+  <string name="brand_manage">品牌管理</string>
+  <string name="choose_salers">选择销售</string>
+  <string name="email_have_send">邮件已发送,请耐心等待</string>
+  <string name="to">至</string>
+  <string name="brand_no_gym">该品牌下暂无场馆</string>
+  <string name="edit_course_jacket">编辑课程封面照片</string>
+  <string name="jacket_hint">最多可以添加5张封面照片，通过长按以后拖动来调整封面图片顺序。</string>
+  <string name="add_jacket_img">+ 添加封面照片</string>
+  <string name="course_min_num">最小上课人数</string>
+  <string name="default_course_plan">默认课程计划</string>
+  <string name="base_info">基本信息</string>
+  <string name="suit_gyms">适用场馆</string>
+  <string name="edit_in_chain">请在[连锁运营]中修改基本信息</string>
+  <string name="manage">管理</string>
+  <string name="permission_forbid_del">无删除权限</string>
+  <string name="copy_link_to_board">复制链接到剪切板</string>
+  <string name="add">添加</string>
+  <string name="alert_del_course">该课程种类适用于%d家场馆，删除后，已有的排期和课程预约都不会受到影响。</string>
+  <string name="alert_del_course_forbid">需由同时具有%d家场馆删除课程种类权限的工作人员，才可删除该课程种类</string>
+  <string name="alert_del_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行停用。</string>
+  <string name="alert_del_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下删除会员卡种类权限的用户才能进行删除。</string>
+  <string name="alert_edit_cardtype_link_manage">该会员卡种类适用于多个场馆，请到[连锁运营]中进行编辑。</string>
+  <string name="alert_edit_cardtype_forbid">此会员卡种类适用于多个场馆，需要具有所有适用场馆下修改会员卡种类权限的用户才能进行编辑。</string>
+
+  <string name="course_category">课程种类</string>
+  <string name="no_teacher_in_course">本课程暂无教练</string>
+  <string name="desperately_loading">玩儿命加载中…</string>
+  <string name="alert_permission_forbid">抱歉，您无该功能权限</string>
+  <string name="no_read_permission">无查看权限</string>
+  <string name="sorry_for_no_permission">抱歉，您无权限查看该模块</string>
+  <string name="alert_at_least_one_gym">至少选择一家场馆</string>
+  <string name="simple_desc">简介</string>
+  <string name="limit">限制</string>
+  <string name="alert_edit_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有编辑课程种类权限的用户才能进行编辑.</string>
+  <string name="alert_del_course_all_permission">此课程种类适用于多家场馆,仅在所有场馆都具有删除课程种类权限的用户才能进行删除.</string>
+  <string name="notification">通知</string>
+
+  <!-- 签到 签出-->
+  <string name="sign_type_in">签到</string>
+  <string name="sign_type_out">签出</string>
+  <string name="sign_in_count">今日签到%d人次</string>
+  <string name="sign_out_count">今日签出%d人次</string>
+  <string name="sign_in_untreated_count">%d条新未处理签到,点击查看</string>
+  <string name="sign_in_untreated_phone">手机 : %s</string>
+  <string name="sign_in_untreated_card">会员卡 : %s</string>
+  <string name="sign_in_untreated_fee">费用 : %s</string>
+  <string name="sign_in_untreated_gui">更衣柜</string>
+  <string name="sign_in_untreated_ka">会员卡</string>
+  <string name="sign_in_untreated_choose">请选择更衣柜</string>
+  <string name="sign_in_untreated_choose_card">请选择会员卡</string>
+  <string name="sign_in_untreated_ignor">忽略</string>
+  <string name="sign_in_untreated_confirm">确认签到</string>
+  <string name="sign_out_untreated_confirm">确认签出</string>
+  <string name="sign_in_untreated_class">当天预约课程(%d)</string>
+  <string name="sign_out_untreated_gui">更衣柜号 : %s</string>
+  <string name="sign_out_untreated_time">签到时间 : %s</string>
+  <string name="sign_in_qrcode">签到二维码</string>
+  <string name="sign_in_manual">手动签到</string>
+  <string name="sign_in_manual_discrib">查找会员进行手动签到</string>
+  <string name="sign_in_coach">教练 : %s</string>
+  <string name="sign_in_room">场地 : %s</string>
+  <string name="sign_in_log_in">签到时间 : %s</string>
+  <string name="sign_in_log_out">签出时间 : %s</string>
+  <string name="sign_in_log_opretor">操作员 : %s</string>
+  <string name="sign_in_log_cancel">撤销</string>
+  <string name="sign_in_notice">初次使用[签到/签出]功能,请先进行签到设置</string>
+  <string name="sign_in_setting">开启通知后，会员在该场馆扫描二维码签到时\n你的手机将收到通知以便处理</string>
+  <string name="sign_in_qrcode_des">出示此二维码,让会员通过微信扫一扫等工具扫码%s</string>
+  <string name="sign_in_config_cost">每人每次签到费用(%s)</string>
+  <string name="sign_in_config_title">进场签到设置</string>
+  <string name="sign_in_detail_title">签到详情</string>
+  <string name="sign_in_log_title">签到记录</string>
+
+  <string name="qc_signin_select_card">请选择会员卡</string>
+  <string name="qc_signin_cancel_confirm">确定要撤销签到么?</string>
+  <string name="qc_signin_config_lable">分配更衣柜</string>
+  <string name="qc_signin_config_get_locker_lable">签到时分配更衣柜</string>
+  <string name="qc_signin_config_return_locker_lable">签出时自动归还更衣柜</string>
+  <string name="qc_signin_config_card_lable">设置签到会员卡</string>
+  <string name="qc_signin_footer">查看3小时内签到记录</string>
+  <string name="wardrobe_no">更衣柜号</string>
+  <string name="wardrobe_district">更衣柜区域</string>
+  <string name="district_choose">区域选择</string>
+  <string name="del_district">删除该区域</string>
+  <string name="signin_img">会员照片</string>
+  <string name="student_fix_signin_img_hint">会员修改照片记录</string>
+  <string name="alert_del_region">注意 : 删除更衣柜区域以后, 区域下的所有更衣柜都将被删除. 如果想修改更衣柜区域名称请使用编辑功能</string>
+  <string name="alert_del_region_deny">该区域下还有未归还更衣柜,请将区域内所有更衣柜归还后再删除. 删除后,该区域下的所有更衣柜都将被删除.</string>
+  <string name="titile_forbid_del_region">无法删除该区域</string>
+  <string name="comfirm_hire">确定租用</string>
+  <string name="free_wardrobe">空闲更衣柜 : </string>
+  <string name="status">状态</string>
+  <string name="time_limit">期限</string>
+  <string name="comfirm_return">确认归还</string>
+  <string name="remind_day">剩余天数</string>
+  <string name="return_wardrobe">归还更衣柜</string>
+  <string name="continue_hire">续租</string>
+  <string name="long_term_hire">长期租用</string>
+  <string name="short_term_hire">短期租用</string>
+  <string formatted="false" name="user_phone">%s ( %s )</string>
+  <string formatted="false" name="start_to_end">%s至%s</string>
+  <string name="region_name">区域名称</string>
+
+
+  <string formatted="false" name="alert_del_wradrobe">确定删除更衣柜%s</string>
+  <string formatted="false" name="alert_retrun_wradrobe">确定归还更衣柜%s</string>
+  <string formatted="false" name="some_day">%d天</string>
+  <string name="continue_hire_time">续租时间</string>
+  <string name="comfirm_continue_hire">确认续租</string>
+
+  <string name="expand_less_path">
+        M24.0 16.0
+        L12.0 28.0
+        L14.83 30.83
+        L24.0 21.66
+        L33.17 30.83
+        L36.0 28.0z
+    </string>
+
+  <string name="expand_more_path">
+        M24.0 26.34
+        L14.83 17.17
+        L12.0 20.0
+        L24.0 32.0
+        L36.0 20.0
+        L33.17 17.17z
+    </string>
+
+
+  <string name="qc_chat_friend_select">已选择%d名联系人</string>
+  <string name="qc_signin_log_footer">只能查看3小时内的签到/签出记录\n更多信息请查看签到/签出报表</string>
+  <string name="wardrobe_all_sum">更衣柜总量 ：</string>
+  <string name="no_suit_student_card">无适用会员卡</string>
+  <string name="buy_now">立即购买</string>
+  <string name="all_read">全部已读</string>
+  <string name="no_checkin_img"><Data><![CDATA[暂无会员照片, <font color="#1faf50"><b>立即添加</b></font>]]></Data></string>
+  <string name="pay_online">在线支付</string>
+  <string name="card_pay">会员卡支付</string>
+  <string name="alert_del_coach">是否确认删除该教练</string>
+  <string name="add_success">添加成功</string>
+  <string name="please_open_camera">请打开摄像头权限</string>
+  <string name="student_limit_buy_count">每个会员限购张数</string>
+  <string name="buy_card_no_limit">不限张数</string>
+  <string name="card_count_unit">%d张</string>
+  <string name="alipay_grey">支付宝支付（暂不支持）</string>
+  <string name="online_pay_client">在线支付平台:</string>
+  <string name="login_pw">登录密码</string>
+  <string name="phone_code">手机验证码</string>
+
+  <!--销售分配-->
+  <string name="qc_allotsale_sale_detail_title">%s的名下会员</string>
+  <string name="qc_allotsale_sale_detail_notitle">未分配</string>
+  <string name="qc_allotsale_multi_modify_title">批量修改</string>
+  <string name="qc_allotsale_multi_allot_title">批量分配</string>
+  <string name="qc_allotsale_add_stud_title">添加名下会员</string>
+  <string name="qc_allotsale_modify_sale_title">修改销售</string>
+
+  <string name="qc_allotsale_sale_detail_add_stud">添加名下会员</string>
+  <string name="qc_allotsale_sale">销售：%s</string>
+
+  <string name="qc_allotsale_stucount">%s名会员</string>
+  <string name="qc_allotsale_stucount_2">名下会员(%d)</string>
+
+  <string name="qc_select_all">全选</string>
+  <string name="qc_allotsale_search_hint">搜索会员姓名/手机号</string>
+  <string name="qc_allotsale_group_search">搜索分组</string>
+  <string name="qc_allotsale_checked">已选择</string>
+  <string name="qc_allotsale_select">已选择%d名会员</string>
+  <string name="qc_allotsale_select_clear">清空选择</string>
+  <string name="qc_allotsale_remove_alert">"确认将选中会员从%s名下移除?"</string>
+  <string name="qc_allotsale_modify_sale">变更销售</string>
+  <string name="qc_allotsale_remove_stud">移除会员</string>
+  <string name="qc_allotsale_clear_alert">确认清空当前选中的会员</string>
+  <!--menu-->
+  <string name="qc_menu_multi_modify"><Data>批量修改</Data></string>
+  <string name="qc_menu_multi_allot"><Data>批量分配</Data></string>
+
+  <string name="must_operate_in_gym">必须在场馆中操作</string>
+  <string name="allot_saler">分配销售</string>
+  <string name="choose_saler">选择销售</string>
+  <string name="choose_saler_tips">选择教练请使用[分配教练]功能，或将教练添加为工作人员</string>
+  <string name="alert_comfirm_allot">确认将所选会员分配到%s名下</string>
+  <string name="alert_comfirm_trans">确认将所选会员转移到%s名下</string>
+  <string name="alert_comfirm_change">"操作成功后，该会员不在任何销售名下，确认继续？"</string>
+  <string name="alert_choose_one_saler">至少选择一个销售</string>
+  <string name="allot_saler_success">分配销售成功</string>
+  <string name="new_registe">新注册</string>
+  <string name="following">已接洽</string>
+  <string name="staff_has_no_this_gym">该工作人员无此场馆</string>
+  <string name="choose_gym_error">选择场馆错误</string>
+  <string name="data_error">数据错误</string>
+  <string name="change_saler">变更销售</string>
+  <!--<string name="long_cube">▇▇▇▇▇▇</string>-->
+  <!--<string name="short_cube">▇▇▇</string>-->
+  <string name="long_cube">""</string>
+  <string name="short_cube">""</string>
+  <string name="student_header">会员头像</string>
+  <string name="setting">设置</string>
+
+  <string name="err_sacn_qrcode">无法识别该二维码，请确认后再进行扫描。</string>
+  <string name="open_link_in_computer">请在电脑浏览器中打开以下网址</string>
+  <string name="scan_url">sao.qingchengfit.cn</string>
+  <string name="realy_open_next">我已经打开，下一步</string>
+  <string name="activity_list">活动营销</string>
+  <string name="fix_password">修改密码</string>
+  <string name="please_input_phone_num">请输入手机号</string>
+  <string name="custom_jacket_hint">关闭自定义封面照片后，封面照片将随机展示公开上课照片</string>
+  <string name="need_pay">需要支付</string>
+  <string name="gym_valid_time">系统有效期: </string>
+  <string name="real_recieve">实收金额</string>
+  <string name="contact_server">如有疑问，请联系青橙客\n400-900-7986</string>
+  <string name="control_person">"操作人: %s"</string>
+  <string name="back">返回</string>
+  <string name="gym_renewal_history">场馆续费记录</string>
+
+  <!-- 会员跟进 -->
+  <string name="qc_student_allotsale">销售分配</string>
+  <string name="qc_student_follow_up">会员跟进</string>
+  <string name="qc_student_follow_transfer">会员转化</string>
+  <string name="qc_student_birthday_notice">生日提醒</string>
+  <string name="qc_student_attendance">出勤统计</string>
+  <string name="qc_student_tab">会员标签</string>
+  <string name="qc_student_allot_coach">教练分配</string>
+  <string name="qc_student_sms">群发短信</string>
+  <string name="qc_student_vip">VIP会员</string>
+  <string name="qc_referrer_count">已推荐%s人</string>
+  <string name="qc_student_total_count">全部会员（%s人）</string>
+  <string name="qc_people_count_with_unit">%s人</string>
+  <string name="qc_student_status_0">新注册</string>
+  <string name="qc_student_status_1">已接洽</string>
+  <string name="qc_student_status_2">会员</string>
+  <string name="qc_student_follow_up_data_statistics">数据统计</string>
+  <string name="qc_student_follow_up_transfer_rate">转化率计算</string>
+  <string name="qc_title_follow_up_transfer_rate">转化率计算</string>
+  <string name="qc_title_follow_up_statistics">数据统计</string>
+  <string name="qc_title_follow_up">会员跟进</string>
+  <string name="qc_follow_up_today_new_count">今日新增（%s）</string>
+  <string name="qc_follow_up_previous_new_count">更早（%s）</string>
+  <string name="qc_foolow_up_lable_today_new">新增注册</string>
+  <string name="qc_follow_up_lable_today_follow">今日跟进</string>
+  <string name="qc_follow_up_lable_toady_member">新增会员</string>
+  <string name="hint_refund_less_7">该场馆将在%s到期，请及时续费</string>
+  <string name="hint_refund_less_0">该场馆已于%s到期，请续费</string>
+  <string name="alert_batch_has_ordered">该结算方式已约课，无法切换。如需切换结课方式，请先取消预约。</string>
+  <string name="alert_cardtype_use_other">仅限%s使用\"其他\"规格</string>
+  <string name="new_su_info">新超级管理员信息</string>
+  <string name="comfirm_change">确认变更</string>
+  <string name="change_su_hint">修改超级管理员的基本信息并不会变换超级管理员身份，需要变更请使用「变更超级管理员」功能</string>
+  <string name="change_su">变更超级管理员</string>
+  <string name="send_msg_to_sb_hint">向%s发送验证码</string>
+  <string formatted="false" name="alert_change_su">确定将超级管理员身份从%s(%s)变更为%s(%s)？</string>
+  <string name="alert_remove_su">变更成功后，%s将自动从工作人员中移除，如有需要请重新添加</string>
+  <string name="su_manager">超级管理员</string>
+  <string name="manager">工作人员</string>
+  <string name="qc_title_student_score">会员积分</string>
+  <string name="score_change_history">积分变动记录</string>
+  <string name="current_score">当前积分</string>
+  <string name="qc_title_student_score_config">积分设置</string>
+  <string name="qc_title_student_score_config_base">基础积分</string>
+  <string name="qc_title_student_score_award_add">积分</string>
+  <string name="caclu_score_hint">本次购卡获得积分%s。由于会员卡绑定多个会员，请手动为会员分配积分。</string>
+
+
+  <!--module IDs-->
+  <string name="module_workspace_order">课程预约</string>
+  <string name="module_workspace_private">代约私教</string>
+  <string name="module_workspace_group">代约团课</string>
+  <string name="module_workspace_signin">签到处理</string>
+
+  <string name="module_service_group">团课</string>
+  <string name="module_service_private">私教</string>
+  <string name="module_service_free">入场签到</string>
+  <string name="module_service_shop">商店</string>
+
+
+  <string name="module_student">会员</string>
+  <string name="module_student_cards">会员卡</string>
+  <string name="module_student_bodytest">体测表模板</string>
+
+
+  <string name="module_manage_staff">工作人员</string>
+  <string name="module_manage_trainer">教练</string>
+
+
+  <string name="module_op_score">会员积分</string>
+  <string name="module_op_acitivty">活动</string>
+  <string name="module_op_ad">主页广告</string>
+  <string name="module_op_koubei">接入口碑网</string>
+  <string name="module_op_registe">注册送会员卡</string>
+  <string name="module_op_anounce">场馆公告</string>
+
+
+  <string name="module_fi_online">在线支付</string>
+  <string name="module_fi_course_statement">课程报表</string>
+  <string name="module_fi_sale_statement">销售报表</string>
+  <string name="module_fi_mark_statement">评分报表</string>
+  <string name="module_fi_card_statement">会员卡报表</string>
+  <string name="module_fi_signin_statement">签到报表</string>
+
+
+  <string name="module_gym_info">场馆信息</string>
+  <string name="module_gym_time">营业时间</string>
+  <string name="module_gym_site">场地</string>
+  <string name="module_gym_msg">短信</string>
+  <string name="module_gym_wardrobe">更衣柜</string>
+  <string name="module_gym_homepage">会员端配置</string>
+  <string name="module_gym_wechat">微信公众号</string>
+  <string name="more">全部功能</string>
+
+
+  <string name="none">" "</string>
+
+
+  <string formatted="false" name="msg_noti_before">%s开始前提醒会员</string>
+  <string formatted="false" name="msg_less_student">上课人数不足提醒教练</string>
+  <string formatted="false" name="msg_new_noti_trainer">有新预约提醒教练</string>
+  <string formatted="false" name="msg_help_order_noti_student">教练工作人员代约%s提醒会员</string>
+  <string formatted="false" name="msg_cancle_order_noti_student">会员取消%s预约提醒会员</string>
+  <string formatted="false" name="msg_send_to_substitute">当有可约名额时发送短信给排队候补会员</string>
+  <string name="help">帮助</string>
+  <string name="popularize">推广</string>
+  <string name="config_homepage">配置页面</string>
+  <string name="connect_to_wechat_public">对接到微信公众号</string>
+  <string name="hint_write_wechat_public">请填写公众号名称</string>
+  <string name="label_upload_public_qr">上传公众号二维码</string>
+
+
+  <string name="alert_title_what_is_home_page">什么是会员端页面？</string>
+  <string name="alert_content_what_is_home_page">
+        会员端页面是健身房提供给会员使用的页面。会员或潜在会员可以通过会员端页面了解健身房信息、购买会员卡、预约课程或 参加活动等
+    </string>
+  <string name="common_date">日期</string>
+  <string name="course_date">课程日期</string>
+  <string name="course_time">课程时间</string>
+  <string name="gym_pro">PRO</string>
+  <string name="module_student_cards_desc">在线购卡、充值，支持会员卡结算</string>
+  <string name="module_op_activity_desc">丰富的运营推广功能，包括会员积分、活动、会员端页面广告、接入口碑网、注册送卡、场馆公告等，以及后续开发的更多功能</string>
+  <string name="module_manage_staff_desc">管理工作人员并分配权限</string>
+  <string name="module_fi_card_statement_desc">可查看全部报表，包括销售报表、评分报表、会员卡报表、签到报表等</string>
+  <string name="start">开始</string>
+  <string name="title_welcome_trial">欢迎试用高级版</string>
+  <string name="hint_empty_fun_edit">将常用功能添加到这里</string>
+  <string name="hint_empty_fun_nomal">点击【管理】，将常用功能添加到这里</string>
+  <string name="lable_signin_type">签到方式</string>
+  <string name="lable_signin_wardrobe">更衣柜联动设置</string>
+  <string name="lable_signin_screen">签到大屏幕</string>
+  <string name="hint_set_signin_wardrobe">设置与更衣柜联动</string>
+  <string name="title_signin_config">入场签到设置</string>
+  <string name="copy_link_to_cpboard">复制链接到剪切板</string>
+  <string name="link_has_copied">链接已复制</string>
+  <string name="qc_student_tag">会员标签</string>
+  <string name="offen_funs">常用功能</string>
+  <string name="label_absentee">缺勤统计</string>
+  <string name="lable_attendace">出勤</string>
+  <string name="test_num">11100022212</string>
+  <string name="unit_class">节</string>
+  <string name="label_checkin">签到</string>
+  <string name="how_to_use">如何使用?</string>
+
+
+  <string name="str_guide_title_1">课程预约</string>
+  <string name="str_guide_title_2">会员管理</string>
+  <string name="str_guide_title_3">数据报表</string>
+  <string name="str_guide_title_4">运营推广</string>
+
+  <string name="str_guide_content_1">会员微信约课</string>
+  <string name="str_guide_content_2">便捷高效的管理会员、会员卡</string>
+  <string name="str_guide_content_3">健身房运营数据一目了然</string>
+  <string name="str_guide_content_4">用互联网更高效的获客</string>
+  <string name="create_brand">创建品牌</string>
+
+  <string name="filter_card_tips">显示符合以下条件的会员卡</string>
+  <string name="filter_card_state">会员卡状态</string>
+  <string name="menu_auto_notify">自动提醒</string>
+  <string name="auto_notify_condition_money">&#60; %d元</string>
+  <string name="auto_notify_condition_time">&#60; %d天</string>
+  <string name="absence_three_seven">缺勤7-30天</string>
+  <string name="absence_thirty">缺勤30-60天</string>
+  <string name="absence_sixty">缺勤>60天</string>
+  <string formatted="false" name="absence_condition">缺勤%s-%s天</string>
+  <string formatted="false" name="absence_account">缺勤%s-%s天的会员共计%d人</string>
+  <string formatted="false" name="attendance_record_head">%d次签到，%d节团课，%d节私教</string>
+  <string name="unit_calss">节</string>
+
+
+  <!--<string name="str_guide_title_1">课程预约</string>-->
+  <!--<string name="str_guide_title_2">会员管理</string>-->
+  <!--<string name="str_guide_title_3">数据报表</string>-->
+  <!--<string name="str_guide_title_4">运营推广</string>-->
+
+  <!--<string name="str_guide_content_1">会员微信约课</string>-->
+  <!--<string name="str_guide_content_2">便捷高效的管理会员、会员卡</string>-->
+  <!--<string name="str_guide_content_3">健身房运营数据一目了然</string>-->
+  <!--<string name="str_guide_content_4">用互联网更高效的获客</string>-->
+
+  <!--<string name="filter_card_tips">显示符合以下条件的会员卡</string>-->
+  <!--<string name="filter_card_state">会员卡状态</string>-->
+  <!--<string name="menu_auto_notify">自动提醒</string>-->
+  <!--<string name="auto_notify_condition_money">&#60; %d元</string>-->
+  <!--<string name="auto_notify_condition_time">&#60; %d天</string>-->
+
+  <!--<string name="absence_three_seven">缺勤7-30天</string>-->
+  <!--<string name="absence_thirty">缺勤30-60天</string>-->
+  <!--<string name="absence_sixty">缺勤>60天</string>-->
+  <!--<string formatted="false" name="absence_condition">缺勤%s-%s天</string>-->
+  <!--<string formatted="false" name="absence_account">缺勤%s-%s天的会员共计%d人</string>-->
+  <!--<string formatted="false" name="attendance_record_head">%d次签到，%d节团课，%d节私教</string>-->
+  <!--<string name="unit_calss">节</string>-->
+  <string formatted="false" name="batch_can_pay_card_count">可用%d种卡结算</string>
+  <string formatted="false" name="batch_date_loop_group">%s至%s的课程：</string>
+  <string formatted="false" name="batch_date_loop_private">%s至%s的排期：</string>
+  <string name="label_pay_online">在线支付结算</string>
+  <string name="label_card_pay">会员卡结算</string>
+  <string name="common_send">发送</string>
+  <string formatted="false" name="sales_sb">销售: %s</string>
+  <string name="has_send">已发送</string>
+  <string name="draft">草稿</string>
+  <string name="detail">详情</string>
+  <string name="hide">隐藏</string>
+  <string name="err_shortmsg_content_null">短信内容不能为空</string>
+  <string name="err_shortmsg_to_null">收件人不能为空</string>
+  <string name="send">发送</string>
+  <string name="qc_student_send_sms">群发短信</string>
+  <string formatted="false" name="qc_sms_begin">【健身房消息】</string>
+  <string name="has_expired">已过期</string>
+  <string name="has_stop_card">已停卡</string>
+  <string name="has_day_off">已请假</string>
+  <!--评论相关-->
+  <string name="activity_text_replay">回复</string>
+  <string name="title_msg">消息</string>
+  <string name="notification_system">系统通知</string>
+  <string name="notification_meetting">学习培训</string>
+  <string name="notification_checkin">签到处理</string>
+  <string name="notification_comment">收到回复</string>
+  <string name="notification_competition">赛事训练营</string>
+  <string name="notification_gym">场馆消息</string>
+  <string name="all_comments_count">全部评论(%d)</string>
+  <string name="sign_up_create_group">新建分组</string>
+  <string name="sign_up_personal">个人</string>
+  <string name="sign_up_group">分组</string>
+
+  <string formatted="false" name="sign_up_personal_member">报名人数：%d人</string>
+  <string formatted="false" name="sign_up_whole_cost">报名费用：%s元</string>
+  <string formatted="false" name="sign_up_personal_time">报名时间：%s</string>
+  <string formatted="false" name="sign_up_personal_cost">报名费用：%s元</string>
+
+  <string formatted="false" name="sign_up_detail_rank">总排名%s，场馆内排名%s</string>
+  <string formatted="false" name="sign_up_member_count">小组成员（%d）</string>
+  <string formatted="false" name="sign_up_group_all">所有分组（%d）</string>
+
+  <string name="detail_address">具体地址</string>
+  <string name="please_input_detail_address">请填写具体地址</string>
+  <string name="please_drag_map">请拖动地图到健身房的正确位置</string>
+  <string name="label_city">城市</string>
+  <string name="complete_gym_info">完善场馆信息</string>
+  <string name="only_su_can_competition">仅超级管理员有权限报名参加训练营</string>
+  <string name="competition">赛事训练营</string>
+  <string name="common_today">今日</string>
+  <string name="last_7_days">最近7日</string>
+  <string name="last_30_days">最近30天</string>
+  <string name="alert_choose_time_cannot_super">选择时间不可以超过%d天</string>
+  <string formatted="false" name="hint_ahead_day_off">从今天(%s)起提前销假 已请假%d天</string>
+
+  <string name="coach_detail_student">%s名下的会员</string>
+  <string name="allocate_coach">分配教练</string>
+  <string name="change_coach">变更教练</string>
+  <string name="coach_list">教练：%s</string>
+  <string name="alert_choose_one_coach">至少选择一个教练</string>
+  <string name="alert_comfirm_change_coach">"操作成功后，该会员不在任何教练名下，确认继续？"</string>
+  <string name="student_general_card">会员通卡</string>
+  <string name="shared_course">课程共享</string>
+  <string name="markting_acitivies">营销活动</string>
+  <string name="brand_manange">品牌管理</string>
+  <string name="alert_no_manage_permission">您没有改场馆管理权限</string>
+
+  <string name="course_report_detail_number">%d人次</string>
+
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/charge"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
+      app:civ_lable="充值(元)"
+      app:civ_nonnull="true"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/income"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
+      app:civ_lable="实收(元)"
+      app:civ_nonnull="true"
+      app:civ_showdivier="false"
+
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <include
+      layout="@layout/layout_switcher"/>
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/validdate"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_inputnum="true"
+      app:civ_lable="@string/valid_date_count"
+      app:civ_showdivier="false"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/for_staff"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:sw_lable="仅工作人员可见"
+      app:sw_showdivier="true"
+      />
+
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/support_new_buy"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:sw_lable="用于新购卡"
+      app:sw_showdivier="true"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+      android:id="@+id/support_charge"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:sw_lable="用于充值"
+      app:sw_showdivier="true"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/desc"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_hint="选填"
+      app:civ_inputnum="true"
+      app:civ_lable="说明"
+      app:civ_showright="true"
+      />
+
+  <Button
+      android:id="@+id/btn_comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/common_comfirm"
+      />
+
+  <TextView
+      android:id="@+id/del"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginTop="@dimen/activity_vertical_margin"
+      android:background="@color/white"
+      android:gravity="center"
+      android:text="删除该会员卡规格"
+      android:textColor="@color/red"
+      android:visibility="gone"
+      />
+</LinearLayout>

@@ -179,6 +179,12 @@ public class WheelTime {
             case ALL:
                 textSize = (screenheight / 100) * 3;
                 break;
+            case YEAR_MONTH:
+                textSize = (screenheight / 150) * 4;
+                wv_day.setVisibility(View.GONE);
+                wv_hours.setVisibility(View.GONE);
+                wv_mins.setVisibility(View.GONE);
+                break;
             case YEAR_MONTH_DAY:
                 textSize = (screenheight / 150) * 4;
                 wv_hours.setVisibility(View.GONE);
@@ -316,6 +322,12 @@ public class WheelTime {
         switch (type) {
             case ALL:
                 textSize = (screenheight / 100) * 3;
+                break;
+            case YEAR_MONTH:
+                textSize = (screenheight / 150) * 4;
+                wv_day.setVisibility(View.GONE);
+                wv_hours.setVisibility(View.GONE);
+                wv_mins.setVisibility(View.GONE);
                 break;
             case YEAR_MONTH_DAY:
                 textSize = (screenheight / 150) * 4;

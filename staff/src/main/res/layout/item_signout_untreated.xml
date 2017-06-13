@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8ca3ba"
+        >
+
+      <ImageView
+          android:id="@+id/img_signout_item_face"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_marginLeft="12dp"
+          android:layout_marginTop="12dp"
+          android:background="@drawable/bg_border_white"
+          android:padding="0.5dp"
+          android:src="@drawable/ic_action_group"
+          />
+
+      <TextView
+          android:id="@+id/tv_signout_item_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@+id/img_signout_item_face"
+          android:layout_marginLeft="10dp"
+          android:layout_marginStart="10dp"
+          android:layout_toEndOf="@+id/img_signout_item_face"
+          android:layout_toRightOf="@+id/img_signout_item_face"
+          android:text="陈驰远"
+          android:textColor="@color/white"
+          android:textSize="@dimen/common_font"
+          />
+
+      <ImageView
+          android:id="@+id/iv_signout_item_gender"
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          android:layout_alignBottom="@+id/tv_signout_item_name"
+          android:layout_marginLeft="5dp"
+          android:layout_marginStart="5dp"
+          android:layout_toEndOf="@+id/tv_signout_item_name"
+          android:layout_toRightOf="@+id/tv_signout_item_name"
+          android:scaleType="fitXY"
+          android:src="@drawable/ic_gender_signal_female"
+          />
+
+      <TextView
+          android:id="@+id/tv_signout_item_phone"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/tv_signout_item_name"
+          android:layout_alignStart="@+id/tv_signout_item_name"
+          android:layout_below="@+id/iv_signout_item_gender"
+          android:layout_marginTop="5dp"
+          android:text="@string/sign_in_untreated_phone"
+          android:textColor="@color/white"
+          android:textSize="@dimen/min_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_signout_item_card"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/tv_signout_item_phone"
+          android:layout_alignStart="@+id/tv_signout_item_phone"
+          android:layout_below="@+id/tv_signout_item_phone"
+          android:layout_marginTop="5dp"
+          android:text="@string/sign_in_untreated_card"
+          android:textColor="@color/white"
+          android:textSize="@dimen/min_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_signout_item_fee"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/tv_signout_item_card"
+          android:layout_alignStart="@+id/tv_signout_item_card"
+          android:layout_below="@+id/tv_signout_item_card"
+          android:layout_marginTop="5dp"
+          android:text="@string/sign_in_untreated_fee"
+          android:textColor="@color/white"
+          android:textSize="@dimen/min_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_signout_item_gui"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/tv_signout_item_fee"
+          android:layout_alignStart="@+id/tv_signout_item_fee"
+          android:layout_below="@+id/tv_signout_item_fee"
+          android:layout_marginTop="5dp"
+          android:text="@string/sign_out_untreated_gui"
+          android:textColor="@color/white"
+          android:textSize="@dimen/min_font"
+          />
+
+      <TextView
+          android:id="@+id/tv_signout_item_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/tv_signout_item_gui"
+          android:layout_alignStart="@+id/tv_signout_item_gui"
+          android:layout_below="@+id/tv_signout_item_gui"
+          android:layout_marginBottom="12dp"
+          android:layout_marginTop="5dp"
+          android:text="@string/sign_out_untreated_time"
+          android:textColor="@color/white"
+          android:textSize="@dimen/min_font"
+          />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_signout_item_ignor"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="center"
+          >
+
+        <TextView
+            android:id="@+id/tv_signout_item_ignor"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="51dp"
+            android:layout_marginRight="51dp"
+            android:layout_marginTop="13dp"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:text="@string/sign_in_untreated_ignor"
+            android:textSize="@dimen/common_font"
+            />
+      </LinearLayout>
+
+
+      <View
+          android:layout_width="1px"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="10dp"
+          android:layout_marginTop="10dp"
+          android:background="@color/divider_grey"
+          />
+
+      <LinearLayout
+          android:id="@+id/ll_signout_item_confirm"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:gravity="center"
+          >
+
+        <TextView
+            android:id="@+id/tv_signout_item_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="51dp"
+            android:layout_marginRight="51dp"
+            android:layout_marginTop="13dp"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:text="@string/sign_out_untreated_confirm"
+            android:textColor="#F9944E"
+            android:textSize="@dimen/common_font"
+            />
+      </LinearLayout>
+    </LinearLayout>
+  </LinearLayout>
+</android.support.v7.widget.CardView>

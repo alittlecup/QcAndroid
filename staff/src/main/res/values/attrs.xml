@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="CommonInputView">
+    <attr format="string" name="civ_lable"/>
+    <attr format="string" name="civ_content"/>
+    <attr format="boolean" name="civ_clickable"/>
+    <attr format="boolean" name="civ_inputnum"/>
+    <attr format="boolean" name="civ_nonnull"/>
+    <attr format="reference" name="civ_right_icon"/>
+    <attr format="boolean" name="civ_showdivier"/>
+    <attr format="boolean" name="civ_showright"/>
+    <attr format="integer" name="civ_max_length"/>
+    <attr format="integer" name="civ_text_color"/>
+    <attr format="dimension" name="civ_text_size"/>
+    <attr format="string" name="civ_hint"/>
+  </declare-styleable>
+  <declare-styleable name="ExpandedLayout">
+    <attr format="boolean" name="el_expanded"/>
+    <attr format="string" name="el_label"/>
+    <attr format="reference" name="el_left_icon"/>
+  </declare-styleable>
+
+  <declare-styleable name="LayoutSwitcher">
+    <attr format="string" name="sw_lable"/>
+    <attr format="reference" name="sw_layout"/>
+    <attr format="boolean" name="sw_showdivier"/>
+    <attr format="boolean" name="sw_open"/>
+    <attr format="integer" name="sw_text_color"/>
+    <attr format="integer" name="sw_background"/>
+  </declare-styleable>
+  <declare-styleable name="RoundedImageView">
+    <attr format="dimension" name="corner_radius"/>
+    <attr format="color" name="up_color"/>
+  </declare-styleable>
+  <declare-styleable name="PagerSlidingTabStrip">
+    <attr format="color" name="pst_text_color"/>
+    <attr format="dimension" name="pst_text_size"/>
+    <attr format="color" name="pst_text_highlight_color"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="LargeInputView">
+    <attr format="string" name="liv_lable"/>
+  </declare-styleable>
+
+  <declare-styleable name="ClubCardView">
+    <attr format="string" name="ccv_lable"/>
+    <attr format="boolean" name="ccv_expand"/>
+    <attr format="integer" name="ccv_count"/>
+    <attr format="integer" name="ccv_type"/>
+  </declare-styleable>
+  <declare-styleable name="TabView">
+    <attr format="dimension" name="text_size"/>
+    <attr format="color" name="text_normal_color"/>
+    <attr format="color" name="text_select_color"/>
+    <attr format="dimension" name="item_padding"/>
+  </declare-styleable>
+
+  <declare-styleable name="CircleIndicator">
+    <attr format="dimension" name="ci_width"/>
+    <attr format="dimension" name="ci_height"/>
+    <attr format="dimension" name="ci_margin"/>
+    <attr format="reference" name="ci_animator"/>
+    <attr format="reference" name="ci_animator_reverse"/>
+    <attr format="reference" name="ci_drawable"/>
+    <attr format="reference" name="ci_drawable_unselected"/>
+    <attr format="integer" name="ci_count_less"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="RecycleNoImg">
+    <attr format="reference" name="rn_drawable"/>
+    <attr format="string" name="rn_hint"/>
+    <attr format="color" name="rn_color"/>
+    <attr format="dimension" name="rn_bottom_padding"/>
+    <attr format="dimension" name="rn_top_padding"/>
+    <attr format="dimension" name="rn_no_data_top"/>
+  </declare-styleable>
+  <declare-styleable name="AnimatedButton">
+    <attr format="reference" name="ab_drawable_on"/>
+    <attr format="reference" name="ab_drawable_off"/>
+    <attr format="color" name="ab_color"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="RobotoCalendarView">
+    <attr format="color" name="monthTitleColor"/>
+    <attr format="string" name="monthTitleFont"/>
+    <attr format="color" name="dayOfWeekColor"/>
+    <attr format="string" name="dayOfWeekFont"/>
+    <attr format="color" name="dayOfMonthColor"/>
+    <attr format="string" name="dayOfMonthFont"/>
+  </declare-styleable>
+
+</resources>

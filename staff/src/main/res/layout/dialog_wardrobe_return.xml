@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:orientation="vertical"
+      android:paddingTop="4dp"
+      >
+
+    <TextView
+
+        android:id="@+id/locker_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        tools:text="D64"
+        />
+
+    <TextView
+        android:id="@+id/locker_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locker_name"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        tools:text="12"
+        />
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="6dp"
+        android:src="@drawable/ic_cross_blace"
+        />
+  </RelativeLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@color/colorPrimary"
+      />
+
+  <LinearLayout
+      android:id="@+id/layout_status"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange"
+        tools:text="状态"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/layout_period"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="@string/time_limit"
+        />
+
+    <TextView
+        android:id="@+id/tv_time_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        tools:text="状态"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/layout_student"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="@string/student"
+        />
+
+    <TextView
+        android:id="@+id/tv_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_phone"
+        android:textColor="@color/text_black"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/layout_remind_day"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="@string/remind_day"
+        />
+
+    <TextView
+        android:id="@+id/tv_remind_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        tools:text="状态"
+        />
+  </LinearLayout>
+
+  <Button
+      android:id="@+id/btn_wardrobe_return"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/return_wardrobe"
+      />
+
+  <Button
+      android:id="@+id/btn_continue_hire"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:layout_marginLeft="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:background="@drawable/btn_white_prime"
+      android:text="@string/continue_hire"
+      android:textColor="@color/red"
+      />
+</LinearLayout>
