@@ -91,6 +91,16 @@
     <item name="android:textColor">@color/text_grey</item>
   </style>
 
+  <style name="QcTagStyle">
+    <item name="android:textSize">10sp</item>
+    <item name="android:textColor">@color/text_orange</item>
+    <item name="android:background">@drawable/bg_tag_orange</item>
+    <item name="android:paddingLeft">10dp</item>
+    <item name="android:paddingRight">10dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
+  </style>
+
   <style name="QcTextStyleTinyDark">
     <item name="android:textSize">8sp</item>
     <item name="android:textColor">@color/text_dark</item>

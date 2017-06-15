@@ -82,11 +82,8 @@ public class DateUtils {
 
     public static String date2YYMM(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
-        String dateStr = formatter.format(date);
-        String[] dateArr = dateStr.split(" ");
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(dateArr[0]).append("T").append(dateArr[1]);
-        return stringBuffer.toString();
+        return formatter.format(date);
+
     }
 
     public static Date YYMM2date(String s) {
@@ -441,4 +438,12 @@ public class DateUtils {
             return Date2MMDD(d);
         }
     }
+
+    public int getAge(Date d) {
+        Calendar c = Calendar.getInstance();
+        int curYear = c.get(Calendar.YEAR);
+        c.setTime(d);
+        return c.get(Calendar.YEAR) - curYear;
+    }
+
 }

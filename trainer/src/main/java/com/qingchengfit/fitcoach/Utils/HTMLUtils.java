@@ -1,7 +1,7 @@
 package com.qingchengfit.fitcoach.Utils;
 
 import android.text.TextUtils;
-import com.qingchengfit.fitcoach.bean.BriefInfo;
+import cn.qingchengfit.model.common.BriefInfo;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;

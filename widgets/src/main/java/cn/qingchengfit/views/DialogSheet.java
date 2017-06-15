@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.component;
+package cn.qingchengfit.views;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.qingchengfit.fitcoach.R;
+import cn.qingchengfit.widgets.R;
 
 /**
  * power by
@@ -51,7 +51,6 @@ public class DialogSheet extends Dialog {
 
     public DialogSheet addButton(String text, View.OnClickListener listener) {
         TextView textView = new TextView(context, null, R.style.Qc_TextCommonBlack);
-        //        textView.setTextAppearance(R.style.Qc_TextCommonBlack);
         textView.setTextColor(getContext().getResources().getColor(R.color.text_black));
         textView.setPadding(30, textView.getPaddingTop(), textView.getPaddingRight(), textView.getPaddingBottom());
         textView.setText(text);

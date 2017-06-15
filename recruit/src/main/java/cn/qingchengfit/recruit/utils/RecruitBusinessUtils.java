@@ -2,6 +2,9 @@ package cn.qingchengfit.recruit.utils;
 
 import android.content.Context;
 import cn.qingchengfit.recruit.R;
+import cn.qingchengfit.recruit.model.TeacherImpression;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -130,5 +133,15 @@ public class RecruitBusinessUtils {
         } else {
             return min + "-" + max + "kg";
         }
+    }
+
+    public static List<String> impress2Str(List<TeacherImpression> impressions) {
+
+        List<String> ret = new ArrayList<>();
+        if (impressions == null) return ret;
+        for (int i = 0; i < impressions.size(); i++) {
+            ret.add(impressions.get(i).comment + "(" + impressions.get(i).count + ")");
+        }
+        return ret;
     }
 }

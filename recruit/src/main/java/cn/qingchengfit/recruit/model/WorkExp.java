@@ -2,6 +2,8 @@ package cn.qingchengfit.recruit.model;
 
 import cn.qingchengfit.model.base.Gym;
 import cn.qingchengfit.model.base.Staff;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
+import java.util.List;
 
 /**
  * power by
@@ -24,7 +26,7 @@ import cn.qingchengfit.model.base.Staff;
  * Created by Paper on 2017/6/12.
  */
 
-public class WorkExp {
+public class WorkExp implements Cloneable {
     /**
      * coach : {"id":6}
      * description : 无
@@ -45,19 +47,31 @@ public class WorkExp {
     public String description;
     public boolean is_authenticated;
     public String position;
-    public int private_course;
+    public Integer private_course;
     public String end;
     public String name;
-    public int id;
-    public int group_user;
-    public float sale;
+    public String id;
+    public Integer group_user;
+    public Integer sale;
     public String start;
-    public int group_course;
-    public int private_user;
+    public float coach_score;
+    public float course_score;
+    public Integer group_course;
+    public Integer private_user;
     public Gym gym;
     public boolean is_hidden;
     public boolean group_is_hidden;
     public boolean private_is_hidden;
     public boolean sale_is_hidden;
+    public List<TeacherImpression> impression;
 
+    public List<String> getImpressList() {
+        return RecruitBusinessUtils.impress2Str(impression);
+    }
+
+    public WorkExp getPostBody() throws CloneNotSupportedException {
+        WorkExp exp = (WorkExp) this.clone();
+        exp.id = null;
+        return exp;
+    }
 }

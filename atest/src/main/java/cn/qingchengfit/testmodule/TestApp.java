@@ -47,14 +47,14 @@ public class TestApp extends Application implements HasActivityInjector, HasSupp
         ToastUtils.init(this);
         Staff staff = new Staff("纸团", "15123358198", "", 1);
         staff.setId("7060");
-        PreferenceUtils.setPrefString(this, "session_id", "kiousgmexiti37vzi9y9w4k29tltrw7c");
+        PreferenceUtils.setPrefString(this, "session_id", "zl7p9g3klrysp75aztoodw4kskgw7fpz");
         LogUtil.e("session:" + PreferenceUtils.getPrefString(this, "session_id", ""));
         AppComponent component = DaggerAppComponent.builder()
             .testModule(new TestModule.Builder().app(this)
                 .gymWrapper(new GymWrapper.Builder().brand(new Brand("1")).build())
-                .loginStatus(new LoginStatus.Builder().userId("7060").loginUser(staff).session("kiousgmexiti37vzi9y9w4k29tltrw7c").build())
+                .loginStatus(new LoginStatus.Builder().userId("7060").loginUser(staff).session("zl7p9g3klrysp75aztoodw4kskgw7fpz").build())
                 .router(new BaseRouter())
-                .restRepository(new QcRestRepository(this, "http://192.168.8.201:7000/", "qingcheng-test"))
+                .restRepository(new QcRestRepository(this, "http://cloudtest.qingchengfit.cn/", "qingcheng-test"))
                 .build())
             .build();
         component.inject(this);

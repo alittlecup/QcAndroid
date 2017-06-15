@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.http.bean;
+package cn.qingchengfit.model.common;
 
 import cn.qingchengfit.model.base.ProvinceBean;
 import com.google.gson.annotations.SerializedName;

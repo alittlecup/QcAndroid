@@ -16,6 +16,8 @@
   <dimen name="large_font">18sp</dimen>
   <dimen name="max_font">24sp</dimen>
 
+  <dimen name="txt_stanrdant">12sp</dimen>
+
   <dimen name="qc_actionbar_height">44dp</dimen>
 
   <dimen name="qc_item_height">44dp</dimen>

@@ -1,10 +1,17 @@
 package cn.qingchengfit.recruit.network;
 
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.recruit.model.Certificate;
+import cn.qingchengfit.recruit.model.Education;
+import cn.qingchengfit.recruit.model.ResumeHome;
+import cn.qingchengfit.recruit.model.WorkExp;
+import cn.qingchengfit.recruit.views.organization.OrganizationBean;
+import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
 import java.util.HashMap;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -45,4 +52,39 @@ public interface PostApi {
      * @param hashMap body:{"job_id": xx, "user_id": xx}
      */
     @POST("/api/user/job/invitations/") rx.Observable<QcResponse> inviteSome(@Body HashMap<String, Object> hashMap);
+
+    /**
+     * 编辑我的简历
+     */
+    @POST("/api/user/resume/") rx.Observable<QcResponse> updateResume(@Body ResumeHome body);
+
+    /**
+     * 新增教育经历
+     */
+    @POST("/api/user/educations/") rx.Observable<QcResponse> addEducation(@Body Education education);
+
+    @PUT("/api/user/educations/{id}/") rx.Observable<QcResponse> updateEducation(@Path("id") String educationid, @Body Education education);
+
+    @DELETE("/api/user/educations/{id}/") rx.Observable<QcResponse> delEducations(@Path("id") String educationid);
+
+    /**
+     * 新增工作经历
+     */
+    @POST("/api/user/job/experiences/") rx.Observable<QcResponse> addWorkExp(@Body WorkExp workExp);
+
+    @PUT("/api/user/job/experiences/{experience_id/}") rx.Observable<QcResponse> updateWorkExp(@Path("experience_id") String experience_id,
+        @Body WorkExp workExp);
+
+    @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(@Body Certificate certificate);
+
+    ;
+
+    @PUT("/api/user/job/certificates/{id}/") rx.Observable<QcResponse> updateCertificate(@Path("id") String id,
+        @Body Certificate certificate);
+
+    ;
+
+    //新增组织
+    @POST("/api/organizations/") rx.Observable<QcAddOrganizationResponse> qcAddOrganization(@Body OrganizationBean organizationBean);
+
 }

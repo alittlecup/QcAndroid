@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.RxBus;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.support.widgets.CompatTextView;
@@ -19,11 +20,16 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
 
     int pos;
     String[] titles;
+    boolean showEdit;
 
-    public ResumeTitleItem(int pos, Context context) {
+    public ResumeTitleItem(int pos, Context context, boolean showEdit) {
         this.pos = pos;
+        this.titles = titles;
+        this.showEdit = showEdit;
         titles = context.getResources().getStringArray(R.array.resume_items);
+
     }
+
 
     public int getPos() {
         return pos;
@@ -39,6 +45,7 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeTitleVH holder, int position, List payloads) {
         holder.tvTitle.setText(titles[pos]);
+        holder.btnEdit.setVisibility(showEdit ? View.VISIBLE : View.GONE);
     }
 
     @Override public boolean equals(Object o) {
@@ -50,9 +57,16 @@ public class ResumeTitleItem extends AbstractHeaderItem<ResumeTitleItem.ResumeTi
         @BindView(R2.id.tv_title) TextView tvTitle;
         @BindView(R2.id.btn_edit) CompatTextView btnEdit;
 
-        public ResumeTitleVH(View view, FlexibleAdapter adapter) {
+        public ResumeTitleVH(View view, final FlexibleAdapter adapter) {
             super(view, adapter);
             ButterKnife.bind(this, view);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    if (adapter.getItem(getAdapterPosition()) instanceof ResumeTitleItem) {
+                        RxBus.getBus().post((ResumeTitleItem) adapter.getItem(getAdapterPosition()));
+                    }
+                }
+            });
         }
     }
 }

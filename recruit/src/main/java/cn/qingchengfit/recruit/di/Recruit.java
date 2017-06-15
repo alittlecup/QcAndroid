@@ -13,6 +13,11 @@ import cn.qingchengfit.recruit.views.RecruitPositionsInvitedFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsSentFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -104,6 +109,31 @@ import dagger.multibindings.IntoMap;
         }
     }
 
+    @Subcomponent() public interface ResumeHomeFragmentSubcomponent extends AndroidInjector<ResumeHomeFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeHomeFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ResumeCertificateListFragmentSubcomponent extends AndroidInjector<ResumeCertificateListFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeCertificateListFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ResumeEduExplistFragmentSubcomponent extends AndroidInjector<ResumeEduExpListFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeEduExpListFragment> {
+        }
+    }
+
+    @Subcomponent() public interface AddEduExpFragmentSubcomponent extends AndroidInjector<AddEduExpFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<AddEduExpFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ResumeIntentsFragmentSubcomponent extends AndroidInjector<ResumeIntentsFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeIntentsFragment> {
+        }
+    }
+
     @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class) abstract class SeekPositionHomeFragmentModule {
         @Binds @IntoMap @FragmentKey(SeekPositionHomeFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
@@ -158,5 +188,30 @@ import dagger.multibindings.IntoMap;
     @Module(subcomponents = RecruitPositionsStarredFragmentSubcomponent.class) abstract class RecruitPositionsStarredFragmentModule {
         @Binds @IntoMap @FragmentKey(RecruitPositionsStarredFragment.class)
         abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(RecruitPositionsStarredFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ResumeHomeFragmentSubcomponent.class) abstract class ResumeHomeFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeHomeFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeHomeFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ResumeCertificateListFragmentSubcomponent.class) abstract class ResumeCertificateListFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeCertificateListFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeCertificateListFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ResumeEduExplistFragmentSubcomponent.class) abstract class ResumeEduExplistFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeEduExpListFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeEduExplistFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = AddEduExpFragmentSubcomponent.class) abstract class AddEduExpFragmentModule {
+        @Binds @IntoMap @FragmentKey(AddEduExpFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(AddEduExpFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ResumeIntentsFragmentSubcomponent.class) abstract class ResumeIntentsFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeIntentsFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeIntentsFragmentSubcomponent.Builder builder);
     }
 }
