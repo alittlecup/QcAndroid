@@ -24,7 +24,7 @@ public class GymUtils {
     }
 
     public static boolean isInBrand(CoachService gymBase) {
-        return gymBase == null || gymBase.id == 0 || gymBase.model == null;
+        return gymBase == null || gymBase.id.endsWith("0") || gymBase.model == null;
     }
 
     public static String getBrandId(CoachService coachService, Brand brand) {

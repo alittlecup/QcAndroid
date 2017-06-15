@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="73dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:layout_height="wrap_content"
+          android:text="操作时间: "
+          />
+
+      <TextView
+          android:id="@+id/fix_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="2016 0808"
+          style="@style/Qc.TextCommonBlack"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="80dp"
+          android:layout_height="wrap_content"
+          android:text="操作员  : "
+          />
+
+      <TextView
+          android:id="@+id/fix_staff"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="毛"
+          style="@style/Qc.TextCommonBlack"
+          />
+    </LinearLayout>
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/old_img"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:scaleType="centerCrop"
+      tools:src="@drawable/test_img"
+      />
+</RelativeLayout>

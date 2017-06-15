@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <RelativeLayout
+      android:id="@+id/header_layout"
+      android:layout_width="match_parent"
+      android:layout_height="90dp"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="@string/header"
+        />
+
+    <ImageView
+        android:id="@+id/header_img"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_default_header"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_arrow_right"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/username"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/label_username"
+      />
+
+  <RelativeLayout
+      android:id="@+id/gender_layout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/gender"
+        />
+
+    <RadioGroup
+        android:id="@+id/course_type_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:dividerPadding="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+      <RadioButton
+          android:id="@+id/gender_male"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:button="@drawable/radio_selector"
+          android:checked="true"
+          android:text="@string/gender_male"
+
+          />
+
+      <RadioButton
+          android:id="@+id/gender_female"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:button="@drawable/radio_selector"
+          android:text="@string/gender_female"
+          />
+
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_white"
+        />
+  </RelativeLayout>
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/phone"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:visibility="gone"
+      app:civ_inputnum="true"
+      app:civ_lable="@string/phone"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/city"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="北京"
+      app:civ_lable="@string/common_city"
+      app:civ_showdivier="false"
+      app:civ_showright="true"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+      android:id="@+id/comfirm"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      android:text="@string/common_comfirm"
+      />
+</LinearLayout>

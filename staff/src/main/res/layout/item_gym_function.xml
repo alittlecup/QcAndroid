@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="94dp"
+    android:layout_gravity="center"
+    android:layout_weight="1"
+    android:background="@drawable/bg_white_click"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/little"
+    >
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingTop="8dp"
+      >
+
+    <ImageView
+        android:id="@+id/fun_img"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_studio_changguan"
+        />
+
+    <TextView
+        android:id="@+id/fun_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fun_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:text="场馆管理"
+        android:textSize="13sp"
+        style="@style/Qc.TextCommonBlack"
+        />
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/status_icon"
+      android:layout_width="16dp"
+      android:layout_height="16dp"
+      android:layout_gravity="right|end"
+      android:layout_marginEnd="8dp"
+      android:layout_marginRight="8dp"
+      android:scaleType="centerInside"
+
+      />
+</FrameLayout>

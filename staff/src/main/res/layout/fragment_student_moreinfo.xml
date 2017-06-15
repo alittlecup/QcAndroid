@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:paddingTop="12dp"
+      >
+
+    <!--<include layout="@layout/divider_grey_margin" />-->
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:id="@+id/layout_signin_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/qc_item_height"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+
+        >
+
+      <ImageView
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          app:srcCompat="@drawable/ic_local_camera_prime_24dp"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:layout_weight="1"
+          android:text="@string/signin_img"
+          />
+
+      <ImageView
+          android:id="@+id/signin_img"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_marginBottom="8dp"
+          android:layout_marginRight="6dp"
+          android:layout_marginTop="8dp"
+          android:scaleType="centerCrop"
+          tools:src="@drawable/test_img"
+          />
+
+      <TextView
+          android:id="@+id/no_checkin_img"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="8dp"
+          android:layout_marginRight="5dp"
+          android:layout_marginTop="8dp"
+          android:visibility="gone"
+          />
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:srcCompat="@drawable/ic_triangle_right"
+          tools:src="@drawable/ic_triangle_right"
+          />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:id="@+id/body_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+      <ImageView
+          android:id="@+id/bodytest_img"
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          android:layout_centerVertical="true"
+          android:scaleType="center"
+          app:srcCompat="@drawable/ic_detail_body"
+          />
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:layout_toEndOf="@id/bodytest_img"
+          android:layout_toRightOf="@id/bodytest_img"
+          android:layout_weight="1"
+          android:text="体测数据"
+          />
+
+      <TextView
+          android:id="@+id/update_info"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:text="2019-12-10更新"
+          android:visibility="gone"
+          />
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          app:srcCompat="@drawable/ic_triangle_right"
+          tools:src="@drawable/ic_triangle_right"
+          />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <RelativeLayout
+        android:id="@+id/baseinfo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+          android:id="@+id/baseinfo_label"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:layout_toRightOf="@+id/imageView4"
+          android:text="基本信息"
+          />
+
+      <LinearLayout
+          android:id="@+id/edit_student"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_alignParentRight="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="6dp"
+            android:text="@string/edit"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <ImageView
+          android:id="@+id/imageView4"
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:layout_marginTop="14dp"
+          android:scaleType="center"
+          app:srcCompat="@drawable/vector_student_basicinfo"
+          />
+    </RelativeLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        >
+
+      <TextView
+          android:id="@+id/student_score_label"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          android:layout_toRightOf="@+id/imageView3"
+          android:text="会员积分"
+          />
+
+      <LinearLayout
+          android:id="@+id/ll_student_score"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_alignParentRight="true"
+          android:layout_marginEnd="@dimen/activity_horizontal_margin"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:layout_toRightOf="@+id/student_score_label"
+          android:gravity="center_vertical|right"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/tv_student_score_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="6dp"
+            android:text=""
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <ImageView
+          android:id="@+id/imageView3"
+          android:layout_width="15dp"
+          android:layout_height="15dp"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:layout_marginTop="14dp"
+          android:scaleType="center"
+          app:srcCompat="@drawable/vector_student_score"
+          />
+    </RelativeLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@color/bg_grey"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:id="@+id/salers_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:id="@+id/choose_saler_img"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_saler"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="销售"
+            />
+
+        <TextView
+            android:id="@+id/sales_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:lines="1"
+            android:maxLines="1"
+            tools:text="@string/test_long"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/coach_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:id="@+id/choose_coach_img"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_info_coach"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="教练"
+            />
+
+        <TextView
+            android:id="@+id/coach_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:lines="1"
+            android:maxLines="1"
+            tools:text="@string/test_long"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/ll_student_source"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/vector_student_origin"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="来源"
+            />
+
+        <TextView
+            android:id="@+id/tv_student_source"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:lines="1"
+            android:maxLines="1"
+            tools:text="@string/test_long"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/ll_student_referrer"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/vector_student_recommender"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:text="推荐人"
+            />
+
+        <TextView
+            android:id="@+id/tv_student_referrer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:lines="1"
+            android:maxLines="1"
+            tools:text="@string/test_long"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+    </LinearLayout>
+
+  </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

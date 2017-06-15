@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data></data>
+
+  <FrameLayout
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      >
+
+    <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+        android:id="@+id/rv_sales"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:rn_drawable="@drawable/schedules_no_data"
+        app:rn_hint="暂无日程"
+        />
+
+
+  </FrameLayout>
+</layout>
+

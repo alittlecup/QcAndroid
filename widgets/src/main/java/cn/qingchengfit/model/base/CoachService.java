@@ -25,9 +25,54 @@ import com.squareup.sqldelight.RowMapper;
  */
 
 public class CoachService implements Parcelable, CoachServiceModel {
+    public static final ColumnAdapter<DistrictEntity, String> gd_districtAdapter = new ColumnAdapter<DistrictEntity, String>() {
+        Gson gson = new Gson();
+
+        @NonNull @Override public DistrictEntity decode(String s) {
+            return gson.fromJson(s, DistrictEntity.class);
+        }
+
+        @Override public String encode(@NonNull DistrictEntity districtEntity) {
+            return gson.toJson(districtEntity, DistrictEntity.class);
+        }
+    };
+    public static final Factory<CoachService> FACTORY = new Factory<>(new CoachServiceModel.Creator<CoachService>() {
+        @Override public CoachService create(@Nullable String id, @Nullable String model, @Nullable String gym_id, @Nullable Integer type,
+            @Nullable String name, @Nullable String color, @Nullable String photo, @Nullable String host, @Nullable String brand_name,
+            @Nullable String shop_id, @Nullable Integer courses_count, @Nullable Integer users_count, @Nullable String brand_id,
+            @Nullable String system_end, @Nullable String phone, @Nullable String address, @Nullable Boolean can_trial,
+            @Nullable DistrictEntity gd_district) {
+            return new Builder().id(id)
+                .model(model)
+                .name(name)
+                .gym_id(gym_id)
+                .type(type == null ? 0 : type)
+                .brand_id(brand_id)
+                .brand_name(brand_name)
+                .color(color)
+                .gd_district(gd_district)
+                .phone(phone)
+                .photo(photo)
+                .host(host)
+                .system_end(system_end)
+                .users_count(users_count == null ? 0 : users_count)
+                .courses_count(courses_count == null ? 0 : courses_count)
+                .build();
+        }
+    }, gd_districtAdapter);
+    public static final Parcelable.Creator<CoachService> CREATOR = new Parcelable.Creator<CoachService>() {
+        @Override public CoachService createFromParcel(Parcel source) {
+            return new CoachService(source);
+        }
+
+        @Override public CoachService[] newArray(int size) {
+            return new CoachService[size];
+        }
+    };
+    public static RowMapper<CoachService> SELECT_ALL_MAPPER = FACTORY.getAllCoachServiceMapper();
     @SerializedName("model") public String model;
     @SerializedName("type") public int type;
-    @SerializedName("id") public long id;
+    @SerializedName("id") public String id;
     @SerializedName("name") public String name;
     @SerializedName("color") public String color;
     @SerializedName("photo") public String photo;
@@ -41,6 +86,9 @@ public class CoachService implements Parcelable, CoachServiceModel {
     @SerializedName("gd_district") public DistrictEntity gd_district;
     public String system_end;
     public String gym_id;
+    public String address;
+    public String shop_id;
+    public String position;
 
     private CoachService(Builder builder) {
         setModel(builder.model);
@@ -59,6 +107,28 @@ public class CoachService implements Parcelable, CoachServiceModel {
         gd_district = builder.gd_district;
         system_end = builder.system_end;
         gym_id = builder.gym_id;
+    }
+
+    public CoachService() {
+    }
+
+    protected CoachService(Parcel in) {
+        this.model = in.readString();
+        this.type = in.readInt();
+        this.id = in.readString();
+        this.name = in.readString();
+        this.color = in.readString();
+        this.photo = in.readString();
+        this.phone = in.readString();
+        this.host = in.readString();
+        this.brand_name = in.readString();
+        this.courses_count = in.readInt();
+        this.users_count = in.readInt();
+        this.brand_id = in.readString();
+        this.has_permission = in.readByte() != 0;
+        this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
+        this.system_end = in.readString();
+        this.gym_id = in.readString();
     }
 
     @Nullable @Override public String id() {
@@ -122,7 +192,7 @@ public class CoachService implements Parcelable, CoachServiceModel {
     }
 
     @Nullable @Override public String address() {
-        return null;
+        return address;
     }
 
     @Nullable @Override public Boolean can_trial() {
@@ -145,6 +215,94 @@ public class CoachService implements Parcelable, CoachServiceModel {
         }
     }
 
+    public int getcityCode() {
+        if (gd_district != null && gd_district.city != null) {
+            return gd_district.city.id;
+        } else {
+            return 0;
+        }
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getcityName() {
+        if (gd_district != null && gd_district.city != null) {
+            return gd_district.city.name;
+        } else {
+            return "";
+        }
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public boolean isHas_permission() {
+        return has_permission;
+    }
+
+    public void setHas_permission(boolean has_permission) {
+        this.has_permission = has_permission;
+    }
+
+    public String getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public DistrictEntity getGd_district() {
+        return gd_district;
+    }
+
+    public void setGd_district(DistrictEntity gd_district) {
+        this.gd_district = gd_district;
+    }
+
+    public String getSystem_end() {
+        return system_end;
+    }
+
+    public void setSystem_end(String system_end) {
+        this.system_end = system_end;
+    }
+
+    public String getGym_id() {
+        return gym_id;
+    }
+
+    public void setGym_id(String gym_id) {
+        this.gym_id = gym_id;
+    }
+
+    public String getBrand_id() {
+        return brand_id;
+    }
+
+    public void setBrand_id(String brand_id) {
+        this.brand_id = brand_id;
+    }
+
     public String getModel() {
         return model;
     }
@@ -161,11 +319,11 @@ public class CoachService implements Parcelable, CoachServiceModel {
         this.type = type;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -225,13 +383,33 @@ public class CoachService implements Parcelable, CoachServiceModel {
         this.users_count = users_count;
     }
 
-    public CoachService() {
+    @Override public int describeContents() {
+        return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.model);
+        dest.writeInt(this.type);
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.color);
+        dest.writeString(this.photo);
+        dest.writeString(this.phone);
+        dest.writeString(this.host);
+        dest.writeString(this.brand_name);
+        dest.writeInt(this.courses_count);
+        dest.writeInt(this.users_count);
+        dest.writeString(this.brand_id);
+        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.gd_district, flags);
+        dest.writeString(this.system_end);
+        dest.writeString(this.gym_id);
     }
 
     public static final class Builder {
         private String model;
         private int type;
-        private long id;
+        private String id;
         private String name;
         private String color;
         private String photo;
@@ -259,7 +437,7 @@ public class CoachService implements Parcelable, CoachServiceModel {
             return this;
         }
 
-        public Builder id(long val) {
+        public Builder id(String val) {
             id = val;
             return this;
         }
@@ -333,96 +511,4 @@ public class CoachService implements Parcelable, CoachServiceModel {
             return new CoachService(this);
         }
     }
-
-    public static final ColumnAdapter<DistrictEntity, String> gd_districtAdapter =
-        new ColumnAdapter<DistrictEntity, String>() {
-            Gson gson = new Gson();
-
-            @NonNull @Override public DistrictEntity decode(String s) {
-                return gson.fromJson(s, DistrictEntity.class);
-            }
-
-            @Override public String encode(@NonNull DistrictEntity districtEntity) {
-                return gson.toJson(districtEntity, DistrictEntity.class);
-            }
-        };
-
-    public static final Factory<CoachService> FACTORY = new Factory<>(new CoachServiceModel.Creator<CoachService>() {
-        @Override public CoachService create(@Nullable String id, @Nullable String model, @Nullable String gym_id, @Nullable Integer type,
-            @Nullable String name, @Nullable String color, @Nullable String photo, @Nullable String host, @Nullable String brand_name,
-            @Nullable String shop_id, @Nullable Integer courses_count, @Nullable Integer users_count, @Nullable String brand_id,
-            @Nullable String system_end, @Nullable String phone, @Nullable String address, @Nullable Boolean can_trial,
-            @Nullable DistrictEntity gd_district) {
-            return new Builder().id(Long.parseLong(id))
-                .model(model)
-                .name(name)
-                .gym_id(gym_id)
-                .type(type == null ? 0 : type)
-                .brand_id(brand_id)
-                .brand_name(brand_name)
-                .color(color)
-                .gd_district(gd_district)
-                .phone(phone)
-                .photo(photo)
-                .host(host)
-                .system_end(system_end)
-                .users_count(users_count == null ? 0 : users_count)
-                .courses_count(courses_count == null ? 0 : courses_count)
-                .build();
-        }
-    }, gd_districtAdapter);
-
-    public static RowMapper<CoachService> SELECT_ALL_MAPPER = FACTORY.getAllCoachServiceMapper();
-
-    @Override public int describeContents() {
-        return 0;
-    }
-
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.model);
-        dest.writeInt(this.type);
-        dest.writeLong(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.color);
-        dest.writeString(this.photo);
-        dest.writeString(this.phone);
-        dest.writeString(this.host);
-        dest.writeString(this.brand_name);
-        dest.writeInt(this.courses_count);
-        dest.writeInt(this.users_count);
-        dest.writeString(this.brand_id);
-        dest.writeByte(this.has_permission ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.gd_district, flags);
-        dest.writeString(this.system_end);
-        dest.writeString(this.gym_id);
-    }
-
-    protected CoachService(Parcel in) {
-        this.model = in.readString();
-        this.type = in.readInt();
-        this.id = in.readLong();
-        this.name = in.readString();
-        this.color = in.readString();
-        this.photo = in.readString();
-        this.phone = in.readString();
-        this.host = in.readString();
-        this.brand_name = in.readString();
-        this.courses_count = in.readInt();
-        this.users_count = in.readInt();
-        this.brand_id = in.readString();
-        this.has_permission = in.readByte() != 0;
-        this.gd_district = in.readParcelable(DistrictEntity.class.getClassLoader());
-        this.system_end = in.readString();
-        this.gym_id = in.readString();
-    }
-
-    public static final Parcelable.Creator<CoachService> CREATOR = new Parcelable.Creator<CoachService>() {
-        @Override public CoachService createFromParcel(Parcel source) {
-            return new CoachService(source);
-        }
-
-        @Override public CoachService[] newArray(int size) {
-            return new CoachService[size];
-        }
-    };
 }

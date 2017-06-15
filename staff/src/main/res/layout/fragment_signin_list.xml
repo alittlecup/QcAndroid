@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:recycle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      android:orientation="horizontal"
+      >
+
+    <LinearLayout
+        android:id="@+id/ll_signin_manual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_sign_border_corner"
+        android:gravity="center"
+        >
+
+      <TextView
+          android:id="@+id/tv_signin_manual"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:drawablePadding="10dp"
+          android:paddingLeft="10dp"
+          android:paddingStart="10dp"
+          android:text="@string/sign_in_manual"
+          android:textColor="@color/text_black"
+          android:textSize="@dimen/common_font"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_signin_qrcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_sign_border_corner"
+        android:gravity="center"
+        >
+
+      <TextView
+          android:id="@+id/tv_signin_qrcode"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/qc_item_height"
+          android:drawablePadding="10dp"
+          android:paddingLeft="10dp"
+          android:paddingStart="10dp"
+          android:text="@string/sign_in_qrcode"
+          android:textColor="@color/text_black"
+          android:textSize="@dimen/common_font"
+          />
+
+    </LinearLayout>
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/tv_signin_header"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:gravity="center"
+      android:paddingBottom="9dp"
+      android:text=" 查看3小时内签到记录 "
+      android:textColor="@color/signin_new_color"
+      android:visibility="visible"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      android:id="@+id/recycleview"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      recycle:rn_drawable="@drawable/ic_sign_in_nodata"
+      recycle:rn_hint="暂无未处理签到"
+      />
+
+  <TextView
+      android:id="@+id/tv_signin_footer"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginBottom="20dp"
+      android:background="@drawable/bg_rect"
+      android:gravity="center"
+      android:padding="9dp"
+      android:text="@string/qc_signin_footer"
+      android:textColor="@color/qc_text_grey"
+      android:visibility="gone"
+      />
+</LinearLayout>

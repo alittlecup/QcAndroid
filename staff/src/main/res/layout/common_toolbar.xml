@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data></data>
+
+  <RelativeLayout
+      android:id="@+id/toolbar_layout"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        >
+
+      <TextView
+          android:id="@+id/tv_left"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textColor="@color/white"
+          tools:text="hahah"
+          />
+    </android.support.v7.widget.Toolbar>
+
+    <CheckBox
+        android:id="@+id/rb_select_all"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:button="@drawable/radio_selector_allotsale_white"
+        android:gravity="center_vertical"
+        android:padding="6dp"
+        android:text="@string/qc_select_all"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/text_toolbar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:padding="6dp"
+        android:text="取消"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/titile_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:id="@+id/toolbar_titile"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:textColor="@color/white"
+
+          android:textSize="16sp"
+          tools:text="@string/site_usage"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <ImageView
+          android:id="@+id/down"
+          android:layout_width="12dp"
+          android:layout_height="12dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginStart="5dp"
+          android:src="@drawable/ic_arrow_down"
+          android:visibility="gone"
+          />
+    </LinearLayout>
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@color/divider_grey"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--/>-->
+    <LinearLayout
+        android:id="@+id/searchview"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:visibility="gone"
+        >
+
+      <FrameLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="5"
+
+          >
+
+        <EditText
+            android:id="@+id/searchview_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_searchview"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:hint="输入学员名字或者手机号"
+            android:imeOptions="actionDone"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:paddingLeft="16dp"
+            android:singleLine="true"
+            />
+
+        <ImageView
+            android:id="@+id/searchview_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_cross_blace"
+            android:visibility="gone"
+            />
+      </FrameLayout>
+
+      <Button
+          android:id="@+id/searchview_cancle"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="5dp"
+          android:layout_weight="1"
+          android:background="@color/transparent"
+          android:text="@string/pickerview_cancel"
+          />
+    </LinearLayout>
+
+  </RelativeLayout>
+</layout>
+
+
+
+

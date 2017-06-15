@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@+id/tv_hint"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:paddingBottom="10dp"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="10dp"
+      tools:text="从今天(2017-02-10)起提前销假 已请假4天"
+      style="@style/QcTextStyleMediumDark"
+      />
+
+  <LinearLayout
+      android:id="@+id/layout_valid_info"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="原有效期"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+    <TextView
+        android:id="@+id/tv_origin_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:text="从今天(2017-02-10)起提前销假 已请假4天"
+        style="@style/QcTextStyleMediumDark"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="销假后有效期"
+        style="@style/QcTextStyleSmallWarm"
+        />
+
+    <TextView
+        android:id="@+id/tv_after_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:text="从今天(2017-02-10)起提前销假 已请假4天"
+        style="@style/QcTextStyleMediumDark"
+        />
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <cn.qingchengfit.widgets.ExpandedLayout
+        android:id="@+id/ep_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:el_label="是否收费"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+
+        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+            android:id="@+id/civ_pay_method"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_clickable="true"
+            app:civ_hint="请选择"
+            app:civ_lable="支付方式"
+            app:civ_showright="true"
+            />
+
+        <cn.qingchengfit.staffkit.views.custom.CommonInputView
+            android:id="@+id/civ_money"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qc_item_height"
+            app:civ_hint="请输入"
+            app:civ_inputnum="true"
+            app:civ_lable="金额（元）"
+            />
+      </LinearLayout>
+
+    </cn.qingchengfit.widgets.ExpandedLayout>
+  </LinearLayout>
+</LinearLayout>

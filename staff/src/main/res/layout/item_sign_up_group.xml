@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_sign_group"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    >
+
+  <TextView
+      android:id="@+id/tv_sign_group_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:textColor="@color/qc_text_black"
+      android:textSize="15sp"
+      tools:text="青橙小分队"
+      />
+
+  <ImageView
+      android:id="@+id/div_right"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      android:src="@drawable/ic_arrow_right"
+      />
+
+  <TextView
+      android:id="@+id/tv_sign_group_member"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      android:layout_marginRight="5dp"
+      android:layout_toLeftOf="@id/div_right"
+      tools:text="陈驰远2人"
+      />
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_alignParentBottom="true"
+      />
+
+</RelativeLayout>

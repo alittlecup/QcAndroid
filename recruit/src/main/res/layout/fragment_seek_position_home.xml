@@ -301,6 +301,12 @@
         >
 
       <FrameLayout
+          android:id="@+id/frag_left_right_filter"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+
+      <FrameLayout
           android:id="@+id/frag_recruit_home"
           android:layout_width="match_parent"
           android:layout_height="match_parent"

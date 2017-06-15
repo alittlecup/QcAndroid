@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/halftransparent_grey"
+
+    >
+
+  <LinearLayout
+      android:layout_width="270dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/colorPrimarytrans"
+        >
+
+      <TextView
+          android:id="@+id/history"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:padding="@dimen/activity_horizontal_margin"
+          android:text="续费记录"
+          android:textColor="@color/colorPrimary"
+          android:textSize="12sp"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:text="场馆续费"
+          android:textColor="@color/colorPrimary"
+          android:textSize="16sp"
+          />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:textSize="13sp"
+        android:visibility="gone"
+        tools:text="该场馆已于2016-12-20到期，请续费"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:divider="@drawable/divier_linear_vectail"
+        android:orientation="vertical"
+        android:showDividers="beginning|middle|end"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:divider="@drawable/divier_linear_nomargin"
+          android:orientation="horizontal"
+          android:showDividers="beginning|middle|end"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="首年"
+            android:textSize="12sp"
+
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="次年起"
+            android:textSize="12sp"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:divider="@drawable/divier_linear_nomargin"
+          android:orientation="horizontal"
+          android:showDividers="beginning|middle|end"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="首家店"
+            android:textSize="12sp"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_first_first"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/first_first"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textColor="@color/text_black"
+              android:textSize="12sp"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/renewal_price"
+              android:textColor="@color/text_grey"
+              android:textSize="10sp"
+              />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_first_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/first_second"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textColor="@color/text_black"
+              android:textSize="12sp"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/renewal_price"
+              android:textColor="@color/text_grey"
+              android:textSize="10sp"
+              />
+        </LinearLayout>
+
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:divider="@drawable/divier_linear_nomargin"
+          android:orientation="horizontal"
+          android:showDividers="beginning|middle|end"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="同品牌第二家店起"
+            android:textSize="12sp"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_second_first"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/second_first"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textColor="@color/text_black"
+              android:textSize="12sp"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/renewal_price"
+              android:textColor="@color/text_grey"
+              android:textSize="10sp"
+              />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_second_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:id="@+id/second_second"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textColor="@color/text_black"
+              android:textSize="12sp"
+              />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/renewal_price"
+              android:textColor="@color/text_grey"
+              android:textSize="10sp"
+              />
+        </LinearLayout>
+
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="本次续费所需费用"
+          android:textColor="@color/text_black"
+          android:textSize="13sp"
+          />
+
+      <TextView
+          android:id="@+id/price"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/text_orange"
+          android:textSize="16sp"
+          tools:text="$5000"
+          />
+    </LinearLayout>
+
+    <include layout="@layout/divider_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:id="@+id/close"
+
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_white_click"
+          android:gravity="center"
+          android:text="@string/back"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/comfirm"
+
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_prime_click"
+          android:gravity="center"
+          android:text="@string/common_comfirm"
+          android:textColor="@color/white"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+    </LinearLayout>
+
+
+  </LinearLayout>
+
+</FrameLayout>

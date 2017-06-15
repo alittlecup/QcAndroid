@@ -3,7 +3,11 @@ package cn.qingchengfit.model.base;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import cn.qingchengfit.widgets.Constant;
+import android.text.TextUtils;
+import cn.qingchengfit.Constants;
+import cn.qingchengfit.widgets.AlphabetView;
+import com.qingcheng.model.base.QcStudentBeanModel;
+import com.squareup.sqldelight.RowMapper;
 import java.util.List;
 
 /**
@@ -20,9 +24,32 @@ import java.util.List;
  * <p/>
  * Created by Paper on 15/10/14 2015.
  */
-public class QcStudentBean extends Personage implements Parcelable {//extends RealmObject
+public class QcStudentBean extends Personage implements Parcelable, com.qingcheng.model.base.QcStudentBeanModel {//extends RealmObject
 
-    public static final Creator<QcStudentBean> CREATOR = new Creator<QcStudentBean>() {
+    public static final Factory<QcStudentBean> FACTORY = new Factory<>(new QcStudentBeanModel.Creator<QcStudentBean>() {
+        @Override
+        public QcStudentBean create(@Nullable String id, @Nullable String username, @Nullable String status, @Nullable String phone,
+            @Nullable String avatar, @Nullable String checkin_avatar, @Nullable Integer gender, @Nullable String head,
+            @Nullable String brand_id, @Nullable String join_at, @Nullable String joined_at, @Nullable String support_gym,
+            @Nullable String supoort_gym_ids) {
+            return new Builder().id(id)
+                .username(username)
+                .status(status)
+                .phone(phone)
+                .avatar(avatar)
+                .checkin_avatar(checkin_avatar)
+                .gender(gender)
+                .head(head)
+                .brand_id(brand_id)
+                .join_at(join_at)
+                .joined_at(joined_at)
+                .support_gym(support_gym)
+                .supoort_gym_ids(supoort_gym_ids)
+                .build();
+        }
+    }, null);
+    public static final RowMapper<QcStudentBean> MAPPER = new Mapper<>(FACTORY);
+    public static final Parcelable.Creator<QcStudentBean> CREATOR = new Parcelable.Creator<QcStudentBean>() {
         @Override public QcStudentBean createFromParcel(Parcel in) {
             return new QcStudentBean(in);
         }
@@ -39,7 +66,7 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
      */
     public int status;//会员状态,--student
     public List<Staff> sellers;//所属销售--student
-
+    public String joined_at;
     private String join_at;
     private String support_gym;//student
     private String supoort_gym_ids;//student
@@ -78,21 +105,24 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
     }
 
     private QcStudentBean(Builder builder) {
-        status = builder.status;
-        setSellers(builder.sellers);
-        tag = builder.tag;
+        setTag(builder.tag);
         setId(builder.id);
         setUsername(builder.username);
+        setArea_code(builder.area_code);
         setPhone(builder.phone);
         setAvatar(builder.avatar);
         setCheckin_avatar(builder.checkin_avatar);
         setGender(builder.gender);
         setHead(builder.head);
         setBrand_id(builder.brand_id);
+        setStatus(builder.status);
+        setSellers(builder.sellers);
         setJoin_at(builder.join_at);
+        joined_at = builder.joined_at;
         setSupport_gym(builder.support_gym);
         setSupoort_gym_ids(builder.supoort_gym_ids);
-        setDistrict_id(builder.district_id);// TODO
+        setDistrict_id(builder.district_id);
+        setDistrict(builder.district);
         postion = builder.postion;
         setShops(builder.shops);
     }
@@ -118,42 +148,42 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
         shops = in.createTypedArrayList(Shop.CREATOR);
     }
 
-    //public StudentBean toStudentBean(String brand_id, String gymid, String gymmodel) {
-    //    String curHead = "";
-    //    StudentBean bean = new StudentBean();
-    //    bean.status = this.status;
-    //    bean.avatar = this.avatar;
-    //    bean.username = this.username;
-    //    bean.systemUrl = "后台无数据";
-    //    bean.id = this.id;
-    //    bean.color = "";
-    //    bean.support_shop = this.support_gym;
-    //    bean.support_shop_ids = this.supoort_gym_ids;
-    //
-    //    bean.brandid = brand_id;
-    //    bean.joined_at = TextUtils.isEmpty(this.join_at()) ? "" : this.join_at();
-    //    bean.modelid = gymid;
-    //    bean.model = gymmodel;
-    //    if (TextUtils.isEmpty(this.getHead()) || !AlphabetView.Alphabet.contains(this.getHead())) {
-    //        bean.head = "~";
-    //    } else {
-    //        bean.head = this.getHead().toUpperCase();
-    //    }
-    //    if (!curHead.equalsIgnoreCase(bean.head)) {
-    //        bean.setIsTag(true);
-    //        curHead = bean.head;
-    //    }
-    //
-    //    StringBuffer sb = new StringBuffer();
-    //    sb.append("手机：").append(this.phone());
-    //    bean.phone = sb.toString();
-    //    if (this.getGender() == 0) {
-    //        bean.gender = true;
-    //    } else {
-    //        bean.gender = false;
-    //    }
-    //    return bean;
-    //}
+    public StudentBean toStudentBean(String brand_id, String gymid, String gymmodel) {
+        String curHead = "";
+        StudentBean bean = new StudentBean();
+        bean.status = this.status;
+        bean.avatar = this.avatar;
+        bean.username = this.username;
+        bean.systemUrl = "后台无数据";
+        bean.id = this.id;
+        bean.color = "";
+        bean.support_shop = this.support_gym;
+        bean.support_shop_ids = this.supoort_gym_ids;
+
+        bean.brandid = brand_id;
+        bean.joined_at = TextUtils.isEmpty(this.joined_at) ? "" : this.joined_at;
+        bean.modelid = gymid;
+        bean.model = gymmodel;
+        if (TextUtils.isEmpty(this.getHead()) || !AlphabetView.Alphabet.contains(this.getHead())) {
+            bean.head = "~";
+        } else {
+            bean.head = this.getHead().toUpperCase();
+        }
+        if (!curHead.equalsIgnoreCase(bean.head)) {
+            bean.setIsTag(true);
+            curHead = bean.head;
+        }
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("手机：").append(this.phone());
+        bean.phone = sb.toString();
+        if (this.getGender() == 0) {
+            bean.gender = true;
+        } else {
+            bean.gender = false;
+        }
+        return bean;
+    }
 
     @Override public boolean equals(Object obj) {
         if (obj instanceof Personage) {
@@ -206,7 +236,7 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
             String ret = "";
             for (int i = 0; i < sellers.size(); i++) {
                 if (i < sellers.size() - 1) {
-                    ret = ret.concat(sellers.get(i).getUsername()).concat(Constant.SEPARATE);
+                    ret = ret.concat(sellers.get(i).getUsername()).concat(Constants.SEPARATOR);
                 } else {
                     ret = ret.concat(sellers.get(i).getUsername());
                 }
@@ -312,51 +342,55 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
         this.head = head;
     }
 
-    @Nullable public String id() {
+    @Nullable @Override public String id() {
         return id;
     }
 
-    @Nullable public String username() {
+    @Nullable @Override public String username() {
         return username;
     }
 
-    @Nullable public String status() {
+    @Nullable @Override public String status() {
         return String.valueOf(status);
     }
 
-    @Nullable public String phone() {
+    @Nullable @Override public String phone() {
         return phone;
     }
 
-    @Nullable public String avatar() {
+    @Nullable @Override public String avatar() {
         return avatar;
     }
 
-    @Nullable public String checkin_avatar() {
+    @Nullable @Override public String checkin_avatar() {
         return checkin_avatar;
     }
 
-    @Nullable public Integer gender() {
+    @Nullable @Override public Integer gender() {
         return gender;
     }
 
-    @Nullable public String head() {
+    @Nullable @Override public String head() {
         return head;
     }
 
-    @Nullable public String brand_id() {
+    @Nullable @Override public String brand_id() {
         return brand_id;
     }
 
-    @Nullable public String join_at() {
+    @Nullable @Override public String join_at() {
         return join_at;
     }
 
-    @Nullable public String support_gym() {
+    @Nullable @Override public String joined_at() {
+        return joined_at;
+    }
+
+    @Nullable @Override public String support_gym() {
         return support_gym;
     }
 
-    @Nullable public String supoort_gym_ids() {
+    @Nullable @Override public String supoort_gym_ids() {
         return supoort_gym_ids;
     }
 
@@ -389,6 +423,7 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
         private String tag;
         private String id;
         private String username;
+        private String area_code;
         private String phone;
         private String avatar;
         private String checkin_avatar;
@@ -396,6 +431,7 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
         private String head;
         private String brand_id;
         private String join_at;
+        private String joined_at;
         private String support_gym;
         private String supoort_gym_ids;
         private String district_id;
@@ -425,6 +461,11 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
 
         public Builder username(String username) {
             this.username = username;
+            return this;
+        }
+
+        public Builder area_code(String val) {
+            area_code = val;
             return this;
         }
 
@@ -458,8 +499,18 @@ public class QcStudentBean extends Personage implements Parcelable {//extends Re
             return this;
         }
 
+        public Builder status(int val) {
+            status = val;
+            return this;
+        }
+
         public Builder join_at(String join_at) {
             this.join_at = join_at;
+            return this;
+        }
+
+        public Builder joined_at(String val) {
+            joined_at = val;
             return this;
         }
 

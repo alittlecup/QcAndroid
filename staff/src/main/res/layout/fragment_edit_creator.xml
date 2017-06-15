@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/name"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_lable="@string/name"
+      />
+
+  <RelativeLayout
+      android:id="@+id/gender_layout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/gender"
+        />
+
+    <RadioGroup
+        android:id="@+id/course_type_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:dividerPadding="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+      <RadioButton
+          android:id="@+id/gender_male"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:button="@drawable/radio_selector"
+          android:checked="true"
+          android:text="@string/gender_male"
+
+          />
+
+      <RadioButton
+          android:id="@+id/gender_female"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:button="@drawable/radio_selector"
+          android:text="@string/gender_female"
+          />
+
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_white"
+        />
+  </RelativeLayout>
+
+  <cn.qingchengfit.widgets.PhoneEditText
+      android:id="@+id/phone_num"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      app:phone_show_icon="false"
+
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <cn.qingchengfit.widgets.PasswordView
+      android:id="@+id/checkcode"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:background="@color/white"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      app:pw_mode="false"
+      app:pw_show_left="false"
+      />
+
+  <include layout="@layout/divider_grey"/>
+</LinearLayout>

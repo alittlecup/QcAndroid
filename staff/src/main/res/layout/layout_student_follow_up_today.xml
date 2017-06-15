@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="horizontal"
+      android:paddingBottom="24dp"
+      android:paddingTop="12dp"
+      >
+
+    <LinearLayout
+        android:id="@+id/ll_student_status_today_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_student_today_count_0"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/xxlarge_font"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:layout_marginTop="7dp"
+          android:text="@string/qc_foolow_up_lable_today_new"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="@dimen/min_font"
+          />
+
+      <View
+          android:layout_width="20dp"
+          android:layout_height="2dp"
+          android:background="@color/qc_student_status_0"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_student_status_today_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_student_today_count_1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/xxlarge_font"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:layout_marginTop="7dp"
+          android:text="@string/qc_follow_up_lable_today_follow"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="@dimen/min_font"
+          />
+
+      <View
+          android:layout_width="20dp"
+          android:layout_height="2dp"
+          android:background="@color/qc_student_status_1"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_student_status_today_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="1dp"
+        >
+
+      <TextView
+          android:id="@+id/tv_student_today_count_2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0"
+          android:textColor="@color/qc_text_black"
+          android:textSize="@dimen/xxlarge_font"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="7dp"
+          android:layout_marginTop="7dp"
+          android:text="@string/qc_follow_up_lable_toady_member"
+          android:textColor="@color/qc_text_grey"
+          android:textSize="@dimen/min_font"
+          />
+
+      <View
+          android:layout_width="20dp"
+          android:layout_height="2dp"
+          android:background="@color/qc_student_status_2"
+          />
+    </LinearLayout>
+
+  </LinearLayout>
+</merge>

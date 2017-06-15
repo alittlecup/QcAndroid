@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:id="@+id/drawer_headerview"
+      android:layout_width="match_parent"
+      android:layout_height="152dp"
+      android:background="@color/colorPrimary"
+      >
+
+    <FrameLayout
+        android:id="@+id/header_icon_out"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/circle_halftrans"
+        android:baseline="32dp"
+        >
+
+      <ImageView
+          android:id="@+id/header_icon"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:layout_gravity="center"
+          android:scaleType="fitXY"
+          >
+      </ImageView>
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/drawer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@id/header_icon_out"
+        android:layout_toRightOf="@id/header_icon_out"
+        android:baseline="32dp"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        />
+
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:scrollbars="none"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#dddddd"
+          />
+
+      <LinearLayout
+          android:id="@+id/oem_acts"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:visibility="gone"
+          >
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#dddddd"
+          >
+      </View>
+
+      <LinearLayout
+          android:id="@+id/drawer_modules"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:clickable="false"
+          android:orientation="vertical"
+          >
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

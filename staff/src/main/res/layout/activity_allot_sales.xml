@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data></data>
+
+  <cn.qingchengfit.staffkit.views.custom.MyDrawerLayout
+      android:id="@+id/drawer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <include
+          layout="@layout/common_toolbar"
+          android:id="@+id/common_toolbar"
+          />
+
+      <FrameLayout
+          android:id="@+id/student_frag"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_student_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        />
+  </cn.qingchengfit.staffkit.views.custom.MyDrawerLayout>
+
+</layout>
+
+

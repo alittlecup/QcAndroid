@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <ScrollView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:minHeight="50dp"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+
+          <cn.qingchengfit.staffkit.views.custom.QcTagContainerLayout
+              android:id="@+id/layout_tags"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingBottom="5dp"
+              android:paddingTop="15dp"
+              app:container_background_color="@color/transparent"
+              app:container_border_color="@color/transparent"
+              app:container_enable_drag="false"
+              app:horizontal_interval="10dp"
+              app:tag_background_color="@color/light_blue_grey"
+              app:tag_border_color="@color/grey_blue"
+              app:tag_drawable_state0="@drawable/bg_send_msg_tag"
+              app:tag_text_color="@color/white"
+              app:tag_theme="none"
+              app:vertical_interval="10dp"
+              >
+
+          </cn.qingchengfit.staffkit.views.custom.QcTagContainerLayout>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/btn_add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|end"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_add"
+            />
+
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="10dp"
+          >
+      </FrameLayout>
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:minHeight="200dp"
+
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:text="@string/qc_sms_begin"
+            />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:minHeight="200dp"
+            android:padding="@dimen/activity_horizontal_margin"
+            style="@style/Qc.TextCommonBlack"
+            />
+
+        <View
+            android:layout_width="110dp"
+            android:layout_height="45dp"
+            android:clickable="true"
+            />
+      </FrameLayout>
+
+
+    </LinearLayout>
+
+  </ScrollView>
+
+  <RelativeLayout
+      android:id="@+id/layout_send_hint"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:gravity="end"
+      android:orientation="vertical"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:visibility="gone"
+      >
+
+    <TextView
+        android:id="@+id/tv_sms_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23dp"
+        android:text="30"
+        android:textColor="@color/text_orange"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="/70"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_sms_count"
+        android:text="字数超过运营商限制，将被拆分成多条发送"
+        android:textSize="@dimen/min_font"
+        />
+  </RelativeLayout>
+</LinearLayout>
+
+
+
+

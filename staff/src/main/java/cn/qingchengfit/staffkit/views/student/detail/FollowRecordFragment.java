@@ -1,0 +1,275 @@
+package cn.qingchengfit.staffkit.views.student.detail;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.transition.ChangeBounds;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.qingchengfit.inject.model.GymWrapper;
+import cn.qingchengfit.inject.model.LoginStatus;
+import cn.qingchengfit.inject.model.StudentWrapper;
+import cn.qingchengfit.model.responese.FollowRecord;
+import cn.qingchengfit.staffkit.R;
+import cn.qingchengfit.staffkit.constant.BaseFragment;
+import cn.qingchengfit.staffkit.constant.PermissionServerUtils;
+import cn.qingchengfit.staffkit.model.dbaction.SerPermisAction;
+import cn.qingchengfit.staffkit.rxbus.RxBus;
+import cn.qingchengfit.staffkit.rxbus.event.LoadingEvent;
+import cn.qingchengfit.staffkit.service.UpyunService;
+import cn.qingchengfit.staffkit.views.TitleFragment;
+import cn.qingchengfit.staffkit.views.adapter.ChatAdatper;
+import cn.qingchengfit.staffkit.views.custom.ChatInputView;
+import cn.qingchengfit.staffkit.views.custom.OnRecycleItemClickListener;
+import cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg;
+import cn.qingchengfit.staffkit.views.custom.SimpleImgDialog;
+import cn.qingchengfit.utils.AppUtils;
+import cn.qingchengfit.utils.FileUtils;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.utils.UpYunClient;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import com.tbruyelle.rxpermissions.RxPermissions;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+/**
+ * power by
+ * <p/>
+ * d8888b.  .d8b.  d8888b. d88888b d8888b.
+ * 88  `8D d8' `8b 88  `8D 88'     88  `8D
+ * 88oodD' 88ooo88 88oodD' 88ooooo 88oobY'
+ * 88~~~   88~~~88 88~~~   88~~~~~ 88`8b
+ * 88      88   88 88      88.     88 `88.
+ * 88      YP   YP 88      Y88888P 88   YD
+ * <p/>
+ * <p/>
+ * Created by Paper on 16/3/19 2016.
+ */
+public class FollowRecordFragment extends BaseFragment implements FollowRecordView, TitleFragment {
+
+    @BindView(R.id.cardnum) TextView cardnum;
+    @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
+
+    List<FollowRecord> datas = new ArrayList<>();
+
+    @BindView(R.id.chat_input) ChatInputView chatInput;
+    @BindView(R.id.disable_input) View disableInput;
+    @Inject StudentWrapper studentBean;
+    @Inject FollowRecordPresenter presenter;
+    @Inject LoginStatus loginStatus;
+    @Inject GymWrapper gymWrapper;
+    @Inject SerPermisAction serPermisAction;
+
+    private ChatAdatper adapter;
+    private Observable<UpyunService.UpYunResult> obUpyun;
+    private LinearLayoutManager manager;
+
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_follow_record, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        delegatePresenter(presenter, this);
+        adapter = new ChatAdatper(datas);
+        manager = new LinearLayoutManager(getContext());
+        recycleview.setLayoutManager(manager);
+        recycleview.setAdapter(adapter);
+        recycleview.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                presenter.queryData();
+            }
+        });
+        adapter.setOnTouchListener(new OnRecycleItemClickListener() {
+            @Override public void onItemClick(View v, int pos) {
+                chatInput.close();
+                AppUtils.hideKeyboard(getActivity());
+            }
+        });
+        adapter.setListener(new OnRecycleItemClickListener() {
+            @Override public void onItemClick(View v, int pos) {
+                if (!TextUtils.isEmpty(datas.get(pos).thumbnail)) {
+                    //                    SimpleImgDialog.newInstance(datas.get(pos).thumbnail).show(getFragmentManager(), "");
+                    SimpleImgDialog fragment = SimpleImgDialog.newInstance(datas.get(pos).thumbnail);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        //                        fragment.setEnterTransition(new ChangeBounds());
+                        ChangeBounds changeBoundsTransition = new ChangeBounds();
+                        changeBoundsTransition.setDuration(1000l);
+                        fragment.setSharedElementEnterTransition(changeBoundsTransition);
+                        fragment.setAllowEnterTransitionOverlap(true);
+                    }
+                    //                    getParentFragment().getFragmentManager().beginTransaction()
+                    //                            .addSharedElement(view.findViewById(R.id.chat_img), "shareimg")
+                    //                            .add(mCallbackActivity.getFragId(), fragment)
+                    //                            .addToBackStack(null)
+                    //                            .commit();
+                    fragment.show(getFragmentManager(), "");
+                }
+            }
+        });
+        presenter.queryData();
+        chatInput.setSendCallback(new ChatInputView.OnSendCallback() {
+            @Override public void onSendMsg(String s) {
+                presenter.addFollow(s, null);
+                //                FollowRecords.Follow follow = new FollowRecords.Follow();
+                //                follow.type = "record";
+                //                follow.content = s;
+                //                follow.created_at = DateUtils.DateToServer(new Date());
+                //                QcStudentBean studentBean = new QcStudentBean();
+                //                studentBean.setUsername("自己");
+                //                studentBean.setAvatar("");
+                //                follow.created_by = studentBean;
+                //                datas.add(follow);
+                //                adapter.notifyDataSetChanged();
+            }
+
+            @Override public void onPicture() {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);//ACTION_OPEN_DOCUMENT
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/jpeg");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    startActivityForResult(intent, ChoosePictureFragmentDialog.CHOOSE_GALLERY);
+                } else {
+                    startActivityForResult(intent, ChoosePictureFragmentDialog.CHOOSE_GALLERY);
+                }
+            }
+
+            @Override public void onCamara() {
+                new RxPermissions(getActivity()).request(Manifest.permission.CAMERA).subscribe(new Subscriber<Boolean>() {
+                    @Override public void onCompleted() {
+
+                    }
+
+                    @Override public void onError(Throwable e) {
+
+                    }
+
+                    @Override public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            Intent intent = new Intent();
+                            // 指定开启系统相机的Action
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            intent.addCategory(Intent.CATEGORY_DEFAULT);
+                            Uri uri = Uri.fromFile(FileUtils.getTmpImageFile(getContext()));
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                            startActivityForResult(intent, ChoosePictureFragmentDialog.CHOOSE_CAMERA);
+                        } else {
+                            ToastUtils.show("请先开启拍照权限");
+                        }
+                    }
+                });
+            }
+        });
+        obUpyun = RxBus.getBus().register(UpyunService.UpYunResult.class);
+        obUpyun.subscribe(new Action1<UpyunService.UpYunResult>() {
+            @Override public void call(UpyunService.UpYunResult upYunResult) {
+                if (TextUtils.isEmpty(upYunResult.getUrl())) {
+                    RxBus.getBus().post(new LoadingEvent(false));
+                } else {
+                    presenter.addFollow(null, upYunResult.getUrl());
+                }
+            }
+        });
+
+        if (!serPermisAction.check(PermissionServerUtils.MANAGE_MEMBERS_CAN_CHANGE)) {
+            disableInput.setVisibility(View.VISIBLE);
+        } else {
+            disableInput.setVisibility(View.GONE);
+        }
+
+        return view;
+    }
+
+    @OnClick(R.id.disable_input) public void onClickDisable() {
+        showAlert(getString(R.string.alert_permission_forbid));
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String filepath = "";
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ChoosePictureFragmentDialog.CHOOSE_GALLERY) {
+                filepath = FileUtils.getPath(getActivity(), data.getData());
+            } else if (requestCode == ChoosePictureFragmentDialog.CHOOSE_CAMERA) {
+                filepath = FileUtils.getTmpImageFile(getContext()).getAbsolutePath();
+            }
+            //            UpyunService.uploadPic(getActivity(),filepath);
+            RxBus.getBus().post(new LoadingEvent(true));
+            final String finalFilepath = filepath;
+            Observable.create(new Observable.OnSubscribe<String>() {
+                @Override public void call(Subscriber<? super String> subscriber) {
+                    String upImg = UpYunClient.upLoadImg("header/", new File(finalFilepath));
+                    subscriber.onNext(upImg);
+                    subscriber.onCompleted();
+                }
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<String>() {
+                @Override public void call(String s) {
+                    if (TextUtils.isEmpty(s)) {
+                        RxBus.getBus().post(new LoadingEvent(false));
+                    } else {
+                        presenter.addFollow(null, s);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override public void onData(List<FollowRecord> records, int page) {
+        if (page == 1) datas.clear();
+        for (int i = 0; i < records.size(); i++) {
+            datas.add(0, records.get(i));
+        }
+        //        datas.addAll(records);
+        adapter.notifyDataSetChanged();
+        recycleview.setFresh(false);
+        recycleview.setNoData(datas.size() == 0);
+        if (page == 1) {
+            manager.scrollToPosition(datas.size() - 1);
+        }
+        //            recycleview.scrollToPosition(datas.size());
+        AppUtils.hideKeyboard(getActivity());
+        RxBus.getBus().post(new LoadingEvent(false));
+        chatInput.close();
+    }
+
+    @Override public void onAdd() {
+        presenter.initPage();
+        presenter.queryData();
+    }
+
+    @Override public String getTitle() {
+        return "跟进记录";
+    }
+
+    @Override public void onDestroyView() {
+        RxBus.getBus().unregister(UpyunService.UpYunResult.class.getName(), obUpyun);
+        presenter.unattachView();
+        super.onDestroyView();
+    }
+
+    //    @OnClick(R.id.add_follow)
+    //    public void onClick() {
+    //        presenter.addFollow();
+    //    }
+
+    @Override public String getFragmentName() {
+        return FollowRecordFragment.class.getName();
+    }
+}

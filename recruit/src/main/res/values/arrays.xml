@@ -38,5 +38,14 @@
     <item>教育经历</item>
     <item>自我描述</item>
   </string-array>
+  <string-array name="resume_empty_items">
+    <item></item>
+    <item>+ 填写求职意向</item>
+    <item>+ 添加照片展示</item>
+    <item>+ 添加工作经历</item>
+    <item>+ 添加学习培训</item>
+    <item>+ 添加教育经历</item>
+    <item>+ 添加自我描述</item>
+  </string-array>
 
 </resources>

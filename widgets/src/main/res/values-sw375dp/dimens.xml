@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="qc_civ_label_max_width_phone">269dp</dimen>
+  <dimen name="qc_civ_label_max_width_txt">169dp</dimen>
+</resources>

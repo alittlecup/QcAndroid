@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import cn.qingchengfit.recruit.R;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ResumeBaseInfoItem extends AbstractFlexibleItem<ResumeBaseInfoItem.ResumeBaseInfoVH> {
 
     @Override public int getLayoutRes() {
-        return 0;
+        return R.layout.item_resume_base_info;
     }
 
     @Override public ResumeBaseInfoVH createViewHolder(FlexibleAdapter adapter, LayoutInflater inflater, ViewGroup parent) {

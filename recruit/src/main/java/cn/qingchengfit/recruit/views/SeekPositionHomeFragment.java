@@ -28,9 +28,12 @@ import cn.qingchengfit.recruit.item.RecruitPositionItem;
 import cn.qingchengfit.recruit.model.Job;
 import cn.qingchengfit.recruit.presenter.SeekPositionPresenter;
 import cn.qingchengfit.support.animator.FlipAnimation;
+import cn.qingchengfit.utils.FileUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.views.fragments.FilterFragment;
 import cn.qingchengfit.widgets.QcFilterToggle;
+import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -79,6 +82,7 @@ public class SeekPositionHomeFragment extends BaseFragment
     @BindView(R2.id.tv_resume_completed) TextView tvResumeCompleted;
     @BindView(R2.id.img_my_job_fair) ImageView imgMyJobFair;
     @BindView(R2.id.tv_job_fair) TextView tvJobFair;
+    private FilterFragment filterFragment;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -95,6 +99,10 @@ public class SeekPositionHomeFragment extends BaseFragment
                 }
             });
         return view;
+    }
+
+    private void initFilter(){
+        filterFragment = new FilterFragment();
     }
 
     @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
@@ -254,6 +262,8 @@ public class SeekPositionHomeFragment extends BaseFragment
         switch (v.getId()) {
             case R2.id.qft_city:
                 qftCity.toggle();
+                Gson gson = new Gson();
+                //CitiesData citiesData = gson.fromJson(FileUtils.getJsonFromAssert("cities.json", getContext()), CitiesData.class);
                 qftDemand.setChecked(false);
                 qftSalary.setChecked(false);
                 break;
@@ -275,6 +285,7 @@ public class SeekPositionHomeFragment extends BaseFragment
     public void showFilter() {
 
         if (fragRecruitFilter.getVisibility() == View.VISIBLE) {
+
 
         } else {
             fragRecruitFilter.setVisibility(View.VISIBLE);

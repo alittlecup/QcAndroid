@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/toolbar"
+      android:orientation="horizontal"
+      >
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/ic_titlebar_back"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        >
+
+      <EditText
+          android:id="@+id/search_et"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="8dp"
+          android:layout_marginTop="8dp"
+          android:background="@drawable/bg_searchview"
+          android:drawableLeft="@drawable/ic_search_black"
+          android:drawablePadding="8dp"
+          android:hint="更衣柜号"
+          android:paddingLeft="8dp"
+          />
+
+      <ImageView
+          android:id="@+id/clear"
+          android:layout_width="40dp"
+          android:layout_height="match_parent"
+          android:layout_gravity="right"
+          android:padding="10dp"
+          android:src="@drawable/ic_et_clear"
+          />
+    </FrameLayout>
+
+  </LinearLayout>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <FrameLayout
+        android:id="@+id/frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/chosen_layout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="已选更衣柜 : "
+          />
+
+      <TextView
+          android:id="@+id/chosen_info"
+          android:layout_width="0dp"
+          android:layout_height="28dp"
+          android:layout_weight="1"
+          android:background="@drawable/bg_wardrobe_choose"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:textColor="@color/green"
+          />
+
+      <ImageView
+          android:id="@+id/del_btn"
+          android:layout_width="50dp"
+          android:layout_height="match_parent"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_item_delete"
+          />
+    </LinearLayout>
+  </FrameLayout>
+
+</LinearLayout>

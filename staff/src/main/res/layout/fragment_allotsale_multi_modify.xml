@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+  <data>
+
+    <variable
+        name="fragment"
+        type="cn.qingchengfit.staffkit.views.allotsales.MultiModifyFragment"
+        />
+  </data>
+
+  <cn.qingchengfit.staffkit.views.custom.MyDrawerLayout
+      android:id="@+id/drawer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/scroll_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/myhome_appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_grey"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp"
+            >
+
+          <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+              android:id="@+id/swt_show_config"
+              android:layout_width="match_parent"
+              android:layout_height="36dp"
+              android:visibility="gone"
+              app:sw_background="@color/bg_grey"
+              app:sw_lable="仅显示未分配销售的会员"
+              app:sw_showdivier="true"
+              app:sw_text_color="@color/text_black"
+              />
+
+          <include
+              layout="@layout/divider_grey"
+              android:id="@+id/ll_divider"
+              android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:visibility="gone"
+              />
+
+          <RelativeLayout
+              android:id="@+id/rl_search"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:padding="10dp"
+              android:visibility="visible"
+              app:layout_scrollFlags="scroll|enterAlways"
+              >
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qc_allotsale_search_hight"
+                android:layout_toLeftOf="@+id/add_student"
+                android:layout_toStartOf="@+id/add_student"
+                android:background="@drawable/bg_rect_allotsale_search"
+                android:drawablePadding="10dp"
+                android:hint="@string/qc_allotsale_search_hint"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:textSize="@dimen/min_font"
+                />
+
+            <ImageView
+                android:id="@+id/img_search_clear"
+                android:layout_width="@dimen/qc_allotsale_search_hight"
+                android:layout_height="@dimen/qc_allotsale_search_hight"
+                android:layout_alignEnd="@+id/et_search"
+                android:layout_alignRight="@+id/et_search"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|right"
+                android:onClick="@{fragment.handleClick}"
+                android:padding="9dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_cancel_grey_16dp"
+                />
+
+            <ImageView
+                android:id="@+id/add_student"
+                android:layout_width="40dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:onClick="@{fragment.handleClick}"
+                android:scaleType="center"
+                android:src="@drawable/btn_add_orange"
+                android:visibility="gone"
+                />
+
+          </RelativeLayout>
+
+          <include layout="@layout/divider_grey"/>
+
+          <include layout="@layout/layout_fliter"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+          <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+              android:id="@+id/rv_student"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:visibility="visible"
+              />
+
+          <include
+              layout="@layout/dialog_alpha_tip"
+              android:visibility="gone"
+              />
+
+          <cn.qingchengfit.widgets.AlphabetView
+              android:id="@+id/alphabetview"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end"
+              android:paddingBottom="0dp"
+              android:paddingTop="0dp"
+              />
+        </FrameLayout>
+
+        <include
+            layout="@layout/divider_grey"
+            android:id="@+id/ll_divider_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/bg_grey"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            >
+
+          <LinearLayout
+              android:id="@+id/ll_show_select"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:onClick="@{fragment.handleClick}"
+              android:orientation="horizontal"
+              >
+
+            <TextView
+                android:id="@+id/tv_allotsale_select_count"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="@drawable/circle_allotsale_green"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/min_font"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
+                android:gravity="center"
+                android:text="@string/qc_allotsale_checked"
+                android:textColor="@color/qc_text_black"
+                android:textSize="@dimen/min_font"
+                />
+
+            <ImageView
+                android:id="@+id/img_down"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                app:srcCompat="@drawable/ic_common_arrow_up"
+                />
+          </LinearLayout>
+
+          <View
+              android:id="@+id/view_space"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:background="#0000"
+              android:visibility="gone"
+              />
+
+          <LinearLayout
+              android:id="@+id/ll_modify_sale"
+              android:layout_width="wrap_content"
+              android:layout_height="28dp"
+              android:layout_marginEnd="10dp"
+              android:layout_marginRight="10dp"
+              android:background="@drawable/bg_rect_allot_green"
+              android:visibility="gone"
+              >
+
+            <Button
+                android:id="@+id/btn_modify_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:onClick="@{fragment.handleClick}"
+                android:text="@string/qc_allotsale_modify_sale"
+                android:textColor="@color/qc_allotsale_green"
+                android:textSize="@dimen/min_font"
+                />
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/ll_remove_stud"
+              android:layout_width="wrap_content"
+              android:layout_height="28dp"
+              android:layout_marginEnd="10dp"
+              android:layout_marginRight="10dp"
+              android:background="@drawable/bg_rect_allot_green"
+              android:visibility="gone"
+              >
+
+            <Button
+                android:id="@+id/btn_remove_stud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:onClick="@{fragment.handleClick}"
+                android:text="@string/qc_allotsale_remove_stud"
+                android:textColor="@color/qc_allotsale_green"
+                android:textSize="@dimen/min_font"
+                />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+  </cn.qingchengfit.staffkit.views.custom.MyDrawerLayout>
+</layout>

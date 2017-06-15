@@ -1,0 +1,61 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_simple_toolbar"/>
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/custom_statment_start"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/start_day"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/custom_statment_end"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_lable="@string/end_day"
+      app:civ_showright="true"
+
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/custom_statment_cardtype"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/cardtype_all"
+      app:civ_lable="@string/cardtype"
+      app:civ_showright="true"
+      />
+
+  <cn.qingchengfit.staffkit.views.custom.CommonInputView
+      android:id="@+id/custom_statment_signin_type"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      app:civ_clickable="true"
+      app:civ_content="@string/no_limit"
+      app:civ_lable="状态"
+      app:civ_showright="true"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <Button
+      android:id="@+id/custom_statment_generate"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_margin="30dp"
+      android:text="@string/generate_statment"
+      />
+</LinearLayout>

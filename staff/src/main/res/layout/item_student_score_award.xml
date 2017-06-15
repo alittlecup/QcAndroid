@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data></data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:paddingBottom="16dp"
+      android:paddingTop="16dp"
+      >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_score_award_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:layout_marginLeft="16dp"
+          android:textColor="@color/qc_text_black"
+          android:textSize="15sp"
+          tools:text="奖励规则1"
+          />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="有效期"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_award_date_range"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            tools:text="2015年1月20日至2016年2月20日"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_score_award_group"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="3dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="团课预约"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_award_times_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            tools:text="1.5倍"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_score_award_private"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="3dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="私教预约"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_award_times_private"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            tools:text="1.5倍"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_score_award_signin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="3dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="签到"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_award_times_signin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            tools:text="1.5倍"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_score_award_buy"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="3dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="新购会员卡"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_award_times_buy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            tools:text="1.5倍"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_score_award_charge"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="3dp"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="会员卡续费"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            />
+
+        <TextView
+            android:id="@+id/tv_score_award_times_charge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/qc_text_grey_less"
+            android:textSize="@dimen/min_font"
+            tools:text="1.5倍"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_arrow_right"
+        />
+
+  </LinearLayout>
+</layout>

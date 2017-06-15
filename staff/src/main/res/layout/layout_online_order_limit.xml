@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.qingchengfit.staffkit.views.custom.ExpandedLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:el_expanded="false"
+    app:el_label="预约限制"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/divider_grey_left_right"/>
+
+    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        android:id="@+id/people_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_lable="每位会员每节课可预约人次"
+        app:civ_showright="true"
+
+        />
+
+    <cn.qingchengfit.staffkit.views.custom.CommonInputView
+        android:id="@+id/only_new"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:civ_clickable="true"
+        app:civ_lable="可预约对象"
+        app:civ_showright="true"
+        />
+
+  </LinearLayout>
+
+</cn.qingchengfit.staffkit.views.custom.ExpandedLayout>

@@ -37,8 +37,10 @@ public class ResumeIntentImgShowItem extends AbstractFlexibleItem<ResumeIntentIm
     @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeIntentImgShowVH holder, int position, List payloads) {
         if (imgs != null) {
             CommonFlexAdapter commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
-            GravitySnapHelper helper = new GravitySnapHelper(Gravity.START);
-            helper.attachToRecyclerView(holder.itemRv);
+            if (holder.itemRv.getOnFlingListener() == null){
+                GravitySnapHelper helper = new GravitySnapHelper(Gravity.START);
+                helper.attachToRecyclerView(holder.itemRv);
+            }
             holder.itemRv.setAdapter(commonFlexAdapter);
             for (String s : imgs) {
                 commonFlexAdapter.addItem(new Image140Item(s));

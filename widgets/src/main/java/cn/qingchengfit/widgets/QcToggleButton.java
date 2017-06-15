@@ -103,6 +103,11 @@ public class QcToggleButton extends View implements Checkable{
         return buttonDrawable == null ? 0: buttonDrawable.getIntrinsicWidth();
     }
 
+    public void setChangeColor(int colorChange){
+        mTextPaint.setColor(colorChange);
+        DrawableCompat.setTint(buttonDrawable, colorChange);
+    }
+
     @Override public boolean performClick() {
         if (!hasOnClickListeners()) {
             toggle();

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/divider_grey"/>
+
+  <include layout="@layout/divider_grey_margin"/>
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="Totalbody - 杨拉拉"
+          style="@style/Qc.TextCommonBlack"
+          />
+
+      <TextView
+          android:id="@+id/sub_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/min_font"
+          tools:text="888店家,1230-123-123"
+          style="@style/Qc.TextCommonGrey"
+          />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:drawablePadding="8dp"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="@string/manage"
+        android:textColor="@color/colorPrimary"
+        />
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey_left_right"/>
+
+  <TextView
+      android:id="@+id/no_data"
+      android:layout_width="match_parent"
+      android:layout_height="38dp"
+      android:background="@color/white"
+      android:gravity="center"
+      android:text="本节课暂无照片"
+      android:visibility="gone"
+      />
+</LinearLayout>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+  <ImageView
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:layout_marginRight="16dp"
+      android:visibility="visible"
+      app:srcCompat="@drawable/ic_paymethod_card_yellow"
+      />
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/realcard_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="中美引力储值卡(123)1"
+        android:textColor="@color/text_black"
+        />
+
+    <TextView
+        android:id="@+id/realcard_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="5dp"
+        android:text="余额:105000元"
+        android:textColor="@color/text_grey"
+        />
+
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/iv_card_selected"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="16dp"
+      android:visibility="gone"
+      app:srcCompat="@drawable/ic_sign_in_card_selected"
+      />
+
+</LinearLayout>

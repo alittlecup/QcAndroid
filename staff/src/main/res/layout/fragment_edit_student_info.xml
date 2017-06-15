@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/bg_grey"
+      android:overScrollMode="always"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_add_hint"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/ic_circle_info"
+          android:drawablePadding="4dp"
+          android:drawableStart="@drawable/ic_circle_info"
+          android:paddingBottom="10dp"
+          android:paddingTop="10dp"
+          android:text="添加会员照片可以帮助工作人员在签到、预约时辨别会员真实身份"
+          style="@style/TextTitleHint"
+          />
+
+      <RelativeLayout
+          android:id="@+id/header_layout"
+          android:layout_width="match_parent"
+          android:layout_height="90dp"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/signin_img"
+            android:textColor="#aa9b9b9b"
+            />
+
+        <ImageView
+            android:id="@+id/header_img"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_default_header"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_right"
+            />
+      </RelativeLayout>
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/civ_name"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_marginTop="@dimen/activity_vertical_margin"
+          app:civ_lable="@string/name"
+          />
+
+      <RelativeLayout
+          android:id="@+id/gender_layout"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/gender"
+            android:textColor="#aa9b9b9b"
+            />
+
+        <RadioGroup
+            android:id="@+id/course_type_rg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:dividerPadding="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+          <RadioButton
+              android:id="@+id/gender_male"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:button="@drawable/radio_selector"
+              android:checked="true"
+              android:text="@string/gender_male"
+
+              />
+
+          <RadioButton
+              android:id="@+id/gender_female"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:button="@drawable/radio_selector"
+              android:text="@string/gender_female"
+              />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_white"
+            />
+      </RelativeLayout>
+
+      <cn.qingchengfit.staffkit.views.custom.PhoneEditText
+          android:id="@+id/phone_num"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          app:phone_show_icon="false"
+          />
+
+      <include layout="@layout/divider_grey_left_right"/>
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/civ_birthday"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="@string/birthday"
+          />
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/civ_address"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_lable="@string/address"
+          />
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/support_shops"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:visibility="gone"
+          app:civ_clickable="true"
+          app:civ_lable="@string/belong_to_gyms"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/civ_remark"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="备注"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <include
+          layout="@layout/divider_grey"
+          android:id="@+id/divider_edit_student"
+          />
+
+      <include
+          layout="@layout/divider_grey_margin"
+          android:id="@+id/margin_divider_edit_student"
+          />
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/civ_salers"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="@string/allot_saler"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <cn.qingchengfit.staffkit.views.custom.CommonInputView
+          android:id="@+id/civ_coaches"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          app:civ_clickable="true"
+          app:civ_lable="@string/allocate_coach"
+          app:civ_showdivier="false"
+          app:civ_showright="true"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/ll_student_source"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="来源"
+            android:textColor="#aa9b9b9b"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_student_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:hint="请选择"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/qc_text_black"
+            android:textColorHint="@color/qc_text_grey"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/ll_student_referrer"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingLeft="@dimen/activity_horizontal_margin"
+          android:paddingRight="@dimen/activity_horizontal_margin"
+          >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="推荐人"
+            android:textColor="#aa9b9b9b"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_student_referrer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical|right"
+            android:hint="查找推荐人"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/qc_text_black"
+            android:textColorHint="@color/qc_text_grey"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_triangle_right"
+            tools:src="@drawable/ic_triangle_right"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <Button
+          android:id="@+id/btn_save"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/qc_item_height"
+          android:layout_margin="@dimen/activity_vertical_margin"
+          android:text="@string/save"
+          android:visibility="gone"
+          />
+
+    </LinearLayout>
+
+  </ScrollView>
+</LinearLayout>
+
+
+

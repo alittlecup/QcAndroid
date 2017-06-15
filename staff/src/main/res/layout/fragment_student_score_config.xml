@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qc_bg_grey"
+    android:scrollbars="none"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/qc_bg_grey"
+      android:orientation="vertical"
+      >
+
+    <include layout="@layout/common_simple_toolbar"/>
+
+    <cn.qingchengfit.staffkit.views.custom.SwitcherLayout
+        android:id="@+id/swt_score_config"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qc_item_height"
+        app:sw_lable="积分功能"
+        app:sw_showdivier="false"
+        app:sw_text_color="@color/qc_text_black"
+        />
+
+    <include layout="@layout/divider_grey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="9dp"
+        android:text="注意：开启积分功能后，会员端将展示积分。"
+        android:textSize="@dimen/min_font"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_student_score_config_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+      <include layout="@layout/divider_grey"/>
+
+      <LinearLayout
+          android:id="@+id/ll_config_base"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:visibility="visible"
+          >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="16dp"
+              android:layout_weight="1"
+              android:orientation="horizontal"
+              >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/vector_score_base_lable"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="基础积分"
+                android:textColor="@color/qc_text_grey"
+                android:textSize="@dimen/common_font"
+                />
+          </LinearLayout>
+
+          <TextView
+              android:id="@+id/tv_score_rule_update_info"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="16dp"
+              android:layout_marginTop="4dp"
+              tools:text="修改时间"
+              />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_arrow_right"
+            />
+
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview_score_base_detail"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="0dp"
+          android:background="@color/white"
+          android:paddingBottom="12dp"
+          android:paddingTop="12dp"
+          android:visibility="visible"
+          />
+
+      <include layout="@layout/divider_grey"/>
+
+      <include
+          layout="@layout/divider_grey"
+          android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:layout_marginTop="10dp"
+          />
+
+      <LinearLayout
+          android:id="@+id/ll_config_award_lable"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingBottom="13dp"
+          android:paddingTop="9dp"
+          android:visibility="visible"
+          >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            app:srcCompat="@drawable/vector_score_award_lable"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="积分奖励规则"
+            android:textColor="@color/qc_text_grey"
+            android:textSize="@dimen/common_font"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview_award"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:visibility="visible"
+          />
+      <!--<include layout="@layout/divider_grey" />-->
+      <LinearLayout
+          android:id="@+id/ll_config_award_add"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:paddingBottom="13dp"
+          android:paddingTop="9dp"
+          android:visibility="visible"
+          >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="+  添加积分奖励规则"
+            android:textColor="@color/qc_score_award_add"
+            android:textSize="@dimen/common_font"
+            />
+      </LinearLayout>
+
+      <include layout="@layout/divider_grey"/>
+
+      <TextView
+          android:id="@+id/tv_student_score_award_rule"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+          android:layout_marginTop="12dp"
+          android:text="注意：【积分奖励】能在设定时间内在基础积分规则上增加积分倍数"
+          android:textSize="@dimen/min_font"
+          android:visibility="visible"
+          />
+
+      <TextView
+          android:id="@+id/tv_student_score_award_rule_dis"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginBottom="12dp"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+          android:layout_marginTop="12dp"
+          android:background="#E4E4E4"
+          android:gravity="center"
+          android:padding="6dp"
+          android:text="显示已删除的奖励规则"
+          android:textSize="@dimen/min_font"
+          android:visibility="visible"
+          />
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview_award_dis"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          android:visibility="gone"
+          />
+
+    </LinearLayout>
+  </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

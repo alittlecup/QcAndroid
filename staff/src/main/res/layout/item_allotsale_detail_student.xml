@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+  <data></data>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+
+    <TextView
+        android:id="@+id/item_student_detail_alpha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_grey"
+        android:paddingBottom="4dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="4dp"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        tools:text="A"
+        />
+
+    <LinearLayout
+        android:id="@+id/sml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_click"
+        android:orientation="vertical"
+        >
+
+      <include
+          layout="@layout/item_allotsale_detail_content"
+          android:id="@+id/smContentView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+          android:layout_marginStart="@dimen/activity_horizontal_margin"
+          />
+
+      <!--<include-->
+      <!--android:id="@+id/smMenuViewRight"-->
+      <!--layout="@layout/item_allotsale_detail_right_menu" />-->
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+
+</layout>

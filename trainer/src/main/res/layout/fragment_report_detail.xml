@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:padding="15dp"
+      >
+
+    <ImageView
+        android:id="@+id/image_report_detail_head"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        tools:src="@drawable/head"
+        />
+
+    <TextView
+        android:id="@+id/text_report_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/image_report_detail_head"
+        android:textSize="18sp"
+        tools:text="Total 卡迪欧"
+        style="@style/QcTextStyleTitleBold"
+        />
+
+    <TextView
+        android:id="@+id/text_report_detail_studio_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_report_detail_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/image_report_detail_head"
+        android:maxLines="1"
+        android:textSize="14sp"
+        tools:text="2017-04-17  09:00，店名很长很长很长很长很长很长很长很长"
+        style="@style/QcTextStyleMediumWarm"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_report_detail_studio_name"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="9dp"
+        android:layout_toRightOf="@id/image_report_detail_head"
+        >
+
+      <ImageView
+          android:id="@+id/image_report_detail_coach_head"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          tools:src="@drawable/head"
+          />
+
+      <TextView
+          android:id="@+id/image_report_detail_coach_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:layout_toRightOf="@id/image_report_detail_coach_head"
+          android:textSize="13sp"
+          tools:text="娜娜"
+          style="@style/QcTextStyleSmallWarm"
+          />
+
+      <cn.qingchengfit.widgets.RatingBarVectorFix
+          android:id="@+id/student_judge_coach_star"
+          android:layout_width="wrap_content"
+          android:layout_height="10dp"
+          android:layout_alignLeft="@id/image_report_detail_coach_name"
+          android:layout_below="@id/image_report_detail_coach_name"
+          android:layout_toRightOf="@id/image_report_detail_coach_head"
+          android:isIndicator="true"
+          android:numStars="5"
+          android:stepSize="0.1"
+          tools:rating="4.7"
+          style="@style/Qc.RatingBar"
+          />
+
+    </RelativeLayout>
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingBottom="16dp"
+      android:paddingTop="16dp"
+      >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="服务人次"
+          android:textColor="@color/qc_text_grey"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <TextView
+          android:id="@+id/text_report_reverse_number"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="1人次"
+          style="@style/QcTextStyleTitleBold"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="课程收入"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <TextView
+          android:id="@+id/text_report_reverse_income"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="200.00元"
+          style="@style/QcTextStyleTitleBold"
+          />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="实际收入"
+          style="@style/Qc.TextCommonGrey"
+          />
+
+      <TextView
+          android:id="@+id/text_report_reverse_fact"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/text_orange"
+          android:textSize="20sp"
+          tools:text="180.00元"
+          />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_report_detail"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:background="@color/white"
+      />
+
+</LinearLayout>

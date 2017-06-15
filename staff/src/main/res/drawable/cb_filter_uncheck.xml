@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+  <item>
+    <shape
+        android:shape="oval"
+        >
+      <size
+          android:height="25dp"
+          android:width="25dp"/>
+      <solid android:color="@color/colorPrimary"/>
+    </shape>
+  </item>
+  <item
+      android:bottom="10dp"
+      android:drawable="@drawable/ic_cb_filter"
+      android:gravity="center"
+      android:height="25dp"
+      android:left="10dp"
+      android:right="10dp"
+      android:top="10dp"
+      android:width="25dp"
+      />
+</layer-list>

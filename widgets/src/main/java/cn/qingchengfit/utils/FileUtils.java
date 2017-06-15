@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,6 +48,27 @@ public class FileUtils {
             file.createNewFile();
         } catch (IOException e) {
         }
+        return file;
+    }
+
+    public static File getTmpImageFileName(Context context, String name) {
+        File file;
+        if(context.getExternalCacheDir() != null) {
+            String path = context.getExternalCacheDir().getAbsolutePath();
+            file = new File(path + File.separator + name + ".png");
+        } else {
+            file = new File(context.getCacheDir().getAbsolutePath() + File.separator + name + ".png");
+        }
+
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+                file.deleteOnExit();
+            } catch (IOException var4) {
+                ;
+            }
+        }
+
         return file;
     }
     public static File getTmpImageFile(Context context,String plus) {
@@ -90,29 +110,81 @@ public class FileUtils {
         return file;
     }
 
-//    public static void saveInput2File(InputStream input,){
-//        try {
-//            File file = new File(getCacheDir(), "cacheFileAppeal.srl");
-//            OutputStream output = new FileOutputStream(file);
-//            try {
-//                try {
-//                    byte[] buffer = new byte[4 * 1024]; // or other buffer size
-//                    int read;
-//
-//                    while ((read = input.read(buffer)) != -1) {
-//                        output.write(buffer, 0, read);
-//                    }
-//                    output.flush();
-//                } finally {
-//                    output.close();
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace(); // handle exception, define IOException and others
-//            }
-//        } finally {
-//            input.close();
-//        }
-//    }
+    @TargetApi(Build.VERSION_CODES.KITKAT) public static String getFilePath(Context context, Uri uri) {
+        boolean isKitKat = Build.VERSION.SDK_INT >= 19;
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            String docId;
+            String[] split;
+            String type;
+            if (isExternalStorageDocument(uri)) {
+                docId = DocumentsContract.getDocumentId(uri);
+                split = docId.split(":");
+                type = split[0];
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            } else {
+                if (isDownloadsDocument(uri)) {
+                    docId = DocumentsContract.getDocumentId(uri);
+                    Uri split1 =
+                        ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId).longValue());
+                    return getDataColumn(context, split1, (String) null, (String[]) null);
+                }
+
+                if (isMediaDocument(uri)) {
+                    docId = DocumentsContract.getDocumentId(uri);
+                    split = docId.split(":");
+                    type = split[0];
+                    Uri contentUri = null;
+                    if ("image".equals(type)) {
+                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("video".equals(type)) {
+                        contentUri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("audio".equals(type)) {
+                        contentUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    }
+
+                    String selection = "_id=?";
+                    String[] selectionArgs = new String[] { split[1] };
+                    return getDataColumn(context, contentUri, "_id=?", selectionArgs);
+                }
+            }
+        } else {
+            if ("content".equalsIgnoreCase(uri.getScheme())) {
+                return getDataColumn(context, uri, (String) null, (String[]) null);
+            }
+
+            if ("file".equalsIgnoreCase(uri.getScheme())) {
+                return uri.getPath();
+            }
+        }
+
+        return null;
+    }
+
+    //    public static void saveInput2File(InputStream input,){
+    //        try {
+    //            File file = new File(getCacheDir(), "cacheFileAppeal.srl");
+    //            OutputStream output = new FileOutputStream(file);
+    //            try {
+    //                try {
+    //                    byte[] buffer = new byte[4 * 1024]; // or other buffer size
+    //                    int read;
+    //
+    //                    while ((read = input.read(buffer)) != -1) {
+    //                        output.write(buffer, 0, read);
+    //                    }
+    //                    output.flush();
+    //                } finally {
+    //                    output.close();
+    //                }
+    //            } catch (Exception e) {
+    //                e.printStackTrace(); // handle exception, define IOException and others
+    //            }
+    //        } finally {
+    //            input.close();
+    //        }
+    //    }
 
     public static void saveCache(String key, String value) {
         if (TextUtils.isEmpty(value))
@@ -122,7 +194,7 @@ public class FileUtils {
 
         File f1 = new File(path);
 
-//        if (f1.exists()) {
+        //        if (f1.exists()) {
         try {
             if (!f1.exists())
                 f1.createNewFile();
@@ -140,7 +212,7 @@ public class FileUtils {
 
             e.printStackTrace();
         }
-//    }
+        //    }
     }
 
     public static String readCache(String key) {
@@ -198,7 +270,7 @@ public class FileUtils {
 
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                    Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 
                 return getDataColumn(context, contentUri, null, null);
             }
@@ -219,7 +291,7 @@ public class FileUtils {
 
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{
-                        split[1]
+                    split[1]
                 };
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
@@ -254,7 +326,7 @@ public class FileUtils {
         StringBuilder stringBuilder = new StringBuilder();
         try {
             BufferedReader bf = new BufferedReader(new InputStreamReader(
-                    context.getAssets().open(fileName)));
+                context.getAssets().open(fileName)));
             String line;
             while ((line = bf.readLine()) != null) {
                 stringBuilder.append(line);
@@ -276,17 +348,17 @@ public class FileUtils {
      * @return The value of the _data column, which is typically a file path.
      */
     public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+        String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
-                column
+            column
         };
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
-                    null);
+                null);
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(index);

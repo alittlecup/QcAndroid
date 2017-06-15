@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
+  <include layout="@layout/common_simple_toolbar"/>
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="@dimen/qc_item_height"
@@ -49,37 +49,10 @@
   </LinearLayout>
 
   <include layout="@layout/divider_grey"/>
-
-  <include
-      layout="@layout/layout_resume_title"
-      android:id="@+id/layout_title_base_info"
-      />
-
-  <FrameLayout
-      android:id="@+id/frag_resume_base_info"
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       />
 
-  <include
-      layout="@layout/layout_resume_title"
-      android:id="@+id/layout_title_intent"
-      />
-
-  <FrameLayout
-      android:id="@+id/frag_resume_intent"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
-
-  <include
-      layout="@layout/layout_resume_title"
-      android:id="@+id/layout_title_picture"
-      />
-
-  <FrameLayout
-      android:id="@+id/frag_resume_picture"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
 </LinearLayout>

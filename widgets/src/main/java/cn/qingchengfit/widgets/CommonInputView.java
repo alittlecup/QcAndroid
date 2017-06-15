@@ -3,6 +3,7 @@ package cn.qingchengfit.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
@@ -61,7 +62,7 @@ public class CommonInputView extends RelativeLayout {
         super(context);
         showDivier = true;
         inflate(context, R.layout.layout_commoninput, this);
-        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_dark);
         onFinishInflate();
     }
     public CommonInputView(Context context, boolean isNum, String content) {
@@ -69,7 +70,7 @@ public class CommonInputView extends RelativeLayout {
         str_content = content;
         showDivier = true;
         this.setIsNum(isNum);
-        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_dark);
 
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
@@ -81,7 +82,7 @@ public class CommonInputView extends RelativeLayout {
         showDivier = true;
         this.canBeNull = canBeNull;
         this.setIsNum(isNum);
-        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_grey);
+        textColor = cn.qingchengfit.utils.CompatUtils.getColor(getContext(), R.color.text_dark);
 
         inflate(context, R.layout.layout_commoninput, this);
         onFinishInflate();
@@ -144,24 +145,6 @@ public class CommonInputView extends RelativeLayout {
         this.enable = enable;
         disableView.setVisibility(enable ? GONE : VISIBLE);
     }
-    //    @Override
-    //    protected Parcelable onSaveInstanceState() {
-    //        Parcelable superState = super.onSaveInstanceState();
-    //        SavedState savedState = new SavedState(superState);
-    //        if (edit != null)
-    //            savedState.content = edit.getText().toString();
-    //        return savedState;
-    //    }
-
-    //    @Override
-    //    protected void onRestoreInstanceState(Parcelable state) {
-    //        SavedState savedState = (SavedState) state;
-    //        super.onRestoreInstanceState(savedState.getSuperState());
-    //
-    //        if (edit != null)
-    //            edit.setText(savedState.content);
-    //
-    //    }
 
     @Override protected void onFinishInflate() {
         super.onFinishInflate();
@@ -178,14 +161,15 @@ public class CommonInputView extends RelativeLayout {
             s.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.red)), l - 1, l, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             label.setText(s);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            label.setTextAppearance(R.style.QcTextStyleStandardDark);
+        }else label.setTextAppearance(getContext(),R.style.QcTextStyleStandardDark);
         label.setTextColor(textColor);
 
         if (canClick) {
-            //            edit.setClickable(false);
             edit.setFocusable(false);
             edit.setFocusableInTouchMode(false);
         } else {
-            //            edit.setClickable(true);
             edit.setFocusableInTouchMode(true);
             edit.setFocusable(true);
             setOnClickListener(new OnClickListener() {
@@ -193,7 +177,6 @@ public class CommonInputView extends RelativeLayout {
                     edit.setClickable(true);
                     edit.requestFocus();
                     AppUtils.showKeyboard(getContext(), edit);
-                    //                edit.performClick();
                 }
             });
         }
@@ -214,10 +197,10 @@ public class CommonInputView extends RelativeLayout {
         }
         if (isNum) {
             edit.setInputType(InputType.TYPE_CLASS_PHONE);
-            label.setMaxWidth((int) MeasureUtils.dpToPx(209f, getResources()));
+            label.setMaxWidth((int) getResources().getDimension(R.dimen.qc_civ_label_max_width_phone));
         } else {
             edit.setInputType(InputType.TYPE_CLASS_TEXT);
-            label.setMaxWidth((int) MeasureUtils.dpToPx(109f, getResources()));
+            label.setMaxWidth((int) getResources().getDimension(R.dimen.qc_civ_label_max_width_txt));
         }
         edit.setText(str_content);
         edit.setHint(str_hint);
@@ -280,12 +263,6 @@ public class CommonInputView extends RelativeLayout {
     }
 
     public String getContent() {
-        //        if (TextUtils.isEmpty(edit.getText())) {
-        //            if (TextUtils.isEmpty(edit.getHint()))
-        //                return "";
-        //            else
-        //                return edit.getHint().toString();
-        //        } else
         return edit.getText().toString().trim();
     }
 

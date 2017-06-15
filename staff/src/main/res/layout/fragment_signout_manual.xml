@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:recycle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <cn.qingchengfit.staffkit.views.custom.RecycleViewWithNoImg
+      android:id="@+id/recycleview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      recycle:rn_drawable="@drawable/no_signout"
+      recycle:rn_hint="该会员暂无可签出的记录"
+      recycle:rn_no_data_top="70dp"
+      />
+</LinearLayout>

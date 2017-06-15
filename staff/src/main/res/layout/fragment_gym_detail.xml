@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:id="@+id/toolbar_layout"
+      android:layout_width="match_parent"
+      android:layout_height="?android:actionBarSize"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Qc.toolbarStyle"
+        app:popupTheme="@style/ToolbarStyle.Overflow"
+        app:theme="@style/Qc.toolbarStyle"
+        app:titleTextAppearance="@style/ToolbarStyle"
+        >
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/toolbar_titile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="@string/site_usage"
+        style="@style/Qc.TextCommonBlack"
+        />
+
+    <ImageView
+        android:id="@+id/down"
+        android:layout_width="12dp"
+        android:layout_height="8dp"
+        android:layout_below="@id/toolbar_titile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:rotation="180"
+        android:scaleType="center"
+        android:src="@drawable/ic_title_triangle"
+        android:transformPivotX="6dp"
+        android:transformPivotY="4dp"
+        android:visibility="visible"
+        />
+
+
+    <TextView
+        android:id="@+id/toolbar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:text="添加场馆"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        />
+
+    <RelativeLayout
+        android:id="@+id/schedule_notification_layout"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_marginRight="?attr/actionBarSize"
+        >
+
+      <ImageView
+          android:id="@+id/schedule_notification"
+          android:layout_width="19dp"
+          android:layout_height="19dp"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/activity_horizontal_margin"
+          android:src="@drawable/ic_actionbar_notification"
+          android:visibility="gone"
+          />
+
+      <TextView
+          android:id="@+id/schedule_notification_count"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_alignParentRight="true"
+          android:layout_marginTop="11dp"
+          android:background="@drawable/bg_notification"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="11sp"
+          android:visibility="gone"
+          tools:text="99"
+          />
+
+    </RelativeLayout>
+  </RelativeLayout>
+
+
+  <android.support.design.widget.CoordinatorLayout
+      android:id="@+id/root_scroll"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="?android:actionBarSize"
+      android:fillViewport="true"
+      >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout_collapsed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+
+        >
+
+      <!--<android.support.v4.widget.SwipeRefreshLayout-->
+      <!--android:id="@+id/swipe_to_refresh"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:minHeight="266.5dp"-->
+      <!--app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"-->
+      <!--&gt;-->
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:minHeight="266.5dp"
+          android:orientation="vertical"
+          app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways"
+          >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_charts"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            />
+
+        <include layout="@layout/divider_grey"/>
+
+        <cn.qingchengfit.staffkit.views.custom.CircleIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/white"
+            app:ci_drawable="@drawable/splash_indicator_doc"
+            />
+
+
+      </LinearLayout>
+      <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:text="@string/offen_funs"
+          android:textColor="@color/text_black"
+          style="@style/TextTitleHint"
+          />
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycleview"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:background="@color/bg_grey"
+          />
+
+      <TextView
+          android:id="@+id/student_preview"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginBottom="15dp"
+          android:background="@drawable/bg_rect_prime"
+          android:paddingBottom="5dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          android:paddingTop="5dp"
+          android:text="@string/student_page_preview"
+          android:textColor="@color/colorPrimary"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          />
+
+      <TextView
+          android:id="@+id/btn_how_to_use"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:drawablePadding="@dimen/little"
+          android:text="@string/how_to_use"
+          android:textColor="@color/text_grey"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          />
+    </LinearLayout>
+
+
+  </android.support.design.widget.CoordinatorLayout>
+
+  <LinearLayout
+      android:id="@+id/gym_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="?android:actionBarSize"
+      android:background="@color/toolbar"
+      android:gravity="center_vertical"
+      android:minHeight="72dp"
+      android:orientation="horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:transformPivotY="0dp"
+      android:visibility="gone"
+      tools:visibility="visible"
+      >
+
+    <ImageView
+        android:id="@+id/shop_img"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        tools:src="@drawable/ic_test"
+        />
+
+    <LinearLayout
+        android:id="@+id/gym_info_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+
+        >
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/gym_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxWidth="179dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            tools:text="中美引力是个非常有趣的工作室"
+            />
+
+        <ImageView
+            android:id="@+id/tag_pro"
+            android:layout_width="24dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:text="PRO"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:srcCompat="@drawable/ic_pro_green"
+            />
+
+      </LinearLayout>
+
+
+      <TextView
+          android:id="@+id/gym_su"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/font_divider"
+          android:maxLines="3"
+          android:maxWidth="150dp"
+          android:textColor="@color/white"
+          android:textSize="13sp"
+          tools:text="123123123122"
+          />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/recharge"
+        android:layout_width="64dp"
+        android:layout_height="28dp"
+        android:background="@drawable/bg_rect_prime"
+        android:text="续费"
+        android:textColor="@color/colorPrimary"
+        android:textSize="13sp"
+
+        />
+
+  </LinearLayout>
+
+  <FrameLayout
+      android:id="@+id/top_frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+</FrameLayout>

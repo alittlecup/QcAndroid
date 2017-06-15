@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        >
+
+      <EditText
+          android:id="@+id/inter_searchview_et"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:background="@drawable/bg_searchview"
+          android:drawableLeft="@drawable/ic_search_black"
+          android:hint="会员姓名、手机号"
+          android:imeOptions="actionDone"
+          android:maxLength="11"
+          android:maxLines="1"
+          android:paddingLeft="16dp"
+          />
+
+      <ImageView
+          android:id="@+id/add_student"
+          android:layout_width="40dp"
+          android:layout_height="match_parent"
+          android:scaleType="center"
+          android:src="@drawable/btn_add_orange"
+
+          />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        />
+
+    <cn.qingchengfit.widgets.AlphabetView
+        android:id="@+id/alphabetview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="?actionBarSize"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        >
+    </cn.qingchengfit.widgets.AlphabetView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="56dp"
+        android:background="@color/divider_grey"
+        />
+  </RelativeLayout>
+</LinearLayout>

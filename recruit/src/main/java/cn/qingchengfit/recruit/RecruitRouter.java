@@ -9,6 +9,7 @@ import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
 import cn.qingchengfit.router.InnerRouter;
 import javax.inject.Inject;
 
@@ -107,7 +108,7 @@ public class RecruitRouter extends InnerRouter {
     }
 
     public void resumeHome() {
-
+        init(new ResumeHomeFragment());
     }
 
 }

@@ -1,1 +1,5 @@
-include ':app', ':atest', ':recruit', ':widgets'
+include ':widgets',
+    ':trainer',
+    ':atest',
+    ':recruit',
+    ':staff'

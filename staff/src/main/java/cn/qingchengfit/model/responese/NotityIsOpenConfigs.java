@@ -1,0 +1,12 @@
+package cn.qingchengfit.model.responese;
+
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
+/**
+ * Created by fb on 2017/3/1.
+ */
+
+public class NotityIsOpenConfigs {
+    @SerializedName("configs") public List<NotifyIsOpen> notifyIsOpens;
+}

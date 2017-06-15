@@ -14,7 +14,8 @@
   <string name="complete">完成</string>
   <string name="please_choose">请选择</string>
   <string name="please_input">请填写</string>
-
+  <string name="gender_male">男</string>
+  <string name="gender_female">女</string>
 
   <string name="cm_edit">编辑</string>
 

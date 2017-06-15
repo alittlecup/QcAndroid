@@ -42,6 +42,7 @@ public class Staff extends Personage implements Parcelable {
     public long count;// # 作为推荐人 已推荐人总数
     public String position_str;
     public String user_id;
+
     public Staff() {
     }
 
@@ -58,7 +59,7 @@ public class Staff extends Personage implements Parcelable {
     }
 
     public Staff(String username, String phone, String avatar, String area_code, int gender) {
-        super(username, phone, avatar, area_code,gender);
+        super(username, phone, avatar, area_code, gender);
     }
 
     protected Staff(Parcel in) {
@@ -69,6 +70,13 @@ public class Staff extends Personage implements Parcelable {
         this.count = in.readLong();
         this.position_str = in.readString();
         this.user_id = in.readString();
+    }
+
+    public Staff(Personage personage) {
+        this.user_id = personage.id;
+        this.avatar = personage.avatar;
+        this.username = personage.username;
+        this.gender = personage.gender;
     }
 
     public static Staff formatFromUser(User user, String coachId) {
@@ -136,6 +144,4 @@ public class Staff extends Personage implements Parcelable {
         dest.writeString(this.position_str);
         dest.writeString(this.user_id);
     }
-
-
 }

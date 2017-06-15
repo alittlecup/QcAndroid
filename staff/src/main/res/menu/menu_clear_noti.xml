@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="cn.qingchengfit.staffkit.MainActivity">
+  <item
+      android:id="@+id/action_clear_noti"
+      android:orderInCategory="100"
+      android:title="@string/all_read"
+      app:showAsAction="always"
+      />
+</menu>

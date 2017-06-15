@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <TextView
+        android:id="@+id/filter_default"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:text="默认"
+        android:textColor="@color/qc_text_black"
+        android:textSize="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_filter_confirm_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/card_filter_confirm"
+        android:visibility="gone"
+        />
+  </RelativeLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginLeft="16dp"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <TextView
+        android:id="@+id/filter_normal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:text="正常"
+        android:textColor="@color/qc_text_black"
+        android:textSize="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_filter_confirm_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/card_filter_confirm"
+        android:visibility="gone"
+        />
+  </RelativeLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginLeft="16dp"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <TextView
+        android:id="@+id/filter_leaving"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:text="请假中"
+        android:textColor="@color/qc_text_black"
+        android:textSize="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_filter_confirm_leaving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/card_filter_confirm"
+        android:visibility="gone"
+        />
+  </RelativeLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginLeft="16dp"
+      />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <TextView
+        android:id="@+id/out_of_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:text="已过期"
+        android:textColor="@color/qc_text_black"
+        android:textSize="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_out_of_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/card_filter_confirm"
+        android:visibility="gone"
+        />
+  </RelativeLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginLeft="16dp"
+      />
+
+  <RelativeLayout
+      android:id="@+id/ll_card_filter_stop"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      >
+
+    <TextView
+        android:id="@+id/filter_stop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:text="已停卡"
+        android:textColor="@color/qc_text_black"
+        android:textSize="12dp"
+        />
+
+    <ImageView
+        android:id="@+id/image_filter_confirm_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/card_filter_confirm"
+        android:visibility="gone"
+        />
+  </RelativeLayout>
+
+  <include
+      layout="@layout/divider_grey"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginLeft="16dp"
+      />
+
+</LinearLayout>

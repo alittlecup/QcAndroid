@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:dividerPadding="4dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:showDividers="middle"
+    tools:background="@drawable/bg_click"
+    >
+
+  <RelativeLayout
+      android:layout_width="58dp"
+      android:layout_height="58dp"
+      >
+
+    <ImageView
+        android:id="@+id/saler_header_img"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:padding="1dp"
+        android:src="@drawable/ic_default_head_nogender"
+        />
+
+    <ImageView
+        android:id="@+id/choose_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_choose_saler_hook"
+        />
+  </RelativeLayout>
+
+  <TextView
+      android:id="@+id/saler_name_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:lines="1"
+      android:maxWidth="70dp"
+      tools:text="@string/name"
+      style="@style/Qc.TextCommonBlack"
+      />
+</LinearLayout>

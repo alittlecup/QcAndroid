@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/common_toolbar"/>
+
+  <android.support.design.widget.TabLayout
+      android:id="@+id/sign_up_tab"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="@color/white"
+      app:paddingEnd="10dp"
+      app:paddingStart="10dp"
+      app:tabGravity="center"
+      app:tabIndicatorColor="@color/colorPrimary"
+      app:tabIndicatorHeight="3dp"
+      app:tabSelectedTextColor="@color/colorPrimary"
+      app:tabTextAppearance="@style/Qc.TextCommonGrey"
+      app:tabTextColor="@color/text_grey"
+      />
+
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/sign_up_viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
+
+</LinearLayout>

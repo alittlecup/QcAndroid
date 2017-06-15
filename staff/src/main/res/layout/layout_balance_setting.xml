@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@color/bg_grey"
+      android:gravity="center"
+      android:text="— 显示符合以下条件的会员卡"
+      android:textSize="12dp"
+      />
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="储值卡余额小于"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+    <EditText
+        android:id="@+id/edit_store_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/store_unit"
+        android:digits="0123456789"
+        android:inputType="number"
+        android:numeric="integer"
+
+        android:text="500"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+    <TextView
+        android:id="@+id/store_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="元"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="次卡余额小于"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+
+    <EditText
+        android:id="@+id/edit_second_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/second_unit"
+        android:digits="0123456789"
+        android:inputType="number"
+        android:numeric="integer"
+        android:text="5"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+    <TextView
+        android:id="@+id/second_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="次"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+  </RelativeLayout>
+
+  <include layout="@layout/divider_grey"/>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_marginBottom="14dp"
+      android:background="@color/white"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="剩余有效期小于"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+
+    <EditText
+        android:id="@+id/edit_remain_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/time_unit"
+        android:digits="0123456789"
+        android:inputType="number"
+        android:numeric="integer"
+        android:text="15"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+    <TextView
+        android:id="@+id/time_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="天"
+        android:textColor="@color/qc_text_black"
+        android:textSize="13dp"
+        />
+
+  </RelativeLayout>
+
+  <include
+      layout="@layout/layout_student_filter_bottom_btn"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_gravity="bottom"
+      android:layout_marginTop="14dp"
+      />
+</LinearLayout>

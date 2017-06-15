@@ -24,7 +24,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">@dimen/qc_item_height</item>
     <item name="civ_text_color">@color/qc_text_black</item>
-    <item name="civ_hint">@string/please_input</item>
+    <item name="civ_hint">@string/please_choose</item>
     <item name="civ_showdivier">true</item>
     <item name="civ_showright">true</item>
     <item name="civ_clickable">true</item>

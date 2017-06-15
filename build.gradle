@@ -13,7 +13,7 @@ ext {
 
     ]
 
-  libraries = [supportVersion  : "25.3.0",
+  libraries = [supportVersion  : "25.3.1",
                dagger          : "2.11",
                rxjava          : "1.1.6",
                rxandroid       : "1.2.1",
@@ -38,13 +38,14 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.squareup.sqldelight:gradle-plugin:0.6.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
         classpath("com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:${TINKERPATCH_VERSION}") {
             changing = true
         }
+      classpath 'com.antfortune.freeline:gradle:0.8.7'
     }
 }
 
@@ -55,9 +56,15 @@ allprojects {
       maven() {
         url "http://maven.aliyun.com/nexus/content/groups/public/"
       }
+      maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+      }
         mavenCentral()
-        maven(){
+      maven() {
             url uri('../repo')
+      }
+      maven() {
+        url uri('../../repo')
         }
         maven(){
             url uri('./repo')

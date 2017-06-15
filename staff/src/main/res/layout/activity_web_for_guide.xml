@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/webview_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <FrameLayout
+      android:id="@+id/web_for_guide_frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="@dimen/qc_item_height"
+      />
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:layout_alignParentBottom="true"
+      android:background="@color/white"
+      android:divider="@drawable/divier_linear_nomargin"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <LinearLayout
+        android:id="@+id/btn_help"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_white_click"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          app:srcCompat="@drawable/ic_homepage_help"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/help"
+          android:textSize="@dimen/min_font"
+          style="@style/Qc.TextCommonBlack"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_config_homepage"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_white_click"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        >
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          app:srcCompat="@drawable/ic_homepage_setting"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/config_homepage"
+          android:textSize="@dimen/min_font"
+          style="@style/Qc.TextCommonBlack"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_poplularize"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_white_click"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        >
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          app:srcCompat="@drawable/ic_homepage_spread"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/popularize"
+          android:textSize="@dimen/min_font"
+          style="@style/Qc.TextCommonBlack"
+          />
+    </LinearLayout>
+  </LinearLayout>
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="@dimen/qc_item_height"
+      android:background="@color/divider_grey"
+      />
+
+  <FrameLayout
+      android:id="@+id/other_frag"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
+</RelativeLayout>

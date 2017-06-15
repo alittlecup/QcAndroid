@@ -22,20 +22,7 @@ android {
     }
   }
 }
-repositories {
-  jcenter()
-  maven() {
-    url "http://maven.aliyun.com/nexus/content/groups/public/"
-  }
-  mavenCentral()
-  maven() {
-    url uri('../../repo')
-  }
-  maven() {
-    url uri('./repo')
-  }
-  maven { url "https://jitpack.io" }
-}
+
 
 
 dependencies {
@@ -46,6 +33,10 @@ dependencies {
 //  compile 'cn.qingchegfit.widgets:widgets:latest.integration'
   compile project(path: ':widgets')
 
+  compile('cn.qingchegfit.chat:chat:latest.integration') {
+    exclude group: 'com.upyun', module: 'java-sdk'
+  }
+  compile 'cn.qingchegfit.chat:sdk:latest.integration'
   compile "com.google.dagger:dagger:${libs.dagger}"
   compile "com.google.dagger:dagger-android:${libs.dagger}"
   compile "com.google.dagger:dagger-android-support:${libs.dagger}"
