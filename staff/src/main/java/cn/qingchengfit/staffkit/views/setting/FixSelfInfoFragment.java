@@ -59,7 +59,7 @@ import rx.schedulers.Schedulers;
  */
 public class FixSelfInfoFragment extends BaseDialogFragment implements CommonPView {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.header_img) ImageView headerImg;
     @BindView(R.id.header_layout) RelativeLayout headerLayout;
     @BindView(R.id.username) CommonInputView username;

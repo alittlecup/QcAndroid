@@ -56,7 +56,7 @@ import javax.inject.Inject;
 public class ResumeMarketHomeFragment extends BaseFragment {
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
     @BindView(R2.id.et_search) EditText etSearch;
     @BindView(R2.id.rv_jobfairs) RecyclerView rvJobfairs;

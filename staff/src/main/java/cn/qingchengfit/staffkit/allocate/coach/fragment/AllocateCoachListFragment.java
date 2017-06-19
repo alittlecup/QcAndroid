@@ -35,7 +35,7 @@ public class AllocateCoachListFragment extends BaseFragment
     @BindView(R.id.recycler_coaches_list) RecyclerView list;
 
     @Inject AllocateCoachListPresenter presenter;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private List<CommonAllocateItem> itemList = new ArrayList<>();
     private CommonFlexAdapter adapter;

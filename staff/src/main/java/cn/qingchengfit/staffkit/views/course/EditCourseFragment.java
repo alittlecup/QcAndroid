@@ -64,7 +64,7 @@ public class EditCourseFragment extends BaseFragment implements EditCoursePresen
     @BindView(R.id.suit_gyms_rv) RecyclerView suitGymsRv;
     @Inject EditCoursePresenter mPresenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private Fragment mCourseInfoFragment;
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {

@@ -83,7 +83,7 @@ public class StudentSignInImageFragment extends BaseFragment implements StudentS
     @Inject StudentSignInImagePresenter presenter;
     @Inject StudentWrapper studentBean;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mAdapter;
 

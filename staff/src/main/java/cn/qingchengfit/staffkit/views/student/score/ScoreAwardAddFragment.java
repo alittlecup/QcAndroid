@@ -88,7 +88,7 @@ public class ScoreAwardAddFragment extends BaseFragment implements ScoreAwardAdd
     //private Date dateEnd;
     ArrayList<StudentScoreAwardRuleBean> allAwards = new ArrayList<>();
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private int type;
     private int requestCode;
 

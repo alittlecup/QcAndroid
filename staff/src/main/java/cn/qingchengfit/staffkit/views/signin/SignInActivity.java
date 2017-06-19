@@ -35,7 +35,7 @@ public class SignInActivity extends BaseActivity implements FragCallBack, SignIn
     public static String checkin_url = "";
     public static String checkout_url = "";
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.student_frag) FrameLayout studentFrag;
     @BindView(R.id.down) ImageView down;
     @Inject LoginStatus loginStatus;

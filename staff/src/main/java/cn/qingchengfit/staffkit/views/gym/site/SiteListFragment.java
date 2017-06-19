@@ -47,7 +47,7 @@ public class SiteListFragment extends BaseFragment implements ChooseSiteView {
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private ChooseSiteAdapter adapter;
     private List<ImageTwoTextBean> datas = new ArrayList<>();
     private boolean isLoading = false;

@@ -16,8 +16,11 @@ import butterknife.OnClick;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.views.fragments.RichTxtFragment;
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
 /**
  * power by
@@ -39,14 +42,20 @@ import cn.qingchengfit.views.fragments.RichTxtFragment;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/14.
  */
+
+@FragmentWithArgs
 public class ResumeEditDescFragment extends BaseFragment {
     RichTxtFragment richTxtFragment;
-    ChoosePictureFragmentDialog choosePictureFragmentDialog;
+    ChoosePictureFragmentNewDialog choosePictureFragmentDialog;
+
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
+
+    @Arg String content;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
         richTxtFragment = new RichTxtFragment();
     }
 
@@ -87,12 +96,17 @@ public class ResumeEditDescFragment extends BaseFragment {
     }
 
     @OnClick(R2.id.btn_insert_img) public void onBtnInsertImgClicked() {
-        richTxtFragment.insertImg("https://ws2.sinaimg.cn/large/006tNbRwly1fgaerzl6zuj30ay04saad.jpg",
-            "/storage/emulated/0/DCIM/.thumbnails/1484892988277.jpg");
-        // TODO: 2017/6/14 等待一起修改传图机制
-        //if (choosePictureFragmentDialog == null)
-        //    choosePictureFragmentDialog = ChoosePictureFragmentDialog.newInstance();
-        //choosePictureFragmentDialog.show(getChildFragmentManager(),"");
+        if (choosePictureFragmentDialog != null) choosePictureFragmentDialog = ChoosePictureFragmentNewDialog.newInstance();
+        choosePictureFragmentDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
+            @Override public void onChoosefile(String filePath) {
+
+            }
+
+            @Override public void onUploadComplete(String sp, String url) {
+                richTxtFragment.insertImg(url, sp);
+            }
+        });
+        choosePictureFragmentDialog.show(getChildFragmentManager(), "");
     }
 
     @OnClick(R2.id.btn_comfirm) public void onBtnComfirmClicked() {

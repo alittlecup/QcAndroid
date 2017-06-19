@@ -91,7 +91,7 @@ public class NotificationFragment extends BaseFragment
     @Inject NotificationPresenter presenter;
     @Inject RestRepository mRestRepository;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private CommonFlexAdapter mAdatper;

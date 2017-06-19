@@ -20,12 +20,15 @@ import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.network.PostApi;
+import cn.qingchengfit.recruit.utils.RecruitBusinessUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bigkoo.pickerview.SimpleScrollPicker;
 import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -54,10 +57,13 @@ import rx.schedulers.Schedulers;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/6/13.
  */
+@FragmentWithArgs
 public class AddEduExpFragment extends BaseFragment {
+    @Arg(required = false) Education education;
+
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.civ_school_name) CommonInputView civSchoolName;
     @BindView(R2.id.civ_speciality) CommonInputView civSpeciality;
     @BindView(R2.id.civ_in_time) CommonInputView civInTime;
@@ -83,8 +89,8 @@ public class AddEduExpFragment extends BaseFragment {
 
     @Override public void initToolbar(@NonNull Toolbar toolbar) {
         super.initToolbar(toolbar);
-        toolbarTitile.setText("添加教育经历");
-        toolbar.inflateMenu(R.menu.menu_compelete);
+        toolbarTitile.setText(education == null ? "添加教育经历" : "编辑教育经历");
+        toolbar.inflateMenu(education == null ? R.menu.menu_compelete : R.menu.menu_save);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
                 if (TextUtils.isEmpty(civSchoolName.getContent())) {
@@ -106,30 +112,70 @@ public class AddEduExpFragment extends BaseFragment {
                     return true;
                 }
                 showLoading();
-                RxRegiste(qcRestRepository.createGetApi(PostApi.class)
-                    .addEducation(new Education.Builder().education(curDegree)
-                        .name(civSchoolName.getContent())
-                        .major(civSpeciality.getContent())
-                        .start(civInTime.getContent())
-                        .end(civOutTime.getContent())
-                        .build())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<QcResponse>() {
-                        @Override public void call(QcResponse qcResponse) {
-                            hideLoading();
-                            getActivity().onBackPressed();
-                            onShowError("添加成功！");
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override public void call(Throwable throwable) {
-                            hideLoading();
-                            onShowError(throwable.getMessage());
-                        }
-                    }));
+                if (education == null) {
+                    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+                        .addEducation(new Education.Builder().education(curDegree)
+                            .name(civSchoolName.getContent())
+                            .major(civSpeciality.getContent())
+                            .start(civInTime.getContent() + "-01")
+                            .end(civOutTime.getContent() + "-01")
+                            .build())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<QcResponse>() {
+                            @Override public void call(QcResponse qcResponse) {
+                                hideLoading();
+                                getActivity().onBackPressed();
+                                onShowError("添加成功！");
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override public void call(Throwable throwable) {
+                                hideLoading();
+                                onShowError(throwable.getMessage());
+                            }
+                        }));
+                } else {
+                    RxRegiste(qcRestRepository.createGetApi(PostApi.class)
+                        .updateEducation(education.id, new Education.Builder().education(curDegree)
+                            .name(civSchoolName.getContent())
+                            .major(civSpeciality.getContent())
+                            .start(civInTime.getContent() + "-01")
+                            .end(civOutTime.getContent() + "-01")
+                            .build())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<QcResponse>() {
+                            @Override public void call(QcResponse qcResponse) {
+                                hideLoading();
+                                if (qcResponse.getStatus() == 200) {
+                                    getActivity().onBackPressed();
+                                    onShowError("修改成功！");
+                                } else {
+                                    onShowError(qcResponse.getMsg());
+                                }
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override public void call(Throwable throwable) {
+                                hideLoading();
+                                onShowError(throwable.getMessage());
+                            }
+                        }));
+                }
                 return false;
             }
         });
+    }
+
+    @Override protected void onFinishAnimation() {
+        super.onFinishAnimation();
+        if (education != null) {
+            civSchoolName.setContent(education.name);
+            civSpeciality.setContent(education.major);
+            civInTime.setContent(DateUtils.date2YYMM(DateUtils.formatDateFromServer(education.start)));
+            civOutTime.setContent(DateUtils.date2YYMM(DateUtils.formatDateFromServer(education.end)));
+            civDegree.setContent(RecruitBusinessUtils.getDegree(getContext(), education.education));
+            curDegree = education.education;
+        }
     }
 
     @Override public String getFragmentName() {
@@ -168,9 +214,11 @@ public class AddEduExpFragment extends BaseFragment {
      * 学位
      */
     @OnClick(R2.id.civ_degree) public void onCivDegreeClicked() {
-        final ArrayList<String> d = new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.education_degree)));
+        final ArrayList<String> d =
+            new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.add_resume_education_degree)));
         simpleScrollPicker.setListener(new SimpleScrollPicker.SelectItemListener() {
             @Override public void onSelectItem(int pos) {
+                if (pos == 0) return;
                 curDegree = pos;
                 civDegree.setContent(d.get(pos));
             }

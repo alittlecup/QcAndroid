@@ -87,11 +87,10 @@ public class Cities2Chooser {
                         onCityChoosenListener.onCityChoosen("", "不限", "", 0);
                     } else {
                         if (options2Items.get(i).get(i1).startsWith(options1Items.get(i))) {
-                            onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), "",
-                                citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                            onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), "", citiesData.provinces.get(i).id);
                         } else {
                             onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1), "",
-                                citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                                citiesData.provinces.get(i).cities.get(i1).id);
                         }
                     }
                 }

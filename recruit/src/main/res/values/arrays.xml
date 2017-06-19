@@ -9,6 +9,24 @@
     <item>硕士</item>
     <item>博士</item>
   </string-array>
+  <string-array name="resume_education_degree">
+    <item>取消</item>
+    <item>中专及以下</item>
+    <item>高中</item>
+    <item>大专</item>
+    <item>本科</item>
+    <item>硕士</item>
+    <item>博士</item>
+  </string-array>
+  <string-array name="add_resume_education_degree">
+    <item>初中</item>
+    <item>中专</item>
+    <item>高中</item>
+    <item>大专</item>
+    <item>本科</item>
+    <item>硕士</item>
+    <item>博士</item>
+  </string-array>
   <string-array name="work_exp">
     <item>不限</item>
     <item>0年</item>
@@ -26,6 +44,10 @@
   </string-array>
   <string-array name="gender">
     <item>不限</item>
+    <item>男性</item>
+    <item>女性</item>
+  </string-array>
+  <string-array name="gender_2">
     <item>男性</item>
     <item>女性</item>
   </string-array>
@@ -55,10 +77,16 @@
 4   # 在职-月内到岗
 -->
   <string-array name="resume_self_status">
-    <item>未填写</item>
     <item>离职-随时到岗</item>
     <item>在职-暂不考虑</item>
     <item>在职-考虑机会</item>
     <item>在职-月内到岗</item>
+  </string-array>
+  <string-array name="resume_status_colors">
+    <item>#00ffffff</item>
+    <item>#00F1C6</item>
+    <item>#4290EA</item>
+    <item>#FEA500</item>
+    <item>#0DB14B</item>
   </string-array>
 </resources>

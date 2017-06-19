@@ -50,7 +50,7 @@ public class WardrobeAddFragment extends BaseFragment implements WardrobeAddPres
     @BindView(R.id.wardrobe_no) CommonInputView wardrobeNo;
     @BindView(R.id.wardrobe_district) CommonInputView wardrobeDistrict;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Bundle saveState = new Bundle();
     private LockerRegion mChoseRegion;

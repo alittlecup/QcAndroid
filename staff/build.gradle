@@ -204,9 +204,6 @@ dependencies {
   debugCompile 'io.github.skyhacker2:sqliteonweb:1.0.1'
   productCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
   releaseCompile 'io.github.skyhacker2:sqliteonweb-no-op:1.0.2'
-  compile('com.upyun:upyun-android-sdk:2.0.1') {
-    exclude group: 'com.squareup.okhttp3'
-  }
 }
 
 

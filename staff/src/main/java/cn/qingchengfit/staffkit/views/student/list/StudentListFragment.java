@@ -77,7 +77,7 @@ public class StudentListFragment extends FilterCommonFragment {
     @BindView(R.id.searchview) public LinearLayout searchview;
     @BindView(R.id.studentlist_rv) RecycleViewWithNoImg studentlistRv;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @Inject StudentListPresenter presenter;
     @Inject LoginStatus loginStatus;

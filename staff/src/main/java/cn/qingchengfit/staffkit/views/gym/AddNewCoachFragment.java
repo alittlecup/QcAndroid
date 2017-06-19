@@ -77,7 +77,7 @@ import rx.schedulers.Schedulers;
 public class AddNewCoachFragment extends BaseDialogFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.header_img) ImageView headerImg;
     @BindView(R.id.down_trainer_app) TextView downTrainerApp;
     @BindView(R.id.name) CommonInputView name;

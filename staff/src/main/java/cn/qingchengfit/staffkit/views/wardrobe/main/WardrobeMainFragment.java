@@ -86,7 +86,7 @@ public class WardrobeMainFragment extends BaseFragment implements FlexibleAdapte
     @Inject GymWrapper gymWrapper;
     HashMap<Long, List<Locker>> mLockers = new HashMap<>();
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private FragmentAdapter fragmentAdapter;
     private ArrayList<Fragment> chooseWardrobeListFragments = new ArrayList<>();
     private List<LockerRegion> regions = new ArrayList<>();

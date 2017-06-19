@@ -44,7 +44,7 @@ import javax.inject.Inject;
 public class GymInfoNoEditFragment extends BaseFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.img_brand) ImageView imgBrand;
     @BindView(R.id.tv_gym_name) TextView tvGymName;
     @BindView(R.id.tv_gym_address) TextView tvGymAddress;

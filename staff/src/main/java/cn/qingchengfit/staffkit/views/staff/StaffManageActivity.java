@@ -52,7 +52,7 @@ public class StaffManageActivity extends BaseActivity implements FragCallBack {
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
     @BindView(R.id.searchview_et) EditText searchviewEt;

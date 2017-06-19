@@ -47,7 +47,7 @@ public class MutiChooseSalersActivity extends BaseActivity
     public static final int ALLOT = 2;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.toolbar_titile) TextView mToolbarTitile;
+    @BindView(R.id.toolbar_title) TextView mToolbarTitile;
     @BindView(recyclerview) RecyclerView mRecyclerview;
     @Inject MutiChooseSalersPresenterPresenter mPresenter;
     @Inject LoginStatus loginStatus;

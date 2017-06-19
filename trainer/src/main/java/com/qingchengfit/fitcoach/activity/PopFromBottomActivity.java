@@ -37,7 +37,7 @@ import com.qingchengfit.fitcoach.fragment.manage.ChooseGymFragmentBuilder;
 public class PopFromBottomActivity extends BaseAcitivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.frag) FrameLayout frag;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {

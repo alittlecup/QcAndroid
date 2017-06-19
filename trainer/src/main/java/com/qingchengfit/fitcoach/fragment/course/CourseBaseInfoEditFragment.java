@@ -15,6 +15,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.model.base.CoachService;
 import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
@@ -23,7 +24,6 @@ import com.qingchengfit.fitcoach.Utils.PhotoUtils;
 import com.qingchengfit.fitcoach.bean.CourseDetail;
 import com.qingchengfit.fitcoach.bean.CoursePlan;
 import com.qingchengfit.fitcoach.fragment.ChoosePictureFragmentDialog;
-import com.qingchengfit.fitcoach.http.UpYunClient;
 import javax.inject.Inject;
 import rx.functions.Action1;
 

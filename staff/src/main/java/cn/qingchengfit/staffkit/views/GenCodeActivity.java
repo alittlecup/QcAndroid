@@ -24,7 +24,7 @@ public class GenCodeActivity extends AppCompatActivity {
     public static final String GEN_CODE_TITLE = "gen.code.title";
     public static final String GEN_CODE_BG = "gen.code.bg";
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.qr_img) ImageView qrImg;
     @BindView(R.id.tv_title) TextView tvTitle;
     @BindView(R.id.bg) FrameLayout bg;

@@ -78,7 +78,6 @@ public class AddOganasitionFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick(R2.id.decript_layout) public void onDescripte() {

@@ -59,7 +59,7 @@ import static cn.qingchengfit.staffkit.views.gym.GymDetailFragment.RESULT_STAFF_
 public class GymMoreFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener, GymMorePresenter.MVPView {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecyclerView mRecyclerView;
     @BindView(R.id.my_fun_recycleview) RecyclerView myFunRecycleview;
     @Inject GymMorePresenter mGymMorePresenter;

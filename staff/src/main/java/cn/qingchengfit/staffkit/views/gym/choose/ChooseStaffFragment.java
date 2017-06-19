@@ -46,7 +46,7 @@ public class ChooseStaffFragment extends BaseDialogFragment implements ChooseSta
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     String selectPhone;
     private int mType = 0;
     private ImageTwoTextAdapter adapter;

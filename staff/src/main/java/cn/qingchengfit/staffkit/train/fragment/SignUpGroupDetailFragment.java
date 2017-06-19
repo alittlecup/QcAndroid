@@ -67,7 +67,7 @@ import rx.functions.Action1;
     @BindView(R.id.open_all_member) LinearLayout openAllMember;
     @Arg String teamId;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject SignUpGroupDetailPresenter presenter;
     @Inject TrainIds trainIds;
     private CommonFlexAdapter flexAdapter;

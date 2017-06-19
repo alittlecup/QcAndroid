@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/bg_click"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+
+  <ImageView
+      android:id="@+id/img"
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+      android:scaleType="fitXY"
+      />
+
+  <android.support.v4.widget.Space
+      android:layout_width="@dimen/activity_horizontal_margin"
+      android:layout_height="@dimen/activity_horizontal_margin"
+      />
+
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      >
+
+    <cn.qingchengfit.support.widgets.CompatTextView
+        android:id="@+id/tv_gym_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/QcTextStyleStandardDark"
+        />
+
+    <TextView
+        android:id="@+id/tv_during"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/QcTextStyleSmallGrey"
+        />
+  </LinearLayout>
+
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:srcCompat="@drawable/ic_arrow_right"
+      />
+</LinearLayout>

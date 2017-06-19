@@ -57,7 +57,7 @@ import javax.inject.Inject;
 
     @Arg boolean mIsPrivate;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject OrderLimitPresenter mOrderLimitPresenter;
     private String mOrderId;
     private String mCancleId;

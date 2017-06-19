@@ -76,7 +76,7 @@ public class TrainChooseGymFragment extends BaseFragment implements FlexibleAdap
     @BindString(R.string.only_su_can_competition) String suHint;
     @BindString(R.string.su_manager) String suStr;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.img_info) ImageView imgInfo;
     @BindView(R.id.tv_hint) TextView tvHint;
     @BindView(R.id.btn_add_gym) LinearLayout btnAddGym;

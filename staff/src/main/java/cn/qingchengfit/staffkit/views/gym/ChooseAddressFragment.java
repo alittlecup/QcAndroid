@@ -70,7 +70,7 @@ public class ChooseAddressFragment extends BaseFragment {
     @BindView(R.id.city_name) TextView cityName;
     @BindView(R.id.address) CommonInputView address;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitle;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private GeocodeSearch geocoderSearch;

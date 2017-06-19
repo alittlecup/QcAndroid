@@ -53,7 +53,7 @@ public class MyPositionsInfoFragment extends BaseFragment
     public static final int MY_STARED = 2;
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
 
     @Inject RecruitRouter router;

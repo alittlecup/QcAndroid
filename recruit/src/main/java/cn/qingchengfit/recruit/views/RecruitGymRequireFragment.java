@@ -49,7 +49,7 @@ public class RecruitGymRequireFragment extends BaseFragment {
     @BindView(R2.id.civ_height) CommonInputView civHeight;
     @BindView(R2.id.civ_weight) CommonInputView civWeight;
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
     SimpleScrollPicker simpleScrollPicker;
     TwoScrollPicker twoScrollPicker;

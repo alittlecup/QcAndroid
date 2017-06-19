@@ -14,10 +14,16 @@ import cn.qingchengfit.recruit.views.RecruitPositionsSentFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionsStarredFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
+import cn.qingchengfit.recruit.views.resume.RecordEditFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeShowImgsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeWorkExpListFragment;
+import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragment;
+import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Subcomponent;
@@ -134,6 +140,36 @@ import dagger.multibindings.IntoMap;
         }
     }
 
+    @Subcomponent() public interface ResumeWorkExpListFragmentSubcomponent extends AndroidInjector<ResumeWorkExpListFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeWorkExpListFragment> {
+        }
+    }
+
+    @Subcomponent() public interface WorkExpSyncDetailFragmentSubcomponent extends AndroidInjector<WorkExpSyncDetailFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<WorkExpSyncDetailFragment> {
+        }
+    }
+
+    @Subcomponent() public interface WorkexpeEditFragmentSubcomponent extends AndroidInjector<WorkExpeEditFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<WorkExpeEditFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ResumeShowImgsFragmentSubcomponent extends AndroidInjector<ResumeShowImgsFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeShowImgsFragment> {
+        }
+    }
+
+    @Subcomponent() public interface RecordEditFragmentSubcomponent extends AndroidInjector<RecordEditFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<RecordEditFragment> {
+        }
+    }
+
+    @Subcomponent() public interface ResumeBaseInfoFragmentSubcomponent extends AndroidInjector<ResumeBaseInfoFragment> {
+        @Subcomponent.Builder public abstract class Builder extends AndroidInjector.Builder<ResumeBaseInfoFragment> {
+        }
+    }
+
     @Module(subcomponents = SeekPositionHomeFragmentSubcomponent.class) abstract class SeekPositionHomeFragmentModule {
         @Binds @IntoMap @FragmentKey(SeekPositionHomeFragment.class)
         abstract AndroidInjector.Factory<? extends Fragment> bindYourFragmentInjectorFactory(
@@ -214,4 +250,45 @@ import dagger.multibindings.IntoMap;
         @Binds @IntoMap @FragmentKey(ResumeIntentsFragment.class)
         abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeIntentsFragmentSubcomponent.Builder builder);
     }
+
+    @Module(subcomponents = ResumeWorkExpListFragmentSubcomponent.class) abstract class ResumeWorkExpListFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeWorkExpListFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeWorkExpListFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = WorkExpSyncDetailFragmentSubcomponent.class) abstract class WorkExpSyncDetailFragmentModule {
+        @Binds @IntoMap @FragmentKey(WorkExpSyncDetailFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(WorkExpSyncDetailFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = WorkexpeEditFragmentSubcomponent.class) abstract class WorkexpeEditFragmentModule {
+        @Binds @IntoMap @FragmentKey(WorkExpeEditFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(WorkexpeEditFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ResumeShowImgsFragmentSubcomponent.class) abstract class ResumeShowImgsFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeShowImgsFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeShowImgsFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = RecordEditFragmentSubcomponent.class) abstract class RecordEditFragmentModule {
+        @Binds @IntoMap @FragmentKey(RecordEditFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(RecordEditFragmentSubcomponent.Builder builder);
+    }
+
+    @Module(subcomponents = ResumeBaseInfoFragmentSubcomponent.class) abstract class ResumeBaseInfoFragmentModule {
+        @Binds @IntoMap @FragmentKey(ResumeBaseInfoFragment.class)
+        abstract Factory<? extends Fragment> bindYourFragmentInjectorFactory(ResumeBaseInfoFragmentSubcomponent.Builder builder);
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

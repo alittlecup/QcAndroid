@@ -43,7 +43,7 @@
         android:id="@+id/tv_resume_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="状态未公开"
+        android:text="状态:未公开"
         style="@style/QcTextStyleStandardGrey"
         />
   </LinearLayout>
@@ -52,7 +52,39 @@
   <android.support.v7.widget.RecyclerView
       android:id="@+id/rv"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
       />
 
+  <include layout="@layout/divider_grey"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/qc_item_height"
+      android:divider="@drawable/divider_linearlayout_horizon"
+      android:orientation="horizontal"
+      android:showDividers="middle"
+      >
+
+    <Button
+        android:id="@+id/btn_open_resume"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/bg_click"
+        android:text="公开我的简历"
+        android:textColor="@color/text_black"
+        style="@style/QcBtnNomal"
+        />
+
+    <Button
+        android:id="@+id/btn_preview_resume"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:text="预览我的简历"
+        android:textColor="@color/white"
+        style="@style/QcBtnPrimery"
+        />
+  </LinearLayout>
 </LinearLayout>

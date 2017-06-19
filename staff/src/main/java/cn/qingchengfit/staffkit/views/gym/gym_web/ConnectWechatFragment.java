@@ -60,7 +60,7 @@ import rx.schedulers.Schedulers;
     @BindView(R.id.civ_wechat_name) CommonInputView civWechatName;
     @BindView(R.id.img_wechat_public) ImageView imgWechatPublic;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Arg String mWxName;
     @Arg String mWxQr;

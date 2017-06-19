@@ -48,7 +48,7 @@ public class BodyTestListFragment extends BaseFragment implements BodyTestListVi
     @Inject BodyTestListPresenter presenter;
     @Inject StudentWrapper studentBean;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private SimpleAdapter adapter;
     private int gender = 0;

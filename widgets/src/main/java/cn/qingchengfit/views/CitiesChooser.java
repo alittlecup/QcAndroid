@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.component;
+package cn.qingchengfit.views;
 
 import android.content.Context;
 import android.view.View;
@@ -35,7 +35,7 @@ public class CitiesChooser {
     public CitiesChooser(Context context) {
         pwOptions = new OptionsDialog(context);
         Gson gson = new Gson();
-        CitiesData citiesData = gson.fromJson(FileUtils.getJsonFromAssert("cities.json", context), CitiesData.class);
+        final CitiesData citiesData = gson.fromJson(FileUtils.getJsonFromAssert("cities.json", context), CitiesData.class);
         for (int i = 0; i < citiesData.provinces.size(); i++) {
             ProvinceBean provinceBean = citiesData.provinces.get(i);
             String provinceName = "";
@@ -81,8 +81,7 @@ public class CitiesChooser {
             @Override public void onOptionsSelect(int i, int i1, int i2) {
                 if (onCityChoosenListener != null) {
                     if (options2Items.get(i).get(i1).startsWith(options1Items.get(i))) {
-                        onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), options3Items.get(i).get(i1).get(i2),
-                            citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);
+                        onCityChoosenListener.onCityChoosen("", options2Items.get(i).get(i1), "", citiesData.provinces.get(i).id);
                     } else {
                         onCityChoosenListener.onCityChoosen(options1Items.get(i), options2Items.get(i).get(i1),
                             options3Items.get(i).get(i1).get(i2), citiesData.provinces.get(i).cities.get(i1).districts.get(i2).id);

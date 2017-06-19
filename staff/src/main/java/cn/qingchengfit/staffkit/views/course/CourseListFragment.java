@@ -78,7 +78,7 @@ public class CourseListFragment extends BaseFragment implements FlexibleAdapter.
 
     @BindView(R.id.rv) RecycleViewWithNoImg rv;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
 
     List<AbstractFlexibleItem> mDatas = new ArrayList<>();

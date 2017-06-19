@@ -40,7 +40,7 @@ import rx.functions.Action1;
  */
 public class StudentsDetailActivity extends BaseActivity implements FragCallBack, HasSupportFragmentInjector {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @Inject Provider<StudentWrapperComponent.Builder> requestComponentProvider;

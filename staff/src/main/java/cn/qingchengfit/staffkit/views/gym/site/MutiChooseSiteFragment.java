@@ -57,7 +57,7 @@ public class MutiChooseSiteFragment extends BaseDialogFragment implements Choose
 
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
 

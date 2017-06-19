@@ -80,7 +80,7 @@ public class CoachDetailFragment extends BaseFragment implements CoachDetailView
     @BindView(R.id.deny_layout) View denyLayout;
     @BindView(R.id.phone_num) PhoneEditText phoneNum;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private boolean isAdd = false;
     private Staff mCoach;

@@ -45,7 +45,7 @@ public class AddBrandActivity extends BaseActivity implements AddBrandView {
 
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.brand_photo) ImageView brandPhoto;
     @Inject CreateBrandPresenter presenter;
     @BindView(R.id.content) CommonInputView content;

@@ -89,7 +89,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     @BindView(R.id.frag_choose_brand) FrameLayout fragChooseBrand;
     @BindView(R.id.layout_brands) FrameLayout layoutBrands;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.tv_left) TextView tvLeft;
     HomeChartAdapter mHomeChartAdapter;
@@ -141,7 +141,7 @@ public class HomeFragment extends BaseFragment implements HomeView, FlexibleAdap
     /**
      * 点击选择品牌
      */
-    @OnClick({ R.id.toolbar_titile, R.id.down }) public void onClickTitle() {
+    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
         getChildFragmentManager().beginTransaction().replace(R.id.frag_choose_brand, new ChooseBrandFragment()).commit();
         ViewCompat.setPivotY(fragChooseBrand, 0);
         if (layoutBrands.getVisibility() == View.VISIBLE) {

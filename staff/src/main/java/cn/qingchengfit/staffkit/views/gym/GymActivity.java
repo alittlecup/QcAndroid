@@ -50,7 +50,7 @@ public class GymActivity extends BaseActivity implements ISetGymView, FragCallBa
     public static final String GYM_SINGLE = "gym_single";
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.frag) FrameLayout frag;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;

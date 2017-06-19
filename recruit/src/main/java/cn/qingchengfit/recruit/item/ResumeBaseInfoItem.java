@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.item;
 
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,10 @@ public class ResumeBaseInfoItem extends AbstractFlexibleItem<ResumeBaseInfoItem.
     }
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeBaseInfoVH holder, int position, List payloads) {
-        PhotoUtils.middle(holder.imgAvatar, resumeHome.avatar);
+        PhotoUtils.smallCircle(holder.imgAvatar, resumeHome.avatar);
         holder.tvUsername.setText(resumeHome.username);
-        //holder.tvUsername.setCompoundDrawablesWithIntrinsicBounds();// TODO: 2017/6/13 性别
+        holder.tvUsername.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(holder.tvUsername.getContext(),
+            resumeHome.gender == 0 ? R.drawable.vd_gender_male : R.drawable.vd_gender_female), null, null, null);
         holder.tvAge.setText(DateUtils.getYear(DateUtils.formatDateFromServer(resumeHome.birthday)) + "岁");
         holder.tvDegree.setText(RecruitBusinessUtils.getDegree(holder.tvDegree.getContext(), resumeHome.max_education));
         holder.tvHeight.setText(resumeHome.height == 0 ? "--" : resumeHome.height + "cm");

@@ -69,7 +69,7 @@ public class CoachCommentListFragment extends BaseFragment {
     @BindView(R.id.hint) TextView hint;
     @BindView(R.id.no_data_layout) LinearLayout noDataLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;

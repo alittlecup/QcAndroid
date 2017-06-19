@@ -47,7 +47,7 @@ public class FixPhoneFragment extends BaseDialogFragment implements FixPwView {
 
     @Inject FixPhonePresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.phone_num) PhoneEditText phoneNum;
     @BindView(R.id.check_code) PasswordView checkCode;
     @BindView(R.id.password) PasswordView password;

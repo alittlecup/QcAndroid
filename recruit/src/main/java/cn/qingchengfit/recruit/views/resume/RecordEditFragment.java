@@ -3,7 +3,6 @@ package cn.qingchengfit.recruit.views.resume;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -22,20 +21,21 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.model.Certificate;
+import cn.qingchengfit.recruit.model.Organization;
 import cn.qingchengfit.recruit.network.PostApi;
 import cn.qingchengfit.recruit.views.organization.SearchActivity;
 import cn.qingchengfit.recruit.views.organization.SearchFragment;
 import cn.qingchengfit.utils.CircleImgWrapper;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.PhotoUtils;
 import cn.qingchengfit.views.DialogSheet;
 import cn.qingchengfit.views.fragments.BaseFragment;
-import cn.qingchengfit.views.fragments.ChoosePictureFragmentDialog;
+import cn.qingchengfit.views.fragments.ChoosePictureFragmentNewDialog;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -43,6 +43,9 @@ import com.bigkoo.pickerview.TimeDialogWindow;
 import com.bigkoo.pickerview.TimePopupWindow;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -52,28 +55,18 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link RecordEditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+@FragmentWithArgs
 public class RecordEditFragment extends BaseFragment {
     public static final String TAG = RecordEditFragment.class.getName();
     public static final int TYPE_MEETING = 1;
     public static final int TYPE_COMFIRM = 2;
     public static final int TYPE_COMPETITION = 3;
-    private static final String TITLE = "param1";
-    private static final String CONTENT = "param2";
-    private static final String TYPE = "param_type";
     @BindView(R2.id.toolbar) Toolbar toolbar;
     @BindView(R2.id.recordedit_score) CommonInputView recordeditScore;
     @BindView(R2.id.recordedit_dateoff) CommonInputView recordeditDateoff;
     @BindView(R2.id.recordedit_upimg) TextView recordeditUpimg;
     @BindView(R2.id.recordedit_img) ImageView recordeditImg;
     @BindView(R2.id.recordedit_comfirm_btn) Button recordeditComfirmBtn;
-
     @BindView(R2.id.rootview) ScrollView rootview;
     @BindView(R2.id.record_edit_name) CommonInputView recordEditName;
     @BindView(R2.id.recordedit_datestart) CommonInputView recordeditDatestart;
@@ -92,35 +85,22 @@ public class RecordEditFragment extends BaseFragment {
     @BindView(R2.id.recordedit_upimg_layout) RelativeLayout recordeditUpimgLayout;
     TimeDialogWindow pwTime;
     @Inject QcRestRepository restRepository;
+    @Arg int mType;
+    @Arg(required = false) Certificate certificatesEntity;
+    @Arg Organization organization;
     private boolean mTitle;
     private boolean mIsHidenImg = false;
-    private String mContent;
-    private int mType;
     private Gson gson = new Gson();
-    private Certificate certificatesEntity;
-    private Certificate addCertificate;
+    private Certificate addCertificate = new Certificate();
     private MaterialDialog delDialog;
     private DialogSheet mDialogSheet;
-    private Unbinder unbinder;
     private Subscription spUpImg;
+    private ChoosePictureFragmentNewDialog choosePictureFragmentNewDialog;
 
     public RecordEditFragment() {
     }
 
-    /**
-     * @param param1 是否为编辑状态
-     * @param param2 具体内容
-     * @param type 类型 1.大会 培训 赛事
-     */
-    public static RecordEditFragment newInstance(boolean param1, String param2, int type) {
-        RecordEditFragment fragment = new RecordEditFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(TITLE, param1);
-        args.putString(CONTENT, param2);
-        args.putInt(TYPE, type);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     private void showDialog() {
         if (delDialog == null) {
@@ -141,11 +121,8 @@ public class RecordEditFragment extends BaseFragment {
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mTitle = getArguments().getBoolean(TITLE);
-            mContent = getArguments().getString(CONTENT);
-            mType = getArguments().getInt(TYPE);
-        }
+        FragmentArgs.inject(this);
+        mTitle = certificatesEntity != null;
         pwTime = new TimeDialogWindow(getActivity(), TimePopupWindow.Type.YEAR_MONTH_DAY);
     }
 
@@ -200,20 +177,19 @@ public class RecordEditFragment extends BaseFragment {
             }
         });
 
-        if (mContent != null) {
-            certificatesEntity = gson.fromJson(mContent, Certificate.class);
-            hostName.setText(certificatesEntity.getOrganization().getName());
-            hostAddress.setText("联系方式:" + certificatesEntity.getOrganization().getContact());
+        if (organization != null) {
+            hostName.setText(organization.getName());
+            hostAddress.setText("联系方式:" + organization.getContact());
+            Glide.with(getContext()).load(organization.getPhoto()).asBitmap().into(new CircleImgWrapper(hostImg, getContext()));
+            addCertificate.setOrganization_id(organization.id);
+        }
+
+        if (certificatesEntity != null) {
             if (certificatesEntity.is_authenticated()) {
                 hostQcIdentify.setVisibility(View.VISIBLE);
             } else {
                 hostQcIdentify.setVisibility(View.GONE);
             }
-            Glide.with(getContext())
-                .load(certificatesEntity.getOrganization().getPhoto())
-                .asBitmap()
-                .into(new CircleImgWrapper(hostImg, getContext()));
-            addCertificate.setOrganization_id(certificatesEntity.getOrganization().getId() + "");
             recordeditDatestart.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getStart())));
             recordeditDate.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(certificatesEntity.getDate_of_issue())));
 
@@ -281,8 +257,6 @@ public class RecordEditFragment extends BaseFragment {
                 }
             }
         });
-
-        // TODO: 2017/6/14 图片上传修改
         return view;
     }
 
@@ -369,7 +343,7 @@ public class RecordEditFragment extends BaseFragment {
                     }
                 }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
-
+                        showAlert(throwable.getMessage());
                     }
                 }));
         } else {
@@ -383,7 +357,7 @@ public class RecordEditFragment extends BaseFragment {
                     }
                 }, new Action1<Throwable>() {
                     @Override public void call(Throwable throwable) {
-
+                        showAlert(throwable.getMessage());
                     }
                 }));
         }
@@ -465,7 +439,17 @@ public class RecordEditFragment extends BaseFragment {
     }
 
     @OnClick({ R2.id.recordedit_upimg_layout }) public void onUpdatePic() {
-        ChoosePictureFragmentDialog.newInstance(false).show(getFragmentManager(), "");
+        if (choosePictureFragmentNewDialog == null) choosePictureFragmentNewDialog = ChoosePictureFragmentNewDialog.newInstance();
+        choosePictureFragmentNewDialog.setResult(new ChoosePictureFragmentNewDialog.ChoosePicResult() {
+            @Override public void onChoosefile(String filePath) {
+
+            }
+
+            @Override public void onUploadComplete(String filePaht, String url) {
+                PhotoUtils.origin(recordeditImg, url);
+            }
+        });
+        choosePictureFragmentNewDialog.show(getChildFragmentManager(), "");
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -487,7 +471,6 @@ public class RecordEditFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         if (spUpImg != null && !spUpImg.isUnsubscribed()) spUpImg.unsubscribe();
     }
 }

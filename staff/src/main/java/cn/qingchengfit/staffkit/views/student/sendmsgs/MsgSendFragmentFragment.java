@@ -70,7 +70,7 @@ import static cn.qingchengfit.staffkit.views.ChooseActivity.CHOOSE_MULTI_STUDENT
     @BindView(R.id.layout_tags) QcTagContainerLayout layoutTags;
     @BindView(R.id.et_content) EditText etContent;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.tv_left) TextView tvLeft;
     @BindView(R.id.tv_sms_count) TextView tvSmsCount;
     @BindView(R.id.layout_send_hint) RelativeLayout layoutSendHint;

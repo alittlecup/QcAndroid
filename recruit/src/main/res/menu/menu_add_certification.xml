@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+      android:id="@+id/action_add_gym"
+      android:icon="@drawable/fab_add"
+      android:orderInCategory="100"
+      android:title="添加学习培训"
+      app:showAsAction="always"
+      >
+    <menu>
+      <item
+          android:id="@+id/action_add_meeting"
+
+          android:orderInCategory="100"
+          android:title="大会"
+          app:showAsAction="always"
+          >
+
+      </item>
+      <item
+          android:id="@+id/action_add_comfirm"
+          android:orderInCategory="100"
+          android:title="培训"
+          app:showAsAction="always"
+          >
+
+      </item>
+      <item
+          android:id="@+id/action_add_competition"
+          android:orderInCategory="100"
+          android:title="赛事"
+          app:showAsAction="always"
+          >
+
+      </item>
+    </menu>
+  </item>
+</menu>

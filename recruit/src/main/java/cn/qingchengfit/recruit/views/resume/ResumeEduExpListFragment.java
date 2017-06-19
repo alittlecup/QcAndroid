@@ -1,9 +1,11 @@
 package cn.qingchengfit.recruit.views.resume;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,6 +16,7 @@ import cn.qingchengfit.network.QcRestRepository;
 import cn.qingchengfit.network.response.QcDataResponse;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
+import cn.qingchengfit.recruit.RecruitRouter;
 import cn.qingchengfit.recruit.item.ResumeEduExpItem;
 import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.network.GetApi;
@@ -51,21 +54,35 @@ import rx.schedulers.Schedulers;
 public class ResumeEduExpListFragment extends BaseFragment {
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.toolbar_layout) FrameLayout toolbarLayout;
     @BindView(R2.id.rv) RecyclerView rv;
 
     CommonFlexAdapter commonFlexAdapter;
     @Inject QcRestRepository restRepository;
+    @Inject RecruitRouter router;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_resume_cm_list, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initToolbar(toolbar);
         commonFlexAdapter = new CommonFlexAdapter(new ArrayList(), this);
         rv.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
         rv.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.trans_h_15dp));
         rv.setAdapter(commonFlexAdapter);
         return view;
+    }
+
+    @Override public void initToolbar(@NonNull Toolbar toolbar) {
+        super.initToolbar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_add);
+        toolbarTitile.setText("编辑教育经历");
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                router.addEduExp();
+                return false;
+            }
+        });
     }
 
     @Override protected void onFinishAnimation() {

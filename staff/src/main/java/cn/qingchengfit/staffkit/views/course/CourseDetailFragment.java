@@ -105,7 +105,7 @@ public class CourseDetailFragment extends BaseFragment implements CourseDetailPr
     boolean isJumped = false;
     @BindView(R.id.edit_jacket) TextView editJacket;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private CourseType mCourseDetail;
     private ViewPaperEndlessAdapter viewpageradapter;
 

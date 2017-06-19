@@ -75,7 +75,7 @@ import rx.functions.Action1;
     @BindView(R.id.phone_num) PhoneEditText phoneNum;
     @BindView(R.id.change_su_btn) TextView changeSuBtn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @Inject SuPresenter mSuPresenter;
     //上传的照片

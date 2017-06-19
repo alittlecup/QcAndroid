@@ -64,7 +64,7 @@ import rx.functions.Action1;
 
     @Arg(required = false) Rule rule;
     @Arg int maxPeople;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.lable) TextView lable;
     @BindView(R.id.switcher_limit) SwitchCompat switcher;

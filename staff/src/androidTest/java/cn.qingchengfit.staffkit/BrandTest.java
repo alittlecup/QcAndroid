@@ -48,7 +48,7 @@
 //        //Wait for activity: 'com.example.ExampleActivty'
 //        solo.unlockScreen();
 //        solo.waitForActivity("MainActivity", 2000);
-//        TextView titleBrand = solo.getText(R.id.toolbar_titile);
+//        TextView titleBrand = solo.getText(R.id.toolbar_title);
 //        solo.clickOnView(titleBrand);
 //        solo.waitForActivity("ChooseBrandActivity", 2000);
 //        boolean find = solo.searchText("Move");

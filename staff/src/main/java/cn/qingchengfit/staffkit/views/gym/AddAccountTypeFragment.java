@@ -45,7 +45,7 @@ public class AddAccountTypeFragment extends BaseDialogFragment {
     @BindView(R.id.instruction) LargeInputView instruction;
     @BindView(R.id.comfirm) Button comfirm;
     DialogSheet sheet;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private int cardtype = 1;
     private TextWatcher textChange = new TextWatcher() {
         @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -1,6 +1,7 @@
 package com.qingchengfit.fitcoach.fragment.mine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
 import cn.qingchengfit.views.fragments.BaseFragment;
@@ -34,7 +36,6 @@ import com.qingchengfit.fitcoach.fragment.schedule.SpecialWebActivity;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import com.qingchengfit.fitcoach.http.bean.QcCoachRespone;
-import java.util.Locale;
 import javax.inject.Inject;
 import rx.Observer;
 import rx.Subscription;
@@ -71,6 +72,7 @@ public class MineFragmentFragment extends BaseFragment {
     @BindView(R.id.btn_login) Button btnLogin;
     @BindView(R.id.layout_login) LinearLayout layoutLogin;
     @Inject LoginStatus loginStatus;
+    @Inject BaseRouter baseRouter;
     private Unbinder unbinder;
     private QcCoachRespone.DataEntity.CoachEntity user;
     private Subscription sp1;
@@ -209,10 +211,9 @@ public class MineFragmentFragment extends BaseFragment {
                 startActivity(toStudnet);
                 break;
             case R.id.layout_my_resume:
-                Intent toResume = new Intent(getActivity(), SpecialWebActivity.class);
-                toResume.putExtra("to", 1);
-                toResume.putExtra("url", String.format(Locale.CHINA, Configs.HOST_RESUME, App.coachid));
-                startActivity(toResume);
+                baseRouter.routerTo("recruit", getActivity());
+                startActivity(new Intent("cn.qingchengfit.staffkit", Uri.parse("qccoach://resume/")));
+
                 break;
             case R.id.layout_my_courseplan:
                 Intent tCoursePlan = new Intent(getContext(), FragActivity.class);

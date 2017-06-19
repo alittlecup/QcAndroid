@@ -69,7 +69,7 @@ import javax.inject.Inject;
     @Arg int maxCount = 1;
     @Arg boolean isPrivate;
 
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @Inject CardTypeListPresenter presenter;

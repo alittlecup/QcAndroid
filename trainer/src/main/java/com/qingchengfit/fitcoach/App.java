@@ -11,6 +11,8 @@ import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.model.base.Staff;
 import cn.qingchengfit.model.base.User;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
 import cn.qingchengfit.utils.ToastUtils;
@@ -31,8 +33,6 @@ import im.fir.sdk.FIR;
 import javax.inject.Inject;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
-
-
 
 /**
  * power by
@@ -139,6 +139,8 @@ public class App extends Application implements HasActivityInjector, HasSupportF
         }
         AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule.Builder().app(this)
                 .gymWrapper(new GymWrapper.Builder().build())
+            .restRepository(new QcRestRepository(this, Configs.Server, getString(R.string.oem_tag)))
+            .router(new BaseRouter())
             .loginStatus(new LoginStatus.Builder().loginUser(gUser == null ? new Staff() : Staff.formatFromUser(gUser, App.coachid + ""))
                 .session(session_id)
                 .userId(gUser == null ? "" : gUser.getId())

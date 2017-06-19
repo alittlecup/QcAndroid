@@ -63,7 +63,7 @@ public class RecruitGymDetailFragment extends BaseFragment implements RecruitGym
     @Inject RecruitGymDetailPresenter presenter;
     Gym gym;
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
     public static RecruitGymDetailFragment newInstance(Gym co) {
         Bundle args = new Bundle();

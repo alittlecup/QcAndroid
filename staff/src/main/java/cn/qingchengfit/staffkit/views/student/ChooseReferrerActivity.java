@@ -62,7 +62,7 @@ import rx.schedulers.Schedulers;
 public class ChooseReferrerActivity extends BaseActivity implements FragCallBack, ChooseReferrerPresenter.PresenterView {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
 

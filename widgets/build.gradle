@@ -31,7 +31,7 @@ configurations.all {
 
 
 dependencies {
-  compile fileTree(include: ["*.jar"], dir: "libs")
+  compile fileTree(include: ['*.jar'], dir: 'libs')
   androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
     exclude group: "com.android.support", module: "support-annotations"
   })
@@ -47,7 +47,6 @@ dependencies {
   compile "com.android.support:cardview-v7:${libs.supportVersion}"
   compile "com.android.support:design:${libs.supportVersion}"
   compile "com.android.support:percent:${libs.supportVersion}"
-
   compile("com.squareup.retrofit2:retrofit:${libs.retrofit}") {
     exclude module: 'okhttp'
   }
@@ -60,32 +59,38 @@ dependencies {
   compile "com.jakewharton.rxbinding:rxbinding:${libs.rxbind}"
   compile "com.jakewharton:butterknife:${libs.butterknife}"
   annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
-
   compile 'com.google.code.gson:gson:2.7'
   compile 'com.nineoldandroids:library:2.4.0'
   compile 'com.github.chrisbanes:PhotoView:1.2.6'
-
-  compile "eu.davidea:flexible-adapter:5.0.0-rc1"
-  compile "com.github.bumptech.glide:glide:3.7.0"
-
-  compile "com.squareup.sqlbrite:sqlbrite:0.7.0"
-  compile "com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar"
-  compile("com.github.afollestad.material-dialogs:core:0.8.5.5@aar") {
+  compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+  compile 'com.github.bumptech.glide:glide:3.7.0'
+  compile 'com.squareup.sqlbrite:sqlbrite:0.7.0'
+  compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
+  compile('com.github.afollestad.material-dialogs:core:0.8.5.5@aar') {
     transitive = true
   }
-  compile "com.umeng.analytics:analytics:latest.integration"
-  compile "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration"
+  compile 'com.umeng.analytics:analytics:latest.integration'
+  compile 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:latest.integration'
   //  compile "me.henrytao:smooth-app-bar-layout:${libs.supportVersion}.0"
-  compile "com.google.android:flexbox:0.3.0-alpha3"
-  compile "com.github.rubensousa:gravitysnaphelper:1.1"
-
-  compile files("libs/Bughd_android_sdk_v1.3.7.jar")
+  compile 'com.google.android:flexbox:0.3.0-alpha3'
+  compile 'com.github.rubensousa:gravitysnaphelper:1.1'
+  compile files('libs/Bughd_android_sdk_v1.3.7.jar')
   annotationProcessor "com.hannesdorfmann.fragmentargs:processor:${libs.fragmentArg}"
   compile "com.hannesdorfmann.fragmentargs:annotation:${libs.fragmentArg}"
-  compile 'com.getbase:floatingactionbutton:1.10.0' //fab
-  compile 'com.theartofdev.edmodo:android-image-cropper:2.4.5' //裁剪图片
-  compile 'com.commonsware.cwac:cam2:0.7.6' //拍照
-  compile 'me.gujun.android.taggroup:library:1.4@aar' //taggroup
+  compile 'com.getbase:floatingactionbutton:1.10.0'
+  //fab
+  compile 'com.theartofdev.edmodo:android-image-cropper:2.4.5'
+  //裁剪图片
+  compile 'com.commonsware.cwac:cam2:0.7.6'
+  //拍照
+  compile 'me.gujun.android.taggroup:library:1.4@aar'
+  //taggroup
+  compile('com.upyun:upyun-android-sdk:2.0.1') {
+    //upyun 又拍云
+    exclude group: 'com.squareup.okhttp3'
+  }
+  compile files('libs/java-sdk-3.1.jar')
+  compile files('libs/AMap2DMap_2.9.2_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
 }
 
 group "cn.qingchegfit.widgets"

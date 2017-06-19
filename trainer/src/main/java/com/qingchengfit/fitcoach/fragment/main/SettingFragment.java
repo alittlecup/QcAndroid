@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.views.DialogSheet;
 import com.qingchengfit.fitcoach.Configs;
@@ -41,6 +42,7 @@ public class SettingFragment extends BaseSettingFragment {
     DialogSheet logoutSheet;
     @BindView(R.id.version_code) TextView versionCode;
     @Inject LoginStatus loginStatus;
+    @Inject BaseRouter baseRouter;
     private Unbinder unbinder;
     private String versionStr;
 

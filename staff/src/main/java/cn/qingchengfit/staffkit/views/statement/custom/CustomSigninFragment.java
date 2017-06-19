@@ -56,7 +56,7 @@ public class CustomSigninFragment extends BaseFragment implements CustomSigninPr
 
     @Inject CustomSigninPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Calendar date;
 

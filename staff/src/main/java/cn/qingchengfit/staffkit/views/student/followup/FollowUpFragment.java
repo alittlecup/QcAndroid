@@ -52,7 +52,7 @@ public class FollowUpFragment extends BaseFragment implements FollowUpPresenter.
 
     StudentFilter filter = new StudentFilter();
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject FollowUpPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;

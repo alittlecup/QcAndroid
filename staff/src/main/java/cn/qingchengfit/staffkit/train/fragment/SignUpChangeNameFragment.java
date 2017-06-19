@@ -37,7 +37,7 @@ import javax.inject.Inject;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Inject SignUpGroupDetailPresenter presenter;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Arg String teamName;
     @Arg String teamId;

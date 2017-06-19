@@ -64,7 +64,7 @@ public class WardrobeReturnFragment extends BaseFragment implements WardrobeRetu
     @BindView(R.id.balance) TextView balance;
     @BindView(R.id.layout_pay_method) LinearLayout layoutPayMethod;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Locker mLocker;
     private int mPayMode;

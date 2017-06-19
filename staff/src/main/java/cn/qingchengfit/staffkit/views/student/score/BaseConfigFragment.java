@@ -71,7 +71,7 @@ public class BaseConfigFragment extends BaseFragment implements BaseConfigPresen
     @BindView(R.id.recyclerView_score_config_charge) RecyclerView recyclerViewCharge;
     @BindView(R.id.tv_student_score_rule_charge) TextView tvStudentScoreRuleCharge;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private CommonFlexAdapter flexibleAdapterBuy;
     private List<AbstractFlexibleItem> itemsBuy = new ArrayList<>();

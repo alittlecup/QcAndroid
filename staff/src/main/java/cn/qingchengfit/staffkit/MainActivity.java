@@ -469,7 +469,7 @@ public class MainActivity extends BaseActivity implements FragCallBack {
     ///**
     // * 点击选择品牌
     // */
-    //@OnClick({ R.id.toolbar_titile, R.id.title_down }) public void onClickTitle() {
+    //@OnClick({ R.id.toolbar_title, R.id.title_down }) public void onClickTitle() {
     //    getSupportFragmentManager().beginTransaction().replace(R.id.frag_choose_brand, new ChooseBrandFragment()).commit();
     //    ViewCompat.setPivotY(fragChooseBrand, 0);
     //    if (layoutBrands.getVisibility() == View.VISIBLE) {

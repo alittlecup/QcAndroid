@@ -77,7 +77,7 @@ import javax.inject.Inject;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @BindView(R.id.tv_add_new_origin) TextView tvAddNew;
     @BindView(R.id.divider) View divider;

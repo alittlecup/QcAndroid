@@ -68,7 +68,7 @@ public class ChooseCoursePlanFragment extends BaseFragment implements FlexibleAd
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
 
     @Inject public ChooseCoursePlanFragment() {

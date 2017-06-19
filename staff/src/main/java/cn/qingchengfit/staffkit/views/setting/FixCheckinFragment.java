@@ -48,7 +48,7 @@ public class FixCheckinFragment extends BaseDialogFragment implements FixCheckin
 
     @Inject FixCheckinPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recyclerview_fix_checkin) RecyclerView recyclerviewFixCheckin;
 
     private List<AbstractFlexibleItem> items;

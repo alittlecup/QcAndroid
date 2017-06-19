@@ -35,11 +35,17 @@ public class DateUtils {
             date = formatter.parse(s);
             return date;
         } catch (ParseException e) {
-            //            e.printStackTrace();
             return new Date();
         } catch (Exception e) {
-            //            e.printStackTrace();
             return new Date();
+        }
+    }
+
+    public static String getYYMMfromServer(String s) {
+        if (s.startsWith("3000")) {
+            return "至今";
+        } else {
+            return s.substring(0, 7);
         }
     }
 
@@ -107,7 +113,6 @@ public class DateUtils {
             s = s.replace("T", " ");
             return s.substring(0, s.length() - 1);
         } catch (Exception e) {
-            //            e.printStackTrace();
             return "";
         }
     }
@@ -203,8 +208,11 @@ public class DateUtils {
     }
 
     public static String formatDateToServer(String s) {
-
         return s.replace(".", "-");
+    }
+
+    public static String YYMMToServer(String s) {
+        return s + "-01";
     }
 
     public static Date addDateMonth(Date d, int i) {
@@ -441,6 +449,7 @@ public class DateUtils {
 
     public int getAge(Date d) {
         Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
         int curYear = c.get(Calendar.YEAR);
         c.setTime(d);
         return c.get(Calendar.YEAR) - curYear;

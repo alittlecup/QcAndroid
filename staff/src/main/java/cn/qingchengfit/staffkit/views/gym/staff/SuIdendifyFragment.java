@@ -74,7 +74,7 @@ import rx.schedulers.Schedulers;
     @Inject SuIdendifyPresenter mSuIdendifyPresenter;
     @BindView(R.id.ret_hint) TextView retHint;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
 
     private Subscription mSendMsgSp;

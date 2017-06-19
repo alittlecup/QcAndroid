@@ -107,7 +107,7 @@ public class AddBatchFragment extends BaseFragment implements AddBatchView {
     @BindView(R.id.endtime) CommonInputView endtime;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @BindView(R.id.add) TextView add;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.pay_online) CommonInputView payOnline;
     @BindView(R.id.pay_card) CommonInputView payCard;

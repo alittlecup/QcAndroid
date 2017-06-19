@@ -72,7 +72,7 @@ public class FollowUpDataTransferFragment extends BaseFragment
     @BindView(R.id.tv_student_list_hint) TextView tvStudentListHint;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.frag_transfer_graph) FrameLayout fragTranser;
     @BindView(R.id.frag_follow_up_filter_container) FrameLayout layoutBg;
     //@BindView(R.id.layout_container) DragHelerLinearLayout layoutContainer;

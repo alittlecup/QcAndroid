@@ -48,7 +48,7 @@ public class ChooseCardTypeActivity extends BaseActivity implements CardTypeList
 
     @Inject CardTypeListPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
 
     private List<CardTpl> datas = new ArrayList<>();

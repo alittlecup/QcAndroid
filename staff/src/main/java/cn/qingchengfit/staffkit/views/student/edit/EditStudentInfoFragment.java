@@ -101,7 +101,7 @@ public class EditStudentInfoFragment extends BaseFragment implements EditStudent
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
     @BindView(R.id.header_layout) RelativeLayout headerLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.support_shops) CommonInputView supportShops;
     @BindView(R.id.civ_salers) CommonInputView mCivSalers;
     @BindView(R.id.tv_header) TextView tvHeader;

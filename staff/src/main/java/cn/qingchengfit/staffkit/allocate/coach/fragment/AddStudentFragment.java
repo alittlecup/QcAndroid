@@ -100,7 +100,7 @@ import static android.view.View.GONE;
     @BindView(R.id.drawer) MyDrawerLayout drawer;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.btn_change_coach) TextView btnChangeCoach;
     @BindView(R.id.btn_remove) TextView btnRemove;
     @Inject OperationPresenter presenter;

@@ -19,6 +19,7 @@ import butterknife.Unbinder;
 import cn.qingchengfit.model.base.PermissionServerUtils;
 import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.LogUtil;
+import cn.qingchengfit.utils.UpYunClient;
 import cn.qingchengfit.widgets.CommonInputView;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
@@ -32,7 +33,6 @@ import com.qingchengfit.fitcoach.component.GalleryPhotoViewDialog;
 import com.qingchengfit.fitcoach.component.InterupteLinearLayout;
 import com.qingchengfit.fitcoach.component.OnRecycleItemClickListener;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
-import com.qingchengfit.fitcoach.http.UpYunClient;
 import com.qingchengfit.fitcoach.http.bean.AddBodyTestBean;
 import com.qingchengfit.fitcoach.http.bean.Measure;
 import com.qingchengfit.fitcoach.http.bean.QcBodyTestTemplateRespone;
@@ -85,11 +85,8 @@ public class BodyTestFragment extends Fragment {
     private List<AddBodyTestBean.Photo> datas = new ArrayList<>();
     private Unbinder unbinder;
     private Subscription spUpImg;
-    // TODO: Rename and change types of parameters
-    //    private QcBodyTestTemplateRespone.Base mBase;
 
     public BodyTestFragment() {
-        // Required empty public constructor
     }
 
     /**

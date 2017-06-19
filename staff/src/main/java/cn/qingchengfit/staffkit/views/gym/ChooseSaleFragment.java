@@ -60,7 +60,7 @@
 //    Button btn;
 //    @BindView(R.id.toolbar)
 //    Toolbar toolbar;
-//    @BindView(R.id.toolbar_titile)
+//    @BindView(R.id.toolbar_title)
 //    TextView toolbarTitile;
 //    String selectPhone;
 ////    @BindView(R.id.item_gym_header)

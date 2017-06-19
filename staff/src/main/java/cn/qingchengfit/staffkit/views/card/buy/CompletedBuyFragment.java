@@ -80,7 +80,7 @@ public class CompletedBuyFragment extends BaseFragment implements CompletedBuyVi
     @Inject CardTypeWrapper card_tpl;
     @Inject CompletedBuyPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {

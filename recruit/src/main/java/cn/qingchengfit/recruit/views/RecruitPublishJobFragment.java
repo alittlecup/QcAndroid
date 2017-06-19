@@ -36,7 +36,7 @@ import cn.qingchengfit.views.fragments.BaseFragment;
 public class RecruitPublishJobFragment extends BaseFragment {
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recruit_publish_job, container, false);
@@ -50,7 +50,6 @@ public class RecruitPublishJobFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     /**

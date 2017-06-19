@@ -9,6 +9,7 @@ import cn.qingchengfit.recruit.network.response.JobIndexWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
+import cn.qingchengfit.recruit.network.response.ResumeIntentsWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
 import cn.qingchengfit.recruit.views.organization.QcSearchOrganResponse;
 import cn.qingchengfit.recruit.views.organization.QcSerachGymRepsonse;
@@ -84,6 +85,11 @@ public interface GetApi {
      * 我的简历详情
      */
     @GET("/api/user/resume/") rx.Observable<QcDataResponse<ResumeHomeWrap>> queryMyResumeHome();
+
+    /**
+     * 获取我的期望值
+     */
+    @GET("/api/user/resume/exp/") rx.Observable<QcDataResponse<ResumeIntentsWrap>> queryMyResumeIntents();
 
     /**
      * 教育经历列表

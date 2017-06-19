@@ -65,7 +65,7 @@ import javax.inject.Inject;
 public class ConfigFragment extends BaseFragment implements ConfigPresenter.PresenterView, FlexibleAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject ConfigPresenter presenter;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;

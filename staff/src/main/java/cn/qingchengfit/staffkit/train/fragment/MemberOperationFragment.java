@@ -57,7 +57,7 @@ public class MemberOperationFragment extends BaseFragment implements FlexibleAda
     @BindView(R.id.ll_bottom) LinearLayout llBottom;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject SignUpPersonalPresenter presenter;
     @Inject SignUpGroupDetailPresenter groupDetail;
     @Inject TrainIds trainIds;

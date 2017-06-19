@@ -63,7 +63,7 @@ public class ChooseCoachFragment extends BaseDialogFragment {
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     String selectPhone;
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
     private int mType = 0;

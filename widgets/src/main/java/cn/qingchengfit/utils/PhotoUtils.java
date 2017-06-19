@@ -80,4 +80,11 @@ public class PhotoUtils {
     public static void origin(ImageView v, String url) {
         origin(v, url, R.drawable.img_loadingimage, R.drawable.img_loadingimage);
     }
+
+    //public static void smallFile(ImageView v, String url){
+    //    Glide.with(v.getContext())
+    //        .load(url)
+    //        .asBitmap()
+    //        .into(new CircleImgWrapper(v, v.getContext()));
+    //}
 }

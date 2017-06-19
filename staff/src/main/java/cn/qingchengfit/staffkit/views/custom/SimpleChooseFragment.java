@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class SimpleChooseFragment extends BaseDialogFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     ArrayList<ImageThreeTextBean> datas;
     private ImageThreeTextAdapter adapter;

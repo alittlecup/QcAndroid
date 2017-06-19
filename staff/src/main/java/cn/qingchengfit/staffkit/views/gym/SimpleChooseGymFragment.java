@@ -54,7 +54,7 @@ import rx.schedulers.Schedulers;
  */
 public class SimpleChooseGymFragment extends BaseDialogFragment {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @Inject RestRepository restRepository;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();

@@ -3,8 +3,8 @@ package cn.qingchengfit.recruit.network;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.recruit.model.Certificate;
 import cn.qingchengfit.recruit.model.Education;
-import cn.qingchengfit.recruit.model.ResumeHome;
 import cn.qingchengfit.recruit.model.WorkExp;
+import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.views.organization.OrganizationBean;
 import cn.qingchengfit.recruit.views.organization.QcAddOrganizationResponse;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public interface PostApi {
     /**
      * 编辑我的简历
      */
-    @POST("/api/user/resume/") rx.Observable<QcResponse> updateResume(@Body ResumeHome body);
+    @PUT("/api/user/resume/") rx.Observable<QcResponse> updateResume(@Body ResumeBody body);
 
     /**
      * 新增教育经历
@@ -72,7 +72,7 @@ public interface PostApi {
      */
     @POST("/api/user/job/experiences/") rx.Observable<QcResponse> addWorkExp(@Body WorkExp workExp);
 
-    @PUT("/api/user/job/experiences/{experience_id/}") rx.Observable<QcResponse> updateWorkExp(@Path("experience_id") String experience_id,
+    @PUT("/api/user/job/experiences/{id}/") rx.Observable<QcResponse> updateWorkExp(@Path("id") String experience_id,
         @Body WorkExp workExp);
 
     @POST("/api/user/job/certificates/") rx.Observable<QcResponse> addCertificate(@Body Certificate certificate);

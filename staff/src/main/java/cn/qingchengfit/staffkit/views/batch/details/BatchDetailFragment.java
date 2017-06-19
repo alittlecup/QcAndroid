@@ -113,7 +113,7 @@ public class BatchDetailFragment extends BaseFragment implements BatchDetailView
     @BindView(R.id.tv_batch_date) TextView tvBatchDate;
     @BindView(R.id.img_layout) FrameLayout imgLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.label_check_all) TextView labelCheckAll;
     @BindView(R.id.del_batch) Button delBatch;
 

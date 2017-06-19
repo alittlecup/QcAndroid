@@ -72,7 +72,7 @@ public class MutiChooseStudentFragment extends BaseFragment implements StudentLi
     @Inject RestRepository restRepository;
     EditStudentInfoFragment editStudentInfoFragment;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private ChooseStudentListFragment chooseStudentListFragment;
     private List<String> students = new ArrayList<>();
 

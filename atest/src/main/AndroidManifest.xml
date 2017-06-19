@@ -79,9 +79,11 @@
     </activity>
     <activity android:name="cn.qingchengfit.recruit.views.RecruitActivity">
     </activity>
+
+    <activity android:name="cn.qingchengfit.recruit.views.organization.SearchActivity">
+    </activity>
     <activity android:name=".TestActivity">
     </activity>
-
 
     <activity
         android:name="com.tencent.qcloud.timchat.ui.qcchat.ChatActivity"
@@ -89,6 +91,22 @@
         android:screenOrientation="portrait"
         android:windowSoftInputMode="adjustResize"
         />
+    <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+              android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+    >
+    </activity>
+
+
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="cn.qingchengfit.testmodule.provider"
+        android:grantUriPermissions="true"
+    >
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/provide_path"
+      />
+    </provider>
   </application>
 
 </manifest>

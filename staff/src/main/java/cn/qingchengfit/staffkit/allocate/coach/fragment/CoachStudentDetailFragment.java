@@ -70,7 +70,7 @@ import rx.schedulers.Schedulers;
     @Arg String coachId;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.ll_add_stu) LinearLayout llAddStu;
     @BindView(R.id.alphabetview) AlphabetView alphabetview;
     @BindView(R.id.drawer) MyDrawerLayout drawer;

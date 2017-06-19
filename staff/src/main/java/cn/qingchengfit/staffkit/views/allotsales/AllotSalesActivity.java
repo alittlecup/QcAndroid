@@ -45,7 +45,7 @@ public class AllotSalesActivity extends BaseActivity implements FragCallBack, Dr
     public StaffWrapper staffWrapper;
     @BindView(R.id.drawer) public MyDrawerLayout drawer;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
     @BindView(R.id.student_frag) FrameLayout studentFrag;
     @BindView(R.id.down) ImageView down;

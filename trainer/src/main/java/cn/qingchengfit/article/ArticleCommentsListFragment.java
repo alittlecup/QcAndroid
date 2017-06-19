@@ -71,7 +71,7 @@ import rx.functions.Action1;
     implements ArticleCommentsPresenter.MVPView, FlexibleAdapter.EndlessScrollListener, FlexibleAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
 

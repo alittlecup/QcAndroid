@@ -49,7 +49,7 @@ public class CustomStatmentFragment extends BaseFragment implements CustomStatem
     @BindView(R.id.custom_statment_generate) Button customStatmentGenerate;
     @BindView(R.id.custom_statment_coach) CommonInputView customStatmentCoach;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Calendar date;
     private List<String> gymStrings = new ArrayList<>();

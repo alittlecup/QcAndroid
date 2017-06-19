@@ -167,13 +167,6 @@ public class WorkExpeEditFragment extends BaseSettingFragment {
         }
         if (experiencesEntity != null) {
             fragmentCallBack.onToolbarMenu(0, 0, mTitle);
-            //            fragmentCallBack.onToolbarClickListener(new Toolbar.OnMenuItemClickListener() {
-            //                @Override
-            //                public boolean onMenuItemClick(MenuItem item) {
-            //                    showDialog();
-            //                    return true;
-            //                }
-            //            });
             workexpeditStartTime.setContent(DateUtils.Date2YYYYMMDD(DateUtils.formatDateFromServer(experiencesEntity.getStart())));
             Date d = DateUtils.formatDateFromServer(experiencesEntity.getEnd());
             Calendar c = Calendar.getInstance(Locale.getDefault());

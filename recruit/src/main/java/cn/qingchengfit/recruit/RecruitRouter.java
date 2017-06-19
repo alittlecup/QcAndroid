@@ -1,8 +1,15 @@
 package cn.qingchengfit.recruit;
 
 import android.support.v4.app.FragmentManager;
+import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.Gym;
+import cn.qingchengfit.recruit.model.Certificate;
+import cn.qingchengfit.recruit.model.Education;
 import cn.qingchengfit.recruit.model.Job;
+import cn.qingchengfit.recruit.model.Organization;
+import cn.qingchengfit.recruit.model.ResumeHome;
+import cn.qingchengfit.recruit.model.WorkExp;
+import cn.qingchengfit.recruit.network.body.ResumeBody;
 import cn.qingchengfit.recruit.views.MyPositionsInfoFragment;
 import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
@@ -10,17 +17,27 @@ import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
 import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
+import cn.qingchengfit.recruit.views.resume.AddEduExpFragmentBuilder;
+import cn.qingchengfit.recruit.views.resume.RecordEditFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
-import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragment;
-import cn.qingchengfit.recruit.views.resume.ResumeIntentsCitiesFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragmentBuilder;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentsCitiesFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentsFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeShowImgsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeShowImgsFragmentBuilder;
 import cn.qingchengfit.recruit.views.resume.ResumeWorkExpListFragment;
+import cn.qingchengfit.recruit.views.resume.WorkExpSyncDetailFragmentBuilder;
+import cn.qingchengfit.recruit.views.resume.WorkExpeEditFragmentBuilder;
 import cn.qingchengfit.router.InnerRouter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -147,39 +164,67 @@ public class RecruitRouter extends InnerRouter {
         }
     }
 
-    public void routeToAdd(int pos) {
+    public void editResumeInfo(ResumeBody body) {
+        add(new ResumeBaseInfoFragmentBuilder(body).build());
+    }
 
-        switch (pos) {
-            case 0:
-                add(new ResumeBaseInfoFragment());
-                break;
-            case 1:
-                add(new ResumeIntentsFragment());
-                break;
-            case 2:
-                add(new ResumeShowImgsFragment());
-                break;
-            case 3:
-                add(new ResumeWorkExpListFragment());
-                break;
-            case 4:
-                add(new ResumeCertificateListFragment());
-                break;
-            case 5:
-                add(new AddEduExpFragment());
-                break;
-            case 6:
-                add(new ResumeEditDescFragment());
-                break;
+    public void editImages(List<String> imgs) {
+        add(new ResumeShowImgsFragmentBuilder(new ArrayList<String>(imgs)).build());
+    }
+
+    public void editEduExp(Education education) {
+        add(new AddEduExpFragmentBuilder().education(education).build());
+    }
+
+    public void addEduExp() {
+        add(new AddEduExpFragment());
+    }
+
+    public void addWorkExp(Gym gym) {
+        add(new WorkExpeEditFragmentBuilder(gym).build());
+    }
+
+    public void editWorkExp(WorkExp workExp) {
+        if (workExp.is_authenticated) {
+            add(new WorkExpSyncDetailFragmentBuilder(workExp).build());
+        } else {
+            add(new WorkExpeEditFragmentBuilder(workExp.gym).workExp(workExp).build());
         }
     }
 
-    public void toIntentCities() {
-        add(new ResumeIntentsCitiesFragment());
+    public void listCertifaciton() {
+        add(new ResumeCertificateListFragment());
     }
 
-    public void toIntentPosition() {
-        add(new ResumeIntentJobsFragment());
+    public void listEdulist() {
+        add(new ResumeEduExpListFragment());
     }
 
+    public void listWorkList() {
+        add(new ResumeWorkExpListFragment());
+    }
+
+    public void addCertification(int type, Organization organization) {
+        add(new RecordEditFragmentBuilder(organization, type).build());
+    }
+
+    public void editCertification(int type, Organization organization, Certificate certificate) {
+        add(new RecordEditFragmentBuilder(organization, type).certificatesEntity(certificate).build());
+    }
+
+    public void toIntentCities(List<CityBean> listcity) {
+        add(new ResumeIntentsCitiesFragmentBuilder(new ArrayList<CityBean>(listcity)).build());
+    }
+
+    public void toIntentPosition(List<String> jobs) {
+        add(new ResumeIntentJobsFragmentBuilder(new ArrayList<String>(jobs)).build());
+    }
+
+    public void toExpect(ResumeHome resumeHome) {
+        add(new ResumeIntentsFragmentBuilder().build());
+    }
+
+    public void brief(String content) {
+        add(new ResumeEditDescFragmentBuilder(content).build());
+    }
 }
