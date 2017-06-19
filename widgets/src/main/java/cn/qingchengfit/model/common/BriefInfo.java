@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.bean;
+package cn.qingchengfit.model.common;
 
 /**
  * power by

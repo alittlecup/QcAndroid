@@ -5,10 +5,10 @@ import android.view.View;
 import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.model.base.DistrictBean;
 import cn.qingchengfit.model.base.ProvinceBean;
+import cn.qingchengfit.model.common.CitiesData;
 import cn.qingchengfit.utils.FileUtils;
 import com.bigkoo.pickerview.OptionsDialog;
 import com.google.gson.Gson;
-import com.qingchengfit.fitcoach.http.bean.CitiesData;
 import java.util.ArrayList;
 
 /**

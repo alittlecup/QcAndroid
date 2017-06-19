@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment;
+package cn.qingchengfit.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.utils.MeasureUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.widgets.CommonFlexAdapter;
+import cn.qingchengfit.widgets.R;
+import cn.qingchengfit.widgets.R2;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.SelectableAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -26,12 +27,13 @@ import java.util.List;
  */
 
 //两个列表关联的筛选
-public class FilterLeftRightFragment extends BaseFragment {
+public class FilterLeftRightFragment extends BaseFragment{
 
-  @BindView(R.id.filter_left_list) RecyclerView filterLeftList;
-  @BindView(R.id.filter_right_list) RecyclerView filterRightList;
+  @BindView(R2.id.filter_left_list) RecyclerView filterLeftList;
+  @BindView(R2.id.filter_right_list) RecyclerView filterRightList;
   private CommonFlexAdapter leftAdapter, rightAdapter;
   private OnLeftRightSelectListener listener;
+  private int lastPosition = -1;
 
   List<AbstractFlexibleItem> leftItemList = new ArrayList<>();
   List<AbstractFlexibleItem> rightItemList = new ArrayList<>();
@@ -55,6 +57,7 @@ public class FilterLeftRightFragment extends BaseFragment {
         if (listener != null) {
           listener.onLeftSelected(position);
         }
+        clearSelection(lastPosition);
         leftAdapter.toggleSelection(position);
         leftAdapter.notifyDataSetChanged();
         return true;
@@ -70,33 +73,49 @@ public class FilterLeftRightFragment extends BaseFragment {
         if (listener != null) {
           listener.onRightSelected(position);
         }
+        lastPosition = position;
         rightAdapter.toggleSelection(position);
         rightAdapter.notifyDataSetChanged();
         return true;
       }
     });
     filterRightList.setLayoutManager(new LinearLayoutManager(getContext()));
-    filterLeftList.setAdapter(rightAdapter);
+    filterRightList.setAdapter(rightAdapter);
   }
 
   public void setListener(OnLeftRightSelectListener listener){
     this.listener = listener;
   }
 
-  public void setLeftItemList(List<? extends AbstractFlexibleItem> items) {
-    if (items.size() > 0) {
+  public void setLeftItemList(List<String> datas) {
+    if (datas.size() > 0) {
       leftItemList.clear();
-      leftItemList.addAll(items);
+      for (String data : datas){
+        leftItemList.add(new FilterCommonLinearItem(data, false));
+      }
       leftAdapter.notifyDataSetChanged();
     }
   }
 
-  public void setRightItemList(List<? extends AbstractFlexibleItem> items) {
-    if (items.size() > 0) {
+  public void setRightItemList(List<String> datas) {
+    if (datas.size() > 0) {
       rightItemList.clear();
-      rightItemList.addAll(items);
+      for (String data : datas){
+        rightItemList.add(new FilterCommonLinearItem(data));
+      }
       rightAdapter.notifyDataSetChanged();
     }
+  }
+
+  public void onChangedCity(List<CityBean> cityBeanList){
+    if (cityBeanList.size() > 0) {
+      rightItemList.clear();
+      for (CityBean cityBean : cityBeanList){
+        rightItemList.add(new FilterCommonLinearItem(cityBean.name));
+      }
+      rightAdapter.notifyDataSetChanged();
+    }
+
   }
 
   public void setFilterAnimation(final ViewGroup filterLayout, boolean isShow) {
@@ -126,6 +145,15 @@ public class FilterLeftRightFragment extends BaseFragment {
       }
     });
     valueAnimator.start();
+  }
+
+  private void clearSelection(int lastPosition){
+    if (lastPosition >= 0){
+      if (rightAdapter.isSelected(lastPosition)){
+        rightAdapter.removeSelection(lastPosition);
+        rightAdapter.notifyItemChanged(lastPosition);
+      }
+    }
   }
 
   @Override public void onDestroyView() {

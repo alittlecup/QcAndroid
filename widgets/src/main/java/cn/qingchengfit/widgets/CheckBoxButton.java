@@ -171,6 +171,9 @@ public class CheckBoxButton extends LinearLayout implements QcCheckable{
         content.setText(contentStr);
     }
 
+    public String getContent(){
+        return content.getText().toString();
+    }
 
     private List<CompoundButton.OnCheckedChangeListener> mListener = new ArrayList<>();
 

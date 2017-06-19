@@ -9,7 +9,17 @@ import cn.qingchengfit.recruit.views.RecruitGymDetailFragment;
 import cn.qingchengfit.recruit.views.RecruitPositionDetailFragment;
 import cn.qingchengfit.recruit.views.ResumeMarketHomeFragment;
 import cn.qingchengfit.recruit.views.SeekPositionHomeFragment;
+import cn.qingchengfit.recruit.views.resume.AddEduExpFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeBaseInfoFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeCertificateListFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeEditDescFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeEduExpListFragment;
 import cn.qingchengfit.recruit.views.resume.ResumeHomeFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentJobsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentsCitiesFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeIntentsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeShowImgsFragment;
+import cn.qingchengfit.recruit.views.resume.ResumeWorkExpListFragment;
 import cn.qingchengfit.router.InnerRouter;
 import javax.inject.Inject;
 
@@ -109,6 +119,67 @@ public class RecruitRouter extends InnerRouter {
 
     public void resumeHome() {
         init(new ResumeHomeFragment());
+    }
+
+    public void routeToEdit(int pos) {
+        switch (pos) {
+            case 0:
+                add(new ResumeBaseInfoFragment());
+                break;
+            case 1:
+                add(new ResumeIntentsFragment());
+                break;
+            case 2:
+                add(new ResumeShowImgsFragment());
+                break;
+            case 3:
+                add(new ResumeWorkExpListFragment());
+                break;
+            case 4:
+                add(new ResumeCertificateListFragment());
+                break;
+            case 5:
+                add(new ResumeEduExpListFragment());
+                break;
+            case 6:
+                add(new ResumeEditDescFragment());
+                break;
+        }
+    }
+
+    public void routeToAdd(int pos) {
+
+        switch (pos) {
+            case 0:
+                add(new ResumeBaseInfoFragment());
+                break;
+            case 1:
+                add(new ResumeIntentsFragment());
+                break;
+            case 2:
+                add(new ResumeShowImgsFragment());
+                break;
+            case 3:
+                add(new ResumeWorkExpListFragment());
+                break;
+            case 4:
+                add(new ResumeCertificateListFragment());
+                break;
+            case 5:
+                add(new AddEduExpFragment());
+                break;
+            case 6:
+                add(new ResumeEditDescFragment());
+                break;
+        }
+    }
+
+    public void toIntentCities() {
+        add(new ResumeIntentsCitiesFragment());
+    }
+
+    public void toIntentPosition() {
+        add(new ResumeIntentJobsFragment());
     }
 
 }

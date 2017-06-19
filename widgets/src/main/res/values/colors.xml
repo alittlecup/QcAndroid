@@ -8,6 +8,7 @@
   <color name="text_light">#ccc</color>
 
   <color name="bg_grey">#f4f4f4</color>
+  <color name="backgroud_grey">@color/bg_grey</color>
   <color name="toolbar">#4e4e4e</color>
   <color name="most_black">#222222</color>
   <color name="bg_white">#ffffff</color>
@@ -17,6 +18,7 @@
   <color name="text_warm">#888888</color>
   <color name="text_grey">#bbbbbb</color>
   <color name="text_hint">#cccccc</color>
+  <color name="text_orange">#fea500</color>
 
 
   <!--common color-->
@@ -91,6 +93,8 @@
   <color name="current_day_of_month">@color/white</color>
   <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
   <color name="half_red">#1aea6161</color>
+
+  <color name="qc_theme_green">#0db14b</color>
 
 
   <color name="wheel_timebtn_nor">#54a3fa</color>

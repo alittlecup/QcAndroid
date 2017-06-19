@@ -5,18 +5,20 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import cn.qingchengfit.utils.MeasureUtils;
 
 /**
  * Created by fb on 2017/3/20.
  */
 
-public class AutoLineGroup extends ViewGroup {
+public class AutoLineGroup extends ViewGroup implements CompoundButton.OnCheckedChangeListener {
 
     private int mScreenWidth;
     private int mHorizontalSpacing;
     private int mVerticalSpacing;
 
-    public AutoLineGroup(Context context) {
+    public AutoLineGroup(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context);
         init();
     }
@@ -31,6 +33,11 @@ public class AutoLineGroup extends ViewGroup {
         init();
     }
 
+    public AutoLineGroup(Context context){
+        super(context);
+        init();
+    }
+
     public void setSpacing(int horizontalSpacing, int verticalSpacing) {
         mHorizontalSpacing = horizontalSpacing;
         mVerticalSpacing = verticalSpacing;
@@ -39,6 +46,8 @@ public class AutoLineGroup extends ViewGroup {
     private void init() {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         mScreenWidth = dm.widthPixels;
+        mHorizontalSpacing = MeasureUtils.dpToPx(10f, getResources());
+        mVerticalSpacing = MeasureUtils.dpToPx(10f, getResources());
     }
 
     @Override
@@ -71,4 +80,28 @@ public class AutoLineGroup extends ViewGroup {
 
         }
     }
+
+    @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (getChildCount() > 0){
+            for (int i = 0; i < getChildCount(); i++) {
+                View v = getChildAt(i);
+                if (v instanceof QcCheckable && !((QcCheckable) v).isOrContainCheck(buttonView)){
+                    ((QcCheckable) v).setChecked(false);
+                }
+            }
+        }
+    }
+
+    @Override protected void onFinishInflate() {
+        super.onFinishInflate();
+        if (getChildCount() > 0){
+            for (int i = 0; i < getChildCount(); i++) {
+                View v = getChildAt(i);
+                if (v instanceof QcCheckable){
+                    ((QcCheckable) v).addCheckedChangeListener(this);
+                }
+            }
+        }
+    }
+
 }

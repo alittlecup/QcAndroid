@@ -199,7 +199,6 @@ dependencies {
 
   compile 'com.getbase:floatingactionbutton:1.10.0'
 
-  compile 'me.gujun.android.taggroup:library:1.4@aar'
   compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 
   compile 'com.github.badoualy:stepper-indicator:1.0.6'

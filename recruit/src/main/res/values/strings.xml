@@ -8,4 +8,31 @@
   <string formatted="false" name="trainer_score">教练评分 %s   课程评分 %s</string>
   <string name="avatar">头像</string>
   <string name="gender">性别</string>
+
+
+  <string name="recordedit_comfirm">认证</string>
+  <string name="recordedit_meeting">健身大会</string>
+  <string name="recordedit_label_type">类型</string>
+  <string name="recordedit_certificat_timestart">生效日期</string>
+  <string name="recordedit_certificat_timeend">失效日期</string>
+  <string name="recordedit_score">学分</string>
+  <string name="recordedit_certificate_date">参会日期</string>
+  <string name="recordedit_host_organization">主办机构</string>
+  <string name="recordedit_name">认证名称</string>
+  <string name="record_title">学习培训</string>
+  <string name="workexper_title">工作经历</string>
+  <string name="title_activity_notification">NotificationActivity</string>
+
+  <string name="add_gym_private_01">注: 您不能自己添加“所属健身房”，需要由“所属健身房”添加您为教练，系统即可自动同步。</string>
+  <string name="add_gym_private_02">如果您所属的健身房未出现在“我的健身房”列表，可能的原因如下：</string>
+  <string name="add_gym_private_03">该健身房未使用「青橙健身房管理系统」</string>
+  <string name="add_gym_private_04">方法1: 您可以使用“个人健身房”管理您的学员和课程预约</string>
+  <string name="add_gym_private_05">方法2: 邀请健身房的管理人员开通「青橙健身房管理系统」。</string>
+  <string name="add_gym_private_06">您在该健身房预留的手机号与当前登录的手机号不一致</string>
+  <string name="add_gym_private_07">方法1: 让该健身房的工作人员在「青橙健身房管理系统」中修改您的手机号；</string>
+  <string name="add_gym_private_08">方法2: 在“我的主页”中修改手机号，使其与在「青橙健身房管理系统」中预留的手机号一致。</string>
+  <string name="title_activity_change_time">ChangeTimeActivity</string>
+  <string name="title_activity_choose_student">ChooseStudentActivity</string>
+  <string name="common_modify_failed">修改失败</string>
+  <string name="common_modify_success">修改成功</string>
 </resources>

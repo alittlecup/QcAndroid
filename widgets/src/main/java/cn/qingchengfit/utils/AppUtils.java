@@ -12,8 +12,10 @@ import android.support.v4.content.FileProvider;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import cn.qingchengfit.widgets.R;
 import java.io.File;
 import java.util.List;
 
@@ -119,6 +121,12 @@ public class AppUtils {
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
+    public static int getPrimaryColor(Context context) {
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        return typedValue.data;
+    }
+
     public boolean isAppOnForeground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
@@ -131,6 +139,4 @@ public class AppUtils {
         }
         return false;
     }
-
-
 }

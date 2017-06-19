@@ -28,6 +28,7 @@
       />
 
   <cn.qingchengfit.support.widgets.CompatTextView
+      android:id="@+id/tv_username"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:drawablePadding="8dp"

@@ -35,6 +35,14 @@ public abstract class InnerRouter {
             .commit();
     }
 
+    public void add(Fragment s) {
+        getFragmentManager().beginTransaction()
+            .setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out)
+            .add(getFragId(), s)
+            .addToBackStack(null)
+            .commit();
+    }
+
     public void init(Fragment s) {
         getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_hold, R.anim.slide_hold).replace(getFragId(), s).commit();
     }

@@ -1,5 +1,5 @@
 include ':widgets',
-    ':trainer',
+//    ':trainer',
     ':atest',
-    ':recruit',
-    ':staff'
+    ':recruit'
+//    ':staff'

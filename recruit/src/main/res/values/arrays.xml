@@ -47,5 +47,18 @@
     <item>+ 添加教育经历</item>
     <item>+ 添加自我描述</item>
   </string-array>
-
+  <!--
+0   # 未填写
+1   # 离职-随时到岗
+2   # 在职-暂不考虑
+3   # 在职-考虑机会
+4   # 在职-月内到岗
+-->
+  <string-array name="resume_self_status">
+    <item>未填写</item>
+    <item>离职-随时到岗</item>
+    <item>在职-暂不考虑</item>
+    <item>在职-考虑机会</item>
+    <item>在职-月内到岗</item>
+  </string-array>
 </resources>

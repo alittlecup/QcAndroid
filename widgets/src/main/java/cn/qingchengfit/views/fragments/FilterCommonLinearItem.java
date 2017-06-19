@@ -15,6 +15,8 @@ import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 /**
  * Created by fb on 2017/3/6.
  */
@@ -22,9 +24,15 @@ import java.util.List;
 public class FilterCommonLinearItem extends AbstractFlexibleItem<FilterCommonLinearItem.FilterCommonLinearVH> {
 
     private String data;
+    private boolean isShowState = true;
 
     public FilterCommonLinearItem(String data) {
         this.data = data;
+    }
+
+    public FilterCommonLinearItem(String data, boolean isShowState){
+        this.data = data;
+        this.isShowState = isShowState;
     }
 
     @Override public int getLayoutRes() {
@@ -48,17 +56,19 @@ public class FilterCommonLinearItem extends AbstractFlexibleItem<FilterCommonLin
         holder.textPopFilterCommon.setText(data);
 
         if (!adapter.isSelected(position)) {
-            holder.imageViewFilterCommon.setVisibility(View.GONE);
+            holder.imageViewFilterCommon.setVisibility(View.INVISIBLE);
             holder.textPopFilterCommon.setTextColor(holder.itemView.getResources().getColor(R.color.qc_text_black));
         } else {
             holder.imageViewFilterCommon.setVisibility(View.VISIBLE);
             holder.textPopFilterCommon.setTextColor(holder.itemView.getResources().getColor(R.color.qc_allotsale_green));
         }
+        if (!isShowState){
+            holder.imageViewFilterCommon.setVisibility(View.INVISIBLE);
+        }
     }
 
     class FilterCommonLinearVH extends FlexibleViewHolder {
 
-        @BindView(R2.id.ll_filter_pop_linear_common) RelativeLayout llPopCommonFilter;
         @BindView(R2.id.tv_filter_pop_linear_common) TextView textPopFilterCommon;
         @BindView(R2.id.image_filter_pop_linear_confirm) ImageView imageViewFilterCommon;
 

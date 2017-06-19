@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import cn.qingchengfit.widgets.R;
 import com.bigkoo.pickerview.lib.ArrayWheelAdapter;
+import com.bigkoo.pickerview.lib.NumericWheelAdapter;
 import com.bigkoo.pickerview.lib.WheelView;
 import java.util.ArrayList;
 
@@ -80,6 +81,20 @@ public class TwoScrollPicker extends Dialog {
         wheelviewright.TEXT_SIZE = 50;
         wheelviewright.setCyclic(false);
         wheelviewright.setCurrentItem(rightPos);
+        show();
+    }
+
+    public void show(int minL, int maxL, int minR, int maxR, int interval, int posL, int posR) {
+        wheelviewleft.setAdapter(new NumericWheelAdapter(minL, maxL, interval));// 设置"年"的显示数据
+        wheelviewleft.TEXT_SIZE = 50;
+        wheelviewleft.setCyclic(false);
+        wheelviewleft.setLabel("K");// 添加文字
+        wheelviewleft.setCurrentItem(posL);
+        wheelviewright.setAdapter(new NumericWheelAdapter(minR, maxR, interval));// 设置"年"的显示数据
+        wheelviewright.TEXT_SIZE = 50;
+        wheelviewright.setCyclic(false);
+        wheelviewright.setLabel("K");// 添加文字
+        wheelviewright.setCurrentItem(posR);
         show();
     }
 

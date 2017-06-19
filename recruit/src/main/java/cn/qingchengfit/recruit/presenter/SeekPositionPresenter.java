@@ -14,6 +14,7 @@ import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.utils.LogUtil;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -167,6 +168,19 @@ public class SeekPositionPresenter extends BasePresenter {
                     view.onShowError(throwable.getMessage());
                 }
             }));
+    }
+
+    public List<String> filterSalary(){
+        List<String> salaryList = new ArrayList<>();
+        salaryList.add("全部");
+        salaryList.add("面议");
+        salaryList.add("5k以下");
+        salaryList.add("5k-10k");
+        salaryList.add("10k-15k");
+        salaryList.add("15k-20k");
+        salaryList.add("20k-50k");
+        salaryList.add("50k以上");
+        return salaryList;
     }
 
     public interface MVPView extends CView {

@@ -54,7 +54,7 @@ public class TestApp extends Application implements HasActivityInjector, HasSupp
                 .gymWrapper(new GymWrapper.Builder().brand(new Brand("1")).build())
                 .loginStatus(new LoginStatus.Builder().userId("7060").loginUser(staff).session("1qd51kk557073f3q419td90t4hfov25v").build())
                 .router(new BaseRouter())
-                .restRepository(new QcRestRepository(this, "http://cloudtest.qingchengfit.cn/", "qingcheng-test"))
+                .restRepository(new QcRestRepository(this, "http://cloudtest.qingchengfit.cn/", "staff-test"))
                 .build())
             .build();
         component.inject(this);

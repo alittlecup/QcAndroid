@@ -91,6 +91,10 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
         valueAnimator.start();
     }
 
+    public float getViewHeight(){
+        return commonFlexAdapter.getItemCount() * MeasureUtils.dpToPx(40f, getResources());
+    }
+
     @Override public String getFragmentName() {
         return FilterFragment.class.getName();
     }

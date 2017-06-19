@@ -118,9 +118,10 @@
     <orderEntry type="library" exported="" name="dagger-android-support-2.11" level="project" />
     <orderEntry type="library" exported="" name="converter-gson-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="fab-1.6.4" level="project" />
+    <orderEntry type="library" exported="" name="library-1.4" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-25.3.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.1.1" level="project" />
     <orderEntry type="library" exported="" name="sqlbrite-0.7.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-8.6.0" level="project" />
     <orderEntry type="library" exported="" name="floatingactionbutton-1.10.0" level="project" />
@@ -142,8 +143,8 @@
     <orderEntry type="library" exported="" name="core-0.8.5.5" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="espresso-core-2.2.2" level="project" />
     <orderEntry type="library" exported="" name="dagger-android-2.11" level="project" />
-    <orderEntry type="library" exported="" name="runtime-0.6.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="rules-0.5" level="project" />
+    <orderEntry type="library" exported="" name="runtime-0.6.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.6" level="project" />
     <orderEntry type="library" exported="" name="percent-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="adapter-rxjava-2.0.2" level="project" />
@@ -157,10 +158,10 @@
     <orderEntry type="library" exported="" name="rxbinding-0.4.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.2.0" level="project" />
-    <orderEntry type="library" exported="" name="SensorsAnalyticsSDK-1.7.5" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="rxpermissions-0.9.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
+    <orderEntry type="library" exported="" name="SensorsAnalyticsSDK-1.7.6" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="annotation-3.0.2" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-25.3.1" level="project" />

@@ -29,12 +29,6 @@ public class OptionsDialog extends Dialog implements OnClickListener {
 
     public OptionsDialog(Context context) {
         super(context, R.style.ChoosePicDialogStyle);
-        //        this.setWidth(LayoutParams.FILL_PARENT);
-        //        this.setHeight(LayoutParams.WRAP_CONTENT);
-        //        this.setBackgroundDrawable(new BitmapDrawable());// 这样设置才能点击屏幕外dismiss窗口
-        //        this.setOutsideTouchable(true);
-        //        this.setAnimationStyle(R.style.timepopwindow_anim_style);
-
         LayoutInflater mLayoutInflater = LayoutInflater.from(context);
         rootView = mLayoutInflater.inflate(R.layout.pw_options, null);
         // -----确定和取消按钮

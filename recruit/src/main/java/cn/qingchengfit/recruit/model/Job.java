@@ -128,6 +128,30 @@ public class Job implements Parcelable {
     }
 
     public static class Created_by implements Parcelable {
+
+        public String username;
+        public String id;
+        public String avatar;
+
+        @Override public int describeContents() {
+            return 0;
+        }
+
+        @Override public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.username);
+            dest.writeString(this.id);
+            dest.writeString(this.avatar);
+        }
+
+        public Created_by() {
+        }
+
+        protected Created_by(Parcel in) {
+            this.username = in.readString();
+            this.id = in.readString();
+            this.avatar = in.readString();
+        }
+
         public static final Creator<Created_by> CREATOR = new Creator<Created_by>() {
             @Override public Created_by createFromParcel(Parcel source) {
                 return new Created_by(source);
@@ -137,27 +161,5 @@ public class Job implements Parcelable {
                 return new Created_by[size];
             }
         };
-        public String username;
-        public String position;
-        public String avatar;
-
-        public Created_by() {
-        }
-
-        protected Created_by(Parcel in) {
-            this.username = in.readString();
-            this.position = in.readString();
-            this.avatar = in.readString();
-        }
-
-        @Override public int describeContents() {
-            return 0;
-        }
-
-        @Override public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.username);
-            dest.writeString(this.position);
-            dest.writeString(this.avatar);
-        }
     }
 }

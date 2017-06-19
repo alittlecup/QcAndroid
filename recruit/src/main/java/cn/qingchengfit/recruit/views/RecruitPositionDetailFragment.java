@@ -100,8 +100,8 @@ public class RecruitPositionDetailFragment extends BaseFragment
     unbinder = ButterKnife.bind(this, view);
     delegatePresenter(presenter, this);
     initToolbar(toolbar);
-    onJob(job);
-    onGym(job.gym);
+    //onJob(job);
+    //onGym(job.gym);
     presenter.queryDetail(job.id);
     return view;
   }
@@ -112,8 +112,10 @@ public class RecruitPositionDetailFragment extends BaseFragment
     //toolbar.inflateMenu(R.dimen.);
   }
 
+  @Override
   public void onJob(Job job) {
     if (job == null) return;
+    this.job = job;
     tvPositionName.setText(job.name);
     tvSalary.setText(RecruitBusinessUtils.getSalary(job.min_salary, job.max_salary));
 
@@ -168,7 +170,7 @@ public class RecruitPositionDetailFragment extends BaseFragment
     //创建者信息
     if (job.created_by != null && job.created_at != null) {
       PhotoUtils.small(imgCreatedBy, job.created_by.avatar);
-      tvCreatedBy.setText(job.created_by.username + "（" + job.created_by.position + "）");
+      tvCreatedBy.setText(job.created_by.username);
       tvPositionCratedAt.setText(
           DateUtils.Date2YYYYMMDDHHmm(DateUtils.formatDateFromServer(job.created_at)) + " 发布此职位");
     }
@@ -230,8 +232,9 @@ public class RecruitPositionDetailFragment extends BaseFragment
    * 与他联系
    */
   @OnClick(R2.id.btn_contact_him) public void onBtnContactHimClicked() {
-    AddConversationProcessor addConversationProcessor = new AddConversationProcessor(getContext());
-    addConversationProcessor.addRecruitConversation("qc_", "", new Gson().toJson(job));
+    AddConversationProcessor addConversationProcessor = new AddConversationProcessor(getContext().getApplicationContext());
+    String jobStr = "{userAction:15, type:2, address:\"北京朝阳区\", name:\"trytrytry\", iconUrl:\"http://zoneke-img.b0.upaiyun.com/45accede5e36007f542a60327cb5cde2.png!120x120\",max_salary:15,min_salary:10,min_height:100,max_height:150,min_work_year:3,max_work_year:8,gender:1,min_age:20,max_age:32}";
+    addConversationProcessor.addRecruitConversation("qctest_" + job.created_by.id, "", jobStr);
   }
 
   /**

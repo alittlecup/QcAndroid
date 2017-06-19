@@ -45,8 +45,4 @@ public class CompatUtils {
             view.setCompoundDrawablesWithIntrinsicBounds(left,top,right,bottom);
         }
     }
-
-
-
-
 }

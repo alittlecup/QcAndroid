@@ -85,6 +85,7 @@ dependencies {
   compile 'com.getbase:floatingactionbutton:1.10.0' //fab
   compile 'com.theartofdev.edmodo:android-image-cropper:2.4.5' //裁剪图片
   compile 'com.commonsware.cwac:cam2:0.7.6' //拍照
+  compile 'me.gujun.android.taggroup:library:1.4@aar' //taggroup
 }
 
 group "cn.qingchegfit.widgets"
