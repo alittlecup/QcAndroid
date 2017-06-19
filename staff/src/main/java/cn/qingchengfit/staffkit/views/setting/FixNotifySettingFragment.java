@@ -34,7 +34,7 @@ public class FixNotifySettingFragment extends BaseDialogFragment implements FixN
 
     private static int id;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitle;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.sw_balance_enough) SwitcherLayout swBalanceEnough;
     @BindView(R.id.text_check_signal) TextView textCheckSignal;
     @BindView(R.id.text_open_notify_tips) TextView textOpenNotifyTips;

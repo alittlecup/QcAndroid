@@ -93,7 +93,7 @@ public class RealCardBuyFragment extends BaseFragment implements RealValueCardCh
 
     CreateCardBody createCardBody;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     private StandardAdapter adapter;
     private TimeDialogWindow pwTime;

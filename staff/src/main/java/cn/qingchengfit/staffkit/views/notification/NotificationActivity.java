@@ -21,7 +21,7 @@ public class NotificationActivity extends BaseActivity implements FragCallBack {
 
     //@BindView(R.id.toolbar)
     //Toolbar toolbar;
-    //@BindView(R.id.toolbar_titile)
+    //@BindView(R.id.toolbar_title)
     //TextView toolbarTitile;
     //@BindView(R.id.activity_notification)
     //LinearLayout activityNotification;

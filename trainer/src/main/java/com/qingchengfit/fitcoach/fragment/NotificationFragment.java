@@ -30,6 +30,7 @@ import cn.qingchengfit.model.responese.QcResponseData;
 import cn.qingchengfit.network.errors.NetWorkThrowable;
 import cn.qingchengfit.network.response.QcResponse;
 import cn.qingchengfit.utils.DateUtils;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import com.bumptech.glide.Glide;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.R;
@@ -40,7 +41,6 @@ import com.qingchengfit.fitcoach.Utils.ToastUtils;
 import com.qingchengfit.fitcoach.activity.WebActivity;
 import com.qingchengfit.fitcoach.bean.EventLatestNoti;
 import com.qingchengfit.fitcoach.bean.EventNotiFresh;
-import com.qingchengfit.fitcoach.component.DividerItemDecoration;
 import com.qingchengfit.fitcoach.http.QcCloudClient;
 import com.qingchengfit.fitcoach.http.ResponseConstant;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class NotificationFragment extends BaseSettingFragment {
     @BindView(R.id.refresh_nodata) SwipeRefreshLayout refreshNodata;
     List<NotificationMsg> list = new ArrayList<>();
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     //    @BindView(R.id.pulltorefresh)
     //    PtrFrameLayout pulltorefresh;

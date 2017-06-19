@@ -2778,8 +2778,8 @@ int id toobar_action 0x7f0d0421
 int id toolbar 0x7f0d009c
 int id toolbar_layout 0x7f0d00aa
 int id toolbar_left 0x7f0d026c
-int id toolbar_titile 0x7f0d009f
-int id toolbar_titile_layout 0x7f0d00ad
+int id toolbar_title 0x7f0d009f
+int id toolbar_title_layout 0x7f0d00ad
 int id top 0x7f0d0043
 int id topPanel 0x7f0d0065
 int id top_frag 0x7f0d0277

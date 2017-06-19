@@ -71,7 +71,7 @@ public class CourseImagesFragment extends BaseFragment
     @Inject GymWrapper gymWrapper;
     @Inject RestRepository restRepository;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private int page = 1;
     private int totalPage = 1;
 

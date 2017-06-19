@@ -60,7 +60,7 @@ public class AddNewSiteFragment extends BaseDialogFragment {
     @BindView(R.id.count) CommonInputView count;
     @BindView(R.id.usage) CommonInputView usage;
     @BindView(R.id.btn) Button btn;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject RestRepository restRepository;
     @Inject GymWrapper gymWrapper;
     private DialogSheet sheet;

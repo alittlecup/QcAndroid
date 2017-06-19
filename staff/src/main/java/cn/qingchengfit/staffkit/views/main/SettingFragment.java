@@ -73,7 +73,7 @@ public class SettingFragment extends BaseFragment implements SettingView {
     @BindView(R.id.drawer_name) TextView drawerName;
     @BindView(R.id.update_time) TextView updateTime;
     @BindView(R.id.logout) TextView logout;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Inject GymWrapper gymWrapper;

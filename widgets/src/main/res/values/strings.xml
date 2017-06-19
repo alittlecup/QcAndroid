@@ -30,4 +30,13 @@
   <string name="pickerview_seconds">秒</string>
   <string name="common_complete">完成</string>
   <string name="common_save">保存</string>
+
+
+  <string name="detail_address">具体地址</string>
+  <string name="please_input_detail_address">请填写具体地址</string>
+  <string name="please_drag_map">请拖动地图到健身房的正确位置</string>
+  <string name="common_comfirm">确定</string>
+  <string name="common_i_konw">知道了</string>
+  <string name="alert_permission_forbid">抱歉，您无该功能权限</string>
+
 </resources>

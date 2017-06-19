@@ -58,7 +58,7 @@ public class ShopCommentsFragment extends BaseFragment
     @BindView(R.id.server_score) TextView serverScore;
     @BindView(R.id.server_rate) RatingBarVectorFix serverRate;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private List<AbstractFlexibleItem> mData = new ArrayList<>();
     private String mCourseId;

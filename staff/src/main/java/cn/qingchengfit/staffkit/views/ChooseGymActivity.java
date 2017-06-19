@@ -40,7 +40,7 @@ public class ChooseGymActivity extends AppCompatActivity implements ChooseGymVie
     @BindView(R.id.qc_identify) ImageView qcIdentify;
     @BindView(R.id.item_gym_phonenum) TextView itemGymPhonenum;
     @BindView(R.id.item_right) ImageView itemRight;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     //    @BindColor(R.color.colorPrimary)
     //    int colorPrimary;

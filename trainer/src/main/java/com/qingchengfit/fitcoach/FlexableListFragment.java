@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.qingchengfit.items.CommonNoDataItem;
+import cn.qingchengfit.utils.DividerItemDecoration;
 import cn.qingchengfit.views.fragments.BaseFragment;
 import com.qingchengfit.fitcoach.adapter.CommonFlexAdapter;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -53,8 +54,7 @@ public class FlexableListFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         recycleview.setHasFixedSize(true);
         recycleview.setLayoutManager(new SmoothScrollLinearLayoutManager(getContext()));
-        recycleview.addItemDecoration(
-            new com.qingchengfit.fitcoach.component.DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        recycleview.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mFlexAdapter = new CommonFlexAdapter(mData, mItemClickListener);
         recycleview.setAdapter(mFlexAdapter);
         return view;

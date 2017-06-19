@@ -74,7 +74,7 @@ import timber.log.Timber;
 public class WebFragment extends BaseFragment implements CustomSwipeRefreshLayout.CanChildScrollUpCallback {
     public static final int RESULT_LOGIN = 1;
     @BindView(R.id.toobar_action) public TextView mToobarActionTextView;
-    @BindView(R.id.toolbar_titile) public TextView mTitle;
+    @BindView(R.id.toolbar_title) public TextView mTitle;
     @BindView(R.id.webview) public WebView mWebviewWebView;
     public String mCurUrl;
     @BindView(R.id.toolbar) protected Toolbar mToolbar;

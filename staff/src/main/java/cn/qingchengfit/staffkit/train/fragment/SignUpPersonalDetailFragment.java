@@ -58,7 +58,7 @@ import rx.functions.Action1;
 
     @Arg String orderId;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @Inject SignUpDetailPresenter signUpDetailPresenter;
     RxPermissions rxPermissions;
     private SignUpDetailResponse.SignUpDetailBean bean;

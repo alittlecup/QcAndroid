@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import cn.qingchengfit.model.common.BriefInfo;
+import cn.qingchengfit.utils.CmStringUtils;
 import cn.qingchengfit.widgets.R;
+import java.util.List;
 
 /**
  * power by
@@ -38,12 +42,8 @@ import cn.qingchengfit.widgets.R;
 public class RichTxtFragment extends BaseFragment {
 
     EditText et;
-    //@BindView(R2.id.btn_insert_img) CompatTextView btnInsertImg;
-    //@BindView(R2.id.btn_comfirm) TextView btnComfirm;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.fragment_rich_txt, container, false);
-        //unbinder = ButterKnife.bind(this, view);
         et = new EditText(getContext());
         et.setGravity(Gravity.TOP);
         et.setBackgroundResource(R.color.white);
@@ -65,6 +65,23 @@ public class RichTxtFragment extends BaseFragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
     }
+
+    public void initContent(String s) {
+        try {
+            List<BriefInfo> a = CmStringUtils.fromHTML(s);
+            for (BriefInfo briefInfo : a) {
+                if (TextUtils.isEmpty(briefInfo.getImg())) {
+                    et.append("\n");
+                    et.append(briefInfo.getText());
+                } else {
+
+                }
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+    }
+
 
     public void insertImg(String url, String filePath) {
         String tempUrl = "<img src=\"" + url + "\" />";
@@ -90,6 +107,5 @@ public class RichTxtFragment extends BaseFragment {
             edit_text.insert(index, spannableString);
         }
         edit_text.insert(index + spannableString.length(), "\n");
-        //bitmap.recycle();
     }
 }

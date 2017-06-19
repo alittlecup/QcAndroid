@@ -39,12 +39,33 @@ public class CityBean implements Parcelable {
     public CityBean() {
     }
 
+    public CityBean(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     protected CityBean(Parcel in) {
         this.id = in.readInt();
         this.province_id = in.readInt();
         this.name = in.readString();
         this.districts = new ArrayList<DistrictBean>();
         in.readList(this.districts, List.class.getClassLoader());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override public int describeContents() {

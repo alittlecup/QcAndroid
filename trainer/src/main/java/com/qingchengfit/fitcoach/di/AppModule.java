@@ -2,6 +2,8 @@ package com.qingchengfit.fitcoach.di;
 
 import cn.qingchengfit.di.model.GymWrapper;
 import cn.qingchengfit.di.model.LoginStatus;
+import cn.qingchengfit.network.QcRestRepository;
+import cn.qingchengfit.router.BaseRouter;
 import com.qingchengfit.fitcoach.App;
 import dagger.Module;
 import dagger.Provides;
@@ -30,11 +32,15 @@ import dagger.Provides;
     private LoginStatus loginStatus;
     private GymWrapper gymWrapper;
     private App app;
+    private BaseRouter router;
+    private QcRestRepository restRepository;
 
     private AppModule(Builder builder) {
         loginStatus = builder.loginStatus;
         gymWrapper = builder.gymWrapper;
         app = builder.app;
+        router = builder.router;
+        restRepository = builder.restRepository;
     }
 
     @Provides LoginStatus providerLoginStatus() {
@@ -49,10 +55,20 @@ import dagger.Provides;
         return app;
     }
 
+    @Provides public BaseRouter provideRouter() {
+        return router;
+    }
+
+    @Provides public QcRestRepository provideRepository() {
+        return restRepository;
+    }
+
     public static final class Builder {
         private LoginStatus loginStatus;
         private GymWrapper gymWrapper;
         private App app;
+        private BaseRouter router;
+        private QcRestRepository restRepository;
 
         public Builder() {
         }
@@ -69,6 +85,16 @@ import dagger.Provides;
 
         public Builder app(App val) {
             app = val;
+            return this;
+        }
+
+        public Builder router(BaseRouter val) {
+            router = val;
+            return this;
+        }
+
+        public Builder restRepository(QcRestRepository val) {
+            restRepository = val;
             return this;
         }
 

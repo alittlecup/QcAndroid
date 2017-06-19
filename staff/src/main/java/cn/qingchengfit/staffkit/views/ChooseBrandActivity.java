@@ -41,7 +41,7 @@ import rx.schedulers.Schedulers;
 public class ChooseBrandActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) public TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) public TextView toolbarTitile;
     @BindView(R.id.down) public ImageView down;
     @BindView(R.id.titile_layout) public LinearLayout titileLayout;
     @BindView(R.id.searchview_et) public EditText searchviewEt;

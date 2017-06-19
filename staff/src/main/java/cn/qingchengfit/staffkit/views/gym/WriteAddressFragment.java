@@ -41,7 +41,7 @@ public class WriteAddressFragment extends BaseDialogFragment {
     @BindView(R.id.address) LargeInputView address;
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private CitiesChooser citiesChooser;
 
     public static void start(Fragment fragment, int requestCode, String city, String address) {

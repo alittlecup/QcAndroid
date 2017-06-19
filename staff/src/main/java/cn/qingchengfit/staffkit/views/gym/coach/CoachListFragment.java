@@ -62,7 +62,7 @@ public class CoachListFragment extends BaseFragment implements CoachListView {
     List<Staff> datas = new ArrayList<>();
     @Inject CoachListPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;

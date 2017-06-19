@@ -58,7 +58,7 @@ public class ReportFragment extends BaseDialogFragment implements CommonPView {
     @BindView(R.id.advice_update) RelativeLayout adviceUpdate;
     @BindView(R.id.setting_advice_btn) Button settingAdviceBtn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private String uploadImageUrl = "";
 

@@ -44,7 +44,7 @@ import java.util.List;
 public class RecruitManageFragment extends BaseFragment implements FlexibleAdapter.OnItemClickListener {
 
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.rv_gyms) RecyclerView rvGyms;
     List<AbstractFlexibleItem> items = new ArrayList<>();
     CommonFlexAdapter commonFlexAdapter;

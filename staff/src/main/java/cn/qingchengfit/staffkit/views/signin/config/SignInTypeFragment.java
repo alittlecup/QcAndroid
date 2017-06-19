@@ -71,7 +71,7 @@ import javax.inject.Inject;
     @BindView(R.id.tv_content) TextView tvContent;
     @BindView(R.id.tag_pro) ImageView tagPro;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Inject RestRepositoryV2 restRepository;
     @Inject SigninConfigCardtypePresenter presenter;

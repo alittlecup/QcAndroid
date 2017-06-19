@@ -42,7 +42,7 @@ public class WriteDescFragment extends BaseDialogFragment {
     @BindView(R.id.descripe) LargeInputView descripe;
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private TextChange textChange;
 
     public static void start(Fragment fragment, int requestCode, String title, String hint) {

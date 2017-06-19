@@ -53,7 +53,7 @@ public class CompletedConnectFragment extends BaseFragment {
     public String mCopyUrl;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Inject public CompletedConnectFragment() {
     }

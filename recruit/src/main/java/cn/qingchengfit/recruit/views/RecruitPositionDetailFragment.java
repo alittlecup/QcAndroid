@@ -65,7 +65,7 @@ public class RecruitPositionDetailFragment extends BaseFragment implements SeekP
     @BindView(R2.id.tv_address) TextView tvAddress;
     @BindView(R2.id.img_right) ImageView imgRight;
     @BindView(R2.id.toolbar) Toolbar toolbar;
-    @BindView(R2.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitile;
     @BindView(R2.id.tv_position_name) TextView tvPositionName;
     @BindView(R2.id.tv_salary) TextView tvSalary;
     @BindView(R2.id.img_created_by) ImageView imgCreatedBy;

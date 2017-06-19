@@ -1,5 +1,7 @@
 package cn.qingchengfit.recruit.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import cn.qingchengfit.model.base.Staff;
 
 /**
@@ -23,7 +25,16 @@ import cn.qingchengfit.model.base.Staff;
  * Created by Paper on 2017/6/10.
  */
 
-public class Certificate implements Cloneable {
+public class Certificate implements Cloneable, Parcelable {
+    public static final Parcelable.Creator<Certificate> CREATOR = new Parcelable.Creator<Certificate>() {
+        @Override public Certificate createFromParcel(Parcel source) {
+            return new Certificate(source);
+        }
+
+        @Override public Certificate[] newArray(int size) {
+            return new Certificate[size];
+        }
+    };
     /**
      * date_of_issue : 2015-09-16T15:08:00
      * coach : {"id":6}
@@ -50,9 +61,31 @@ public class Certificate implements Cloneable {
     public Organization organization;
     public int type;
     public String id;
-    public boolean is_authenticated;
-    public boolean is_hidden; //是否隐藏
-    public boolean will_expired; //是否有有效期
+    public Boolean is_authenticated;
+    public Boolean is_hidden; //是否隐藏
+    public Boolean will_expired; //是否有有效期
+
+    public Certificate() {
+    }
+
+    protected Certificate(Parcel in) {
+        this.date_of_issue = in.readString();
+        this.coach = in.readParcelable(Staff.class.getClassLoader());
+        this.name = in.readString();
+        this.certificate_name = in.readString();
+        this.photo = in.readString();
+        this.grade = in.readString();
+        this.created_at = in.readString();
+        this.start = in.readString();
+        this.end = in.readString();
+        this.organization_id = in.readString();
+        this.organization = in.readParcelable(Organization.class.getClassLoader());
+        this.type = in.readInt();
+        this.id = in.readString();
+        this.is_authenticated = in.readByte() != 0;
+        this.is_hidden = in.readByte() != 0;
+        this.will_expired = in.readByte() != 0;
+    }
 
     public String getDate_of_issue() {
         return date_of_issue;
@@ -188,6 +221,26 @@ public class Certificate implements Cloneable {
         return c;
     }
 
+    @Override public int describeContents() {
+        return 0;
+    }
 
-
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.date_of_issue);
+        dest.writeParcelable(this.coach, flags);
+        dest.writeString(this.name);
+        dest.writeString(this.certificate_name);
+        dest.writeString(this.photo);
+        dest.writeString(this.grade);
+        dest.writeString(this.created_at);
+        dest.writeString(this.start);
+        dest.writeString(this.end);
+        dest.writeString(this.organization_id);
+        dest.writeParcelable(this.organization, flags);
+        dest.writeInt(this.type);
+        dest.writeString(this.id);
+        dest.writeByte(this.is_authenticated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_hidden ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.will_expired ? (byte) 1 : (byte) 0);
+    }
 }

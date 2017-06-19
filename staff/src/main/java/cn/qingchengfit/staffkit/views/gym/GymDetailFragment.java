@@ -119,7 +119,7 @@ public class GymDetailFragment extends BaseFragment
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @BindView(R.id.shop_img) ImageView shopImg;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.toolbar_layout) RelativeLayout toolbarLayout;
     //@BindView(R.id.root_scroll) NestedScrollView rootScroll;
@@ -242,7 +242,7 @@ public class GymDetailFragment extends BaseFragment
         gymDetailPresenter.updatePermission();
     }
 
-    @OnClick({ R.id.toolbar_titile, R.id.down }) public void onTitleClick() {
+    @OnClick({ R.id.toolbar_title, R.id.down }) public void onTitleClick() {
         ViewCompat.setPivotY(gymLayout, 0);
         gymLayout.setPivotY(0);
 

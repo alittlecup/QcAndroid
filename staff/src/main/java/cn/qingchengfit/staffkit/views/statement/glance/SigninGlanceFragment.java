@@ -55,7 +55,7 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
 
     private String mChooseShopId;
@@ -89,7 +89,7 @@ public class SigninGlanceFragment extends BaseFragment implements StatementGlanc
         }
     }
 
-    @OnClick({ R.id.toolbar_titile, R.id.down }) public void onClickTitle() {
+    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
         ChooseGymActivity.start(SigninGlanceFragment.this, 1, PermissionServerUtils.SALES_REPORT, getString(R.string.choose_gym),
             mChooseShopId);
     }

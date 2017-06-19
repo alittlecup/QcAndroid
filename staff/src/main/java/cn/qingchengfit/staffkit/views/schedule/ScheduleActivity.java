@@ -71,7 +71,7 @@ import rx.schedulers.Schedulers;
 public class ScheduleActivity extends BaseActivity implements FragCallBack {
 
     private static final int REQUEST_CHOOSE_GYM = 1;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitle;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.schedule_notification) ImageView scheduleNotification;
     @BindView(R.id.schedule_notification_count) TextView scheduleNotificationCount;

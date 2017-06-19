@@ -56,7 +56,7 @@ public class ConversationFriendsFragment extends BaseFragment implements ChatFri
 
     @BindView(R.id.tv_left) TextView tvLeft;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitle;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.tv_allotsale_select_count) TextView tvAllotsaleSelectCount;
     //@BindView(R.id.et_search) EditText etSearch;
     //@BindView(R.id.search_clear) ImageView searchClear;

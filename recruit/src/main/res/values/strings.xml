@@ -35,4 +35,12 @@
   <string name="title_activity_choose_student">ChooseStudentActivity</string>
   <string name="common_modify_failed">修改失败</string>
   <string name="common_modify_success">修改成功</string>
+
+
+  <string name="workexp_detail_hiden">该工作经历已隐藏</string>
+  <string name="workexp_detail_unhiden">同步自［健身房管理系统］</string>
+  <string formatted="false" name="exp_group">团课%d节 服务%d人次</string>
+  <string formatted="false" name="exp_private">私教%d节 服务%d人次</string>
+  <string formatted="false" name="exp_sale">销售额达%s元</string>
+
 </resources>

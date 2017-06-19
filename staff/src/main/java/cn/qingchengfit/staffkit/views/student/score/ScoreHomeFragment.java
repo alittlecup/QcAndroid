@@ -67,7 +67,7 @@ public class ScoreHomeFragment extends BaseFragment
     @BindView(R.id.recycler_view) RecycleViewWithNoImg recyclerView;
     @BindView(R.id.ll_student_score_lable) LinearLayout llStudentScoreLable;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private CommonFlexAdapter flexibleAdapter;
     private List<AbstractFlexibleItem> items = new ArrayList();

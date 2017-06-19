@@ -64,7 +64,7 @@ public class RenewalHistoryFragment extends BaseFragment
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_renewal_history, container, false);

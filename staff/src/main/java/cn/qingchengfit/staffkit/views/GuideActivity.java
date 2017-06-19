@@ -63,7 +63,7 @@ import static cn.qingchengfit.staffkit.views.gym.GymActivity.GYM_TO;
 public class GuideActivity extends BaseActivity implements FragCallBack {
     public boolean isAdd = false;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
     @BindView(R.id.searchview_clear) ImageView searchviewClear;

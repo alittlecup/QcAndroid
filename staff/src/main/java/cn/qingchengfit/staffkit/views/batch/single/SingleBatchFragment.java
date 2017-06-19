@@ -109,7 +109,7 @@ import rx.functions.Action1;
     @Inject SingleBatchPresenter mSingleBatchPresenter;
     @BindView(R.id.root_scroll) ScrollView rootScroll;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.sw_need_pay) SwitchCompat swNeedPay;
     @BindView(R.id.layout_need_pay) LinearLayout layoutNeedPay;
     @BindView(R.id.can_not_close) View canNotClose;

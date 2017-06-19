@@ -43,7 +43,7 @@ import cn.qingchengfit.utils.IntentUtils;
 public class FilterFragment extends BaseFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.card_name) CommonInputView cardName;
     @BindView(R.id.card_status) CommonInputView cardStatus;
 

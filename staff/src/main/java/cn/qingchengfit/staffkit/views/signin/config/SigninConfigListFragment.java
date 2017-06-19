@@ -70,7 +70,7 @@ public class SigninConfigListFragment extends BaseFragment implements ModuleConf
     @BindView(R.id.layout_signin_screen) LinearLayout layoutSigninScreen;
     @BindView(R.id.sw_open) ExpandedLayout swOpen;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private boolean setted;
     private boolean isJumping = false;
     private boolean isAutoOpen = false;

@@ -52,7 +52,7 @@ public class SiteDetailFragment extends BaseFragment implements SiteDetailView {
     @Inject SiteDetailPresenter presenter;
     @BindView(R.id.deny_layout) View denyLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Space mCurSpace;
     private DialogSheet sheet;

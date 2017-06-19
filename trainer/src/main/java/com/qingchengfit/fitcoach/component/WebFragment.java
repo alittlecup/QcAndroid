@@ -105,7 +105,7 @@ public class WebFragment extends BaseFragment
 
     @BindView(R.id.toobar_action) public TextView mToobarActionTextView;
     @BindView(R.id.toolbar) public Toolbar mToolbar;
-    @BindView(R.id.toolbar_titile) public TextView mTitle;
+    @BindView(R.id.toolbar_title) public TextView mTitle;
     @BindView(webview) public WebView mWebviewWebView;
     @BindView(R.id.guide_to_wechat_layout) public RelativeLayout guideToWechatLayout;
     public String mCurUrl;
@@ -615,7 +615,7 @@ public class WebFragment extends BaseFragment
             i.setData(Uri.parse(s));
             startActivity(i);
         } catch (Exception e) {
-
+            LogUtil.e(e.getMessage());
         }
     }
 

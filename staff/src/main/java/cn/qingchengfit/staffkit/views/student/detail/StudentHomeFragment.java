@@ -103,7 +103,7 @@ public class StudentHomeFragment extends BaseFragment {
     @Inject StudentWrapper studentBean;
     @Inject SerPermisAction serPermisAction;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     ArrayList<Fragment> fragments = new ArrayList<>();
     private FragmentAdapter mAdapter;
     private Observable<StudentBaseInfoEvent> ObInfo;

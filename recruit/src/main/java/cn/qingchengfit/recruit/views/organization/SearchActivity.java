@@ -2,9 +2,14 @@ package cn.qingchengfit.recruit.views.organization;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import cn.qingchengfit.recruit.R;
+import cn.qingchengfit.views.activity.BaseAcitivity;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import javax.inject.Inject;
 
 /**
  * power by
@@ -19,8 +24,9 @@ import cn.qingchengfit.recruit.R;
  * <p>
  * Created by Paper on 15/9/17 2015.
  */
-public class SearchActivity extends AppCompatActivity implements SearchInterface {
+public class SearchActivity extends BaseAcitivity implements SearchInterface, HasSupportFragmentInjector {
 
+    @Inject DispatchingAndroidInjector<Fragment> dispatchingFragmentInjector;
     private FragmentManager mFragmentManager;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +48,9 @@ public class SearchActivity extends AppCompatActivity implements SearchInterface
         it.putExtra("isauth", isAuth);
         setResult(result, it);
         this.finish();
+    }
+
+    @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingFragmentInjector;
     }
 }

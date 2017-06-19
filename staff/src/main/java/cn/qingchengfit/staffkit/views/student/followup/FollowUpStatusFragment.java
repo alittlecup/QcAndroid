@@ -97,7 +97,7 @@ public class FollowUpStatusFragment extends BaseFragment
     @BindView(R.id.qtb_filter) QcToggleButton qtbFilter;
     @BindView(R.id.qft_gender) QcFilterToggle qftGender;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.frag_chart) FrameLayout fragChart;
     @BindView(R.id.frag_follow_up_status_filter_container) FrameLayout fragContaiter;
     FollowUpFilterFragment filterFragment;

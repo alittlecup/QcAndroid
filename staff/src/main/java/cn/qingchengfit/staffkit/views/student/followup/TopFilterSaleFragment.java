@@ -59,7 +59,7 @@ public class TopFilterSaleFragment extends BaseFragment
     @BindView(R.id.rv_referrer) RecyclerView rvSales;
     @Inject TopFilterSalePresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     private CommonFlexAdapter mFlexAdapter;
     private List<AbstractFlexibleItem> items = new ArrayList<>();

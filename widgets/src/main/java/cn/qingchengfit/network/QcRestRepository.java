@@ -1,6 +1,7 @@
 package cn.qingchengfit.network;
 
 import android.content.Context;
+import cn.qingchengfit.network.response.QcResponToken;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.LogUtil;
 import cn.qingchengfit.utils.PreferenceUtils;
@@ -13,11 +14,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.json.JSONException;
-import org.json.JSONObject;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
 
 /**
  * power by
@@ -60,16 +61,7 @@ public class QcRestRepository {
 
                 Request request = chain.request();
                 if (!request.method().equalsIgnoreCase("GET")) {
-                    String tokenJson =
-                        tokenClient.newCall(new Request.Builder().url(host + "api/csrftoken/").build()).execute().body().toString();
-                    String token = "";
-                    try {
-                        JSONObject jsonObject = new JSONObject(tokenJson);
-                        token = jsonObject.getJSONObject("data").getString("token");
-                    } catch (JSONException e) {
-                        //e.printStackTrace();
-                    }
-
+                    String token = QcRestRepository.this.createGetApi(GetCsrfToken.class).qcGetToken().execute().body().data.token;
                     request = request.newBuilder()
                         .addHeader("X-CSRFToken", token)
                         .addHeader("Cookie",
@@ -115,5 +107,9 @@ public class QcRestRepository {
 
     public <T> T createPostApi(final Class<T> service) {
         return postApiAdapter.create(service);
+    }
+
+    public interface GetCsrfToken {
+        @GET("/api/csrftoken/") Call<QcResponToken> qcGetToken();
     }
 }

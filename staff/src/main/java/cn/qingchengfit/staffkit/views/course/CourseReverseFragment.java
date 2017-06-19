@@ -57,7 +57,7 @@ import javax.inject.Inject;
     @BindView(R.id.text_report_reverse_fact) TextView textReportReverseFact;
     @BindView(R.id.recycler_report_detail) RecyclerView recyclerReportDetail;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Inject CourseReversePresenter presenter;
     private CommonFlexAdapter adapter;

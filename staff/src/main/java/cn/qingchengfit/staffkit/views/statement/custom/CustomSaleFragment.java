@@ -67,7 +67,7 @@ public class CustomSaleFragment extends BaseFragment implements CustomSaleView {
     @BindView(R.id.sale_menber) CommonInputView saleMenber;
     @BindView(R.id.pay_method) CommonInputView payMethod;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Calendar date;
 

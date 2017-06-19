@@ -60,9 +60,6 @@ public class HTMLUtils {
                     break;
                 case XmlPullParser.TEXT:
                     if (isImg) {
-                        //                        String img = parser.getText();
-                        //                        String img_out = img.substring(6, img.length() - 2);
-                        //                        breif.setImg(img_out);
                     } else {
                         String content = parser.getText();
                         breif.setText(content);

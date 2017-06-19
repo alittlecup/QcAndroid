@@ -62,7 +62,7 @@ public class SinginConfigWardrobeFragment extends BaseFragment implements Signin
     List<SignInConfig.Config> signOutConfig = new ArrayList<>();
     @BindView(R.id.view_no_permission) View viewNoPermission;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

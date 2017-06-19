@@ -27,7 +27,7 @@ public class SignUpFormHomeFragment extends BaseFragment {
     @BindView(R.id.sign_up_tab) TabLayout tabLayout;
     @BindView(R.id.sign_up_viewpager) ViewPager viewPager;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

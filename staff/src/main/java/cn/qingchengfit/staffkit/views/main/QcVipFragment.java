@@ -121,7 +121,7 @@ public class QcVipFragment extends WebFragment {
     //    @BindView(R.id.webview_root)
     //    RelativeLayout webviewRoot;
     //
-    //    @BindView(R.id.toolbar_titile)
+    //    @BindView(R.id.toolbar_title)
     //    TextView toolbarTitile;
     //
     //    @BindView(R.id.fl_common_toolbar)

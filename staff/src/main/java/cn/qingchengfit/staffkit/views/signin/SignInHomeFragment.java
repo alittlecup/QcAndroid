@@ -70,7 +70,7 @@ public class SignInHomeFragment extends BaseFragment implements SignInConfigPres
     @Inject SignInConfigPresenter presenter;
     @Inject ModuleConfigsPresenter moduleConfigsPresenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     public SignInHomeFragment() {
     }

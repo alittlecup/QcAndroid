@@ -7,6 +7,8 @@ import cn.qingchengfit.article.ArticleReplyFragment;
 import cn.qingchengfit.chat.ChatChooseInGymFragment;
 import cn.qingchengfit.chat.ChatFriendAllChooseFragment;
 import cn.qingchengfit.chat.ConversationFriendsFragment;
+import cn.qingchengfit.recruit.di.BindRecruitModule;
+import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import cn.qingchengfit.views.container.ContainerActivity;
 import com.qingchengfit.fitcoach.App;
 import com.qingchengfit.fitcoach.activity.Main2Activity;
@@ -63,7 +65,7 @@ import dagger.multibindings.IntoMap;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * Created by Paper on 2017/4/17.
  */
-@Component(modules ={ AppModule.class,
+@Component(modules ={ AppModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
     AppComponent.MainMsgFragmentModule.class,
     AppComponent.ContainerModule.class,
     AppComponent.ArticleCommentsListFragmentModule.class,

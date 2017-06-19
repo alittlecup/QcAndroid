@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.fragment;
+package cn.qingchengfit.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,9 +13,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.qingchengfit.RxBus;
+import cn.qingchengfit.events.EventAddress;
 import cn.qingchengfit.utils.CompatUtils;
-import cn.qingchengfit.views.fragments.BaseFragment;
+import cn.qingchengfit.utils.ToastUtils;
+import cn.qingchengfit.views.CitiesChooser;
 import cn.qingchengfit.widgets.CommonInputView;
+import cn.qingchengfit.widgets.R;
+import cn.qingchengfit.widgets.R2;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -29,11 +34,6 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeResult;
-import com.qingchengfit.fitcoach.R;
-import com.qingchengfit.fitcoach.RxBus;
-import com.qingchengfit.fitcoach.Utils.ToastUtils;
-import com.qingchengfit.fitcoach.bean.EventAddress;
-import com.qingchengfit.fitcoach.component.CitiesChooser;
 
 /**
  * power by
@@ -57,12 +57,12 @@ import com.qingchengfit.fitcoach.component.CitiesChooser;
  */
 public class ChooseAddressFragment extends BaseFragment {
 
-    @BindView(R.id.mapview) MapView mMapview;
+    @BindView(R2.id.mapview) MapView mMapview;
+    @BindView(R2.id.city_name) TextView cityName;
+    @BindView(R2.id.address) CommonInputView address;
+    @BindView(R2.id.toolbar) Toolbar toolbar;
+    @BindView(R2.id.toolbar_title) TextView toolbarTitle;
     AMap mAMap;
-    @BindView(R.id.city_name) TextView cityName;
-    @BindView(R.id.address) CommonInputView address;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private GeocodeSearch geocoderSearch;
@@ -74,8 +74,8 @@ public class ChooseAddressFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_address, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-        toolbarTitle.setText(R.string.address);
+        initToolbar(toolbar);
+        toolbarTitle.setText("选择地址");
         toolbar.inflateMenu(R.menu.menu_comfirm);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override public boolean onMenuItemClick(MenuItem item) {
@@ -90,11 +90,12 @@ public class ChooseAddressFragment extends BaseFragment {
                     return true;
                 }
 
-                RxBus.getBus().post(new EventAddress.Builder().city_code(Integer.parseInt(mCityCode))
+                RxBus.getBus()
+                    .post(new EventAddress.Builder().city_code(Integer.parseInt(mCityCode))
                         .city(cityName.getText().toString().trim())
                         .address(address.getContent().trim())
-                    .lat(mLatLng == null ? 0 : mLatLng.latitude)
-                    .log(mLatLng == null ? 0 : mLatLng.longitude)
+                        .lat(mLatLng == null ? 0 : mLatLng.latitude)
+                        .log(mLatLng == null ? 0 : mLatLng.longitude)
                         .build());
                 getActivity().onBackPressed();
                 return true;
@@ -161,7 +162,7 @@ public class ChooseAddressFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.layout_city) public void onCity() {
+    @OnClick(R2.id.layout_city) public void onCity() {
         if (mCitiesChooser == null) {
             mCitiesChooser = new CitiesChooser(getContext());
             mCitiesChooser.setOnCityChoosenListener(new CitiesChooser.OnCityChoosenListener() {
@@ -196,6 +197,5 @@ public class ChooseAddressFragment extends BaseFragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         mMapview.onDestroy();
-        unbinder.unbind();
     }
 }

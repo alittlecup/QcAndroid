@@ -85,6 +85,10 @@ public class MainWebFragment extends WebFragment {
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 LogUtil.d("shouldOverrideUrlLoading:" + url + " :");
+                if (!url.startsWith("http")) {
+                    handleSchema(url);
+                    return true;
+                }
                 WebActivity.startWeb(url, getActivity());
                 return true;
             }

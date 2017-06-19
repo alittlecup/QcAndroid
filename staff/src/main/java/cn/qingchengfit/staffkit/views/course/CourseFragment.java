@@ -48,7 +48,7 @@ public class CourseFragment extends BaseFragment {
     @BindView(R.id.viewpager) ViewPager viewpager;
     ArrayList<Fragment> fragments = new ArrayList<>();
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private FragmentAdapter fragmentAdater;
     private Toolbar.OnMenuItemClickListener menuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {

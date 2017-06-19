@@ -66,7 +66,7 @@ import rx.functions.Action1;
     @Arg(required = false) long mCourselength = 0;
 
     List<Integer> x = new ArrayList<>();
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.label_can_order) TextView labelCanOrder;
     @Inject AddCyclePresenter presenter;

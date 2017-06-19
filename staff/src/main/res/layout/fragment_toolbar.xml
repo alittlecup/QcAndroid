@@ -25,7 +25,7 @@
   </android.support.v7.widget.Toolbar>
 
   <LinearLayout
-      android:id="@+id/toolbar_titile_layout"
+      android:id="@+id/toolbar_title_layout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"
@@ -33,7 +33,7 @@
       >
 
     <TextView
-        android:id="@+id/toolbar_titile"
+        android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"

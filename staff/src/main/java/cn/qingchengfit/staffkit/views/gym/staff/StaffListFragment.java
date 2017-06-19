@@ -76,7 +76,7 @@ public class StaffListFragment extends BaseFragment implements StaffListView {
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
 
     private Staff mSelf;
 

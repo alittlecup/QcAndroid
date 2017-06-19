@@ -21,7 +21,7 @@ import rx.functions.Action1;
 public class PopFromBottomActivity extends BaseActivity implements FragCallBack {
 
     @BindView(cn.qingchengfit.staffkit.R.id.toolbar) Toolbar toolbar;
-    @BindView(cn.qingchengfit.staffkit.R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(cn.qingchengfit.staffkit.R.id.toolbar_title) TextView toolbarTitile;
 
     @Inject GymWrapper gymWrapper;
     private Observable<ToolbarBean> mObToolbar;

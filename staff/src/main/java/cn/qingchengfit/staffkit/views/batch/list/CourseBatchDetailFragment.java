@@ -69,7 +69,7 @@ public class CourseBatchDetailFragment extends BaseFragment implements CourseBat
 
     @Inject CourseBatchDetailPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private List<ImageIconBean> datas = new ArrayList<>();
     private DialogSheet delCourseDialog;
     private MaterialDialog delDialog;

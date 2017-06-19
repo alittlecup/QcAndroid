@@ -76,7 +76,7 @@ import javax.inject.Inject;
 
     String msgId;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.label_save_time) TextView labelSaveTime;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {

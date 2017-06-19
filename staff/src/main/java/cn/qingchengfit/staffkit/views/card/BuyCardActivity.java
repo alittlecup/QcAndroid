@@ -45,7 +45,7 @@ import rx.functions.Action1;
  * Created by Paper on 16/4/2 2016.
  */
 public class BuyCardActivity extends BaseActivity implements FragCallBack {
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.frag) FrameLayout frag;
     @BindView(R.id.down) ImageView down;

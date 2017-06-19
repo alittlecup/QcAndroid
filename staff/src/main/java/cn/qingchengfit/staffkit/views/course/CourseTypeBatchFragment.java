@@ -60,7 +60,7 @@ import javax.inject.Inject;
      */
     @Inject GymWrapper gymWrapper;
     @Arg boolean mIsPrivate;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -54,7 +54,7 @@ import rx.functions.Action1;
 public class ArticleReplyFragment extends BaseFragment implements ArticleReplyPresenter.MVPView, FlexibleAdapter.EndlessScrollListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
 

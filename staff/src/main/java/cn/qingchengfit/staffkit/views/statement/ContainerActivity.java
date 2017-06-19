@@ -55,7 +55,7 @@ import rx.schedulers.Schedulers;
  */
 public class ContainerActivity extends BaseActivity implements FragCallBack {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.titile_layout) LinearLayout titleLayout;
     @BindView(R.id.frag) FrameLayout frag;
     @BindView(R.id.down) ImageView down;

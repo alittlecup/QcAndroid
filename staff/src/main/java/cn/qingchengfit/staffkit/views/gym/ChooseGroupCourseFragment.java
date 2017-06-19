@@ -62,7 +62,7 @@ import rx.schedulers.Schedulers;
  */
 public class ChooseGroupCourseFragment extends BaseDialogFragment {
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecycleViewWithNoImg recycleview;
     @BindView(R.id.btn) Button btn;
     @Inject GymUseCase usecase;

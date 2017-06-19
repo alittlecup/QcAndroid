@@ -388,7 +388,6 @@ public class SearchFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     public void setOnItemClickListener(OnRecycleItemClickListener listener) {

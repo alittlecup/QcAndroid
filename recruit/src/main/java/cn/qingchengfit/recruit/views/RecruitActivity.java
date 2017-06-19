@@ -1,5 +1,7 @@
 package cn.qingchengfit.recruit.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -39,7 +41,25 @@ public class RecruitActivity extends BaseAcitivity implements HasSupportFragment
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit);
-        router.resumeHome();
+        onNewIntent(getIntent());
+    }
+
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getData() != null) {
+            Uri uri = intent.getData();
+            switch (uri.getHost()) {
+                case "recruit":
+                    router.home();
+                    break;
+                case "resume":
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            router.home();
+        }
     }
 
     @Override public AndroidInjector<Fragment> supportFragmentInjector() {

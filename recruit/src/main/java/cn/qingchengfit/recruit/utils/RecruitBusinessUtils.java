@@ -1,6 +1,9 @@
 package cn.qingchengfit.recruit.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
+import cn.qingchengfit.Constants;
+import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.model.TeacherImpression;
 import java.util.ArrayList;
@@ -31,7 +34,9 @@ import java.util.Locale;
 public class RecruitBusinessUtils {
 
     public static String getSalary(float min, float max) {
-        if (min == 0 && max == 0) {
+        if (min == -1 && max == -1) {
+            return "面谈";
+        } else if (min == 0 && max == 0) {
             return "不限";
         } else if (min == 0) {
             return "<" + getMoney(max);
@@ -144,4 +149,30 @@ public class RecruitBusinessUtils {
         }
         return ret;
     }
+
+    public static String getStrFromCities(List<CityBean> ct) {
+        String ret = "";
+        for (CityBean cityBean : ct) {
+            ret = TextUtils.concat(ret, cityBean.name, Constants.SEPARATE).toString();
+        }
+        if (ret.endsWith(Constants.SEPARATE)) ret = ret.substring(0, ret.length() - 1);
+        return ret;
+    }
+
+    public static List<String> getListStrFromCities(List<CityBean> ct) {
+        List<String> ret = new ArrayList<>();
+        for (CityBean cityBean : ct) {
+            ret.add(cityBean.getName());
+        }
+        return ret;
+    }
+
+    public static List<String> getIdsFromCities(List<CityBean> ct) {
+        List<String> ret = new ArrayList<>();
+        for (CityBean cityBean : ct) {
+            ret.add(cityBean.id + "");
+        }
+        return ret;
+    }
+
 }

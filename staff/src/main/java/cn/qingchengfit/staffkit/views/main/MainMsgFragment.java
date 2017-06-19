@@ -92,7 +92,7 @@ public class MainMsgFragment extends BaseFragment
 
     @BindView(R.id.fab_add_conversation) FloatingActionButton addConversation;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recyclerview) RecyclerView recyclerview;
     @BindView(R.id.divider) View divider;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;

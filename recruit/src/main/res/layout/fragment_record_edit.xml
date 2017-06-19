@@ -10,20 +10,18 @@
     android:scrollbars="none"
     >
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@color/backgroud_grey"
-      >
 
-    <include layout="@layout/common_simple_toolbar"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroud_grey"
         android:orientation="vertical"
 
         >
+
+      <include layout="@layout/common_simple_toolbar"/>
 
       <RelativeLayout
           android:id="@+id/host_layout"
@@ -38,6 +36,7 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             />
 
         <ImageView
@@ -45,6 +44,7 @@
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_alignBottom="@id/host_img"
+            android:layout_alignEnd="@id/host_img"
             android:layout_alignRight="@id/host_img"
             android:padding="1dp"
             app:srcCompat="@drawable/vd_qc_logo"
@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="70dp"
+            android:layout_marginStart="70dp"
             android:orientation="vertical"
             >
 
@@ -117,18 +118,14 @@
 
       <include layout="@layout/divider_grey"/>
 
-      <include
-          layout="@layout/divider_grey"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginTop="10dp"
-          />
+
 
       <RelativeLayout
           android:id="@+id/comfirm_scroe_layout"
           android:layout_width="match_parent"
           android:layout_height="@dimen/qc_item_height"
           android:background="@color/white"
+          android:visibility="gone"
           >
 
         <TextView
@@ -136,6 +133,8 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+
             android:text="有无学分"
             style="@style/Qc.TextCommonGrey"
             />
@@ -144,8 +143,10 @@
             android:id="@+id/comfirm_scroe_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:checked="false"
             />
@@ -193,6 +194,7 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:text="有无证书"
             style="@style/Qc.TextCommonGrey"
             />
@@ -201,8 +203,10 @@
             android:id="@+id/comfirm_certification_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:checked="false"
             />
@@ -263,6 +267,7 @@
             android:layout_height="@dimen/qc_item_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:text="上传照片"
             style="@style/Qc.TextCommonGrey"
             />
@@ -271,8 +276,10 @@
             android:id="@+id/advice_right_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_arrow_right"
             />
@@ -281,28 +288,18 @@
             android:id="@+id/recordedit_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
             android:padding="5dp"
             android:visibility="gone"
 
             />
-        <!--<ImageView-->
-        <!--android:id="@+id/recordedit_img"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
-        <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-        <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-        <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
-        <!--android:background="@color/white"-->
-        <!--android:visibility="gone"-->
-        <!--/>-->
 
       </RelativeLayout>
 
-      <include layout="@layout/divider_grey">
-      </include>
+      <include layout="@layout/divider_grey"/>
 
       <Button
           android:id="@+id/recordedit_comfirm_btn"
@@ -312,5 +309,4 @@
           android:text="确定"
           />
     </LinearLayout>
-  </RelativeLayout>
 </ScrollView>

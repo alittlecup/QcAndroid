@@ -49,7 +49,7 @@ public class CreateGroupFragment extends BaseFragment implements SignUpView {
     @BindView(R.id.tv_add_member) TextView tvAddMember;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycle_add_member) RecyclerView recyclerAddMember;
     @BindView(R.id.image_create_clear_name) ImageView imageClearName;
     @Inject SignUpGroupDetailPresenter presenter;

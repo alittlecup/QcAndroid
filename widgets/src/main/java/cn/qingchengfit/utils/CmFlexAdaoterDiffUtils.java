@@ -1,4 +1,8 @@
-package com.qingchengfit.fitcoach.bean;
+package cn.qingchengfit.utils;
+
+import android.support.v7.util.DiffUtil;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import java.util.List;
 
 /**
  * power by
@@ -18,62 +22,36 @@ package com.qingchengfit.fitcoach.bean;
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.   .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\ /MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMVMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
- * Created by Paper on 16/11/11.
+ * Created by Paper on 2017/6/17.
  */
 
-public class EventAddress {
+public class CmFlexAdaoterDiffUtils extends DiffUtil.Callback {
+    private List<AbstractFlexibleItem> olds, news;
 
-    public int city_code;
-    public String address;
-    public String city;
-    public double lat;
-    public double log;
-
-    private EventAddress(Builder builder) {
-        city_code = builder.city_code;
-        address = builder.address;
-        city = builder.city;
-        lat = builder.lat;
-        log = builder.log;
+    public CmFlexAdaoterDiffUtils(List<AbstractFlexibleItem> olds, List<AbstractFlexibleItem> news) {
+        this.olds = olds;
+        this.news = news;
     }
 
-    public static final class Builder {
-        private int city_code;
-        private String address;
-        private String city;
-        private double lat;
-        private double log;
+    @Override public int getOldListSize() {
+        return olds == null ? 0 : olds.size();
+    }
 
-        public Builder() {
-        }
+    @Override public int getNewListSize() {
+        return news == null ? 0 : news.size();
+    }
 
-        public Builder city_code(int val) {
-            city_code = val;
-            return this;
-        }
+    @Override public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+        return olds.get(oldItemPosition).equals(news.get(newItemPosition));
+    }
 
-        public Builder address(String val) {
-            address = val;
-            return this;
-        }
-
-        public Builder city(String val) {
-            city = val;
-            return this;
-        }
-
-        public Builder lat(double val) {
-            lat = val;
-            return this;
-        }
-
-        public Builder log(double val) {
-            log = val;
-            return this;
-        }
-
-        public EventAddress build() {
-            return new EventAddress(this);
+    @Override public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+        AbstractFlexibleItem o = olds.get(oldItemPosition);
+        AbstractFlexibleItem n = news.get(newItemPosition);
+        if (o instanceof IDiff && n instanceof IDiff) {
+            return ((IDiff) o).getContentJson().equals(((IDiff) n).getContentJson());
+        } else {
+            return false;
         }
     }
 }

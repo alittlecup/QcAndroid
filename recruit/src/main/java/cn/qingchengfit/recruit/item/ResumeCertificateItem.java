@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.model.Certificate;
+import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
@@ -24,6 +25,10 @@ public class ResumeCertificateItem extends AbstractFlexibleItem<ResumeCertificat
 
     public ResumeCertificateItem(Certificate certificate) {
         this.certificate = certificate;
+    }
+
+    public Certificate getCertificate() {
+        return certificate;
     }
 
     @Override public int getLayoutRes() {
@@ -48,7 +53,8 @@ public class ResumeCertificateItem extends AbstractFlexibleItem<ResumeCertificat
         } else {
             holder.layoutCertificatePhoto.setVisibility(View.VISIBLE);
             holder.tvCertificateCardName.setText("证书名称" + certificate.certificate_name);
-            holder.tvCertificatePeriod.setText("有效期" + certificate.start + "至" + certificate.end);
+            holder.tvCertificatePeriod.setText(
+                "有效期" + DateUtils.getYYYYMMDDfromServer(certificate.start) + "至" + DateUtils.getYYYYMMDDfromServer(certificate.end));
             PhotoUtils.origin(holder.imgCertificate, certificate.photo);
         }
 

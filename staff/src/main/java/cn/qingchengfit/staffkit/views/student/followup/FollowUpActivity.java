@@ -55,7 +55,7 @@ public class FollowUpActivity extends BaseActivity implements FragCallBack {
 
     //@BindView(R.id.toolbar) Toolbar toolbar;
     //@BindView(R.id.rb_select_all) CheckBox rbSelectAll;
-    //@BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    //@BindView(R.id.toolbar_title) TextView toolbarTitile;
     //@BindView(R.id.down) ImageView down;
     //@BindView(R.id.titile_layout) LinearLayout titileLayout;
     //

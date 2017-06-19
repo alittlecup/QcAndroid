@@ -39,7 +39,7 @@ import javax.inject.Inject;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.text_toolbar_right) TextView textToolbarRight;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycler_member_delete) RecyclerView recyclerMemberDelete;
 
     @Arg ArrayList<QcStudentBean> memberList;

@@ -52,6 +52,10 @@ public class TagInputFragment extends BaseFragment {
         }
     }
 
+    public List<String> getTags() {
+        return Arrays.asList(tagGroup.getTags());
+    }
+
     @Override public String getFragmentName() {
         return TagInputFragment.class.getName();
     }

@@ -88,7 +88,7 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<QcResponseSaleDetail.History> statementBeans = new ArrayList<>();
@@ -223,7 +223,7 @@ public class SaleDetailFragment extends BaseFragment implements SaleCardTypeView
         return view;
     }
 
-    @OnClick({ R.id.toolbar_titile, R.id.down }) public void onClickTitle() {
+    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
         ChooseGymActivity.start(SaleDetailFragment.this, 1, PermissionServerUtils.SALES_REPORT, getString(R.string.choose_gym),
             mChooseShopId);
     }

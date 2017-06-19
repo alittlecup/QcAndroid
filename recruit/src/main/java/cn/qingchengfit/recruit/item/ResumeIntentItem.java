@@ -1,6 +1,10 @@
 package cn.qingchengfit.recruit.item;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qingchengfit.model.base.CityBean;
 import cn.qingchengfit.recruit.R;
 import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.support.widgets.CompatTextView;
@@ -24,11 +27,11 @@ public class ResumeIntentItem extends AbstractFlexibleItem<ResumeIntentItem.Resu
 
     int stauts;
     List<String> expPos;
-    List<CityBean> cities;
+    List<String> cities;
     String salary;
     String[] statusStr;
 
-    public ResumeIntentItem(Context context, List<String> expPos, List<CityBean> cities, String salary, int status) {
+    public ResumeIntentItem(Context context, List<String> expPos, List<String> cities, String salary, int status) {
         this.context = context;
         this.expPos = expPos;
         this.cities = cities;
@@ -48,8 +51,12 @@ public class ResumeIntentItem extends AbstractFlexibleItem<ResumeIntentItem.Resu
     @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeIntentVH holder, int position, List payloads) {
         String statu = Math.abs(stauts) < 5 ? statusStr[Math.abs(stauts)] : "";
         holder.tvCurrentStatus.setText(statu);
-        holder.tvCity.setText(CmStringUtils.List2Str(expPos));
-        // TODO: 2017/6/13 城市
+        Drawable d = DrawableCompat.wrap(ContextCompat.getDrawable(context, R.drawable.dot_red));
+        String color = context.getResources().getStringArray(R.array.resume_status_colors)[Math.abs(stauts) % 5];
+        DrawableCompat.setTint(d, Color.parseColor(color));
+        holder.tvCurrentStatus.setCompoundDrawablesWithIntrinsicBounds(d, null, null, null);
+        holder.tvPosition.setText(CmStringUtils.List2Str(expPos));
+        holder.tvCity.setText(CmStringUtils.List2Str(cities));
         holder.tvSalary.setText(salary);
     }
 

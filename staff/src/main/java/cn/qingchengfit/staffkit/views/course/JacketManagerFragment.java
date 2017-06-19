@@ -61,7 +61,7 @@ public class JacketManagerFragment extends BaseFragment
     @BindView(R.id.custom_switch) ExpandedLayout customSwitch;
     @BindView(R.id.costum_jacket_hint) TextView costumJacketHint;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private ArrayList<AbstractFlexibleItem> mDatas = new ArrayList<>();
     private JacketManageAdapter mAdapter;
     private String courseid;

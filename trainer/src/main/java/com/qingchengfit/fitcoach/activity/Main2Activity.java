@@ -25,7 +25,9 @@ import cn.qingchengfit.di.model.LoginStatus;
 import cn.qingchengfit.event.EventLoginChange;
 import cn.qingchengfit.model.base.User;
 import cn.qingchengfit.network.response.QcResponse;
+import cn.qingchengfit.recruit.views.RecruitActivity;
 import cn.qingchengfit.repository.RepoCoachServiceImpl;
+import cn.qingchengfit.router.BaseRouter;
 import cn.qingchengfit.utils.AppUtils;
 import cn.qingchengfit.utils.CompatUtils;
 import cn.qingchengfit.utils.LogUtil;
@@ -107,6 +109,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
     @BindView(R.id.tv_noti_count) TextView tvNotiCount;
     @Inject LoginStatus loginStatus;
     @Inject RepoCoachServiceImpl repoCoachService;
+    @Inject BaseRouter baseRouter;
     AsyncDownloader mDownloadThread;
     private Gson gson;
     private Date mChooseDate;
@@ -139,7 +142,7 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
-
+        initRouter();
         new RxPermissions(this).request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
             @Override public void call(Boolean aBoolean) {
                 if (aBoolean) {
@@ -254,6 +257,9 @@ public class Main2Activity extends BaseAcitivity implements WebActivityInterface
         }
     }
 
+    private void initRouter() {
+        baseRouter.registeRouter("recruit", RecruitActivity.class);
+    }
 
     public void changeLogin(){
         if (loginStatus.isLogined()){

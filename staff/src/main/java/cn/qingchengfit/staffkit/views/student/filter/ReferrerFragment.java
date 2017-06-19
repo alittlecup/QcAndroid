@@ -71,7 +71,7 @@ import javax.inject.Inject;
     @Inject ReferrerPresenter presenter;
     @BindView(R.id.rv_referrer) RecyclerView rvReferrer;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {

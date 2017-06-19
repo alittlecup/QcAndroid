@@ -96,7 +96,7 @@ public class StatementDetailFragment extends BaseFragment implements StatementDe
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     private StatementDetailAdapter mStatementDetailAdapter;
     private List<QcResponseStatementDetail.StatamentSchedule> statementBeans = new ArrayList<>();

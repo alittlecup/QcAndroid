@@ -16,6 +16,7 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.recruit.model.WorkExp;
 import cn.qingchengfit.support.widgets.CompatTextView;
 import cn.qingchengfit.utils.CmStringUtils;
+import cn.qingchengfit.utils.DateUtils;
 import cn.qingchengfit.utils.PhotoUtils;
 import com.google.android.flexbox.FlexboxLayout;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
@@ -34,6 +35,10 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
         this.context = context;
     }
 
+    public WorkExp getWorkExp() {
+        return workExp;
+    }
+
     @Override public int getLayoutRes() {
         return R.layout.item_resume_workexp;
     }
@@ -45,15 +50,21 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
 
     @Override public void bindViewHolder(FlexibleAdapter adapter, ResumeWorkExpVH holder, int position, List payloads) {
         if (workExp.gym != null){
-        //健身房信息
-            PhotoUtils.small(holder.imgGym,workExp.gym.photo);
-            holder.tvGymBrand.setText(workExp.gym.brand_name);
-
+            //健身房信息
+            if (workExp.gym.brand != null) {
+                PhotoUtils.small(holder.imgGym, workExp.gym.brand.photo);
+                holder.tvGymBrand.setText(workExp.gym.brand.getName());
+                holder.tvGymPosition.setText("职位：" + workExp.position);
+                holder.tvGymName.setText(workExp.gym.getCityName() + " · " + workExp.gym.name);
+            }
         }
+        holder.tvDuring.setText(DateUtils.getYYMMfromServer(workExp.start) + "至" + DateUtils.getYYMMfromServer(workExp.end));
         if (TextUtils.isEmpty(workExp.description)) {
             holder.tvDesc.setVisibility(View.GONE);
+            holder.short_divider.setVisibility(View.GONE);
         } else {
             holder.tvDesc.setVisibility(View.VISIBLE);
+            holder.short_divider.setVisibility(View.VISIBLE);
             holder.tvDesc.setText(workExp.description);
         }
 
@@ -78,7 +89,7 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
                 }
                 holder.tvShowAll.setVisibility(workExp.impression.size() > 5 ? View.VISIBLE : View.GONE);
             } else {
-                // TODO: 2017/6/14 无印象
+                // TODO: 2017/6/14 无印象怎么处理
                 holder.tvShowAll.setVisibility(View.GONE);
             }
 
@@ -118,6 +129,7 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
 
     public class ResumeWorkExpVH extends FlexibleViewHolder {
         @BindView(R2.id.img_gym) ImageView imgGym;
+        @BindView(R2.id.short_divider) View short_divider;
         @BindView(R2.id.tv_gym_brand) TextView tvGymBrand;
         @BindView(R2.id.tv_gym_position) TextView tvGymPosition;
         @BindView(R2.id.tv_gym_name) TextView tvGymName;
@@ -135,6 +147,7 @@ public class ResumeWorkExpItem extends AbstractFlexibleItem<ResumeWorkExpItem.Re
         @BindView(R2.id.tv_course_score) TextView tvCourseScore;
         @BindView(R2.id.fl_trainer_tags) FlexboxLayout flTrainerTags;
         @BindView(R2.id.tv_desc) TextView tvDesc;
+        @BindView(R2.id.tv_during) TextView tvDuring;
         @BindView(R2.id.tv_show_all) CompatTextView tvShowAll;
 
         public ResumeWorkExpVH(View view, final FlexibleAdapter adapter) {

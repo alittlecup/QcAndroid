@@ -43,7 +43,7 @@ import java.util.List;
 public class ChooseGymFragment extends BaseDialogFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();
     private ImageTwoTextAdapter mGymsAdapter;

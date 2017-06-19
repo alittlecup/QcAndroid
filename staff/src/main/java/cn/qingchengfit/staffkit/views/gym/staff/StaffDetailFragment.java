@@ -82,7 +82,7 @@ public class StaffDetailFragment extends BaseFragment implements StaffDetailView
     ManagerBody body = new ManagerBody();
     @BindView(R.id.phone_num) PhoneEditText phoneNum;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private boolean mIsAdd = true;
     private StaffShip mStaff;
     private List<String> mPositionStrList = new ArrayList<>();

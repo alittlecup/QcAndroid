@@ -56,7 +56,7 @@ public class QRActivity extends BaseActivity implements QRCodeReaderView.OnQRCod
 
     @Inject RestRepository restRepository;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.done) LinearLayout done;
     @BindView(R.id.layout_next) LinearLayout layoutNext;
     @BindView(R.id.root_view) RelativeLayout rootView;

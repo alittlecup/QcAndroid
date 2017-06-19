@@ -63,7 +63,7 @@ import javax.inject.Inject;
     @Arg boolean mIsPrivate;
     @Inject MsgNotiPresenter mMsgNotiPresenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private String mBeginNotiId;
     private String mLessNotiId;
     private String mCancelId;

@@ -51,7 +51,7 @@ import rx.functions.Action1;
 @FragmentWithArgs public class UnLoginFragment extends BaseFragment {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.brand_manage) TextView brandManage;
     @BindView(R.id.viewpager) ViewPager viewpager;
     @BindView(R.id.tabview) TabView tabview;

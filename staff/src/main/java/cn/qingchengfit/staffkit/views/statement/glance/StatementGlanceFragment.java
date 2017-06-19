@@ -49,7 +49,7 @@ public class StatementGlanceFragment extends BaseFragment implements StatementGl
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     private String mChooseShopId;
 
@@ -95,7 +95,7 @@ public class StatementGlanceFragment extends BaseFragment implements StatementGl
         }
     }
 
-    @OnClick({ R.id.toolbar_titile, R.id.down }) public void onClickTitle() {
+    @OnClick({ R.id.toolbar_title, R.id.down }) public void onClickTitle() {
         ChooseGymActivity.start(StatementGlanceFragment.this, 1, PermissionServerUtils.COST_REPORT, getString(R.string.choose_gym),
             mChooseShopId);
     }

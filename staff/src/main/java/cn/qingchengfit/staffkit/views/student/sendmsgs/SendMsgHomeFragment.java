@@ -78,7 +78,7 @@ public class SendMsgHomeFragment extends BaseFragment implements ShortMsgPresent
 
     @Inject ShortMsgPresentersPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     SendMsgHomeAdapter adapter;
     @BindView(R.id.searchview_clear) ImageView searchviewClear;
 

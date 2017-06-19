@@ -63,7 +63,7 @@ public class AddCourseFragment extends BaseFragment implements AddCoursePresente
     @BindView(R.id.btn_suit_gyms) CommonInputView btnSuitGyms;
     @BindView(R.id.layout_suit_gym) LinearLayout layoutSuitGym;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private CourseBaseInfoEditFragment mEditBaseInfo;
     private Toolbar.OnMenuItemClickListener listener = new Toolbar.OnMenuItemClickListener() {
         @Override public boolean onMenuItemClick(MenuItem item) {

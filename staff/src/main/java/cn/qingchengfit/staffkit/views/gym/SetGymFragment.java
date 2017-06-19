@@ -86,7 +86,7 @@ public class SetGymFragment extends BaseFragment implements ISetGymView {
     @BindView(R.id.brand_name) TextView brandName;
     @BindView(R.id.guide_step_1) ImageView guideStep1;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.toolbar_layout) FrameLayout toolbarLayout;
     private String addressStr;
     private GymBody gymBody = new GymBody();

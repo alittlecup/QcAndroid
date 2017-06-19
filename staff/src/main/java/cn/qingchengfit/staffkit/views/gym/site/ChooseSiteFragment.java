@@ -47,7 +47,7 @@ public class ChooseSiteFragment extends BaseDialogFragment implements ChooseSite
 
     @BindView(R.id.btn) Button btn;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recyclerview) RecycleViewWithNoImg recyclerview;
     @Inject ChooseSitePresenter presenter;
     private int type = 0;//0 是初始化 1是创建新的健身房 2 是单独管理site

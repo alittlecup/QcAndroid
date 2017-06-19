@@ -76,7 +76,7 @@ public class SigninReportFragment extends BaseFragment implements SigninReportPr
     @Inject LoginStatus loginStatus;
     @Inject GymWrapper gymWrapper;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
 
     private ReportDetailAdapter mStatementDetailAdapter;

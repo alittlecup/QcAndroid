@@ -51,7 +51,7 @@ public class MutiChooseCoachActivity extends BaseActivity
     public static final int CHANGE = 1;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.toolbar_titile) TextView mToolbarTitile;
+    @BindView(R.id.toolbar_title) TextView mToolbarTitile;
     @BindView(R.id.all_coach_recyclerView) RecyclerView mRecyclerview;
     @Inject MutiChooseCoachPresenter mPresenter;
     @Inject LoginStatus loginStatus;

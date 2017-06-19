@@ -40,7 +40,7 @@ import rx.functions.Action1;
 public class CardTypeActivity extends BaseActivity implements FragCallBack {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.student_frag) FrameLayout studentFrag;
     LinkedList<ToolbarBean> toolbarList = new LinkedList<>();
     @BindView(R.id.down) ImageView down;

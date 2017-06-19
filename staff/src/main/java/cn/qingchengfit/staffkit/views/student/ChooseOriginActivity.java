@@ -39,7 +39,7 @@ import se.emilsjolander.intentbuilder.IntentBuilder;
     public static final int RESULT_ADD_ORIGIN = 11;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
 

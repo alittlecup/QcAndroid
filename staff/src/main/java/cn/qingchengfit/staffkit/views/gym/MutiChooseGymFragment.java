@@ -61,7 +61,7 @@ public class MutiChooseGymFragment extends BaseDialogFragment {
     public static final int FEATURE_ALLOTSALE = 1;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.recycleview) RecyclerView recycleview;
     @Inject RestRepository restRepository;
     private List<ImageTwoTextBean> mDatas = new ArrayList<>();

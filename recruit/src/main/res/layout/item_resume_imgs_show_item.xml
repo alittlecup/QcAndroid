@@ -4,6 +4,7 @@
     android:id="@+id/img"
     android:layout_width="140dp"
     android:layout_height="140dp"
+    android:background="@drawable/bg_rect_square_img"
     android:contentDescription="@string/app_name"
     android:orientation="vertical"
     />

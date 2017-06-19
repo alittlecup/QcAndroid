@@ -67,7 +67,7 @@ public class WardrobeContinueHireFragment extends BaseFragment implements Wardro
     @BindView(R.id.cv_cost) CommonInputView cvCost;
     @Inject WardrobeContinueHirePresenter mPresenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     private Locker mLocker;
     private TimeDialogWindow pwTime;
     private int mPayMode = -1;

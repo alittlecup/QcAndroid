@@ -46,7 +46,7 @@ import se.emilsjolander.intentbuilder.IntentBuilder;
     @Extra String title;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.down) ImageView down;
     @BindView(R.id.titile_layout) LinearLayout titileLayout;
 

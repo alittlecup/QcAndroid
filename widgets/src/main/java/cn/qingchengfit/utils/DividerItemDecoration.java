@@ -1,4 +1,4 @@
-package com.qingchengfit.fitcoach.component;
+package cn.qingchengfit.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,8 +7,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import cn.qingchengfit.utils.MeasureUtils;
-import com.qingchengfit.fitcoach.R;
+import cn.qingchengfit.widgets.R;
 
 /**
  * power by

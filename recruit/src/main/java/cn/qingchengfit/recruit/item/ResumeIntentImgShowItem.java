@@ -1,5 +1,6 @@
 package cn.qingchengfit.recruit.item;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import cn.qingchengfit.recruit.R2;
 import cn.qingchengfit.widgets.CommonFlexAdapter;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.common.DividerItemDecoration;
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
 import eu.davidea.viewholders.FlexibleViewHolder;
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class ResumeIntentImgShowItem extends AbstractFlexibleItem<ResumeIntentIm
                 GravitySnapHelper helper = new GravitySnapHelper(Gravity.START);
                 helper.attachToRecyclerView(holder.itemRv);
             }
+            holder.itemRv.setLayoutManager(new LinearLayoutManager(holder.itemRv.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            holder.itemRv.addItemDecoration(new DividerItemDecoration(holder.itemRv.getContext(), R.drawable.divider_linearlayout_6dp, 6));
             holder.itemRv.setAdapter(commonFlexAdapter);
             for (String s : imgs) {
                 commonFlexAdapter.addItem(new Image140Item(s));
@@ -54,7 +58,6 @@ public class ResumeIntentImgShowItem extends AbstractFlexibleItem<ResumeIntentIm
 
     @Override public boolean onItemClick(int i) {
         // TODO: 2017/6/10 图片点击
-
         return true;
     }
 

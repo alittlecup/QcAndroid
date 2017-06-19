@@ -57,7 +57,7 @@ public class CourseManageFragment extends BaseFragment implements CourseManageVi
     @BindView(R.id.rootview) RelativeLayout rootview;
     @BindView(R.id.no_data) LinearLayout noData;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.toolbar_titile) TextView toolbarTitile;
+    @BindView(R.id.toolbar_title) TextView toolbarTitile;
     @BindView(R.id.btn_del) Button btnDel;
 
     @Inject LoginStatus loginStatus;

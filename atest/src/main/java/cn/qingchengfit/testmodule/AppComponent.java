@@ -2,6 +2,7 @@ package cn.qingchengfit.testmodule;
 
 import android.app.Activity;
 import cn.qingchengfit.recruit.di.BindRecruitModule;
+import cn.qingchengfit.recruit.di.BindSeacherOrgModule;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -33,7 +34,7 @@ import dagger.multibindings.IntoMap;
  * Created by Paper on 2017/5/31.
  */
 @Component(modules = {
-    AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class, BindRecruitModule.class,
+    AndroidSupportInjectionModule.class, AndroidInjectionModule.class, TestModule.class, BindRecruitModule.class, BindSeacherOrgModule.class,
     AppComponent.MainModule.class,
 
     //AppComponent.RecruitModule.class,
