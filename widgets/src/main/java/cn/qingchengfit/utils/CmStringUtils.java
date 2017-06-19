@@ -147,4 +147,21 @@ public class CmStringUtils {
         }
         return sb.toString();
     }
+
+    public static String getMobileHtml(String content) {
+        return "<html>\n"
+            + "<head>\n"
+            + "\t<title>容器</title>\n"
+            + "\t<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no\">\n"
+            + "\t<style type=\"text/css\">\n"
+            + "\t\tbody{overflow-x:hidden;overflow-y:auto;}\n"
+            + "\t\t.richTxtCtn{margin:0;padding:0;}\n"
+            + "\t\t.richTxtCtn *{max-width:100% !important;}\n"
+            + "\t</style>\n"
+            + "</head>\n"
+            + "<body>\n"
+            + "\t<div class=\"richTxtCtn\">"
+            + content
+            + "</div></body></html>";
+    }
 }
