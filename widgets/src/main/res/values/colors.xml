@@ -94,6 +94,8 @@
   <color name="currentDayOfMonthSelectorColor">#33b5e5</color>
   <color name="half_red">#1aea6161</color>
 
+  <color name="qc_theme_green">#0db14b</color>
+
 
   <color name="wheel_timebtn_nor">#54a3fa</color>
   <color name="wheel_timebtn_pre">#CCCCCC</color>

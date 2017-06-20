@@ -14,6 +14,7 @@ import cn.qingchengfit.recruit.network.response.CertificateListWrap;
 import cn.qingchengfit.recruit.network.response.EduExpListWrap;
 import cn.qingchengfit.recruit.network.response.ResumeHomeWrap;
 import cn.qingchengfit.recruit.network.response.WorkExpListWrap;
+import com.tencent.qcloud.timchat.chatmodel.ResumeModel;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,6 +71,37 @@ public class ResumePresenter extends BasePresenter {
           }
         }));
   }
+    public ResumeModel dealResumeMessage(ResumeHome resumeHome){
+        ResumeModel resumeModel = new ResumeModel();
+        resumeModel.id = resumeHome.id;
+        resumeModel.username = resumeHome.username;
+        resumeModel.avatar = resumeHome.avatar;
+        resumeModel.birthday = resumeHome.birthday;
+        resumeModel.work_year = resumeHome.work_year;
+        resumeModel.gender = resumeHome.gender;
+        resumeModel.max_education = resumeHome.max_education;
+        return resumeModel;
+    }
+
+    public void queryEducations() {
+        RxRegiste(restRepository.createGetApi(GetApi.class)
+            .queryEducations()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<QcDataResponse<EduExpListWrap>>() {
+                @Override public void call(QcDataResponse<EduExpListWrap> eduExpListWrapQcDataResponse) {
+                    if (eduExpListWrapQcDataResponse.getStatus() == 200) {
+                        view.onEduExpList(eduExpListWrapQcDataResponse.data.educations);
+                    } else {
+                        view.onShowError(eduExpListWrapQcDataResponse.getMsg());
+                    }
+                }
+            }, new Action1<Throwable>() {
+                @Override public void call(Throwable throwable) {
+                    view.onShowError(throwable.getMessage());
+                }
+            }));
+    }
 
   public void queryWorkExps() {
     RxRegiste(restRepository.createGetApi(GetApi.class)

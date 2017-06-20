@@ -121,6 +121,15 @@ gradle.projectsEvaluated {
   }
 }
 
+repositories {
+  maven() {
+    url uri('../../repo')
+  }
+  maven() {
+    url uri('./repo')
+  }
+}
+
 dependencies {
   compile project(path: ':widgets')
   compile 'cn.qingchegfit.widgets:widgets:1.2@aar'

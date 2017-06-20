@@ -48,7 +48,6 @@ public class FilterFragment extends BaseFragment implements FlexibleAdapter.OnIt
     @Override public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (isVisible()) {
-
         }
     }
 

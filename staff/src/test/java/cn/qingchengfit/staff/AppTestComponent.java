@@ -1,6 +1,5 @@
 package cn.qingchengfit.staff;
 
-import cn.qingchengfit.staffkit.views.course.CourseDetailPresenterTest;
 import dagger.Component;
 import javax.inject.Singleton;
 

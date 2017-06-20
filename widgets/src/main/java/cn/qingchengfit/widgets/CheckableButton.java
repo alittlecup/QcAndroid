@@ -181,7 +181,9 @@ public class CheckableButton extends RelativeLayout implements QcCheckable{
         content.setText(contentStr);
     }
 
-
+    public String getContent(){
+        return content.getText().toString();
+    }
 
     private List<CompoundButton.OnCheckedChangeListener> mListener = new ArrayList<>();
 

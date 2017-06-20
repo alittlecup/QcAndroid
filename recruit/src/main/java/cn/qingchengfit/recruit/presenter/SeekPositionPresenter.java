@@ -14,6 +14,7 @@ import cn.qingchengfit.recruit.network.response.JobDetailWrap;
 import cn.qingchengfit.recruit.network.response.JobListIndex;
 import cn.qingchengfit.recruit.network.response.JobListWrap;
 import cn.qingchengfit.utils.LogUtil;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class SeekPositionPresenter extends BasePresenter {
+
   protected MVPView view;
   @Inject QcRestRepository restRepository;
 
@@ -151,7 +153,7 @@ public class SeekPositionPresenter extends BasePresenter {
    */
   public void sendResume(String jobid) {
     HashMap<String, Object> params = new HashMap<String, Object>();
-    params.put("id", jobid);
+    params.put("job_id", jobid);
     RxRegiste(restRepository.createPostApi(PostApi.class)
         .sendResume(params)
         .subscribeOn(Schedulers.io())
@@ -169,6 +171,37 @@ public class SeekPositionPresenter extends BasePresenter {
         }));
   }
 
+  //public RecruitModel getRecruitModel(Job job){
+  //    RecruitModel recruitModel = new RecruitModel();
+  //    recruitModel.id = job.id;
+  //    recruitModel.address = job.gd_district.city.name + job.gd_district.name + job.gym.name;
+  //    recruitModel.gender = job.gender;
+  //    recruitModel.photo = job.gym.photo;
+  //    recruitModel.max_age = job.max_age;
+  //    recruitModel.min_age = job.min_age;
+  //    recruitModel.max_height = job.max_height;
+  //    recruitModel.min_height = job.min_height;
+  //    recruitModel.max_salary = job.max_salary;
+  //    recruitModel.min_salary = job.min_salary;
+  //    recruitModel.max_work_year = job.max_work_year;
+  //    recruitModel.min_work_year = job.min_work_year;
+  //    recruitModel.name = job.name;
+  //    return recruitModel;
+  //}
+
+  public List<String> filterSalary() {
+    List<String> salaryList = new ArrayList<>();
+    salaryList.add("全部");
+    salaryList.add("面议");
+    salaryList.add("5k以下");
+    salaryList.add("5k-10k");
+    salaryList.add("10k-15k");
+    salaryList.add("15k-20k");
+    salaryList.add("20k-50k");
+    salaryList.add("50k以上");
+    return salaryList;
+  }
+
   public interface MVPView extends CView {
     void onJob(Job job);
 
@@ -179,8 +212,6 @@ public class SeekPositionPresenter extends BasePresenter {
     void starOK();
 
     void unStarOk();
-
-    void sendResumeOk();
 
     void onJobsIndex(Number completed, int fair_count, String avatar, String fiar_banner);
   }
